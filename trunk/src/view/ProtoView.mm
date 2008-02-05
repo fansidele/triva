@@ -105,8 +105,6 @@
 
 	//Create DrawManager
 	drawManager = new DrawManager (self);
-//	mInputMgr->addKeyListener (drawManager, "DrawManager");
-//      mInputMgr->addMouseListener (drawManager, "DrawManager");
         mRoot->addFrameListener (drawManager);
 
 	//Create KeyboardListener	
