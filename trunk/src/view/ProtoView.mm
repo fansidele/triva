@@ -114,12 +114,6 @@
 	mInputMgr->addKeyListener (keyboardListener, "KeyboardListener");
 	mInputMgr->addMouseListener (keyboardListener, "KeyboardListener");
 
-
-	//Create ProtoSensor 
-	//sensor = new ProtoSensor (self);
-	//mRoot->addFrameListener (sensor);	
-	//NSLog (@"%s", __FUNCTION__);
-
 	[fm changeCurrentDirectoryPath: currentPath];
         return true;
 }

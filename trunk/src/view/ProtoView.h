@@ -5,7 +5,6 @@
 #include <OIS.h>
 #include "general/ProtoComponent.h"
 #include "view/VisuInputManager.h"
-#include "view/ProtoSensor.h"
 #include "view/camera/CameraManager.h"
 #include "view/ambient/AmbientManager.h"
 #include "view/cegui/CEGUIManager.h"
@@ -33,7 +32,6 @@
 	KeyboardListener *keyboardListener;
 
 	ProtoController *applicationController;
-	ProtoSensor *sensor;
 
 	/* for visual scaling */
 	bool zoomSwitch;
