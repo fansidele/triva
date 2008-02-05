@@ -1,0 +1,19 @@
+GNUSTEP_INSTALLATION_DOMAIN = USER
+
+include $(GNUSTEP_MAKEFILES)/common.make
+
+CC=$(CXX)
+
+SUBPROJECT_NAME=cegui
+cegui_OBJC_FILES=
+cegui_OBJCC_FILES=CEGUIManager.mm
+
+cegui_INCLUDE_DIRS += -I../../ -I../ -I./ @OGRE_CFLAGS@ @OIS_CFLAGS@ @CEGUI_CFLAGS@ @GVC_CFLAGS@
+cegui_LIB_DIRS += @OGRE_LIBS@ @OIS_LIBS@ @CEGUI_LIBS@ @GVC_LIBS@
+cegui_LDFLAGS += @LDFLAGS@
+
+include $(GNUSTEP_MAKEFILES)/subproject.make
+
+after-distclean::
+after-all::
+after-clean:: 

@@ -1,0 +1,19 @@
+GNUSTEP_INSTALLATION_DOMAIN = USER
+
+include $(GNUSTEP_MAKEFILES)/common.make
+
+CC=$(CXX)
+
+SUBPROJECT_NAME=reader
+reader_OBJC_FILES=ProtoMemory.m
+reader_OBJCC_FILES=
+
+reader_INCLUDE_DIRS += -I../ -I./
+reader_LIB_DIRS += 
+reader_LDFLAGS += 
+
+include $(GNUSTEP_MAKEFILES)/subproject.make
+
+after-distclean::
+after-all::
+after-clean:: 

@@ -1,0 +1,19 @@
+GNUSTEP_INSTALLATION_DOMAIN = USER
+
+include $(GNUSTEP_MAKEFILES)/common.make
+
+CC=$(CXX)
+
+SUBPROJECT_NAME=extras
+extras_OBJC_FILES= 
+extras_OBJCC_FILES=MovableText.mm DynamicLines.mm DynamicRenderable.mm
+
+extras_INCLUDE_DIRS += @OGRE_CFLAGS@ @OIS_CFLAGS@ @CEGUI_CFLAGS@ @GVC_CFLAGS@
+extras_LIB_DIRS += @OGRE_LIBS@ @OIS_LIBS@ @CEGUI_LIBS@ @GVC_LIBS@ -lDIMVisual
+extras_LDFLAGS += @LDFLAGS@
+
+include $(GNUSTEP_MAKEFILES)/subproject.make
+
+after-distclean::
+after-all::
+after-clean:: 
