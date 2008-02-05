@@ -5,7 +5,7 @@ include $(GNUSTEP_MAKEFILES)/common.make
 CC=$(CXX)
 
 SUBPROJECT_NAME=view
-view_SUBPROJECTS=exit camera ambient cegui draw extras keyboard
+view_SUBPROJECTS=exit camera ambient cegui draw extras keyboard mouse
 view_OBJC_FILES=
 view_OBJCC_FILES=ProtoView.mm ProtoView+KeyboardReceivers.mm VisuInputManager.mm
 

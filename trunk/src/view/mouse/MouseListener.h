@@ -3,7 +3,8 @@
 
 #include <Ogre.h>
 #include <OIS.h>
-#include "view/ProtoView.h"
+
+@class ProtoView;
 
 class MouseListener : public OIS::MouseListener
 {
@@ -15,10 +16,15 @@ class MouseListener : public OIS::MouseListener
 private:
         ProtoView *viewController;
 
+	Ogre::RaySceneQuery *mRaySceneQuery;     // The ray scene query pointer
+	bool mLMouseDown, mRMouseDown;     // True if the mouse buttons are down
+	Ogre::SceneNode *mCurrentObject;         // The newly created object
+
 
 public: 
-	MouseListener (ProtoView *view) { viewController = view; [viewController retain];};
-	~MouseListener (){};
+	MouseListener (ProtoView *view);
+	~MouseListener ();
 };
 
+#include "view/ProtoView.h"
 #endif

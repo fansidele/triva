@@ -112,6 +112,10 @@
 	mInputMgr->addKeyListener (keyboardListener, "KeyboardListener");
 	mInputMgr->addMouseListener (keyboardListener, "KeyboardListener");
 
+	//Create MouseListener
+	mouseListener = new MouseListener (self);
+	mInputMgr->addMouseListener (mouseListener, "MouseListener");
+
 	[fm changeCurrentDirectoryPath: currentPath];
         return true;
 }

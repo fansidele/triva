@@ -9,6 +9,7 @@
 #include "view/ambient/AmbientManager.h"
 #include "view/cegui/CEGUIManager.h"
 #include "view/keyboard/KeyboardListener.h"
+#include "view/mouse/MouseListener.h"
 #include "view/draw/DrawManager.h"
 #include "view/exit/ExitManager.h"
 #include "core/ProtoController.h"
@@ -30,6 +31,7 @@
 	DrawManager *drawManager;
 	ExitManager *exitManager;
 	KeyboardListener *keyboardListener;
+	MouseListener *mouseListener;
 
 	ProtoController *applicationController;
 
