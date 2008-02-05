@@ -162,15 +162,26 @@
 	[super dealloc];
 }
 
+- (BOOL) refresh 
+{
+	if (mRoot->renderOneFrame() == false){
+		return YES;
+	}
+	Ogre::WindowEventUtilities::messagePump();
+	return NO;
+}
+
+- (void) end
+{
+	delete mInputMgr;
+	delete mRoot;
+}
+
 - (void) start
 {
 	NS_DURING
 	try {
 		while( !bShutdown || false ) {
-			if (mRoot->renderOneFrame() == false){
-				bShutdown = true;
-			}
-			Ogre::WindowEventUtilities::messagePump();
 		}
 	}catch (Ogre::Exception &ex){
 		std::cerr << "An exception has occured: " <<

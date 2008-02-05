@@ -53,6 +53,8 @@
 }
 /* methods called by the application controller (core/ProtoController.mm) */
 - (void) setController: (ProtoController *) controller;
+- (BOOL) refresh;
+- (void) end;
 - (void) start;
 - (void) startSession;
 - (double) yScale;

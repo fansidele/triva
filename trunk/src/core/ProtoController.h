@@ -13,6 +13,9 @@
 	OgreProtoSimulator *simulator;
 	ProtoMemory *memory;
 	ProtoView *view;
+
+
+	BOOL quit;
 }
 - (void) start;
 - (id) initWithArgc: (int) argc andArgv: (char **) argv;

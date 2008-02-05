@@ -1,12 +1,6 @@
 #include "ProtoController.h"
 
 @implementation ProtoController
-- (id) init
-{
-	self = [super init];
-	return self;
-}
-
 - (id) initWithArgc: (int) argc andArgv: (char **) argv
 {
 	self = [super init];
@@ -20,12 +14,18 @@
 
 	view = [[ProtoView alloc] init];
 	[view setController: self];
+
+
+	quit = NO;
 	return self;
 }
 
 - (void) start
 {
-	[view start];
+	while (!quit){
+		quit = [view refresh];
+	}
+	[view end];
 }
 
 - (void) dealloc
