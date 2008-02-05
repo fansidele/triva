@@ -14,7 +14,7 @@
 	ProtoMemory *memory;
 	ProtoView *view;
 
-
+	BOOL sessionStarted;
 	BOOL quit;
 }
 - (void) start;

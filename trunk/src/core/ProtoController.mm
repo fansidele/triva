@@ -17,6 +17,7 @@
 
 
 	quit = NO;
+	sessionStarted = NO;
 	return self;
 }
 
@@ -24,6 +25,12 @@
 {
 	while (!quit){
 		quit = [view refresh];
+
+		if (sessionStarted){
+			if ([reader hasMoreData]){
+				[reader read];
+			}
+		}
 	}
 	[view end];
 }
@@ -58,6 +65,7 @@
 	[view setInput: simulator];
 
 	NSLog (@"%s", __FUNCTION__);
+	sessionStarted = YES;
 	return true;
 }
 

@@ -116,9 +116,9 @@
 
 
 	//Create ProtoSensor 
-	sensor = new ProtoSensor (self);
-	mRoot->addFrameListener (sensor);	
-	NSLog (@"%s", __FUNCTION__);
+	//sensor = new ProtoSensor (self);
+	//mRoot->addFrameListener (sensor);	
+	//NSLog (@"%s", __FUNCTION__);
 
 	[fm changeCurrentDirectoryPath: currentPath];
         return true;
