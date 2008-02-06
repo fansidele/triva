@@ -29,4 +29,8 @@
 - (NSMutableDictionary *) containersDictionary;
 @end
 
+@interface XContainer (Search)
+- (XState *) stateWithIdentifier: (NSString *) ide; //recursive
+@end
+
 #endif

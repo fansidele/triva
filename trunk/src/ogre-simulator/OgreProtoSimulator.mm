@@ -166,4 +166,10 @@ conected */
 {
 	return [root containersDictionary];
 }
+
+- (XObject *) objectWithIdentifier: (NSString *) identifier
+{
+	NSLog (@"%s %@", __FUNCTION__, identifier);
+	return [root stateWithIdentifier: identifier];
+}
 @end
