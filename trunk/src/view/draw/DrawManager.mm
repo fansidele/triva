@@ -336,3 +336,12 @@ bool DrawManager::frameStarted (const Ogre::FrameEvent& evt)
 } 
 
 
+void DrawManager::selectState (XState *s)
+{
+	[[s layout] setSelected: 1];
+}
+
+void DrawManager::unselectState (XState *s)
+{
+	[[s layout] setSelected: 0];
+}

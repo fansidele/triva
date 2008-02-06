@@ -16,6 +16,7 @@
 - (void) attachTo: (Ogre::SceneNode *) node;
 - (void) redraw;
 - (void) setVisibility: (int) k;
+- (void) setSelected: (int) k;
 @end
 
 #include "view/draw/layout/LayoutState.h"

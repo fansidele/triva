@@ -63,6 +63,8 @@ CEGUI::Event::Subscriber(&CEGUIManager::pause, this));
 	scaleval->subscribeEvent (CEGUI::Editbox::EventTextAccepted,
 CEGUI::Event::Subscriber (&CEGUIManager::scaleval, this));
 
+	infoPanel = win->getWindow ("info");
+
 	this->updateScale ();
 
 /*
@@ -237,4 +239,9 @@ bool CEGUIManager::startSession(const CEGUI::EventArgs &e)
 	[viewController startSession];
 //	start->setVisible (0);
 	return true;
+}
+
+void CEGUIManager::setInfoPanelText (std::string s)
+{
+	infoPanel->setText(s);
 }

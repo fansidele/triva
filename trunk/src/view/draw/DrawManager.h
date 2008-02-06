@@ -7,6 +7,7 @@
 
 @class ProtoView;
 @class Position;
+@class XState;
 
 class DrawManager : public Ogre::FrameListener,
 	public Ogre::WindowEventListener
@@ -39,6 +40,10 @@ public:
 	void hideStatesLabels ();
 	void showContainersLabels ();
 	void hideContainersLabels ();
+
+	//interactive 
+	void selectState (XState *s);
+	void unselectState (XState *s);
 
 private:
 	Ogre::Root *mRoot;

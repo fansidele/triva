@@ -19,6 +19,7 @@ private:
 	CEGUI::Window *start;
 	CEGUI::Window *pauseButton;
 	CEGUI::Window *scaleText;
+	CEGUI::Window *infoPanel;
 	bool mShutdown;
 
 	ProtoView *viewController;
@@ -50,7 +51,9 @@ public:
 	bool scalein (const CEGUI::EventArgs &e);
 	bool scaleout (const CEGUI::EventArgs &e);
 	void updateScale ();
-	
+
+	//To update CEGUI elements
+	void setInfoPanelText (std::string s);
 
 	bool paused;
 };

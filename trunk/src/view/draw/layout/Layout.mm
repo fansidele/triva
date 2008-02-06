@@ -44,4 +44,14 @@
 	[[NSException exceptionWithName: @"Layout"  reason: str userInfo: nil]
 raise];
 }
+
+- (void) setSelected: (int) k
+{
+	if (k){
+		sceneNode->showBoundingBox (true);
+	}else{
+		sceneNode->showBoundingBox (false);
+
+	}
+}
 @end

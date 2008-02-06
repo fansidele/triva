@@ -3,7 +3,23 @@
 @implementation ProtoView (Selection)
 - (void) selectObjectIdentifier: (NSString *) identifier
 {
-//	NSLog (@"%s: %@", __FUNCTION__, identifier);
+	static XState *prev = nil;
+
+	XState *s = (XState *)[super objectWithIdentifier: identifier];
+	if (s){
+		NSMutableString *str = [NSMutableString string];
+		[str appendString: [NSString stringWithFormat: @"%@\n", [s type]]];
+		[str appendString: [NSString stringWithFormat: @"%@\n", [s start]]];
+		[str appendString: [NSString stringWithFormat: @"%@\n", [s end]]];
+		ceguiManager->setInfoPanelText([str cString]);
+
+		if (prev){
+			drawManager->unselectState (prev);
+		}
+		drawManager->selectState (s);
+		prev = s;
+
+	}
 }
 
 
