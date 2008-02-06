@@ -4,6 +4,7 @@
 #include <Ogre.h>
 #include "view/ambient/Axis.h"
 #include "view/ambient/Origin.h"
+#include "view/QueryFlags.h"
 
 class XAxis : public Axis
 {

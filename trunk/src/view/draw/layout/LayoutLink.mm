@@ -31,6 +31,7 @@
 	line->addPoint (Ogre::Vector3 (0,0,0));
 	line->addPoint (Ogre::Vector3 (0,0,0));
 	line->update();
+	line->setQueryFlags(LINK_MASK);
 
 	std::string x, y;
 	x = [ide cString];

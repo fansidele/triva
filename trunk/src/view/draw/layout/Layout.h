@@ -3,6 +3,7 @@
 #include <Foundation/Foundation.h>
 #include <Ogre.h>
 #include "view/extras/MovableText.h"
+#include "view/QueryFlags.h"
 
 @interface Layout : NSObject
 {

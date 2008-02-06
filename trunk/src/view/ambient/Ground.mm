@@ -20,6 +20,7 @@ Ground::Ground (double si, double sc, Origin *origin)
 	plane->triangle (2, 1, 0);
 	plane->triangle (1, 2, 3);
 	plane->end();
+	plane->setQueryFlags (AMBIENT_MASK);
 
 	si = si/4;
 
@@ -40,6 +41,7 @@ Ground::Ground (double si, double sc, Origin *origin)
 		line->position (i, 0, -si/2);
 		line->position (i, 0, si/2);	
 		line->end();
+		line->setQueryFlags (AMBIENT_MASK);
 		node->attachObject (line);
 	}
 
@@ -52,12 +54,11 @@ Ground::Ground (double si, double sc, Origin *origin)
 		line->position (-si/2, 0, i);
 		line->position (si/2, 0, i);	
 		line->end();
+		line->setQueryFlags (AMBIENT_MASK);
 		node->attachObject (line);
 
 	}
 
-
-	std::cout << "###" << std::endl;
 
 /*
 	Ogre::Plane plane (Ogre::Vector3::UNIT_Y, 0);

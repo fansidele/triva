@@ -18,6 +18,7 @@
 	
 	entity = mSceneMgr->createEntity ([ide cString], Ogre::SceneManager::PT_CUBE);
 	entity->setMaterialName (materialName);
+	entity->setQueryFlags(STATE_MASK);
 	
 	text = new MovableText ([mat cString], [mat cString]);
 	text->setColor (Ogre::ColourValue::Blue);

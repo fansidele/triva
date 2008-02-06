@@ -11,5 +11,6 @@ XAxis::XAxis (double si, double sc, Origin *origin) :
 	line->position (0, 0, 0);
 	line->position (size, 0, 0);
 	line->end();
+	line->setQueryFlags(AMBIENT_MASK);
 	node->attachObject (line);
 };

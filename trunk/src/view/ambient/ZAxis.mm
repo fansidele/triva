@@ -11,5 +11,6 @@ ZAxis::ZAxis (double si, double sc, Origin *origin) :
 	line->position (0, 0, 0);
 	line->position (0, 0, size);
 	line->end();
+	line->setQueryFlags (AMBIENT_MASK);
 	node->attachObject (line);
 };

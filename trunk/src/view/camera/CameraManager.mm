@@ -9,6 +9,7 @@ void CameraManager::createCamera ()
 	mCamera->setNearClipDistance (1);
 	mCamera->setPosition (Ogre::Vector3 (500, 500, 500));
 	mCamera->lookAt (Ogre::Vector3 (100,0,100));
+	mCamera->setQueryFlags(CAMERA_MASK);
 
 	childNode->attachObject (mCamera);
 

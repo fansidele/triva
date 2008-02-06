@@ -11,6 +11,7 @@ YAxis::YAxis (double si, double sc, Origin *origin) :
 	line->position (0, 0, 0);
 	line->position (0, size, 0);
 	line->end();
+	line->setQueryFlags(AMBIENT_MASK);
 	node->attachObject (line);
 
 	int i;
@@ -26,6 +27,7 @@ YAxis::YAxis (double si, double sc, Origin *origin) :
 		mark->position (0, i, 10);
 		mark->position (0, i, 0);
 		mark->end();
+		mark->setQueryFlags(AMBIENT_MASK);
 		node->attachObject (mark);
 
 		char nodeName[100], textId[100], textValue[100];
@@ -42,6 +44,7 @@ YAxis::YAxis (double si, double sc, Origin *origin) :
 		MovableText *text = new MovableText (markNameId, markName);
 		text->setColor (Ogre::ColourValue::Blue);
 		text->setCharacterHeight (15);
+		text->setQueryFlags(AMBIENT_MASK);
 		textNode->attachObject (text);
 		textNode->setPosition (0, i, 0);
 		textNode->setInheritScale (false);

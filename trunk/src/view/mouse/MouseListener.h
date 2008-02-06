@@ -21,6 +21,10 @@ private:
 	Ogre::MovableObject *mCurrentObject;         // The newly created object
 
 
+	//debug
+	Ogre::SceneNode *myManualObjectNode;
+	Ogre::ManualObject *myManualObject;
+
 public: 
 	MouseListener (ProtoView *view);
 	~MouseListener ();

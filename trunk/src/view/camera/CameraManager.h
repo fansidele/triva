@@ -3,6 +3,7 @@
 
 #include <Ogre.h>
 #include <OIS.h>
+#include "view/QueryFlags.h"
 
 class CameraManager : public Ogre::FrameListener, 
 			public Ogre::WindowEventListener,
