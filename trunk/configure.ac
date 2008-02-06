@@ -47,6 +47,7 @@ src/view/extras/GNUmakefile
 src/view/camera/GNUmakefile
 src/view/ambient/GNUmakefile
 src/view/keyboard/GNUmakefile
+src/view/mouse/GNUmakefile
 src/view/cegui/GNUmakefile)
 AC_OUTPUT
 

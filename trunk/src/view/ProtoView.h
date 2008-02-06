@@ -76,6 +76,11 @@
 - (bool) containersLabelsAppearance;
 @end
 
+@interface ProtoView (Selection)
+- (void) selectObjectIdentifier: (NSString *) identifier;
+- (void) unselectObjectIdentifier: (NSString *) identifier; 
+@end
+
 @interface ProtoView (KeyboardMethods)
 - (void) keyboardP;
 - (void) keyboardO;

@@ -18,7 +18,7 @@ private:
 
 	Ogre::RaySceneQuery *mRaySceneQuery;     // The ray scene query pointer
 	bool mLMouseDown, mRMouseDown;     // True if the mouse buttons are down
-	Ogre::SceneNode *mCurrentObject;         // The newly created object
+	Ogre::MovableObject *mCurrentObject;         // The newly created object
 
 
 public: 
