@@ -5,6 +5,7 @@
 #include "general/Macros.h"
 
 @class XContainer;
+@class XObject;
 
 @interface ProtoComponent  : NSObject
 {
@@ -27,6 +28,7 @@
 - (id) hierarchy; // to the simulator obtain the hierarchy of reader (dimvisual)
 - (NSDictionary *) newLinksBetweenContainers;
 - (NSDictionary *) hierarchyOrganization; /* for graphviz with subgraph supp */
+- (XObject *) objectWithIdentifier: (NSString *) identifier;
 @end
 
 @interface ProtoComponent (Commands)

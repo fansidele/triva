@@ -55,4 +55,9 @@
 {
 	return [input hierarchyOrganization];
 }
+
+- (XObject *) objectWithIdentifier: (NSString *) identifier
+{
+	return [input objectWithIdentifier: identifier];
+}
 @end
