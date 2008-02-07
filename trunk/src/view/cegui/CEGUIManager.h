@@ -19,6 +19,7 @@ private:
 	CEGUI::Window *startButton;
 	CEGUI::Window *quitButton;
 	CEGUI::Window *pauseButton;
+	CEGUI::Window *moveCameraButton;
 	CEGUI::Window *scaleText;
 	CEGUI::Window *infoPanel;
 	bool mShutdown;
@@ -47,6 +48,7 @@ public:
 	bool quit(const CEGUI::EventArgs &e);
 	bool startSession(const CEGUI::EventArgs &e);
 	bool pause (const CEGUI::EventArgs &e);
+	bool moveCamera (const CEGUI::EventArgs &e);
 
 	bool scaleval (const CEGUI::EventArgs &e);
 	bool scalein (const CEGUI::EventArgs &e);

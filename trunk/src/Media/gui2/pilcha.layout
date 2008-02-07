@@ -66,5 +66,12 @@
             <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
             <Property Name="UnifiedAreaRect" Value="{{0.005,0},{0.287055,0},{0.13125,0},{0.423787,0}}" />
         </Window>
+        <Window Type="WindowsLook/Checkbox" Name="movecamera" >
+            <Property Name="Font" Value="Iconified-12" />
+            <Property Name="Text" Value="Move Camera" />
+            <Property Name="Alpha" Value="0.6" />
+            <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
+            <Property Name="UnifiedAreaRect" Value="{{0.0075,0},{0.421036,0},{0.128748,0},{0.462298,0}}" />
+        </Window>
     </Window>
 </GUILayout>

@@ -55,6 +55,10 @@ CEGUIManager::CEGUIManager (ProtoView *view, Ogre::RenderWindow *mWindow, Ogre::
 		pauseButton->subscribeEvent(CEGUI::PushButton::EventClicked,
 CEGUI::Event::Subscriber(&CEGUIManager::pause, this));	
 	}
+	moveCameraButton = win->getWindow ("movecamera");
+	if (moveCameraButton){
+		moveCameraButton->subscribeEvent (CEGUI::Checkbox::EventCheckStateChanged, CEGUI::Event::Subscriber (&CEGUIManager::moveCamera, this));
+	}
 	CEGUI::Window *scalein = win->getWindow ("yscale/in");
 	CEGUI::Window *scaleout= win->getWindow ("yscale/out");
 	scalein->subscribeEvent (CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber (&CEGUIManager::scalein, this));
@@ -193,3 +197,10 @@ void CEGUIManager::setInfoPanelText (std::string s)
 {
 	infoPanel->setText(s);
 }
+
+bool CEGUIManager::moveCamera (const CEGUI::EventArgs &e)
+{
+	std::cout << "oi" << std::endl;
+	return true;
+}
+
