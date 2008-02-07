@@ -41,17 +41,18 @@ CEGUIManager::CEGUIManager (ProtoView *view, Ogre::RenderWindow *mWindow, Ogre::
 	CEGUI::System::getSingleton().setGUISheet(myRoot);
 
 
-	CEGUI::Window *quit = win->getWindow ("quit");
-	if (quit){
-		quit->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&CEGUIManager::quit, this));
+	quitButton = win->getWindow ("quit");
+	if (quitButton){
+		quitButton->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&CEGUIManager::quit, this));
 	}
-	CEGUI::Window *start = win->getWindow ("start");
-	if (start){
-		start->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&CEGUIManager::startSession, this));
+	startButton = win->getWindow ("start");
+	if (startButton){
+		startButton->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&CEGUIManager::startSession, this));
 	}
-	CEGUI::Window *pause = win->getWindow ("pause");
-	if (pause){
-		pause->subscribeEvent(CEGUI::PushButton::EventClicked,
+	pauseButton = win->getWindow ("pause");
+	if (pauseButton){
+		pauseButton->setVisible(0);
+		pauseButton->subscribeEvent(CEGUI::PushButton::EventClicked,
 CEGUI::Event::Subscriber(&CEGUIManager::pause, this));	
 	}
 	CEGUI::Window *scalein = win->getWindow ("yscale/in");
@@ -66,62 +67,6 @@ CEGUI::Event::Subscriber (&CEGUIManager::scaleval, this));
 	infoPanel = win->getWindow ("info");
 
 	this->updateScale ();
-
-/*
-	CEGUI::ProgressBar *bar = (CEGUI::ProgressBar *)win->getWindow ("bar");
-	if (bar){
-		bar->setProgress (0.6);
-		bar->subscribeEvent (CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber (&CEGUIManager::bar, this));
-	}
-*/
-
-/*
-	CEGUI::Slider *slider = (CEGUI::Slider *)win->getWindow ("slider");
-	if (slider){
-		slider->subscribeEvent (CEGUI::Slider::EventValueChanged,
-CEGUI::Event::Subscriber (&CEGUIManager::slider, this));
-	}else{
-		std::cout << "slider null" << std::endl;
-	}
-*/
-
-/*
-        CEGUI::Window *sheet = win->createWindow("DefaultGUISheet", "CEGUIDemo/Sheet");
-
-        CEGUI::Window *quit = win->createWindow("TaharezLook/Button", "CEGUIDemo/QuitButton");
-        quit->setText("Quit");
-        quit->setSize(CEGUI::UVector2(CEGUI::UDim(0.15, 0), CEGUI::UDim(0.05, 0)));
-
-        sheet->addChildWindow(quit);
-
-	start = win->createWindow ("TaharezLook/Button","CEGUIDemo/StartSessionButton");
-	start->setText ("Start");
-	start->setSize (CEGUI::UVector2(CEGUI::UDim(0.15, 0), CEGUI::UDim(0.05, 0)));
-	start->setPosition (CEGUI::UVector2(CEGUI::UDim(0.15,0),CEGUI::UDim(0,0)));
-
-	sheet->addChildWindow (start);
-
-pauseButton = win->createWindow ("TaharezLook/Button","CEGUIDemo/PauseButton");
-pauseButton->setText ("Pause");
-	paused = false;
-pauseButton->setSize (CEGUI::UVector2(CEGUI::UDim(0.15, 0), CEGUI::UDim(0.05, 0)));
-pauseButton->setPosition (CEGUI::UVector2(CEGUI::UDim(0,0),CEGUI::UDim(0.15,0)));
-sheet->addChildWindow (pauseButton);
-
-
-
-	scaleText = win->createWindow ("TaharezLook/Button","CEGUIDemo/ScaleText");
-	scaleText->setSize (CEGUI::UVector2(CEGUI::UDim(0.10, 0), CEGUI::UDim(0.02, 0)));	
-	scaleText->setPosition ((CEGUI::UVector2(CEGUI::UDim(0,0),CEGUI::UDim(0.30,0))));
-	sheet->addChildWindow (scaleText);
-
-
-
-
-        mSystem->setGUISheet(sheet);
-
-*/
-
 }
 
 CEGUIManager::~CEGUIManager ()
@@ -225,11 +170,13 @@ bool CEGUIManager::bar(const CEGUI::EventArgs &e)
 bool CEGUIManager::pause (const CEGUI::EventArgs &e)
 {
 	if (paused == false){
-//		pauseButton->setText ("Pause");
+		[viewController setPaused: YES];
 		paused = true;
+		pauseButton->setText ("Resume");
 	}else{
-//		pauseButton->setText ("Resume");
+		[viewController setPaused: NO];
 		paused = false;
+		pauseButton->setText ("Pause");
 	}
 	return true;
 }
@@ -237,7 +184,8 @@ bool CEGUIManager::pause (const CEGUI::EventArgs &e)
 bool CEGUIManager::startSession(const CEGUI::EventArgs &e)
 {
 	[viewController startSession];
-//	start->setVisible (0);
+	pauseButton->setVisible (1);
+	startButton->setVisible (0);
 	return true;
 }
 

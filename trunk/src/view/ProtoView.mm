@@ -397,4 +397,14 @@
         mSceneMgr->getRootSceneNode()->setScale (planeScale,yScale,planeScale);
 }
 
+- (BOOL) paused
+{
+	return paused;
+}
+
+- (void) setPaused: (BOOL) p
+{
+	paused = p;
+}
+
 @end

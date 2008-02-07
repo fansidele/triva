@@ -25,13 +25,13 @@
             <Property Name="Text" Value="Pause" />
             <Property Name="Alpha" Value="0.6" />
             <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
-            <Property Name="UnifiedAreaRect" Value="{{0.005,0},{0.152666,0},{0.1325,0},{0.223344,0}}" />
+            <Property Name="UnifiedAreaRect" Value="{{0.005,0},{0.0782323,0},{0.1325,0},{0.148911,0}}" />
         </Window>
         <Window Type="WindowsLook/Static" Name="yscale" >
             <Property Name="Font" Value="Iconified-12" />
             <Property Name="Alpha" Value="0.6" />
             <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
-            <Property Name="UnifiedAreaRect" Value="{{0.00625,0},{0.232154,0},{0.13125,0},{0.36265,0}}" />
+            <Property Name="UnifiedAreaRect" Value="{{0.00625,0},{0.152866,0},{0.13125,0},{0.283362,0}}" />
             <Window Type="WindowsLook/Button" Name="yscale/in" >
                 <Property Name="Font" Value="Iconified-12" />
                 <Property Name="Text" Value="in" />
@@ -64,7 +64,7 @@
             <Property Name="Alpha" Value="0.6" />
             <Property Name="AlwaysOnTop" Value="True" />
             <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
-            <Property Name="UnifiedAreaRect" Value="{{0.005,0},{0.369579,0},{0.13125,0},{0.506311,0}}" />
+            <Property Name="UnifiedAreaRect" Value="{{0.005,0},{0.287055,0},{0.13125,0},{0.423787,0}}" />
         </Window>
     </Window>
 </GUILayout>

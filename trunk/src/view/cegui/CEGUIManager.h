@@ -16,7 +16,8 @@ class CEGUIManager :
 private:
 	CEGUI::System *mSystem;
 	CEGUI::OgreCEGUIRenderer *mRenderer;
-	CEGUI::Window *start;
+	CEGUI::Window *startButton;
+	CEGUI::Window *quitButton;
 	CEGUI::Window *pauseButton;
 	CEGUI::Window *scaleText;
 	CEGUI::Window *infoPanel;

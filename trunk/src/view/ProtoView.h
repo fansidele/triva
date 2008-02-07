@@ -50,6 +50,8 @@
 	bool containersLabelsAppearance;
 
 	XContainer *root; //not retained (modified in View and in Simulator)
+
+	BOOL paused;
 }
 /* methods called by the application controller (core/ProtoController.mm) */
 - (void) setController: (ProtoController *) controller;
@@ -74,6 +76,9 @@
 - (void) switchContainersLabels;
 - (bool) statesLabelsAppearance;
 - (bool) containersLabelsAppearance;
+
+- (BOOL) paused; //to be called from ProtoController
+- (void) setPaused: (BOOL) p; //to be called from CEGUI 
 @end
 
 @interface ProtoView (Selection)

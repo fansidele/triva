@@ -27,8 +27,10 @@
 		quit = [view refresh];
 
 		if (sessionStarted){
-			if ([reader hasMoreData]){
-				[reader read];
+			if (![view paused]){
+				if ([reader hasMoreData]){
+					[reader read];
+				}
 			}
 		}
 	}
