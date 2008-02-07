@@ -52,6 +52,7 @@
 	XContainer *root; //not retained (modified in View and in Simulator)
 
 	BOOL paused;
+	BOOL movingCamera;
 }
 /* methods called by the application controller (core/ProtoController.mm) */
 - (void) setController: (ProtoController *) controller;
@@ -76,6 +77,7 @@
 - (void) switchContainersLabels;
 - (bool) statesLabelsAppearance;
 - (bool) containersLabelsAppearance;
+- (void) switchMovingCamera;
 
 - (BOOL) paused; //to be called from ProtoController
 - (void) setPaused: (BOOL) p; //to be called from CEGUI 
@@ -95,6 +97,7 @@
 - (void) keyboardV;
 - (void) keyboardL;
 - (void) keyboardK;
+- (void) keyboardM;
 @end
 
 

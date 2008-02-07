@@ -14,12 +14,14 @@ class CEGUIManager :
 	public OIS::MouseListener
 {
 private:
+	CEGUI::Window *root;
+
 	CEGUI::System *mSystem;
 	CEGUI::OgreCEGUIRenderer *mRenderer;
 	CEGUI::Window *startButton;
 	CEGUI::Window *quitButton;
 	CEGUI::Window *pauseButton;
-	CEGUI::Window *moveCameraButton;
+	CEGUI::Checkbox *moveCameraButton;
 	CEGUI::Window *scaleText;
 	CEGUI::Window *infoPanel;
 	bool mShutdown;
@@ -49,6 +51,7 @@ public:
 	bool startSession(const CEGUI::EventArgs &e);
 	bool pause (const CEGUI::EventArgs &e);
 	bool moveCamera (const CEGUI::EventArgs &e);
+	bool keyDown (const CEGUI::EventArgs &e);
 
 	bool scaleval (const CEGUI::EventArgs &e);
 	bool scalein (const CEGUI::EventArgs &e);
@@ -57,6 +60,7 @@ public:
 
 	//To update CEGUI elements
 	void setInfoPanelText (std::string s);
+	void setMoveCameraButton (bool m);
 
 	bool paused;
 };

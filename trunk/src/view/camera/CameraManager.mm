@@ -49,9 +49,6 @@ void CameraManager::createViewport ()
 bool CameraManager::keyPressed (const OIS::KeyEvent &e) 
 { 
 	switch (e.key){
-		case OIS::KC_M:
-			movingCamera = !movingCamera;
-			break;
 		case OIS::KC_E:
 			mDirection.y -= mMove;
 			break;
@@ -164,4 +161,9 @@ void CameraManager::newPositionForCamera (double time)
 {
 	mCamera->setPosition (Ogre::Vector3 (500, time, 500));
 	mCamera->lookAt (Ogre::Vector3 (100,time,100));
+}
+
+void CameraManager::setMovingCamera (bool m)
+{
+	movingCamera = m;
 }

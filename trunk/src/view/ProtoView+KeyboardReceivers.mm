@@ -41,4 +41,11 @@
 {
 	[self switchContainersLabels];
 }
+
+- (void) keyboardM
+{
+	NSLog (@"%s", __FUNCTION__);
+	ceguiManager->setMoveCameraButton (!movingCamera);
+//	[self switchMovingCamera];
+}
 @end

@@ -370,6 +370,17 @@
 	}
 }
 
+- (void) switchMovingCamera
+{
+	NSLog (@"%s", __FUNCTION__);
+	movingCamera = !movingCamera;
+	NSLog (@"\t#1");
+	cameraManager->setMovingCamera (movingCamera);
+	NSLog (@"\t#2");
+//	ceguiManager->setMoveCameraButton (movingCamera);
+	NSLog (@"\t#3");
+}
+
 - (bool) statesLabelsAppearance
 {
 	return statesLabelsAppearance;

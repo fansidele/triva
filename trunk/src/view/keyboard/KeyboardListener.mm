@@ -27,6 +27,9 @@ bool KeyboardListener::keyPressed (const OIS::KeyEvent &e)
 		case OIS::KC_K:
 			[viewController keyboardK];
 			break;
+		case OIS::KC_M:
+			[viewController keyboardM];
+			break;
 /*
 		case OIS::KC_M:
 			break;

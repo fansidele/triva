@@ -40,10 +40,13 @@ CEGUIManager::CEGUIManager (ProtoView *view, Ogre::RenderWindow *mWindow, Ogre::
 	CEGUI::Window* myRoot = win->loadWindowLayout("pilcha.layout");
 	CEGUI::System::getSingleton().setGUISheet(myRoot);
 
+	root = win->getWindow ("root");
 
 	quitButton = win->getWindow ("quit");
 	if (quitButton){
 		quitButton->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&CEGUIManager::quit, this));
+		quitButton->subscribeEvent(CEGUI::Window::EventKeyDown, CEGUI::Event::Subscriber(&CEGUIManager::keyDown, this));
+		quitButton->subscribeEvent(CEGUI::Window::EventActivated, CEGUI::Event::Subscriber(&CEGUIManager::keyDown, this));
 	}
 	startButton = win->getWindow ("start");
 	if (startButton){
@@ -55,7 +58,7 @@ CEGUIManager::CEGUIManager (ProtoView *view, Ogre::RenderWindow *mWindow, Ogre::
 		pauseButton->subscribeEvent(CEGUI::PushButton::EventClicked,
 CEGUI::Event::Subscriber(&CEGUIManager::pause, this));	
 	}
-	moveCameraButton = win->getWindow ("movecamera");
+	moveCameraButton = (CEGUI::Checkbox *)win->getWindow ("movecamera");
 	if (moveCameraButton){
 		moveCameraButton->subscribeEvent (CEGUI::Checkbox::EventCheckStateChanged, CEGUI::Event::Subscriber (&CEGUIManager::moveCamera, this));
 	}
@@ -200,7 +203,21 @@ void CEGUIManager::setInfoPanelText (std::string s)
 
 bool CEGUIManager::moveCamera (const CEGUI::EventArgs &e)
 {
-	std::cout << "oi" << std::endl;
+	[viewController switchMovingCamera];
 	return true;
 }
 
+void CEGUIManager::setMoveCameraButton (bool m)
+{
+	moveCameraButton->setSelected (m);
+}
+
+bool CEGUIManager::keyDown (const CEGUI::EventArgs &e)
+{
+	std::cout << "Key: " << static_cast<const
+CEGUI::KeyEventArgs&>(e).codepoint << std::endl;
+//	CEGUI::KeyEventArgs *x = (CEGUI::KeyEventArgs*) &e;
+//	const CEGUI::KeyEventArgs *x = dynamic_cast<CEGUI::KeyEventArgs>(e);
+//	std::cout << "Key: " << x->codepoint << std::endl;
+	return true;
+}

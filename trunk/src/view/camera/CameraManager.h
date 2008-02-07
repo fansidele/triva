@@ -32,7 +32,7 @@ protected:
 public:
 	void changeCamera ();	
 	void newPositionForCamera (double time);
-	
+	void setMovingCamera (bool m);
 
 private:
 	Ogre::Radian mRotX, mRotY;
