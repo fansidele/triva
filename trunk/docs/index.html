@@ -11,20 +11,21 @@
 <DIV CLASS="header" ID="header">
 <H1>TRIVA</H1>
 <H2>ThRee dimension-Interactive Visualization Analysis</H2>
-<H3>31/01/2008</H3>
+<H3>07/02/2008</H3>
 </DIV>
 
 <DIV CLASS="toc" ID="toc">
   <UL>
   <LI><A HREF="#toc1">TRIVA</A>
     <UL>
-    <LI><A HREF="#toc2">Installation</A>
-    <LI><A HREF="#toc3">Execution</A>
-    <LI><A HREF="#toc4">Downloads</A>
+    <LI><A HREF="#toc2">Binary Installation (Recommended)</A>
+    <LI><A HREF="#toc3">Source Installation</A>
+    <LI><A HREF="#toc4">Execution</A>
+    <LI><A HREF="#toc5">Downloads</A>
     </UL>
-  <LI><A HREF="#toc5">Tracing KAAPI</A>
+  <LI><A HREF="#toc6">Tracing KAAPI</A>
     <UL>
-    <LI><A HREF="#toc6">Synchronization</A>
+    <LI><A HREF="#toc7">Synchronization</A>
     </UL>
   </UL>
 
@@ -37,7 +38,36 @@ TRIVA is a three dimensional interactive visualization analysis tool
 that can be used to visualy analyse trace files from computer applications.
 </P>
 <A NAME="toc2"></A>
-<H2>Installation</H2>
+<H2>Binary Installation (Recommended)</H2>
+<OL>
+<LI>Required packages
+<P></P>
+<PRE>
+$ apt-get install libogre14 libois1 libcegui-mk2-1
+</PRE>
+<P></P>
+<LI>Download the following .deb files
+</OL>
+
+<UL>
+<LI><A HREF="http://www-id.imag.fr/Laboratoire/Membres/Schnorr_Lucas/triva/debs/libpaje_0.5-r17_i386.deb">libpaje_0.5</A>
+<LI><A HREF="http://www-id.imag.fr/Laboratoire/Membres/Schnorr_Lucas/triva/debs/libgenericevent_0.3-r35_i386.deb">libgenericevent_0.3</A>
+<LI><A HREF="http://www-id.imag.fr/Laboratoire/Membres/Schnorr_Lucas/triva/debs/dimvisual_0.7-r150_i386.deb">dimvisual_0.7</A>
+<LI><A HREF="http://www-id.imag.fr/Laboratoire/Membres/Schnorr_Lucas/triva/debs/dimvisual-kaapi_0.1-r128_i386.deb">dimvisual-kaapi_0.1</A>
+<LI><A HREF="http://www-id.imag.fr/Laboratoire/Membres/Schnorr_Lucas/triva/debs/triva_0.1-r16_i386.deb">triva_0.1</A>
+<P></P>
+<LI>Install binary packages
+<P></P>
+<PRE>
+$ dpkg -i libpaje_0.5-r17_i386.deb libgenericevent_0.3-r35_i386.deb
+$ dpkg -i dimvisual_0.7-r150_i386.deb 
+$ dpkg -i dimvisual-kaapi_0.1-r128_i386.deb
+$ dpkg -i triva_0.1-r16_i386.deb
+</PRE>
+</UL>
+
+<A NAME="toc3"></A>
+<H2>Source Installation</H2>
 <P>
 These are instructions to install TRIVA in a deb-like environments, such as
 Debian or Ubuntu. The sources of the requirements can also be
@@ -111,7 +141,7 @@ $ make install
 </PRE>
 </OL>
 
-<A NAME="toc3"></A>
+<A NAME="toc4"></A>
 <H2>Execution</H2>
 <P>
 In order to execute the application, a file named <B>plugins.cfg</B> must
@@ -142,7 +172,7 @@ $ triva -load dimvisual-kaapi.bundle -KAAPI-sync TRACES/timesync \
                                      -KAAPI-file TRACES/sorted*
 </PRE>
 <P></P>
-<A NAME="toc4"></A>
+<A NAME="toc5"></A>
 <H2>Downloads</H2>
 <UL>
 <LI><A HREF="http://www.inf.ufrgs.br/~lmschnorr/downloads/projects/libPaje-0.5.tar.gz">libPaje 0.5</A>
@@ -153,7 +183,7 @@ $ triva -load dimvisual-kaapi.bundle -KAAPI-sync TRACES/timesync \
 <LI><A HREF="http://www-id.imag.fr/Laboratoire/Membres/Schnorr_Lucas/triva/30012008-1320-20np-1th-2cluster-fibo-45.5.tar.gz">30012008-1320-20np-1th-2cluster-fibo-45.5</A> (trace example)
 </UL>
 
-<A NAME="toc5"></A>
+<A NAME="toc6"></A>
 <H1>Tracing KAAPI</H1>
 <P>
 In order to trace a KAAPI application, the library must be configured with
@@ -257,7 +287,7 @@ in the current directory, it is used like this:
 ./sort.sh kaapi-trace/
 </PRE>
 <P></P>
-<A NAME="toc6"></A>
+<A NAME="toc7"></A>
 <H2>Synchronization</H2>
 <P>
 Use <B>rastro_timesync</B> of libRastro in order to synchronize the event
