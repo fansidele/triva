@@ -58,11 +58,15 @@ public:
 	bool scaleout (const CEGUI::EventArgs &e);
 	bool about (const CEGUI::EventArgs &e);
 	bool aboutWindow (const CEGUI::EventArgs &e);
+	bool loadBundle (const CEGUI::EventArgs &e);
 	void updateScale ();
 
 	//To update CEGUI elements
 	void setInfoPanelText (std::string s);
 	void setMoveCameraButton (bool m);
+
+	//bundle related
+	void resetLoadBundleMenu ();
 
 	bool paused;
 };

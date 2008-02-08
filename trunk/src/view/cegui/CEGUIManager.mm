@@ -79,6 +79,7 @@ CEGUI::Event::Subscriber (&CEGUIManager::scaleval, this));
 	win->getWindow ("aboutWindow")->setVisible(0);
 
 	win->getWindow ("exit")->subscribeEvent(CEGUI::PushButton::EventClicked,CEGUI::Event::Subscriber(&CEGUIManager::quit, this));
+	win->getWindow ("loadBundles")->subscribeEvent(CEGUI::PushButton::EventClicked,CEGUI::Event::Subscriber(&CEGUIManager::loadBundle, this));
 
 	this->updateScale ();
 }
@@ -245,4 +246,20 @@ bool CEGUIManager::aboutWindow (const CEGUI::EventArgs &e)
 	CEGUI::Window *about = win->getWindow("aboutWindow");
 	about->setVisible(0);
 	return true;
+}
+
+bool CEGUIManager::loadBundle (const CEGUI::EventArgs &e)
+{
+	return true;
+}
+
+void CEGUIManager::resetLoadBundleMenu ()
+{
+	CEGUI::WindowManager *win = CEGUI::WindowManager::getSingletonPtr();
+	CEGUI::Window *menuLoadBundles = win->getWindow ("loadBundles");
+	unsigned int i;
+	for (i = 0; i < menuLoadBundles->getChildCount(); i++){
+		CEGUI::Window *sub = menuLoadBundles->getChild (i);
+		menuLoadBundles->removeChildWindow (sub);
+	}
 }
