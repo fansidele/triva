@@ -49,7 +49,7 @@ Install them as follows:
 
 ```
 $ dpkg -i libpaje_0.5-r17_i386.deb libgenericevent_0.3-r35_i386.deb
-$ dpkg -i dimvisual_0.7-r150_i386.deb 
+$ dpkg -i dimvisual_0.7-1_i386.deb 
 $ dpkg -i dimvisual-kaapi_0.1-r128_i386.deb
 $ dpkg -i triva_0.1-r16_i386.deb
 ```
