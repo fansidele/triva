@@ -73,6 +73,13 @@ CEGUI::Event::Subscriber (&CEGUIManager::scaleval, this));
 
 	infoPanel = win->getWindow ("info");
 
+	//about
+	CEGUI::Window *about = win->getWindow("about");
+	about->subscribeEvent(CEGUI::PushButton::EventClicked,CEGUI::Event::Subscriber(&CEGUIManager::about, this));
+	win->getWindow ("aboutWindow")->setVisible(0);
+
+	win->getWindow ("exit")->subscribeEvent(CEGUI::PushButton::EventClicked,CEGUI::Event::Subscriber(&CEGUIManager::quit, this));
+
 	this->updateScale ();
 }
 
@@ -219,5 +226,23 @@ CEGUI::KeyEventArgs&>(e).codepoint << std::endl;
 //	CEGUI::KeyEventArgs *x = (CEGUI::KeyEventArgs*) &e;
 //	const CEGUI::KeyEventArgs *x = dynamic_cast<CEGUI::KeyEventArgs>(e);
 //	std::cout << "Key: " << x->codepoint << std::endl;
+	return true;
+}
+
+bool CEGUIManager::about (const CEGUI::EventArgs &e)
+{
+	std::cout << "Key: " << std::endl;
+	CEGUI::WindowManager *win = CEGUI::WindowManager::getSingletonPtr();
+	CEGUI::Window *about = win->getWindow("aboutWindow");
+	about->setVisible(1);
+	about->subscribeEvent(CEGUI::FrameWindow::EventCloseClicked,CEGUI::Event::Subscriber(&CEGUIManager::aboutWindow, this));
+	return true;
+}
+
+bool CEGUIManager::aboutWindow (const CEGUI::EventArgs &e)
+{
+	CEGUI::WindowManager *win = CEGUI::WindowManager::getSingletonPtr();
+	CEGUI::Window *about = win->getWindow("aboutWindow");
+	about->setVisible(0);
 	return true;
 }

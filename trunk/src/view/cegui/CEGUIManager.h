@@ -56,6 +56,8 @@ public:
 	bool scaleval (const CEGUI::EventArgs &e);
 	bool scalein (const CEGUI::EventArgs &e);
 	bool scaleout (const CEGUI::EventArgs &e);
+	bool about (const CEGUI::EventArgs &e);
+	bool aboutWindow (const CEGUI::EventArgs &e);
 	void updateScale ();
 
 	//To update CEGUI elements
