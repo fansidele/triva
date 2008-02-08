@@ -1,4 +1,4 @@
-AC_INIT(triva,25,schnorr@gmail.com,triva)
+AC_INIT(triva,0.1,schnorr@gmail.com,triva)
 #AC_CONFIG_HEADER(config.h)
 
 # check for GNUstep
