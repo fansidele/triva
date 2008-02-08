@@ -4,7 +4,7 @@ ThRee dimension-Interactive Visualization Analysis
 
 %!target: html
 %!options: --css-sugar --mask-email --toc --toc-level=2
-%!style: css/color.css
+%!style: css/modern.css
 %!encoding: iso-8859-1
 
 = TRIVA =
@@ -12,24 +12,40 @@ ThRee dimension-Interactive Visualization Analysis
 TRIVA is a three dimensional interactive visualization analysis tool
 that can be used to visualy analyse trace files from computer applications.
 
-== Binary Installation (Recommended) ==
+== Ubuntu deb Installation (Recommended) ==
 
 + Required packages
+```
+$ apt-get install libogre14 libois1 libcegui-mk2-1 libgraphviz3
+$ apt-get install libcegui-mk2-dev #Bug 93961 in cegui-mk2 (Ubuntu)
+$ apt-get install libffcall1  # for GNUstep
+```
 
++ Installing GNUstep
+GNUstep packages in Ubuntu does not work properly (Please, let me know if you
+were able to get a nice installation of GNUstep using deb packages in Ubuntu).
+Install it using the source, as follows:
 ```
-$ apt-get install libogre14 libois1 libcegui-mk2-1
+$ wget http://ftpmain.gnustep.org/pub/gnustep/core/gnustep-startup-0.18.4.tar.gz
+$ tar xfz gnustep-startup-0.18.4.tar.gz
+$ sudo ./InstallGNUstep
+$ source /usr/GNUstep/System/Makefiles/GNUstep.sh
 ```
+In order to uninstall GNUstep, just delete recursively the /usr/GNUstep
+directory.
 
 + Download the following .deb files
+The following packages work only when the GNUstep is installed as explained
+above.
 
 
 - [libpaje_0.5 http://www-id.imag.fr/Laboratoire/Membres/Schnorr_Lucas/triva/debs/libpaje_0.5-r17_i386.deb]
 - [libgenericevent_0.3 http://www-id.imag.fr/Laboratoire/Membres/Schnorr_Lucas/triva/debs/libgenericevent_0.3-r35_i386.deb]
-- [dimvisual_0.7 http://www-id.imag.fr/Laboratoire/Membres/Schnorr_Lucas/triva/debs/dimvisual_0.7-r150_i386.deb]
+- [dimvisual_0.7 http://www-id.imag.fr/Laboratoire/Membres/Schnorr_Lucas/triva/debs/dimvisual_0.7-1_i386.deb]
 - [dimvisual-kaapi_0.1 http://www-id.imag.fr/Laboratoire/Membres/Schnorr_Lucas/triva/debs/dimvisual-kaapi_0.1-r128_i386.deb]
 - [triva_0.1 http://www-id.imag.fr/Laboratoire/Membres/Schnorr_Lucas/triva/debs/triva_0.1-r16_i386.deb]
 
-+ Install binary packages
+Install them as follows:
 
 ```
 $ dpkg -i libpaje_0.5-r17_i386.deb libgenericevent_0.3-r35_i386.deb
@@ -121,7 +137,7 @@ PluginFolder variable):
 
 ```
 # Define plugin folder (edit here to match your installation)
-PluginFolder=/usr/local/lib/OGRE 
+PluginFolder=/usr/lib/OGRE 
 
 # Define D3D rendering implementation plugin
 Plugin=RenderSystem_GL.so
