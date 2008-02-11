@@ -250,6 +250,7 @@ bool CEGUIManager::aboutWindow (const CEGUI::EventArgs &e)
 
 bool CEGUIManager::loadBundle (const CEGUI::EventArgs &e)
 {
+	std::cout << "oi" << std::endl;
 	return true;
 }
 

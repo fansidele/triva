@@ -100,5 +100,7 @@
 - (void) keyboardM;
 @end
 
+@interface ProtoView (CEGUI)
+@end
 
 #endif
