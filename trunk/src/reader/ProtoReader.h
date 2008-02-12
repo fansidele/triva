@@ -21,7 +21,7 @@
  * The argc,argv parameters are passed in order to initialized the 
  * integrator of DIMVisual
  */
-- (id) initWithArgc: (int) argc andArgv: (char **) argv;
+//- (id) initWithArgc: (int) argc andArgv: (char **) argv;
 @end
 
 #endif

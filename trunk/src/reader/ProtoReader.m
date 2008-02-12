@@ -3,9 +3,10 @@
 #define NUMBER_OF_REVENTS_READ_AT_ONCE 10
 
 @implementation ProtoReader
-- (id) initWithArgc: (int) argc andArgv: (char **) argv
+- (id) init //WithArgc: (int) argc andArgv: (char **) argv
 {
 	self = [super init];
+/*
 	Command *command;
 
 	command = [[Command alloc] initWithArgc: argc andArgv: argv];
@@ -16,32 +17,10 @@
 	if (integrator == nil){
 		return nil;
 	}
+*/
+	integrator = [[IntegratorLib alloc] init];
 	moreData = YES;	
 
-
-/*
-	BundleCenter *b = [[BundleCenter alloc] init];
-	NSLog (@"### LOADBUNDLE => %d",[b loadBundleWithName: @"dimvisual-kaapi.bundle"]);
-
-	dataSource = [[NSClassFromString (@"KAAPIDataSource") alloc] init];
-	NSMutableDictionary *conf = [[NSMutableDictionary alloc] initWithDictionary: [dataSource configuration]];
-	NSArray *files = [NSArray arrayWithObjects:
-@"/home/schnorr/dev/tracage/fibo/cas3/tracefile.0.sorted",
-@"/home/schnorr/dev/tracage/fibo/cas3/tracefile.1.sorted",
-@"/home/schnorr/dev/tracage/fibo/cas3/tracefile.2.sorted",nil];
-	NSString *sync = @"/home/schnorr/dev/tracage/fibo/cas3/timesync";
-	NSString *machine = @"/home/schnorr/dev/tracage/fibo/cas3/machine";
-	[[conf objectForKey: @"parameters"] setObject: files forKey: @"file"];
-	[[conf objectForKey: @"parameters"] setObject: sync forKey: @"sync"];
-	[[conf objectForKey: @"parameters"] setObject: machine forKey: @"machine"];
-
-	NSLog (@"%@", conf);
-	dataSource = [dataSource initWithConfiguration: conf provider: nil];
-	if (dataSource == nil){
-		NSLog (@"dataSource is nil");
-		exit(1);
-	}
-*/
 	return self;
 }
 
@@ -120,5 +99,25 @@
 - (id) hierarchy
 {
 	return [integrator hierarchy];
+}
+
+- (NSArray *) dimvisualBundlesAvailable
+{
+	NSLog (@"%s", __FUNCTION__);
+	return [integrator dimvisualBundlesAvailable];
+}
+
+- (BOOL) isDIMVisualBundleLoaded: (NSString *) name
+{
+	return [integrator isDIMVisualBundleLoaded: name];
+}
+
+- (BOOL) loadDIMVisualBundle: (NSString *) bundleName
+{
+	return [integrator loadDIMVisualBundle: bundleName];
+}
+- (NSDictionary *) getConfigurationOptionsFromDIMVisualBundle: (NSString *)name
+{
+	return [integrator getConfigurationOptionsFromDIMVisualBundle: name];
 }
 @end

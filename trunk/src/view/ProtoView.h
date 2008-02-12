@@ -101,6 +101,9 @@
 @end
 
 @interface ProtoView (CEGUI)
+- (void) loadBundles;
+- (void) loadBundleNamed: (NSString *) bundleName;
+- (void) optionValue: (NSString *) bValue optionNamed: (NSString *) bOption ofBundle: (NSString *) bName;
 @end
 
 #endif

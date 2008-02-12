@@ -29,11 +29,15 @@
 - (NSDictionary *) newLinksBetweenContainers;
 - (NSDictionary *) hierarchyOrganization; /* for graphviz with subgraph supp */
 - (XObject *) objectWithIdentifier: (NSString *) identifier;
+- (NSArray *) dimvisualBundlesAvailable;
+- (BOOL) isDIMVisualBundleLoaded: (NSString *) name;
+- (NSDictionary *) getConfigurationOptionsFromDIMVisualBundle: (NSString *)name;
 @end
 
 @interface ProtoComponent (Commands)
 /* Commands: messages from (visualization) to (data sources) */
 - (void) read; //for ProtoReader
+- (BOOL) loadDIMVisualBundle: (NSString *) bundleName;
 @end
 
 @interface ProtoComponent (Notifications)

@@ -60,4 +60,20 @@
 {
 	return [input objectWithIdentifier: identifier];
 }
+
+- (NSArray *) dimvisualBundlesAvailable
+{
+	NSLog (@"%s %@ input=%@", __FUNCTION__,self,input);
+	return [input dimvisualBundlesAvailable];
+}
+
+- (BOOL) isDIMVisualBundleLoaded: (NSString *) name
+{
+	return [input isDIMVisualBundleLoaded: name];
+}
+
+- (NSDictionary *) getConfigurationOptionsFromDIMVisualBundle: (NSString *)name
+{
+	return [input getConfigurationOptionsFromDIMVisualBundle: name];
+}
 @end

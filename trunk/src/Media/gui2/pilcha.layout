@@ -85,12 +85,13 @@
                 <Property Name="UnifiedAreaRect" Value="{{0,7},{0,0},{0,85},{0,23}}" />
                 <Property Name="VerticalAlignment" Value="Centre" />
                 <Window Type="WindowsLook/PopupMenu" Name="root//Item1/AutoPopup" >
+                    <Property Name="Visible" Value="False" />
                     <Property Name="FadeInTime" Value="0" />
                     <Property Name="FadeOutTime" Value="0" />
                     <Property Name="ItemSpacing" Value="2" />
                     <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
                     <Property Name="ClippedByParent" Value="False" />
-                    <Property Name="UnifiedAreaRect" Value="{{0,0},{0,23},{0,36},{0,52.1349}}" />
+                    <Property Name="UnifiedAreaRect" Value="{{0,0},{0,23},{0,36},{0,52.7605}}" />
                     <Property Name="AutoResizeEnabled" Value="True" />
                     <Window Type="WindowsLook/MenuItem" Name="exit" >
                         <Property Name="Font" Value="Iconified-12" />
@@ -104,29 +105,47 @@
                 <Property Name="Font" Value="Iconified-12" />
                 <Property Name="Text" Value="Load Bundles" />
                 <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
-                <Property Name="UnifiedAreaRect" Value="{{0,137},{0,0},{0,230},{0,23}}" />
+                <Property Name="UnifiedAreaRect" Value="{{0,95},{0,0},{0,188},{0,23}}" />
                 <Property Name="VerticalAlignment" Value="Centre" />
-            </Window>
-            <Window Type="WindowsLook/MenuItem" Name="help" >
-                <Property Name="Font" Value="Iconified-12" />
-                <Property Name="Text" Value="Help" />
-                <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
-                <Property Name="UnifiedAreaRect" Value="{{0,95},{0,0},{0,127},{0,23}}" />
-                <Property Name="VerticalAlignment" Value="Centre" />
-                <Window Type="WindowsLook/PopupMenu" Name="root//Item14/AutoPopup" >
+                <Window Type="WindowsLook/PopupMenu" Name="loadBundlesAutoPopup" >
                     <Property Name="Visible" Value="False" />
                     <Property Name="FadeInTime" Value="0" />
                     <Property Name="FadeOutTime" Value="0" />
                     <Property Name="ItemSpacing" Value="2" />
                     <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
                     <Property Name="ClippedByParent" Value="False" />
-                    <Property Name="UnifiedAreaRect" Value="{{0,0},{0,23},{0,61},{0,52.7504}}" />
+                    <Property Name="UnifiedAreaRect" Value="{{0,0},{0,23},{0,6},{0,28.6193}}" />
+                    <Property Name="AutoResizeEnabled" Value="True" />
+                </Window>
+            </Window>
+            <Window Type="WindowsLook/MenuItem" Name="help" >
+                <Property Name="Font" Value="Iconified-12" />
+                <Property Name="Text" Value="Help" />
+                <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
+                <Property Name="UnifiedAreaRect" Value="{{0,198},{0,0},{0,230},{0,23}}" />
+                <Property Name="VerticalAlignment" Value="Centre" />
+                <Window Type="WindowsLook/PopupMenu" Name="root//Item14/AutoPopup" >
+                    <Property Name="FadeInTime" Value="0" />
+                    <Property Name="FadeOutTime" Value="0" />
+                    <Property Name="ItemSpacing" Value="2" />
+                    <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
+                    <Property Name="ClippedByParent" Value="False" />
+                    <Property Name="UnifiedAreaRect" Value="{{0,0},{0,23},{0,61},{0,52.376}}" />
                     <Property Name="AutoResizeEnabled" Value="True" />
                     <Window Type="WindowsLook/MenuItem" Name="about" >
                         <Property Name="Font" Value="Iconified-12" />
                         <Property Name="Text" Value="About..." />
                         <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
                         <Property Name="UnifiedAreaRect" Value="{{0,3},{0,3},{0,58},{0,26}}" />
+                        <Window Type="WindowsLook/PopupMenu" Name="about/AutoPopup" >
+                            <Property Name="FadeInTime" Value="0" />
+                            <Property Name="FadeOutTime" Value="0" />
+                            <Property Name="ItemSpacing" Value="2" />
+                            <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
+                            <Property Name="ClippedByParent" Value="False" />
+                            <Property Name="UnifiedAreaRect" Value="{{0,0},{0,0},{0,6},{0,6}}" />
+                            <Property Name="AutoResizeEnabled" Value="True" />
+                        </Window>
                     </Window>
                 </Window>
             </Window>
@@ -137,7 +156,7 @@
             <Property Name="TitlebarFont" Value="Iconified-12" />
             <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
             <Property Name="TitlebarEnabled" Value="True" />
-            <Property Name="UnifiedAreaRect" Value="{{0.43,0},{0.321358,0},{0.677501,0},{0.574596,0}}" />
+            <Property Name="UnifiedAreaRect" Value="{{0.23625,0},{0.119093,0},{0.483751,0},{0.372331,0}}" />
             <Window Type="WindowsLook/StaticText" Name="root/" >
                 <Property Name="Font" Value="Iconified-12" />
                 <Property Name="Text" >TRIVA - ThRee dimensional

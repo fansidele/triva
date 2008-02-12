@@ -67,7 +67,30 @@ public:
 
 	//bundle related
 	void resetLoadBundleMenu ();
+	void addBundleMenu (std::string newentry);
+	bool loadBundleItem (const CEGUI::EventArgs &e);
 
+	//CEGUIManager+BundleWindow
+	CEGUI::Window *getWindow (std::string name);
+/*
+	CEGUI::Window *getBundleWindow ();
+	CEGUI::Window *getComboBundleWindow ();
+	CEGUI::Window *getPaneBundleWindow ();
+	bool configureBundleWindow();
+	bool showBundleWindow(const CEGUI::EventArgs &e);
+	bool showBundleWindow();
+	bool hideBundleWindow (const CEGUI::EventArgs &e);
+	bool hideBundleWindow ();
+*/
+	bool bundleMenuOption (const CEGUI::EventArgs &e);
+	bool addMenuNamed (std::string bundleName);
+	bool addSubMenu (std::string bundleName, std::string option, id val);
+	bool addDictionarySubMenu (id val, std::string optionName, CEGUI::PopupMenu* p);
+
+
+
+
+	//other
 	bool paused;
 };
 

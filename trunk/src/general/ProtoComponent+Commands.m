@@ -5,4 +5,9 @@
 {
 	[input read];
 }
+
+- (BOOL) loadDIMVisualBundle: (NSString *) bundleName
+{
+	return [input loadDIMVisualBundle: bundleName];
+}
 @end

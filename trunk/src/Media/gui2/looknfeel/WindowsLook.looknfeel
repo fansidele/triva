@@ -1662,6 +1662,7 @@
         <PropertyDefinition name="PushedColour" initialValue="FF87A7DF" redrawOnWrite="true" />
         <PropertyDefinition name="PushedOffColour" initialValue="7F87A7DF" redrawOnWrite="true" />
         <PropertyDefinition name="OpenedColour" initialValue="FFEFEFEF" redrawOnWrite="true" />
+        <PropertyDefinition name="SelectedColour" initialValue="F0FF0000" redrawOnWrite="true" />
         <Property name="WantsMultiClickEvents" value="False" />
         <NamedArea name="ContentSize">
             <Area>
@@ -1857,6 +1858,13 @@
                 </Section>
             </Layer>
         </StateImagery>
+        <StateImagery name="EnabledSelected">
+            <Layer>
+                <Section section="label">
+                    <ColourProperty name="SelectedColour" />
+                </Section>
+            </Layer>
+        </StateImagery>
         <StateImagery name="DisabledNormal">
             <Layer>
                 <Section section="label">
@@ -1893,6 +1901,13 @@
                 <Section section="frame" />
                 <Section section="label">
                     <ColourProperty name="DisabledTextColour" />
+                </Section>
+            </Layer>
+        </StateImagery>
+        <StateImagery name="DisabledSelected">
+            <Layer>
+                <Section section="label">
+                    <ColourProperty name="DisabledSelectedColour" />
                 </Section>
             </Layer>
         </StateImagery>

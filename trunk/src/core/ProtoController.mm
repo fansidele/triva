@@ -5,17 +5,20 @@
 {
 	self = [super init];
 
+/*
 	if (argc > 1){
 		reader = [[ProtoReader alloc] initWithArgc: argc andArgv: argv];
 		if (reader == nil){
 			return nil;
 		}
 	}
+*/
 
 	view = [[ProtoView alloc] init];
 	[view setController: self];
 
-
+	[self startSession: nil];
+	
 	quit = NO;
 	sessionStarted = NO;
 	return self;
@@ -54,16 +57,13 @@
 	[self endSession];
 
 	/* create them */
-	//reader = [[ProtoReader alloc] init]; already created
+	reader = [[ProtoReader alloc] init];
 	simulator = [[OgreProtoSimulator alloc] init];
-	//memory = [[ProtoMemory alloc] init];
 
 	/* connect them */
 	[reader setOutput: simulator];
 	[simulator setInput: reader];
 	[simulator setOutput: view];
-//	[memory setInput: simulator];
-//	[memory setOutput: view];
 	[view setInput: simulator];
 
 	NSLog (@"%s", __FUNCTION__);

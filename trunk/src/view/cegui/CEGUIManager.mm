@@ -78,7 +78,10 @@ CEGUI::Event::Subscriber (&CEGUIManager::scaleval, this));
 	about->subscribeEvent(CEGUI::PushButton::EventClicked,CEGUI::Event::Subscriber(&CEGUIManager::about, this));
 	win->getWindow ("aboutWindow")->setVisible(0);
 
+	//exit
 	win->getWindow ("exit")->subscribeEvent(CEGUI::PushButton::EventClicked,CEGUI::Event::Subscriber(&CEGUIManager::quit, this));
+
+	//load bundles
 	win->getWindow ("loadBundles")->subscribeEvent(CEGUI::PushButton::EventClicked,CEGUI::Event::Subscriber(&CEGUIManager::loadBundle, this));
 
 	this->updateScale ();
@@ -250,17 +253,38 @@ bool CEGUIManager::aboutWindow (const CEGUI::EventArgs &e)
 
 bool CEGUIManager::loadBundle (const CEGUI::EventArgs &e)
 {
-	std::cout << "oi" << std::endl;
+	this->resetLoadBundleMenu();
+	[viewController loadBundles];
+	CEGUI::PopupMenu* popupMenu = (CEGUI::PopupMenu*)CEGUI::WindowManager::getSingleton().getWindow("loadBundlesAutoPopup");
+	return true;
+}
+
+bool CEGUIManager::loadBundleItem (const CEGUI::EventArgs &e)
+{
+	CEGUI::WindowEventArgs *x = (CEGUI::WindowEventArgs *)&e;
+	CEGUI::MenuItem *m = (CEGUI::MenuItem*)x->window;
+	[viewController loadBundleNamed: [NSString stringWithFormat: @"%s",
+m->getText().c_str()]];
 	return true;
 }
 
 void CEGUIManager::resetLoadBundleMenu ()
 {
 	CEGUI::WindowManager *win = CEGUI::WindowManager::getSingletonPtr();
-	CEGUI::Window *menuLoadBundles = win->getWindow ("loadBundles");
+	CEGUI::Window *menuLoadBundles = win->getWindow ("loadBundlesAutoPopup");
 	unsigned int i;
 	for (i = 0; i < menuLoadBundles->getChildCount(); i++){
 		CEGUI::Window *sub = menuLoadBundles->getChild (i);
 		menuLoadBundles->removeChildWindow (sub);
 	}
 }
+
+void CEGUIManager::addBundleMenu (std::string newentry)
+{
+	CEGUI::PopupMenu* popupMenu = (CEGUI::PopupMenu*)CEGUI::WindowManager::getSingleton().getWindow("loadBundlesAutoPopup");
+	CEGUI::Window* menuitem = CEGUI::WindowManager::getSingleton().createWindow("WindowsLook/MenuItem");
+	menuitem->setText (newentry);
+	menuitem->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&CEGUIManager::loadBundleItem, this));
+	popupMenu->addChildWindow(menuitem);
+}
+
