@@ -85,13 +85,16 @@ public:
 	bool bundleMenuOption (const CEGUI::EventArgs &e);
 	bool addMenuNamed (std::string bundleName);
 	bool addSubMenu (std::string bundleName, std::string option, id val);
-	bool addDictionarySubMenu (id val, std::string optionName, CEGUI::PopupMenu* p);
-
-
-
+	bool setSubMenu (std::string bundleName, std::string option, id val);
 
 	//other
 	bool paused;
+
+private:
+	bool addSubMenu (std::string optionName, CEGUI::PopupMenu* optionPopupMenu, id val);
+	bool addDictionarySubMenu (id val, std::string optionName, CEGUI::PopupMenu* p);
+	bool addArraySubMenu (id val, std::string optionName, CEGUI::PopupMenu* p);
+	bool addStringSubMenu (id val, std::string optionName, CEGUI::PopupMenu* p);
 };
 
 #include "view/ProtoView.h"

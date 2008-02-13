@@ -43,9 +43,16 @@
 
 	//HACK (while CEGUI does not offer a easy way to create GUI
 	NSMutableDictionary *thisBundleConf = [bundlesConfiguration objectForKey: bundleName];
-	[thisBundleConf setObject: [applicationController syncfile] forKey: @"sync"];
-	[thisBundleConf setObject: [applicationController tracefile] forKey: @"files"];
-	NSLog (@"thisBundleConf = %@", thisBundleConf);
+	NSString *k = @"sync";
+	[thisBundleConf setObject: [applicationController syncfile] forKey: k];
+	
+	std::string optionNameStr = [k cString];
+	ceguiManager->setSubMenu (bundleNameStr, optionNameStr, (id)[applicationController syncfile]);
+
+	k = @"files";	
+	optionNameStr = [k cString];
+	[thisBundleConf setObject: [applicationController tracefile] forKey: k];
+	ceguiManager->setSubMenu (bundleNameStr, optionNameStr, (id)[applicationController tracefile]);
 	//EOH
 }
 

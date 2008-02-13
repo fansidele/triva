@@ -71,6 +71,34 @@ bool CEGUIManager::addMenuNamed (std::string bundleName)
 	return true;
 }
 
+bool CEGUIManager::addStringSubMenu (id val, std::string optionName, CEGUI::PopupMenu* p)
+{
+	std::string a = [val cString];
+	if (a.empty()){
+		return false;
+	}
+
+	std::string subOptionName = optionName;
+	subOptionName.append ("#");
+	subOptionName.append(a);
+
+	CEGUI::MenuItem *suboptionitem = (CEGUI::MenuItem *) CEGUI::WindowManager::getSingleton().createWindow("WindowsLook/MenuItem", subOptionName);
+	suboptionitem->setText ([val cString]);
+	suboptionitem->subscribeEvent(CEGUI::PushButton::EventClicked,CEGUI::Event::Subscriber(&CEGUIManager::bundleMenuOption, this));
+	p->addChildWindow (suboptionitem);
+	return true;
+}
+
+bool CEGUIManager::addArraySubMenu (id val, std::string optionName, CEGUI::PopupMenu* p)
+{
+	unsigned int i;
+	NSArray *ar = (NSArray *)val;
+	for (i = 0; i < [ar count]; i++){
+		this->addStringSubMenu ([ar objectAtIndex: i], optionName, p);
+	}
+	return true;
+}
+
 bool CEGUIManager::addDictionarySubMenu (id val, std::string optionName, CEGUI::PopupMenu* p)
 {
 
@@ -88,7 +116,6 @@ bool CEGUIManager::addDictionarySubMenu (id val, std::string optionName, CEGUI::
 		std::string kstr = optionName;
 		kstr.append("#");
 		kstr.append([k cString]);
-		std::cout << kstr << std::endl;
 	
 		
 		CEGUI::MenuItem *menuitem = (CEGUI::MenuItem *) CEGUI::WindowManager::getSingleton().createWindow("WindowsLook/MenuItem", kstr);
@@ -131,23 +158,7 @@ bool CEGUIManager::addSubMenu (std::string bundleName, std::string option, id va
 	CEGUI::PopupMenu* optionPopupMenu = (CEGUI::PopupMenu*) CEGUI::WindowManager::getSingleton().createWindow("WindowsLook/PopupMenu", optionPopupName);
 	menuitem->addChildWindow (optionPopupMenu);
 
-	if ([val isKindOf: [NSSet class]]){
-		unsigned int i;
-		NSArray *ar = [val allObjects];
-		for (i = 0; i < [ar count]; i++){
-			std::string subOptionName = optionName;
-			subOptionName.append ("#");
-			subOptionName.append([[ar objectAtIndex: i] cString]);
-			
-
-			CEGUI::MenuItem *suboptionitem = (CEGUI::MenuItem *) CEGUI::WindowManager::getSingleton().createWindow("WindowsLook/MenuItem", subOptionName);
-			suboptionitem->setText ([[ar objectAtIndex: i] cString]);
-			suboptionitem->subscribeEvent(CEGUI::PushButton::EventClicked,CEGUI::Event::Subscriber(&CEGUIManager::bundleMenuOption, this));
-			optionPopupMenu->addChildWindow (suboptionitem);
-		}
-	}else if ([val isKindOf: [NSDictionary class]]){
-		this->addDictionarySubMenu (val, optionName, optionPopupMenu);
-	}
+	this->addSubMenu (optionName, optionPopupMenu, val);
 	return true;
 }
 
@@ -159,9 +170,7 @@ CEGUI::WindowEventArgs&>(e);
 	CEGUI::MenuItem *m = (CEGUI::MenuItem*) &we.window;
 
 	NSString *str = [NSString stringWithFormat: @"%s",we.window->getName().c_str()];
-	NSLog (@"str = %@", str);
 	NSArray *ar = [str componentsSeparatedByString: @"#"];
-	NSLog (@"ar = %@", ar);
 	NSString *bundle = [ar objectAtIndex: 0];
 	NSString *option = [ar objectAtIndex: 1];
 	NSString *value = [ar lastObject];
@@ -170,3 +179,38 @@ CEGUI::WindowEventArgs&>(e);
 	return true;
 }
 
+bool CEGUIManager::setSubMenu (std::string bundleName, std::string option, id val)
+{
+	std::string optionName = bundleName;
+	optionName.append ("#");
+	optionName.append (option);
+
+	std::string optionPopupName = optionName;
+	optionPopupName.append ("Popup");
+
+
+	CEGUI::PopupMenu* optionPopupMenu;
+	optionPopupMenu = (CEGUI::PopupMenu*)this->getWindow (optionPopupName);
+
+	if (optionPopupMenu == NULL){
+		return false;
+	}
+	this->addSubMenu (optionName, optionPopupMenu, val);
+	return true;
+}
+
+
+bool CEGUIManager::addSubMenu (std::string optionName, CEGUI::PopupMenu* optionPopupMenu, id val)
+{
+	if ([val isKindOf: [NSSet class]]){
+		NSArray *ar = [val allObjects];
+		this->addArraySubMenu((id)ar, optionName, optionPopupMenu);
+	}else if ([val isKindOf: [NSDictionary class]]){
+		this->addDictionarySubMenu (val, optionName, optionPopupMenu);
+	}else if ([val isKindOf: [NSString class]]){
+		this->addStringSubMenu (val, optionName, optionPopupMenu);
+	}else if ([val isKindOf: [NSArray class]]){
+		this->addArraySubMenu (val, optionName, optionPopupMenu);
+	}
+	return true;
+}
