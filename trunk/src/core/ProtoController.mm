@@ -48,6 +48,9 @@
 	[memory release];
 	[simulator release];
 	[reader release];
+
+	[tracefile release];
+	[syncfile release];
 	[super dealloc];
 }
 
@@ -93,5 +96,27 @@
 {
 	NSLog (@"############################################");
 	NSLog (@"%s", __FUNCTION__);
+}
+
+- (void) setSyncfile: (NSString *) f
+{
+	syncfile = f;
+	[syncfile retain];
+}
+
+- (void) setTracefile: (NSArray *) a
+{
+	tracefile = a;
+	[tracefile retain];
+}
+
+- (NSString *) syncfile
+{
+	return syncfile;
+}
+
+- (NSArray *) tracefile
+{
+	return tracefile;
 }
 @end

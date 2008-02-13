@@ -16,9 +16,19 @@
 
 	BOOL sessionStarted;
 	BOOL quit;
+
+	NSString *syncfile;
+	NSArray *tracefile;
 }
 - (void) start;
 - (id) initWithArgc: (int) argc andArgv: (char **) argv;
+
+//HACK (workaround to receive trace file names as parameters, instead of using
+//a GUI that does not exist)
+- (void) setSyncfile: (NSString *) f;
+- (void) setTracefile: (NSArray *) a;
+- (NSString *) syncfile;
+- (NSArray *) tracefile;
 
 /* Commands: originated in the view component */
 - (BOOL) startSession: (NSDictionary *) description;

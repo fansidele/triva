@@ -53,6 +53,8 @@ int main(int argc, char *argv[])
 	exit(1);
 
 	ProtoController *controller = [[ProtoController alloc] initWithArgc: (int) argc andArgv: (char **) argv];
+	[controller setSyncfile: tsStr];
+	[controller setTracefile: tfAr];
 	if (controller != nil){
 		[controller start];
 		[controller release];
