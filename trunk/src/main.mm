@@ -5,7 +5,7 @@
 
 int main(int argc, char *argv[])
 {
-	struct arg_file *syncfile = arg_file1("s", "sync", "<FILE>", "timesync file");
+	struct arg_file *syncfile = arg_file0("s", "sync", "<FILE>", "timesync file");
 	struct arg_lit *help = arg_lit0(NULL,"help","print this help and exit");
 	struct arg_lit *version = arg_lit0(NULL,"version","print version information and exit");
 	struct arg_file *traces = arg_filen(NULL, NULL, "FILE", 1, 5000, NULL);
@@ -43,14 +43,18 @@ int main(int argc, char *argv[])
 	}
 
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-	NSString *tsStr = [NSString stringWithFormat: @"%s",syncfile->filename[0]];
+
+	NSString *tsStr;
+	if (syncfile->count != 0){
+		tsStr= [NSString stringWithFormat: @"%s",syncfile->filename[0]];
+	}else{
+		tsStr= @"NONE";
+	}
 	int i;
 	NSMutableArray *tfAr = [NSMutableArray array];
 	for (i = 0; i < traces->count; i++){
 		[tfAr addObject: [NSString stringWithFormat: @"%s",traces->filename[i]]];
 	}
-	NSLog (@"timesync = %@, tracefiles = %@", tsStr, tfAr);
-	exit(1);
 
 	ProtoController *controller = [[ProtoController alloc] initWithArgc: (int) argc andArgv: (char **) argv];
 	[controller setSyncfile: tsStr];
