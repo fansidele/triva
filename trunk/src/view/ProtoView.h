@@ -53,6 +53,9 @@
 
 	BOOL paused;
 	BOOL movingCamera;
+
+	//to keep bundles configuration
+	NSMutableDictionary *bundlesConfiguration;
 }
 /* methods called by the application controller (core/ProtoController.mm) */
 - (void) setController: (ProtoController *) controller;

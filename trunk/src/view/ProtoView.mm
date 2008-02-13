@@ -138,7 +138,8 @@
 
 
 	mSceneMgr->getRootSceneNode()->setScale (planeScale,yScale,planeScale);
-	
+
+	bundlesConfiguration = [[NSMutableDictionary alloc] init];	
 
 	return self;
 }
@@ -155,6 +156,7 @@
 	delete mInputMgr;
 	delete mRoot;
 	[applicationController release];
+	[bundlesConfiguration release];
 	[super dealloc];
 }
 
