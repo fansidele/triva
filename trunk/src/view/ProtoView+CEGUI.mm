@@ -28,8 +28,8 @@
 	}
 
 	unsigned int i;
-	NSDictionary *conf = [[super getConfigurationOptionsFromDIMVisualBundle:
-bundleName] objectForKey: @"parameters"];
+	NSDictionary *conf = [[super getConfigurationOptionsFromDIMVisualBundle: bundleName] objectForKey: @"parameters"];
+
 	NSArray *keys = [conf allKeys];
 	for (i = 0; i < [keys count]; i++){
 		NSString *key = [keys objectAtIndex: i];
@@ -38,6 +38,15 @@ bundleName] objectForKey: @"parameters"];
 		ceguiManager->addSubMenu (bundleNameStr, keyStr, val);
 //		NSLog (@"key = %@, %@", [keys objectAtIndex: i], [conf objectForKey: [keys objectAtIndex: i]]);
 	}
+
+	[bundlesConfiguration setObject: [NSMutableDictionary dictionaryWithDictionary: conf] forKey: bundleName];
+
+	//HACK (while CEGUI does not offer a easy way to create GUI
+	NSMutableDictionary *thisBundleConf = [bundlesConfiguration objectForKey: bundleName];
+	[thisBundleConf setObject: [applicationController syncfile] forKey: @"sync"];
+	[thisBundleConf setObject: [applicationController tracefile] forKey: @"files"];
+	NSLog (@"thisBundleConf = %@", thisBundleConf);
+	//EOH
 }
 
 - (void) optionValue: (NSString *) bValue optionNamed: (NSString *) bOption ofBundle: (NSString *) bName
