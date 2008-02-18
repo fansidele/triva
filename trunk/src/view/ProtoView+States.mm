@@ -3,20 +3,26 @@
 @implementation ProtoView (States)
 - (void) applicationIsConfigured
 {
+#ifndef TRIVAWXWIDGETS
 	ceguiManager->setControlButtonText ("Start");
 	ceguiManager->showControlWindow();
+#endif
 }
 
 - (void) applicationIsRunning
 {
+#ifndef TRIVAWXWIDGETS
 	ceguiManager->setControlButtonText ("Pause");
+#endif
 	[applicationController startSession];
 	root = [super root];
 }
 
 - (void) applicationIsPaused
 {
+#ifndef TRIVAWXWIDGETS
 	ceguiManager->setControlButtonText ("Resume");
+#endif
 }
 
 - (void) setState: (ProtoApplicationState) newState

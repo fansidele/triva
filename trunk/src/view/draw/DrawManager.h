@@ -51,6 +51,6 @@ private:
 	Ogre::AnimationState *mAnimationState;
 };
 
-#include "view/ProtoView.h"
+//#include "view/ProtoView.h"
 #include "view/draw/position/Position.h"
 #endif

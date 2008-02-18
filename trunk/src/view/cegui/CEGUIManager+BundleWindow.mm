@@ -1,5 +1,7 @@
 #include "CEGUIManager.h"
 
+#ifndef TRIVAWXWIDGETS
+
 CEGUI::Window *CEGUIManager::getWindow (std::string name)
 {
 	CEGUI::WindowManager *win = CEGUI::WindowManager::getSingletonPtr();
@@ -214,3 +216,6 @@ bool CEGUIManager::addSubMenu (std::string optionName, CEGUI::PopupMenu* optionP
 	}
 	return true;
 }
+
+#endif //TRIVAWXWIDGETS
+

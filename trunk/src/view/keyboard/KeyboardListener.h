@@ -27,5 +27,5 @@ public:
 	~KeyboardListener (){};
 };
 
-#include "view/ProtoView.h"
+//#include "view/ProtoView.h"
 #endif

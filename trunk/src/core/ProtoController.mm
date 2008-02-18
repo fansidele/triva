@@ -1,5 +1,7 @@
 #include "ProtoController.h"
 
+#ifndef TRIVAWXWIDGETS
+
 @implementation ProtoController
 - (id) initWithArgc: (int) argc andArgv: (char **) argv
 {
@@ -120,3 +122,15 @@
 	return tracefile;
 }
 @end
+
+#else //TRIVAWXWIDGETS
+
+IMPLEMENT_APP(ProtoController);
+
+bool ProtoController::OnInit()
+{
+
+	return true;
+}
+
+#endif //TRIVAWXWIDGETS

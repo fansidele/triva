@@ -1,5 +1,7 @@
 #include "CEGUIManager.h"
 
+#ifndef TRIVAWXWIDGETS
+
 void CEGUIManager::configureControlWindow ()
 {
 	//callbacks
@@ -102,3 +104,5 @@ bool CEGUIManager::showControlWindow ()
 	var->setVisible(1);
 	return true;
 }
+
+#endif

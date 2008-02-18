@@ -11,7 +11,16 @@ LIBS="-L/usr/lib/"
 AC_LANG_CPLUSPLUS
 AC_PROG_CXX
 #AM_PROG_LIBTOOL
-$
+
+
+AC_ARG_ENABLE(wxwidgets,
+	[AS_HELP_STRING([--enable-wxwidgets],[build with wxwidgets as GUI])],
+	[ if test "$enable_wxwidgets" = "yes"; then
+		CPPFLAGS="$CPPFLAGS -DTRIVAWXWIDGETS"
+	  fi
+	]
+)
+
 PKG_CHECK_MODULES(OGRE, [OGRE >= 1.4])
 CPPFLAGS="$CPPFLAGS $OGRE_CFLAGS"
 LIBS="$LIBS $OGRE_LIBS"

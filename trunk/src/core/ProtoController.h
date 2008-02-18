@@ -1,11 +1,14 @@
 #ifndef __PROTOCONTROLLER_H
 #define __PROTOCONTROLLER_H
+
+#ifndef TRIVAWXWIDGETS
+
 #include <Foundation/Foundation.h>
-#include <AppKit/AppKit.h>
 #include "reader/ProtoReader.h"
 #include "ogre-simulator/OgreProtoSimulator.h"
 #include "memory/ProtoMemory.h"
 #include "view/ProtoView.h"
+
 
 @interface ProtoController : NSObject
 {
@@ -35,5 +38,19 @@
 - (BOOL) endSession;
 //- (void) applicationWillFinishLaunching: (NSNotification *)not;
 @end
+
+
+#else // TRIVAWXWIDGETS
+
+#include <wx/wxprec.h>
+#include <wx/wx.h>
+
+class ProtoController : public wxApp
+{
+	public:
+		virtual bool OnInit();
+};
+
+#endif // TRIVAWXWIDGETS
 
 #endif

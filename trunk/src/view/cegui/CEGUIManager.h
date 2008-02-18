@@ -1,6 +1,8 @@
 #ifndef __CEGUI_MANAGER_H
 #define __CEGUI_MANAGER_H
 
+#ifndef TRIVAWXWIDGETS
+
 #include <Ogre.h>
 #include <OIS.h>
 #include <CEGUI.h>
@@ -97,5 +99,7 @@ private:
 };
 
 #include "view/ProtoView.h"
+
+#endif //TRIVAWXWIDGETS
 
 #endif

@@ -12,7 +12,7 @@
 #include "view/mouse/MouseListener.h"
 #include "view/draw/DrawManager.h"
 #include "view/exit/ExitManager.h"
-#include "core/ProtoController.h"
+//#include "core/ProtoController.h"
 #include "ogre-simulator/XObject.h"
 
 @class ProtoController;
@@ -29,7 +29,9 @@ enum ProtoApplicationState {Initialized,Configured,Running,Paused};
 
 	CameraManager *cameraManager;
 	AmbientManager *ambientManager;
+#ifndef TRIVAWXWIDGETS
 	CEGUIManager *ceguiManager;
+#endif
 	DrawManager *drawManager;
 	ExitManager *exitManager;
 	KeyboardListener *keyboardListener;
@@ -104,11 +106,13 @@ enum ProtoApplicationState {Initialized,Configured,Running,Paused};
 - (void) keyboardM;
 @end
 
+#ifndef TRIVAWXWIDGETS
 @interface ProtoView (CEGUI)
 - (void) loadBundles;
 - (void) loadBundleNamed: (NSString *) bundleName;
 - (void) optionValue: (NSString *) bValue optionNamed: (NSString *) bOption ofBundle: (NSString *) bName;
 @end
+#endif
 
 @interface ProtoView (States)
 - (void) setState: (enum ProtoApplicationState) newState;

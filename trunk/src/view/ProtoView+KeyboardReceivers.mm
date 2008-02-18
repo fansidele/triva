@@ -45,7 +45,9 @@
 - (void) keyboardM
 {
 	NSLog (@"%s", __FUNCTION__);
+#ifndef TRIVAWXWIDGETS
 	ceguiManager->setMoveCameraButton (!movingCamera);
+#endif
 //	[self switchMovingCamera];
 }
 @end

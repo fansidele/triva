@@ -97,11 +97,13 @@
 	ambientManager = new AmbientManager ();
 	mRoot->addFrameListener (ambientManager);
 
+#ifndef TRIVAWXWIDGETS
         //Create CEGUIManager
         ceguiManager = new CEGUIManager (self, mWindow, mSceneMgr);
         mInputMgr->addKeyListener (ceguiManager, "CEGUIManager");
         mInputMgr->addMouseListener (ceguiManager, "CEGUIManager");
         mRoot->addFrameListener (ceguiManager);
+#endif
 
 	//Create DrawManager
 	drawManager = new DrawManager (self);
@@ -276,7 +278,9 @@
 	}else{
 		planeScale += planeScaleChangeFactor;
 	}
+#ifndef TRIVAWXWIDGETS
 	ceguiManager->updateScale ();
+#endif
 	mSceneMgr->getRootSceneNode()->setScale (planeScale,yScale,planeScale);
 }
 
@@ -306,7 +310,9 @@
 			planeScale += planeScaleChangeFactor;
 		}
 	}
+#ifndef TRIVAWXWIDGETS
 	ceguiManager->updateScale ();
+#endif
 	mSceneMgr->getRootSceneNode()->setScale (planeScale,yScale,planeScale);
 }
 
@@ -408,7 +414,9 @@
 - (void) setYScale: (double) y
 {
 	yScale = y;
+#ifndef TRIVAWXWIDGETS
 	ceguiManager->updateScale ();
+#endif
         mSceneMgr->getRootSceneNode()->setScale (planeScale,yScale,planeScale);
 }
 @end

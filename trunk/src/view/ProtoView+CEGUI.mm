@@ -1,5 +1,7 @@
 #include "ProtoView.h"
 
+#ifndef TRIVAWXWIDGETS
+
 @implementation ProtoView (CEGUI)
 - (void) loadBundles
 {
@@ -68,3 +70,5 @@ bundleName] objectForKey: @"parameters"]];
 
 }
 @end
+
+#endif

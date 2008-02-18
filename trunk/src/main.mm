@@ -1,3 +1,5 @@
+#ifndef TRIVAWXWIDGETS
+
 #include <Foundation/Foundation.h>
 #include "general/ProtoComponent.h"
 #include "core/ProtoController.h"
@@ -66,3 +68,5 @@ int main(int argc, char *argv[])
 	[pool release];
 	return 0;
 }
+
+#endif

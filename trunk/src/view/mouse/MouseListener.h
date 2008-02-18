@@ -1,8 +1,10 @@
 #ifndef __MOUSELISTENER_H
 #define __MOUSELISTENER_H
 
+#include <Foundation/Foundation.h>
 #include <Ogre.h>
 #include <OIS.h>
+#include "view/QueryFlags.h"
 
 @class ProtoView;
 
@@ -30,5 +32,5 @@ public:
 	~MouseListener ();
 };
 
-#include "view/ProtoView.h"
+//#include "view/ProtoView.h"
 #endif

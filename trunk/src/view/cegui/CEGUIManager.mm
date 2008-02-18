@@ -1,5 +1,7 @@
 #include "CEGUIManager.h"
 
+#ifndef TRIVAWXWIDGETS
+
 static CEGUI::MouseButton convertButton(int buttonID)
 {   
         using namespace OIS; 
@@ -169,3 +171,4 @@ void CEGUIManager::addBundleMenu (std::string newentry)
 	popupMenu->addChildWindow(menuitem);
 }
 
+#endif //TRIVAWXWIDGETS
