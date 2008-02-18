@@ -8,9 +8,9 @@ SUBPROJECT_NAME=reader
 reader_OBJC_FILES=ProtoReader.m
 reader_OBJCC_FILES=
 
-reader_INCLUDE_DIRS += -I../ -I./
-reader_LIB_DIRS += 
-reader_LDFLAGS += 
+reader_INCLUDE_DIRS += @CPPFLAGS@
+reader_LIB_DIRS += @LIBS@
+reader_LDFLAGS += @LDFLAGS@
 
 include $(GNUSTEP_MAKEFILES)/subproject.make
 

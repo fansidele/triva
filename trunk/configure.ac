@@ -11,25 +11,51 @@ LIBS="-L/usr/lib/"
 AC_LANG_CPLUSPLUS
 AC_PROG_CXX
 #AM_PROG_LIBTOOL
-
+$
 PKG_CHECK_MODULES(OGRE, [OGRE >= 1.4])
-AC_SUBST(OGRE_CFLAGS)
-AC_SUBST(OGRE_LIBS)
+CPPFLAGS="$CPPFLAGS $OGRE_CFLAGS"
+LIBS="$LIBS $OGRE_LIBS"
 
 PKG_CHECK_MODULES(OIS, OIS >= 1.0.0, [ois_found=yes],[ois_found=no])
-AC_SUBST(OIS_CFLAGS)
-AC_SUBST(OIS_LIBS)
+CPPFLAGS="$CPPFLAGS $OIS_CFLAGS"
+LIBS="$LIBS $OIS_LIBS"
 
 PKG_CHECK_MODULES(CEGUI, CEGUI >= 0.5.0, [cegui_found=yes],[cegui_found=no])
-AC_SUBST(CEGUI_CFLAGS)
 CEGUI_LIBS="$CEGUI_LIBS -lCEGUIOgreRenderer"
-AC_SUBST(CEGUI_LIBS)
+CPPFLAGS="$CPPFLAGS $CEGUI_CFLAGS"
+LIBS="$LIBS $CEGUI_LIBS"
 
 #PKG_CHECK_MODULES(GVC,GVC >= 3.0, [gvc_found=yes],[gvc_found=no])
 GVC_CFLAGS="-I/usr/include/graphviz"
 GVC_LIBS="-L/usr/lib -lgvc"
-AC_SUBST(GVC_CFLAGS)
-AC_SUBST(GVC_LIBS)
+CPPFLAGS="$CPPFLAGS $GVC_CFLAGS"
+LIBS="$LIBS $GVC_LIBS"
+
+PKG_CHECK_MODULES(GTK, gtk+-2.0)
+
+AM_OPTIONS_WXCONFIG
+reqwx=2.8.0
+AM_PATH_WXCONFIG($reqwx, wxWin=1)
+if test "$wxWin" != 1; then
+	AC_MSG_ERROR([
+		wxWidgets must be installed on your system.
+ 
+		Please check that wx-config is in path, the directory
+		where wxWidgets libraries are installed (returned by
+		'wx-config --libs' or 'wx-config --static --libs' command)
+		is in LD_LIBRARY_PATH or equivalent variable and
+		wxWidgets version is $reqwx or above.
+		])
+fi
+ 
+CPPFLAGS="$CPPFLAGS $WX_CPPFLAGS"
+CXXFLAGS="$CXXFLAGS $WX_CXXFLAGS_ONLY"
+CFLAGS="$CFLAGS $WX_CFLAGS_ONLY"
+LIBS="$LIBS $WX_LIBS"
+
+CPPFLAGS="-I../../ -I../ -I./ $CPPFLAGS"
+AC_SUBST(CPPFLAGS)
+AC_SUBST(LIBS)
 
 AC_CONFIG_FILES(GNUmakefile 
 src/GNUmakefile 

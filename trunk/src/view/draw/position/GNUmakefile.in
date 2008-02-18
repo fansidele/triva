@@ -8,8 +8,8 @@ SUBPROJECT_NAME=position
 position_OBJC_FILES= Position.m PositionGraphviz.m
 position_OBJCC_FILES=
 
-position_INCLUDE_DIRS += @GVC_CFLAGS@
-position_LIB_DIRS += @GVC_LIBS@
+position_INCLUDE_DIRS += @CPPFLAGS@
+position_LIB_DIRS += @LIBS@
 position_LDFLAGS += @LDFLAGS@
 
 include $(GNUSTEP_MAKEFILES)/subproject.make

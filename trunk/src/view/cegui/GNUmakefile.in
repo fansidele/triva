@@ -8,8 +8,8 @@ SUBPROJECT_NAME=cegui
 cegui_OBJC_FILES=
 cegui_OBJCC_FILES=CEGUIManager.mm CEGUIManager+BundleWindow.mm CEGUIManager+ControlWindow.mm
 
-cegui_INCLUDE_DIRS += -I../../ -I../ -I./ @OGRE_CFLAGS@ @OIS_CFLAGS@ @CEGUI_CFLAGS@ @GVC_CFLAGS@
-cegui_LIB_DIRS += @OGRE_LIBS@ @OIS_LIBS@ @CEGUI_LIBS@ @GVC_LIBS@
+cegui_INCLUDE_DIRS += @CPPFLAGS@ 
+cegui_LIB_DIRS += @LIBS@ 
 cegui_LDFLAGS += @LDFLAGS@
 
 include $(GNUSTEP_MAKEFILES)/subproject.make

@@ -8,9 +8,9 @@ SUBPROJECT_NAME=general
 general_OBJC_FILES=ProtoComponent.m ProtoComponent+Queries.m ProtoComponent+Commands.m ProtoComponent+Notifications.m BundleCenter.m
 general_OBJCC_FILES=
 
-general_INCLUDE_DIRS += -I../
-general_LIB_DIRS += 
-general_LDFLAGS += 
+general_INCLUDE_DIRS += @CPPFLAGS@
+general_LIB_DIRS += @LIBS@
+general_LDFLAGS += @LDFLAGS@
 
 include $(GNUSTEP_MAKEFILES)/subproject.make
 

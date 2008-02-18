@@ -8,8 +8,8 @@ SUBPROJECT_NAME=exit
 exit_OBJC_FILES=
 exit_OBJCC_FILES=ExitManager.mm
 
-exit_INCLUDE_DIRS += -I../../ -I../ -I./ @OGRE_CFLAGS@ @OIS_CFLAGS@ @CEGUI_CFLAGS@ @GVC_CFLAGS@
-exit_LIB_DIRS += @OGRE_LIBS@ @OIS_LIBS@ @CEGUI_LIBS@ @GVC_LIBS@
+exit_INCLUDE_DIRS += @CPPFLAGS@
+exit_LIB_DIRS += @LIBS@
 exit_LDFLAGS += @LDFLAGS@
 
 include $(GNUSTEP_MAKEFILES)/subproject.make

@@ -2,15 +2,15 @@
 #
 include $(GNUSTEP_MAKEFILES)/common.make
 
-CC=$(CXX)
-
-SUBPROJECT_NAME=reader
-reader_OBJC_FILES=ProtoMemory.m
-reader_OBJCC_FILES=
-
-reader_INCLUDE_DIRS += -I../ -I./
-reader_LIB_DIRS += 
-reader_LDFLAGS += 
+#CC=$(CXX)
+#
+#SUBPROJECT_NAME=memory
+#memory_OBJC_FILES=ProtoMemory.m
+#memory_OBJCC_FILES=
+#
+#memory_INCLUDE_DIRS += -I../ -I./
+#memory_LIB_DIRS += 
+#memory_LDFLAGS += 
 
 include $(GNUSTEP_MAKEFILES)/subproject.make
 
