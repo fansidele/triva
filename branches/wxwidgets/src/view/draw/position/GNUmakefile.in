@@ -1,0 +1,19 @@
+#GNUSTEP_INSTALLATION_DOMAIN = USER
+#
+include $(GNUSTEP_MAKEFILES)/common.make
+
+CC=$(CXX)
+
+SUBPROJECT_NAME=position
+position_OBJC_FILES= Position.m PositionGraphviz.m
+position_OBJCC_FILES=
+
+position_INCLUDE_DIRS += @CPPFLAGS@
+position_LIB_DIRS += @LIBS@
+position_LDFLAGS += @LDFLAGS@
+
+include $(GNUSTEP_MAKEFILES)/subproject.make
+
+after-distclean::
+after-all::
+after-clean:: 

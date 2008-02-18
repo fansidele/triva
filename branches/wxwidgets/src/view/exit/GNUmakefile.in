@@ -1,0 +1,19 @@
+#GNUSTEP_INSTALLATION_DOMAIN = USER
+#
+include $(GNUSTEP_MAKEFILES)/common.make
+
+CC=$(CXX)
+
+SUBPROJECT_NAME=exit
+exit_OBJC_FILES=
+exit_OBJCC_FILES=ExitManager.mm
+
+exit_INCLUDE_DIRS += @CPPFLAGS@
+exit_LIB_DIRS += @LIBS@
+exit_LDFLAGS += @LDFLAGS@
+
+include $(GNUSTEP_MAKEFILES)/subproject.make
+
+after-distclean::
+after-all::
+after-clean:: 

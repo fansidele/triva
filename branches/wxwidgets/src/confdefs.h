@@ -1,0 +1,5 @@
+#define PACKAGE_NAME "triva"
+#define PACKAGE_TARNAME "triva"
+#define PACKAGE_VERSION "25"
+#define PACKAGE_STRING "triva 25"
+#define PACKAGE_BUGREPORT "schnorr@gmail.com"
