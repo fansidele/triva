@@ -32,6 +32,7 @@
 - (NSArray *) dimvisualBundlesAvailable;
 - (BOOL) isDIMVisualBundleLoaded: (NSString *) name;
 - (NSDictionary *) getConfigurationOptionsFromDIMVisualBundle: (NSString *)name;
+- (BOOL) setConfiguration: (NSDictionary *) conf forDIMVisualBundle: (NSString *) name;
 @end
 
 @interface ProtoComponent (Commands)

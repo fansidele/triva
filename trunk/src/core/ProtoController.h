@@ -30,8 +30,8 @@
 - (NSString *) syncfile;
 - (NSArray *) tracefile;
 
-/* Commands: originated in the view component */
-- (BOOL) startSession: (NSDictionary *) description;
+/* Commands: just to see (initialized|notinitialized) */
+- (BOOL) startSession;
 - (BOOL) endSession;
 //- (void) applicationWillFinishLaunching: (NSNotification *)not;
 @end

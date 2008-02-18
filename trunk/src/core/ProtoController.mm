@@ -17,7 +17,7 @@
 	view = [[ProtoView alloc] init];
 	[view setController: self];
 
-	[self startSession: nil];
+	[self startSession];
 	
 	quit = NO;
 	sessionStarted = NO;
@@ -30,7 +30,7 @@
 		quit = [view refresh];
 
 		if (sessionStarted){
-			if (![view paused]){
+			if (![view isPaused]){
 				if ([reader hasMoreData]){
 					[reader read];
 				}
@@ -54,7 +54,7 @@
 	[super dealloc];
 }
 
-- (BOOL) startSession: (NSDictionary *) description
+- (BOOL) startSession
 {
 	/* destroy previous */
 	[self endSession];

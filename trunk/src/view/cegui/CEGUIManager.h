@@ -14,16 +14,8 @@ class CEGUIManager :
 	public OIS::MouseListener
 {
 private:
-	CEGUI::Window *root;
-
 	CEGUI::System *mSystem;
 	CEGUI::OgreCEGUIRenderer *mRenderer;
-	CEGUI::Window *startButton;
-	CEGUI::Window *quitButton;
-	CEGUI::Window *pauseButton;
-	CEGUI::Checkbox *moveCameraButton;
-	CEGUI::Window *scaleText;
-	CEGUI::Window *infoPanel;
 	bool mShutdown;
 
 	ProtoView *viewController;
@@ -46,29 +38,36 @@ public:
 	bool mouseMoved( const OIS::MouseEvent &e );
 
 	//For CEGUI Event Callbacks
-	bool bar(const CEGUI::EventArgs &e);
 	bool quit(const CEGUI::EventArgs &e);
-	bool startSession(const CEGUI::EventArgs &e);
-	bool pause (const CEGUI::EventArgs &e);
-	bool moveCamera (const CEGUI::EventArgs &e);
-	bool keyDown (const CEGUI::EventArgs &e);
-
-	bool scaleval (const CEGUI::EventArgs &e);
-	bool scalein (const CEGUI::EventArgs &e);
-	bool scaleout (const CEGUI::EventArgs &e);
 	bool about (const CEGUI::EventArgs &e);
 	bool aboutWindow (const CEGUI::EventArgs &e);
 	bool loadBundle (const CEGUI::EventArgs &e);
-	void updateScale ();
+
+	//control window related
 
 	//To update CEGUI elements
-	void setInfoPanelText (std::string s);
-	void setMoveCameraButton (bool m);
 
 	//bundle related
 	void resetLoadBundleMenu ();
 	void addBundleMenu (std::string newentry);
 	bool loadBundleItem (const CEGUI::EventArgs &e);
+
+	//CEGUIManager+ControlWindow
+	void configureControlWindow();
+	bool moveCamera (const CEGUI::EventArgs &e);
+	bool scaleval (const CEGUI::EventArgs &e);
+	bool scalein (const CEGUI::EventArgs &e);
+	bool scaleout (const CEGUI::EventArgs &e);
+	void updateScale ();
+	void setInfoPanelText (std::string s);
+	void setMoveCameraButton (bool m);
+	bool controlButton(const CEGUI::EventArgs &e);
+	void setControlButtonText (std::string s);
+	bool hideControlWindow ();
+	bool hideControlWindow (const CEGUI::EventArgs &e);
+	bool showControlWindow ();
+	bool showControlWindow (const CEGUI::EventArgs &e);
+	
 
 	//CEGUIManager+BundleWindow
 	CEGUI::Window *getWindow (std::string name);
@@ -88,7 +87,7 @@ public:
 	bool setSubMenu (std::string bundleName, std::string option, id val);
 
 	//other
-	bool paused;
+//	bool paused;
 
 private:
 	bool addSubMenu (std::string optionName, CEGUI::PopupMenu* optionPopupMenu, id val);

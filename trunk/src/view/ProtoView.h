@@ -17,6 +17,8 @@
 
 @class ProtoController;
 
+enum ProtoApplicationState {Initialized,Configured,Running,Paused};
+
 @interface ProtoView  : ProtoComponent
 {
 	Ogre::Root *mRoot;
@@ -56,6 +58,8 @@
 
 	//to keep bundles configuration
 	NSMutableDictionary *bundlesConfiguration;
+
+	ProtoApplicationState applicationState;
 }
 /* methods called by the application controller (core/ProtoController.mm) */
 - (void) setController: (ProtoController *) controller;
@@ -81,9 +85,6 @@
 - (bool) statesLabelsAppearance;
 - (bool) containersLabelsAppearance;
 - (void) switchMovingCamera;
-
-- (BOOL) paused; //to be called from ProtoController
-- (void) setPaused: (BOOL) p; //to be called from CEGUI 
 @end
 
 @interface ProtoView (Selection)
@@ -107,6 +108,13 @@
 - (void) loadBundles;
 - (void) loadBundleNamed: (NSString *) bundleName;
 - (void) optionValue: (NSString *) bValue optionNamed: (NSString *) bOption ofBundle: (NSString *) bName;
+@end
+
+@interface ProtoView (States)
+- (void) setState: (enum ProtoApplicationState) newState;
+- (enum ProtoApplicationState) currentState;
+- (void) controlButton;
+- (BOOL) isPaused;
 @end
 
 #endif

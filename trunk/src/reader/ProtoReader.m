@@ -120,4 +120,9 @@
 {
 	return [integrator getConfigurationOptionsFromDIMVisualBundle: name];
 }
+
+- (BOOL) setConfiguration: (NSDictionary *) conf forDIMVisualBundle: (NSString *) name
+{
+	return [integrator setConfiguration: conf forDIMVisualBundle: name];
+}
 @end

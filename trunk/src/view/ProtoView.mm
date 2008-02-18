@@ -141,6 +141,7 @@
 
 	bundlesConfiguration = [[NSMutableDictionary alloc] init];	
 
+	[self setState: Initialized];
 	return self;
 }
 
@@ -242,12 +243,13 @@
 	drawManager->updateContainersPositions();
 }
 
+/*
 - (void) startSession
 {
-	/* TODO: how do we obtain which files to open */
 	[applicationController startSession: nil];
 	root = [super root];
 }
+*/
 
 - (XContainer *) root
 {
@@ -260,7 +262,7 @@
 - (BOOL) hasMoreData
 {
 //	NSLog (@"%s", __FUNCTION__);
-	if (ceguiManager->paused == true){
+	if (applicationState == Paused){
 		return NO;
 	}else{
 		return [super hasMoreData];
@@ -409,15 +411,4 @@
 	ceguiManager->updateScale ();
         mSceneMgr->getRootSceneNode()->setScale (planeScale,yScale,planeScale);
 }
-
-- (BOOL) paused
-{
-	return paused;
-}
-
-- (void) setPaused: (BOOL) p
-{
-	paused = p;
-}
-
 @end

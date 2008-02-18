@@ -76,4 +76,9 @@
 {
 	return [input getConfigurationOptionsFromDIMVisualBundle: name];
 }
+
+- (BOOL) setConfiguration: (NSDictionary *) conf forDIMVisualBundle: (NSString *) name
+{
+	return [input setConfiguration: conf forDIMVisualBundle: name];
+}
 @end

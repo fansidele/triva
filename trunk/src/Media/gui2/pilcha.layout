@@ -5,74 +5,6 @@
         <Property Name="InheritsAlpha" Value="False" />
         <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
         <Property Name="UnifiedAreaRect" Value="{{0,0},{0,0},{1,0},{1,0}}" />
-        <Window Type="WindowsLook/Button" Name="quit" >
-            <Property Name="Font" Value="Iconified-12" />
-            <Property Name="Text" Value="Quit" />
-            <Property Name="Alpha" Value="0.6" />
-            <Property Name="Tooltip" Value="Click to exit" />
-            <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
-            <Property Name="UnifiedAreaRect" Value="{{0.00375,0},{0.00597704,0},{0.13125,0},{0.0766556,0}}" />
-        </Window>
-        <Window Type="WindowsLook/Button" Name="start" >
-            <Property Name="Font" Value="Iconified-12" />
-            <Property Name="Text" Value="Start" />
-            <Property Name="Alpha" Value="0.6" />
-            <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
-            <Property Name="UnifiedAreaRect" Value="{{0.005,0},{0.0768934,0},{0.1325,0},{0.147572,0}}" />
-        </Window>
-        <Window Type="WindowsLook/Button" Name="pause" >
-            <Property Name="Font" Value="Iconified-12" />
-            <Property Name="Text" Value="Pause" />
-            <Property Name="Alpha" Value="0.6" />
-            <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
-            <Property Name="UnifiedAreaRect" Value="{{0.005,0},{0.0798504,0},{0.1325,0},{0.150529,0}}" />
-        </Window>
-        <Window Type="WindowsLook/Static" Name="yscale" >
-            <Property Name="Font" Value="Iconified-12" />
-            <Property Name="Alpha" Value="0.6" />
-            <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
-            <Property Name="UnifiedAreaRect" Value="{{0.00625,0},{0.152866,0},{0.13125,0},{0.283362,0}}" />
-            <Window Type="WindowsLook/Button" Name="yscale/in" >
-                <Property Name="Font" Value="Iconified-12" />
-                <Property Name="Text" Value="in" />
-                <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
-                <Property Name="UnifiedAreaRect" Value="{{0.626139,0},{0.338397,0},{0.936139,0},{0.589889,0}}" />
-            </Window>
-            <Window Type="WindowsLook/Button" Name="yscale/out" >
-                <Property Name="Font" Value="Iconified-12" />
-                <Property Name="Text" Value="out" />
-                <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
-                <Property Name="UnifiedAreaRect" Value="{{0.627228,0},{0.599591,0},{0.937228,0},{0.903969,0}}" />
-            </Window>
-            <Window Type="WindowsLook/Editbox" Name="yscale/val" >
-                <Property Name="Font" Value="Iconified-12" />
-                <Property Name="Text" Value="0" />
-                <Property Name="MaxTextLength" Value="1073741823" />
-                <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
-                <Property Name="UnifiedAreaRect" Value="{{0.06,0},{0.32775,0},{0.59,0},{0.891178,0}}" />
-            </Window>
-            <Window Type="WindowsLook/StaticText" Name="yscale/" >
-                <Property Name="Font" Value="Iconified-12" />
-                <Property Name="Text" Value="time scale" />
-                <Property Name="HorzFormatting" Value="HorzCentred" />
-                <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
-                <Property Name="UnifiedAreaRect" Value="{{0.08,0},{0.0512025,0},{0.93,0},{0.301202,0}}" />
-            </Window>
-        </Window>
-        <Window Type="WindowsLook/Titlebar" Name="info" >
-            <Property Name="Font" Value="Iconified-12" />
-            <Property Name="Alpha" Value="0.6" />
-            <Property Name="AlwaysOnTop" Value="True" />
-            <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
-            <Property Name="UnifiedAreaRect" Value="{{0.005,0},{0.287055,0},{0.13125,0},{0.423787,0}}" />
-        </Window>
-        <Window Type="WindowsLook/Checkbox" Name="movecamera" >
-            <Property Name="Font" Value="Iconified-12" />
-            <Property Name="Text" Value="Move Camera" />
-            <Property Name="Alpha" Value="0.6" />
-            <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
-            <Property Name="UnifiedAreaRect" Value="{{0.0075,0},{0.421036,0},{0.128748,0},{0.462298,0}}" />
-        </Window>
         <Window Type="WindowsLook/Menubar" Name="menu" >
             <Property Name="Font" Value="Iconified-12" />
             <Property Name="ItemSpacing" Value="10" />
@@ -91,7 +23,7 @@
                     <Property Name="ItemSpacing" Value="2" />
                     <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
                     <Property Name="ClippedByParent" Value="False" />
-                    <Property Name="UnifiedAreaRect" Value="{{0,0},{0,23},{0,36},{0,52.7605}}" />
+                    <Property Name="UnifiedAreaRect" Value="{{0,0},{0,23},{0,36},{0,52.6669}}" />
                     <Property Name="AutoResizeEnabled" Value="True" />
                     <Window Type="WindowsLook/MenuItem" Name="exit" >
                         <Property Name="Font" Value="Iconified-12" />
@@ -125,19 +57,21 @@
                 <Property Name="UnifiedAreaRect" Value="{{0,198},{0,0},{0,230},{0,23}}" />
                 <Property Name="VerticalAlignment" Value="Centre" />
                 <Window Type="WindowsLook/PopupMenu" Name="root//Item14/AutoPopup" >
+                    <Property Name="Visible" Value="False" />
                     <Property Name="FadeInTime" Value="0" />
                     <Property Name="FadeOutTime" Value="0" />
                     <Property Name="ItemSpacing" Value="2" />
                     <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
                     <Property Name="ClippedByParent" Value="False" />
-                    <Property Name="UnifiedAreaRect" Value="{{0,0},{0,23},{0,61},{0,52.376}}" />
+                    <Property Name="UnifiedAreaRect" Value="{{0,0},{0,23},{0,76},{0,52.2824}}" />
                     <Property Name="AutoResizeEnabled" Value="True" />
                     <Window Type="WindowsLook/MenuItem" Name="about" >
                         <Property Name="Font" Value="Iconified-12" />
                         <Property Name="Text" Value="About..." />
                         <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
-                        <Property Name="UnifiedAreaRect" Value="{{0,3},{0,3},{0,58},{0,26}}" />
+                        <Property Name="UnifiedAreaRect" Value="{{0,3},{0,3},{0,73},{0,26}}" />
                         <Window Type="WindowsLook/PopupMenu" Name="about/AutoPopup" >
+                            <Property Name="Visible" Value="False" />
                             <Property Name="FadeInTime" Value="0" />
                             <Property Name="FadeOutTime" Value="0" />
                             <Property Name="ItemSpacing" Value="2" />
@@ -166,6 +100,67 @@ Analysis
 Lucas.Schnorr@imag.fr</Property>
                 <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
                 <Property Name="UnifiedAreaRect" Value="{{0.002,4},{0.200082,0},{0.968911,0},{0.97444,0}}" />
+            </Window>
+        </Window>
+        <Window Type="WindowsLook/FrameWindow" Name="controlWindow" >
+            <Property Name="Font" Value="Iconified-12" />
+            <Property Name="Text" Value="Controls" />
+            <Property Name="TitlebarFont" Value="Iconified-12" />
+            <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
+            <Property Name="TitlebarEnabled" Value="True" />
+            <Property Name="UnifiedAreaRect" Value="{{0.0175,0},{0.0737861,0},{0.1725,0},{0.511489,0}}" />
+            <Window Type="WindowsLook/Button" Name="controlButton" >
+                <Property Name="Font" Value="Iconified-12" />
+                <Property Name="Text" Value="Anything" />
+                <Property Name="Alpha" Value="0.6" />
+                <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
+                <Property Name="UnifiedAreaRect" Value="{{0.0376445,0},{0.113862,0},{0.955126,0},{0.299042,0}}" />
+            </Window>
+            <Window Type="WindowsLook/Static" Name="yscale" >
+                <Property Name="Font" Value="Iconified-12" />
+                <Property Name="Alpha" Value="0.6" />
+                <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
+                <Property Name="UnifiedAreaRect" Value="{{0.0388942,0},{0.315426,0},{0.948629,0},{0.639488,0}}" />
+                <Window Type="WindowsLook/Button" Name="yscale/in" >
+                    <Property Name="Font" Value="Iconified-12" />
+                    <Property Name="Text" Value="in" />
+                    <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
+                    <Property Name="UnifiedAreaRect" Value="{{0.626139,0},{0.338397,0},{0.936139,0},{0.589889,0}}" />
+                </Window>
+                <Window Type="WindowsLook/Button" Name="yscale/out" >
+                    <Property Name="Font" Value="Iconified-12" />
+                    <Property Name="Text" Value="out" />
+                    <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
+                    <Property Name="UnifiedAreaRect" Value="{{0.627228,0},{0.599591,0},{0.937228,0},{0.903969,0}}" />
+                </Window>
+                <Window Type="WindowsLook/Editbox" Name="yscale/val" >
+                    <Property Name="Font" Value="Iconified-12" />
+                    <Property Name="Text" Value="0" />
+                    <Property Name="MaxTextLength" Value="1073741823" />
+                    <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
+                    <Property Name="UnifiedAreaRect" Value="{{0.06,0},{0.32775,0},{0.59,0},{0.891178,0}}" />
+                </Window>
+                <Window Type="WindowsLook/StaticText" Name="yscale/" >
+                    <Property Name="Font" Value="Iconified-12" />
+                    <Property Name="Text" Value="time scale" />
+                    <Property Name="HorzFormatting" Value="HorzCentred" />
+                    <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
+                    <Property Name="UnifiedAreaRect" Value="{{0.08,0},{0.0512025,0},{0.93,0},{0.301202,0}}" />
+                </Window>
+            </Window>
+            <Window Type="WindowsLook/Titlebar" Name="info" >
+                <Property Name="Font" Value="Iconified-12" />
+                <Property Name="Alpha" Value="0.6" />
+                <Property Name="AlwaysOnTop" Value="True" />
+                <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
+                <Property Name="UnifiedAreaRect" Value="{{0.0432781,0},{0.652106,0},{0.951445,0},{0.888654,0}}" />
+            </Window>
+            <Window Type="WindowsLook/Checkbox" Name="movecamera" >
+                <Property Name="Font" Value="Iconified-12" />
+                <Property Name="Text" Value="Move Camera" />
+                <Property Name="Alpha" Value="0.6" />
+                <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
+                <Property Name="UnifiedAreaRect" Value="{{0.0514119,0},{0.894195,0},{0.963414,0},{0.979819,0}}" />
             </Window>
         </Window>
     </Window>
