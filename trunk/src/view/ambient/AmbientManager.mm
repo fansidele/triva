@@ -9,8 +9,6 @@ AmbientManager::AmbientManager ()
 	mRoot = Ogre::Root::getSingletonPtr();
 	mSceneMgr = mRoot->getSceneManager("VisuSceneManager");
 
-	std::cout << "mSceneMgr at AmbientManager: " << mSceneMgr << std::endl;
-
 	/* Creating main object (to receive all Y transformations) 
 		All others visual objects will be attached to it
 	*/
@@ -21,7 +19,6 @@ AmbientManager::AmbientManager ()
 	origin.setZAxis (new ZAxis (size, 1, &origin));
 	origin.setGround (new Ground (size, 1, &origin));
 
-	
 
 	//mSceneMgr->getRootSceneNode()->setScale (1,1,1);
 	//mSceneMgr->setAmbientLight(Ogre::ColourValue::White);

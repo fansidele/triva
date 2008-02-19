@@ -179,45 +179,28 @@
 	NSLog (@"mediaPath = %@", mediaPath);
 
 	[fm changeCurrentDirectoryPath: mediaPath];
-	//[self setupResources];
+	[self setupResources];
 	[fm changeCurrentDirectoryPath: currentPath];
 
-	if (!mRoot->restoreConfig()) {
-		if (!mRoot->showConfigDialog()) {
-			return false;
-		}
-	}
-	mWindow = mRoot->initialise(false, "AA");
+	mRoot->setRenderSystem (mRoot->getRenderSystemByName ("OpenGL Rendering Subsystem"));
+
+	mRoot->initialise(false);
 
 
-
-	[self createSceneManager];
-	NSLog (@"mSceneMgr = %p", mSceneMgr);
 	return YES;
 }
 
 - (BOOL) step4: (Ogre::RenderWindow*) win
 {
 	mWindow = win;
-	NSLog (@"mWindow = %p", mWindow);
-	//Create CameraManager
-	NSLog (@"initializating cameraManager");
+
 	cameraManager = new CameraManager (win);
 //	mInputMgr->addKeyListener (cameraManager, "CameraManager");
 //	mInputMgr->addMouseListener (cameraManager, "CameraManager");
 	mRoot->addFrameListener (cameraManager);
 
-	Ogre::Entity *ent = mSceneMgr->createEntity("Lucas", Ogre::SceneManager::PT_CUBE);
-	NSLog (@"entity = %p", ent);
-	ent->setMaterialName ("VisuApp/RUNNING");
-	mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(ent);
+	Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
 
-        //Setup Input
-//        mInputMgr = VisuInputManager::getSingletonPtr();
-//        mInputMgr->initialise (mWindow);
-//        mRoot->addFrameListener (mInputMgr);
-
-/*
 
 	//Create AmbientManager
 	NSLog (@"initializating ambientManager");
@@ -225,9 +208,9 @@
 	mRoot->addFrameListener (ambientManager);
 
 	//Create DrawManager
+	NSLog (@"initializating drawManager");
 	drawManager = new DrawManager (self);
         mRoot->addFrameListener (drawManager);
-*/
 	return YES;
 }
 

@@ -54,7 +54,6 @@
 #include <wx/wxprec.h>
 #include <wx/wx.h>
 #include "core/wxOgreRenderWindow.h"
-#include "core/TRIVAGUI.h"
 
 class ProtoController : public wxApp
 {
@@ -73,6 +72,7 @@ class ProtoController : public wxApp
 		virtual bool OnInit();
 };
 
+#include "core/TRIVAGUIEvents.h"
 #endif // TRIVAWXWIDGETS
 
 #endif
