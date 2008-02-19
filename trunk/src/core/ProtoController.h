@@ -42,11 +42,33 @@
 
 #else // TRIVAWXWIDGETS
 
+#include <Foundation/Foundation.h>
+//#include "reader/ProtoReader.h"
+//#include "ogre-simulator/OgreProtoSimulator.h"
+
+@class ProtoReader;
+@class OgreProtoSimulator;
+@class ProtoView;
+
+#define WXINTL_NO_GETTEXT_MACRO
 #include <wx/wxprec.h>
 #include <wx/wx.h>
+#include "core/wxOgreRenderWindow.h"
+#include "core/TRIVAGUI.h"
 
 class ProtoController : public wxApp
 {
+	private:
+		ProtoReader *reader;
+		OgreProtoSimulator *simulator;
+		ProtoView *view;
+
+		//wxOgreRenderWindow *mOgre;
+		//Ogre::RenderWindow *mWindow;
+		//TRIVAGUI *gui;
+		NSAutoreleasePool *pool;
+        
+		BOOL sessionStarted;
 	public:
 		virtual bool OnInit();
 };

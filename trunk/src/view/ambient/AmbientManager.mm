@@ -9,6 +9,8 @@ AmbientManager::AmbientManager ()
 	mRoot = Ogre::Root::getSingletonPtr();
 	mSceneMgr = mRoot->getSceneManager("VisuSceneManager");
 
+	std::cout << "mSceneMgr at AmbientManager: " << mSceneMgr << std::endl;
+
 	/* Creating main object (to receive all Y transformations) 
 		All others visual objects will be attached to it
 	*/

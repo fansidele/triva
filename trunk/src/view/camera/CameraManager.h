@@ -11,6 +11,9 @@ class CameraManager : public Ogre::FrameListener,
 			public OIS::MouseListener
 {
 public: 
+#ifdef TRIVAWXWIDGETS
+	CameraManager (Ogre::RenderWindow *win);
+#endif
 	CameraManager ();
 	~CameraManager ();
 
@@ -27,7 +30,10 @@ protected:
 	void createCamera ();
 	void moveCamera (const Ogre::FrameEvent& evt);
 	void createViewport ();
-	
+
+#ifdef TRIVAWXWIDGETS
+	void createViewport (Ogre::RenderWindow *win);
+#endif
 
 public:
 	void changeCamera ();	

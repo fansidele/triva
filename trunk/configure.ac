@@ -15,11 +15,14 @@ AC_PROG_CXX
 
 AC_ARG_ENABLE(wxwidgets,
 	[AS_HELP_STRING([--enable-wxwidgets],[build with wxwidgets as GUI])],
-	[ if test "$enable_wxwidgets" = "yes"; then
+	[ if test "$enable_wxwidgets" = "no"; then
+		CPPFLAGS="$CPPFLAGS"
+	  else
 		CPPFLAGS="$CPPFLAGS -DTRIVAWXWIDGETS"
 	  fi
 	]
 )
+#CPPFLAGS="$CPPFLAGS -DTRIVAWXWIDGETS"
 
 PKG_CHECK_MODULES(OGRE, [OGRE >= 1.4])
 CPPFLAGS="$CPPFLAGS $OGRE_CFLAGS"
@@ -41,6 +44,8 @@ CPPFLAGS="$CPPFLAGS $GVC_CFLAGS"
 LIBS="$LIBS $GVC_LIBS"
 
 PKG_CHECK_MODULES(GTK, gtk+-2.0)
+CPPFLAGS="$CPPFLAGS $GTK_CFLAGS"
+LIBS="$LIBS $GTK_LIBS"
 
 AM_OPTIONS_WXCONFIG
 reqwx=2.8.0
@@ -63,6 +68,7 @@ CFLAGS="$CFLAGS $WX_CFLAGS_ONLY"
 LIBS="$LIBS $WX_LIBS"
 
 CPPFLAGS="-I../../ -I../ -I./ $CPPFLAGS"
+LIBS="$LIBS -lGL"
 AC_SUBST(CPPFLAGS)
 AC_SUBST(LIBS)
 

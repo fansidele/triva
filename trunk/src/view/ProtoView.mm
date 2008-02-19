@@ -25,8 +25,6 @@
 			++itSetting;
 		}
 	}
-
-
 	return true;
 }
 
@@ -54,6 +52,7 @@
 	return true;
 }
 
+#ifndef TRIVAWXWIDGETS
 - (BOOL) configureApplication
 {
 	mRoot = new Ogre::Root("plugins.cfg", "ogre.cfg", "Ogre.log");
@@ -97,13 +96,11 @@
 	ambientManager = new AmbientManager ();
 	mRoot->addFrameListener (ambientManager);
 
-#ifndef TRIVAWXWIDGETS
         //Create CEGUIManager
         ceguiManager = new CEGUIManager (self, mWindow, mSceneMgr);
         mInputMgr->addKeyListener (ceguiManager, "CEGUIManager");
         mInputMgr->addMouseListener (ceguiManager, "CEGUIManager");
         mRoot->addFrameListener (ceguiManager);
-#endif
 
 	//Create DrawManager
 	drawManager = new DrawManager (self);
@@ -146,11 +143,104 @@
 	[self setState: Initialized];
 	return self;
 }
+#else
+
+
+- (id) init
+{
+	self = [super init];
+	yScale = 1;
+	yScaleChangeFactor = 0.1;
+	planeScale = 1;
+	planeScaleChangeFactor = 0.5;
+	zoomSwitch = true;
+	statesLabelsAppearance = true;
+	containersLabelsAppearance = true;
+
+	bundlesConfiguration = [[NSMutableDictionary alloc] init];
+	[self setState: Initialized];
+	return self;
+}
+
+- (BOOL) step1
+{
+	mRoot = new Ogre::Root("plugins.cfg", "ogre.cfg", "Ogre.log");
+	NSLog (@"mRoot = %p", mRoot);
+
+
+	NSString *resourcescfg = [[NSBundle mainBundle] pathForResource:
+@"resources" ofType: @"cfg"];
+	NSFileManager *fm = [NSFileManager defaultManager];
+	NSString *currentPath = [fm currentDirectoryPath];
+	NSArray *ar = [resourcescfg pathComponents];
+	NSMutableArray *ar2 = [NSMutableArray arrayWithArray: ar];
+	[ar2 removeLastObject];
+	NSString *mediaPath = [NSString pathWithComponents: ar2];
+	NSLog (@"mediaPath = %@", mediaPath);
+
+	[fm changeCurrentDirectoryPath: mediaPath];
+	//[self setupResources];
+	[fm changeCurrentDirectoryPath: currentPath];
+
+	if (!mRoot->restoreConfig()) {
+		if (!mRoot->showConfigDialog()) {
+			return false;
+		}
+	}
+	mWindow = mRoot->initialise(false, "AA");
+
+
+
+	[self createSceneManager];
+	NSLog (@"mSceneMgr = %p", mSceneMgr);
+	return YES;
+}
+
+- (BOOL) step4: (Ogre::RenderWindow*) win
+{
+	mWindow = win;
+	NSLog (@"mWindow = %p", mWindow);
+	//Create CameraManager
+	NSLog (@"initializating cameraManager");
+	cameraManager = new CameraManager (win);
+//	mInputMgr->addKeyListener (cameraManager, "CameraManager");
+//	mInputMgr->addMouseListener (cameraManager, "CameraManager");
+	mRoot->addFrameListener (cameraManager);
+
+	Ogre::Entity *ent = mSceneMgr->createEntity("Lucas", Ogre::SceneManager::PT_CUBE);
+	NSLog (@"entity = %p", ent);
+	ent->setMaterialName ("VisuApp/RUNNING");
+	mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(ent);
+
+        //Setup Input
+//        mInputMgr = VisuInputManager::getSingletonPtr();
+//        mInputMgr->initialise (mWindow);
+//        mRoot->addFrameListener (mInputMgr);
+
+/*
+
+	//Create AmbientManager
+	NSLog (@"initializating ambientManager");
+	ambientManager = new AmbientManager ();
+	mRoot->addFrameListener (ambientManager);
+
+	//Create DrawManager
+	drawManager = new DrawManager (self);
+        mRoot->addFrameListener (drawManager);
+*/
+	return YES;
+}
+
+#endif //TRIVAWXWIDGETS
+
+
 
 - (void) setController: (ProtoController *) controller
 {
+#ifndef TRIVAWXWIDGETS
 	applicationController = controller;
 	[applicationController retain];
+#endif
 }
 
 - (void) dealloc

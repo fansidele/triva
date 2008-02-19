@@ -140,9 +140,12 @@ CameraManager::CameraManager ()
 {
 	mRoot = Ogre::Root::getSingletonPtr();
 	mSceneMgr = mRoot->getSceneManager("VisuSceneManager");
+	std::cout << "mSceneMgr = " << mSceneMgr << std::endl;
 
 	createCamera ();
+	std::cout << "#1" << std::endl;
 	createViewport ();
+	std::cout << "#2" << std::endl;
 }
 
 void CameraManager::changeCamera ()
@@ -167,3 +170,23 @@ void CameraManager::setMovingCamera (bool m)
 {
 	movingCamera = m;
 }
+
+#ifdef TRIVAWXWIDGETS
+CameraManager::CameraManager (Ogre::RenderWindow *win)
+{
+	mRoot = Ogre::Root::getSingletonPtr();
+	mSceneMgr = mRoot->getSceneManager("VisuSceneManager");
+	createCamera ();
+	createViewport (win);
+}
+
+void CameraManager::createViewport (Ogre::RenderWindow *win)
+{
+	mViewport = win->addViewport (mCamera);
+	mViewport->setBackgroundColour(Ogre::ColourValue::White);
+	mCamera->setAspectRatio (Ogre::Real(mViewport->getActualWidth()) /
+				Ogre::Real(mViewport->getActualHeight()));
+}
+
+#endif
+
