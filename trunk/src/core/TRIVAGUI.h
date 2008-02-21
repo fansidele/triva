@@ -25,6 +25,10 @@ class wxOgreRenderWindow;
 #include <wx/frame.h>
 #include <wx/statbmp.h>
 #include <wx/stattext.h>
+#include <wx/button.h>
+#include <wx/listbox.h>
+#include <wx/textctrl.h>
+#include <wx/notebook.h>
 
 ///////////////////////////////////////////////////////////////////////////
 
@@ -37,16 +41,20 @@ class TRIVAGUI : public wxFrame
 	private:
 	
 	protected:
-		wxStatusBar* m_statusBar1;
+		wxStatusBar* statusBar;
 		wxMenuBar* m_menubar1;
 		wxMenu* application;
+		wxMenu* view;
+		wxMenuItem* bundlesAppear;
 		wxMenu* help;
 		wxToolBar* m_toolBar1;
 		
 		// Virtual event handlers, overide them in your derived class
 		virtual void loadbundle( wxCommandEvent& event ){ event.Skip(); }
 		virtual void exit( wxCommandEvent& event ){ event.Skip(); }
+		virtual void bundlesView( wxCommandEvent& event ){ event.Skip(); }
 		virtual void about( wxCommandEvent& event ){ event.Skip(); }
+		virtual void playClicked( wxCommandEvent& event ){ event.Skip(); }
 		
 	
 	public:
@@ -70,6 +78,45 @@ class TrivaAboutGui : public wxFrame
 	public:
 		TrivaAboutGui( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("About..."), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 400,150 ), long style = wxDEFAULT_FRAME_STYLE|wxSYSTEM_MENU );
 		~TrivaAboutGui();
+	
+};
+
+///////////////////////////////////////////////////////////////////////////////
+/// Class BundleGUI
+///////////////////////////////////////////////////////////////////////////////
+class BundleGUI : public wxFrame 
+{
+	private:
+	
+	protected:
+		wxNotebook* m_notebook2;
+		wxPanel* m_panel9;
+		wxButton* selectTraceButton;
+		wxStaticText* m_staticText5;
+		wxListBox* traceFileOpened;
+		wxButton* removeTraceFileButton;
+		wxPanel* m_panel10;
+		wxButton* selectSyncButton;
+		wxStaticText* m_staticText51;
+		wxListBox* syncFileOpened;
+		wxButton* removeSyncFileButton;
+		wxPanel* m_panel11;
+		wxTextCtrl* statusText;
+		
+		
+		wxButton* activateButton;
+		
+		// Virtual event handlers, overide them in your derived class
+		virtual void traceFilePicker( wxCommandEvent& event ){ event.Skip(); }
+		virtual void removeTraceFile( wxCommandEvent& event ){ event.Skip(); }
+		virtual void syncFilePicker( wxCommandEvent& event ){ event.Skip(); }
+		virtual void removeSyncFile( wxCommandEvent& event ){ event.Skip(); }
+		virtual void activate( wxCommandEvent& event ){ event.Skip(); }
+		
+	
+	public:
+		BundleGUI( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 500,361 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
+		~BundleGUI();
 	
 };
 

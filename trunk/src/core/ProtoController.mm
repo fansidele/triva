@@ -136,8 +136,11 @@ bool ProtoController::OnInit()
 
 	TRIVAGUIEvents *gui = new TRIVAGUIEvents (0, wxID_ANY);
 
+	wxMyInput *inp = new wxMyInput ();
+
         wxOgreRenderWindow *mOgre = gui->mOgre;
         mOgre->createRenderWindow ();
+	mOgre->addInputListener (inp);
 
         Ogre::RenderWindow *win = mOgre->getRenderWindow();
 	[view createSceneManager];
@@ -153,11 +156,22 @@ bool ProtoController::OnInit()
 	[simulator setOutput: view];
 	[view setInput: simulator];
 
+	gui->setReader (reader);
+//	gui->setController (this);
 	gui->Show();
+
 	sessionStarted = true;
 	return true;
 }
 
+void wxMyInput::onCharEvent(wxKeyEvent& evt)
+{
+//	std::cout << __FUNCTION__ << std::endl;
+}
 
+void wxMyInput::onMouseEvent(wxMouseEvent& evt)
+{
+//	std::cout << __FUNCTION__ << std::endl;
+}
 
 #endif //TRIVAWXWIDGETS

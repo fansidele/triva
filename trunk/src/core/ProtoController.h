@@ -50,7 +50,6 @@
 @class OgreProtoSimulator;
 @class ProtoView;
 
-#define WXINTL_NO_GETTEXT_MACRO
 #include <wx/wxprec.h>
 #include <wx/wx.h>
 #include "core/wxOgreRenderWindow.h"
@@ -70,6 +69,14 @@ class ProtoController : public wxApp
 		BOOL sessionStarted;
 	public:
 		virtual bool OnInit();
+		void changeState () { std::cout << "change State" << std::endl; };
+};
+
+class wxMyInput : public wxInputEventListener
+{
+	public:
+		void onCharEvent(wxKeyEvent& evt);
+		void onMouseEvent(wxMouseEvent& evt);
 };
 
 #include "core/TRIVAGUIEvents.h"

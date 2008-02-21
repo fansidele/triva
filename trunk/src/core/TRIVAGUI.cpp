@@ -23,11 +23,11 @@ TRIVAGUI::TRIVAGUI( wxWindow* parent, wxWindowID id, const wxString& title, cons
 	
 	this->SetSizer( bSizer3 );
 	this->Layout();
-	m_statusBar1 = this->CreateStatusBar( 1, wxST_SIZEGRIP, wxID_ANY );
+	statusBar = this->CreateStatusBar( 1, wxST_SIZEGRIP, wxID_ANY );
 	m_menubar1 = new wxMenuBar( wxMB_DOCKABLE );
 	application = new wxMenu();
 	wxMenuItem* loadbundle;
-	loadbundle = new wxMenuItem( application, wxID_OPEN, wxString( wxT("&Load Bundle") ) , wxEmptyString, wxITEM_NORMAL );
+	loadbundle = new wxMenuItem( application, wxID_OPEN, wxString( wxT("Load &KAAPI Bundle") ) , wxT("Load a data source for DIMVisual as a Bundle"), wxITEM_NORMAL );
 	application->Append( loadbundle );
 	
 	wxMenuItem* exit;
@@ -35,6 +35,13 @@ TRIVAGUI::TRIVAGUI( wxWindow* parent, wxWindowID id, const wxString& title, cons
 	application->Append( exit );
 	
 	m_menubar1->Append( application, wxT("Application") );
+	
+	view = new wxMenu();
+	bundlesAppear = new wxMenuItem( view, wxID_ANY, wxString( wxT("Bundles") ) , wxEmptyString, wxITEM_CHECK );
+	view->Append( bundlesAppear );
+	bundlesAppear->Check( true );
+	
+	m_menubar1->Append( view, wxT("View") );
 	
 	help = new wxMenu();
 	wxMenuItem* about;
@@ -45,9 +52,8 @@ TRIVAGUI::TRIVAGUI( wxWindow* parent, wxWindowID id, const wxString& title, cons
 	
 	this->SetMenuBar( m_menubar1 );
 	
-	m_toolBar1 = this->CreateToolBar( wxTB_DOCKABLE|wxTB_HORIZONTAL, wxID_ANY ); 
-	m_toolBar1->AddTool( wxID_ANY, wxT("Play"), wxNullBitmap, wxNullBitmap, wxITEM_NORMAL, wxEmptyString, wxT("Play") );
-	m_toolBar1->AddTool( wxID_ANY, wxT("tool"), wxNullBitmap, wxNullBitmap, wxITEM_NORMAL, wxEmptyString, wxEmptyString );
+	m_toolBar1 = this->CreateToolBar( wxTB_DOCKABLE|wxTB_HORIZONTAL|wxTB_NOICONS|wxTB_TEXT, wxID_ANY ); 
+	m_toolBar1->AddTool( wxID_ANY, wxT("Play"), wxNullBitmap, wxNullBitmap, wxITEM_CHECK, wxEmptyString, wxT("This button control the reading of a file") );
 	m_toolBar1->Realize();
 	
 	
@@ -56,7 +62,9 @@ TRIVAGUI::TRIVAGUI( wxWindow* parent, wxWindowID id, const wxString& title, cons
 	// Connect Events
 	this->Connect( loadbundle->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( TRIVAGUI::loadbundle ) );
 	this->Connect( exit->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( TRIVAGUI::exit ) );
+	this->Connect( bundlesAppear->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( TRIVAGUI::bundlesView ) );
 	this->Connect( about->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( TRIVAGUI::about ) );
+	this->Connect( wxID_ANY, wxEVT_COMMAND_TOOL_CLICKED, wxCommandEventHandler( TRIVAGUI::playClicked ) );
 }
 
 TRIVAGUI::~TRIVAGUI()
@@ -64,7 +72,9 @@ TRIVAGUI::~TRIVAGUI()
 	// Disconnect Events
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( TRIVAGUI::loadbundle ) );
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( TRIVAGUI::exit ) );
+	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( TRIVAGUI::bundlesView ) );
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( TRIVAGUI::about ) );
+	this->Disconnect( wxID_ANY, wxEVT_COMMAND_TOOL_CLICKED, wxCommandEventHandler( TRIVAGUI::playClicked ) );
 }
 
 TrivaAboutGui::TrivaAboutGui( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxFrame( parent, id, title, pos, size, style )
@@ -93,4 +103,115 @@ TrivaAboutGui::TrivaAboutGui( wxWindow* parent, wxWindowID id, const wxString& t
 
 TrivaAboutGui::~TrivaAboutGui()
 {
+}
+
+BundleGUI::BundleGUI( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxFrame( parent, id, title, pos, size, style )
+{
+	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
+	
+	wxBoxSizer* bSizer12;
+	bSizer12 = new wxBoxSizer( wxVERTICAL );
+	
+	m_notebook2 = new wxNotebook( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, 0 );
+	m_panel9 = new wxPanel( m_notebook2, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	wxBoxSizer* bSizer13;
+	bSizer13 = new wxBoxSizer( wxVERTICAL );
+	
+	selectTraceButton = new wxButton( m_panel9, wxID_ANY, wxT("(Select Trace Files)"), wxDefaultPosition, wxDefaultSize, wxBU_LEFT );
+	selectTraceButton->SetBackgroundColour( wxColour( 152, 198, 229 ) );
+	
+	bSizer13->Add( selectTraceButton, 0, wxALL|wxEXPAND, 5 );
+	
+	m_staticText5 = new wxStaticText( m_panel9, wxID_ANY, wxT("Trace"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText5->Wrap( -1 );
+	bSizer13->Add( m_staticText5, 0, wxALL|wxEXPAND, 5 );
+	
+	traceFileOpened = new wxListBox( m_panel9, wxID_ANY, wxDefaultPosition, wxDefaultSize, 0, NULL, wxLB_ALWAYS_SB|wxLB_MULTIPLE ); 
+	bSizer13->Add( traceFileOpened, 1, wxALL|wxEXPAND, 5 );
+	
+	removeTraceFileButton = new wxButton( m_panel9, wxID_ANY, wxT("Remove"), wxDefaultPosition, wxDefaultSize, 0 );
+	bSizer13->Add( removeTraceFileButton, 0, wxALL, 5 );
+	
+	m_panel9->SetSizer( bSizer13 );
+	m_panel9->Layout();
+	bSizer13->Fit( m_panel9 );
+	m_notebook2->AddPage( m_panel9, wxT("&Trace Files"), true );
+	m_panel10 = new wxPanel( m_notebook2, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	wxBoxSizer* bSizer131;
+	bSizer131 = new wxBoxSizer( wxVERTICAL );
+	
+	selectSyncButton = new wxButton( m_panel10, wxID_ANY, wxT("(Select Sync File)"), wxDefaultPosition, wxDefaultSize, wxBU_LEFT );
+	selectSyncButton->SetBackgroundColour( wxColour( 152, 198, 229 ) );
+	
+	bSizer131->Add( selectSyncButton, 0, wxALL|wxEXPAND, 5 );
+	
+	m_staticText51 = new wxStaticText( m_panel10, wxID_ANY, wxT("Sync"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText51->Wrap( -1 );
+	bSizer131->Add( m_staticText51, 0, wxALL|wxEXPAND, 5 );
+	
+	syncFileOpened = new wxListBox( m_panel10, wxID_ANY, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
+	bSizer131->Add( syncFileOpened, 1, wxALL|wxEXPAND, 5 );
+	
+	removeSyncFileButton = new wxButton( m_panel10, wxID_ANY, wxT("Remove"), wxDefaultPosition, wxDefaultSize, 0 );
+	bSizer131->Add( removeSyncFileButton, 0, wxALL, 5 );
+	
+	m_panel10->SetSizer( bSizer131 );
+	m_panel10->Layout();
+	bSizer131->Fit( m_panel10 );
+	m_notebook2->AddPage( m_panel10, wxT("&Synchronization File"), false );
+	m_panel11 = new wxPanel( m_notebook2, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	wxBoxSizer* bSizer17;
+	bSizer17 = new wxBoxSizer( wxVERTICAL );
+	
+	wxGridSizer* gSizer4;
+	gSizer4 = new wxGridSizer( 1, 1, 0, 0 );
+	
+	statusText = new wxTextCtrl( m_panel11, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxHSCROLL|wxTE_CAPITALIZE|wxTE_CENTRE|wxTE_READONLY );
+	statusText->SetFont( wxFont( 22, 77, 90, 92, false, wxT("Verdana") ) );
+	statusText->SetForegroundColour( wxColour( 5, 255, 1 ) );
+	
+	gSizer4->Add( statusText, 0, wxALL|wxEXPAND, 5 );
+	
+	bSizer17->Add( gSizer4, 5, wxEXPAND, 5 );
+	
+	wxGridSizer* gSizer6;
+	gSizer6 = new wxGridSizer( 1, 3, 0, 0 );
+	
+	
+	gSizer6->Add( 0, 0, 1, wxEXPAND, 5 );
+	
+	
+	gSizer6->Add( 0, 0, 1, wxEXPAND, 5 );
+	
+	activateButton = new wxButton( m_panel11, wxID_ANY, wxT("Activate"), wxDefaultPosition, wxDefaultSize, 0 );
+	gSizer6->Add( activateButton, 0, wxALL|wxEXPAND, 5 );
+	
+	bSizer17->Add( gSizer6, 1, wxEXPAND, 5 );
+	
+	m_panel11->SetSizer( bSizer17 );
+	m_panel11->Layout();
+	bSizer17->Fit( m_panel11 );
+	m_notebook2->AddPage( m_panel11, wxT("&Activation && Status"), false );
+	
+	bSizer12->Add( m_notebook2, 1, wxEXPAND | wxALL, 5 );
+	
+	this->SetSizer( bSizer12 );
+	this->Layout();
+	
+	// Connect Events
+	selectTraceButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( BundleGUI::traceFilePicker ), NULL, this );
+	removeTraceFileButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( BundleGUI::removeTraceFile ), NULL, this );
+	selectSyncButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( BundleGUI::syncFilePicker ), NULL, this );
+	removeSyncFileButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( BundleGUI::removeSyncFile ), NULL, this );
+	activateButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( BundleGUI::activate ), NULL, this );
+}
+
+BundleGUI::~BundleGUI()
+{
+	// Disconnect Events
+	selectTraceButton->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( BundleGUI::traceFilePicker ), NULL, this );
+	removeTraceFileButton->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( BundleGUI::removeTraceFile ), NULL, this );
+	selectSyncButton->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( BundleGUI::syncFilePicker ), NULL, this );
+	removeSyncFileButton->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( BundleGUI::removeSyncFile ), NULL, this );
+	activateButton->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( BundleGUI::activate ), NULL, this );
 }
