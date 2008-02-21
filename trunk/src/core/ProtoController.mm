@@ -134,7 +134,7 @@ bool ProtoController::OnInit()
 	ProtoView *view = [[ProtoView alloc] init];
 	[view step1];
 
-	TRIVAGUIEvents *gui = new TRIVAGUIEvents (0, wxID_ANY);
+	TrivaController *gui = new TrivaController (0, wxID_ANY);
 
 	wxMyInput *inp = new wxMyInput ();
 

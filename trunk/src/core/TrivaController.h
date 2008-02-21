@@ -1,5 +1,5 @@
-#ifndef __TRIVAGUIEvents__
-#define __TRIVAGUIEvents__
+#ifndef __TrivaController__
+#define __TrivaController__
 
 #include "TRIVAGUI.h"
 #include <wx/wxprec.h>
@@ -12,10 +12,10 @@
 DECLARE_EVENT_TYPE(wxEVT_MY_EVENT, -1)
 
 BEGIN_DECLARE_EVENT_TYPES()
-//	EVT_CUSTOM(trivaCHANGE_STATE, wxID_ANY, TRIVAGUIEvents::OnProcessCustom)
+//	EVT_CUSTOM(trivaCHANGE_STATE, wxID_ANY, TrivaController::OnProcessCustom)
 END_DECLARE_EVENT_TYPES()
 
-class TRIVAGUIEvents : public TRIVAGUI
+class TrivaController : public TRIVAGUI
 {
 private:
 	ProtoReader *reader;
@@ -38,8 +38,8 @@ public:
 //	void setController (ProtoController *c) { controller = c; };
 	
 	/** Constructor */
-	TRIVAGUIEvents( wxWindow* parent );
-	TRIVAGUIEvents( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("TRIVA"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 600,480 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
+	TrivaController( wxWindow* parent );
+	TrivaController( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("TRIVA"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 600,480 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
 
 	DECLARE_EVENT_TABLE()
 };
@@ -47,4 +47,4 @@ public:
 
 
 
-#endif // __TRIVAGUIEvents__
+#endif // __TrivaController__

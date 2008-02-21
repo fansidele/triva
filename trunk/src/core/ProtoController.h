@@ -53,6 +53,7 @@
 #include <wx/wxprec.h>
 #include <wx/wx.h>
 #include "core/wxOgreRenderWindow.h"
+#include "core/TrivaController.h"
 
 class ProtoController : public wxApp
 {
@@ -61,9 +62,9 @@ class ProtoController : public wxApp
 		OgreProtoSimulator *simulator;
 		ProtoView *view;
 
-		//wxOgreRenderWindow *mOgre;
-		//Ogre::RenderWindow *mWindow;
-		//TRIVAGUI *gui;
+		wxOgreRenderWindow *mOgre;
+		Ogre::RenderWindow *mWindow;
+		TrivaController *gui;
 		NSAutoreleasePool *pool;
         
 		BOOL sessionStarted;
@@ -79,7 +80,6 @@ class wxMyInput : public wxInputEventListener
 		void onMouseEvent(wxMouseEvent& evt);
 };
 
-#include "core/TRIVAGUIEvents.h"
 #endif // TRIVAWXWIDGETS
 
 #endif

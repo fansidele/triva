@@ -1,4 +1,4 @@
-#include "TRIVAGUIEvents.h"
+#include "TrivaController.h"
 
 wxString NSSTRINGtoWXSTRING (NSString *ns)
 {
@@ -8,23 +8,23 @@ wxString NSSTRINGtoWXSTRING (NSString *ns)
 	return wxString::FromAscii ([ns cString]);
 }
 
-TRIVAGUIEvents::TRIVAGUIEvents( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : TRIVAGUI (parent,id,title,pos,size,style)
+TrivaController::TrivaController( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : TRIVAGUI (parent,id,title,pos,size,style)
 {
 }
 
 
-void TRIVAGUIEvents::exit( wxCommandEvent& event )
+void TrivaController::exit( wxCommandEvent& event )
 {
 	Close(true);
 }
 
-void TRIVAGUIEvents::about( wxCommandEvent& event )
+void TrivaController::about( wxCommandEvent& event )
 {
 	TrivaAboutGui *win = new TrivaAboutGui (0, wxID_ANY);
 	win->Show();
 }
 
-void TRIVAGUIEvents::bundlesView ( wxCommandEvent& event )
+void TrivaController::bundlesView ( wxCommandEvent& event )
 {
 //	bundlesAppear->Check (!bundlesAppear->IsChecked());
 //	std::vector<wxWindow*>::iterator it;
@@ -38,7 +38,7 @@ void TRIVAGUIEvents::bundlesView ( wxCommandEvent& event )
 	
 }
 
-void TRIVAGUIEvents::loadbundle ( wxCommandEvent& event )
+void TrivaController::loadbundle ( wxCommandEvent& event )
 {
 /*
 	wxDirDialog * openDirDialog = new wxDirDialog(this);
@@ -63,7 +63,7 @@ void TRIVAGUIEvents::loadbundle ( wxCommandEvent& event )
 
 }
 
-void TRIVAGUIEvents::playClicked( wxCommandEvent& event )
+void TrivaController::playClicked( wxCommandEvent& event )
 {
 	if (event.IsChecked()){
 //		controller->changeState();
@@ -78,7 +78,7 @@ void TRIVAGUIEvents::playClicked( wxCommandEvent& event )
 DEFINE_EVENT_TYPE(wxEVT_MY_EVENT)
 
 
-BEGIN_EVENT_TABLE(TRIVAGUIEvents, wxFrame)
-	EVT_COMMAND  (wxID_ANY, wxEVT_MY_EVENT, TRIVAGUIEvents::OnProcessCustom)
+BEGIN_EVENT_TABLE(TrivaController, wxFrame)
+	EVT_COMMAND  (wxID_ANY, wxEVT_MY_EVENT, TrivaController::OnProcessCustom)
 END_EVENT_TABLE()
 
