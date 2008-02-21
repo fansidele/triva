@@ -7,7 +7,7 @@ CC=$(CXX)
 ADDITIONAL_INCLUDE_DIRS=-I../ -I./ # structure/ -I../layout/ -I../position/
 SUBPROJECT_NAME=core
 core_OBJC_FILES=
-core_OBJCC_FILES=ProtoController.mm wxOgreRenderWindow.mm TRIVAGUI.mm TRIVAGUIEvents.mm BundleGUIEvents.mm
+core_OBJCC_FILES=ProtoController.mm wxOgreRenderWindow.mm TRIVAGUI.mm TrivaController.mm BundleGUIEvents.mm
 
 core_INCLUDE_DIRS += @CPPFLAGS@
 core_LIB_DIRS += @LIBS@
