@@ -65,6 +65,13 @@ protected:
 };
 
 
-
+class OgreEventListener : public wxInputEventListener
+{
+	void onCharEvent (wxKeyEvent& evt);
+	void onKeyDownEvent(wxKeyEvent& evt);
+	void onKeyUpEvent(wxKeyEvent& evt);
+	void onMouseEvent(wxMouseEvent& evt);
+	void onWindowSize(wxSizeEvent& evt);
+};
 
 #endif // __TrivaController__
