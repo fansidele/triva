@@ -20,18 +20,17 @@ class wxOgreRenderWindow;
 #include <wx/bitmap.h>
 #include <wx/image.h>
 #include <wx/menu.h>
+#include <wx/button.h>
 #include <wx/toolbar.h>
 #include <wx/frame.h>
 #include <wx/statbmp.h>
 #include <wx/stattext.h>
-#include <wx/button.h>
 #include <wx/listbox.h>
 #include <wx/textctrl.h>
 #include <wx/notebook.h>
 
 ///////////////////////////////////////////////////////////////////////////
 
-#define wxID_PLAY 1000
 
 ///////////////////////////////////////////////////////////////////////////////
 /// Class TRIVAGUI
@@ -46,12 +45,15 @@ class TRIVAGUI : public wxFrame
 		wxMenu* application;
 		wxMenu* m_menu6;
 		wxToolBar* toolbar;
+		wxButton* playButton;
+		wxButton* pauseButton;
 		
 		// Virtual event handlers, overide them in your derived class
 		virtual void loadBundle( wxCommandEvent& event ){ event.Skip(); }
 		virtual void exit( wxCommandEvent& event ){ event.Skip(); }
 		virtual void about( wxCommandEvent& event ){ event.Skip(); }
 		virtual void playClicked( wxCommandEvent& event ){ event.Skip(); }
+		virtual void pauseClicked( wxCommandEvent& event ){ event.Skip(); }
 		
 	
 	public:

@@ -37,17 +37,18 @@ TRIVAGUI::TRIVAGUI( wxWindow* parent, wxWindowID id, const wxString& title, cons
 	
 	m_menu6 = new wxMenu();
 	wxMenuItem* m_menuItem9;
-	m_menuItem9 = new wxMenuItem( m_menu6, wxID_ANY, wxString( wxT("About...") ) , wxEmptyString, wxITEM_NORMAL );
+	m_menuItem9 = new wxMenuItem( m_menu6, wxID_ABOUT, wxString( wxT("About...") ) , wxEmptyString, wxITEM_NORMAL );
 	m_menu6->Append( m_menuItem9 );
 	
 	m_menubar2->Append( m_menu6, wxT("Help") );
 	
 	this->SetMenuBar( m_menubar2 );
 	
-	toolbar = this->CreateToolBar( wxTB_HORIZONTAL|wxTB_NOICONS|wxTB_TEXT, wxID_ANY ); 
-	toolbar->Enable( false );
-	
-	toolbar->AddTool( wxID_PLAY, wxT("Play"), wxNullBitmap, wxNullBitmap, wxITEM_NORMAL, wxEmptyString, wxEmptyString );
+	toolbar = this->CreateToolBar( wxTB_NOICONS|wxTB_TEXT, wxID_ANY ); 
+	playButton = new wxButton( toolbar, wxID_ANY, wxT("Play"), wxDefaultPosition, wxDefaultSize, 0 );
+	toolbar->AddControl( playButton );
+	pauseButton = new wxButton( toolbar, wxID_ANY, wxT("Pause"), wxDefaultPosition, wxDefaultSize, 0 );
+	toolbar->AddControl( pauseButton );
 	toolbar->Realize();
 	
 	
@@ -57,7 +58,8 @@ TRIVAGUI::TRIVAGUI( wxWindow* parent, wxWindowID id, const wxString& title, cons
 	this->Connect( m_menuItem6->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( TRIVAGUI::loadBundle ) );
 	this->Connect( m_menuItem5->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( TRIVAGUI::exit ) );
 	this->Connect( m_menuItem9->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( TRIVAGUI::about ) );
-	this->Connect( wxID_PLAY, wxEVT_COMMAND_TOOL_CLICKED, wxCommandEventHandler( TRIVAGUI::playClicked ) );
+	playButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( TRIVAGUI::playClicked ), NULL, this );
+	pauseButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( TRIVAGUI::pauseClicked ), NULL, this );
 }
 
 TRIVAGUI::~TRIVAGUI()
@@ -66,7 +68,8 @@ TRIVAGUI::~TRIVAGUI()
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( TRIVAGUI::loadBundle ) );
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( TRIVAGUI::exit ) );
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( TRIVAGUI::about ) );
-	this->Disconnect( wxID_PLAY, wxEVT_COMMAND_TOOL_CLICKED, wxCommandEventHandler( TRIVAGUI::playClicked ) );
+	playButton->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( TRIVAGUI::playClicked ), NULL, this );
+	pauseButton->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( TRIVAGUI::pauseClicked ), NULL, this );
 }
 
 TrivaAboutGui::TrivaAboutGui( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxFrame( parent, id, title, pos, size, style )

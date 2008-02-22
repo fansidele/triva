@@ -17,7 +17,7 @@
 
 @class ProtoController;
 
-enum ProtoApplicationState {Initialized,Configured,Running,Paused};
+///enum ProtoApplicationState {Initialized,Configured,Running,Paused};
 
 @interface ProtoView  : ProtoComponent
 {
@@ -61,7 +61,7 @@ enum ProtoApplicationState {Initialized,Configured,Running,Paused};
 	//to keep bundles configuration
 	NSMutableDictionary *bundlesConfiguration;
 
-	ProtoApplicationState applicationState;
+//	ProtoApplicationState applicationState;
 }
 /* methods called by the application controller (core/ProtoController.mm) */
 - (void) setController: (ProtoController *) controller;
@@ -114,11 +114,12 @@ enum ProtoApplicationState {Initialized,Configured,Running,Paused};
 @end
 #endif
 
+/*
 @interface ProtoView (States)
 - (void) setState: (enum ProtoApplicationState) newState;
 - (enum ProtoApplicationState) currentState;
 - (void) controlButton;
 - (BOOL) isPaused;
 @end
-
+*/
 #endif

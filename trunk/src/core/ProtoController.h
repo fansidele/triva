@@ -9,7 +9,6 @@
 #include "memory/ProtoMemory.h"
 #include "view/ProtoView.h"
 
-
 @interface ProtoController : NSObject
 {
 	ProtoReader *reader;

@@ -139,8 +139,6 @@
 	mSceneMgr->getRootSceneNode()->setScale (planeScale,yScale,planeScale);
 
 	bundlesConfiguration = [[NSMutableDictionary alloc] init];	
-
-	[self setState: Initialized];
 	return self;
 }
 #else
@@ -158,7 +156,6 @@
 	containersLabelsAppearance = true;
 
 	bundlesConfiguration = [[NSMutableDictionary alloc] init];
-	[self setState: Initialized];
 	return self;
 }
 
@@ -336,12 +333,15 @@
 
 - (BOOL) hasMoreData
 {
+/*
 //	NSLog (@"%s", __FUNCTION__);
 	if (applicationState == Paused){
 		return NO;
 	}else{
 		return [super hasMoreData];
 	}
+*/
+	return NO;
 }
 
 - (void) zoomIn

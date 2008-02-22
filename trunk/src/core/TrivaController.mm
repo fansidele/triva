@@ -10,6 +10,7 @@ wxString NSSTRINGtoWXSTRING (NSString *ns)
 
 void TrivaController::_activateOgre()
 {
+	reader = [[ProtoReader alloc] init];
 	std::cout << "##" << __FUNCTION__ << std::endl;
 	ProtoView *view = [[ProtoView alloc] init];
 	[view step1];
@@ -25,12 +26,18 @@ void TrivaController::_activateOgre()
 	Ogre::RenderWindow *win = mOgre->getRenderWindow();
 	[view createSceneManager];
 	[view step4: win];
+	simulator = [[OgreProtoSimulator alloc] init];
+
+
+	[reader setOutput: simulator];
+	[simulator setInput: reader];
+	[simulator setOutput: view];
+	[view setInput: simulator];
+	this->setState(Initialized);
 }
 
 TrivaController::TrivaController( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : TRIVAGUI (parent,id,title,pos,size,style)
 {
-	reader = [[ProtoReader alloc] init];
-	toolbar->Disable();
 }
 
 
@@ -87,18 +94,28 @@ void TrivaController::loadBundle ( wxCommandEvent& event )
 void TrivaController::playClicked( wxCommandEvent& event )
 {
 	std::cout << __FUNCTION__ << std::endl;
-	if (event.IsChecked()){
-//		controller->changeState();
-//		wxCommandEvent event( wxEVT_MY_EVENT, GetId() );
-//		event.SetEventObject( this );
-//		GetEventHandler()->ProcessEvent( event );
-	}else{
-//		controller->changeState();
+	if (this->currentState() == Configured ||
+		this->currentState() == Paused){
+		this->setState(Running);
+	}
+}
+
+void TrivaController::pauseClicked( wxCommandEvent& event )
+{
+	std::cout << __FUNCTION__ << std::endl;
+	if (this->currentState() == Running){
+		this->setState(Paused);
 	}
 }
 
 void TrivaController::oneBundleConfigured()
 {
-	toolbar->Enable();
+	this->setState (Configured);
 }
 
+void TrivaController::checkRead(wxTimerEvent& event)
+{
+	if ([reader hasMoreData]){
+		[reader read];
+	}
+}

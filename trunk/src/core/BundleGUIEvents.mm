@@ -6,24 +6,6 @@ void BundleGUIEvents::setBundleName (std::string n)
 {
 	bundleName = n; 
 	this->SetTitle(wxT("dimvisual-kaapi.bundle"));
-/*
-
-	root = treeConf->AddRoot (wxT("root"));
-	files = treeConf->AppendItem (root, wxT("files"));
-	sync = treeConf->AppendItem (root, wxT("sync"));
-
-	[[NSUserDefaults standardUserDefaults] synchronize];
-	NSString *str = [[NSUserDefaults standardUserDefaults]
-		stringForKey:@"LastTraceDirectory"];
-	NSLog (@"retomando str = %@", str);
-	if (str){
-		wxString to_format;
-		to_format.Printf(wxT("%s"), [str cString]);
-		to_format = wxString::Format(wxT("%s"), [str cString]);
-//		std::cout << "# " << to_format.mb_str() << std::endl;
-//		traceDir->ExpandPath (to_format);
-	}
-*/
 }
 
 void BundleGUIEvents::traceFilePicker( wxCommandEvent& event )
@@ -63,44 +45,6 @@ void BundleGUIEvents::removeSyncFile( wxCommandEvent& event )
 {
 	syncFileOpened->Clear();
 }
-
-
-/*
-void BundleGUIEvents::addTraceFile( wxCommandEvent& event )
-{
-	wxString file = traceDir->GetFilePath();
-	if (file != wxString()){
-		treeConf->AppendItem (files, file);
-	}
-
-	wxString s = traceDir->GetPath();
-	char sa[100];
-	snprintf (sa, 100, "%S", s.c_str());
-//
-	NSString *str = [NSString stringWithFormat: @"%s", sa];
-	NSLog (@"str = %@", str);
-	[[NSUserDefaults standardUserDefaults] setObject:str forKey:@"LastTraceDirectory"];
-	[[NSUserDefaults standardUserDefaults] synchronize];
-}
-
-void BundleGUIEvents::setSyncFile( wxCommandEvent& event )
-{
-	wxString file = traceDir->GetFilePath();
-	if (file != wxString()){
-		treeConf->DeleteChildren(sync);
-		treeConf->AppendItem (sync, file);
-	}
-
-	wxString s = traceDir->GetPath();
-	char sa[100];
-	snprintf (sa, 100, "%S", s.c_str());
-//
-	NSString *str = [NSString stringWithFormat: @"%s", sa];
-	NSLog (@"str = %@", str);
-	[[NSUserDefaults standardUserDefaults] setObject:str forKey:@"LastTraceDirectory"];
-	[[NSUserDefaults standardUserDefaults] synchronize];
-}
-*/
 
 void BundleGUIEvents::activate( wxCommandEvent& event )
 {
@@ -152,7 +96,7 @@ NS_DURING
 		selectTraceButton->Disable();
 		removeSyncFileButton->Disable();
 		removeTraceFileButton->Disable();
-		std::cout.rdbuf(sbOld);	
+		std::cout << "controller = " << controller << std::endl;
 		controller->oneBundleConfigured();
 	
 
