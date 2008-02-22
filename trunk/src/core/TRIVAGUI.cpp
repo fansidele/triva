@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// C++ code generated with wxFormBuilder (version Feb 12 2008)
+// C++ code generated with wxFormBuilder (version Feb 21 2008)
 // http://www.wxformbuilder.org/
 //
 // PLEASE DO "NOT" EDIT THIS FILE!
@@ -23,58 +23,50 @@ TRIVAGUI::TRIVAGUI( wxWindow* parent, wxWindowID id, const wxString& title, cons
 	
 	this->SetSizer( bSizer3 );
 	this->Layout();
-	statusBar = this->CreateStatusBar( 1, wxST_SIZEGRIP, wxID_ANY );
-	m_menubar1 = new wxMenuBar( wxMB_DOCKABLE );
+	m_menubar2 = new wxMenuBar( 0 );
 	application = new wxMenu();
-	wxMenuItem* loadbundle;
-	loadbundle = new wxMenuItem( application, wxID_OPEN, wxString( wxT("Load &KAAPI Bundle") ) , wxT("Load a data source for DIMVisual as a Bundle"), wxITEM_NORMAL );
-	application->Append( loadbundle );
+	wxMenuItem* m_menuItem6;
+	m_menuItem6 = new wxMenuItem( application, wxID_OPEN, wxString( wxT("Load &KAAPI Bundle") ) , wxEmptyString, wxITEM_NORMAL );
+	application->Append( m_menuItem6 );
 	
-	wxMenuItem* exit;
-	exit = new wxMenuItem( application, wxID_EXIT, wxString( wxT("&Quit") ) , wxT("Click to exit the application"), wxITEM_NORMAL );
-	application->Append( exit );
+	wxMenuItem* m_menuItem5;
+	m_menuItem5 = new wxMenuItem( application, wxID_EXIT, wxString( wxT("E&xit") ) , wxEmptyString, wxITEM_NORMAL );
+	application->Append( m_menuItem5 );
 	
-	m_menubar1->Append( application, wxT("Application") );
+	m_menubar2->Append( application, wxT("Application") );
 	
-	view = new wxMenu();
-	bundlesAppear = new wxMenuItem( view, wxID_ANY, wxString( wxT("Bundles") ) , wxEmptyString, wxITEM_CHECK );
-	view->Append( bundlesAppear );
-	bundlesAppear->Check( true );
+	m_menu6 = new wxMenu();
+	wxMenuItem* m_menuItem9;
+	m_menuItem9 = new wxMenuItem( m_menu6, wxID_ANY, wxString( wxT("About...") ) , wxEmptyString, wxITEM_NORMAL );
+	m_menu6->Append( m_menuItem9 );
 	
-	m_menubar1->Append( view, wxT("View") );
+	m_menubar2->Append( m_menu6, wxT("Help") );
 	
-	help = new wxMenu();
-	wxMenuItem* about;
-	about = new wxMenuItem( help, wxID_ABOUT, wxString( wxT("&About...") ) , wxEmptyString, wxITEM_NORMAL );
-	help->Append( about );
+	this->SetMenuBar( m_menubar2 );
 	
-	m_menubar1->Append( help, wxT("Help") );
+	toolbar = this->CreateToolBar( wxTB_HORIZONTAL|wxTB_NOICONS|wxTB_TEXT, wxID_ANY ); 
+	toolbar->Enable( false );
 	
-	this->SetMenuBar( m_menubar1 );
-	
-	m_toolBar1 = this->CreateToolBar( wxTB_DOCKABLE|wxTB_HORIZONTAL|wxTB_NOICONS|wxTB_TEXT, wxID_ANY ); 
-	m_toolBar1->AddTool( wxID_ANY, wxT("Play"), wxNullBitmap, wxNullBitmap, wxITEM_CHECK, wxEmptyString, wxT("This button control the reading of a file") );
-	m_toolBar1->Realize();
+	toolbar->AddTool( wxID_PLAY, wxT("Play"), wxNullBitmap, wxNullBitmap, wxITEM_NORMAL, wxEmptyString, wxEmptyString );
+	toolbar->Realize();
 	
 	
 	this->Centre( wxBOTH );
 	
 	// Connect Events
-	this->Connect( loadbundle->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( TRIVAGUI::loadbundle ) );
-	this->Connect( exit->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( TRIVAGUI::exit ) );
-	this->Connect( bundlesAppear->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( TRIVAGUI::bundlesView ) );
-	this->Connect( about->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( TRIVAGUI::about ) );
-	this->Connect( wxID_ANY, wxEVT_COMMAND_TOOL_CLICKED, wxCommandEventHandler( TRIVAGUI::playClicked ) );
+	this->Connect( m_menuItem6->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( TRIVAGUI::loadBundle ) );
+	this->Connect( m_menuItem5->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( TRIVAGUI::exit ) );
+	this->Connect( m_menuItem9->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( TRIVAGUI::about ) );
+	this->Connect( wxID_PLAY, wxEVT_COMMAND_TOOL_CLICKED, wxCommandEventHandler( TRIVAGUI::playClicked ) );
 }
 
 TRIVAGUI::~TRIVAGUI()
 {
 	// Disconnect Events
-	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( TRIVAGUI::loadbundle ) );
+	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( TRIVAGUI::loadBundle ) );
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( TRIVAGUI::exit ) );
-	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( TRIVAGUI::bundlesView ) );
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( TRIVAGUI::about ) );
-	this->Disconnect( wxID_ANY, wxEVT_COMMAND_TOOL_CLICKED, wxCommandEventHandler( TRIVAGUI::playClicked ) );
+	this->Disconnect( wxID_PLAY, wxEVT_COMMAND_TOOL_CLICKED, wxCommandEventHandler( TRIVAGUI::playClicked ) );
 }
 
 TrivaAboutGui::TrivaAboutGui( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxFrame( parent, id, title, pos, size, style )
@@ -197,6 +189,8 @@ BundleGUI::BundleGUI( wxWindow* parent, wxWindowID id, const wxString& title, co
 	
 	this->SetSizer( bSizer12 );
 	this->Layout();
+	
+	this->Centre( wxBOTH );
 	
 	// Connect Events
 	selectTraceButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( BundleGUI::traceFilePicker ), NULL, this );

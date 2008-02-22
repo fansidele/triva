@@ -43,41 +43,16 @@
 #else // TRIVAWXWIDGETS
 
 #include <Foundation/Foundation.h>
-//#include "reader/ProtoReader.h"
-//#include "ogre-simulator/OgreProtoSimulator.h"
-
-@class ProtoReader;
-@class OgreProtoSimulator;
-@class ProtoView;
-
 #include <wx/wxprec.h>
 #include <wx/wx.h>
-#include "core/wxOgreRenderWindow.h"
 #include "core/TrivaController.h"
 
 class ProtoController : public wxApp
 {
 	private:
-		ProtoReader *reader;
-		OgreProtoSimulator *simulator;
-		ProtoView *view;
-
-		wxOgreRenderWindow *mOgre;
-		Ogre::RenderWindow *mWindow;
-		TrivaController *gui;
 		NSAutoreleasePool *pool;
-        
-		BOOL sessionStarted;
 	public:
 		virtual bool OnInit();
-		void changeState () { std::cout << "change State" << std::endl; };
-};
-
-class wxMyInput : public wxInputEventListener
-{
-	public:
-		void onCharEvent(wxKeyEvent& evt);
-		void onMouseEvent(wxMouseEvent& evt);
 };
 
 #endif // TRIVAWXWIDGETS

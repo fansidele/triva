@@ -35,6 +35,7 @@ wxDefaultPosition);
 		wxArrayString files;
 		f->GetPaths (files);
 		traceFileOpened->InsertItems(files,0);
+		activateButton->Enable();
 	}
 }
 
@@ -43,6 +44,9 @@ void BundleGUIEvents::removeTraceFile( wxCommandEvent& event )
 	wxArrayInt sel;
 	while(traceFileOpened->GetSelections(sel) != 0){
 		traceFileOpened->Delete(sel[0]);
+	}
+	if (traceFileOpened->GetCount() == 0){
+		activateButton->Disable();
 	}
 }
 
@@ -149,6 +153,8 @@ NS_DURING
 		removeSyncFileButton->Disable();
 		removeTraceFileButton->Disable();
 		std::cout.rdbuf(sbOld);	
+		controller->oneBundleConfigured();
+	
 
 	}
 NS_HANDLER
@@ -169,6 +175,5 @@ BundleGUI( parent, ide,
 title, pos, size, 
 style )
 {
-	sbOld = std::cout.rdbuf();
-	std::cout.rdbuf(statusText);
+	activateButton->Disable();
 }

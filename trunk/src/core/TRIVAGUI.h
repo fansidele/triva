@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// C++ code generated with wxFormBuilder (version Feb 12 2008)
+// C++ code generated with wxFormBuilder (version Feb 21 2008)
 // http://www.wxformbuilder.org/
 //
 // PLEASE DO "NOT" EDIT THIS FILE!
@@ -17,7 +17,6 @@ class wxOgreRenderWindow;
 #include <wx/settings.h>
 #include <wx/string.h>
 #include <wx/sizer.h>
-#include <wx/statusbr.h>
 #include <wx/bitmap.h>
 #include <wx/image.h>
 #include <wx/menu.h>
@@ -32,6 +31,7 @@ class wxOgreRenderWindow;
 
 ///////////////////////////////////////////////////////////////////////////
 
+#define wxID_PLAY 1000
 
 ///////////////////////////////////////////////////////////////////////////////
 /// Class TRIVAGUI
@@ -41,24 +41,20 @@ class TRIVAGUI : public wxFrame
 	private:
 	
 	protected:
-		wxStatusBar* statusBar;
-		wxMenuBar* m_menubar1;
+		wxOgreRenderWindow* mOgre;
+		wxMenuBar* m_menubar2;
 		wxMenu* application;
-		wxMenu* view;
-		wxMenuItem* bundlesAppear;
-		wxMenu* help;
-		wxToolBar* m_toolBar1;
+		wxMenu* m_menu6;
+		wxToolBar* toolbar;
 		
 		// Virtual event handlers, overide them in your derived class
-		virtual void loadbundle( wxCommandEvent& event ){ event.Skip(); }
+		virtual void loadBundle( wxCommandEvent& event ){ event.Skip(); }
 		virtual void exit( wxCommandEvent& event ){ event.Skip(); }
-		virtual void bundlesView( wxCommandEvent& event ){ event.Skip(); }
 		virtual void about( wxCommandEvent& event ){ event.Skip(); }
 		virtual void playClicked( wxCommandEvent& event ){ event.Skip(); }
 		
 	
 	public:
-		wxOgreRenderWindow* mOgre;
 		TRIVAGUI( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("TRIVA"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 600,480 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
 		~TRIVAGUI();
 	

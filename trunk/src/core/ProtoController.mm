@@ -131,47 +131,11 @@ bool ProtoController::OnInit()
 {
 	pool = [[NSAutoreleasePool alloc] init];
 
-	ProtoView *view = [[ProtoView alloc] init];
-	[view step1];
-
 	TrivaController *gui = new TrivaController (0, wxID_ANY);
-
-	wxMyInput *inp = new wxMyInput ();
-
-        wxOgreRenderWindow *mOgre = gui->mOgre;
-        mOgre->createRenderWindow ();
-	mOgre->addInputListener (inp);
-
-        Ogre::RenderWindow *win = mOgre->getRenderWindow();
-	[view createSceneManager];
-	[view step4: win];
-
-	/* create them */
-	reader = [[ProtoReader alloc] init];
-	simulator = [[OgreProtoSimulator alloc] init];
-
-	/* connect them */
-	[reader setOutput: simulator];
-	[simulator setInput: reader];
-	[simulator setOutput: view];
-	[view setInput: simulator];
-
-	gui->setReader (reader);
-//	gui->setController (this);
+	gui->_activateOgre();
 	gui->Show();
 
-	sessionStarted = true;
 	return true;
-}
-
-void wxMyInput::onCharEvent(wxKeyEvent& evt)
-{
-//	std::cout << __FUNCTION__ << std::endl;
-}
-
-void wxMyInput::onMouseEvent(wxMouseEvent& evt)
-{
-//	std::cout << __FUNCTION__ << std::endl;
 }
 
 #endif //TRIVAWXWIDGETS
