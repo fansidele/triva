@@ -16,12 +16,12 @@ void TrivaController::_activateOgre()
 	[view step1];
 
 	std::cout << "#########################################"<< std::endl;
-	OgreEventListener *inp = new OgreEventListener ();	
+	ogreInput = new OgreEventListener ();	
 
 	std::cout << mOgre << std::endl;
 	mOgre->createRenderWindow ();
 	std::cout << "#########################################"<< std::endl;
-	mOgre->addInputListener (inp);
+	mOgre->addInputListener (ogreInput);
 
 	Ogre::RenderWindow *win = mOgre->getRenderWindow();
 	[view createSceneManager];
@@ -118,32 +118,5 @@ void TrivaController::checkRead(wxTimerEvent& event)
 	if ([reader hasMoreData]){
 		[reader read];
 	}
-}
-
-/****/
-void OgreEventListener::onCharEvent (wxKeyEvent& evt)
-{
-	std::cout << __FUNCTION__ << std::endl;
-}
-
-void OgreEventListener::onKeyDownEvent(wxKeyEvent& evt)
-{
-	std::cout << __FUNCTION__ << std::endl;
-}
-
-
-void OgreEventListener::onKeyUpEvent(wxKeyEvent& evt)
-{
-	std::cout << __FUNCTION__ << std::endl;
-}
-
-void OgreEventListener::onMouseEvent(wxMouseEvent& evt)
-{
-	std::cout << __FUNCTION__ << std::endl;
-}
-
-void OgreEventListener::onWindowSize(wxSizeEvent& evt)
-{
-	std::cout << __FUNCTION__ << std::endl;
 }
 

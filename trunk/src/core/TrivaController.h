@@ -11,6 +11,7 @@
 #include "ogre-simulator/OgreProtoSimulator.h"
 #include "view/ProtoView.h"
 #include <Ogre.h>
+#include "core/OgreEventListener.h"
 
 class BundleGUIEvents;
 
@@ -25,6 +26,7 @@ private:
 	ProtoReader *reader;
 	Ogre::RenderWindow *mWindow;
 	std::vector<BundleGUIEvents*> bundlesGUI;
+	OgreEventListener *ogreInput;
 
 protected:
 	// Handlers for TRIVAGUI events.
@@ -62,16 +64,6 @@ private:
 
 protected:
 	void checkRead (wxTimerEvent& event);
-};
-
-
-class OgreEventListener : public wxInputEventListener
-{
-	void onCharEvent (wxKeyEvent& evt);
-	void onKeyDownEvent(wxKeyEvent& evt);
-	void onKeyUpEvent(wxKeyEvent& evt);
-	void onMouseEvent(wxMouseEvent& evt);
-	void onWindowSize(wxSizeEvent& evt);
 };
 
 #endif // __TrivaController__
