@@ -6,7 +6,7 @@ CC=$(CXX)
 
 SUBPROJECT_NAME=camera
 camera_OBJC_FILES=
-camera_OBJCC_FILES=CameraManager.mm Camera2Manager.mm
+camera_OBJCC_FILES=CameraManager.mm
 
 camera_INCLUDE_DIRS += @CPPFLAGS@ 
 camera_LIB_DIRS += @LIBS@ 
