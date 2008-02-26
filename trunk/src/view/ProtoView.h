@@ -82,7 +82,6 @@
 - (bool) statesLabelsAppearance;
 - (bool) containersLabelsAppearance;
 - (void) switchMovingCamera;
-- (BOOL) step1;
 - (BOOL) step4: (Ogre::RenderWindow*) win;
 
 //fev26 2008

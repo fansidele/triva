@@ -5,13 +5,15 @@
 #include <Ogre.h>
 #include "view/QueryFlags.h"
 
+class TrivaController;
+
 class CameraManager : public wxInputEventListener,
 			public Ogre::FrameListener
 {
 public: 
-	CameraManager (Ogre::RenderWindow *win);
-	CameraManager ();
+	CameraManager (TrivaController *c, Ogre::RenderWindow *win);
 	~CameraManager ();
+	void setMovingCamera (bool c){ movingCamera = c; };
 
 protected:
 	void onKeyDownEvent(wxKeyEvent& evt);
@@ -23,14 +25,7 @@ protected:
 
 	void createCamera ();
 	void moveCamera ();
-	void createViewport ();
-
 	void createViewport (Ogre::RenderWindow *win);
-
-public:
-	void changeCamera ();	
-	void newPositionForCamera (double time);
-	void setMovingCamera (bool m);
 
 private:
 	Ogre::Radian mRotX, mRotY;
@@ -44,6 +39,8 @@ private:
         Ogre::Root *mRoot;
         Ogre::SceneManager* mSceneMgr;
 
+	TrivaController *controller;
 };
 
+#include "view/TrivaController.h"
 #endif

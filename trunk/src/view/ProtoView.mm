@@ -1,38 +1,8 @@
 #include "ProtoView.h"
 
 @implementation ProtoView
-- (BOOL) setupResources
-{
-	NSString *resourcescfg = [[NSBundle mainBundle] pathForResource:
-@"resources" ofType: @"cfg"];
-
-
-	//Load resource paths from config file
-	Ogre::ConfigFile cf;
-	cf.load ([resourcescfg cString]);
-
-	//Go through all settings in the file
-	Ogre::ConfigFile::SectionIterator itSection = cf.getSectionIterator();
-	Ogre::String sSection, sType, sArch;
-	while( itSection.hasMoreElements() ) {
-		sSection = itSection.peekNextKey();
-		Ogre::ConfigFile::SettingsMultiMap *mapSettings = itSection.getNext();
-		Ogre::ConfigFile::SettingsMultiMap::iterator itSetting = mapSettings->begin();
-		while( itSetting != mapSettings->end() ) {
-			sType = itSetting->first;
-			sArch = itSetting->second;
-			Ogre::ResourceGroupManager::getSingleton().addResourceLocation(sArch, sType, sSection);
-			++itSetting;
-		}
-	}
-	return true;
-}
-
 - (BOOL) createRootAndWindow
 {
-
-
-	[self setupResources];
 	if (!mRoot->restoreConfig()) {
 		if (!mRoot->showConfigDialog()) {
 			return false;
@@ -42,13 +12,6 @@
 	Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
 
 
-	return true;
-}
-
-- (BOOL) createSceneManager
-{
-	mSceneMgr = mRoot->createSceneManager(Ogre::ST_EXTERIOR_CLOSE,
-"VisuSceneManager");
 	return true;
 }
 
@@ -66,45 +29,20 @@
 	containersLabelsAppearance = true;
 
 	bundlesConfiguration = [[NSMutableDictionary alloc] init];
+
+
+	mRoot = Ogre::Root::getSingletonPtr ();
 	return self;
-}
-
-- (BOOL) step1
-{
-	mRoot = new Ogre::Root("plugins.cfg", "ogre.cfg", "Ogre.log");
-	NSLog (@"mRoot = %p", mRoot);
-
-
-	NSString *resourcescfg = [[NSBundle mainBundle] pathForResource:
-@"resources" ofType: @"cfg"];
-	NSFileManager *fm = [NSFileManager defaultManager];
-	NSString *currentPath = [fm currentDirectoryPath];
-	NSArray *ar = [resourcescfg pathComponents];
-	NSMutableArray *ar2 = [NSMutableArray arrayWithArray: ar];
-	[ar2 removeLastObject];
-	NSString *mediaPath = [NSString pathWithComponents: ar2];
-	NSLog (@"mediaPath = %@", mediaPath);
-
-	[fm changeCurrentDirectoryPath: mediaPath];
-	[self setupResources];
-	[fm changeCurrentDirectoryPath: currentPath];
-
-	mRoot->setRenderSystem (mRoot->getRenderSystemByName ("OpenGL Rendering Subsystem"));
-
-	mRoot->initialise(false);
-
-
-	return YES;
 }
 
 - (BOOL) step4: (Ogre::RenderWindow*) win
 {
 	mWindow = win;
 
-	cameraManager = new CameraManager (win);
+//	cameraManager = new CameraManager (win);
 //	mInputMgr->addKeyListener (cameraManager, "CameraManager");
 //	mInputMgr->addMouseListener (cameraManager, "CameraManager");
-	mRoot->addFrameListener (cameraManager);
+//	mRoot->addFrameListener (cameraManager);
 
 	Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
 
@@ -312,7 +250,6 @@
 
 - (void) fullscreenSwitch
 {
-	cameraManager->changeCamera();
 	if (mWindow->isFullScreen()){
 		NSLog (@"fullscreen ativado, mudando");
 		mWindow->setFullscreen (false, 800, 600);
@@ -354,7 +291,6 @@
 	NSLog (@"%s", __FUNCTION__);
 	movingCamera = !movingCamera;
 	NSLog (@"\t#1");
-	cameraManager->setMovingCamera (movingCamera);
 	NSLog (@"\t#2");
 //	ceguiManager->setMoveCameraButton (movingCamera);
 	NSLog (@"\t#3");
