@@ -50,34 +50,4 @@
 #endif
 //	[self switchMovingCamera];
 }
-
-- (void) keyEvent: (wxKeyEvent *) ev
-{
-	int key = ev->GetKeyCode();
-	switch (key){
-		case WXK_NUMPAD8:
-		case WXK_UP:
-			cameraManager->moveUp();
-			break;
-
-		case WXK_NUMPAD2:
-		case WXK_DOWN:
-			cameraManager->moveDown();
-			break;
-
-		case WXK_NUMPAD6:
-		case WXK_RIGHT:
-			cameraManager->moveRight();
-			break;
-
-		case WXK_NUMPAD4:
-		case WXK_LEFT:
-			cameraManager->moveLeft();
-			break;
-
-		default:
-			break;
-	}
-	
-}
 @end

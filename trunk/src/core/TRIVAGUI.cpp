@@ -49,9 +49,11 @@ TRIVAGUI::TRIVAGUI( wxWindow* parent, wxWindowID id, const wxString& title, cons
 	toolbar->AddControl( playButton );
 	pauseButton = new wxButton( toolbar, wxID_ANY, wxT("Pause"), wxDefaultPosition, wxDefaultSize, 0 );
 	toolbar->AddControl( pauseButton );
-	renderCheckbox = new wxCheckBox( toolbar, wxID_ANY, wxT("Render"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
+	camCheckbox = new wxCheckBox( toolbar, wxID_ANY, wxT("Camera"), wxDefaultPosition, wxDefaultSize, 0 );
 	
-	toolbar->AddControl( renderCheckbox );
+	camCheckbox->Enable( false );
+	
+	toolbar->AddControl( camCheckbox );
 	toolbar->Realize();
 	
 	
@@ -63,7 +65,7 @@ TRIVAGUI::TRIVAGUI( wxWindow* parent, wxWindowID id, const wxString& title, cons
 	this->Connect( m_menuItem9->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( TRIVAGUI::about ) );
 	playButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( TRIVAGUI::playClicked ), NULL, this );
 	pauseButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( TRIVAGUI::pauseClicked ), NULL, this );
-	renderCheckbox->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( TRIVAGUI::ogreRenderCheckbox ), NULL, this );
+	camCheckbox->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( TRIVAGUI::cameraCheckbox ), NULL, this );
 }
 
 TRIVAGUI::~TRIVAGUI()
@@ -74,7 +76,7 @@ TRIVAGUI::~TRIVAGUI()
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( TRIVAGUI::about ) );
 	playButton->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( TRIVAGUI::playClicked ), NULL, this );
 	pauseButton->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( TRIVAGUI::pauseClicked ), NULL, this );
-	renderCheckbox->Disconnect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( TRIVAGUI::ogreRenderCheckbox ), NULL, this );
+	camCheckbox->Disconnect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( TRIVAGUI::cameraCheckbox ), NULL, this );
 }
 
 TrivaAboutGui::TrivaAboutGui( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxFrame( parent, id, title, pos, size, style )

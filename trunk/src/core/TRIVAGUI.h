@@ -48,7 +48,7 @@ class TRIVAGUI : public wxFrame
 		wxToolBar* toolbar;
 		wxButton* playButton;
 		wxButton* pauseButton;
-		wxCheckBox* renderCheckbox;
+		wxCheckBox* camCheckbox;
 		
 		// Virtual event handlers, overide them in your derived class
 		virtual void loadBundle( wxCommandEvent& event ){ event.Skip(); }
@@ -56,7 +56,7 @@ class TRIVAGUI : public wxFrame
 		virtual void about( wxCommandEvent& event ){ event.Skip(); }
 		virtual void playClicked( wxCommandEvent& event ){ event.Skip(); }
 		virtual void pauseClicked( wxCommandEvent& event ){ event.Skip(); }
-		virtual void ogreRenderCheckbox( wxCommandEvent& event ){ event.Skip(); }
+		virtual void cameraCheckbox( wxCommandEvent& event ){ event.Skip(); }
 		
 	
 	public:

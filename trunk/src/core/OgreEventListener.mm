@@ -12,15 +12,13 @@ void OgreEventListener::onCharEvent (wxKeyEvent& evt)
 
 void OgreEventListener::onKeyDownEvent(wxKeyEvent& evt)
 {
-	std::cout << __FUNCTION__ << std::endl;
-	std::cout << "#: " << evt.GetKeyCode() << std::endl;
-	[view keyEvent: &evt];
+	[view onKeyDownEvent: &evt];
 }
 
 
 void OgreEventListener::onKeyUpEvent(wxKeyEvent& evt)
 {
-	std::cout << __FUNCTION__ << std::endl;
+	[view onKeyUpEvent: &evt];
 }
 
 void OgreEventListener::onMouseEvent(wxMouseEvent& evt)

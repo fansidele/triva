@@ -191,7 +191,7 @@
 {
 	mWindow = win;
 
-	cameraManager = new CameraManager (win);
+	cameraManager = new Camera2Manager (win);
 //	mInputMgr->addKeyListener (cameraManager, "CameraManager");
 //	mInputMgr->addMouseListener (cameraManager, "CameraManager");
 	mRoot->addFrameListener (cameraManager);
@@ -491,5 +491,10 @@
 	ceguiManager->updateScale ();
 #endif
         mSceneMgr->getRootSceneNode()->setScale (planeScale,yScale,planeScale);
+}
+
+- (Camera2Manager *) cameraManager
+{
+	return cameraManager;
 }
 @end

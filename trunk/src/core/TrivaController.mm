@@ -11,17 +11,11 @@ wxString NSSTRINGtoWXSTRING (NSString *ns)
 void TrivaController::_activateOgre()
 {
 	reader = [[ProtoReader alloc] init];
-	std::cout << "##" << __FUNCTION__ << std::endl;
 	ProtoView *view = [[ProtoView alloc] init];
 	[view step1];
 
-	std::cout << "#########################################"<< std::endl;
-	ogreInput = new OgreEventListener ((id)view);
-
 	std::cout << mOgre << std::endl;
 	mOgre->createRenderWindow ();
-	std::cout << "#########################################"<< std::endl;
-	mOgre->addInputListener (ogreInput);
 
 	Ogre::RenderWindow *win = mOgre->getRenderWindow();
 	[view createSceneManager];
@@ -34,7 +28,9 @@ void TrivaController::_activateOgre()
 	[simulator setOutput: view];
 	[view setInput: simulator];
 	this->setState(Initialized);
-	mOgre->setRenderTimerPeriod (100);
+	mOgre->addInputListener ([view cameraManager]);
+	mOgre->setRenderTimerPeriod (10,true);
+//	mOgre->setListenersEnabled (true, true);
 }
 
 TrivaController::TrivaController( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : TRIVAGUI (parent,id,title,pos,size,style)
@@ -117,12 +113,21 @@ void TrivaController::checkRead(wxTimerEvent& event)
 	}
 }
 
-void TrivaController::ogreRenderCheckbox( wxCommandEvent& event )
+void TrivaController::cameraCheckbox( wxCommandEvent& event )
 {
 	std::cout << __FUNCTION__ << std::endl;
+	Camera2Manager *c = [view cameraManager];
+	if (camCheckbox->IsChecked()){
+		c->setMovingCamera(true);
+	}else{
+		c->setMovingCamera(false);
+	}
+
+/*
 	if (renderCheckbox->IsChecked()){
 		mOgre->resumeRenderTimer();
 	}else{
 		mOgre->pauseRenderTimer();
 	}
+*/
 }
