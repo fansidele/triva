@@ -1,4 +1,4 @@
-#include "ProtoController.h"
+#include "AppController.h"
 
 IMPLEMENT_APP(ProtoController);
 
