@@ -5,8 +5,6 @@
 // PLEASE DO "NOT" EDIT THIS FILE!
 ///////////////////////////////////////////////////////////////////////////
 
-#include "wxOgreRenderWindow.h"
-
 #include "TRIVAGUI.h"
 
 ///////////////////////////////////////////////////////////////////////////
@@ -18,7 +16,7 @@ TRIVAGUI::TRIVAGUI( wxWindow* parent, wxWindowID id, const wxString& title, cons
 	wxBoxSizer* bSizer3;
 	bSizer3 = new wxBoxSizer( wxVERTICAL );
 	
-	mOgre = new wxOgreRenderWindow( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	mOgre = new TrivaRenderWindow( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	bSizer3->Add( mOgre, 1, wxEXPAND|wxALL|wxALIGN_CENTER_HORIZONTAL, 0 );
 	
 	this->SetSizer( bSizer3 );

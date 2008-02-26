@@ -8,7 +8,7 @@
 #ifndef __TRIVAGUI__
 #define __TRIVAGUI__
 
-class wxOgreRenderWindow;
+class TrivaRenderWindow;
 
 #include <wx/panel.h>
 #include <wx/gdicmn.h>
@@ -41,7 +41,7 @@ class TRIVAGUI : public wxFrame
 	private:
 	
 	protected:
-		wxOgreRenderWindow* mOgre;
+		TrivaRenderWindow* mOgre;
 		wxMenuBar* m_menubar2;
 		wxMenu* application;
 		wxMenu* m_menu6;
