@@ -14,3 +14,8 @@ TrivaRenderWindow::TrivaRenderWindow(wxWindow *parent, wxWindowID id,
 {
 }
 
+
+void TrivaRenderWindow::OnKeyDownEvent(wxKeyEvent& evt)
+{
+	std::cout << __FILE__ << " : " << __FUNCTION__ << std::endl;
+}

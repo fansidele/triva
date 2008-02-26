@@ -1,7 +1,7 @@
 #ifndef __OgreEventListener__
 #define __OgreEventListener__
 
-#include "core/wxOgreRenderWindow.h"
+#include "view/wxInputEventListener.h"
 #include <Ogre.h>
 #include <OIS.h>
 

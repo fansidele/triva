@@ -12,6 +12,7 @@ public:
 			const wxSize &size = wxDefaultSize,
 			long style = wxSUNKEN_BORDER,
 			const wxValidator &validator = wxDefaultValidator);
+	void OnKeyDownEvent(wxKeyEvent& evt);
 };
 
 #endif
