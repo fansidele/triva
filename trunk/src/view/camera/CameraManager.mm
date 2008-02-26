@@ -127,6 +127,7 @@ bool CameraManager::frameEnded (const Ogre::FrameEvent& evt)
 bool CameraManager::frameStarted (const Ogre::FrameEvent& evt) 
 { 
 	moveCamera (evt);
+	std::cout << __FUNCTION__ << std::endl;
 	return true; 
 } 
 
@@ -188,5 +189,32 @@ void CameraManager::createViewport (Ogre::RenderWindow *win)
 				Ogre::Real(mViewport->getActualHeight()));
 }
 
+void CameraManager::moveUp ()
+{
+	std::cout << __FUNCTION__ << std::endl;
+	mDirection.z -= mMove;
+	mCamera->moveRelative (mDirection);
+}
+
+void CameraManager::moveDown ()
+{
+	std::cout << __FUNCTION__ << std::endl;
+	mDirection.z += mMove;
+	mCamera->moveRelative (mDirection);
+}
+
+void CameraManager::moveLeft ()
+{
+	std::cout << __FUNCTION__ << std::endl;
+	mDirection.x += mMove;
+	mCamera->moveRelative (mDirection);
+}
+
+void CameraManager::moveRight ()
+{
+	std::cout << __FUNCTION__ << std::endl;
+	mDirection.x -= mMove;
+	mCamera->moveRelative (mDirection);
+}
 #endif
 

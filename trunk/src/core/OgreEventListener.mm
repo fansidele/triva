@@ -1,5 +1,10 @@
 #include "OgreEventListener.h"
 
+OgreEventListener::OgreEventListener (id v)
+{
+	view = v;
+}
+
 void OgreEventListener::onCharEvent (wxKeyEvent& evt)
 {
 	std::cout << __FUNCTION__ << std::endl;
@@ -8,6 +13,8 @@ void OgreEventListener::onCharEvent (wxKeyEvent& evt)
 void OgreEventListener::onKeyDownEvent(wxKeyEvent& evt)
 {
 	std::cout << __FUNCTION__ << std::endl;
+	std::cout << "#: " << evt.GetKeyCode() << std::endl;
+	[view keyEvent: &evt];
 }
 
 

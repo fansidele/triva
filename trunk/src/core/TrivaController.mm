@@ -16,7 +16,7 @@ void TrivaController::_activateOgre()
 	[view step1];
 
 	std::cout << "#########################################"<< std::endl;
-	ogreInput = new OgreEventListener ();	
+	ogreInput = new OgreEventListener ((id)view);
 
 	std::cout << mOgre << std::endl;
 	mOgre->createRenderWindow ();
@@ -34,6 +34,7 @@ void TrivaController::_activateOgre()
 	[simulator setOutput: view];
 	[view setInput: simulator];
 	this->setState(Initialized);
+	mOgre->setRenderTimerPeriod (100);
 }
 
 TrivaController::TrivaController( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : TRIVAGUI (parent,id,title,pos,size,style)
@@ -41,10 +42,6 @@ TrivaController::TrivaController( wxWindow* parent, wxWindowID id, const wxStrin
 }
 
 
-void TrivaController::caputz( wxCommandEvent& event )
-{
-	std::cout << "##" << __FUNCTION__ << std::endl;
-}
 
 void TrivaController::exit( wxCommandEvent& event )
 {
@@ -120,3 +117,12 @@ void TrivaController::checkRead(wxTimerEvent& event)
 	}
 }
 
+void TrivaController::ogreRenderCheckbox( wxCommandEvent& event )
+{
+	std::cout << __FUNCTION__ << std::endl;
+	if (renderCheckbox->IsChecked()){
+		mOgre->resumeRenderTimer();
+	}else{
+		mOgre->pauseRenderTimer();
+	}
+}

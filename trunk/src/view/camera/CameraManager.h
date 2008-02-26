@@ -13,6 +13,10 @@ class CameraManager : public Ogre::FrameListener,
 public: 
 #ifdef TRIVAWXWIDGETS
 	CameraManager (Ogre::RenderWindow *win);
+	void moveUp();
+	void moveDown();
+	void moveLeft();
+	void moveRight();
 #endif
 	CameraManager ();
 	~CameraManager ();

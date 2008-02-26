@@ -3,6 +3,7 @@
 #include <Foundation/Foundation.h>
 #include <Ogre.h>
 #include <OIS.h>
+#include <wx/wx.h>
 #include "general/ProtoComponent.h"
 #include "view/VisuInputManager.h"
 #include "view/camera/CameraManager.h"
@@ -104,6 +105,7 @@
 - (void) keyboardL;
 - (void) keyboardK;
 - (void) keyboardM;
+- (void) keyEvent: (wxKeyEvent *) ev;
 @end
 
 #ifndef TRIVAWXWIDGETS

@@ -3,11 +3,16 @@
 
 #include "core/wxOgreRenderWindow.h"
 #include <Ogre.h>
+#include <OIS.h>
 
 
 class OgreEventListener : public wxInputEventListener
 {
 private:
+	id view;
+
+public:
+	OgreEventListener (id v);
 
 protected:
 	void onCharEvent (wxKeyEvent& evt);

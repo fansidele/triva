@@ -36,7 +36,7 @@ protected:
 	void bundlesView ( wxCommandEvent& event );
 	void playClicked( wxCommandEvent& event );
 	void pauseClicked( wxCommandEvent& event );
-	void caputz( wxCommandEvent& event );
+	void ogreRenderCheckbox ( wxCommandEvent& event );
 	
 public:
 	/** Constructor */
