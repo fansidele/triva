@@ -1,17 +1,17 @@
 #ifndef __CAMERA2_MANAGER_H
 #define __CAMERA2_MANAGER_H
 
-#include "core/wxOgreRenderWindow.h"
+#include "view/wxInputEventListener.h"
 #include <Ogre.h>
 #include "view/QueryFlags.h"
 
-class Camera2Manager : public wxInputEventListener,
+class CameraManager : public wxInputEventListener,
 			public Ogre::FrameListener
 {
 public: 
-	Camera2Manager (Ogre::RenderWindow *win);
-	Camera2Manager ();
-	~Camera2Manager ();
+	CameraManager (Ogre::RenderWindow *win);
+	CameraManager ();
+	~CameraManager ();
 
 protected:
 	void onKeyDownEvent(wxKeyEvent& evt);

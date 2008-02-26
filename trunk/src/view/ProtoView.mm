@@ -52,96 +52,6 @@
 	return true;
 }
 
-#ifndef TRIVAWXWIDGETS
-- (BOOL) configureApplication
-{
-	mRoot = new Ogre::Root("plugins.cfg", "ogre.cfg", "Ogre.log");
-
-
-	NSString *resourcescfg = [[NSBundle mainBundle] pathForResource:
-@"resources" ofType: @"cfg"];
-	NSFileManager *fm = [NSFileManager defaultManager];
-	NSString *currentPath = [fm currentDirectoryPath];
-	NSArray *ar = [resourcescfg pathComponents];
-	NSMutableArray *ar2 = [NSMutableArray arrayWithArray: ar];
-	[ar2 removeLastObject];
-	NSString *mediaPath = [NSString pathWithComponents: ar2];
-	NSLog (@"mediaPath = %@", mediaPath);
-
-	[fm changeCurrentDirectoryPath: mediaPath];
-
-
-	if (![self createRootAndWindow]) return false;
-	if (![self createSceneManager]) return false;
-
-	Ogre::TextureManager::getSingleton().setDefaultNumMipmaps(5);
-
-        //Setup Input
-        mInputMgr = VisuInputManager::getSingletonPtr();
-        mInputMgr->initialise (mWindow);
-        mRoot->addFrameListener (mInputMgr);
-
-        //Create ExitManager
-        exitManager = new ExitManager ();
-        mInputMgr->addKeyListener (exitManager, "ExitManager");
-        mRoot->addFrameListener (exitManager);
-
-	//Create CameraManager
-	cameraManager = new CameraManager ();
-	mInputMgr->addKeyListener (cameraManager, "CameraManager");
-	mInputMgr->addMouseListener (cameraManager, "CameraManager");
-	mRoot->addFrameListener (cameraManager);
-
-	//Create AmbientManager
-	ambientManager = new AmbientManager ();
-	mRoot->addFrameListener (ambientManager);
-
-        //Create CEGUIManager
-        ceguiManager = new CEGUIManager (self, mWindow, mSceneMgr);
-        mInputMgr->addKeyListener (ceguiManager, "CEGUIManager");
-        mInputMgr->addMouseListener (ceguiManager, "CEGUIManager");
-        mRoot->addFrameListener (ceguiManager);
-
-	//Create DrawManager
-	drawManager = new DrawManager (self);
-        mRoot->addFrameListener (drawManager);
-
-	//Create KeyboardListener	
-	keyboardListener = new KeyboardListener (self);
-	mInputMgr->addKeyListener (keyboardListener, "KeyboardListener");
-	mInputMgr->addMouseListener (keyboardListener, "KeyboardListener");
-
-	//Create MouseListener
-	mouseListener = new MouseListener (self);
-	mInputMgr->addMouseListener (mouseListener, "MouseListener");
-
-	[fm changeCurrentDirectoryPath: currentPath];
-        return true;
-}
-
-- (id) init
-{
-	self = [super init];
-
-	//kaapi
-	yScale = 1;
-	yScaleChangeFactor = 0.1;
-	planeScale = 1;
-	planeScaleChangeFactor = 0.5;
-	zoomSwitch = true;
-	statesLabelsAppearance = true;
-	containersLabelsAppearance = true;
-
-	[self configureApplication];
-	applicationController = nil;
-
-
-	mSceneMgr->getRootSceneNode()->setScale (planeScale,yScale,planeScale);
-
-	bundlesConfiguration = [[NSMutableDictionary alloc] init];	
-	return self;
-}
-#else
 
 
 - (id) init
@@ -191,7 +101,7 @@
 {
 	mWindow = win;
 
-	cameraManager = new Camera2Manager (win);
+	cameraManager = new CameraManager (win);
 //	mInputMgr->addKeyListener (cameraManager, "CameraManager");
 //	mInputMgr->addMouseListener (cameraManager, "CameraManager");
 	mRoot->addFrameListener (cameraManager);
@@ -211,22 +121,16 @@
 	return YES;
 }
 
-#endif //TRIVAWXWIDGETS
 
 
 
 - (void) setController: (ProtoController *) controller
 {
-#ifndef TRIVAWXWIDGETS
-	applicationController = controller;
-	[applicationController retain];
-#endif
 }
 
 - (void) dealloc
 {
         NSLog (@"%s", self, __FUNCTION__);
-	delete mInputMgr;
 	delete mRoot;
 	[applicationController release];
 	[bundlesConfiguration release];
@@ -244,7 +148,6 @@
 
 - (void) end
 {
-	delete mInputMgr;
 	delete mRoot;
 }
 
@@ -271,7 +174,6 @@
 
 	/* follows a HACK! it should be done in dealloc method, that
 		currently is not called */
-	delete mInputMgr;
 	delete mRoot;
 	return;
 }
@@ -351,9 +253,6 @@
 	}else{
 		planeScale += planeScaleChangeFactor;
 	}
-#ifndef TRIVAWXWIDGETS
-	ceguiManager->updateScale ();
-#endif
 	mSceneMgr->getRootSceneNode()->setScale (planeScale,yScale,planeScale);
 }
 
@@ -383,9 +282,6 @@
 			planeScale += planeScaleChangeFactor;
 		}
 	}
-#ifndef TRIVAWXWIDGETS
-	ceguiManager->updateScale ();
-#endif
 	mSceneMgr->getRootSceneNode()->setScale (planeScale,yScale,planeScale);
 }
 
@@ -487,13 +383,10 @@
 - (void) setYScale: (double) y
 {
 	yScale = y;
-#ifndef TRIVAWXWIDGETS
-	ceguiManager->updateScale ();
-#endif
         mSceneMgr->getRootSceneNode()->setScale (planeScale,yScale,planeScale);
 }
 
-- (Camera2Manager *) cameraManager
+- (CameraManager *) cameraManager
 {
 	return cameraManager;
 }

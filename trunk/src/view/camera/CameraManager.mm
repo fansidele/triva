@@ -1,11 +1,11 @@
-#include "view/camera/Camera2Manager.h"
+#include "view/camera/CameraManager.h"
 
-void Camera2Manager::createCamera ()
+void CameraManager::createCamera ()
 {
 	Ogre::SceneNode *node = mSceneMgr->getRootSceneNode();
 	Ogre::SceneNode *childNode = node->createChildSceneNode();
 
-	mCamera = mSceneMgr->createCamera ("Camera2Manager-DefaultCamera");
+	mCamera = mSceneMgr->createCamera ("CameraManager-DefaultCamera");
 	mCamera->setNearClipDistance (1);
 	mCamera->setPosition (Ogre::Vector3 (500, 500, 500));
 	mCamera->lookAt (Ogre::Vector3 (100,0,100));
@@ -20,7 +20,7 @@ void Camera2Manager::createCamera ()
 	movingCamera = false;
 }
 
-void Camera2Manager::moveCamera ()
+void CameraManager::moveCamera ()
 {
 	mCamera->yaw (mRotX);
 	mCamera->pitch (mRotY);
@@ -38,7 +38,7 @@ void Camera2Manager::moveCamera ()
 	mDirection = Ogre::Vector3::ZERO;
 }
 
-void Camera2Manager::createViewport ()
+void CameraManager::createViewport ()
 {
 	Ogre::RenderWindow *mWindow = mRoot->getAutoCreatedWindow();
 	mViewport = mWindow->addViewport (mCamera);
@@ -47,7 +47,7 @@ void Camera2Manager::createViewport ()
 				Ogre::Real(mViewport->getActualHeight()));
 }
 
-void Camera2Manager::onKeyDownEvent(wxKeyEvent& evt)
+void CameraManager::onKeyDownEvent(wxKeyEvent& evt)
 { 
 	std::cout << __FILE__ << "::" << __FUNCTION__ << std::endl;
         int key = evt.GetKeyCode();
@@ -86,11 +86,11 @@ void Camera2Manager::onKeyDownEvent(wxKeyEvent& evt)
 	moveCamera();
 }
 
-void Camera2Manager::onKeyUpEvent (wxKeyEvent& evt)
+void CameraManager::onKeyUpEvent (wxKeyEvent& evt)
 { 
 }
 
-void Camera2Manager::onMouseEvent(wxMouseEvent& evt)
+void CameraManager::onMouseEvent(wxMouseEvent& evt)
 {
 	std::cout << __FILE__ << "::" << __FUNCTION__ << std::endl;
 	std::cout << "X: " << evt.GetX() << " Y: " << evt.GetY() << std::endl;
@@ -106,25 +106,25 @@ void Camera2Manager::onMouseEvent(wxMouseEvent& evt)
 	}
 }
 
-bool Camera2Manager::frameEnded (const Ogre::FrameEvent& evt) 
+bool CameraManager::frameEnded (const Ogre::FrameEvent& evt) 
 {
 	return true; 
 } 
 
-bool Camera2Manager::frameStarted (const Ogre::FrameEvent& evt) 
+bool CameraManager::frameStarted (const Ogre::FrameEvent& evt) 
 { 
 	moveCamera ();
 	std::cout << __FUNCTION__ << std::endl;
 	return true; 
 } 
 
-Camera2Manager::~Camera2Manager ()
+CameraManager::~CameraManager ()
 {
 	mSceneMgr->destroyAllCameras();
 	mRoot->getAutoCreatedWindow()->removeAllViewports();
 }
 
-Camera2Manager::Camera2Manager ()
+CameraManager::CameraManager ()
 {
 	mRoot = Ogre::Root::getSingletonPtr();
 	mSceneMgr = mRoot->getSceneManager("VisuSceneManager");
@@ -136,7 +136,7 @@ Camera2Manager::Camera2Manager ()
 	std::cout << "#2" << std::endl;
 }
 
-void Camera2Manager::changeCamera ()
+void CameraManager::changeCamera ()
 {
 	static int x = 0;
 	if (x == 0){
@@ -148,18 +148,18 @@ void Camera2Manager::changeCamera ()
 	}
 }
 
-void Camera2Manager::newPositionForCamera (double time)
+void CameraManager::newPositionForCamera (double time)
 {
 	mCamera->setPosition (Ogre::Vector3 (500, time, 500));
 	mCamera->lookAt (Ogre::Vector3 (100,time,100));
 }
 
-void Camera2Manager::setMovingCamera (bool m)
+void CameraManager::setMovingCamera (bool m)
 {
 	movingCamera = m;
 }
 
-Camera2Manager::Camera2Manager (Ogre::RenderWindow *win)
+CameraManager::CameraManager (Ogre::RenderWindow *win)
 {
 	mRoot = Ogre::Root::getSingletonPtr();
 	mSceneMgr = mRoot->getSceneManager("VisuSceneManager");
@@ -167,7 +167,7 @@ Camera2Manager::Camera2Manager (Ogre::RenderWindow *win)
 	createViewport (win);
 }
 
-void Camera2Manager::createViewport (Ogre::RenderWindow *win)
+void CameraManager::createViewport (Ogre::RenderWindow *win)
 {
 	mViewport = win->addViewport (mCamera);
 	mViewport->setBackgroundColour(Ogre::ColourValue::White);

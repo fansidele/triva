@@ -1,12 +1,11 @@
 #ifndef __PROTOVIEW_H
 #define __PROTOVIEW_H
-#include "view/camera/Camera2Manager.h"
+#include "view/camera/CameraManager.h"
 #include <Foundation/Foundation.h>
 #include <Ogre.h>
 #include <OIS.h>
 #include <wx/wx.h>
 #include "general/ProtoComponent.h"
-#include "view/VisuInputManager.h"
 #include "view/ambient/AmbientManager.h"
 #include "view/cegui/CEGUIManager.h"
 #include "view/keyboard/KeyboardListener.h"
@@ -25,14 +24,10 @@
 	Ogre::Root *mRoot;
 	Ogre::RenderWindow *mWindow;
 	Ogre::SceneManager *mSceneMgr;
-	VisuInputManager *mInputMgr;
 	BOOL bShutdown;
 
-	Camera2Manager *cameraManager;
+	CameraManager *cameraManager;
 	AmbientManager *ambientManager;
-#ifndef TRIVAWXWIDGETS
-	CEGUIManager *ceguiManager;
-#endif
 	DrawManager *drawManager;
 	ExitManager *exitManager;
 	KeyboardListener *keyboardListener;
@@ -91,7 +86,7 @@
 
 
 //fev26 2008
-- (Camera2Manager *) cameraManager;
+- (CameraManager *) cameraManager;
 @end
 
 @interface ProtoView (Selection)
@@ -112,14 +107,6 @@
 - (void) onKeyDownEvent: (wxKeyEvent *) ev;
 - (void) onKeyUpEvent: (wxKeyEvent *) ev;
 @end
-
-#ifndef TRIVAWXWIDGETS
-@interface ProtoView (CEGUI)
-- (void) loadBundles;
-- (void) loadBundleNamed: (NSString *) bundleName;
-- (void) optionValue: (NSString *) bValue optionNamed: (NSString *) bOption ofBundle: (NSString *) bName;
-@end
-#endif
 
 /*
 @interface ProtoView (States)
