@@ -5,11 +5,10 @@
 #include <wx/wx.h>
 #include <Foundation/Foundation.h>
 #include "view/TrivaController.h"
+#include "core/OgreConfigure.h"
 
 class ProtoController : public wxApp
 {
-	private:
-		NSAutoreleasePool *pool;
 	public:
 		virtual bool OnInit();
 };

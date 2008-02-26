@@ -4,12 +4,16 @@ IMPLEMENT_APP(ProtoController);
 
 bool ProtoController::OnInit()
 {
-	pool = [[NSAutoreleasePool alloc] init];
+	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+
+	OgreConfigure *ogreConfigure = [[OgreConfigure alloc] init];
 
 	TrivaController *gui = new TrivaController (0, wxID_ANY);
-	gui->_activateOgre();
 	gui->Show();
 
+
+	[ogreConfigure release];
+	[pool release];
 	return true;
 }
 
