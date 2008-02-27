@@ -1,0 +1,20 @@
+#GNUSTEP_INSTALLATION_DOMAIN = USER
+#
+include $(GNUSTEP_MAKEFILES)/common.make
+
+CC=$(CXX)
+
+ADDITIONAL_INCLUDE_DIRS=-I../ -I./ # structure/ -I../layout/ -I../position/
+SUBPROJECT_NAME=core
+core_OBJC_FILES=
+core_OBJCC_FILES=ProtoController.mm
+
+core_INCLUDE_DIRS += @OGRE_CFLAGS@ @OIS_CFLAGS@ @CEGUI_CFLAGS@ @GVC_CFLAGS@
+core_LIB_DIRS += @OGRE_LIBS@ @OIS_LIBS@ @CEGUI_LIBS@ @GVC_LIBS@ -lDIMVisual
+core_LDFLAGS += @LDFLAGS@
+
+include $(GNUSTEP_MAKEFILES)/subproject.make
+
+after-distclean::
+after-all::
+after-clean:: 

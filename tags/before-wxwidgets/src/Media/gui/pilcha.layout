@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<GUILayout >
+    <Window Type="DefaultWindow" Name="Root" >
+        <Property Name="InheritsAlpha" Value="False" />
+        <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
+        <Property Name="UnifiedAreaRect" Value="{{0,0},{0,0},{1,0},{1,0}}" />
+        <Window Type="WindowsLook/Button" Name="Root/1" >
+            <Property Name="Font" Value="Iconified-12" />
+            <Property Name="Text" Value="Teste" />
+            <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
+            <Property Name="UnifiedAreaRect" Value="{{0.40125,0},{0.138333,0},{0.46125,0},{0.181667,0}}" />
+        </Window>
+        <Window Type="TaharezLook/Menubar" Name="Root/" >
+            <Property Name="Font" Value="Iconified-12" />
+            <Property Name="ItemSpacing" Value="10" />
+            <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
+            <Property Name="UnifiedAreaRect" Value="{{0.0025,0},{1.23633e-07,0},{0.59,0},{0.0450003,0}}" />
+            <Window Type="TaharezLook/MenuItem" Name="Root//Item1" >
+                <Property Name="Font" Value="Iconified-12" />
+                <Property Name="Text" Value="File" />
+                <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
+                <Property Name="UnifiedAreaRect" Value="{{0,7},{0,0},{0,35},{0,24}}" />
+                <Property Name="VerticalAlignment" Value="Centre" />
+                <Window Type="TaharezLook/PopupMenu" Name="Root//Item1/AutoPopup" >
+                    <Property Name="Visible" Value="False" />
+                    <Property Name="FadeInTime" Value="0" />
+                    <Property Name="FadeOutTime" Value="0" />
+                    <Property Name="ItemSpacing" Value="2" />
+                    <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
+                    <Property Name="ClippedByParent" Value="False" />
+                    <Property Name="UnifiedAreaRect" Value="{{0,0},{0,24},{0,46},{0,157.801}}" />
+                    <Property Name="AutoResizeEnabled" Value="True" />
+                    <Window Type="TaharezLook/MenuItem" Name="Root//Item1/Item3" >
+                        <Property Name="Font" Value="Iconified-12" />
+                        <Property Name="Text" Value="New" />
+                        <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
+                        <Property Name="UnifiedAreaRect" Value="{{0,2},{0,2},{0,42},{0,26}}" />
+                    </Window>
+                    <Window Type="TaharezLook/MenuItem" Name="Root//Item1/Item4" >
+                        <Property Name="Font" Value="Iconified-12" />
+                        <Property Name="Text" Value="Open" />
+                        <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
+                        <Property Name="UnifiedAreaRect" Value="{{0,2},{0,28},{0,42},{0,52}}" />
+                    </Window>
+                    <Window Type="TaharezLook/MenuItem" Name="Root//Item1/Item5" >
+                        <Property Name="Font" Value="Iconified-12" />
+                        <Property Name="Text" Value="Close" />
+                        <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
+                        <Property Name="UnifiedAreaRect" Value="{{0,2},{0,54},{0,42},{0,78}}" />
+                    </Window>
+                    <Window Type="TaharezLook/MenuItem" Name="Root//Item1/Item6" >
+                        <Property Name="Font" Value="Iconified-12" />
+                        <Property Name="Text" Value="Save" />
+                        <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
+                        <Property Name="UnifiedAreaRect" Value="{{0,2},{0,80},{0,42},{0,104}}" />
+                    </Window>
+                    <Window Type="TaharezLook/MenuItem" Name="Root//Item1/Item7" >
+                        <Property Name="Font" Value="Iconified-12" />
+                        <Property Name="Text" Value="Exit" />
+                        <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
+                        <Property Name="UnifiedAreaRect" Value="{{0,2},{0,106},{0,42},{0,130}}" />
+                    </Window>
+                </Window>
+            </Window>
+            <Window Type="TaharezLook/MenuItem" Name="Root//Item8" >
+                <Property Name="Font" Value="Iconified-12" />
+                <Property Name="Text" Value="Edit" />
+                <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
+                <Property Name="UnifiedAreaRect" Value="{{0,45},{0,0},{0,77},{0,24}}" />
+                <Property Name="VerticalAlignment" Value="Centre" />
+                <Window Type="TaharezLook/PopupMenu" Name="Root//Item8/AutoPopup" >
+                    <Property Name="FadeInTime" Value="0" />
+                    <Property Name="FadeOutTime" Value="0" />
+                    <Property Name="ItemSpacing" Value="2" />
+                    <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
+                    <Property Name="ClippedByParent" Value="False" />
+                    <Property Name="UnifiedAreaRect" Value="{{0,0},{0,24},{0,52},{0,131.593}}" />
+                    <Property Name="AutoResizeEnabled" Value="True" />
+                    <Window Type="TaharezLook/MenuItem" Name="Root//Item8/Item10" >
+                        <Property Name="Font" Value="Iconified-12" />
+                        <Property Name="Text" Value="Cut" />
+                        <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
+                        <Property Name="UnifiedAreaRect" Value="{{0,2},{0,2},{0,48},{0,26}}" />
+                    </Window>
+                    <Window Type="TaharezLook/MenuItem" Name="Root//Item8/Item11" >
+                        <Property Name="Font" Value="Iconified-12" />
+                        <Property Name="Text" Value="Copy" />
+                        <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
+                        <Property Name="UnifiedAreaRect" Value="{{0,2},{0,28},{0,48},{0,52}}" />
+                    </Window>
+                    <Window Type="TaharezLook/MenuItem" Name="Root//Item8/Item12" >
+                        <Property Name="Font" Value="Iconified-12" />
+                        <Property Name="Text" Value="Paste" />
+                        <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
+                        <Property Name="UnifiedAreaRect" Value="{{0,2},{0,54},{0,48},{0,78}}" />
+                    </Window>
+                    <Window Type="TaharezLook/MenuItem" Name="Root//Item8/Item13" >
+                        <Property Name="Font" Value="Iconified-12" />
+                        <Property Name="Text" Value="Delete" />
+                        <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
+                        <Property Name="UnifiedAreaRect" Value="{{0,2},{0,80},{0,48},{0,104}}" />
+                    </Window>
+                </Window>
+            </Window>
+            <Window Type="TaharezLook/MenuItem" Name="Root//Item14" >
+                <Property Name="Font" Value="Iconified-12" />
+                <Property Name="Text" Value="Help" />
+                <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
+                <Property Name="UnifiedAreaRect" Value="{{0,87},{0,0},{0,120},{0,24}}" />
+                <Property Name="VerticalAlignment" Value="Centre" />
+                <Window Type="TaharezLook/PopupMenu" Name="Root//Item14/AutoPopup" >
+                    <Property Name="Visible" Value="False" />
+                    <Property Name="FadeInTime" Value="0" />
+                    <Property Name="FadeOutTime" Value="0" />
+                    <Property Name="ItemSpacing" Value="2" />
+                    <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
+                    <Property Name="ClippedByParent" Value="False" />
+                    <Property Name="UnifiedAreaRect" Value="{{0,0},{0,0},{0,83},{0,55.6482}}" />
+                    <Property Name="AutoResizeEnabled" Value="True" />
+                    <Window Type="TaharezLook/MenuItem" Name="Root//Item14/Item16" >
+                        <Property Name="Font" Value="Iconified-12" />
+                        <Property Name="Text" Value="Contents..." />
+                        <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
+                        <Property Name="UnifiedAreaRect" Value="{{0,2},{0,2},{0,79},{0,26}}" />
+                    </Window>
+                    <Window Type="TaharezLook/MenuItem" Name="Root//Item14/Item17" >
+                        <Property Name="Font" Value="Iconified-12" />
+                        <Property Name="Text" Value="About..." />
+                        <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
+                        <Property Name="UnifiedAreaRect" Value="{{0,2},{0,28},{0,79},{0,52}}" />
+                    </Window>
+                </Window>
+            </Window>
+        </Window>
+    </Window>
+</GUILayout>

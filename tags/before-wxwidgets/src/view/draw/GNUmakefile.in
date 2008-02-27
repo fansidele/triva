@@ -1,0 +1,21 @@
+#GNUSTEP_INSTALLATION_DOMAIN = USER
+#
+include $(GNUSTEP_MAKEFILES)/common.make
+
+CC=$(CXX)
+
+SUBPROJECT_NAME=draw
+draw_OBJC_FILES=
+
+draw_SUBPROJECTS=layout position
+draw_OBJCC_FILES=DrawManager.mm
+
+draw_INCLUDE_DIRS += -I../../ -I../ -I./ @OGRE_CFLAGS@ @OIS_CFLAGS@ @CEGUI_CFLAGS@ @GVC_CFLAGS@
+draw_LIB_DIRS += @OGRE_LIBS@ @OIS_LIBS@ @CEGUI_LIBS@ @GVC_LIBS@
+draw_LDFLAGS += @LDFLAGS@
+
+include $(GNUSTEP_MAKEFILES)/subproject.make
+
+after-distclean::
+after-all::
+after-clean:: 
