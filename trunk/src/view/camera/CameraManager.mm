@@ -114,7 +114,7 @@ void CameraManager::onMouseEvent(wxMouseEvent& evt)
 CameraManager::~CameraManager ()
 {
 	mSceneMgr->destroyAllCameras();
-	mRoot->getAutoCreatedWindow()->removeAllViewports();
+	mRenderWindow->removeAllViewports();
 }
 
 CameraManager::CameraManager (TrivaController *c, Ogre::RenderWindow *win)
@@ -124,6 +124,7 @@ CameraManager::CameraManager (TrivaController *c, Ogre::RenderWindow *win)
 	mSceneMgr = mRoot->getSceneManager("VisuSceneManager");
 	createCamera ();
 	createViewport (win);
+	mRenderWindow = win;
 }
 
 void CameraManager::createViewport (Ogre::RenderWindow *win)

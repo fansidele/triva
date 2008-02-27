@@ -17,7 +17,7 @@
 - (void) dealloc
 {
         NSLog (@"%s", self, __FUNCTION__);
-	delete mRoot;
+	delete drawManager;
 	[super dealloc];
 }
 

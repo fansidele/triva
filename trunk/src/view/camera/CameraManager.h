@@ -38,6 +38,7 @@ private:
 
         Ogre::Root *mRoot;
         Ogre::SceneManager* mSceneMgr;
+	Ogre::RenderWindow *mRenderWindow;
 
 	TrivaController *controller;
 };
