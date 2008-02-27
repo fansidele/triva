@@ -9,8 +9,13 @@
 
 class ProtoController : public wxApp
 {
+	private:
+		NSAutoreleasePool *pool;
+		OgreConfigure *ogreConfigure;
+
 	public:
 		virtual bool OnInit();
+		virtual int OnExit();
 };
 
 #endif

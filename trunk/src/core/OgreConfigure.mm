@@ -52,4 +52,10 @@
 	return self;
 }
 
+- (void) dealloc
+{
+	Ogre::Root *mRoot = Ogre::Root::getSingletonPtr ();
+	delete mRoot;
+	[super dealloc];
+}
 @end
