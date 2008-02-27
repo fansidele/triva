@@ -56,6 +56,13 @@ protected:
 	void zoomIn ( wxCommandEvent& event );	
 	void zoomOut ( wxCommandEvent& event );	
 
+/* Draw category */
+protected:
+	void configureDraw ();
+	void containerLabels ( wxCommandEvent& event );	
+	void stateLabels ( wxCommandEvent& event );	
+
+
 
 /* States Category */
 private:

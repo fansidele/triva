@@ -17,12 +17,14 @@ void TrivaController::applicationIsRunning()
 	bool x =readTimer.Start(100,wxTIMER_CONTINUOUS); /* TODO: make 1 second configurable */
 	std::cout << "start result if " << x << std::endl;
 	this->Connect (wxID_ANY, wxEVT_TIMER, wxTimerEventHandler(TrivaController::checkRead));
+	m3DFrame->resumeRenderTimer();
 }
 
 void TrivaController::applicationIsPaused()
 {
 	std::cout << __FUNCTION__ << std::endl;
 	readTimer.Stop();
+	m3DFrame->pauseRenderTimer();
 }
 
 void TrivaController::setState (TrivaApplicationState newState)

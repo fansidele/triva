@@ -13,11 +13,26 @@ void BundleGUIEvents::traceFilePicker( wxCommandEvent& event )
 	wxFileDialog *f = new wxFileDialog (NULL, wxT("Choose multiple files"), 
 wxT(""), wxT(""), wxT("*.trc"), wxOPEN|wxMULTIPLE|wxFILE_MUST_EXIST,
 wxDefaultPosition);
+
+	NSUserDefaults *d = [NSUserDefaults standardUserDefaults];
+	NSString *v = [d stringForKey:@"LastOpenDirectory"];
+	if (v != nil){
+		wxString dir = NSSTRINGtoWXSTRING(v);
+		f->SetPath (dir);
+	}
+
 	if (f->ShowModal() == wxID_OK){
 		wxArrayString files;
 		f->GetPaths (files);
 		traceFileOpened->InsertItems(files,0);
 		activateButton->Enable();
+
+		wxString path = f->GetPath().BeforeLast('/').Append('/');
+		char sa[100];
+		snprintf (sa, 100, "%S", path.c_str());
+
+		[d setObject: [NSString stringWithFormat:@"%s", sa] forKey: @"LastOpenDirectory"];
+		[d synchronize];		
 	}
 }
 
@@ -36,8 +51,23 @@ void BundleGUIEvents::syncFilePicker( wxCommandEvent& event )
 {
 	wxFileDialog *f = new wxFileDialog (NULL, wxT("Choose one file"), 
 wxT(""), wxT(""), wxT("*"), wxOPEN|wxFILE_MUST_EXIST, wxDefaultPosition);
+
+	NSUserDefaults *d = [NSUserDefaults standardUserDefaults];
+	NSString *v = [d stringForKey:@"LastOpenDirectory"];
+	if (v != nil){
+		wxString dir = NSSTRINGtoWXSTRING(v);
+		f->SetPath (dir);
+	}
+
 	if (f->ShowModal() == wxID_OK){
 		syncFileOpened->Insert(f->GetPath(),0);
+
+		wxString path = f->GetPath().BeforeLast('/').Append('/');
+		char sa[100];
+		snprintf (sa, 100, "%S", path.c_str());
+
+		[d setObject: [NSString stringWithFormat:@"%s", sa] forKey: @"LastOpenDirectory"];
+		[d synchronize];		
 	}
 }
 
