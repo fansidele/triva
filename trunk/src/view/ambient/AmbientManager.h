@@ -2,7 +2,6 @@
 #define __AMBIENT_MANAGER_H
 
 #include <Ogre.h>
-#include <OIS.h>
 #include "view/ambient/Origin.h"
 
 class AmbientManager : public Ogre::FrameListener,

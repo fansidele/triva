@@ -13,29 +13,19 @@ AC_PROG_CXX
 #AM_PROG_LIBTOOL
 
 
-AC_ARG_ENABLE(wxwidgets,
-	[AS_HELP_STRING([--enable-wxwidgets],[build with wxwidgets as GUI])],
-	[ if test "$enable_wxwidgets" = "no"; then
-		CPPFLAGS="$CPPFLAGS"
-	  else
-		CPPFLAGS="$CPPFLAGS -DTRIVAWXWIDGETS"
-	  fi
-	]
-)
-CPPFLAGS="$CPPFLAGS -DWXINTL_NO_GETTEXT_MACRO"
 
 PKG_CHECK_MODULES(OGRE, [OGRE >= 1.4])
 CPPFLAGS="$CPPFLAGS $OGRE_CFLAGS"
 LIBS="$LIBS $OGRE_LIBS"
 
-PKG_CHECK_MODULES(OIS, OIS >= 1.0.0, [ois_found=yes],[ois_found=no])
-CPPFLAGS="$CPPFLAGS $OIS_CFLAGS"
-LIBS="$LIBS $OIS_LIBS"
+#PKG_CHECK_MODULES(OIS, OIS >= 1.0.0, [ois_found=yes],[ois_found=no])
+#CPPFLAGS="$CPPFLAGS $OIS_CFLAGS"
+#LIBS="$LIBS $OIS_LIBS"
 
-PKG_CHECK_MODULES(CEGUI, CEGUI >= 0.5.0, [cegui_found=yes],[cegui_found=no])
-CEGUI_LIBS="$CEGUI_LIBS -lCEGUIOgreRenderer"
-CPPFLAGS="$CPPFLAGS $CEGUI_CFLAGS"
-LIBS="$LIBS $CEGUI_LIBS"
+#PKG_CHECK_MODULES(CEGUI, CEGUI >= 0.5.0, [cegui_found=yes],[cegui_found=no])
+#CEGUI_LIBS="$CEGUI_LIBS -lCEGUIOgreRenderer"
+#CPPFLAGS="$CPPFLAGS $CEGUI_CFLAGS"
+#LIBS="$LIBS $CEGUI_LIBS"
 
 #PKG_CHECK_MODULES(GVC,GVC >= 3.0, [gvc_found=yes],[gvc_found=no])
 GVC_CFLAGS="-I/usr/include/graphviz"
@@ -61,7 +51,7 @@ if test "$wxWin" != 1; then
 		wxWidgets version is $reqwx or above.
 		])
 fi
- 
+CPPFLAGS="$CPPFLAGS -DWXINTL_NO_GETTEXT_MACRO"
 CPPFLAGS="$CPPFLAGS $WX_CPPFLAGS"
 CXXFLAGS="$CXXFLAGS $WX_CXXFLAGS_ONLY"
 CFLAGS="$CFLAGS $WX_CFLAGS_ONLY"

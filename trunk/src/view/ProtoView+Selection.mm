@@ -11,9 +11,6 @@
 		[str appendString: [NSString stringWithFormat: @"%@\n", [s type]]];
 		[str appendString: [NSString stringWithFormat: @"%@\n", [s start]]];
 		[str appendString: [NSString stringWithFormat: @"%@\n", [s end]]];
-#ifndef TRIVAWXWIDGETS
-		ceguiManager->setInfoPanelText([str cString]);
-#endif
 
 		if (prev){
 			drawManager->unselectState (prev);

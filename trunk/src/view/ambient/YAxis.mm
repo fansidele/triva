@@ -41,7 +41,6 @@ YAxis::YAxis (double si, double sc, Origin *origin) :
 		Ogre::String markNameId = Ogre::String (textId);
 		Ogre::String markName = Ogre::String (textValue);
 
-#ifndef TRIVAWXWIDGETS
 		MovableText *text = new MovableText (markNameId, markName);
 		text->setColor (Ogre::ColourValue::Blue);
 		text->setCharacterHeight (15);
@@ -49,6 +48,5 @@ YAxis::YAxis (double si, double sc, Origin *origin) :
 		textNode->attachObject (text);
 		textNode->setPosition (0, i, 0);
 		textNode->setInheritScale (false);
-#endif
 	}
 };

@@ -2,7 +2,6 @@
 #define __DRAW_MANAGER_H
 
 #include <Ogre.h>
-#include <OIS.h>
 #include <Foundation/Foundation.h>
 
 @class ProtoView;

@@ -24,7 +24,7 @@ void TrivaController::applicationIsPaused()
 {
 	std::cout << __FUNCTION__ << std::endl;
 	readTimer.Stop();
-	m3DFrame->pauseRenderTimer();
+//	m3DFrame->pauseRenderTimer();
 }
 
 void TrivaController::setState (TrivaApplicationState newState)
