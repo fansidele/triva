@@ -49,6 +49,13 @@ public:
 	void disableInputMouseFocus ();
 	void enableInputMouseFocus ();
 
+/* Zoom Category */
+protected:
+	double xScale, yScale, zScale;
+	void configureZoom ();
+	void zoomIn ( wxCommandEvent& event );	
+	void zoomOut ( wxCommandEvent& event );	
+
 
 /* States Category */
 private:

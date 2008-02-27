@@ -47,6 +47,7 @@ TrivaController::TrivaController( wxWindow* parent, wxWindowID id, const wxStrin
 
 	/* configuring other GUI objects */
 	camCheckbox->SetValue(false);
+	this->configureZoom();
 
 	/* configuring reader, simulator and inner view */
 	reader = [[ProtoReader alloc] init];
