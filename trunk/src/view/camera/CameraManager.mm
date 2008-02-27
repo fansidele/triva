@@ -73,6 +73,8 @@ void CameraManager::onKeyDownEvent(wxKeyEvent& evt)
 		case WXK_ESCAPE:
 			if (movingCamera){
 				//avisa TrivaController que acabou
+				std::cout << "disableInputMouseFocus()"<<
+std::endl;
 				controller->disableInputMouseFocus ();
 			}else{
 				evt.Skip();
@@ -92,14 +94,17 @@ void CameraManager::onKeyUpEvent (wxKeyEvent& evt)
 
 void CameraManager::onMouseEvent(wxMouseEvent& evt)
 {
-	std::cout << __FILE__ << "::" << __FUNCTION__ << std::endl;
-	std::cout << "X: " << evt.GetX() << " Y: " << evt.GetY() << std::endl;
+//	std::cout << __FILE__ << "::" << __FUNCTION__ << std::endl;
 	if (movingCamera) {
 		static int lx = 0, ly = 0;
-		int x = (evt.GetX() - lx);
-		int y = (evt.GetY() - ly);
-		mRotX = Ogre::Degree(-x * mRotate);
-		mRotY = Ogre::Degree(-y * mRotate);
+		int x = evt.GetX();
+		int y = evt.GetY();
+		int xdif = (x - lx);
+		int ydif = (y - ly);
+//		std::cout << "X: " << evt.GetX() << " xdif: " << xdif << std::endl;
+//		std::cout << "Y: " << evt.GetY() << " ydif: " << ydif << std::endl;
+		mRotX = Ogre::Degree(-xdif * mRotate);
+		mRotY = Ogre::Degree(-ydif * mRotate);
 		lx = x;
 		ly = y;
 		moveCamera();

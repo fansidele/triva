@@ -15,8 +15,6 @@
 //#include "core/ProtoController.h"
 #include "ogre-simulator/XObject.h"
 
-@class ProtoController;
-
 ///enum ProtoApplicationState {Initialized,Configured,Running,Paused};
 
 @interface ProtoView  : ProtoComponent
@@ -32,8 +30,6 @@
 	ExitManager *exitManager;
 	KeyboardListener *keyboardListener;
 	MouseListener *mouseListener;
-
-	ProtoController *applicationController;
 
 	/* for visual scaling */
 	bool zoomSwitch;
@@ -60,7 +56,6 @@
 //	ProtoApplicationState applicationState;
 }
 /* methods called by the application controller (core/ProtoController.mm) */
-- (void) setController: (ProtoController *) controller;
 - (BOOL) refresh;
 - (void) end;
 - (void) start;

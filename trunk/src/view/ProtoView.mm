@@ -32,6 +32,9 @@
 
 
 	mRoot = Ogre::Root::getSingletonPtr ();
+	NSLog (@"initializating drawManager");
+	drawManager = new DrawManager (self);
+        mRoot->addFrameListener (drawManager);
 	return self;
 }
 
@@ -44,33 +47,25 @@
 //	mInputMgr->addMouseListener (cameraManager, "CameraManager");
 //	mRoot->addFrameListener (cameraManager);
 
-	Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
+//	Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
 
 
 	//Create AmbientManager
-	NSLog (@"initializating ambientManager");
-	ambientManager = new AmbientManager ();
-	mRoot->addFrameListener (ambientManager);
+//	NSLog (@"initializating ambientManager");
+//	ambientManager = new AmbientManager ();
+//	mRoot->addFrameListener (ambientManager);
 
 	//Create DrawManager
-	NSLog (@"initializating drawManager");
-	drawManager = new DrawManager (self);
-        mRoot->addFrameListener (drawManager);
 	return YES;
 }
 
 
 
 
-- (void) setController: (ProtoController *) controller
-{
-}
-
 - (void) dealloc
 {
         NSLog (@"%s", self, __FUNCTION__);
 	delete mRoot;
-	[applicationController release];
 	[bundlesConfiguration release];
 	[super dealloc];
 }
@@ -154,14 +149,6 @@
 {
 	drawManager->updateContainersPositions();
 }
-
-/*
-- (void) startSession
-{
-	[applicationController startSession: nil];
-	root = [super root];
-}
-*/
 
 - (XContainer *) root
 {

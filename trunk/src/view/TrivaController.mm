@@ -47,11 +47,31 @@ TrivaController::TrivaController( wxWindow* parent, wxWindowID id, const wxStrin
 
 	/* configuring other GUI objects */
 	camCheckbox->SetValue(false);
+
+	/* configuring reader, simulator and inner view */
+	reader = [[ProtoReader alloc] init];
+	simulator = [[OgreProtoSimulator alloc] init];
+	view = [[ProtoView alloc] init];
+
+	[reader setOutput: simulator];
+	[simulator setInput: reader];
+	[simulator setOutput: view];
+	[view setInput: simulator];
+	this->setState(Initialized);
 }
 
 void TrivaController::disableInputMouseFocus ()
 {
-	m3DFrame->setListenersEnabled (true, false);
+//	m3DFrame->setListenersEnabled (false, false);
+	camCheckbox->SetValue(false);
+//	statusBar->SetStatusText (wxT(""));
+	cameraManager->setMovingCamera(false);
+//	m3DFrame->setListenersEnabled (true, false);
+}
+
+void TrivaController::enableInputMouseFocus ()
+{
+//	m3DFrame->setListenersEnabled (true, true);
 }
 
 void TrivaController::exit( wxCommandEvent& event )
@@ -133,8 +153,11 @@ void TrivaController::cameraCheckbox( wxCommandEvent& event )
 	std::cout << __FUNCTION__ << std::endl;
 	if (camCheckbox->IsChecked()){
 		cameraManager->setMovingCamera(true);
+//		enableInputMouseFocus();		
+//		statusBar->SetStatusText (wxT("Press ESC to disable camera follows mouse"));
 	}else{
 		cameraManager->setMovingCamera(false);
+//		disableInputMouseFocus();		
 	}
 
 /*
