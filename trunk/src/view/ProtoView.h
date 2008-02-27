@@ -22,65 +22,19 @@
 	Ogre::Root *mRoot;
 	Ogre::RenderWindow *mWindow;
 	Ogre::SceneManager *mSceneMgr;
-	BOOL bShutdown;
 
-	CameraManager *cameraManager;
-	AmbientManager *ambientManager;
 	DrawManager *drawManager;
-	ExitManager *exitManager;
-	KeyboardListener *keyboardListener;
-	MouseListener *mouseListener;
-
-	/* for visual scaling */
-	bool zoomSwitch;
-	double yScale;
-	double yScaleChangeFactor;
-	double planeScale;
-	double planeScaleChangeFactor;
-
-	/* for fullscreen control */
-	double fullscreenSwitch;
-
 	/* for labels appearence */
 	bool statesLabelsAppearance;
 	bool containersLabelsAppearance;
-
 	XContainer *root; //not retained (modified in View and in Simulator)
-
-	BOOL paused;
-	BOOL movingCamera;
-
-	//to keep bundles configuration
-	NSMutableDictionary *bundlesConfiguration;
-
-//	ProtoApplicationState applicationState;
 }
-/* methods called by the application controller (core/ProtoController.mm) */
-- (BOOL) refresh;
-- (void) end;
-- (void) start;
-- (double) yScale;
-- (double) yScaleChangeFactor;
 
-- (void) setYScale: (double) y;
-
-/* X */
-- (void) zoomIn;
-- (void) zoomOut;
-- (void) zoomSwitch;
-- (void) adjustZoom;
-- (void) fullscreenSwitch;
 - (void) changePositionAlgorithm;
-
 - (void) switchStatesLabels;
 - (void) switchContainersLabels;
 - (bool) statesLabelsAppearance;
 - (bool) containersLabelsAppearance;
-- (void) switchMovingCamera;
-- (BOOL) step4: (Ogre::RenderWindow*) win;
-
-//fev26 2008
-- (CameraManager *) cameraManager;
 @end
 
 @interface ProtoView (Selection)
@@ -102,12 +56,4 @@
 - (void) onKeyUpEvent: (wxKeyEvent *) ev;
 @end
 
-/*
-@interface ProtoView (States)
-- (void) setState: (enum ProtoApplicationState) newState;
-- (enum ProtoApplicationState) currentState;
-- (void) controlButton;
-- (BOOL) isPaused;
-@end
-*/
 #endif

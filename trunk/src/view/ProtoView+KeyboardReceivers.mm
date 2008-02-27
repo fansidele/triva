@@ -3,23 +3,18 @@
 @implementation ProtoView (KeyboardReceivers)
 - (void) keyboardP
 {
-//	[self zoomOut];
 }
 
 - (void) keyboardO
 {
-//	[self zoomIn];
 }
 
 - (void) keyboardB
 {
-	[self zoomSwitch];
 }
 
 - (void) keyboardF
 {
-	NSLog (@"%s", __FUNCTION__);
-	[self fullscreenSwitch];
 }
 
 - (void) keyboardG
@@ -29,7 +24,6 @@
 
 - (void) keyboardV
 {
-	[self adjustZoom];
 }
 
 - (void) keyboardL
@@ -44,10 +38,5 @@
 
 - (void) keyboardM
 {
-	NSLog (@"%s", __FUNCTION__);
-#ifndef TRIVAWXWIDGETS
-	ceguiManager->setMoveCameraButton (!movingCamera);
-#endif
-//	[self switchMovingCamera];
 }
 @end
