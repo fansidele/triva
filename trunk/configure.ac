@@ -77,9 +77,7 @@ src/view/draw/layout/GNUmakefile
 src/view/extras/GNUmakefile
 src/view/camera/GNUmakefile
 src/view/ambient/GNUmakefile
-src/view/keyboard/GNUmakefile
-src/view/mouse/GNUmakefile
-src/view/cegui/GNUmakefile)
+src/view/selector/GNUmakefile)
 AC_OUTPUT
 
 AC_MSG_NOTICE([

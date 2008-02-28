@@ -26,6 +26,7 @@ protected:
         void syncFilePicker( wxCommandEvent& event );
         void removeSyncFile( wxCommandEvent& event );
 	void configureSetupTab();
+	NSMutableDictionary *getConfigureSetupTab();
 
 public:
 	void setReader (ProtoReader *r);

@@ -1,6 +1,7 @@
 #include "BundleGUIEvents.h"
 
 extern wxString NSSTRINGtoWXSTRING (NSString *ns);
+extern NSString *WXSTRINGtoNSSTRING (wxString wsa);
 
 void BundleGUIEvents::setBundleName (std::string n)
 {
@@ -111,6 +112,9 @@ dictionaryWithDictionary: [conf objectForKey: @"parameters"]];
 	}else{
 		[parameters removeObjectForKey: @"sync"];
 	}
+	NSMutableDictionary *eventsdir = this->getConfigureSetupTab();
+	NSLog (@"eventsdir = %@", eventsdir);
+	[parameters setObject: eventsdir forKey: @"events"];
 NS_DURING
 	[conf setObject: parameters forKey: @"parameters"];
 	if(![reader setConfiguration: conf forDIMVisualBundle:
@@ -182,4 +186,21 @@ dictionaryWithDictionary: [[conf objectForKey: @"parameters"] objectForKey:
 	for (i=0; i < setupCheckList->GetCount(); i++){
 		setupCheckList->Check(i,true);
 	}
+}
+
+NSMutableDictionary *BundleGUIEvents::getConfigureSetupTab()
+{
+	unsigned int i;
+	NSMutableDictionary *conf = [NSMutableDictionary dictionaryWithDictionary: [reader getConfigurationOptionsFromDIMVisualBundle: @"dimvisual-kaapi.bundle"]];
+	NSMutableDictionary *events = [NSMutableDictionary
+dictionaryWithDictionary: [[conf objectForKey: @"parameters"] objectForKey:
+@"events"]];
+
+	for (i=0; i < setupCheckList->GetCount(); i++){
+		if (!setupCheckList->IsChecked(i)){
+			wxString notc = setupCheckList->GetString(i);
+			[events removeObjectForKey: WXSTRINGtoNSSTRING(notc)];
+		}
+	}
+	return events;
 }

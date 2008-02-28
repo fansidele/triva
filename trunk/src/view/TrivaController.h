@@ -12,9 +12,11 @@
 #include "view/ProtoView.h"
 #include "view/camera/CameraManager.h"
 #include "view/ambient/AmbientManager.h"
+#include "view/selector/SelectorManager.h"
 #include <Ogre.h>
 
 class BundleGUIEvents;
+class SelectorManager;
 @class ProtoView;
 
 enum TrivaApplicationState {Initialized,Configured,Running,Paused};
@@ -55,6 +57,11 @@ protected:
 	void zoomIn ( wxCommandEvent& event );	
 	void zoomOut ( wxCommandEvent& event );	
 
+/* Select category */
+public:
+	void selectObjectIdentifier (std::string name);
+	void unselectObjectIdentifier (std::string name);
+
 /* Draw category */
 protected:
 	void configureDraw ();
@@ -85,6 +92,7 @@ protected:
 private:
 	CameraManager *cameraManager;
 	AmbientManager *ambientManager;
+	SelectorManager *selectorManager;
 };
 
 #endif // __TrivaController__
