@@ -196,6 +196,13 @@ BundleGUI::BundleGUI( wxWindow* parent, wxWindowID id, const wxString& title, co
 	setupCheckList = new wxCheckListBox( m_panel5, wxID_ANY, wxDefaultPosition, wxDefaultSize, setupCheckListChoices, wxLB_SORT );
 	bSizer6->Add( setupCheckList, 1, wxALL|wxEXPAND, 5 );
 	
+	wxArrayString setupChoiceChoices;
+	setupChoice = new wxChoice( m_panel5, wxID_ANY, wxDefaultPosition, wxDefaultSize, setupChoiceChoices, 0 );
+	setupChoice->SetSelection( 0 );
+	setupChoice->Enable( false );
+	
+	bSizer6->Add( setupChoice, 0, wxALL|wxEXPAND, 5 );
+	
 	m_panel5->SetSizer( bSizer6 );
 	m_panel5->Layout();
 	bSizer6->Fit( m_panel5 );

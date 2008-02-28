@@ -112,6 +112,17 @@ dictionaryWithDictionary: [conf objectForKey: @"parameters"]];
 	}else{
 		[parameters removeObjectForKey: @"sync"];
 	}
+
+
+	NSMutableSet *types = [NSMutableSet
+setWithSet: [[conf objectForKey: @"parameters"] objectForKey:
+@"type"]];
+	wxString type = setupChoice->GetStringSelection();
+	NSString *typestr = WXSTRINGtoNSSTRING(type);
+	[types intersectSet: [NSSet setWithObject: WXSTRINGtoNSSTRING(type)]];
+	NSLog (@"typestr = %@", types);
+	[parameters setObject: types forKey: @"type"];	
+
 	NSMutableDictionary *eventsdir = this->getConfigureSetupTab();
 	NSLog (@"eventsdir = %@", eventsdir);
 	[parameters setObject: eventsdir forKey: @"events"];
@@ -174,7 +185,10 @@ getConfigurationOptionsFromDIMVisualBundle: @"dimvisual-kaapi.bundle"]];
 dictionaryWithDictionary: [[conf objectForKey: @"parameters"] objectForKey:
 @"events"]];
 
-	NSLog (@"parameters = %@", events);
+	NSMutableSet *types = [NSMutableSet setWithSet: [[conf objectForKey:
+@"parameters"] objectForKey: @"type"]];
+
+	NSLog (@"conf = %@", conf);
 	
 	NSArray *ar = [events allKeys];
 	wxArrayString wsar;
@@ -186,12 +200,23 @@ dictionaryWithDictionary: [[conf objectForKey: @"parameters"] objectForKey:
 	for (i=0; i < setupCheckList->GetCount(); i++){
 		setupCheckList->Check(i,true);
 	}
+
+	NSArray *ar2 = [types allObjects];
+	NSLog (@"types = %@", types);
+	for (i=0; i < [ar2 count]; i++){
+		setupChoice->Insert(NSSTRINGtoWXSTRING([ar2 objectAtIndex: i]),i);
+	}
+	setupChoice->Select(0);
 }
 
 NSMutableDictionary *BundleGUIEvents::getConfigureSetupTab()
 {
 	unsigned int i;
 	NSMutableDictionary *conf = [NSMutableDictionary dictionaryWithDictionary: [reader getConfigurationOptionsFromDIMVisualBundle: @"dimvisual-kaapi.bundle"]];
+	NSMutableSet *types = [NSMutableSet
+setWithSet: [[conf objectForKey: @"parameters"] objectForKey:
+@"type"]];
+
 	NSMutableDictionary *events = [NSMutableDictionary
 dictionaryWithDictionary: [[conf objectForKey: @"parameters"] objectForKey:
 @"events"]];

@@ -29,6 +29,7 @@ class Triva3DFrame;
 #include <wx/stattext.h>
 #include <wx/listbox.h>
 #include <wx/checklst.h>
+#include <wx/choice.h>
 #include <wx/textctrl.h>
 #include <wx/notebook.h>
 
@@ -115,6 +116,7 @@ class BundleGUI : public wxFrame
 		wxButton* removeSyncFileButton;
 		wxPanel* m_panel5;
 		wxCheckListBox* setupCheckList;
+		wxChoice* setupChoice;
 		wxPanel* m_panel11;
 		wxTextCtrl* statusText;
 		
