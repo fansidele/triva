@@ -28,6 +28,7 @@ class Triva3DFrame;
 #include <wx/statbmp.h>
 #include <wx/stattext.h>
 #include <wx/listbox.h>
+#include <wx/checklst.h>
 #include <wx/textctrl.h>
 #include <wx/notebook.h>
 
@@ -112,6 +113,8 @@ class BundleGUI : public wxFrame
 		wxStaticText* m_staticText51;
 		wxListBox* syncFileOpened;
 		wxButton* removeSyncFileButton;
+		wxPanel* m_panel5;
+		wxCheckListBox* setupCheckList;
 		wxPanel* m_panel11;
 		wxTextCtrl* statusText;
 		

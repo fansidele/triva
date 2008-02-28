@@ -126,6 +126,7 @@ NS_DURING
 		selectTraceButton->Disable();
 		removeSyncFileButton->Disable();
 		removeTraceFileButton->Disable();
+		setupCheckList->Disable();
 		std::cout << "controller = " << controller << std::endl;
 		controller->oneBundleConfigured();
 	
@@ -150,4 +151,35 @@ title, pos, size,
 style )
 {
 	activateButton->Disable();
+}
+
+void BundleGUIEvents::setReader (ProtoReader *r)
+{
+	reader = r;
+
+	this->configureSetupTab();
+}
+
+void BundleGUIEvents::configureSetupTab()
+{
+	NSMutableDictionary *conf = [NSMutableDictionary
+dictionaryWithDictionary: [reader
+getConfigurationOptionsFromDIMVisualBundle: @"dimvisual-kaapi.bundle"]];
+
+	NSMutableDictionary *events = [NSMutableDictionary
+dictionaryWithDictionary: [[conf objectForKey: @"parameters"] objectForKey:
+@"events"]];
+
+	NSLog (@"parameters = %@", events);
+	
+	NSArray *ar = [events allKeys];
+	wxArrayString wsar;
+	unsigned int i;
+	for (i=0; i < [ar count]; i++){
+		wsar.Add(NSSTRINGtoWXSTRING([ar objectAtIndex: i]));
+	}
+	setupCheckList->InsertItems (wsar,0);
+	for (i=0; i < setupCheckList->GetCount(); i++){
+		setupCheckList->Check(i,true);
+	}
 }

@@ -25,9 +25,10 @@ protected:
         void removeTraceFile( wxCommandEvent& event );
         void syncFilePicker( wxCommandEvent& event );
         void removeSyncFile( wxCommandEvent& event );
+	void configureSetupTab();
 
 public:
-	void setReader (ProtoReader *r) { reader = r; };
+	void setReader (ProtoReader *r);
 	void setController (TrivaController *t) { controller = t; };
 	void setBundleName (std::string n);
 	/** Constructor */
