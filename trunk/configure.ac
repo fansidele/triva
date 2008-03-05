@@ -70,7 +70,6 @@ src/reader/GNUmakefile
 src/memory/GNUmakefile
 src/ogre-simulator/GNUmakefile
 src/view/GNUmakefile
-src/view/exit/GNUmakefile
 src/view/draw/GNUmakefile
 src/view/draw/position/GNUmakefile 
 src/view/draw/layout/GNUmakefile
