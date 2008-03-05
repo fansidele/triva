@@ -1,0 +1,31 @@
+#GNUSTEP_INSTALLATION_DOMAIN = USER
+#
+include $(GNUSTEP_MAKEFILES)/common.make
+
+CC=$(CXX)
+
+
+#ADDITIONAL_TOOL_LIBS += -lcore
+#ADDITIONAL_LIB_DIRS += -L./core/$(GNUSTEP_OBJ_DIR)
+ADDITIONAL_INCLUDE_DIRS=-I.
+PACKAGE_NAME=@PACKAGE_TARNAME@
+TOOL_NAME=@PACKAGE_TARNAME@
+@PACKAGE_TARNAME@_PRINCIPAL_CLASS = NSApplication
+@PACKAGE_TARNAME@_HAS_RESOURCE_BUNDLE = yes
+@PACKAGE_TARNAME@_RESOURCE_FILES = ogre.cfg resources.cfg plugins.cfg Media trivaInfo.plist
+@PACKAGE_TARNAME@_SUBPROJECTS=core general reader ogre-simulator view
+@PACKAGE_TARNAME@_OBJC_FILES=
+@PACKAGE_TARNAME@_OBJCC_FILES=main.mm
+@PACKAGE_TARNAME@_INCLUDE_DIRS += @CPPFLAGS@
+@PACKAGE_TARNAME@_LIB_DIRS += @LIBS@
+@PACKAGE_TARNAME@_LDFLAGS +=  -lGenericEvent -lPaje -lDIMVisual @LDFLAGS@ 
+
+#include $(GNUSTEP_MAKEFILES)/aggregate.make
+include $(GNUSTEP_MAKEFILES)/tool.make
+
+after-distclean::
+	rm -rf autom4te.cache
+	rm -f config.log config.cache config.status
+
+after-all::
+after-clean:: 

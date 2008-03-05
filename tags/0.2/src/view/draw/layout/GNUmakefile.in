@@ -1,0 +1,21 @@
+#GNUSTEP_INSTALLATION_DOMAIN = USER
+#
+include $(GNUSTEP_MAKEFILES)/common.make
+
+CC=$(CXX)
+
+ADDITIONAL_INCLUDE_DIRS=-I../../../ -I../ -I./
+SUBPROJECT_NAME=layout
+layout_OBJC_FILES=
+layout_OBJCC_FILES=LayoutState.mm Layout.mm LayoutContainer.mm LayoutLink.mm
+
+
+layout_INCLUDE_DIRS += @CPPFLAGS@
+layout_LIB_DIRS += @LIBS@
+layout_LDFLAGS += @LDFLAGS@
+
+include $(GNUSTEP_MAKEFILES)/subproject.make
+
+after-distclean::
+after-all::
+after-clean:: 
