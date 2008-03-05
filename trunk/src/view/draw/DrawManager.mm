@@ -140,7 +140,8 @@ destName];
 
 void DrawManager::updateContainerDrawings ()
 {
-	int visible = (int)[viewController containersLabelsAppearance];
+	bool x = [viewController containersLabelsAppearance];
+	int visible = (int)x;
 	XContainer *root = [viewController root];
 	NSMutableArray *ar = [root allContainers];
 	unsigned int i;
@@ -156,7 +157,8 @@ void DrawManager::updateContainerDrawings ()
 
 void DrawManager::createStatesDrawings ()
 {
-	int visible = (int)[viewController statesLabelsAppearance];
+	bool x = [viewController statesLabelsAppearance];
+	int visible = (int)x;
 	XContainer *root = [viewController root];
 	NSMutableArray *ar = [root allContainersWithStates];
 	unsigned int i;
@@ -177,7 +179,8 @@ void DrawManager::createStatesDrawings ()
 
 void DrawManager::updateStatesDrawings ()
 {
-	int visible = (int)[viewController statesLabelsAppearance];
+	bool x = [viewController statesLabelsAppearance];
+	int visible = (int)x;
 	XContainer *root = [viewController root];
 	NSMutableArray *ar = [root allContainersWithStates];
 	unsigned int i;
