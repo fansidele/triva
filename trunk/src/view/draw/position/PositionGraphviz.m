@@ -47,7 +47,7 @@
 			[allNodesIdentifiers setObject: b forKey: nodeName];
 			[b release];
 		}
-		gvRenderFilename (gvc, g, "png", "out.png");
+//		gvRenderFilename (gvc, g, "png", "out.png");
 		gvFreeLayout (gvc, g);
 	}
 }
