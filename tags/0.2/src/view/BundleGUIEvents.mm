@@ -29,10 +29,8 @@ wxDefaultPosition);
 		activateButton->Enable();
 
 		wxString path = f->GetPath().BeforeLast('/').Append('/');
-		char sa[100];
-		snprintf (sa, 100, "%S", path.c_str());
 
-		[d setObject: [NSString stringWithFormat:@"%s", sa] forKey: @"LastOpenDirectory"];
+		[d setObject: WXSTRINGtoNSSTRING(path) forKey: @"LastOpenDirectory"];
 		[d synchronize];		
 	}
 }
@@ -64,10 +62,8 @@ wxT(""), wxT(""), wxT("*"), wxOPEN|wxFILE_MUST_EXIST, wxDefaultPosition);
 		syncFileOpened->Insert(f->GetPath(),0);
 
 		wxString path = f->GetPath().BeforeLast('/').Append('/');
-		char sa[100];
-		snprintf (sa, 100, "%S", path.c_str());
 
-		[d setObject: [NSString stringWithFormat:@"%s", sa] forKey: @"LastOpenDirectory"];
+		[d setObject:  WXSTRINGtoNSSTRING(path) forKey: @"LastOpenDirectory"];
 		[d synchronize];		
 	}
 }
@@ -96,18 +92,14 @@ dictionaryWithDictionary: [conf objectForKey: @"parameters"]];
 	}
 	for (i = 0; i < n; i++){
 		wxString s = traceFileOpened->GetString(i);
-		char sa[100];
-		snprintf (sa, 100, "%S", s.c_str());
-		[ar addObject: [NSString stringWithFormat:@"%s", sa]];
+		[ar addObject: WXSTRINGtoNSSTRING(s)];
 	}
 	[parameters setObject: ar forKey: @"files"];
 
 	n = syncFileOpened->GetCount();
 	if (n != 0){
 		wxString s = syncFileOpened->GetString(0);
-		char sa[100];
-		snprintf (sa, 100, "%S", s.c_str());
-		[parameters setObject: [NSString stringWithFormat:@"%s", sa]
+		[parameters setObject: WXSTRINGtoNSSTRING(s)
 				forKey: @"sync"];
 	}else{
 		[parameters removeObjectForKey: @"sync"];

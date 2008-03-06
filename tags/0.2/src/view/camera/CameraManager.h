@@ -14,6 +14,12 @@ public:
 	CameraManager (TrivaController *c, Ogre::RenderWindow *win);
 	~CameraManager ();
 	void setMovingCamera (bool c){ movingCamera = c; };
+	void cameraForward ();
+	void cameraBackward ();
+	void cameraLeft ();
+	void cameraRight ();
+	void cameraUp ();
+	void cameraDown ();
 
 protected:
 	void onKeyDownEvent(wxKeyEvent& evt);

@@ -138,3 +138,39 @@ void CameraManager::createViewport (Ogre::RenderWindow *win)
 bool CameraManager::frameStarted (const Ogre::FrameEvent& evt) { return true; }
 bool CameraManager::frameEnded (const Ogre::FrameEvent& evt) { return true; }
 
+
+void CameraManager::cameraForward ()
+{
+	mDirection.z -= mMove;
+	moveCamera();
+}
+
+void CameraManager::cameraBackward ()
+{
+	mDirection.z += mMove;
+	moveCamera();
+}
+
+void CameraManager::cameraLeft ()
+{
+	mDirection.x -= mMove;
+	moveCamera();
+}
+
+void CameraManager::cameraRight ()
+{
+	mDirection.x += mMove;
+	moveCamera();
+}
+
+void CameraManager::cameraUp ()
+{
+	mDirection.y += mMove;
+	moveCamera();
+}
+
+void CameraManager::cameraDown ()
+{
+	mDirection.y -= mMove;
+	moveCamera();
+}
