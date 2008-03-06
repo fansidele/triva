@@ -8,11 +8,11 @@ void TrivaController::configureDraw ()
 
 void TrivaController::containerLabels ( wxCommandEvent& event )
 {
-	[view switchContainersLabels];
+//	[view switchContainersLabels];
 }
 
 void TrivaController::stateLabels ( wxCommandEvent& event )
 {
-	[view switchStatesLabels];
+//	[view switchStatesLabels];
 }
 

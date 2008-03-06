@@ -123,6 +123,7 @@
 
 - (BOOL) setConfiguration: (NSDictionary *) conf forDIMVisualBundle: (NSString *) name
 {
+	NSLog (@"conf = %@", conf);
 	return [integrator setConfiguration: conf forDIMVisualBundle: name];
 }
 @end

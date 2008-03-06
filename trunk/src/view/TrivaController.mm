@@ -40,25 +40,41 @@ TrivaController::TrivaController( wxWindow* parent, wxWindowID id, const wxStrin
 	m3DFrame->pauseRenderTimer();
 
 	/* configuring reader, simulator and inner view */
+/*
 	reader = [[ProtoReader alloc] init];
 	simulator = [[OgreProtoSimulator alloc] init];
 	view = [[ProtoView alloc] init];
+*/
 
+/*
 	[reader setOutput: simulator];
 	[simulator setInput: reader];
 	[simulator setOutput: view];
 	[view setInput: simulator];
+*/
+	trivaPaje = [[TrivaPajeComponent alloc] init];
+	NSLog (@"trivaPaje = %@", [trivaPaje description]);
+
+	[[NSRunLoop currentRunLoop] runUntilDate:[NSDate
+dateWithTimeIntervalSinceNow:1.1]];
 
 	/* set application instance state to Initialized */
 	this->setState(Initialized);
+
+	/* run the NSRunloop */
+	nsRunloopTimer.SetOwner(this);
+	nsRunloopTimer.Start(10,wxTIMER_CONTINUOUS);
+	this->Connect (wxID_ANY, wxEVT_TIMER, wxTimerEventHandler(TrivaController::runGNUstepLoop));
 }
 
 TrivaController::~TrivaController()
 {
 	std::cout << "#### " << __FUNCTION__ << std::endl;
+/*
 	[reader release];
 	[simulator release];
 	[view release];
+*/
 	m3DFrame->removeInputListener(cameraManager);
 	delete ambientManager;
 	delete cameraManager;
@@ -107,6 +123,7 @@ void TrivaController::bundlesView ( wxCommandEvent& event )
 void TrivaController::loadBundle ( wxCommandEvent& event )
 {
 
+/*
 	if (![reader loadDIMVisualBundle: @"dimvisual-kaapi.bundle"]){
 		 wxMessageDialog *dial = new wxMessageDialog(NULL, 
     wxT("Error loading bundle (more messages in the console)"), wxT("Error"), wxOK | wxICON_ERROR);
@@ -119,7 +136,7 @@ void TrivaController::loadBundle ( wxCommandEvent& event )
 		ev->Show();
 		bundlesGUI.push_back(ev);
 	}
-
+*/
 }
 
 
@@ -147,9 +164,11 @@ void TrivaController::oneBundleConfigured()
 
 void TrivaController::checkRead(wxTimerEvent& event)
 {
+/*
 	if ([reader hasMoreData]){
 		[reader read];
 	}
+*/
 }
 
 void TrivaController::cameraCheckbox( wxCommandEvent& event )
@@ -171,4 +190,10 @@ void TrivaController::cameraCheckbox( wxCommandEvent& event )
 		m3DFrame->pauseRenderTimer();
 	}
 */
+}
+
+void TrivaController::runGNUstepLoop(wxTimerEvent& event)
+{
+	[trivaPaje readNextChunk: trivaPaje];
+//	[[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.1]];
 }

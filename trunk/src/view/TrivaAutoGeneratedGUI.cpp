@@ -164,7 +164,7 @@ BundleGUI::BundleGUI( wxWindow* parent, wxWindowID id, const wxString& title, co
 	m_panel9->SetSizer( bSizer13 );
 	m_panel9->Layout();
 	bSizer13->Fit( m_panel9 );
-	m_notebook2->AddPage( m_panel9, wxT("&Trace Files"), true );
+	m_notebook2->AddPage( m_panel9, wxT("&Trace Files"), false );
 	m_panel10 = new wxPanel( m_notebook2, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	wxBoxSizer* bSizer131;
 	bSizer131 = new wxBoxSizer( wxVERTICAL );
@@ -199,14 +199,12 @@ BundleGUI::BundleGUI( wxWindow* parent, wxWindowID id, const wxString& title, co
 	wxArrayString setupChoiceChoices;
 	setupChoice = new wxChoice( m_panel5, wxID_ANY, wxDefaultPosition, wxDefaultSize, setupChoiceChoices, 0 );
 	setupChoice->SetSelection( 0 );
-	setupChoice->Enable( false );
-	
 	bSizer6->Add( setupChoice, 0, wxALL|wxEXPAND, 5 );
 	
 	m_panel5->SetSizer( bSizer6 );
 	m_panel5->Layout();
 	bSizer6->Fit( m_panel5 );
-	m_notebook2->AddPage( m_panel5, wxT("Setup"), false );
+	m_notebook2->AddPage( m_panel5, wxT("Setup"), true );
 	m_panel11 = new wxPanel( m_notebook2, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	wxBoxSizer* bSizer17;
 	bSizer17 = new wxBoxSizer( wxVERTICAL );

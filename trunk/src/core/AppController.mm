@@ -10,6 +10,8 @@ bool ProtoController::OnInit()
 	TrivaController *gui = new TrivaController (0, wxID_ANY);
 	gui->Show();
 
+	[NSApplication sharedApplication];
+
 	return true;
 }
 

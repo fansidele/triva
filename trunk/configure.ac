@@ -67,8 +67,8 @@ src/GNUmakefile
 src/core/GNUmakefile
 src/general/GNUmakefile
 src/reader/GNUmakefile
-src/memory/GNUmakefile
 src/ogre-simulator/GNUmakefile
+src/paje-simulator/GNUmakefile
 src/view/GNUmakefile
 src/view/draw/GNUmakefile
 src/view/draw/position/GNUmakefile 

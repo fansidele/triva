@@ -50,7 +50,6 @@
 @end
 
 #include "reader/ProtoReader.h"
-#include "memory/ProtoMemory.h"
 //#include "ogre-simulator/OgreProtoSimulator.h"
 
 #endif

@@ -4,6 +4,7 @@ extern wxString NSSTRINGtoWXSTRING (NSString *ns);
 
 void TrivaController::selectObjectIdentifier (std::string name)
 {
+/*
 	if (view){
 		NSString *identifier;
 		identifier = [NSString stringWithFormat: @"%s", name.c_str()];
@@ -14,12 +15,15 @@ void TrivaController::selectObjectIdentifier (std::string name)
 [s type], [s start], [s end]]];
 		statusBar->SetStatusText (NSSTRINGtoWXSTRING(info));
 	}
+*/
 }
 
 void TrivaController::unselectObjectIdentifier (std::string name)
 {
+/*
 	if (view){
 		[view unselectObjectIdentifier: [NSString stringWithFormat: @"%s",
 name.c_str()]];
 	}
+*/
 }
