@@ -120,11 +120,9 @@ setWithSet: [[conf objectForKey: @"parameters"] objectForKey:
 	wxString type = setupChoice->GetStringSelection();
 	NSString *typestr = WXSTRINGtoNSSTRING(type);
 	[types intersectSet: [NSSet setWithObject: WXSTRINGtoNSSTRING(type)]];
-	NSLog (@"typestr = %@", types);
 	[parameters setObject: types forKey: @"type"];	
 
 	NSMutableDictionary *eventsdir = this->getConfigureSetupTab();
-	NSLog (@"eventsdir = %@", eventsdir);
 	[parameters setObject: eventsdir forKey: @"events"];
 NS_DURING
 	[conf setObject: parameters forKey: @"parameters"];
@@ -206,7 +204,7 @@ dictionaryWithDictionary: [[conf objectForKey: @"parameters"] objectForKey:
 	for (i=0; i < [ar2 count]; i++){
 		setupChoice->Insert(NSSTRINGtoWXSTRING([ar2 objectAtIndex: i]),i);
 	}
-	setupChoice->Select(0);
+	setupChoice->Select(1);
 }
 
 NSMutableDictionary *BundleGUIEvents::getConfigureSetupTab()

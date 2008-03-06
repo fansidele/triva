@@ -93,6 +93,17 @@ private:
 	CameraManager *cameraManager;
 	AmbientManager *ambientManager;
 	SelectorManager *selectorManager;
+
+
+/* Camera Category */
+protected:
+	void cameraForward( wxCommandEvent& event );
+	void cameraBackward( wxCommandEvent& event );
+	void cameraLeft( wxCommandEvent& event );
+	void cameraRight( wxCommandEvent& event );
+	void cameraUp( wxCommandEvent& event );
+	void cameraDown( wxCommandEvent& event );
+
 };
 
 #endif // __TrivaController__

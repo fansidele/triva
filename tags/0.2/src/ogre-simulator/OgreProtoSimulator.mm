@@ -53,7 +53,7 @@ conected */
 		return;
 	}
 	for (i = 0; i < [object count]; i++){
-		PajeEvent *e = [object objectAtIndex: i];
+		LibPajeEvent *e = [object objectAtIndex: i];
 		if ([e isKindOfClass: [PajeCreateContainer class]]){
 			PajeCreateContainer *pcc = (PajeCreateContainer *) e;
 			[self pajeCreateContainer: pcc];
