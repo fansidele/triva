@@ -3,7 +3,7 @@
 #include <Foundation/Foundation.h>
 #include <Ogre.h>
 #include "general/Macros.h"
-#include "view/draw/layout/Layout.h"
+#include "gui/draw/layout/Layout.h"
 
 @class XState;
 @class XLink;

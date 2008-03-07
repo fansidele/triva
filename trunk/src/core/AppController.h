@@ -4,7 +4,7 @@
 #include <wx/wxprec.h>
 #include <wx/wx.h>
 #include <Foundation/Foundation.h>
-#include "view/TrivaController.h"
+#include "gui/TrivaController.h"
 #include "core/OgreConfigure.h"
 
 class ProtoController : public wxApp

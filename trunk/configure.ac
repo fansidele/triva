@@ -69,14 +69,14 @@ src/general/GNUmakefile
 src/reader/GNUmakefile
 src/ogre-simulator/GNUmakefile
 src/paje-simulator/GNUmakefile
-src/view/GNUmakefile
-src/view/draw/GNUmakefile
-src/view/draw/position/GNUmakefile 
-src/view/draw/layout/GNUmakefile
-src/view/extras/GNUmakefile
-src/view/camera/GNUmakefile
-src/view/ambient/GNUmakefile
-src/view/selector/GNUmakefile)
+src/gui/GNUmakefile
+src/gui/draw/GNUmakefile
+src/gui/draw/position/GNUmakefile 
+src/gui/draw/layout/GNUmakefile
+src/gui/extras/GNUmakefile
+src/gui/camera/GNUmakefile
+src/gui/ambient/GNUmakefile
+src/gui/selector/GNUmakefile)
 AC_OUTPUT
 
 AC_MSG_NOTICE([
