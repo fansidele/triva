@@ -1,4 +1,5 @@
 #include "TrivaController.h"
+#include "paje-simulator/TrivaPajeFilter.h"
 
 wxString NSSTRINGtoWXSTRING (NSString *ns)
 {
@@ -65,7 +66,10 @@ TrivaController::TrivaController( wxWindow* parent, wxWindowID id, const wxStrin
 	[view setInput: simulator];
 */
 
+
 	trivaPaje = [[TrivaPajeComponent alloc] init];
+	TrivaPajeFilter *tpf = [TrivaPajeFilter componentWithController:trivaPaje];
+	[trivaPaje setOutputFilter: tpf];
 	NSLog (@"%@", [trivaPaje description]);
 	[trivaPaje setInputFilename:@"/home/schnorr/paje-tool/Paje.tool/Traces/JavaTest.trace"];
 	[trivaPaje readNextChunk:nil];

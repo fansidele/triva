@@ -8,9 +8,6 @@
 	components = [NSMutableDictionary dictionary];
 	bundles = [NSMutableDictionary dictionary];
 	[self createComponentGraph];
-	id lastComponent = [self componentWithName: @"AggregatingFilter"];
-	TrivaPajeFilter *tpf = [TrivaPajeFilter componentWithController:self];
-	[self connectComponent: lastComponent toComponent: tpf];
 	return self;
 }
 
@@ -182,10 +179,10 @@
         [self startChunk:chunkNumber];
         i = -(int)[simulator eventCount];
         if ([reader hasMoreData]) {
-            NSDebugMLLog(@"tim", @"will read chunk starting at %@",
-                                    [simulator currentTime]);
-            NSLog(@"will read chunk starting at %@",
-                                    [simulator currentTime]);
+      //      NSDebugMLLog(@"tim", @"will read chunk starting at %@",
+    //                                [simulator currentTime]);
+//            NSLog(@"will read chunk starting at %@",
+  //                                  [simulator currentTime]);
             [reader readNextChunk];
         }
         [self endOfChunkLast:![reader hasMoreData]];
@@ -248,7 +245,6 @@
 
 - (void)readNextChunk:(id)sender
 {
-	NSLog (@"%@ %s", self, __FUNCTION__);
 	[self readChunk:[chunkDates count]];
 }
 
@@ -263,8 +259,21 @@
 
 - (void)setInputFilename:(NSString *)name
 {
-	NSLog (@"%@ - %s reader = %@, name = %@", self, __FUNCTION__, reader, name);
     [reader setInputFilename:name];
+}
+
+- (BOOL) setOutputFilter: (PajeFilter *) output
+{
+	id lastComponent = [self componentWithName: @"AggregatingFilter"];
+//	TrivaPajeFilter *tpf = [TrivaPajeFilter componentWithController:self];
+	[self connectComponent: lastComponent toComponent: output];
+	return YES;
+
+}
+
+- (BOOL) setInputFilter: (PajeFilter *) input
+{
+	return YES;
 }
 
 @end

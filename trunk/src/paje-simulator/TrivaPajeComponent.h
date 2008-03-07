@@ -30,4 +30,8 @@
 - (void)createComponentGraph;
 - (void)startChunk:(int)chunkNumber;
 - (void)endOfChunkLast:(BOOL)last;
+
+/* Triva special methods */
+- (BOOL) setOutputFilter: (PajeFilter *) output;
+- (BOOL) setInputFilter: (PajeFilter *) input;
 @end
