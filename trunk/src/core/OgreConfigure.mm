@@ -47,7 +47,13 @@
 	[self setupResources];
 	[fm changeCurrentDirectoryPath: currentPath];
 
-	mRoot->setRenderSystem (mRoot->getRenderSystemByName ("OpenGL Rendering Subsystem"));
+	Ogre::RenderSystem *r;
+	r = mRoot->getRenderSystemByName ("OpenGL Rendering Subsystem");
+	if (!r){
+		NSLog (@"%@, %s: OpenGL Rendering Subsystem not found. Do you have a file named plugins.cfg in the execution directory? Is this file correctly configured?", self, __FUNCTION__);
+		return nil;
+	}
+	mRoot->setRenderSystem (r);
 	mRoot->initialise(false);
 	return self;
 }

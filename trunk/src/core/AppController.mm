@@ -7,6 +7,9 @@ bool ProtoController::OnInit()
 	pool = [[NSAutoreleasePool alloc] init];
 	[NSApplication sharedApplication];
 	ogreConfigure = [[OgreConfigure alloc] init];
+	if (ogreConfigure == nil){
+		return false;
+	}
 
 	/* Run the GNUstep loop every 5 milliseconds (is this a good number?) */
 	nsRunloopTimer.SetOwner(this);
