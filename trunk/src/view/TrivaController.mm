@@ -19,9 +19,21 @@ TrivaController::TrivaController( wxWindow* parent, wxWindowID id, const wxStrin
 {
 	/* last ogre initialization that cannot be accomplished before */
 	Ogre::Root *mRoot = Ogre::Root::getSingletonPtr ();
+
+	NSString *resourcescfg = [[NSBundle mainBundle] pathForResource:
+@"resources" ofType: @"cfg"];
+        NSFileManager *fm = [NSFileManager defaultManager];
+        NSString *currentPath = [fm currentDirectoryPath];
+        NSArray *ar = [resourcescfg pathComponents];
+        NSMutableArray *ar2 = [NSMutableArray arrayWithArray: ar];
+        [ar2 removeLastObject];
+        NSString *mediaPath = [NSString pathWithComponents: ar2];
+	[fm changeCurrentDirectoryPath: mediaPath];
 	Ogre::ResourceGroupManager *resource;
 	resource = Ogre::ResourceGroupManager::getSingletonPtr();
 	resource->initialiseAllResourceGroups();
+	[fm changeCurrentDirectoryPath: currentPath];
+
 
 	/* initializing visual objects */
 	cameraManager = new CameraManager (this, m3DFrame->getRenderWindow());
