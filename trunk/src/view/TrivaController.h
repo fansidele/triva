@@ -90,11 +90,9 @@ public:
 /* Periodic timers */
 private:
 	wxTimer readTimer;
-	wxTimer nsRunloopTimer;
 
 protected:
 	void checkRead (wxTimerEvent& event);
-	void runGNUstepLoop (wxTimerEvent& event);
 
 /* from old ProtoView */
 private:

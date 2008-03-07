@@ -12,6 +12,8 @@ class ProtoController : public wxApp
 	private:
 		NSAutoreleasePool *pool;
 		OgreConfigure *ogreConfigure;
+		wxTimer nsRunloopTimer;
+		void runGNUstepLoop(wxTimerEvent& event);
 
 	public:
 		virtual bool OnInit();

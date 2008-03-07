@@ -52,19 +52,17 @@ TrivaController::TrivaController( wxWindow* parent, wxWindowID id, const wxStrin
 	[simulator setOutput: view];
 	[view setInput: simulator];
 */
-	trivaPaje = [[TrivaPajeComponent alloc] init];
-	NSLog (@"trivaPaje = %@", [trivaPaje description]);
 
-	[[NSRunLoop currentRunLoop] runUntilDate:[NSDate
-dateWithTimeIntervalSinceNow:1.1]];
+	trivaPaje = [[TrivaPajeComponent alloc] init];
+	NSLog (@"%@", [trivaPaje description]);
+	[trivaPaje setInputFilename:@"/home/schnorr/paje-tool/Paje.tool/Traces/JavaTest.trace"];
+	[trivaPaje readNextChunk:nil];
+	[trivaPaje readNextChunk:nil];
+	[trivaPaje readNextChunk:nil];
 
 	/* set application instance state to Initialized */
 	this->setState(Initialized);
 
-	/* run the NSRunloop */
-	nsRunloopTimer.SetOwner(this);
-	nsRunloopTimer.Start(10,wxTIMER_CONTINUOUS);
-	this->Connect (wxID_ANY, wxEVT_TIMER, wxTimerEventHandler(TrivaController::runGNUstepLoop));
 }
 
 TrivaController::~TrivaController()
@@ -190,10 +188,4 @@ void TrivaController::cameraCheckbox( wxCommandEvent& event )
 		m3DFrame->pauseRenderTimer();
 	}
 */
-}
-
-void TrivaController::runGNUstepLoop(wxTimerEvent& event)
-{
-	[trivaPaje readNextChunk: trivaPaje];
-//	[[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.1]];
 }
