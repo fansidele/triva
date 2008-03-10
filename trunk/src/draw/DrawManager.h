@@ -3,10 +3,10 @@
 
 #include <Ogre.h>
 #include <Foundation/Foundation.h>
+#include "draw/layout/Layout.h"
 
 @class ProtoView;
 @class Position;
-@class XState;
 
 class DrawManager : public Ogre::FrameListener,
 	public Ogre::WindowEventListener
@@ -22,9 +22,11 @@ protected:
 private:
 	ProtoView *viewController;
 	Position *position;
+
 public: 
 	DrawManager (ProtoView *view);
 	~DrawManager ();
+/*
 	void movePointer ();
 	void updateContainersPositions ();
 	void updateContainerDrawings ();
@@ -41,8 +43,9 @@ public:
 	void hideContainersLabels ();
 
 	//interactive 
-	void selectState (XState *s);
-	void unselectState (XState *s);
+//	void selectState (XState *s);
+//	void unselectState (XState *s);
+*/
 
 private:
 	Ogre::Root *mRoot;
@@ -51,7 +54,12 @@ private:
 
 
 //PAJE CATEGORY
+private:
+	LayoutContainer *rootLayout;
+	LayoutContainer *internalDrawContainers (id entity, Ogre::SceneNode *node);
+	NSMutableDictionary *internalCreateContainersDictionary (id entity);
 public:
+	void drawContainers ();
 	
 };
 

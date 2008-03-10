@@ -1,19 +1,15 @@
 #include "ProtoView.h"
 
 @implementation ProtoView
-- (id) init
+- (void) initialize
 {
-	self = [super init];
 //	statesLabelsAppearance = true;
 //	containersLabelsAppearance = true;
 
 	mRoot = Ogre::Root::getSingletonPtr ();
 	NSLog (@"initializating drawManager");
-/*
 	drawManager = new DrawManager (self);
-        mRoot->addFrameListener (drawManager);
-*/
-	return self;
+//        mRoot->addFrameListener (drawManager);
 }
 
 - (void) dealloc
@@ -94,10 +90,13 @@
 
 - (void)hierarchyChanged
 {
-        NSLog (@"##oi");
+	drawManager->drawContainers();
+
+
+//        NSLog (@"##oi %p", drawManager);
 //    NSLog(@"%@ root=%@", NSStringFromSelector(_cmd), [self nameForContainer:[self rootInstance]]);
 //        NSLog (@"antes");
-    [self printAll];
+//    [self printAll];
     //    NSLog (@"depois");
 //      NSLog (@"################ FIM @@@@@@@@@@@@@@");
 }

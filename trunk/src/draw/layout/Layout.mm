@@ -23,7 +23,7 @@
 //subclasses
 }
 
-- (void) attachTo: (Ogre::SceneNode *) node
+- (Ogre::SceneNode *) attachTo: (Ogre::SceneNode *) node
 {
 	if (entity != NULL){
 		if (sceneNode == NULL){
@@ -35,6 +35,7 @@
 			textNode->setInheritScale (false);
 		}
 	}
+	return sceneNode;
 }
 
 - (void) createWithIdentifier: (NSString *) ide andMaterial: (NSString *) t
@@ -53,5 +54,15 @@ raise];
 		sceneNode->showBoundingBox (false);
 
 	}
+}
+
+- (Ogre::SceneNode *) sceneNode
+{
+	return sceneNode;
+}
+
+- (void) setPosition: (Ogre::Vector3) vector
+{
+	sceneNode->setPosition (vector);
 }
 @end

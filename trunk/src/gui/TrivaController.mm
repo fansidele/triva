@@ -68,6 +68,7 @@ TrivaController::TrivaController( wxWindow* parent, wxWindowID id, const wxStrin
 
 	trivaPaje = [[TrivaPajeComponent alloc] init];
 	view =[ProtoView componentWithController:trivaPaje];
+	[view initialize];
 	[trivaPaje setOutputFilter: view];
 	NSLog (@"%@", [trivaPaje description]);
 	[trivaPaje setInputFilename:@"/home/schnorr/paje-tool/Paje.tool/Traces/JavaTest.trace"];
@@ -77,6 +78,7 @@ TrivaController::TrivaController( wxWindow* parent, wxWindowID id, const wxStrin
 
 	/* set application instance state to Initialized */
 	this->setState(Initialized);
+	this->setState(Running);
 
 }
 

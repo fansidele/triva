@@ -25,11 +25,12 @@
 	text->setCharacterHeight (15);
 }
 
-- (void) attachTo: (Ogre::SceneNode *) node
+- (Ogre::SceneNode *) attachTo: (Ogre::SceneNode *) node
 {
 	[super attachTo: node];
 	sceneNode->setScale (0,0,0);
 	sceneNode->setPosition (0,0,0);
+	return sceneNode;
 }
 
 - (void) setStart: (double) s

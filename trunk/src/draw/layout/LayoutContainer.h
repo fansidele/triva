@@ -6,7 +6,11 @@
 
 @interface LayoutContainer : Layout
 {
+	NSMutableArray *subcontainers;
+	NSMutableArray *states;
 }
+- (void) addSubContainer: (LayoutContainer *) lc;
+- (void) addState: (LayoutState *) ls;
 @end
 
 #endif

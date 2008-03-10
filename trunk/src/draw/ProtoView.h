@@ -5,7 +5,7 @@
 #include <General/PajeFilter.h>
 //#include "general/ProtoComponent.h"
 //#include "draw/ambient/AmbientManager.h"
-//#include "draw/DrawManager.h"
+#include "draw/DrawManager.h"
 
 @interface ProtoView  : PajeFilter
 {
@@ -13,8 +13,8 @@
 	Ogre::RenderWindow *mWindow;
 	Ogre::SceneManager *mSceneMgr;
 
-/*
 	DrawManager *drawManager;
+/*
 	bool statesLabelsAppearance;
 	bool containersLabelsAppearance;
 	XContainer *root; 

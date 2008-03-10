@@ -3,6 +3,7 @@
 #include "draw/position/Position.h"
 #include "draw/layout/Layout.h"
 
+/*
 void DrawManager::setContainersVisibility (int k)
 {
 	XContainer *root = [viewController root];
@@ -111,7 +112,6 @@ destName];
 	NSSet *containersDefined = [NSSet setWithArray: [[position positionForAllNodes] allKeys]];
 	NSArray *allContainers = [root allContainers];
 
-	/* add new Nodes */
 	unsigned int i;
 	for (i = 0; i < [allContainers count]; i++){
 		NSString *contID = (NSString *)[[allContainers objectAtIndex: i] identifier];
@@ -220,15 +220,15 @@ void DrawManager::updateLinksDrawings ()
 	for (i = 0; i < [ar count]; i++){
 		XLink *link = (XLink *)[ar objectAtIndex: i];
 		[link updateLayout];
-/*
 		if (![link layout]){
 			LayoutLink *lay = [[LayoutLink alloc] init];
 			[link setLayout: lay];
 		}
-*/
 	}
 }
+*/
 
+/*
 #define ANIMTIME 0.15
 
 void DrawManager::movePointer ()
@@ -240,7 +240,6 @@ void DrawManager::movePointer ()
 	pointer->setPosition (0,end,0);
 	pointer = mSceneMgr->getSceneNode ("pointer");
 
-	/* animation */
 	if (mAnimationState != NULL) { 
 		if (mAnimationState->getTimePosition() < ANIMTIME){
 			saved = end;
@@ -273,6 +272,7 @@ void DrawManager::movePointer ()
 	mAnimationState->setEnabled (true);
 	mAnimationState->setLoop (false);
 }
+*/
 
 DrawManager::DrawManager (ProtoView *view) 
 {
@@ -339,6 +339,7 @@ bool DrawManager::frameStarted (const Ogre::FrameEvent& evt)
 } 
 
 
+/*
 void DrawManager::selectState (XState *s)
 {
 	[[s layout] setSelected: 1];
@@ -348,3 +349,4 @@ void DrawManager::unselectState (XState *s)
 {
 	[[s layout] setSelected: 0];
 }
+*/

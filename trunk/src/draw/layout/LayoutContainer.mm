@@ -4,7 +4,16 @@
 - (id) init
 {
 	self = [super init];
+	subcontainers = [NSMutableArray array];
+	states = [NSMutableArray array];
 	return self;
+}
+
+- (void) dealloc
+{
+	[subcontainers release];
+	[states release];
+	[super dealloc];
 }
 
 - (void) createWithIdentifier: (NSString *) ide andMaterial: (NSString *) t
@@ -25,11 +34,21 @@
 	text->setCharacterHeight (15);
 }
 
-- (void) attachTo: (Ogre::SceneNode *) node
+- (Ogre::SceneNode *) attachTo: (Ogre::SceneNode *) node
 {
 	[super attachTo: node];
 	sceneNode->setScale (.3,.01,.3);
 	sceneNode->setInheritScale (false); // just for container
+	return sceneNode;
+}
 
+- (void) addSubContainer: (LayoutContainer *) lc
+{
+	[subcontainers addObject: lc];
+}
+
+- (void) addState: (LayoutState *) ls
+{
+	[states addObject: ls];
 }
 @end
