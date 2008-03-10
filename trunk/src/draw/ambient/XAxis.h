@@ -2,9 +2,9 @@
 #define __XAXIS_H
 
 #include <Ogre.h>
-#include "gui/ambient/Axis.h"
-#include "gui/ambient/Origin.h"
-#include "gui/QueryFlags.h"
+#include "Axis.h"
+#include "Origin.h"
+#include "draw/QueryFlags.h"
 
 class XAxis : public Axis
 {

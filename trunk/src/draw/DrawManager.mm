@@ -1,7 +1,7 @@
-#include "gui/draw/DrawManager.h"
+#include "DrawManager.h"
 #include "ogre-simulator/XObject.h"
-#include "gui/draw/position/Position.h"
-#include "gui/draw/layout/Layout.h"
+#include "draw/position/Position.h"
+#include "draw/layout/Layout.h"
 
 void DrawManager::setContainersVisibility (int k)
 {

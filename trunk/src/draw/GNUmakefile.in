@@ -7,7 +7,7 @@ CC=$(CXX)
 SUBPROJECT_NAME=draw
 draw_OBJC_FILES=
 
-draw_SUBPROJECTS=layout position
+draw_SUBPROJECTS=layout position ambient extras
 draw_OBJCC_FILES=DrawManager.mm
 
 draw_INCLUDE_DIRS += @CPPFLAGS@

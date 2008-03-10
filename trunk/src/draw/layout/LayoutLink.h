@@ -2,8 +2,8 @@
 #define __LAYOUTLINK_H
 #include <Foundation/Foundation.h>
 #include <Ogre.h>
-#include "gui/draw/layout/Layout.h"
-#include "gui/extras/DynamicLines.h"
+#include "draw/layout/Layout.h"
+#include "draw/extras/DynamicLines.h"
 
 @interface LayoutLink : Layout
 {

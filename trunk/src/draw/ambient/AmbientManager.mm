@@ -1,4 +1,4 @@
-#include "gui/ambient/AmbientManager.h"
+#include "AmbientManager.h"
 
 AmbientManager::~AmbientManager ()
 {

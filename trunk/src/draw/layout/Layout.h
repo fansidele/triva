@@ -2,8 +2,8 @@
 #define __LAYOUT_H
 #include <Foundation/Foundation.h>
 #include <Ogre.h>
-#include "gui/extras/MovableText.h"
-#include "gui/QueryFlags.h"
+#include "draw/extras/MovableText.h"
+#include "draw/QueryFlags.h"
 
 @interface Layout : NSObject
 {
@@ -19,7 +19,7 @@
 - (void) setSelected: (int) k;
 @end
 
-#include "gui/draw/layout/LayoutState.h"
-#include "gui/draw/layout/LayoutLink.h"
-#include "gui/draw/layout/LayoutContainer.h"
+#include "LayoutState.h"
+#include "LayoutLink.h"
+#include "LayoutContainer.h"
 #endif

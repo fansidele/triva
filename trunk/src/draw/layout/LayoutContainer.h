@@ -2,7 +2,7 @@
 #define __LAYOUTCONTAINER_H
 #include <Foundation/Foundation.h>
 #include <Ogre.h>
-#include "gui/draw/layout/Layout.h"
+#include "draw/layout/Layout.h"
 
 @interface LayoutContainer : Layout
 {

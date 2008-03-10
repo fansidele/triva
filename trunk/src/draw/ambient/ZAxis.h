@@ -2,8 +2,8 @@
 #define __ZAXIS_H
 
 #include <Ogre.h>
-#include "gui/ambient/Axis.h"
-#include "gui/ambient/Origin.h"
+#include "Axis.h"
+#include "Origin.h"
 
 class ZAxis : public Axis
 {

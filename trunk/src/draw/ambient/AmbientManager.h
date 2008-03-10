@@ -2,7 +2,7 @@
 #define __AMBIENT_MANAGER_H
 
 #include <Ogre.h>
-#include "gui/ambient/Origin.h"
+#include "Origin.h"
 
 class AmbientManager : public Ogre::FrameListener,
 	public Ogre::WindowEventListener

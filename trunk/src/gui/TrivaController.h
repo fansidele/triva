@@ -13,8 +13,8 @@
 #include "gui/ProtoView.h"
 */
 #include "gui/camera/CameraManager.h"
-#include "gui/ambient/AmbientManager.h"
 #include "gui/selector/SelectorManager.h"
+#include "draw/ambient/AmbientManager.h"
 #include <Ogre.h>
 
 #include "paje-simulator/TrivaPajeComponent.h"

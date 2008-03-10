@@ -2,8 +2,8 @@
 #define __YAXIS_H
 
 #include <Ogre.h>
-#include "gui/ambient/Axis.h"
-#include "gui/ambient/Origin.h"
+#include "Axis.h"
+#include "Origin.h"
 
 class YAxis : public Axis
 {
@@ -16,5 +16,5 @@ public:
 	~YAxis () {};
 };
 
-#include "gui/extras/MovableText.h"
+#include "draw/extras/MovableText.h"
 #endif

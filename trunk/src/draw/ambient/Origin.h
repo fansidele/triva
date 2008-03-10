@@ -31,8 +31,8 @@ public:
 	Ogre::SceneNode *getNode () { return node; };
 };
 
-#include "gui/ambient/XAxis.h"
-#include "gui/ambient/YAxis.h"
-#include "gui/ambient/ZAxis.h"
-#include "gui/ambient/Ground.h"
+#include "XAxis.h"
+#include "YAxis.h"
+#include "ZAxis.h"
+#include "Ground.h"
 #endif

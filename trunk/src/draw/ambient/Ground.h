@@ -2,7 +2,7 @@
 #define __GROUND_H
 
 #include <Ogre.h>
-#include "gui/ambient/Origin.h"
+#include "Origin.h"
 
 #define SPACE_BETWEEN_LINES 50
 

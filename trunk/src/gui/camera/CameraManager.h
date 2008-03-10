@@ -3,7 +3,7 @@
 
 #include "gui/wxInputEventListener.h"
 #include <Ogre.h>
-#include "gui/QueryFlags.h"
+#include "draw/QueryFlags.h"
 
 class TrivaController;
 

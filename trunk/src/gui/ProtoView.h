@@ -5,8 +5,8 @@
 #include <Ogre.h>
 #include <wx/wx.h>
 #include "general/ProtoComponent.h"
-#include "gui/ambient/AmbientManager.h"
-#include "gui/draw/DrawManager.h"
+#include "draw/ambient/AmbientManager.h"
+#include "draw/DrawManager.h"
 #include "ogre-simulator/XObject.h"
 
 @interface ProtoView  : ProtoComponent
