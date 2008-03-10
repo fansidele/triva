@@ -3,6 +3,7 @@
 #include "draw/layout/Layout.h"
 
 NSDictionary *pos;
+static int count = 0;
 
 LayoutContainer *DrawManager::internalDrawContainers (id entity, Ogre::SceneNode *node)
 {
@@ -32,18 +33,26 @@ doubleValue]), 0, Ogre::Real([[nodePos objectAtIndex: 1] doubleValue]));
 				LayoutContainer *lc = this->internalDrawContainers((id)sub,newnode);	
 				[ret addSubContainer: lc];
 			}
-		}else{
+		}else if ([et isKindOfClass: [PajeStateType class]]){
 			/* others */
 			NSEnumerator *en3;
 			PajeEntity *ent;
-			
+		
 			en3 = [viewController enumeratorOfEntitiesTyped:et
 					inContainer:entity
 					fromTime:[viewController startTime]
 					toTime:[viewController endTime]
 					minDuration: 0];
 			while ((ent = [en3 nextObject]) != nil) {
-				NSLog(@"e%@", [ent name]);
+				LayoutState *st = [[LayoutState alloc] init];
+				NSString *ide = [NSString stringWithFormat: @"%@-%d", [ent name], count++];
+				[st createWithIdentifier: ide andMaterial:
+@"RUNNING"];
+				[st setStart: [[[ent time] description] doubleValue]];
+				[st setEnd: [[[ent endTime] description] doubleValue]];
+				[st attachTo: newnode];
+				[st redraw];
+				[ret addState:st];
 			}
 
 
