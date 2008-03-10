@@ -55,6 +55,6 @@ public:
 	
 };
 
-#include "gui/ProtoView.h"
+#include "ProtoView.h"
 #include "draw/position/Position.h"
 #endif

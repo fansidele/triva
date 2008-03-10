@@ -79,4 +79,16 @@
 //	NSLog (@"################ FIM @@@@@@@@@@@@@@");
 }
 
+
+- (void) setViewController: (ProtoView *) c
+{
+	viewController = c;
+	[viewController retain];
+}
+
+- (void) dealloc
+{
+	[viewController release];
+	[super dealloc];
+}
 @end

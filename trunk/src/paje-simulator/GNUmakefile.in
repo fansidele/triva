@@ -3,8 +3,8 @@
 include $(GNUSTEP_MAKEFILES)/common.make
 
 SUBPROJECT_NAME=paje-simulator
-paje-simulator_OBJC_FILES=TrivaPajeComponent.m
-paje-simulator_OBJCC_FILES=
+paje-simulator_OBJC_FILES=
+paje-simulator_OBJCC_FILES=TrivaPajeComponent.mm
 
 paje-simulator_INCLUDE_DIRS += @CPPFLAGS@
 paje-simulator_LIB_DIRS += @LIBS@ -lGeneral

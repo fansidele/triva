@@ -21,9 +21,9 @@
 	[super dealloc];
 }
 
+/*
 - (void) input: (id) object
 {
-	/* TODO: arrival of a new object to be drawn. what to do? */
 	//NSLog (@"%@", [object class]);
 	NSString *str;
 	 str = [NSString stringWithFormat: @"%s: TODO", __FUNCTION__];
@@ -40,7 +40,6 @@
 
 	//cameraManager->newPositionForCamera (atof([[self endTime] cString]));
 
-	/* TODO: new data available at previous components */
 	//NSLog (@"%s %p %@", __FUNCTION__, drawManager, [self endTime]);
 //	ProtoContainer *r = [self root];
 //	NSLog (@"%@", [r identifier]);
@@ -48,7 +47,6 @@
 
 - (void) hierarchyChanged
 {
-	/* TODO: */	
 	drawManager->updateContainersPositions();
 	drawManager->updateContainerDrawings();
 	drawManager->updateLinksDrawings ();
@@ -103,4 +101,5 @@
 {
 	return containersLabelsAppearance;
 }
+*/
 @end

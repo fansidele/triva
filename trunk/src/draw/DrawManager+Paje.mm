@@ -2,6 +2,7 @@
 #include "draw/position/Position.h"
 #include "draw/layout/Layout.h"
 
+/*
 void DrawManager::updateContainersPositions ()
 {
 	XContainer *root = [viewController root];
@@ -48,7 +49,6 @@ destName];
 	NSSet *containersDefined = [NSSet setWithArray: [[position positionForAllNodes] allKeys]];
 	NSArray *allContainers = [root allContainers];
 
-	/* add new Nodes */
 	unsigned int i;
 	for (i = 0; i < [allContainers count]; i++){
 		NSString *contID = (NSString *)[[allContainers objectAtIndex: i] identifier];
@@ -91,4 +91,4 @@ void DrawManager::updateContainerDrawings ()
 		}
 	}
 }
-
+*/
