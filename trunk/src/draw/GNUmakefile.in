@@ -5,10 +5,10 @@ include $(GNUSTEP_MAKEFILES)/common.make
 CC=$(CXX)
 
 SUBPROJECT_NAME=draw
-draw_OBJC_FILES=PajeOgreFilter.m
+draw_OBJC_FILES=
 
 draw_SUBPROJECTS=layout position ambient extras
-draw_OBJCC_FILES=DrawManager.mm 
+draw_OBJCC_FILES=DrawManager.mm DrawManager+Paje.mm PajeOgreFilter.mm
 
 draw_INCLUDE_DIRS += @CPPFLAGS@
 draw_LIB_DIRS += @LIBS@

@@ -48,6 +48,11 @@ private:
 	Ogre::Root *mRoot;
 	Ogre::SceneManager* mSceneMgr;
 	Ogre::AnimationState *mAnimationState;
+
+
+//PAJE CATEGORY
+public:
+	
 };
 
 #include "gui/ProtoView.h"

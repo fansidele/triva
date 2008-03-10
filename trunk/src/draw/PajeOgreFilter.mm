@@ -68,12 +68,15 @@
 
 - (void)hierarchyChanged
 {
-        NSLog (@"##oi");
-    NSLog(@"%@ root=%@", NSStringFromSelector(_cmd), [self nameForContainer:[self rootInstance]]);
-        NSLog (@"antes");
-    [self printAll];
-        NSLog (@"depois");
-	NSLog (@"################ FIM @@@@@@@@@@@@@@");
+
+
+
+  //      NSLog (@"##oi");
+//    NSLog(@"%@ root=%@", NSStringFromSelector(_cmd), [self nameForContainer:[self rootInstance]]);
+//        NSLog (@"antes");
+  //  [self printAll];
+    //    NSLog (@"depois");
+//	NSLog (@"################ FIM @@@@@@@@@@@@@@");
 }
 
 @end
