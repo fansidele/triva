@@ -1,5 +1,5 @@
 #include "TrivaController.h"
-#include "paje-simulator/TrivaPajeFilter.h"
+#include "draw/TrivaPajeFilter.h"
 
 wxString NSSTRINGtoWXSTRING (NSString *ns)
 {
