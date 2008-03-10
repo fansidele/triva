@@ -1,5 +1,5 @@
 #include "TrivaPajeComponent.h"
-#include "draw/TrivaPajeFilter.h"
+#include "draw/PajeOgreFilter.h"
 
 @implementation TrivaPajeComponent
 - (id) init

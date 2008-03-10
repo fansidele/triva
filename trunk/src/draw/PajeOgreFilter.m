@@ -1,6 +1,6 @@
-#include "TrivaPajeFilter.h"
+#include "PajeOgreFilter.h"
 
-@implementation TrivaPajeFilter
+@implementation PajeOgreFilter
 - (void)dataChangedForEntityType:(PajeEntityType *)entityType
 {
     NSLog(@"%@ root=%@", NSStringFromSelector(_cmd), [self nameForContainer:[self rootInstance]]);
