@@ -1,5 +1,4 @@
 #include "TrivaPajeComponent.h"
-#include "draw/PajeOgreFilter.h"
 
 @implementation TrivaPajeComponent
 - (id) init
@@ -221,7 +220,7 @@
 - (void)startChunk:(int)chunkNumber
 {
     [reader startChunk:chunkNumber];
-    if ([reader hasMoreData] && chunkNumber >= [chunkDates count]) {
+    if ([reader hasMoreData] && (unsigned int)chunkNumber >= [chunkDates count]) {
         [chunkDates addObject:[simulator currentTime]];
         timeLimitsChanged = YES;
     }

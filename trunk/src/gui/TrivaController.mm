@@ -1,5 +1,4 @@
 #include "TrivaController.h"
-#include "draw/PajeOgreFilter.h"
 
 wxString NSSTRINGtoWXSTRING (NSString *ns)
 {
@@ -68,8 +67,8 @@ TrivaController::TrivaController( wxWindow* parent, wxWindowID id, const wxStrin
 
 
 	trivaPaje = [[TrivaPajeComponent alloc] init];
-	PajeOgreFilter *tpf =[PajeOgreFilter componentWithController:trivaPaje];
-	[trivaPaje setOutputFilter: tpf];
+	view =[ProtoView componentWithController:trivaPaje];
+	[trivaPaje setOutputFilter: view];
 	NSLog (@"%@", [trivaPaje description]);
 	[trivaPaje setInputFilename:@"/home/schnorr/paje-tool/Paje.tool/Traces/JavaTest.trace"];
 	[trivaPaje readNextChunk:nil];
@@ -87,8 +86,8 @@ TrivaController::~TrivaController()
 /*
 	[reader release];
 	[simulator release];
-	[view release];
 */
+	[view release];
 	m3DFrame->removeInputListener(cameraManager);
 	delete ambientManager;
 	delete cameraManager;

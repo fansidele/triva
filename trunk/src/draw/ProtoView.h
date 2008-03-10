@@ -2,22 +2,26 @@
 #define __PROTOVIEW_H
 #include <Ogre.h>
 #include <Foundation/Foundation.h>
-#include "general/ProtoComponent.h"
-#include "draw/ambient/AmbientManager.h"
-#include "draw/DrawManager.h"
+#include <General/PajeFilter.h>
+//#include "general/ProtoComponent.h"
+//#include "draw/ambient/AmbientManager.h"
+//#include "draw/DrawManager.h"
 
-@interface ProtoView  : ProtoComponent
+@interface ProtoView  : PajeFilter
 {
 	Ogre::Root *mRoot;
 	Ogre::RenderWindow *mWindow;
 	Ogre::SceneManager *mSceneMgr;
 
+/*
 	DrawManager *drawManager;
-	/* for labels appearence */
 	bool statesLabelsAppearance;
 	bool containersLabelsAppearance;
-	XContainer *root; //not retained (modified in View and in Simulator)
+	XContainer *root; 
+	id pajeOgreFilter;
+*/
 }
+//- (void) setFilter: (id) filter;
 /*
 - (void) changePositionAlgorithm;
 - (void) switchStatesLabels;
