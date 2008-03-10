@@ -157,9 +157,11 @@
 			}
 		}else{
 			/* is a subgraph */
-			char str2[100];
-			strncpy (str2, "cluster", strlen ("cluster"));
+			char str2[1000];
+			bzero (str2, 1000);
+			strncpy (str2, "cluster-", strlen ("cluster-"));
 			strncat (str2, str, strlen(str));
+			strncat (str2, "\0", 1);
 
 			/* ok, first, was a node? */
 			Agnode_t *n = agfindnode (g, str);
