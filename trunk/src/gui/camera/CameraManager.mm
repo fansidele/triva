@@ -40,7 +40,7 @@ void CameraManager::moveCamera ()
 
 void CameraManager::onKeyDownEvent(wxKeyEvent& evt)
 { 
-	std::cout << __FILE__ << "::" << __FUNCTION__ << std::endl;
+//	std::cout << __FILE__ << "::" << __FUNCTION__ << std::endl;
         int key = evt.GetKeyCode();
         switch (key){
 		case WXK_NUMPAD9:
@@ -89,7 +89,7 @@ std::endl;
 
 void CameraManager::onKeyUpEvent (wxKeyEvent& evt)
 { 
-	std::cout << __FILE__ << "::" << __FUNCTION__ << std::endl;
+//	std::cout << __FILE__ << "::" << __FUNCTION__ << std::endl;
 }
 
 void CameraManager::onMouseEvent(wxMouseEvent& evt)
