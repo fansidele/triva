@@ -92,7 +92,7 @@
 {
 	drawManager->resetCurrentVisualization();
 	drawManager->createHierarchy ();
-	drawManager->drawContainers();
+	drawManager->createTimestampedObjects ();
 
 
 //        NSLog (@"##oi %p", drawManager);

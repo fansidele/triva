@@ -63,7 +63,7 @@ private:
 public:
 	void resetCurrentVisualization();
 	void createHierarchy ();
-	void drawContainers ();
+	void createTimestampedObjects ();
 	
 };
 

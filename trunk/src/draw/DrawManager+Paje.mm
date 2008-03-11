@@ -12,10 +12,10 @@ void DrawManager::resetCurrentVisualization ()
 }
 
 
+/*
 void DrawManager::drawContainers()
 {
 
-/*
 	NSEnumerator *en;
 	PajeEntityType *et;
 	id instance = [viewController rootInstance];
@@ -27,8 +27,8 @@ void DrawManager::drawContainers()
 		if ([viewController isContainerEntityType:et]) {
 		}
 	}
-*/
 }
+*/
 /*
 void DrawManager::updateContainersPositions ()
 {

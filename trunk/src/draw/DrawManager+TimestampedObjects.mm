@@ -2,19 +2,35 @@
 #include "draw/position/Position.h"
 #include "draw/layout/Layout.h"
 
-static NSDictionary *pos;
-static int count;
+//static NSDictionary *pos;
+//static int count;
 
-void DrawManager::createHierarchy ()
+void DrawManager::createTimestampedObjects ()
 {
-	id instance = [viewController rootInstance];
+	
+	NSMutableDictionary *ret = [[NSMutableDictionary alloc] init];
+	NSMutableDictionary *me = [[NSMutableDictionary alloc] init];
 
-	[position newHierarchyOrganization: this->internalCreateContainersDictionary(instance)];
-	pos =  [position positionForAllNodes];
-	this->internalDrawContainers (instance, currentVisuNode);
-	NSLog (@"positionDict = %@", pos);
+	NSEnumerator *en = [[viewController containedTypesForContainerType:[viewController entityTypeForEntity:entity]] objectEnumerator];
+	PajeEntityType *et;
+	while ((et = [en nextObject]) != nil) {
+		if ([viewController isContainerEntityType:et]) {
+			NSEnumerator *en2;
+			PajeContainer *sub;
+			en2 = [viewController enumeratorOfContainersTyped:et inContainer:entity];
+			while ((sub = [en2 nextObject]) != nil) {
+				NSMutableDictionary *d = this->internalCreateContainersDictionary((id)sub);
+				[me addEntriesFromDictionary: d];
+			}
+		}
+	}
+	[ret setObject: me forKey: [entity name]];
+	[me release];
+	[ret autorelease];
+	return ret;
 }
 
+/*
 LayoutContainer *DrawManager::internalDrawContainers (id entity, Ogre::SceneNode *node)
 {
 	Ogre::SceneNode *n = node->createChildSceneNode();
@@ -57,8 +73,6 @@ doubleValue]*2), 0, Ogre::Real([[nodePos objectAtIndex: 1] doubleValue]*2));
 			while ((sub = [en2 nextObject]) != nil) {
 				this->internalDrawContainers ((id)sub, n);
 			}
-		}
-/*
 		}else if ([et isKindOfClass: [PajeStateType class]]){
 			NSEnumerator *en3;
 			PajeEntity *ent;
@@ -90,7 +104,6 @@ doubleValue]*2), 0, Ogre::Real([[nodePos objectAtIndex: 1] doubleValue]*2));
 //				[ret addState:st];
 			}
 		}
-*/
 	}
 	LayoutContainer *ret = nil;
 	return ret;
@@ -98,25 +111,5 @@ doubleValue]*2), 0, Ogre::Real([[nodePos objectAtIndex: 1] doubleValue]*2));
 
 NSMutableDictionary *DrawManager::internalCreateContainersDictionary (id entity)
 {
-	NSMutableDictionary *ret = [[NSMutableDictionary alloc] init];
-	NSMutableDictionary *me = [[NSMutableDictionary alloc] init];
-
-	NSEnumerator *en = [[viewController containedTypesForContainerType:[viewController entityTypeForEntity:entity]] objectEnumerator];
-	PajeEntityType *et;
-	while ((et = [en nextObject]) != nil) {
-		if ([viewController isContainerEntityType:et]) {
-			NSEnumerator *en2;
-			PajeContainer *sub;
-			en2 = [viewController enumeratorOfContainersTyped:et inContainer:entity];
-			while ((sub = [en2 nextObject]) != nil) {
-				NSMutableDictionary *d = this->internalCreateContainersDictionary((id)sub);
-				[me addEntriesFromDictionary: d];
-			}
-		}
-	}
-	[ret setObject: me forKey: [entity name]];
-	[me release];
-	[ret autorelease];
-	return ret;
 }
-
+*/
