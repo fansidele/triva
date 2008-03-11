@@ -29,7 +29,6 @@
 		if (sceneNode == NULL){
 			sceneNode = node->createChildSceneNode();
 			sceneNode->attachObject (entity);
-//			sceneNode->setScale (.3,.1,.3);
 			textNode = sceneNode->createChildSceneNode();
 			textNode->attachObject (text);
 			textNode->setInheritScale (false);

@@ -51,6 +51,9 @@ TrivaController::TrivaController( wxWindow* parent, wxWindowID id, const wxStrin
 	this->configureZoom();
 	m3DFrame->pauseRenderTimer();
 
+	/* configuring color window */
+	colorWindow = new TrivaColorWindowEvents(0,wxID_ANY);
+
 	/* configuring reader, simulator and inner view */
 /*
 	reader = [[ProtoReader alloc] init];
@@ -91,6 +94,7 @@ TrivaController::~TrivaController()
 */
 	[view release];
 	m3DFrame->removeInputListener(cameraManager);
+	colorWindow->Close();
 	delete ambientManager;
 	delete cameraManager;
 }
@@ -205,4 +209,9 @@ void TrivaController::cameraCheckbox( wxCommandEvent& event )
 		m3DFrame->pauseRenderTimer();
 	}
 */
+}
+
+void TrivaController::colourWindow( wxCommandEvent& event )
+{
+	colorWindow->Show();
 }

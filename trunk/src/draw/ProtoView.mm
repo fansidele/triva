@@ -90,6 +90,8 @@
 
 - (void)hierarchyChanged
 {
+	drawManager->resetCurrentVisualization();
+	drawManager->createHierarchy ();
 	drawManager->drawContainers();
 
 

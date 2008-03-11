@@ -304,9 +304,9 @@ DrawManager::DrawManager (ProtoView *view)
         line->position (10,0,-10);
         line->end();
         pointer->attachObject (line);
+
 	
-
-
+	currentVisuNode = NULL;
 	mAnimationState = NULL;
 
 

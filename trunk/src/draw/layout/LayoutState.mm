@@ -50,9 +50,12 @@
 		sceneNode->setPosition (0,0,0);
 		sceneNode->setScale (0,0,0);
 	}else{
-//		NSLog (@"%@: %f -> %f", self, start, end);
+		NSLog (@"%@: ypos = %f scale = %f", self, (end-start)/2+start,
+(end-start)/100);
 		sceneNode->setPosition (0,(end-start)/2+start,0);
 		sceneNode->setScale (0.3,(end-start)/100,0.3);
+//		sceneNode->setPosition (0,4000,500);
+//		sceneNode->setScale (1,5,1);
 	}
 }
 @end

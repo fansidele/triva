@@ -25,7 +25,7 @@ void TrivaController::zoomIn ( wxCommandEvent& event )
 	mRoot = Ogre::Root::getSingletonPtr ();
 	mSceneMgr = mRoot->getSceneManager("VisuSceneManager");
 
-	yScale += yScale/10;
+	yScale += yScale/5;
 	mSceneMgr->getRootSceneNode()->setScale (xScale,yScale,zScale);
 	
 	NSUserDefaults *d = [NSUserDefaults standardUserDefaults];
@@ -40,7 +40,7 @@ void TrivaController::zoomOut ( wxCommandEvent& event )
 	mRoot = Ogre::Root::getSingletonPtr ();
 	mSceneMgr = mRoot->getSceneManager("VisuSceneManager");
 
-	yScale -= yScale/10;
+	yScale -= yScale/5;
 	mSceneMgr->getRootSceneNode()->setScale (xScale,yScale,zScale);
 
 	NSUserDefaults *d = [NSUserDefaults standardUserDefaults];

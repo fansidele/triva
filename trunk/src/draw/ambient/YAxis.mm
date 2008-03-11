@@ -15,7 +15,7 @@ YAxis::YAxis (double si, double sc, Origin *origin) :
 	node->attachObject (line);
 
 	int i;
-	for (i = 0; i < size; i += 60){
+	for (i = 0; i < size; i += 10){
 		static int x = 0;
 		char name[100];
 		sprintf (name, "YAxisMark-%d", x);

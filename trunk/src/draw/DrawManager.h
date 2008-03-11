@@ -52,6 +52,8 @@ private:
 	Ogre::SceneManager* mSceneMgr;
 	Ogre::AnimationState *mAnimationState;
 
+	Ogre::SceneNode *currentVisuNode;
+
 
 //PAJE CATEGORY
 private:
@@ -59,6 +61,8 @@ private:
 	LayoutContainer *internalDrawContainers (id entity, Ogre::SceneNode *node);
 	NSMutableDictionary *internalCreateContainersDictionary (id entity);
 public:
+	void resetCurrentVisualization();
+	void createHierarchy ();
 	void drawContainers ();
 	
 };
