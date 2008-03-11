@@ -10,8 +10,13 @@ void TrivaController::selectObjectIdentifier (std::string name)
 		[view selectObjectIdentifier: identifier];
 		XState *s = (XState *)[view objectWithIdentifier: identifier];
 		NSMutableString *info = [NSMutableString string];
-		[info appendString: [NSString stringWithFormat: @"%@ - %@,%@",
-[s type], [s start], [s end]]];
+		[info appendString: [NSString stringWithFormat: @"%@ - %@,%@ (dif=%f)", [s type], [s start], [s end], [[s end] doubleValue]-[[s start]
+doubleValue]]];
+	
+		XContainer *c = [s container];
+		[info appendString: [NSString stringWithFormat: @" - %@", 
+				[c identifier]]];
+
 		statusBar->SetStatusText (NSSTRINGtoWXSTRING(info));
 	}
 }
