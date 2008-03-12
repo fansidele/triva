@@ -1,6 +1,6 @@
 #include "gui/camera/CameraManager.h"
 
-void CameraManager::createCamera ()
+void CameraManager::createCamera (Ogre::Vector3 position, Ogre::Vector3 direction)
 {
 	Ogre::SceneNode *node = mSceneMgr->getRootSceneNode();
 	Ogre::SceneNode *childNode = node->createChildSceneNode();
@@ -10,6 +10,9 @@ void CameraManager::createCamera ()
 	mCamera->setPosition (Ogre::Vector3 (500, 500, 500));
 	mCamera->lookAt (Ogre::Vector3 (100,0,100));
 	mCamera->setQueryFlags(CAMERA_MASK);
+
+	mCamera->setPosition (position);
+	mCamera->setDirection (direction);
 
 	childNode->attachObject (mCamera);
 
@@ -113,6 +116,24 @@ void CameraManager::onMouseEvent(wxMouseEvent& evt)
 
 CameraManager::~CameraManager ()
 {
+
+	NSUserDefaults *d = [NSUserDefaults standardUserDefaults];
+	Ogre::Vector3 direction = mCamera->getDirection();
+	Ogre::Vector3 position = mCamera->getPosition();
+	[d setObject: [NSString stringWithFormat: @"%f", direction.x] 
+		forKey: @"cameraDirection-X"];
+	[d setObject: [NSString stringWithFormat: @"%f", direction.y] 
+		forKey: @"cameraDirection-Y"];
+	[d setObject: [NSString stringWithFormat: @"%f", direction.z] 
+		forKey: @"cameraDirection-Z"];
+	[d setObject: [NSString stringWithFormat: @"%f", position.x] 
+		forKey: @"cameraPosition-X"];
+	[d setObject: [NSString stringWithFormat: @"%f", position.y] 
+		forKey: @"cameraPosition-Y"];
+	[d setObject: [NSString stringWithFormat: @"%f", position.z] 
+		forKey: @"cameraPosition-Z"];
+	[d synchronize];
+
 	mSceneMgr->destroyAllCameras();
 	mRenderWindow->removeAllViewports();
 }
@@ -122,7 +143,28 @@ CameraManager::CameraManager (TrivaController *c, Ogre::RenderWindow *win)
 	controller = c;
 	mRoot = Ogre::Root::getSingletonPtr();
 	mSceneMgr = mRoot->getSceneManager("VisuSceneManager");
-	createCamera ();
+
+	Ogre::Vector3 position, direction;
+	NSUserDefaults *d = [NSUserDefaults standardUserDefaults];
+
+	NSString *dx, *dy, *dz;
+	NSString *px, *py, *pz;
+	dx = [d stringForKey: @"cameraDirection-X"];
+	dy = [d stringForKey: @"cameraDirection-Y"];
+	dz = [d stringForKey: @"cameraDirection-Z"];
+	px = [d stringForKey: @"cameraPosition-X"];
+	py = [d stringForKey: @"cameraPosition-Y"];
+	pz = [d stringForKey: @"cameraPosition-Z"];
+
+	if (dx && dy && dz && px && py && pz){
+		direction = Ogre::Vector3([dx doubleValue], [dy doubleValue], [dz doubleValue]);
+		position = Ogre::Vector3([px doubleValue], [py doubleValue], [pz doubleValue]);
+	}else{
+		direction = Ogre::Vector3 (-0.529813,-0.662266, -0.529813);
+		position = Ogre::Vector3 (500,500,500);
+	}
+
+	createCamera (position, direction);
 	createViewport (win);
 	mRenderWindow = win;
 }

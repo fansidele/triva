@@ -23,7 +23,7 @@ protected:
 	bool frameStarted (const Ogre::FrameEvent& evt);
 	bool frameEnded (const Ogre::FrameEvent& evt);
 
-	void createCamera ();
+	void createCamera (Ogre::Vector3 position, Ogre::Vector3 direction);
 	void moveCamera ();
 	void createViewport (Ogre::RenderWindow *win);
 
