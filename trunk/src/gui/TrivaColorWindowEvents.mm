@@ -16,6 +16,10 @@ void TrivaColorWindowEvents::removeTraceFile( wxCommandEvent& event )
 }
 */
 
+void TrivaColorWindowEvents::addMaterialOption (wxString materialName)
+{
+	stateCombo->Insert (materialName, stateCombo->GetCount());
+}
 
 TrivaColorWindowEvents::TrivaColorWindowEvents( wxWindow* parent, wxWindowID ide, 
 const wxString& title, const wxPoint& pos, const wxSize& size, 

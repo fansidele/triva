@@ -50,7 +50,7 @@ protected:
 	void playClicked( wxCommandEvent& event );
 	void pauseClicked( wxCommandEvent& event );
 	void cameraCheckbox ( wxCommandEvent& event );
-	void colourWindow( wxCommandEvent& event );
+	void openColorWindow( wxCommandEvent& event );
 	
 public:
 	/** Constructor */

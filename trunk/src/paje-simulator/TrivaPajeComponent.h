@@ -13,9 +13,8 @@
 
 	PSortedArray *chunkDates;
 	BOOL timeLimitsChanged;
-
-
 }
+
 - (NSBundle *)bundleWithName:(NSString *)name;
 - (NSBundle *)loadBundleNamed:(NSString*)name;
 + (NSArray *)defaultComponentGraph;

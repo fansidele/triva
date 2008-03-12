@@ -70,8 +70,10 @@ TrivaController::TrivaController( wxWindow* parent, wxWindowID id, const wxStrin
 
 
 	trivaPaje = [[TrivaPajeComponent alloc] init];
+//	[trivaPaje setController: this];
 	view =[ProtoView componentWithController:trivaPaje];
 	[view initialize];
+//	[view setColorWindow: colorWindow];
 	[trivaPaje setOutputFilter: view];
 	NSLog (@"%@", [trivaPaje description]);
 	[trivaPaje setInputFilename:@"/home/schnorr/paje-tool/Paje.tool/Traces/JavaTest.trace"];
@@ -211,7 +213,7 @@ void TrivaController::cameraCheckbox( wxCommandEvent& event )
 */
 }
 
-void TrivaController::colourWindow( wxCommandEvent& event )
+void TrivaController::openColorWindow( wxCommandEvent& event )
 {
 	colorWindow->Show();
 }

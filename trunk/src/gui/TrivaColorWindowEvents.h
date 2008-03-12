@@ -16,6 +16,7 @@ private:
 
 public:
 	void setController (TrivaController *t) { controller = t; };
+	void addMaterialOption (wxString materialName);
 	/** Constructor */
 	TrivaColorWindowEvents( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 500,300 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
 

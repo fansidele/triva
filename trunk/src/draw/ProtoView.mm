@@ -12,6 +12,13 @@
 //        mRoot->addFrameListener (drawManager);
 }
 
+//- (void) setColorWindow: (TrivaColorWindowEvents *) window
+//{
+//        mwin = window;
+//	return;
+//}
+
+
 - (void) dealloc
 {
         NSLog (@"%s", self, __FUNCTION__);
@@ -93,14 +100,7 @@
 	drawManager->resetCurrentVisualization();
 	drawManager->createHierarchy ();
 	drawManager->createTimestampedObjects ();
-
-
-//        NSLog (@"##oi %p", drawManager);
-//    NSLog(@"%@ root=%@", NSStringFromSelector(_cmd), [self nameForContainer:[self rootInstance]]);
-//        NSLog (@"antes");
-//    [self printAll];
-    //    NSLog (@"depois");
-//      NSLog (@"################ FIM @@@@@@@@@@@@@@");
+	//[self printAll];
 }
 
 

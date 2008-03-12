@@ -99,7 +99,10 @@ evt.GetY()/(float)mViewport->getActualHeight());//m.state.X.abs/float(m.state.wi
 //			std::cout << "a: " << mCurrentObject->getName().c_str() << std::endl;
 
 
-			controller->selectObjectIdentifier(mCurrentObject->getName());
+			std::cout << "mouseRay: " << mouseRay.getDirection() << std::endl;
+			std::cout << "cont: " <<
+mCurrentObject->getParentSceneNode()->getParentSceneNode()->getName() << " nome  do estado: " << mCurrentObject->getName() << " pos in time: " << mCurrentObject->getPosition() << std::endl;
+			//controller->selectObjectIdentifier(mCurrentObject->getName());
 			break;
 	
 		}

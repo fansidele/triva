@@ -3,7 +3,7 @@
 
 #include <Ogre.h>
 #include <Foundation/Foundation.h>
-#include "draw/layout/Layout.h"
+//#include "draw/layout/Layout.h"
 
 @class ProtoView;
 @class Position;
@@ -56,14 +56,15 @@ private:
 
 
 //PAJE CATEGORY
-private:
-	LayoutContainer *rootLayout;
-	LayoutContainer *internalDrawContainers (id entity, Ogre::SceneNode *node);
-	NSMutableDictionary *internalCreateContainersDictionary (id entity);
 public:
-	void resetCurrentVisualization();
 	void createHierarchy ();
+	void resetCurrentVisualization();
 	void createTimestampedObjects ();
+
+private:
+	NSMutableDictionary *createContainersDictionary (id entity);
+	void drawContainers (id entity, Ogre::SceneNode *node);
+	void drawTimestampedObjects (id entity);
 	
 };
 

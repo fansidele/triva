@@ -3,65 +3,20 @@
 #include "draw/layout/Layout.h"
 
 //static NSDictionary *pos;
-//static int count;
+static int count;
 
 void DrawManager::createTimestampedObjects ()
 {
-	
-	NSMutableDictionary *ret = [[NSMutableDictionary alloc] init];
-	NSMutableDictionary *me = [[NSMutableDictionary alloc] init];
-
-	NSEnumerator *en = [[viewController containedTypesForContainerType:[viewController entityTypeForEntity:entity]] objectEnumerator];
-	PajeEntityType *et;
-	while ((et = [en nextObject]) != nil) {
-		if ([viewController isContainerEntityType:et]) {
-			NSEnumerator *en2;
-			PajeContainer *sub;
-			en2 = [viewController enumeratorOfContainersTyped:et inContainer:entity];
-			while ((sub = [en2 nextObject]) != nil) {
-				NSMutableDictionary *d = this->internalCreateContainersDictionary((id)sub);
-				[me addEntriesFromDictionary: d];
-			}
-		}
-	}
-	[ret setObject: me forKey: [entity name]];
-	[me release];
-	[ret autorelease];
-	return ret;
+	id instance = [viewController rootInstance];
+	this->drawTimestampedObjects (instance);
 }
 
-/*
-LayoutContainer *DrawManager::internalDrawContainers (id entity, Ogre::SceneNode *node)
+void DrawManager::drawTimestampedObjects (id entity)
 {
-	Ogre::SceneNode *n = node->createChildSceneNode();
-	Ogre::Entity *e = mSceneMgr->createEntity ([[entity name] cString], 
-					Ogre::SceneManager::PT_CUBE);
-	e->setMaterialName ("VisuApp/Base");
-	Ogre::SceneNode *entn = n->createChildSceneNode([[entity name] cString]);
-	entn->attachObject (e);
-	entn->setScale (.3,.01,.3);
-	entn->setInheritScale (false);
+	Ogre::SceneNode *n = mSceneMgr->getSceneNode ([[entity name] cString]);
+	NSLog (@"entity name = %@ %d", [entity name], n->getInheritScale());
 
-	MovableText *text;
-	Ogre::SceneNode *entnt = n->createChildSceneNode();
-	NSString *textid = [NSString stringWithFormat: @"%@-t", [entity name]];
-	text = new MovableText ([textid cString], [textid cString]);
-	text->setColor (Ogre::ColourValue::Blue);
-	text->setCharacterHeight (15);
-	entnt->setInheritScale (false);
-	entnt->attachObject (text);
 
-	NSLog (@"[entity name] = %@", [entity name]);
-
-	Ogre::Vector3 newPos;
-	NSArray *nodePos = [pos objectForKey: [entity name]];
-	if ([nodePos count] == 2){
-		newPos =  Ogre::Vector3 (Ogre::Real([[nodePos objectAtIndex: 0]
-doubleValue]*2), 0, Ogre::Real([[nodePos objectAtIndex: 1] doubleValue]*2));	
-	}else{
-		newPos =  Ogre::Vector3 (0,0,0);
-	}
-	n->setPosition (newPos);
 
 	NSEnumerator *en = [[viewController containedTypesForContainerType:[viewController entityTypeForEntity:entity]] objectEnumerator];
 	PajeEntityType *et;
@@ -69,9 +24,10 @@ doubleValue]*2), 0, Ogre::Real([[nodePos objectAtIndex: 1] doubleValue]*2));
 		if ([viewController isContainerEntityType:et]) {
 			NSEnumerator *en2;
 			PajeContainer *sub;
-			en2 = [viewController enumeratorOfContainersTyped:et inContainer:entity];
+			en2 = [viewController enumeratorOfContainersTyped:et
+							inContainer:entity];
 			while ((sub = [en2 nextObject]) != nil) {
-				this->internalDrawContainers ((id)sub, n);
+				this->drawTimestampedObjects ((id)sub);
 			}
 		}else if ([et isKindOfClass: [PajeStateType class]]){
 			NSEnumerator *en3;
@@ -88,7 +44,12 @@ doubleValue]*2), 0, Ogre::Real([[nodePos objectAtIndex: 1] doubleValue]*2));
 				NSString *ide = [NSString stringWithFormat: @"%@-%d", [ent name], count++];
 				Ogre::Entity *ste = mSceneMgr->createEntity ([ide cString], Ogre::SceneManager::PT_CUBE);
 				NSLog (@"%@", [ent name]);
-				ste->setMaterialName ([[ent name] cString]);
+
+				[viewController createMaterialNamed: [ent name]];
+
+//				ste->setMaterialName ([[ent name] cString]);
+				ste->setMaterialName ("VisuApp/RUNNING");
+				ste->setQueryFlags(STATE_MASK);
 				ssn->attachObject (ste);
 				double start;
 				double end;
@@ -105,11 +66,5 @@ doubleValue]*2), 0, Ogre::Real([[nodePos objectAtIndex: 1] doubleValue]*2));
 			}
 		}
 	}
-	LayoutContainer *ret = nil;
-	return ret;
 }
 
-NSMutableDictionary *DrawManager::internalCreateContainersDictionary (id entity)
-{
-}
-*/
