@@ -5,8 +5,6 @@
 #include <General/PajeFilter.h>
 #include "draw/DrawManager.h"
 
-class TrivaColorWindowEvents;
-
 @interface ProtoView  : PajeFilter
 {
 	Ogre::Root *mRoot;

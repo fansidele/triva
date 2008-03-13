@@ -41,11 +41,11 @@ void DrawManager::drawTimestampedObjects (id entity)
 			while ((ent = [en3 nextObject]) != nil) {
 				Ogre::SceneNode *ssn;
 				ssn = n->createChildSceneNode();
-				NSString *ide = [NSString stringWithFormat: @"%@-%d", [ent name], count++];
+				NSString *ide = [NSString stringWithFormat: @"%@-#-#-%d", [[ent entityType] name], count++];
 				Ogre::Entity *ste = mSceneMgr->createEntity ([ide cString], Ogre::SceneManager::PT_CUBE);
 				NSLog (@"%@", [ent name]);
 
-				[viewController createMaterialNamed: [ent name]];
+//				[viewController createMaterialNamed: [ent name]];
 
 //				ste->setMaterialName ([[ent name] cString]);
 				ste->setMaterialName ("VisuApp/RUNNING");

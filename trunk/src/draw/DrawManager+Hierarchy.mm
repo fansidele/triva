@@ -15,9 +15,14 @@ void DrawManager::createHierarchy ()
 
 void DrawManager::drawContainers (id entity, Ogre::SceneNode *node)
 {
+	std::string name = std::string([[entity name] cString]);
+	name.append ("-#-#-");
+	name.append ([[[entity entityType] name] cString]);
+
 	Ogre::SceneNode *n = node->createChildSceneNode([[entity name] cString]);
 	Ogre::Entity *e = mSceneMgr->createEntity ([[entity name] cString], 
 					Ogre::SceneManager::PT_CUBE);
+	e->setUserAny (Ogre::Any (name));
 	e->setMaterialName ("VisuApp/Base");
 	e->setQueryFlags(CONTAINER_MASK);
 	Ogre::SceneNode *entn = n->createChildSceneNode();

@@ -70,7 +70,7 @@ protected:
 
 /* Select category */
 public:
-	void selectObjectIdentifier (std::string name);
+	void selectObjectIdentifier (Ogre::MovableObject *objectToSelect);
 	void unselectObjectIdentifier (std::string name);
 
 /* Draw category */

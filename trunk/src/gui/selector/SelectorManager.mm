@@ -94,15 +94,14 @@ evt.GetY()/(float)mViewport->getActualHeight());//m.state.X.abs/float(m.state.wi
 			location = itr->worldFragment->singleIntersection;
 //			std::cout << "WorldFragment: (" << location.x << ", " << location.y << ", " << location.z << ")" << std::endl;
 		} else  if ( itr->movable ) {
-//			std::cout << "MovableObject: " << itr->movable->getName() << " type: " << itr->movable->getMovableType() << std::endl;
+			std::cout << "MovableObject: " << itr->movable->getName() << " type: " << itr->movable->getMovableType() << std::endl;
 			mCurrentObject = itr->movable;
 //			std::cout << "a: " << mCurrentObject->getName().c_str() << std::endl;
 
 
-			std::cout << "mouseRay: " << mouseRay.getDirection() << std::endl;
-			std::cout << "cont: " <<
-mCurrentObject->getParentSceneNode()->getParentSceneNode()->getName() << " nome  do estado: " << mCurrentObject->getName() << " pos in time: " << mCurrentObject->getPosition() << std::endl;
-			//controller->selectObjectIdentifier(mCurrentObject->getName());
+//			std::cout << "mouseRay: " << mouseRay.getDirection() << std::endl;
+			std::cout << "cont: " << mCurrentObject->getParentSceneNode()->getParentSceneNode()->getName() << " nome do estado: " << mCurrentObject->getName() << " pos in time: " << mCurrentObject->getParentSceneNode()->getPosition() << std::endl;
+			controller->selectObjectIdentifier(mCurrentObject);
 			break;
 	
 		}
