@@ -82,29 +82,49 @@ evt.GetY()/(float)mViewport->getActualHeight());//m.state.X.abs/float(m.state.wi
 */
 
 	mRaySceneQuery->setRay(mouseRay);
-	mRaySceneQuery->setSortByDistance(true,1);
-	mRaySceneQuery->setQueryTypeMask (Ogre::SceneManager::ENTITY_TYPE_MASK);
+	mRaySceneQuery->setSortByDistance(true,10);
+	mRaySceneQuery->setQueryTypeMask(Ogre::SceneManager::ENTITY_TYPE_MASK);
 	mRaySceneQuery->setQueryMask (STATE_MASK|CONTAINER_MASK|LINK_MASK);
 
 	Ogre::RaySceneQueryResult &result = mRaySceneQuery->execute();
 	Ogre::RaySceneQueryResult::iterator itr;
+
+
+	Ogre::SceneNode *mainSN = NULL;
+	Ogre::Vector3 hitAt;
+
+
 	for ( itr = result.begin(); itr != result.end(); itr++ ) {
 		if ( itr->worldFragment ) {
 			Ogre::Vector3 location;
 			location = itr->worldFragment->singleIntersection;
 //			std::cout << "WorldFragment: (" << location.x << ", " << location.y << ", " << location.z << ")" << std::endl;
 		} else  if ( itr->movable ) {
-			std::cout << "MovableObject: " << itr->movable->getName() << " type: " << itr->movable->getMovableType() << std::endl;
-			mCurrentObject = itr->movable;
+			if (mainSN == NULL){
+				mCurrentObject = itr->movable;
+				mainSN = mCurrentObject->getParentSceneNode()->getParentSceneNode();
+				hitAt = mouseRay.getPoint( itr->distance );
+			}else{
+				if (mainSN == itr->movable->getParentSceneNode()->getParentSceneNode()){
+					mCurrentObject = itr->movable;
+					hitAt =mouseRay.getPoint(itr->distance);
+				}
+			}
 //			std::cout << "a: " << mCurrentObject->getName().c_str() << std::endl;
 
 
 //			std::cout << "mouseRay: " << mouseRay.getDirection() << std::endl;
-			std::cout << "cont: " << mCurrentObject->getParentSceneNode()->getParentSceneNode()->getName() << " nome do estado: " << mCurrentObject->getName() << " pos in time: " << mCurrentObject->getParentSceneNode()->getPosition() << std::endl;
-			controller->selectObjectIdentifier(mCurrentObject);
-			break;
-	
+//			controller->selectObjectIdentifier(mCurrentObject);
+//			break;
+//			std::cout << "cont: " << itr->movable->getParentSceneNode()->getParentSceneNode()->getName() << std::endl;
 		}
+	}
+	if (mCurrentObject){
+		hitAt.normalise();
+		std::cout << "SEL # cont: " << mCurrentObject->getParentSceneNode()->getParentSceneNode()->getName() << " nome do estado: " << mCurrentObject->getName() << " pos in time: " << hitAt.y << std::endl;
+		controller->selectObjectIdentifier(mCurrentObject, hitAt);
+	}else{
+		controller->unselectObjectIdentifier("");
 	}
 	mRaySceneQuery->clearResults();
 

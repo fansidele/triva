@@ -25,15 +25,15 @@ void DrawManager::createMaterial (std::string materialName, Ogre::ColourValue co
 		Ogre::Pass *p2 = t->createPass();
 		p2->setPolygonMode(Ogre::PM_WIREFRAME);
 		Ogre::TextureUnitState *tu2 = p2->createTextureUnitState();
-		tu2->setColourOperationEx(Ogre::LBX_SOURCE1,Ogre::LBS_MANUAL,Ogre::LBS_CURRENT, color, color, 0);
-		mat->setDiffuse(color);
-		mat->setSelfIllumination (color);
-		mat->setAmbient (color);
-		mat->reload();
+//		tu2->setColourOperationEx(Ogre::LBX_SOURCE1,Ogre::LBS_MANUAL,Ogre::LBS_CURRENT, color, color, 0);
+//		mat->setDiffuse(color);
+//		mat->setSelfIllumination (color);
+//		mat->setAmbient (color);
+		mat->load();
 		std::cout << "cor = " << color << std::endl;
 	}else{
 //		std::cout << "material: " << materialName << " EXISTE" << std::endl;
-//		mat->reload();
+		mat->reload();
 
 	}
 //	std::cout << mat << std::endl;

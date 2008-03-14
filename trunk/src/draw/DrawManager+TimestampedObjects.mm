@@ -40,7 +40,7 @@ void DrawManager::drawTimestampedObjects (id entity)
 				ssn = n->createChildSceneNode();
 				NSString *ide = [NSString stringWithFormat: @"%@-#-#-%d", [[ent entityType] name], count++];
 				Ogre::Entity *ste = mSceneMgr->createEntity ([ide cString], Ogre::SceneManager::PT_CUBE);
-//				NSLog (@"entity, name=%@ color=%@", [ent name],[viewController colorForEntity: ent]);
+				NSLog (@"entity(%@), name=%@ color=%@ imbricationLevel=%d", [ent class], [ent name],[viewController colorForEntity: ent],[ent imbricationLevel]);
 
 				NSColor *color = [viewController colorForEntity:
 ent];
@@ -54,12 +54,16 @@ cString]), ogreColor);
 				ssn->attachObject (ste);
 				double start;
 				double end;
+				int imbric;
 
 				start = [[[ent time] description] doubleValue];
 				end = [[[ent endTime] description] doubleValue];
+				imbric = [ent imbricationLevel];
+
+				double kk = 0.3-(0.3/5*imbric);
 
 				ssn->setPosition (0,(end-start)/2+start,0);
-				ssn->setScale (0.3,(end-start)/100,0.3);
+				ssn->setScale (kk,(end-start)/100,kk);
 				
 //				NSLog (@"State name=%@ starttime=%f endtime=%f", [ent name], [[[ent time] description] doubleValue], [[[ent endTime] description] doubleValue]);
 //				[st redraw];

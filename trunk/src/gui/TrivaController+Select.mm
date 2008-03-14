@@ -3,7 +3,8 @@
 extern wxString NSSTRINGtoWXSTRING (NSString *ns);
 Ogre::MovableObject *selectedObject = NULL;
 
-void TrivaController::selectObjectIdentifier (Ogre::MovableObject *objectToSelect)
+void TrivaController::selectObjectIdentifier (Ogre::MovableObject
+*objectToSelect, Ogre::Vector3 hitAt)
 {
 	Ogre::Root *mRoot;
 	Ogre::SceneManager *mSceneMgr;
@@ -28,8 +29,10 @@ void TrivaController::selectObjectIdentifier (Ogre::MovableObject *objectToSelec
 
 	/* search for time of selected object */
 	Ogre::Vector3 pos = objectToSelect->getParentSceneNode()->getPosition();
-	double time = pos.y;
-	NSLog (@"time=%f", time);
+	double time;
+	time = pos.y;
+//	time = hitAt.y;
+//	NSLog (@"hitAt.y=%f pos.y=%f", hitAt.y, pos.y);
 
 	/* search for objectEntityType */
 	NSString *objectEntityTypeName = [[[NSString stringWithFormat: @"%s", objectToSelect->getName().c_str()] componentsSeparatedByString: @"-#-#-"] objectAtIndex: 0];
@@ -42,15 +45,21 @@ void TrivaController::selectObjectIdentifier (Ogre::MovableObject *objectToSelec
 		fromTime: [NSDate dateWithTimeIntervalSinceReferenceDate:time]
 		toTime: [NSDate dateWithTimeIntervalSinceReferenceDate: time]
 		minDuration: 0];
-	PajeEntity *et = [en nextObject];
-	if (et != nil){
+	PajeEntity *fet = [en nextObject];
+	PajeEntity *et = fet;
+	NSLog (@"%@", et);
+	while ((et = [en nextObject]) != nil){
+		NSLog (@"%@", et);
+	}
+
+	if (fet != nil){
 		NSString *info = [NSString stringWithFormat: 
 					@"%@ - %@ (%@:%@) %f",
 					[container name],
-					[et name],
-					[et startTime],
-					[et endTime],
-					[et duration]];
+					[fet name],
+					[fet startTime],
+					[fet endTime],
+					[fet duration]];
 		statusBar->SetStatusText (NSSTRINGtoWXSTRING(info));
 		if (selectedObject != NULL){
 			selectedObject->getParentSceneNode()->showBoundingBox(false);
@@ -77,6 +86,10 @@ void TrivaController::selectObjectIdentifier (Ogre::MovableObject *objectToSelec
 
 void TrivaController::unselectObjectIdentifier (std::string name)
 {
+	statusBar->SetStatusText (wxString());
+	if (selectedObject){
+		selectedObject->getParentSceneNode()->showBoundingBox(false);
+	}
 /*
 	if (view){
 		[view unselectObjectIdentifier: [NSString stringWithFormat: @"%s",

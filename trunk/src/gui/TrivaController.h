@@ -68,7 +68,7 @@ protected:
 
 /* Select category */
 public:
-	void selectObjectIdentifier (Ogre::MovableObject *objectToSelect);
+	void selectObjectIdentifier (Ogre::MovableObject *objectToSelect, Ogre::Vector3 hitAt);
 	void unselectObjectIdentifier (std::string name);
 
 /* Draw category */
