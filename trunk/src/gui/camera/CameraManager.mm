@@ -73,16 +73,6 @@ void CameraManager::onKeyDownEvent(wxKeyEvent& evt)
                 case WXK_LEFT:
 			mDirection.x -= mMove;
                         break;
-		case WXK_ESCAPE:
-			if (movingCamera){
-				//avisa TrivaController que acabou
-				std::cout << "disableInputMouseFocus()"<<
-std::endl;
-				controller->disableInputMouseFocus ();
-			}else{
-				evt.Skip();
-			}
-			break;
                 default:
 			evt.Skip();
                         break;

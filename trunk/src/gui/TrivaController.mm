@@ -47,7 +47,6 @@ TrivaController::TrivaController( wxWindow* parent, wxWindowID id, const wxStrin
 	m3DFrame->setListenersEnabled (true, false);
 
 	/* configuring other GUI objects */
-	camCheckbox->SetValue(false);
 	this->configureZoom();
 	m3DFrame->pauseRenderTimer();
 
@@ -99,20 +98,6 @@ TrivaController::~TrivaController()
 	colorWindow->Close();
 	delete ambientManager;
 	delete cameraManager;
-}
-
-void TrivaController::disableInputMouseFocus ()
-{
-//	m3DFrame->setListenersEnabled (false, false);
-	camCheckbox->SetValue(false);
-//	statusBar->SetStatusText (wxT(""));
-//	cameraManager->setMovingCamera(false);
-//	m3DFrame->setListenersEnabled (true, false);
-}
-
-void TrivaController::enableInputMouseFocus ()
-{
-//	m3DFrame->setListenersEnabled (true, true);
 }
 
 void TrivaController::exit( wxCommandEvent& event )
@@ -188,27 +173,6 @@ void TrivaController::checkRead(wxTimerEvent& event)
 /*
 	if ([reader hasMoreData]){
 		[reader read];
-	}
-*/
-}
-
-void TrivaController::cameraCheckbox( wxCommandEvent& event )
-{
-	std::cout << __FUNCTION__ << std::endl;
-	if (camCheckbox->IsChecked()){
-//		cameraManager->setMovingCamera(true);
-//		enableInputMouseFocus();		
-//		statusBar->SetStatusText (wxT("Press ESC to disable camera follows mouse"));
-	}else{
-//		cameraManager->setMovingCamera(false);
-//		disableInputMouseFocus();		
-	}
-
-/*
-	if (renderCheckbox->IsChecked()){
-		m3DFrame->resumeRenderTimer();
-	}else{
-		m3DFrame->pauseRenderTimer();
 	}
 */
 }

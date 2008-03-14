@@ -58,8 +58,6 @@ public:
 	TrivaController( wxWindow* parent );
 	TrivaController( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("TRIVA"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 600,480 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
 	~TrivaController ();
-	void disableInputMouseFocus ();
-	void enableInputMouseFocus ();
 
 /* Zoom Category */
 protected:
