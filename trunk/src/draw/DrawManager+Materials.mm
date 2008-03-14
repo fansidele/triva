@@ -11,10 +11,10 @@ void DrawManager::createMaterial (std::string materialName, Ogre::ColourValue co
 //		Ogre::MaterialPtr bmat = manager->getByName ("VisuApp/RUNNING");
 //		mat = bmat->clone (materialName, true, "Triva");
 
-		Ogre::Technique *t = mat->createTechnique();
+		Ogre::Technique *t = mat->getTechnique(0);
 
 		//pass1
-		Ogre::Pass *p = t->createPass();
+		Ogre::Pass *p = t->getPass(0);
 		p->setSceneBlending (Ogre::SBT_TRANSPARENT_ALPHA);
 		p->setDepthWriteEnabled (false);
 		Ogre::TextureUnitState *tu = p->createTextureUnitState();
