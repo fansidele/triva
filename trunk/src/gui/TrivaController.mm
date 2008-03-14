@@ -106,7 +106,7 @@ void TrivaController::disableInputMouseFocus ()
 //	m3DFrame->setListenersEnabled (false, false);
 	camCheckbox->SetValue(false);
 //	statusBar->SetStatusText (wxT(""));
-	cameraManager->setMovingCamera(false);
+//	cameraManager->setMovingCamera(false);
 //	m3DFrame->setListenersEnabled (true, false);
 }
 
@@ -196,11 +196,11 @@ void TrivaController::cameraCheckbox( wxCommandEvent& event )
 {
 	std::cout << __FUNCTION__ << std::endl;
 	if (camCheckbox->IsChecked()){
-		cameraManager->setMovingCamera(true);
+//		cameraManager->setMovingCamera(true);
 //		enableInputMouseFocus();		
 //		statusBar->SetStatusText (wxT("Press ESC to disable camera follows mouse"));
 	}else{
-		cameraManager->setMovingCamera(false);
+//		cameraManager->setMovingCamera(false);
 //		disableInputMouseFocus();		
 	}
 

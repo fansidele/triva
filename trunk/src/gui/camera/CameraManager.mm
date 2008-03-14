@@ -97,15 +97,22 @@ void CameraManager::onKeyUpEvent (wxKeyEvent& evt)
 
 void CameraManager::onMouseEvent(wxMouseEvent& evt)
 {
-//	std::cout << __FILE__ << "::" << __FUNCTION__ << std::endl;
-	if (movingCamera) {
-		static int lx = 0, ly = 0;
+	static int lx = 0, ly = 0;
+	if (evt.RightDown()){
+		lx = evt.GetX();
+		ly = evt.GetY();
+		movingCamera = true;
+	}
+
+	if (!evt.RightIsDown()) {
+		movingCamera = false;
+	}
+	
+	if (movingCamera){
 		int x = evt.GetX();
 		int y = evt.GetY();
 		int xdif = (x - lx);
 		int ydif = (y - ly);
-//		std::cout << "X: " << evt.GetX() << " xdif: " << xdif << std::endl;
-//		std::cout << "Y: " << evt.GetY() << " ydif: " << ydif << std::endl;
 		mRotX = Ogre::Degree(-xdif * mRotate);
 		mRotY = Ogre::Degree(-ydif * mRotate);
 		lx = x;

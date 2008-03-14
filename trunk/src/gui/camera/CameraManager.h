@@ -13,7 +13,7 @@ class CameraManager : public wxInputEventListener,
 public: 
 	CameraManager (TrivaController *c, Ogre::RenderWindow *win);
 	~CameraManager ();
-	void setMovingCamera (bool c){ movingCamera = c; };
+//	void setMovingCamera (bool c){ movingCamera = c; };
 
 protected:
 	void onKeyDownEvent(wxKeyEvent& evt);
