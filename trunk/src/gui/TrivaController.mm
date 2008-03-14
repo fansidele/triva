@@ -54,8 +54,8 @@ TrivaController::TrivaController( wxWindow* parent, wxWindowID id, const wxStrin
 	colorWindow = new TrivaColorWindowEvents(0,wxID_ANY);
 
 	/* configuring reader, simulator and inner view */
-/*
 	reader = [[ProtoReader alloc] init];
+/*
 	simulator = [[OgreProtoSimulator alloc] init];
 	view = [[ProtoView alloc] init];
 */
@@ -82,15 +82,14 @@ TrivaController::TrivaController( wxWindow* parent, wxWindowID id, const wxStrin
 
 	/* set application instance state to Initialized */
 	this->setState(Initialized);
-	this->setState(Running);
 
 }
 
 TrivaController::~TrivaController()
 {
 	std::cout << "#### " << __FUNCTION__ << std::endl;
-/*
 	[reader release];
+/*
 	[simulator release];
 */
 	[view release];
@@ -129,7 +128,6 @@ void TrivaController::bundlesView ( wxCommandEvent& event )
 void TrivaController::loadBundle ( wxCommandEvent& event )
 {
 
-/*
 	if (![reader loadDIMVisualBundle: @"dimvisual-kaapi.bundle"]){
 		 wxMessageDialog *dial = new wxMessageDialog(NULL, 
     wxT("Error loading bundle (more messages in the console)"), wxT("Error"), wxOK | wxICON_ERROR);
@@ -142,7 +140,6 @@ void TrivaController::loadBundle ( wxCommandEvent& event )
 		ev->Show();
 		bundlesGUI.push_back(ev);
 	}
-*/
 }
 
 
@@ -170,11 +167,10 @@ void TrivaController::oneBundleConfigured()
 
 void TrivaController::checkRead(wxTimerEvent& event)
 {
-/*
+	NSLog (@"%s", __FUNCTION__);
 	if ([reader hasMoreData]){
 		[reader read];
 	}
-*/
 }
 
 void TrivaController::openColorWindow( wxCommandEvent& event )

@@ -8,8 +8,8 @@
 #include <wx/wx.h>
 #include "gui/BundleGUIEvents.h"
 #include "gui/TrivaColorWindowEvents.h"
-/*
 #include "reader/ProtoReader.h"
+/*
 #include "ogre-simulator/OgreProtoSimulator.h"
 */
 #include "draw/ProtoView.h"
@@ -33,8 +33,8 @@ private:
 	ProtoView *view;
 /*
 	OgreProtoSimulator *simulator;
-	ProtoReader *reader;
 */
+	ProtoReader *reader;
 	TrivaPajeComponent *trivaPaje;
 	Ogre::RenderWindow *mWindow;
 	std::vector<BundleGUIEvents*> bundlesGUI;
