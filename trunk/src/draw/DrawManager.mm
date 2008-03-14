@@ -309,7 +309,8 @@ DrawManager::DrawManager (ProtoView *view)
 	currentVisuNode = NULL;
 	mAnimationState = NULL;
 
-
+	Ogre::MaterialPtr(Ogre::MaterialManager::getSingleton().getByName("BaseWhiteNoLighting"))->setAmbient(Ogre::ColourValue::Black);
+	Ogre::MaterialPtr(Ogre::MaterialManager::getSingleton().getByName("BaseWhiteNoLighting"))->setLightingEnabled(true); 
 
 } 
 

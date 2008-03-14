@@ -19,16 +19,13 @@ void DrawManager::createMaterial (std::string materialName, Ogre::ColourValue co
 		p->setDepthWriteEnabled (false);
 		Ogre::TextureUnitState *tu = p->createTextureUnitState();
 		tu->setColourOperationEx(Ogre::LBX_SOURCE1,Ogre::LBS_MANUAL,Ogre::LBS_CURRENT, color, color, 0);
-		tu->setAlphaOperation(Ogre::LBX_SOURCE1,Ogre::LBS_MANUAL,Ogre::LBS_CURRENT, 1, 0.5, 0.5);
+		tu->setAlphaOperation(Ogre::LBX_SOURCE1,Ogre::LBS_MANUAL,Ogre::LBS_CURRENT, 0.5, 0.5, 0.5);
 
 		//pass2 
 		Ogre::Pass *p2 = t->createPass();
 		p2->setPolygonMode(Ogre::PM_WIREFRAME);
 		Ogre::TextureUnitState *tu2 = p2->createTextureUnitState();
-//		tu2->setColourOperationEx(Ogre::LBX_SOURCE1,Ogre::LBS_MANUAL,Ogre::LBS_CURRENT, color, color, 0);
-//		mat->setDiffuse(color);
-//		mat->setSelfIllumination (color);
-//		mat->setAmbient (color);
+		tu2->setColourOperationEx(Ogre::LBX_SOURCE1,Ogre::LBS_MANUAL,Ogre::LBS_CURRENT, color, color, 0);
 		mat->load();
 		std::cout << "cor = " << color << std::endl;
 	}else{
