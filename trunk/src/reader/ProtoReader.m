@@ -37,7 +37,8 @@
 			break;
 		}
 	}
-	[self output: chunk];
+//	[self output: chunk];
+	NSLog (@"%@", chunk);
 	[chunk release];
 	if (moreData == NO){
 		NSLog (@"%s End Of Data", __FUNCTION__);
@@ -48,6 +49,7 @@
 
 - (BOOL) hasMoreData
 {
+	NSLog (@"moreData = %d", moreData);
 	return moreData;
 /*
 	if ([integrator time] == nil){
