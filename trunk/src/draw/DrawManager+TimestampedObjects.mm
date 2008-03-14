@@ -14,9 +14,6 @@ void DrawManager::createTimestampedObjects ()
 void DrawManager::drawTimestampedObjects (id entity)
 {
 	Ogre::SceneNode *n = mSceneMgr->getSceneNode ([[entity name] cString]);
-	NSLog (@"entity name = %@ %d", [entity name], n->getInheritScale());
-
-
 
 	NSEnumerator *en = [[viewController containedTypesForContainerType:[viewController entityTypeForEntity:entity]] objectEnumerator];
 	PajeEntityType *et;
@@ -43,12 +40,16 @@ void DrawManager::drawTimestampedObjects (id entity)
 				ssn = n->createChildSceneNode();
 				NSString *ide = [NSString stringWithFormat: @"%@-#-#-%d", [[ent entityType] name], count++];
 				Ogre::Entity *ste = mSceneMgr->createEntity ([ide cString], Ogre::SceneManager::PT_CUBE);
-				NSLog (@"%@", [ent name]);
+//				NSLog (@"entity, name=%@ color=%@", [ent name],[viewController colorForEntity: ent]);
 
-//				[viewController createMaterialNamed: [ent name]];
+				NSColor *color = [viewController colorForEntity:
+ent];
+				Ogre::ColourValue ogreColor = Ogre::ColourValue([color redComponent], [color greenComponent], [color blueComponent], [color alphaComponent]);
+				this->createMaterial(std::string([[ent name]
+cString]), ogreColor);
 
-//				ste->setMaterialName ([[ent name] cString]);
-				ste->setMaterialName ("VisuApp/RUNNING");
+				ste->setMaterialName ([[ent name] cString]);
+//				ste->setMaterialName ("VisuApp/RUNNING");
 				ste->setQueryFlags(STATE_MASK);
 				ssn->attachObject (ste);
 				double start;

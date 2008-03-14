@@ -65,7 +65,11 @@ private:
 	NSMutableDictionary *createContainersDictionary (id entity);
 	void drawContainers (id entity, Ogre::SceneNode *node);
 	void drawTimestampedObjects (id entity);
-	
+
+
+//MATERIALS CATEGORY
+private:
+	void createMaterial (std::string materialName, Ogre::ColourValue color);	
 };
 
 #include "ProtoView.h"
