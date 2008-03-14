@@ -166,6 +166,7 @@ title, pos, size,
 style )
 {
 	activateButton->Disable();
+	m_notebook2->SetSelection(0);
 }
 
 void BundleGUIEvents::setReader (ProtoReader *r)
