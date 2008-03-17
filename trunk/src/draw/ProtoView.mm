@@ -97,6 +97,7 @@
 
 - (void)hierarchyChanged
 {
+	NSLog (@"%@", __FUNCTION__);
 	drawManager->resetCurrentVisualization();
 	drawManager->createHierarchy ();
 	drawManager->createTimestampedObjects ();

@@ -54,8 +54,8 @@ TrivaController::TrivaController( wxWindow* parent, wxWindowID id, const wxStrin
 	colorWindow = new TrivaColorWindowEvents(0,wxID_ANY);
 
 	/* configuring reader, simulator and inner view */
-	reader = [[ProtoReader alloc] init];
 /*
+	reader = [[ProtoReader alloc] init];
 	simulator = [[OgreProtoSimulator alloc] init];
 	view = [[ProtoView alloc] init];
 */
@@ -72,13 +72,12 @@ TrivaController::TrivaController( wxWindow* parent, wxWindowID id, const wxStrin
 //	[trivaPaje setController: this];
 	view =[ProtoView componentWithController:trivaPaje];
 	[view initialize];
-//	[view setColorWindow: colorWindow];
+	reader = [[TrivaPajeReader alloc] initWithController: trivaPaje];
 	[trivaPaje setOutputFilter: view];
-	NSLog (@"%@", [trivaPaje description]);
-	[trivaPaje setInputFilename:@"/home/schnorr/paje-tool/Paje.tool/Traces/JavaTest.trace"];
-	[trivaPaje readNextChunk:nil];
-	[trivaPaje readNextChunk:nil];
-	[trivaPaje readNextChunk:nil];
+	[trivaPaje setInputFilter: reader];
+	NSLog (@"trivaPajeComponent = %@", [trivaPaje description]);
+	NSLog (@"pajeReader = %@", reader);
+	NSLog (@"pajeView = %@", view);
 
 	/* set application instance state to Initialized */
 	this->setState(Initialized);
@@ -167,10 +166,22 @@ void TrivaController::oneBundleConfigured()
 
 void TrivaController::checkRead(wxTimerEvent& event)
 {
-	NSLog (@"%s", __FUNCTION__);
+NS_DURING
+	[trivaPaje readNextChunk: nil];
+/*
 	if ([reader hasMoreData]){
 		[reader read];
 	}
+*/
+NS_HANDLER
+        NSLog (@"Exception = %@", localException);
+        wxString m = NSSTRINGtoWXSTRING ([localException reason]);
+        wxString n = NSSTRINGtoWXSTRING ([localException name]);
+        wxMessageDialog *dial = new wxMessageDialog(NULL, m, n, wxOK |
+wxICON_ERROR);
+        dial->ShowModal();
+	this->setState(Paused);
+NS_ENDHANDLER
 }
 
 void TrivaController::openColorWindow( wxCommandEvent& event )

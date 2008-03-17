@@ -1,5 +1,7 @@
 #include "TrivaController.h"
 
+extern wxString NSSTRINGtoWXSTRING (NSString *ns);
+
 void TrivaController::applicationIsInitialized()
 {
 	std::cout << __FUNCTION__ << std::endl;
@@ -18,6 +20,21 @@ void TrivaController::applicationIsRunning()
 	std::cout << "start result if " << x << std::endl;
 	this->Connect (wxID_ANY, wxEVT_TIMER, wxTimerEventHandler(TrivaController::checkRead));
 	m3DFrame->resumeRenderTimer();
+/*
+NS_DURING
+	[trivaPaje readNextChunk:nil];
+	[trivaPaje readNextChunk:nil];
+	[trivaPaje readNextChunk:nil];
+NS_HANDLER
+        NSLog (@"Exception = %@", localException);
+        wxString m = NSSTRINGtoWXSTRING ([localException reason]);
+        wxString n = NSSTRINGtoWXSTRING ([localException name]);
+        wxMessageDialog *dial = new wxMessageDialog(NULL, m, n, wxOK |
+wxICON_ERROR);
+        dial->ShowModal();
+
+NS_ENDHANDLER
+*/
 }
 
 void TrivaController::applicationIsPaused()

@@ -5,7 +5,7 @@
 #include "gui/TrivaController.h"
 #include <wx/wxprec.h>
 #include <wx/wx.h>
-#include "reader/ProtoReader.h"
+#include "reader/TrivaPajeReader.h"
 #include <vector>
 
 class TrivaController;
@@ -14,7 +14,7 @@ class BundleGUIEvents : public BundleGUI
 {
 private:
 	TrivaController *controller;
-	ProtoReader *reader;
+	TrivaPajeReader *reader;
 	std::string bundleName;
 	std::streambuf *sbOld;
 
@@ -29,7 +29,7 @@ protected:
 	NSMutableDictionary *getConfigureSetupTab();
 
 public:
-	void setReader (ProtoReader *r);
+	void setReader (TrivaPajeReader *r);
 	void setController (TrivaController *t) { controller = t; };
 	void setBundleName (std::string n);
 	/** Constructor */

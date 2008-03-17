@@ -16,6 +16,7 @@
 	IntegratorLib *integrator;
 	/*! boolean to say if it has more data or no */
 	BOOL moreData; 
+	PajeHeaderCenter *headerCenter;
 }
 /*!
  * The argc,argv parameters are passed in order to initialized the 

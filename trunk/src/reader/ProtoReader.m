@@ -38,7 +38,22 @@
 		}
 	}
 //	[self output: chunk];
-	NSLog (@"%@", chunk);
+
+	static int flag = 0;
+	if (!flag){
+		NSLog (@"%@", [headerCenter print]);
+		flag = 1;
+	}
+	for (i = 0; i < [chunk count]; i++){
+		LibPajeEvent *ev = [chunk objectAtIndex: i];
+		if ([headerCenter headerIsPresent: [ev header]] == NO){
+			[headerCenter addHeader: [ev header]];
+			int code = [headerCenter codeForHeader: [ev header]];
+			NSLog (@"%@", [headerCenter printHeaderWithCode: code]);
+		}
+		NSLog (@"%@", [ev printWithProvider: headerCenter]);
+	}
+
 	[chunk release];
 	if (moreData == NO){
 		NSLog (@"%s End Of Data", __FUNCTION__);
@@ -125,7 +140,12 @@
 
 - (BOOL) setConfiguration: (NSDictionary *) conf forDIMVisualBundle: (NSString *) name
 {
-	NSLog (@"conf = %@", conf);
-	return [integrator setConfiguration: conf forDIMVisualBundle: name];
+	BOOL ret = [integrator setConfiguration: conf forDIMVisualBundle: name];
+	if (ret == YES){
+		headerCenter = [integrator pajeHeaderCenter];	
+		return YES;
+	}else{
+		return NO;
+	}
 }
 @end

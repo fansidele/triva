@@ -169,7 +169,7 @@ style )
 	m_notebook2->SetSelection(0);
 }
 
-void BundleGUIEvents::setReader (ProtoReader *r)
+void BundleGUIEvents::setReader (TrivaPajeReader *r)
 {
 	reader = r;
 

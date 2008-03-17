@@ -63,8 +63,7 @@
 {
     NSArray *graph;
 
-	graph = [@"( ( FileReader, \
-                   PajeEventDecoder, \
+	graph = [@"( ( PajeEventDecoder, \
                    PajeSimulator, \
                    StorageController, \
                    AggregatingFilter \
@@ -250,21 +249,21 @@
 - (void)createComponentGraph
 {
 	[self addComponentSequences:[[self class] defaultComponentGraph]];
-	reader = [self componentWithName:@"FileReader"];
+//	reader = [self componentWithName:@"FileReader"];
 	simulator = [self componentWithName:@"PajeSimulator"];
 	encapsulator = [self componentWithName:@"StorageController"];
 }
 
-
+/*
 - (void)setInputFilename:(NSString *)name
 {
     [reader setInputFilename:name];
 }
+*/
 
 - (BOOL) setOutputFilter: (PajeFilter *) output
 {
 	id lastComponent = [self componentWithName: @"AggregatingFilter"];
-//	TrivaPajeFilter *tpf = [TrivaPajeFilter componentWithController:self];
 	[self connectComponent: lastComponent toComponent: output];
 	return YES;
 
@@ -272,7 +271,9 @@
 
 - (BOOL) setInputFilter: (PajeFilter *) input
 {
+	id firstComponent = [self componentWithName: @"PajeEventDecoder"];
+	[self connectComponent: input toComponent: firstComponent];
+	reader = input;
 	return YES;
 }
-
 @end
