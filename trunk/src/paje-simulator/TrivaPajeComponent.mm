@@ -163,19 +163,20 @@
     }
 }
 
+/*
 - (void)readChunk:(int)chunkNumber
 {
-    int i;
-    NSDate *start, *end, *e2;
-    double t, t2;
-    NSAutoreleasePool *pool;
+//    int i;
+    //NSDate *start, *end, *e2;
+  //  double t, t2;
+//    NSAutoreleasePool *pool;
 
-    pool = [NSAutoreleasePool new];
-    start = [NSDate date];
+//    pool = [NSAutoreleasePool new];
+//    start = [NSDate date];
 
 //    NS_DURING
-        [self startChunk:chunkNumber];
-        i = -(int)[simulator eventCount];
+//        [self startChunk:chunkNumber];
+//        i = -(int)[simulator eventCount];
         if ([reader hasMoreData]) {
       //      NSDebugMLLog(@"tim", @"will read chunk starting at %@",
     //                                [simulator currentTime]);
@@ -183,8 +184,7 @@
   //                                  [simulator currentTime]);
             [reader readNextChunk];
         }
-        [self endOfChunkLast:![reader hasMoreData]];
-/*
+//        [self endOfChunkLast:![reader hasMoreData]];
 
     NS_HANDLER
 		NSLog (@" exception = %@"
@@ -202,7 +202,6 @@
                             ) != NSAlertDefaultReturn)
 //            [[NSApplication sharedApplication] terminate:self];
     NS_ENDHANDLER
-*/
 
     end = [[NSDate date] retain];
     t = [end timeIntervalSinceDate:start];
@@ -240,16 +239,21 @@
 }
 
 
+*/
 
 - (void)readNextChunk:(id)sender
 {
-	[self readChunk:[chunkDates count]];
+//	[self readChunk:[chunkDates count]];
+        if ([reader hasMoreData]) {
+            [reader readNextChunk];
+        }
 }
 
 - (void)createComponentGraph
 {
 	[self addComponentSequences:[[self class] defaultComponentGraph]];
 //	reader = [self componentWithName:@"FileReader"];
+	reader = nil;
 	simulator = [self componentWithName:@"PajeSimulator"];
 	encapsulator = [self componentWithName:@"StorageController"];
 }

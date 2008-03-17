@@ -11,7 +11,7 @@
 	NSMutableDictionary *bundles;
 	NSMutableDictionary *components;
 
-	PSortedArray *chunkDates;
+//	PSortedArray *chunkDates;
 	BOOL timeLimitsChanged;
 }
 
@@ -27,8 +27,10 @@
 - (void)addComponentSequence:(NSArray *)componentSequence;
 - (void)addComponentSequences:(NSArray *)componentSequences;
 - (void)createComponentGraph;
+/*
 - (void)startChunk:(int)chunkNumber;
 - (void)endOfChunkLast:(BOOL)last;
+*/
 
 /* Triva special methods */
 - (BOOL) setOutputFilter: (PajeFilter *) output;
