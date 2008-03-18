@@ -103,8 +103,8 @@ void CameraManager::onMouseEvent(wxMouseEvent& evt)
 		int y = evt.GetY();
 		int xdif = (x - lx);
 		int ydif = (y - ly);
-		mRotX = Ogre::Degree(-xdif * mRotate);
-		mRotY = Ogre::Degree(-ydif * mRotate);
+		mRotX = Ogre::Degree(xdif * mRotate);
+		mRotY = Ogre::Degree(ydif * mRotate);
 		lx = x;
 		ly = y;
 		moveCamera();
