@@ -21,7 +21,7 @@
 
 - (void) dealloc
 {
-        NSLog (@"%s", self, __FUNCTION__);
+        NSLog (@"%@ %s", self, __FUNCTION__);
 //	[pajeOgreFilter release];
 //	delete drawManager;
 	[super dealloc];
@@ -97,11 +97,11 @@
 
 - (void)hierarchyChanged
 {
-	NSLog (@"%@", __FUNCTION__);
+	NSLog (@"%s", __FUNCTION__);
 	drawManager->resetCurrentVisualization();
 	drawManager->createHierarchy ();
-	drawManager->createTimestampedObjects ();
-	//[self printAll];
+//	drawManager->createTimestampedObjects ();
+	[self printAll];
 }
 
 

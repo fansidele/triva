@@ -12,6 +12,9 @@
 	IntegratorLib *integrator;
 	BOOL moreData; 
 	PajeHeaderCenter *headerCenter;
+
+	unsigned currentChunk;
+	NSMutableArray *chunkInfo;
 }
 - (id)initWithController:(PajeTraceController *)c;
 

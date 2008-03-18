@@ -167,12 +167,15 @@ void TrivaController::oneBundleConfigured()
 void TrivaController::checkRead(wxTimerEvent& event)
 {
 NS_DURING
-	[trivaPaje readNextChunk: nil];
-/*
 	if ([reader hasMoreData]){
-		[reader read];
+		[trivaPaje readNextChunk: nil];
+	}else{
+		static int flag = 0;
+		if (!flag){
+			[view hierarchyChanged];
+			flag = 1;
+		}
 	}
-*/
 NS_HANDLER
         NSLog (@"Exception = %@", localException);
         wxString m = NSSTRINGtoWXSTRING ([localException reason]);

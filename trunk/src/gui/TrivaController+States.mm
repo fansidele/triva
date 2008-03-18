@@ -20,21 +20,20 @@ void TrivaController::applicationIsRunning()
 	std::cout << "start result if " << x << std::endl;
 	this->Connect (wxID_ANY, wxEVT_TIMER, wxTimerEventHandler(TrivaController::checkRead));
 	m3DFrame->resumeRenderTimer();
-/*
 NS_DURING
-	[trivaPaje readNextChunk:nil];
-	[trivaPaje readNextChunk:nil];
-	[trivaPaje readNextChunk:nil];
+//	[trivaPaje readNextChunk:nil];
+//	NSLog (@"retornou");
+//	[trivaPaje readNextChunk:nil];
+//	[trivaPaje readNextChunk:nil];
+
 NS_HANDLER
         NSLog (@"Exception = %@", localException);
         wxString m = NSSTRINGtoWXSTRING ([localException reason]);
         wxString n = NSSTRINGtoWXSTRING ([localException name]);
-        wxMessageDialog *dial = new wxMessageDialog(NULL, m, n, wxOK |
-wxICON_ERROR);
+        wxMessageDialog *dial = new wxMessageDialog(NULL, m, n, wxOK | wxICON_ERROR);
         dial->ShowModal();
-
 NS_ENDHANDLER
-*/
+//	NSLog (@"passou a rotina de tratamento %@\n", nil);
 }
 
 void TrivaController::applicationIsPaused()

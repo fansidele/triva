@@ -2,10 +2,29 @@
 #include "draw/position/Position.h"
 #include "draw/layout/Layout.h"
 
+void DrawManager::destroyAllChildren (Ogre::SceneNode *node)
+{
+/*
+	unsigned int i, n = node->numAttachedObjects();
+	for (i = 0; i < n; i++){
+		mSceneMgr->destroyMovableObject (node->getAttachedObject(i));
+	}
+
+	Ogre::ChildNodeIterator it = node->getChildIterator();
+	for (it.begin(); it < it.end(); it++){
+		this->destroyAllChildren (it);
+	}
+	node->removeAndDestroyAllChildren ();
+*/
+}
+
 void DrawManager::resetCurrentVisualization ()
 {
+	NSLog (@"currentVisuNode = %p", currentVisuNode);
 	if (currentVisuNode){
-		mSceneMgr->getRootSceneNode()->removeAndDestroyAllChildren();
+		currentVisuNode->removeAndDestroyAllChildren();
+		std::cout<<"Destroying "<<currentVisuNode->getName()<<std::endl;
+		mSceneMgr->destroySceneNode (currentVisuNode->getName());
 		currentVisuNode = NULL;
 	}
 	currentVisuNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();

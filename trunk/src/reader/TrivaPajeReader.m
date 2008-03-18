@@ -9,6 +9,8 @@ static NSFileHandle *file;
 	if (self != nil){
 		integrator = [[IntegratorLib alloc] init];
 		moreData = YES;	
+		currentChunk = 0;
+		chunkInfo = [[NSMutableArray alloc] init];
 		file = [NSFileHandle fileHandleForWritingAtPath: @"/tmp/toto.trace"];
 		NSLog (@"file = %@", file);
 	}
@@ -17,12 +19,26 @@ static NSFileHandle *file;
 
 - (void)startChunk:(int)chunkNumber
 {
-//	NSLog (@"%s - received chunkNumber=%d (doing nothing about it)", __FUNCTION__, chunkNumber);
+//	NSLog (@"%s chunkNumber=%d", __FUNCTION__,chunkNumber);
+	// go to chunkNumber, so next chunk read will be chunkNumber 
+	if (chunkNumber != currentChunk) {
+		currentChunk = chunkNumber;
+	}
+
+	// notify others that chunkNumber is starting 
+	[super startChunk: chunkNumber];
 }
 
 - (void)endOfChunkLast:(BOOL)last
 {
-//	NSLog (@"%s - received last=%d (doing nothing about it)", __FUNCTION__, last);
+//	NSLog (@"%s - %d", __FUNCTION__, last);
+	currentChunk++;
+	// the currentChunk has ended 
+	// ...
+	//if (!last) {}
+	
+	// notify others about this
+	[super endOfChunkLast: last];
 }
 
 
@@ -44,13 +60,20 @@ static NSFileHandle *file;
 - (NSString *)inputFilename
 {
     NSString *ret = @"DIMVisual-Input.trace";
-    NSLog (@"%s - returning (%@)", __FUNCTION__, ret);
+//    NSLog (@"%s - returning (%@)", __FUNCTION__, ret);
     return ret;
 }
 
+- (NSString *)traceDescription
+{
+//	NSLog (@"%s", __FUNCTION__);
+    return [self inputFilename];// stringByAbbreviatingWithTildeInPath];
+}
+
+
 - (void)setInputFilename:(NSString *)filename
 {
-//	NSLog (@"%s - received filename=%@ (doing nothing about it)", __FUNCTION__, filename);
+	NSLog (@"%s - received filename=%@ (doing nothing about it)", __FUNCTION__, filename);
 }
 
 - (void)inputEntity:(id)entity
@@ -58,55 +81,77 @@ static NSFileHandle *file;
     [self raise:@"Configuration error:" " PajeFileReader should be first component"];
 }
 
-- (BOOL)canEndChunk
+- (NSData *) readDataFromDIMVisual
 {
-	NSLog (@"%s - returning YES", __FUNCTION__);
-	return YES;
-}
+	NSMutableData *data = [NSMutableData data];
 
-
-- (void) readNextChunk
-{
-	NSMutableArray *chunk = [[NSMutableArray alloc] init];
+	NSMutableArray *events = [NSMutableArray array];
 	int i;
 	for (i = 0; i < 10; i++){
 		NSMutableArray *a = [integrator convert];
 		if (a != nil){
-			[chunk addObjectsFromArray: a];
+			[events addObjectsFromArray: a];
 		}else{
 			moreData = NO;
+			NSLog (@"%s: End Of Data", __FUNCTION__);
 			break;
 		}
 	}
 
-	NSMutableData *data = [NSMutableData data];
-
-	int flag2 = 0;
 	static int flag = 0;
 	if (!flag){
-//		NSLog (@"%@", [headerCenter print]);
 		[data appendData: [[headerCenter print] dataUsingEncoding: NSASCIIStringEncoding]];
 		flag = 1;
-		flag2 = 1;
 	}
-	for (i = 0; i < [chunk count]; i++){
-		LibPajeEvent *ev = [chunk objectAtIndex: i];
-//		NSLog (@"ev = %@", ev);
+	for (i = 0; i < [events count]; i++){
+		LibPajeEvent *ev = [events objectAtIndex: i];
 		if ([headerCenter headerIsPresent: [ev header]] == NO){
 			[headerCenter addHeader: [ev header]];
 			int code = [headerCenter codeForHeader: [ev header]];
 			[data appendData: [[headerCenter printHeaderWithCode: code] dataUsingEncoding: NSASCIIStringEncoding]];
 		}
-//		NSLog (@"%@ %@", [ev class], [ev printWithProvider: headerCenter]);
 		[data appendData: [[ev printWithProvider: headerCenter] dataUsingEncoding: NSASCIIStringEncoding]];
-		flag2 = 1;
 	}
-	if (flag2){
-		[file writeData: data];
-		[self outputEntity: data];
+	return data;
+}
+
+- (BOOL)canEndChunk
+{
+//	NSLog (@"%s", __FUNCTION__);
+	if (moreData == NO){
+		return YES;
+	}
+	NSData *data = [self readDataFromDIMVisual];
+	[file writeData: data];
+	if ([super canEndChunkBefore:data]) {
+		return YES;
+	}else{
+		return NO;
+	}
+}
+
+- (void) readNextChunk
+{
+//	NSLog (@"%s nextChunk will be=%d", __FUNCTION__, currentChunk+1);
+	if (moreData == NO){
+		return;
 	}
 
-	[chunk release];
+	int nextChunk = currentChunk +1;
+	if (nextChunk < [chunkInfo count]) {
+	}else{
+		NSData *data = [self readDataFromDIMVisual];
+		if (!data){
+			NSLog (@"%@: warning, data is nil", self);
+		}
+		[file writeData: data];
+		[self outputEntity: data];
+		while (![self canEndChunk]) {
+			;
+		}
+	}
+
+
 	if (moreData == NO){
 		NSLog (@"%s End Of Data", __FUNCTION__);
 	}

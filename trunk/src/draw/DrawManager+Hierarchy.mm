@@ -10,18 +10,25 @@ void DrawManager::createHierarchy ()
 
 	[position newHierarchyOrganization: this->createContainersDictionary(instance)];
 	pos =  [position positionForAllNodes];
+	NSLog (@"pos = %@", pos);
 	this->drawContainers (instance, currentVisuNode);
 }
 
 void DrawManager::drawContainers (id entity, Ogre::SceneNode *node)
 {
-	std::string name = std::string([[entity name] cString]);
+	std::string orname = std::string ([[entity name] cString]);
+	std::string name = std::string(orname);
 	name.append ("-#-#-");
 	name.append ([[[entity entityType] name] cString]);
 
-	Ogre::SceneNode *n = node->createChildSceneNode([[entity name] cString]);
-	Ogre::Entity *e = mSceneMgr->createEntity ([[entity name] cString], 
-					Ogre::SceneManager::PT_CUBE);
+	Ogre::SceneNode *n = node->createChildSceneNode(orname);
+	Ogre::Entity *e;
+	try {
+		e = mSceneMgr->getEntity(orname);
+	}catch (Ogre::Exception ex){
+		e = mSceneMgr->createEntity (orname, 
+				Ogre::SceneManager::PT_CUBE);
+	}
 	e->setUserAny (Ogre::Any (name));
 	e->setMaterialName ("VisuApp/Base");
 	e->setQueryFlags(CONTAINER_MASK);

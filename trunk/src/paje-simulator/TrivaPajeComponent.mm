@@ -7,6 +7,18 @@
 	components = [NSMutableDictionary dictionary];
 	bundles = [NSMutableDictionary dictionary];
 	[self createComponentGraph];
+
+	chunkDates = [[NSClassFromString(@"PSortedArray") alloc]
+                                initWithSelector:@selector(self)];
+
+	NSNotificationCenter *notificationCenter;
+	notificationCenter = [NSNotificationCenter defaultCenter];
+
+	[notificationCenter addObserver:self
+		selector:@selector(chunkFault:)
+		name:@"PajeChunkNotInMemoryNotification"
+		object:nil];
+
 	return self;
 }
 
@@ -163,10 +175,11 @@
     }
 }
 
-/*
 - (void)readChunk:(int)chunkNumber
 {
-//    int i;
+//	NSLog (@"%s - chunkNumber:%d", __FUNCTION__, chunkNumber);
+
+    int i;
     //NSDate *start, *end, *e2;
   //  double t, t2;
 //    NSAutoreleasePool *pool;
@@ -175,8 +188,8 @@
 //    start = [NSDate date];
 
 //    NS_DURING
-//        [self startChunk:chunkNumber];
-//        i = -(int)[simulator eventCount];
+        [self startChunk:chunkNumber];
+        i = -(int)[simulator eventCount];
         if ([reader hasMoreData]) {
       //      NSDebugMLLog(@"tim", @"will read chunk starting at %@",
     //                                [simulator currentTime]);
@@ -184,39 +197,41 @@
   //                                  [simulator currentTime]);
             [reader readNextChunk];
         }
-//        [self endOfChunkLast:![reader hasMoreData]];
+//	NSLog (@"fini: %d", [reader hasMoreData]);
+        [self endOfChunkLast:![reader hasMoreData]];
 
-    NS_HANDLER
-		NSLog (@" exception = %@"
-			"reason = %@"
-			"userInfo = %@", [localException name],
-					[localException reason],
-					[localException userInfo]);
+//    NS_HANDLER
+//		NSLog (@" exception = %@"
+//			"reason = %@"
+//			"userInfo = %@", [localException name],
+//					[localException reason],
+//					[localException userInfo]);
 	
-        if (NSRunAlertPanel([localException name], @"%@\n%@",
-                            @"Continue", @"Abort", nil,
-                            [localException reason],
-                            [localException userInfo]
+//        if (NSRunAlertPanel([localException name], @"%@\n%@",
+//                            @"Continue", @"Abort", nil,
+//                            [localException reason],
+//                            [localException userInfo]
                             //[[[localException userInfo] objectEnumerator] 
                             //allObjects]
-                            ) != NSAlertDefaultReturn)
+//                            ) != NSAlertDefaultReturn)
 //            [[NSApplication sharedApplication] terminate:self];
-    NS_ENDHANDLER
+//    NS_ENDHANDLER
 
-    end = [[NSDate date] retain];
-    t = [end timeIntervalSinceDate:start];
-    i += [simulator eventCount];
+//    end = [[NSDate date] retain];
+//    t = [end timeIntervalSinceDate:start];
+//    i += [simulator eventCount];
 
-    [pool release];
+//    [pool release];
 
-    e2 = [NSDate date];
-    t2 = [e2 timeIntervalSinceDate:end];
-    [end release];
+//    e2 = [NSDate date];
+//    t2 = [e2 timeIntervalSinceDate:end];
+//    [end release];
     //NSLog(@"%@: %d events in %f seconds = %f e/s; rel=%f", [reader inputFilename], i, t, i/t, t2);
 }
 
 - (void)startChunk:(int)chunkNumber
 {
+//	NSLog (@"%s - chunkNumber:%d", __FUNCTION__, chunkNumber);
     [reader startChunk:chunkNumber];
     if ([reader hasMoreData] && (unsigned int)chunkNumber >= [chunkDates count]) {
         [chunkDates addObject:[simulator currentTime]];
@@ -226,6 +241,7 @@
 
 - (void)endOfChunkLast:(BOOL)last
 {
+//	NSLog (@"%s - last:%d", __FUNCTION__, last);
     [reader endOfChunkLast:last];
     if (timeLimitsChanged) {
         [encapsulator timeLimitsChanged];
@@ -235,18 +251,15 @@
 
 - (void)missingChunk:(int)chunkNumber
 {
+//	NSLog (@"%s - chunkNumber:%d", __FUNCTION__, chunkNumber);
     [self readChunk:chunkNumber];
 }
 
-
-*/
-
 - (void)readNextChunk:(id)sender
 {
-//	[self readChunk:[chunkDates count]];
-        if ([reader hasMoreData]) {
-            [reader readNextChunk];
-        }
+//	NSLog (@"%s - senderr:%@", __FUNCTION__, sender);
+	[self readChunk:[chunkDates count]];
+//	NSLog (@"%s - sender :%@ (AFTER)", __FUNCTION__, sender);
 }
 
 - (void)createComponentGraph
@@ -256,6 +269,16 @@
 	reader = nil;
 	simulator = [self componentWithName:@"PajeSimulator"];
 	encapsulator = [self componentWithName:@"StorageController"];
+}
+
+- (void)chunkFault:(NSNotification *)notification
+{
+//	NSLog (@"%s", __FUNCTION__);
+    int chunkNumber;
+
+    chunkNumber = [[[notification userInfo]
+                          objectForKey:@"ChunkNumber"] intValue];
+    [self readChunk:chunkNumber];
 }
 
 /*
