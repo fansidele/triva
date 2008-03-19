@@ -84,7 +84,16 @@
 
 	NSMutableArray *events = [NSMutableArray array];
 	int i;
-	events = [integrator convert];
+	for (i = 0; i < 10; i++){
+		NSMutableArray *a = [integrator convert];
+		if (a != nil){
+			[events addObjectsFromArray: a];
+		}else{
+			moreData = NO;
+			NSLog (@"%s: End Of Data", __FUNCTION__);
+			break;
+		}
+	}
 	if (events == nil){
 		moreData = NO;
 		NSLog (@"%s: End Of Data", __FUNCTION__);
