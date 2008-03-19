@@ -5,13 +5,14 @@
 #include <DIMVisual/Protocols.h> /* for the FileReader protocol */
 #include <DIMVisual/IntegratorLib.h>
 #include <General/PajeFilter.h>
-#include "general/BundleCenter.h"
 
 @interface TrivaPajeReader  : PajeFilter
 {
 	IntegratorLib *integrator;
 	BOOL moreData; 
 	PajeHeaderCenter *headerCenter;
+
+	NSMutableData *dataChunk;
 
 	unsigned currentChunk;
 	NSMutableArray *chunkInfo;

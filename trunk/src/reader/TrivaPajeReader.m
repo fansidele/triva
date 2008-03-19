@@ -1,7 +1,5 @@
 #include "TrivaPajeReader.h"
 
-static NSFileHandle *file;
-
 @implementation TrivaPajeReader
 - (id)initWithController:(PajeTraceController *)c
 {
@@ -11,8 +9,7 @@ static NSFileHandle *file;
 		moreData = YES;	
 		currentChunk = 0;
 		chunkInfo = [[NSMutableArray alloc] init];
-		file = [NSFileHandle fileHandleForWritingAtPath: @"/tmp/toto.trace"];
-		NSLog (@"file = %@", file);
+		dataChunk = nil;
 	}
 	return self;
 }
@@ -87,15 +84,11 @@ static NSFileHandle *file;
 
 	NSMutableArray *events = [NSMutableArray array];
 	int i;
-	for (i = 0; i < 10; i++){
-		NSMutableArray *a = [integrator convert];
-		if (a != nil){
-			[events addObjectsFromArray: a];
-		}else{
-			moreData = NO;
-			NSLog (@"%s: End Of Data", __FUNCTION__);
-			break;
-		}
+	events = [integrator convert];
+	if (events == nil){
+		moreData = NO;
+		NSLog (@"%s: End Of Data", __FUNCTION__);
+		return data;
 	}
 
 	static int flag = 0;
@@ -117,13 +110,18 @@ static NSFileHandle *file;
 
 - (BOOL)canEndChunk
 {
-//	NSLog (@"%s", __FUNCTION__);
 	if (moreData == NO){
 		return YES;
 	}
 	NSData *data = [self readDataFromDIMVisual];
-	[file writeData: data];
-	if ([super canEndChunkBefore:data]) {
+	NSData *data2 = [[NSData alloc] initWithData: data];
+	BOOL x = [super canEndChunkBefore:data2];
+	[data2 release];
+	if (x) {
+		if (dataChunk == nil){
+			dataChunk = [[NSMutableData alloc] init];
+		}
+		[dataChunk appendData: data];
 		return YES;
 	}else{
 		return NO;
@@ -132,20 +130,21 @@ static NSFileHandle *file;
 
 - (void) readNextChunk
 {
-//	NSLog (@"%s nextChunk will be=%d", __FUNCTION__, currentChunk+1);
 	if (moreData == NO){
 		return;
 	}
-
 	int nextChunk = currentChunk +1;
 	if (nextChunk < [chunkInfo count]) {
 	}else{
-		NSData *data = [self readDataFromDIMVisual];
-		if (!data){
-			NSLog (@"%@: warning, data is nil", self);
+		GSDebugAllocationActive(YES);
+		NSMutableData *data = [self readDataFromDIMVisual];
+		if (dataChunk == nil){
+			dataChunk = [[NSMutableData alloc] init];
 		}
-		[file writeData: data];
-		[self outputEntity: data];
+		[dataChunk appendData: data];
+		[self outputEntity: dataChunk];
+		[dataChunk release];
+		dataChunk = nil;
 		while (![self canEndChunk]) {
 			;
 		}
@@ -193,7 +192,7 @@ static NSFileHandle *file;
 {
 	BOOL ret = [integrator setConfiguration: conf forDIMVisualBundle: name];
 	if (ret == YES){
-//		headerCenter = [integrator pajeHeaderCenter];	
+//		headerCenter = [integrator pajeHeaderCenter];   
 		headerCenter = [[PajeHeaderCenter alloc] initWithDefaultHeader];
 		return YES;
 	}else{
