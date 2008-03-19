@@ -39,12 +39,22 @@ void DrawManager::drawTimestampedObjects (id entity)
 				Ogre::SceneNode *ssn;
 				ssn = n->createChildSceneNode();
 				NSString *ide = [NSString stringWithFormat: @"%@-#-#-%d", [[ent entityType] name], count++];
-				Ogre::Entity *ste = mSceneMgr->createEntity ([ide cString], Ogre::SceneManager::PT_CUBE);
+				Ogre::Entity *ste;
+				std::string n;
+				n = std::string ([ide cString]);
+				try {
+					ste = mSceneMgr->getEntity(n);
+				}catch (Ogre::Exception ex){
+					ste = mSceneMgr->createEntity (n,
+						Ogre::SceneManager::PT_CUBE);
+				}
 				NSLog (@"entity(%@), name=%@ color=%@ imbricationLevel=%d", [ent class], [ent name],[viewController colorForEntity: ent],[ent imbricationLevel]);
 
 				NSColor *color = [viewController colorForEntity:
 ent];
-				Ogre::ColourValue ogreColor = Ogre::ColourValue([color redComponent], [color greenComponent], [color blueComponent], [color alphaComponent]);
+//				Ogre::ColourValue ogreColor = Ogre::ColourValue([color redComponent], [color greenComponent], [color blueComponent], [color alphaComponent]);
+				Ogre::ColourValue ogreColor =
+Ogre::ColourValue::White;
 				this->createMaterial(std::string([[ent name]
 cString]), ogreColor);
 
