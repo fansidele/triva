@@ -100,6 +100,7 @@
 	drawManager->resetCurrentVisualization();
 	drawManager->createHierarchy ();
 	drawManager->createTimestampedObjects ();
+//	[self printAll];
 }
 
 
