@@ -10,7 +10,6 @@ void DrawManager::createHierarchy ()
 
 	[position newHierarchyOrganization: this->createContainersDictionary(instance)];
 	pos =  [position positionForAllNodes];
-	NSLog (@"pos = %@", pos);
 	this->drawContainers (instance, currentVisuNode);
 }
 
