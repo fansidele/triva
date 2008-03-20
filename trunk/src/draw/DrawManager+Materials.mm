@@ -6,7 +6,6 @@ void DrawManager::createMaterial (std::string materialName, Ogre::ColourValue co
 	Ogre::MaterialPtr mat;
 	mat = manager->getByName (materialName);
 	if (mat.isNull()){
-		std::cout << "material: " << materialName << " nao existe" << std::endl;
 		mat = manager->create (materialName, "Triva");
 //		Ogre::MaterialPtr bmat = manager->getByName ("VisuApp/RUNNING");
 //		mat = bmat->clone (materialName, true, "Triva");
@@ -27,13 +26,11 @@ void DrawManager::createMaterial (std::string materialName, Ogre::ColourValue co
 		Ogre::TextureUnitState *tu2 = p2->createTextureUnitState();
 		tu2->setColourOperationEx(Ogre::LBX_SOURCE1,Ogre::LBS_MANUAL,Ogre::LBS_CURRENT, color, color, 0);
 		mat->load();
-		std::cout << "cor = " << color << std::endl;
+		mat->setDiffuse(color);
 	}else{
-//		std::cout << "material: " << materialName << " EXISTE" << std::endl;
 		mat->reload();
 
 	}
-//	std::cout << mat << std::endl;
 }
 
 Ogre::ColourValue DrawManager::getMaterialColor (std::string materialName)
@@ -45,9 +42,9 @@ Ogre::MaterialManager::getSingletonPtr();
 	if (!mat.isNull()){
 		Ogre::ColourValue og =
 mat->getTechnique(0)->getPass(0)->getDiffuse();
-		std::cout << "cor eh " << og << std::endl;
 		return og;
 	}else{
+		//should never end here
 		return Ogre::ColourValue::White;
 	}
 }
@@ -55,16 +52,15 @@ mat->getTechnique(0)->getPass(0)->getDiffuse();
 void DrawManager::setMaterialColor (std::string materialName, Ogre::ColourValue
 og)
 {
-	std::cout << __FUNCTION__ << " cor = " << og << std::endl;
 	Ogre::MaterialManager *manager =
 Ogre::MaterialManager::getSingletonPtr();
 	Ogre::MaterialPtr mat;
 	mat = manager->getByName (materialName);
+	og.a = 0.5;
 	if (!mat.isNull()){
+		mat->setDiffuse(og);
 		mat->getTechnique(0)->getPass(0)->getTextureUnitState(0)->setColourOperationEx (Ogre::LBX_SOURCE1,Ogre::LBS_MANUAL,Ogre::LBS_CURRENT, og,og,0);
 		mat->getTechnique(0)->getPass(0)->getTextureUnitState(0)->setAlphaOperation(Ogre::LBX_SOURCE1,Ogre::LBS_MANUAL,Ogre::LBS_CURRENT, 0.5, 0.5, 0.5);
 		mat->getTechnique(0)->getPass(1)->getTextureUnitState(0)->setColourOperationEx (Ogre::LBX_SOURCE1,Ogre::LBS_MANUAL,Ogre::LBS_CURRENT, og, og, 0);
-//		mat->reload();
-		std::cout << "material " << materialName << " reload" << std::endl;
 	}
 }
