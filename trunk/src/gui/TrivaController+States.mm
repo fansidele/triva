@@ -5,6 +5,7 @@ extern wxString NSSTRINGtoWXSTRING (NSString *ns);
 void TrivaController::applicationIsInitialized()
 {
 	std::cout << __FUNCTION__ << std::endl;
+	m3DFrame->resumeRenderTimer();
 }
 
 void TrivaController::applicationIsConfigured()
@@ -19,7 +20,6 @@ void TrivaController::applicationIsRunning()
 	bool x =readTimer.Start(100,wxTIMER_CONTINUOUS); /* TODO: make 1 second configurable */
 	std::cout << "start result if " << x << std::endl;
 	this->Connect (wxID_ANY, wxEVT_TIMER, wxTimerEventHandler(TrivaController::checkRead));
-	m3DFrame->resumeRenderTimer();
 NS_DURING
 //	[trivaPaje readNextChunk:nil];
 //	NSLog (@"retornou");
