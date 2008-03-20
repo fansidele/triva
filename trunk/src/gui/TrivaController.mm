@@ -1,4 +1,5 @@
 #include "TrivaController.h"
+#include <wx/colordlg.h>
 
 wxString NSSTRINGtoWXSTRING (NSString *ns)
 {
@@ -50,10 +51,6 @@ TrivaController::TrivaController( wxWindow* parent, wxWindowID id, const wxStrin
 	this->configureZoom();
 	m3DFrame->pauseRenderTimer();
 
-	/* configuring color window */
-	colorWindow = new TrivaColorWindowEvents(this,wxID_ANY);
-	colorWindow->setController (this);
-
 	/* configuring reader, simulator and inner view */
 /*
 	reader = [[ProtoReader alloc] init];
@@ -94,10 +91,8 @@ TrivaController::~TrivaController()
 */
 	[view release];
 	m3DFrame->removeInputListener(cameraManager);
-	colorWindow->Close();
 	delete ambientManager;
 	delete cameraManager;
-	delete colorWindow;
 }
 
 void TrivaController::exit( wxCommandEvent& event )
@@ -189,7 +184,19 @@ wxICON_ERROR);
 NS_ENDHANDLER
 }
 
-void TrivaController::openColorWindow( wxCommandEvent& event )
+void TrivaController::changeColor( wxCommandEvent& event )
 {
-	colorWindow->Show();
+	//check if anything is selected
+
+	//pega cor existente
+	wxColourData data;
+	wxColor color;
+	data.SetColour(color);
+
+	wxColour x = wxGetColourFromUser(this, color);
+	colorButton->SetBackgroundColour (x);
+	DrawManager *m = [view drawManager];
+	std::string str = std::string (colorButton->GetLabel().ToAscii());
+	Ogre::ColourValue og = this->convertWxColor (x);
+	m->setMaterialColor (str, og);
 }

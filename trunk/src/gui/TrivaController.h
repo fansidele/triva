@@ -7,7 +7,6 @@
 #include <wx/wxprec.h>
 #include <wx/wx.h>
 #include "gui/BundleGUIEvents.h"
-#include "gui/TrivaColorWindowEvents.h"
 /*
 #include "reader/ProtoReader.h"
 #include "ogre-simulator/OgreProtoSimulator.h"
@@ -41,8 +40,6 @@ private:
 	Ogre::RenderWindow *mWindow;
 	std::vector<BundleGUIEvents*> bundlesGUI;
 
-	TrivaColorWindowEvents *colorWindow;
-
 protected:
 	// Handlers for TRIVAGUI events.
 	void loadBundle( wxCommandEvent& event );
@@ -52,7 +49,7 @@ protected:
 	void playClicked( wxCommandEvent& event );
 	void pauseClicked( wxCommandEvent& event );
 	void cameraCheckbox ( wxCommandEvent& event );
-	void openColorWindow( wxCommandEvent& event );
+	void changeColor( wxCommandEvent& event );
 	
 public:
 	ProtoView *getView () { return view; };
