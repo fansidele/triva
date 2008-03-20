@@ -55,6 +55,8 @@ protected:
 	void openColorWindow( wxCommandEvent& event );
 	
 public:
+	ProtoView *getView () { return view; };
+
 	/** Constructor */
 	void oneBundleConfigured();
 	TrivaController( wxWindow* parent );
@@ -72,6 +74,9 @@ protected:
 public:
 	void selectObjectIdentifier (Ogre::MovableObject *objectToSelect, Ogre::Vector3 hitAt);
 	void unselectObjectIdentifier (std::string name);
+	wxColour convertOgreColor (Ogre::ColourValue v);
+	Ogre::ColourValue convertWxColor (wxColor c);
+
 
 /* Draw category */
 protected:

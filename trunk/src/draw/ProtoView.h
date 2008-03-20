@@ -14,6 +14,7 @@
 	DrawManager *drawManager;
 }
 - (void) initialize;
+- (DrawManager *) drawManager;
 @end
 
 @interface ProtoView (Materials)

@@ -193,4 +193,9 @@
 	return containersLabelsAppearance;
 }
 */
+
+- (DrawManager *) drawManager
+{
+	return drawManager;
+}
 @end

@@ -70,7 +70,10 @@ private:
 
 //MATERIALS CATEGORY
 private:
-	void createMaterial (std::string materialName, Ogre::ColourValue color);	
+	void createMaterial (std::string materialName, Ogre::ColourValue color);
+public:
+	Ogre::ColourValue getMaterialColor (std::string materialName);
+	void setMaterialColor (std::string materialName, Ogre::ColourValue og);
 };
 
 #include "ProtoView.h"

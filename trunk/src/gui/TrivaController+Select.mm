@@ -66,6 +66,17 @@ void TrivaController::selectObjectIdentifier (Ogre::MovableObject
 		}
 		selectedObject = objectToSelect;
 		selectedObject->getParentSceneNode()->showBoundingBox(true);
+		colorWindow->setMaterialToBeChanged (NSSTRINGtoWXSTRING([fet name]));
+
+//		std::cout << mat->getParameters() << std::endl;
+
+		DrawManager *m = [view drawManager];
+		Ogre::ColourValue og = m->getMaterialColor (std::string([[fet name] cString]));
+		wxColour c = this->convertOgreColor (og);
+		colorWindow->setColorToBeChanged (c);
+		if (!colorWindow->IsShown()){
+			colorWindow->Show();
+		}
 	}
 		
 		
@@ -82,6 +93,23 @@ void TrivaController::selectObjectIdentifier (Ogre::MovableObject
 		statusBar->SetStatusText (NSSTRINGtoWXSTRING(info));
 	}
 */
+}
+
+wxColour TrivaController::convertOgreColor (Ogre::ColourValue og)
+{
+	wxColour c;
+	c.Set (og.getAsRGBA());
+	return c;
+}
+
+Ogre::ColourValue TrivaController::convertWxColor (wxColor c)
+{
+	int r, g, b, a;
+	r = c.Red();
+	g = c.Green();
+	b = c.Blue();
+	a = c.Alpha();
+	return Ogre::ColourValue(r/255, g/255, b/255, a/255);
 }
 
 void TrivaController::unselectObjectIdentifier (std::string name)

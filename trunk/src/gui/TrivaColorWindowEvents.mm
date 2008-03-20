@@ -16,9 +16,29 @@ void TrivaColorWindowEvents::removeTraceFile( wxCommandEvent& event )
 }
 */
 
-void TrivaColorWindowEvents::addMaterialOption (wxString materialName)
+void TrivaColorWindowEvents::setMaterialToBeChanged (wxString materialName)
 {
-	stateCombo->Insert (materialName, stateCombo->GetCount());
+	std::cout << materialName.ToAscii() << std::endl;
+	stateName->SetValue (materialName);//, stateCombo->GetCount());
+}
+
+void TrivaColorWindowEvents::setColorToBeChanged (wxColor color)
+{
+	std::cout << "setting color to: " << color.Red() << std::endl;
+	colorPicker->SetColour(color);
+}
+
+
+void TrivaColorWindowEvents::colorChanged( wxColourPickerEvent& event )
+{
+//	if (!stateName->GetValue().IsEmpty())
+//		return;
+	wxColour c = colorPicker->GetColour();
+	ProtoView *view = controller->getView();
+	DrawManager *m = [view drawManager];
+	std::string str = std::string (stateName->GetValue().ToAscii());
+	Ogre::ColourValue og = controller->convertWxColor (c);
+	m->setMaterialColor (str, og);
 }
 
 TrivaColorWindowEvents::TrivaColorWindowEvents( wxWindow* parent, wxWindowID ide, 

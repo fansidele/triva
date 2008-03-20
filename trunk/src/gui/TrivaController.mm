@@ -51,7 +51,8 @@ TrivaController::TrivaController( wxWindow* parent, wxWindowID id, const wxStrin
 	m3DFrame->pauseRenderTimer();
 
 	/* configuring color window */
-	colorWindow = new TrivaColorWindowEvents(0,wxID_ANY);
+	colorWindow = new TrivaColorWindowEvents(this,wxID_ANY);
+	colorWindow->setController (this);
 
 	/* configuring reader, simulator and inner view */
 /*
@@ -96,6 +97,7 @@ TrivaController::~TrivaController()
 	colorWindow->Close();
 	delete ambientManager;
 	delete cameraManager;
+	delete colorWindow;
 }
 
 void TrivaController::exit( wxCommandEvent& event )

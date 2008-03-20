@@ -84,7 +84,7 @@ evt.GetY()/(float)mViewport->getActualHeight());//m.state.X.abs/float(m.state.wi
 	mRaySceneQuery->setRay(mouseRay);
 	mRaySceneQuery->setSortByDistance(true,10);
 	mRaySceneQuery->setQueryTypeMask(Ogre::SceneManager::ENTITY_TYPE_MASK);
-	mRaySceneQuery->setQueryMask (STATE_MASK|CONTAINER_MASK|LINK_MASK);
+	mRaySceneQuery->setQueryMask (STATE_MASK|CONTAINER_MASK);
 
 	Ogre::RaySceneQueryResult &result = mRaySceneQuery->execute();
 	Ogre::RaySceneQueryResult::iterator itr;
