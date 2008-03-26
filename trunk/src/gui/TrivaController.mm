@@ -193,10 +193,14 @@ void TrivaController::changeColor( wxCommandEvent& event )
 	wxColor color;
 	data.SetColour(color);
 
+	NSLog (@"selectedEntity = %@", selectedEntity);
+
 	wxColour x = wxGetColourFromUser(this, color);
 	colorButton->SetBackgroundColour (x);
 	DrawManager *m = [view drawManager];
 	std::string str = std::string (colorButton->GetLabel().ToAscii());
 	Ogre::ColourValue og = this->convertWxColor (x);
 	m->setMaterialColor (str, og);
+	m->registerColor (std::string([[[selectedEntity entityType] name]
+cString]), std::string([[selectedEntity name] cString]), og);
 }

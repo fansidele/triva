@@ -1,5 +1,43 @@
 #include "DrawManager.h"
 
+Ogre::ColourValue DrawManager::getRegisteredColor (std::string state, std::string value)
+{
+	NSUserDefaults *d = [NSUserDefaults standardUserDefaults];
+	NSString *key = [NSString stringWithFormat: @"%s Colors",state.c_str()];
+	NSDictionary *md = [d dictionaryForKey: key];
+	if (md == nil){
+		return Ogre::ColourValue::White;
+	}else{
+		NSString *key2=[NSString stringWithFormat:@"%s",value.c_str()];
+		NSString *c = [md objectForKey: key2];
+		if (c == nil){
+			return Ogre::ColourValue::White;
+		}else{
+			NSArray *a = [c componentsSeparatedByString:@" "];
+			Ogre::ColourValue ret;
+			ret.r = [[a objectAtIndex: 0] doubleValue];
+			ret.g = [[a objectAtIndex: 1] doubleValue];
+			ret.b = [[a objectAtIndex: 2] doubleValue];
+			return ret;
+		}
+	}
+}
+
+void DrawManager::registerColor (std::string state, std::string value, Ogre::ColourValue col)
+{
+	NSLog (@"%s: state=%s value=%s", __FUNCTION__, state.c_str(), value.c_str());
+	NSUserDefaults *d = [NSUserDefaults standardUserDefaults];
+	NSString *key = [NSString stringWithFormat: @"%s Colors",state.c_str()];
+	NSMutableDictionary *md = [d dictionaryForKey: key];
+	if (md == nil){
+		md = [[NSMutableDictionary alloc] init];
+	}
+	[md setObject: [NSString stringWithFormat: @"%f %f %f", col.r, col.g,
+col.b] forKey: [NSString stringWithFormat: @"%s", value.c_str()]];
+	[d setObject: md forKey: key];
+	[d synchronize];
+}
+
 void DrawManager::createMaterial (std::string materialName, Ogre::ColourValue color)
 {
 	Ogre::MaterialManager *manager = Ogre::MaterialManager::getSingletonPtr();

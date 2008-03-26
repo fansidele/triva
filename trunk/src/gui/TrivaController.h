@@ -68,6 +68,9 @@ protected:
 	void zoomOut ( wxCommandEvent& event );	
 
 /* Select category */
+private:
+	PajeEntity *selectedEntity;
+
 public:
 	void selectObjectIdentifier (Ogre::MovableObject *objectToSelect, Ogre::Vector3 hitAt);
 	void unselectObjectIdentifier (std::string name);

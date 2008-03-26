@@ -71,9 +71,11 @@ private:
 //MATERIALS CATEGORY
 private:
 	void createMaterial (std::string materialName, Ogre::ColourValue color);
+	Ogre::ColourValue getRegisteredColor (std::string state, std::string value);
 public:
 	Ogre::ColourValue getMaterialColor (std::string materialName);
 	void setMaterialColor (std::string materialName, Ogre::ColourValue og);
+	void registerColor (std::string state, std::string value, Ogre::ColourValue col);
 };
 
 #include "ProtoView.h"

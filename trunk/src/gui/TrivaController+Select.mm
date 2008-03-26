@@ -75,6 +75,7 @@ void TrivaController::selectObjectIdentifier (Ogre::MovableObject
 		colorButton->SetBackgroundColour (c);
 		colorButton->SetLabel (NSSTRINGtoWXSTRING([fet name]));
 		colorButton->Enable();
+		selectedEntity = fet;
 	}
 		
 		
@@ -124,6 +125,7 @@ void TrivaController::unselectObjectIdentifier (std::string name)
 	colorButton->SetBackgroundColour (wxSystemSettings::GetColour( wxSYS_COLOUR_MENU ));
 	colorButton->SetLabel(wxT("Color"));
 	colorButton->Disable();
+	selectedEntity = nil;
 /*
 	if (view){
 		[view unselectObjectIdentifier: [NSString stringWithFormat: @"%s",
