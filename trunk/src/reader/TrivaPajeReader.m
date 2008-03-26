@@ -78,7 +78,7 @@
     [self raise:@"Configuration error:" " PajeFileReader should be first component"];
 }
 
-- (NSData *) readDataFromDIMVisual
+- (NSMutableData *) readDataFromDIMVisual
 {
 	NSMutableData *data = [NSMutableData data];
 
