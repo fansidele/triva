@@ -82,12 +82,19 @@ cString]), ogreColor);
 			NSEnumerator *en4;
 			PajeEntity *ent;
 		
-			en4 = [viewController enumeratorOfEntitiesTyped:et
+			en4 = [viewController enumeratorOfCompleteEntitiesTyped:et
 					inContainer:entity
 					fromTime:[viewController startTime]
 					toTime:[viewController endTime]
 					minDuration: 0];
 			while ((ent = [en4 nextObject]) != nil) {
+				NSLog (@"ent=%@, source=%@ dest=%@", [ent
+class],[[ent sourceContainer] name], [[ent destContainer] name]);
+
+//				if (![[end destContainer] name] || ![[ent sourceContainer] name]){
+//					break;
+//				}
+
 				Ogre::SceneNode *ssn;
 				ssn = n->createChildSceneNode();
 				NSString *ide = [NSString stringWithFormat:
@@ -133,8 +140,6 @@ cString]), ogreColor);
 				ste->setQueryFlags (LINK_MASK);
 				ssn->attachObject (ste);
 
-				NSLog (@"ent=%@, source=%@ dest=%@", [ent
-class],[[ent sourceContainer] name], [[ent destContainer] name]);
 
 
 
