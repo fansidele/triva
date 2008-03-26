@@ -48,7 +48,7 @@ void DrawManager::drawTimestampedObjects (id entity)
 					ste = mSceneMgr->createEntity (n,
 						Ogre::SceneManager::PT_CUBE);
 				}
-				NSLog (@"entity(%@), name=%@ color=%@ imbricationLevel=%d", [ent class], [ent name],[viewController colorForEntity: ent],[ent imbricationLevel]);
+//				NSLog (@"entity(%@), name=%@ color=%@ imbricationLevel=%d", [ent class], [ent name],[viewController colorForEntity: ent],[ent imbricationLevel]);
 
 //				NSColor *color = [viewController colorForEntity: ent];
 //				Ogre::ColourValue ogreColor = Ogre::ColourValue([color redComponent], [color greenComponent], [color blueComponent], [color alphaComponent]);
@@ -87,8 +87,7 @@ cString]), ogreColor);
 					toTime:[viewController endTime]
 					minDuration: 0];
 			while ((ent = [en4 nextObject]) != nil) {
-				NSLog (@"ent=%@, source=%@ dest=%@", [ent
-class],[[ent sourceContainer] name], [[ent destContainer] name]);
+//				NSLog (@"ent=%@, source=%@ dest=%@", [ent class],[[ent sourceContainer] name], [[ent destContainer] name]);
 
 //				if (![[end destContainer] name] || ![[ent sourceContainer] name]){
 //					break;

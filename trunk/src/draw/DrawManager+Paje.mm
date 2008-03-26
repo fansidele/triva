@@ -20,10 +20,10 @@ void DrawManager::destroyAllChildren (Ogre::SceneNode *node)
 
 void DrawManager::resetCurrentVisualization ()
 {
-	NSLog (@"currentVisuNode = %p", currentVisuNode);
+//	NSLog (@"currentVisuNode = %p", currentVisuNode);
 	if (currentVisuNode){
 		currentVisuNode->removeAndDestroyAllChildren();
-		std::cout<<"Destroying "<<currentVisuNode->getName()<<std::endl;
+//		std::cout<<"Destroying "<<currentVisuNode->getName()<<std::endl;
 		mSceneMgr->destroySceneNode (currentVisuNode->getName());
 		currentVisuNode = NULL;
 	}

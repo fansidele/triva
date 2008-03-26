@@ -29,13 +29,13 @@
 //	graph_t **cc;
 
 	if (1){//counter == 0){
-		struct timeval tim;
-		gettimeofday (&tim, NULL);		
-		double t1=tim.tv_sec+(tim.tv_usec/1000000.0);
+//		struct timeval tim;
+//		gettimeofday (&tim, NULL);		
+//		double t1=tim.tv_sec+(tim.tv_usec/1000000.0);
 		gvLayout (gvc, g, (char *)[algorithm cString]);
-		gettimeofday (&tim, NULL);		
-		double t2=tim.tv_sec+(tim.tv_usec/1000000.0);
-		NSLog (@"PosGraphViz(%@) %f - %d", algorithm, t2-t1, agnnodes (g));
+//		gettimeofday (&tim, NULL);		
+//		double t2=tim.tv_sec+(tim.tv_usec/1000000.0);
+//		NSLog (@"PosGraphViz(%@) %f - %d", algorithm, t2-t1, agnnodes (g));
 		NSArray *ar = [allNodesIdentifiers allKeys];
 		for (i = 0; i < [ar count]; i++){
 			NSString *nodeName = [ar objectAtIndex: i];
@@ -47,7 +47,7 @@
 			[allNodesIdentifiers setObject: b forKey: nodeName];
 			[b release];
 		}
-		gvRenderFilename (gvc, g, "png", "out.png");
+//		gvRenderFilename (gvc, g, "png", "out.png");
 		gvFreeLayout (gvc, g);
 	}
 }

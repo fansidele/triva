@@ -121,14 +121,14 @@ evt.GetY()/(float)mViewport->getActualHeight());//m.state.X.abs/float(m.state.wi
 	}
 	if (mCurrentObject){
 		hitAt.normalise();
-		std::cout << "SEL # cont: " << mCurrentObject->getParentSceneNode()->getParentSceneNode()->getName() << " nome do estado: " << mCurrentObject->getName() << " pos in time: " << hitAt.y << std::endl;
+//		std::cout << "SEL # cont: " << mCurrentObject->getParentSceneNode()->getParentSceneNode()->getName() << " nome do estado: " << mCurrentObject->getName() << " pos in time: " << hitAt.y << std::endl;
 		controller->selectObjectIdentifier(mCurrentObject, hitAt);
 	}else{
 		controller->unselectObjectIdentifier("");
 	}
 	mRaySceneQuery->clearResults();
 
-	std::cout << std::endl;
+//	std::cout << std::endl;
 
 /*
        if (b == OIS::MB_Left)
