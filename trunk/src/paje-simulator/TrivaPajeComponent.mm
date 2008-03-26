@@ -100,7 +100,7 @@
 		componentClass = [bundle principalClass];
 	}
     }
-    component = [componentClass componentWithController:self];
+    component = [componentClass componentWithController: (id)self];
     if (component != nil) {
         [components setObject:component forKey:componentName];
     }
@@ -288,17 +288,19 @@
 }
 */
 
-- (BOOL) setOutputFilter: (PajeFilter *) output
+- (BOOL) setOutputFilter: (id) output
 {
-	id lastComponent = [self componentWithName: @"AggregatingFilter"];
+	id lastComponent;
+	lastComponent = [self componentWithName: @"AggregatingFilter"];
 	[self connectComponent: lastComponent toComponent: output];
 	return YES;
 
 }
 
-- (BOOL) setInputFilter: (PajeFilter *) input
+- (BOOL) setInputFilter: (id<PajeReader>) input
 {
-	id firstComponent = [self componentWithName: @"PajeEventDecoder"];
+	id firstComponent;
+	firstComponent = [self componentWithName: @"PajeEventDecoder"];
 	[self connectComponent: input toComponent: firstComponent];
 	reader = input;
 	return YES;

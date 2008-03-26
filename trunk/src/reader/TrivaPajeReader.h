@@ -6,7 +6,7 @@
 #include <DIMVisual/IntegratorLib.h>
 #include <General/PajeFilter.h>
 
-@interface TrivaPajeReader  : PajeFilter
+@interface TrivaPajeReader  : PajeFilter <PajeReader>
 {
 	IntegratorLib *integrator;
 	BOOL moreData; 
@@ -29,6 +29,13 @@
 - (void)endOfChunkLast:(BOOL)last;
 
 - (void)raise:(NSString *)reason;
+
+- (id) hierarchy;
+- (NSArray *) dimvisualBundlesAvailable;
+- (BOOL) isDIMVisualBundleLoaded: (NSString *) name;
+- (BOOL) loadDIMVisualBundle: (NSString *) bundleName;
+- (NSDictionary *) getConfigurationOptionsFromDIMVisualBundle: (NSString *)name;
+- (BOOL) setConfiguration: (NSDictionary *) conf forDIMVisualBundle: (NSString *) name;
 @end
 
 #endif

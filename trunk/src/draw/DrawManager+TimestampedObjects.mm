@@ -50,8 +50,7 @@ void DrawManager::drawTimestampedObjects (id entity)
 				}
 				NSLog (@"entity(%@), name=%@ color=%@ imbricationLevel=%d", [ent class], [ent name],[viewController colorForEntity: ent],[ent imbricationLevel]);
 
-				NSColor *color = [viewController colorForEntity:
-ent];
+//				NSColor *color = [viewController colorForEntity: ent];
 //				Ogre::ColourValue ogreColor = Ogre::ColourValue([color redComponent], [color greenComponent], [color blueComponent], [color alphaComponent]);
 				Ogre::ColourValue ogreColor = this->getRegisteredColor (std::string([[[ent entityType] name] cString]), [[ent name] cString]);
 				this->createMaterial(std::string([[ent name]
@@ -125,8 +124,7 @@ cString])->getWorldPosition();
 				}
 				ste = new DynamicLines(Ogre::RenderOperation::OT_LINE_LIST);
 
-				NSColor *color = [viewController colorForEntity:
-ent];
+//				NSColor *color = [viewController colorForEntity: ent];
 //				Ogre::ColourValue ogreColor = Ogre::ColourValue([color redComponent], [color greenComponent], [color blueComponent], [color alphaComponent]);
 				Ogre::ColourValue ogreColor =
 Ogre::ColourValue::White;

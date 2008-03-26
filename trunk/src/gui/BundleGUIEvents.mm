@@ -118,7 +118,7 @@ dictionaryWithDictionary: [conf objectForKey: @"parameters"]];
 setWithSet: [[conf objectForKey: @"parameters"] objectForKey:
 @"type"]];
 	wxString type = setupChoice->GetStringSelection();
-	NSString *typestr = WXSTRINGtoNSSTRING(type);
+//	NSString *typestr = WXSTRINGtoNSSTRING(type);
 	[types intersectSet: [NSSet setWithObject: WXSTRINGtoNSSTRING(type)]];
 	NSLog (@"typestr = %@", types);
 	[parameters setObject: types forKey: @"type"];	
@@ -214,9 +214,7 @@ NSMutableDictionary *BundleGUIEvents::getConfigureSetupTab()
 {
 	unsigned int i;
 	NSMutableDictionary *conf = [NSMutableDictionary dictionaryWithDictionary: [reader getConfigurationOptionsFromDIMVisualBundle: @"dimvisual-kaapi.bundle"]];
-	NSMutableSet *types = [NSMutableSet
-setWithSet: [[conf objectForKey: @"parameters"] objectForKey:
-@"type"]];
+//	NSMutableSet *types = [NSMutableSet setWithSet: [[conf objectForKey: @"parameters"] objectForKey: @"type"]];
 
 	NSMutableDictionary *events = [NSMutableDictionary
 dictionaryWithDictionary: [[conf objectForKey: @"parameters"] objectForKey:

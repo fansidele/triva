@@ -5,7 +5,7 @@
 @interface TrivaPajeComponent : NSObject
 {
 	id <PajeReader> reader;
-	id <PajeSimulator> simulator;
+	id simulator;
 	id encapsulator;
 
 	NSMutableDictionary *bundles;
@@ -29,8 +29,9 @@
 - (void)createComponentGraph;
 - (void)startChunk:(int)chunkNumber;
 - (void)endOfChunkLast:(BOOL)last;
+- (void)readNextChunk:(id)sender;
 
 /* Triva special methods */
-- (BOOL) setOutputFilter: (PajeFilter *) output;
-- (BOOL) setInputFilter: (PajeFilter *) input;
+- (BOOL) setOutputFilter: (id) output;
+- (BOOL) setInputFilter: (id<PajeReader>) input;
 @end

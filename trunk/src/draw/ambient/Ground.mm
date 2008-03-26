@@ -32,7 +32,7 @@ Ground::Ground (double si, double sc, Origin *origin)
 
 
 	Ogre::ManualObject *line;
-	for (i = -si/2; i < si/2; i += SPACE_BETWEEN_LINES){
+	for (i = (int)-si/2; i < si/2; i += SPACE_BETWEEN_LINES){
 		static int x = 0;
 		char name[100];
 		sprintf (name, "GroundXLine-%d", x++);
@@ -45,7 +45,7 @@ Ground::Ground (double si, double sc, Origin *origin)
 		node->attachObject (line);
 	}
 
-	for (i = -si/2; i < si/2; i+= SPACE_BETWEEN_LINES){
+	for (i = (int)-si/2; i < si/2; i+= SPACE_BETWEEN_LINES){
 		static int x = 0;
 		char name[100];
 		sprintf (name, "GroundZLine-%d", x++);

@@ -28,7 +28,8 @@ void DrawManager::registerColor (std::string state, std::string value, Ogre::Col
 	NSLog (@"%s: state=%s value=%s", __FUNCTION__, state.c_str(), value.c_str());
 	NSUserDefaults *d = [NSUserDefaults standardUserDefaults];
 	NSString *key = [NSString stringWithFormat: @"%s Colors",state.c_str()];
-	NSMutableDictionary *md = [d dictionaryForKey: key];
+	NSMutableDictionary *md;
+	md = (NSMutableDictionary *)[d dictionaryForKey: key];
 	if (md == nil){
 		md = [[NSMutableDictionary alloc] init];
 	}
