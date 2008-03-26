@@ -105,6 +105,8 @@ count++];
 				NSString *sn = [[ent sourceContainer] name];
 				NSString *dn = [[ent destContainer] name];
 
+				[position addLinkBetweenNode: sn andNode: dn];
+
 			        Ogre::Vector3 op = mSceneMgr->getSceneNode ([sn
 cString])->getWorldPosition();
 				Ogre::Vector3 dp = mSceneMgr->getSceneNode ([dn
