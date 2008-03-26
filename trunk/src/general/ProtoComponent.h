@@ -49,7 +49,7 @@
 - (void) endOfData; //from ProtoReader to simulator
 @end
 
-#include "reader/ProtoReader.h"
+//#include "reader/ProtoReader.h"
 //#include "ogre-simulator/OgreProtoSimulator.h"
 
 #endif
