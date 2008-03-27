@@ -1,0 +1,18 @@
+TRIVA
+
+Three dimension-Interactive Visualization Analysis
+
+%!includeconf: config.t2t
+
+%!include: menu.t2t
+
+= Forge =
+
+You can access to our [Forums https://gforge.inria.fr/forum/?group_id=1230], or
+use the [Tracking System https://gforge.inria.fr/tracker/?group_id=1230] to
+report bugs and request features, or register to our [mailing-lists
+http://gforge.inria.fr/mail/?group_id=1230] to receive updates or use the
+[download http://gforge.inria.fr/frs/?group_id=1230] to get the latest stable
+release.
+
+
