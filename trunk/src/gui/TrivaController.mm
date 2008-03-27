@@ -51,23 +51,7 @@ TrivaController::TrivaController( wxWindow* parent, wxWindowID id, const wxStrin
 	this->configureZoom();
 	m3DFrame->pauseRenderTimer();
 
-	/* configuring reader, simulator and inner view */
-/*
-	reader = [[ProtoReader alloc] init];
-	simulator = [[OgreProtoSimulator alloc] init];
-	view = [[ProtoView alloc] init];
-*/
-
-/*
-	[reader setOutput: simulator];
-	[simulator setInput: reader];
-	[simulator setOutput: view];
-	[view setInput: simulator];
-*/
-
-
 	trivaPaje = [[TrivaPajeComponent alloc] init];
-//	[trivaPaje setController: this];
 	view = (ProtoView *)[ProtoView componentWithController: (id)trivaPaje];
 	[view initialize];
 	reader = [[TrivaPajeReader alloc] initWithController: (id)trivaPaje];
@@ -86,9 +70,6 @@ TrivaController::~TrivaController()
 {
 	std::cout << "#### " << __FUNCTION__ << std::endl;
 	[reader release];
-/*
-	[simulator release];
-*/
 	[view release];
 	m3DFrame->removeInputListener(cameraManager);
 	delete ambientManager;
