@@ -41,16 +41,6 @@ TrivaController::TrivaController( wxWindow* parent, wxWindowID id, const wxStrin
 	ambientManager = new AmbientManager ();
 	selectorManager = new SelectorManager (this);
 
-	/* configuring 3d frame */
-	m3DFrame->addInputListener (cameraManager);
-	m3DFrame->addInputListener (selectorManager);
-	m3DFrame->setRenderTimerPeriod (5,true);
-	m3DFrame->setListenersEnabled (true, false);
-
-	/* configuring other GUI objects */
-	this->configureZoom();
-	m3DFrame->pauseRenderTimer();
-
 	trivaPaje = [[TrivaPajeComponent alloc] init];
 	view = (ProtoView *)[ProtoView componentWithController: (id)trivaPaje];
 	[view initialize];
@@ -60,6 +50,17 @@ TrivaController::TrivaController( wxWindow* parent, wxWindowID id, const wxStrin
 	NSLog (@"trivaPajeComponent = %@", [trivaPaje description]);
 	NSLog (@"pajeReader = %@", reader);
 	NSLog (@"pajeView = %@", view);
+
+	/* configuring 3d frame */
+	m3DFrame->addInputListener (cameraManager);
+	m3DFrame->addInputListener (selectorManager);
+	m3DFrame->addInputListener ([view drawManager]);
+	m3DFrame->setRenderTimerPeriod (5,true);
+	m3DFrame->setListenersEnabled (true, false);
+
+	/* configuring other GUI objects */
+	this->configureZoom();
+	m3DFrame->pauseRenderTimer();
 
 	/* set application instance state to Initialized */
 	this->setState(Initialized);
