@@ -3,13 +3,16 @@
 
 #include <Ogre.h>
 #include <Foundation/Foundation.h>
+#include "gui/wxInputEventListener.h"
 
 @class ProtoView;
 @class Position;
 
-class DrawManager : public Ogre::FrameListener,
-	public Ogre::WindowEventListener
+class DrawManager : public wxInputEventListener
 {
+protected:
+        void onMouseEvent(wxMouseEvent& evt);
+
 protected:
 	bool frameStarted (const Ogre::FrameEvent& evt);
 	bool frameEnded (const Ogre::FrameEvent& evt);
