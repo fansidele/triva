@@ -52,9 +52,3 @@ DrawManager::~DrawManager()
 	Ogre::MaterialManager::getSingleton().removeAll();		
 	mRoot->getAutoCreatedWindow()->removeAllViewports();
 }
-
-void DrawManager::onMouseEvent(wxMouseEvent& evt)
-{
-	std::cout << __FUNCTION__ << std::endl;
-}
-
