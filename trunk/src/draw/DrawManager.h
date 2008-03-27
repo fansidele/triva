@@ -3,7 +3,6 @@
 
 #include <Ogre.h>
 #include <Foundation/Foundation.h>
-//#include "draw/layout/Layout.h"
 
 @class ProtoView;
 @class Position;
@@ -26,26 +25,6 @@ private:
 public: 
 	DrawManager (ProtoView *view);
 	~DrawManager ();
-/*
-	void movePointer ();
-	void updateContainersPositions ();
-	void updateContainerDrawings ();
-	void updateStatesDrawings ();
-	void createStatesDrawings ();
-	void updateLinksDrawings ();
-	void createLinksDrawings ();
-
-	void changePositionAlgorithm();
-
-	void showStatesLabels ();
-	void hideStatesLabels ();
-	void showContainersLabels ();
-	void hideContainersLabels ();
-
-	//interactive 
-//	void selectState (XState *s);
-//	void unselectState (XState *s);
-*/
 
 private:
 	Ogre::Root *mRoot;
