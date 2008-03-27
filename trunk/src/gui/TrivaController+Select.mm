@@ -3,7 +3,13 @@
 extern wxString NSSTRINGtoWXSTRING (NSString *ns);
 Ogre::MovableObject *selectedObject = NULL;
 
-void TrivaController::selectObjectIdentifier (Ogre::MovableObject
+void TrivaController::selectContainer (Ogre::MovableObject
+*objectToSelect, Ogre::Vector3 hitAt)
+{
+
+}
+
+void TrivaController::selectState (Ogre::MovableObject
 *objectToSelect, Ogre::Vector3 hitAt)
 {
 	Ogre::Root *mRoot;
@@ -92,6 +98,20 @@ void TrivaController::selectObjectIdentifier (Ogre::MovableObject
 		statusBar->SetStatusText (NSSTRINGtoWXSTRING(info));
 	}
 */
+
+}
+
+void TrivaController::selectObjectIdentifier (Ogre::MovableObject
+*objectToSelect, Ogre::Vector3 hitAt)
+{
+	if (objectToSelect == NULL){
+		return;
+	}else if (objectToSelect->getQueryFlags() == CONTAINER_MASK){
+		this->selectContainer (objectToSelect, hitAt);
+	}else if (objectToSelect->getQueryFlags() == STATE_MASK){
+		this->selectState (objectToSelect, hitAt);
+	}
+
 }
 
 wxColour TrivaController::convertOgreColor (Ogre::ColourValue og)

@@ -71,6 +71,12 @@ protected:
 private:
 	PajeEntity *selectedEntity;
 
+private:
+	void selectContainer (Ogre::MovableObject
+*objectToSelect, Ogre::Vector3 hitAt);
+	void selectState (Ogre::MovableObject
+*objectToSelect, Ogre::Vector3 hitAt);
+
 public:
 	void selectObjectIdentifier (Ogre::MovableObject *objectToSelect, Ogre::Vector3 hitAt);
 	void unselectObjectIdentifier (std::string name);
