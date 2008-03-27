@@ -5,14 +5,12 @@
 #include <Foundation/Foundation.h>
 #include "gui/wxInputEventListener.h"
 
+class TrivaController;
 @class ProtoView;
 @class Position;
 
 class DrawManager : public wxInputEventListener
 {
-protected:
-        void onMouseEvent(wxMouseEvent& evt);
-
 protected:
 	bool frameStarted (const Ogre::FrameEvent& evt);
 	bool frameEnded (const Ogre::FrameEvent& evt);
@@ -58,8 +56,20 @@ public:
 	Ogre::ColourValue getMaterialColor (std::string materialName);
 	void setMaterialColor (std::string materialName, Ogre::ColourValue og);
 	void registerColor (std::string state, std::string value, Ogre::ColourValue col);
+
+// MOUSE CATEGORY
+private:
+	TrivaController *trivaController;
+	Ogre::RaySceneQuery *mRaySceneQuery;
+	Ogre::MovableObject *mCurrentObject;
+	bool mLMouseDown, mRMouseDown;
+protected:
+        void onMouseEvent(wxMouseEvent& evt);
+public:
+	void setTrivaController (TrivaController *triva);
 };
 
 #include "ProtoView.h"
 #include "draw/position/Position.h"
+#include "gui/TrivaController.h"
 #endif

@@ -39,11 +39,11 @@ TrivaController::TrivaController( wxWindow* parent, wxWindowID id, const wxStrin
 	/* initializing visual objects */
 	cameraManager = new CameraManager (this, m3DFrame->getRenderWindow());
 	ambientManager = new AmbientManager ();
-	selectorManager = new SelectorManager (this);
 
 	trivaPaje = [[TrivaPajeComponent alloc] init];
 	view = (ProtoView *)[ProtoView componentWithController: (id)trivaPaje];
 	[view initialize];
+	[view drawManager]->setTrivaController(this);
 	reader = [[TrivaPajeReader alloc] initWithController: (id)trivaPaje];
 	[trivaPaje setOutputFilter: view];
 	[trivaPaje setInputFilter: reader];
@@ -53,7 +53,6 @@ TrivaController::TrivaController( wxWindow* parent, wxWindowID id, const wxStrin
 
 	/* configuring 3d frame */
 	m3DFrame->addInputListener (cameraManager);
-	m3DFrame->addInputListener (selectorManager);
 	m3DFrame->addInputListener ([view drawManager]);
 	m3DFrame->setRenderTimerPeriod (5,true);
 	m3DFrame->setListenersEnabled (true, false);

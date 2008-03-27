@@ -40,6 +40,11 @@ DrawManager::DrawManager (ProtoView *view)
 	Ogre::MaterialPtr(Ogre::MaterialManager::getSingleton().getByName("BaseWhiteNoLighting"))->setAmbient(Ogre::ColourValue::Black);
 	Ogre::MaterialPtr(Ogre::MaterialManager::getSingleton().getByName("BaseWhiteNoLighting"))->setLightingEnabled(true); 
 
+	//configuring mouse category
+	mCurrentObject = NULL;
+	mLMouseDown = false;
+	mRMouseDown = false;
+	mRaySceneQuery = mSceneMgr->createRayQuery(Ogre::Ray());
 } 
 
 DrawManager::~DrawManager()
@@ -51,4 +56,7 @@ DrawManager::~DrawManager()
 	mSceneMgr->destroyAllCameras();
 	Ogre::MaterialManager::getSingleton().removeAll();		
 	mRoot->getAutoCreatedWindow()->removeAllViewports();
+
+	//mouse category
+	delete mRaySceneQuery;
 }
