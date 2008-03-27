@@ -75,7 +75,8 @@ src/draw/GNUmakefile
 src/draw/position/GNUmakefile 
 src/draw/layout/GNUmakefile
 src/draw/extras/GNUmakefile
-src/draw/ambient/GNUmakefile)
+src/draw/ambient/GNUmakefile
+docs/GNUmakefile)
 AC_OUTPUT
 
 AC_MSG_NOTICE([
