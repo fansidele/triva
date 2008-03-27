@@ -9,7 +9,6 @@
 #include "gui/BundleGUIEvents.h"
 #include "draw/ProtoView.h"
 #include "gui/camera/CameraManager.h"
-#include "gui/selector/SelectorManager.h"
 #include "draw/ambient/AmbientManager.h"
 #include <Ogre.h>
 
@@ -18,7 +17,6 @@
 
 class TrivaColorWindowEvents;
 class BundleGUIEvents;
-class SelectorManager;
 
 enum TrivaApplicationState {Initialized,Configured,Running,Paused};
 
@@ -106,7 +104,6 @@ protected:
 private:
 	CameraManager *cameraManager;
 	AmbientManager *ambientManager;
-	SelectorManager *selectorManager;
 };
 
 #endif // __TrivaController__
