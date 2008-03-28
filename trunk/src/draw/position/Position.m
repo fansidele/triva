@@ -14,6 +14,8 @@
 - (void) addLinkBetweenNode: (NSString *) nodeName andNode: (NSString *) nodeName2 {}
 - (int) positionXForNode: (NSString *) nodeName { return 0;}
 - (int) positionYForNode: (NSString *) nodeName { return 0;}
+- (void) setPositionX: (int) x forNode: (NSString *) nodeName {}
+- (void) setPositionY: (int) y forNode: (NSString *) nodeName {}
 - (NSMutableDictionary *) positionForAllNodes { return nil; }
 - (void) newHierarchyOrganization: (NSDictionary *) hierarchy {}
 @end

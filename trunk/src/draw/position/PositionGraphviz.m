@@ -115,6 +115,24 @@
 	}
 }
 
+- (void) setPositionX: (int) x forNode: (NSString *) nodeName 
+{
+	char *name = (char *)[nodeName cString];
+	Agnode_t *node = agfindnode (g, name);
+	if (node != NULL){
+		ND_coord_i(node).x = x;
+	}
+}
+
+- (void) setPositionY: (int) y forNode: (NSString *) nodeName 
+{
+	char *name = (char *)[nodeName cString];
+	Agnode_t *node = agfindnode (g, name);
+	if (node != NULL){
+		ND_coord_i(node).y = y;
+	}
+}
+
 - (NSMutableDictionary *) positionForAllNodes
 {
 	[self refresh];
