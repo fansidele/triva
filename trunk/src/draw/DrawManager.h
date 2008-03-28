@@ -69,6 +69,7 @@ protected:
 	void moveMouseCursors (wxMouseEvent& evt);
 	void createMouseCursors ();
         void onMouseEvent(wxMouseEvent& evt);
+	void onKeyDownEvent(wxKeyEvent& evt);
 public:
 	void setTrivaController (TrivaController *triva);
 };

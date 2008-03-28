@@ -146,13 +146,17 @@ void DrawManager::onMouseEvent(wxMouseEvent& evt)
 	if (evt.LeftDown()){
 		this->selectObject (evt);
 	}
-	if (evt.LeftIsDown()){
+	if (evt.LeftIsDown() && evt.ControlDown()){
 		this->moveObject (evt);
 	}
 	this->moveMouseCursors (evt);
 	return;
 }
 
+void DrawManager::onKeyDownEvent(wxKeyEvent& evt)
+{
+	evt.Skip();
+}
 
 void DrawManager::setTrivaController (TrivaController *triva)
 {
