@@ -22,34 +22,21 @@
 
 - (void) refresh
 {
-//	static int counter = 0;
 	int i;
-//	int ncc = 0; //
-//	graph_t *sg;
-//	graph_t **cc;
-
-	if (1){//counter == 0){
-//		struct timeval tim;
-//		gettimeofday (&tim, NULL);		
-//		double t1=tim.tv_sec+(tim.tv_usec/1000000.0);
-		gvLayout (gvc, g, (char *)[algorithm cString]);
-//		gettimeofday (&tim, NULL);		
-//		double t2=tim.tv_sec+(tim.tv_usec/1000000.0);
-//		NSLog (@"PosGraphViz(%@) %f - %d", algorithm, t2-t1, agnnodes (g));
-		NSArray *ar = [allNodesIdentifiers allKeys];
-		for (i = 0; i < [ar count]; i++){
-			NSString *nodeName = [ar objectAtIndex: i];
-			int x = [self positionXForNode: nodeName];
-			int y = [self positionYForNode: nodeName];
-			NSMutableArray *b = [[NSMutableArray alloc] init];
-			[b addObject: [NSString stringWithFormat: @"%d", x]];
-			[b addObject: [NSString stringWithFormat: @"%d", y]];
-			[allNodesIdentifiers setObject: b forKey: nodeName];
-			[b release];
-		}
-//		gvRenderFilename (gvc, g, "png", "out.png");
-		gvFreeLayout (gvc, g);
+	gvLayout (gvc, g, (char *)[algorithm cString]);
+	NSArray *ar = [allNodesIdentifiers allKeys];
+	for (i = 0; i < [ar count]; i++){
+		NSString *nodeName = [ar objectAtIndex: i];
+		int x = [self positionXForNode: nodeName];
+		int y = [self positionYForNode: nodeName];
+		NSMutableArray *b = [[NSMutableArray alloc] init];
+		[b addObject: [NSString stringWithFormat: @"%d", x]];
+		[b addObject: [NSString stringWithFormat: @"%d", y]];
+		[allNodesIdentifiers setObject: b forKey: nodeName];
+		[b release];
 	}
+//	gvRenderFilename (gvc, g, "png", "out.png");
+	gvFreeLayout (gvc, g);
 }
 
 - (void) addNode: (NSString *) nodeName
