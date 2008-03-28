@@ -48,16 +48,11 @@ void DrawManager::drawTimestampedObjects (id entity)
 					ste = mSceneMgr->createEntity (n,
 						Ogre::SceneManager::PT_CUBE);
 				}
-//				NSLog (@"entity(%@), name=%@ color=%@ imbricationLevel=%d", [ent class], [ent name],[viewController colorForEntity: ent],[ent imbricationLevel]);
-
-//				NSColor *color = [viewController colorForEntity: ent];
-//				Ogre::ColourValue ogreColor = Ogre::ColourValue([color redComponent], [color greenComponent], [color blueComponent], [color alphaComponent]);
 				Ogre::ColourValue ogreColor = this->getRegisteredColor (std::string([[[ent entityType] name] cString]), [[ent name] cString]);
 				this->createMaterial(std::string([[ent name]
 cString]), ogreColor);
 
 				ste->setMaterialName ([[ent name] cString]);
-//				ste->setMaterialName ("VisuApp/RUNNING");
 				ste->setQueryFlags(STATE_MASK);
 				ssn->attachObject (ste);
 				double start;
@@ -72,10 +67,6 @@ cString]), ogreColor);
 
 				ssn->setPosition (0,(end-start)/2+start,0);
 				ssn->setScale (kk,(end-start)/100,kk);
-				
-//				NSLog (@"State name=%@ starttime=%f endtime=%f", [ent name], [[[ent time] description] doubleValue], [[[ent endTime] description] doubleValue]);
-//				[st redraw];
-//				[ret addState:st];
 			}
 		}else if ([et isKindOfClass: [PajeLinkType class]]){
 			NSEnumerator *en4;
@@ -87,12 +78,6 @@ cString]), ogreColor);
 					toTime:[viewController endTime]
 					minDuration: 0];
 			while ((ent = [en4 nextObject]) != nil) {
-//				NSLog (@"ent=%@, source=%@ dest=%@", [ent class],[[ent sourceContainer] name], [[ent destContainer] name]);
-
-//				if (![[end destContainer] name] || ![[ent sourceContainer] name]){
-//					break;
-//				}
-
 				Ogre::SceneNode *ssn;
 				ssn = n->createChildSceneNode();
 				NSString *ide = [NSString stringWithFormat:
@@ -125,23 +110,16 @@ cString])->getWorldPosition();
 				}
 				ste = new DynamicLines(Ogre::RenderOperation::OT_LINE_LIST);
 
-//				NSColor *color = [viewController colorForEntity: ent];
-//				Ogre::ColourValue ogreColor = Ogre::ColourValue([color redComponent], [color greenComponent], [color blueComponent], [color alphaComponent]);
 				Ogre::ColourValue ogreColor =
 Ogre::ColourValue::White;
 				this->createMaterial(std::string([[ent name]
 cString]), ogreColor);
-//				ste->setName (n);
 				ste->setMaterial ([[ent name] cString]);
 				ste->addPoint (op.x, start,op.z);
 				ste->addPoint (dp.x, end, dp.z);
 				ste->update();
 				ste->setQueryFlags (LINK_MASK);
 				ssn->attachObject (ste);
-
-
-
-
 			}
 		}
 	}
