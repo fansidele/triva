@@ -75,7 +75,6 @@ void DrawManager::moveObject (wxMouseEvent& evt)
 		Ogre::SceneNode *sn = mCurrentObject->getParentSceneNode()->getParentSceneNode();
 		Ogre::Vector3 pos = sn->getPosition();
 		
-		std::cout << pos << std::endl;
 		pos.x = x;
 		pos.z = z;
 		sn->setPosition (pos);
