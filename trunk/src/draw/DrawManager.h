@@ -64,6 +64,10 @@ private:
 	Ogre::MovableObject *mCurrentObject;
 	bool mLMouseDown, mRMouseDown;
 protected:
+	void selectObject (wxMouseEvent& evt);
+	void moveObject (wxMouseEvent& evt);
+	void moveMouseCursors (wxMouseEvent& evt);
+	void createMouseCursors ();
         void onMouseEvent(wxMouseEvent& evt);
 public:
 	void setTrivaController (TrivaController *triva);
