@@ -7,8 +7,7 @@
 
 class TrivaController;
 
-class CameraManager : public wxInputEventListener,
-			public Ogre::FrameListener
+class CameraManager : public wxInputEventListener
 {
 public: 
 	CameraManager (TrivaController *c, Ogre::RenderWindow *win);
@@ -19,9 +18,6 @@ protected:
 	void onKeyDownEvent(wxKeyEvent& evt);
 	void onKeyUpEvent(wxKeyEvent& evt);
 	void onMouseEvent(wxMouseEvent& evt);
-
-	bool frameStarted (const Ogre::FrameEvent& evt);
-	bool frameEnded (const Ogre::FrameEvent& evt);
 
 	void createCamera (Ogre::Vector3 position, Ogre::Vector3 direction);
 	void moveCamera ();

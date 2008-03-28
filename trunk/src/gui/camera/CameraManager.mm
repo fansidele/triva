@@ -173,7 +173,3 @@ void CameraManager::createViewport (Ogre::RenderWindow *win)
 	mCamera->setAspectRatio (Ogre::Real(mViewport->getActualWidth()) /
 				Ogre::Real(mViewport->getActualHeight()));
 }
-
-bool CameraManager::frameStarted (const Ogre::FrameEvent& evt) { return true; }
-bool CameraManager::frameEnded (const Ogre::FrameEvent& evt) { return true; }
-
