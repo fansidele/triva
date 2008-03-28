@@ -78,6 +78,12 @@ void DrawManager::moveObject (wxMouseEvent& evt)
 		pos.x = x;
 		pos.z = z;
 		sn->setPosition (pos);
+		
+		/* give graphviz this info */
+		NSString *name;
+		name = [NSString stringWithFormat:@"%s", sn->getName().c_str()];
+		[position setPositionX: (int)x forNode: name];
+		[position setPositionY: (int)y forNode: name];
 	}
 }
 
