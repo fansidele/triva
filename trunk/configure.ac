@@ -70,7 +70,6 @@ src/reader/GNUmakefile
 src/paje-simulator/GNUmakefile
 src/gui/GNUmakefile
 src/gui/camera/GNUmakefile
-src/gui/selector/GNUmakefile
 src/draw/GNUmakefile
 src/draw/position/GNUmakefile 
 src/draw/layout/GNUmakefile
