@@ -6,7 +6,6 @@ if test -z "$GNUSTEP_SYSTEM_ROOT"; then
         AC_MSG_ERROR([You must run the GNUstep.sh script before configuring])
 fi
 
-LIBS="-L/usr/lib/"
 
 AC_LANG_CPLUSPLUS
 AC_PROG_CXX
