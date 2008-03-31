@@ -31,7 +31,6 @@ void DrawManager::moveMouseCursors (wxMouseEvent& evt)
         Ogre::Ray mouseRay;
         Ogre::Camera *mCamera;
 	Ogre::Viewport *mViewport;
-	Ogre::RaySceneQuery *sceneQuery;
 
 
         mViewport = mSceneMgr->getCurrentViewport();
@@ -73,17 +72,19 @@ void DrawManager::moveObject (wxMouseEvent& evt)
 		mCurrentObject->getQueryFlags () == STATE_MASK){
 
 		Ogre::SceneNode *sn = mCurrentObject->getParentSceneNode()->getParentSceneNode();
-		Ogre::Vector3 pos = sn->getPosition();
+		Ogre::Vector3 posi = sn->getPosition();
 		
-		pos.x = x;
-		pos.z = z;
-		sn->setPosition (pos);
+		posi.x = x;
+		posi.z = z;
+		sn->setPosition (posi);
 		
-		/* give graphviz this info */
+		/* register position */
 		NSString *name;
 		name = [NSString stringWithFormat:@"%s", sn->getName().c_str()];
-		[position setPositionX: (int)x forNode: name];
-		[position setPositionY: (int)y forNode: name];
+		NSMutableArray *b = [pos objectForKey: name];
+		[b replaceObjectAtIndex: 0 withObject:[NSString stringWithFormat:@"%d", (int)x]];
+		[b replaceObjectAtIndex: 1 withObject:[NSString stringWithFormat:@"%d", (int)z]];
+		this->updateLinksPositions();
 	}
 }
 
@@ -154,6 +155,7 @@ void DrawManager::onMouseEvent(wxMouseEvent& evt)
 	if (evt.LeftIsDown() && evt.ControlDown()){
 		this->moveObject (evt);
 	}
+
 	this->moveMouseCursors (evt);
 	return;
 }
