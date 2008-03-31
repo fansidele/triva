@@ -67,7 +67,7 @@ void DrawManager::drawLinks (PajeEntityType *et, id container)
 			minDuration: 0];
 	PajeEntity *ent;
 	while ((ent = [en4 nextObject]) != nil) {
-		NSString *ide = [NSString stringWithFormat: @"%@-%@-#-#-%d", [[ent sourceContainer] name], [[ent destContainer] name], mcount++];
+		NSString *ide = [ent description];
 		std::string name;
 		name = std::string ([ide cString]);
 
