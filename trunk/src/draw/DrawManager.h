@@ -42,9 +42,11 @@ public:
 	void createTimestampedObjects ();
 
 private:
+	NSMutableDictionary *pos;
 	NSMutableDictionary *createContainersDictionary (id entity);
 	void destroyAllChildren (Ogre::SceneNode *node);
 	void drawContainers (id entity, Ogre::SceneNode *node);
+	void updateLinksPositions ();
 	void drawTimestampedObjects (id entity);
 
 

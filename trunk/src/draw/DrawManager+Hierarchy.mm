@@ -2,8 +2,6 @@
 #include "draw/position/Position.h"
 #include "draw/layout/Layout.h"
 
-static NSDictionary *pos;
-
 void DrawManager::createHierarchy ()
 {
 	id instance = [viewController rootInstance];

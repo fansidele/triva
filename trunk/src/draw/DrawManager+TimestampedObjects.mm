@@ -132,3 +132,9 @@ cString]), ogreColor);
 	}
 }
 
+
+void DrawManager::updateLinksPositions ()
+{
+        id instance = [viewController rootInstance];
+}
+
