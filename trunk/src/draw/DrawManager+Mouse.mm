@@ -111,7 +111,7 @@ void DrawManager::selectObject (wxMouseEvent& evt)
         mRaySceneQuery->setRay(mouseRay);
         mRaySceneQuery->setSortByDistance(true,10);
         mRaySceneQuery->setQueryTypeMask(Ogre::SceneManager::ENTITY_TYPE_MASK);
-        mRaySceneQuery->setQueryMask (STATE_MASK|CONTAINER_MASK);
+        mRaySceneQuery->setQueryMask (STATE_MASK|CONTAINER_MASK|LINK_MASK);
 
         Ogre::RaySceneQueryResult &result = mRaySceneQuery->execute();
         Ogre::RaySceneQueryResult::iterator itr;
