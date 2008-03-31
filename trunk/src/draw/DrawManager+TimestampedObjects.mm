@@ -2,11 +2,6 @@
 #include "draw/position/Position.h"
 #include "draw/layout/Layout.h"
 
-//static NSDictionary *pos;
-//static int mcount;
-
-//#include "draw/extras/Line3D.h"
-
 void DrawManager::createTimestampedObjects ()
 {
 	id instance = [viewController rootInstance];
@@ -101,29 +96,12 @@ void DrawManager::drawLinks (PajeEntityType *et, id container)
 		ste->position (dp.x, end, dp.z);
 		ste->end();
 		ste->setQueryFlags (LINK_MASK);
-
-
-//		ste = new DynamicLines(Ogre::RenderOperation::OT_LINE_LIST);
-//		Ogre::ColourValue ogreColor = Ogre::ColourValue::White;
-/*
-		ste->addPoint (op.x, start,op.z);
-		ste->addPoint (dp.x, end, dp.z);
-		ste->update();
-*/
-//		Line3D *ste = new Line3D();
-//		ste->setQueryFlags (LINK_MASK);
-//		ste->setMaterial ([[ent name] cString]);
-//		ste->addPoint (Ogre::Vector3(op.x, start,op.z));
-//		ste->addPoint (Ogre::Vector3(dp.x, end, dp.z));
-//		ste->drawLines();
 		n->attachObject (ste);
 	}
 }
 
 void DrawManager::drawTimestampedObjects (id entity)
 {
-//	Ogre::SceneNode *n = mSceneMgr->getSceneNode ([[entity name] cString]);
-
 	NSEnumerator *en = [[viewController containedTypesForContainerType:[viewController entityTypeForEntity:entity]] objectEnumerator];
 	PajeEntityType *et;
 	while ((et = [en nextObject]) != nil) {
