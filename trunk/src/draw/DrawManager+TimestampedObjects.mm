@@ -21,7 +21,7 @@ void DrawManager::drawStates (PajeEntityType *et, id container)
 	while ((ent = [en3 nextObject]) != nil) {
 		Ogre::SceneNode *ssn;
 		ssn = n->createChildSceneNode();
-		NSString *ide = [NSString stringWithFormat: @"%@-#-#-%@-#-#-%@", [ent description], [container name], [et name]];	
+		NSString *ide = [NSString stringWithFormat: @"%@-#-#-%@-#-#-%@-#-#-%@", [ent description], [container name], [et name], [[container entityType] name]];
 		Ogre::Entity *ste;
 		std::string name = std::string ([ide cString]);
 		try {
@@ -62,7 +62,7 @@ void DrawManager::drawLinks (PajeEntityType *et, id container)
 			minDuration: 0];
 	PajeEntity *ent;
 	while ((ent = [en4 nextObject]) != nil) {
-		NSString *ide = [NSString stringWithFormat: @"%@-#-#-%@-#-#-%@", [ent description], [container name], [et name]];	
+		NSString *ide = [NSString stringWithFormat: @"%@-#-#-%@-#-#-%@-#-#-%@", [ent description], [container name], [et name], [[container entityType] name]];
 		std::string name;
 		name = std::string ([ide cString]);
 
@@ -131,7 +131,7 @@ void DrawManager::updateLinksPositions (PajeEntityType *et, id container)
 			minDuration: 0];
 	PajeEntity *ent;
 	while ((ent = [en4 nextObject]) != nil) {
-		NSString *ide = [NSString stringWithFormat: @"%@-#-#-%@-#-#-%@", [ent description], [container name], [et name]];	
+		NSString *ide = [NSString stringWithFormat: @"%@-#-#-%@-#-#-%@-#-#-%@", [ent description], [container name], [et name], [[container entityType] name]];
 		std::string name;
 		name = std::string ([ide cString]);
 
