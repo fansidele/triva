@@ -3,7 +3,9 @@
 #include "draw/layout/Layout.h"
 
 //static NSDictionary *pos;
-static int count;
+static int mcount;
+
+#include "draw/extras/Line3D.h"
 
 void DrawManager::createTimestampedObjects ()
 {
@@ -38,7 +40,8 @@ void DrawManager::drawTimestampedObjects (id entity)
 			while ((ent = [en3 nextObject]) != nil) {
 				Ogre::SceneNode *ssn;
 				ssn = n->createChildSceneNode();
-				NSString *ide = [NSString stringWithFormat: @"%@-#-#-%d", [[ent entityType] name], count++];
+				NSString *ide = [NSString stringWithFormat:
+@"%@-#-#-%d", [[ent entityType] name], mcount++];
 				Ogre::Entity *ste;
 				std::string n;
 				n = std::string ([ide cString]);
@@ -80,10 +83,7 @@ cString]), ogreColor);
 			while ((ent = [en4 nextObject]) != nil) {
 				Ogre::SceneNode *ssn;
 				ssn = n->createChildSceneNode();
-				NSString *ide = [NSString stringWithFormat:
-@"%@-%@-#-#-%d", [[ent sourceContainer] name], [[ent destContainer] name],
-count++];
-				DynamicLines *ste;
+				NSString *ide = [NSString stringWithFormat: @"%@-%@-#-#-%d", [[ent sourceContainer] name], [[ent destContainer] name], mcount++];
 				std::string n;
 				n = std::string ([ide cString]);
 
@@ -104,21 +104,28 @@ cString])->getWorldPosition();
 				start = [[[ent time] description] doubleValue];
 				end = [[[ent endTime] description] doubleValue];
 
+/*
 				try {
 //					ste = mSceneMgr->getMovableObject(n);
 				}catch (Ogre::Exception ex){
 				}
 				ste = new DynamicLines(Ogre::RenderOperation::OT_LINE_LIST);
-
-				Ogre::ColourValue ogreColor =
-Ogre::ColourValue::White;
+*/
+//				Ogre::ColourValue ogreColor = Ogre::ColourValue::White;
+				Ogre::ColourValue ogreColor = this->getRegisteredColor (std::string([[[ent entityType] name] cString]), [[ent name] cString]);
 				this->createMaterial(std::string([[ent name]
 cString]), ogreColor);
-				ste->setMaterial ([[ent name] cString]);
+/*
 				ste->addPoint (op.x, start,op.z);
 				ste->addPoint (dp.x, end, dp.z);
 				ste->update();
+*/
+				Line3D *ste = new Line3D();
 				ste->setQueryFlags (LINK_MASK);
+				ste->setMaterial ([[ent name] cString]);
+				ste->addPoint (Ogre::Vector3(op.x, start,op.z));
+				ste->addPoint (Ogre::Vector3(dp.x, end, dp.z));
+				ste->drawLines();
 				ssn->attachObject (ste);
 			}
 		}
