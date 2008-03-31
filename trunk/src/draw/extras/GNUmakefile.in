@@ -6,7 +6,7 @@ CC=$(CXX)
 
 SUBPROJECT_NAME=extras
 extras_OBJC_FILES= 
-extras_OBJCC_FILES=MovableText.mm DynamicLines.mm DynamicRenderable.mm
+extras_OBJCC_FILES=MovableText.mm DynamicLines.mm DynamicRenderable.mm Line3D.mm
 
 extras_INCLUDE_DIRS += @CPPFLAGS@ 
 extras_LIB_DIRS += @LIBS@ 
