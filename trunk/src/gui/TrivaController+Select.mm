@@ -41,7 +41,7 @@ void TrivaController::selectState (Ogre::MovableObject
 //	NSLog (@"hitAt.y=%f pos.y=%f", hitAt.y, pos.y);
 
 	/* search for objectEntityType */
-	NSString *objectEntityTypeName = [[[NSString stringWithFormat: @"%s", objectToSelect->getName().c_str()] componentsSeparatedByString: @"-#-#-"] objectAtIndex: 0];
+	NSString *objectEntityTypeName = [[[NSString stringWithFormat: @"%s", objectToSelect->getName().c_str()] componentsSeparatedByString: @"-#-#-"] objectAtIndex: 2];
 	PajeEntityType *objectEntityType = [view entityTypeWithName: objectEntityTypeName];
 //	NSLog (@"objectEntityTypeName=%@ - objectEntityType=%@ allEntitiesTypes=%@",objectEntityTypeName,objectEntityType,[view allEntityTypes]);
 

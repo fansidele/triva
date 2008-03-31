@@ -3,9 +3,9 @@
 #include "draw/layout/Layout.h"
 
 //static NSDictionary *pos;
-static int mcount;
+//static int mcount;
 
-#include "draw/extras/Line3D.h"
+//#include "draw/extras/Line3D.h"
 
 void DrawManager::createTimestampedObjects ()
 {
@@ -26,7 +26,7 @@ void DrawManager::drawStates (PajeEntityType *et, id container)
 	while ((ent = [en3 nextObject]) != nil) {
 		Ogre::SceneNode *ssn;
 		ssn = n->createChildSceneNode();
-		NSString *ide = [ent description];		
+		NSString *ide = [NSString stringWithFormat: @"%@-#-#-%@-#-#-%@", [ent description], [container name], [et name]];	
 		Ogre::Entity *ste;
 		std::string name = std::string ([ide cString]);
 		try {
@@ -67,7 +67,7 @@ void DrawManager::drawLinks (PajeEntityType *et, id container)
 			minDuration: 0];
 	PajeEntity *ent;
 	while ((ent = [en4 nextObject]) != nil) {
-		NSString *ide = [ent description];
+		NSString *ide = [NSString stringWithFormat: @"%@-#-#-%@-#-#-%@", [ent description], [container name], [et name]];	
 		std::string name;
 		name = std::string ([ide cString]);
 
@@ -96,7 +96,7 @@ void DrawManager::drawLinks (PajeEntityType *et, id container)
 		this->createMaterial(std::string([[ent name] cString]), ogreColor);
 
 		ste->clear();
-		ste->begin(std::string([[ent name] cString]), RenderOperation::OT_LINE_STRIP);
+		ste->begin(std::string([[ent name] cString]), Ogre::RenderOperation::OT_LINE_STRIP);
 		ste->position (op.x, start, op.z);
 		ste->position (dp.x, end, dp.z);
 		ste->end();
