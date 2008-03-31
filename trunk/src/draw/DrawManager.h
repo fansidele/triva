@@ -48,6 +48,8 @@ private:
 	void destroyAllChildren (Ogre::SceneNode *node);
 	void drawContainers (id entity, Ogre::SceneNode *node);
 	void updateLinksPositions ();
+	void updateLinksPositions (id entity);
+	void updateLinksPositions (PajeEntityType *et, id container);
 	void drawTimestampedObjects (id entity);
 	void drawStates (PajeEntityType *et, id container);
 	void drawLinks (PajeEntityType *et, id container);

@@ -143,11 +143,69 @@ void DrawManager::drawTimestampedObjects (id entity)
 	}
 }
 
+void DrawManager::updateLinksPositions (PajeEntityType *et, id container)
+{
+	NSEnumerator *en4;
+	en4 = [viewController enumeratorOfCompleteEntitiesTyped: et
+			inContainer: container
+			fromTime:[viewController startTime]
+			toTime:[viewController endTime]
+			minDuration: 0];
+	PajeEntity *ent;
+	while ((ent = [en4 nextObject]) != nil) {
+		NSString *ide = [NSString stringWithFormat: @"%@-#-#-%@-#-#-%@", [ent description], [container name], [et name]];	
+		std::string name;
+		name = std::string ([ide cString]);
+
+		NSString *sn = [[ent sourceContainer] name];
+		NSString *dn = [[ent destContainer] name];
+
+	        Ogre::Vector3 op = mSceneMgr->getSceneNode ([sn cString])->getWorldPosition();
+		Ogre::Vector3 dp = mSceneMgr->getSceneNode ([dn cString])->getWorldPosition();
+
+		Ogre::Vector3 dif = dp - op;
+		
+		double start;
+		double end;
+		start = [[[ent time] description] doubleValue];
+		end = [[[ent endTime] description] doubleValue];
+
+		Ogre::ManualObject *ste;
+		try {
+			ste = mSceneMgr->getManualObject(name);
+		}catch (Ogre::Exception ex){
+			std::cout << "Link named " << name << " does not exists." << std::endl;
+			return;
+		}
+		ste->clear();
+		ste->begin(std::string([[ent name] cString]), Ogre::RenderOperation::OT_LINE_STRIP);
+		ste->position (op.x, start, op.z);
+		ste->position (dp.x, end, dp.z);
+		ste->end();
+	}
+}
+
+void DrawManager::updateLinksPositions (id entity)
+{
+	NSEnumerator *en = [[viewController containedTypesForContainerType:[viewController entityTypeForEntity:entity]] objectEnumerator];
+	PajeEntityType *et;
+	while ((et = [en nextObject]) != nil) {
+		if ([viewController isContainerEntityType:et]) {
+			NSEnumerator *en2;
+			PajeContainer *sub;
+			en2 = [viewController enumeratorOfContainersTyped:et
+							inContainer:entity];
+			while ((sub = [en2 nextObject]) != nil) {
+				this->updateLinksPositions ((id)sub);
+			}
+		}else if ([et isKindOfClass: [PajeLinkType class]]){
+			this->updateLinksPositions (et, entity);
+		}
+	}
+}
 
 void DrawManager::updateLinksPositions ()
 {
 	id instance = [viewController rootInstance];
-//	this->deleteAllLinks (instance);
-//	this->updateLinksPositions (instance);
+	this->updateLinksPositions (instance);
 }
-
