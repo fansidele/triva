@@ -3,6 +3,7 @@
 
 #include <Ogre.h>
 #include <Foundation/Foundation.h>
+#include <General/PajeType.h>
 #include "gui/wxInputEventListener.h"
 
 class TrivaController;
@@ -48,6 +49,8 @@ private:
 	void drawContainers (id entity, Ogre::SceneNode *node);
 	void updateLinksPositions ();
 	void drawTimestampedObjects (id entity);
+	void drawStates (PajeEntityType *et, id container);
+	void drawLinks (PajeEntityType *et, id container);
 
 
 //MATERIALS CATEGORY
