@@ -100,6 +100,7 @@ void DrawManager::drawLinks (PajeEntityType *et, id container)
 		ste->position (op.x, start, op.z);
 		ste->position (dp.x, end, dp.z);
 		ste->end();
+		ste->setQueryFlags (LINK_MASK);
 
 
 //		ste = new DynamicLines(Ogre::RenderOperation::OT_LINE_LIST);
