@@ -139,7 +139,7 @@ void DrawManager::selectObject (wxMouseEvent& evt)
                 }
         }
         if (mCurrentObject){
-                hitAt.normalise();
+//                hitAt.normalise();
                 trivaController->selectObjectIdentifier(mCurrentObject, hitAt);
         }else{
                 trivaController->unselectObjectIdentifier("");
