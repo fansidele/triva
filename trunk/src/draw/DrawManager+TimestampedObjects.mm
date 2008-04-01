@@ -96,7 +96,8 @@ void DrawManager::drawLinks (PajeEntityType *et, id container)
 		ste->position (dp.x, end, dp.z);
 		ste->end();
 		ste->setQueryFlags (LINK_MASK);
-		n->attachObject (ste);
+		Ogre::SceneNode *dsn = n->createChildSceneNode();
+		dsn->attachObject (ste);
 	}
 }
 
