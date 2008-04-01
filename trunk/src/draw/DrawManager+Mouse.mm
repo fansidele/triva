@@ -8,7 +8,9 @@ void DrawManager::createMouseCursors ()
 	ex = mSceneMgr->createEntity ("x-cursor", Ogre::SceneManager::PT_SPHERE);
 	ez = mSceneMgr->createEntity ("z-cursor", Ogre::SceneManager::PT_SPHERE);
 	ex->setMaterialName ("VisuApp/XAxis");
+	ex->setQueryFlags(AMBIENT_MASK);
 	ez->setMaterialName ("VisuApp/ZAxis");
+	ez->setQueryFlags(AMBIENT_MASK);
 
 	Ogre::SceneNode *origin = mSceneMgr->getSceneNode ("Origin");
 	Ogre::SceneNode *cx = origin->createChildSceneNode ("x-cursor");
