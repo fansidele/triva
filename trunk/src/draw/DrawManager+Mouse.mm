@@ -96,6 +96,7 @@ void DrawManager::selectObject (wxMouseEvent& evt)
 
         if (mCurrentObject){
                 trivaController->unselectObjectIdentifier(mCurrentObject->getName());
+		mCurrentObject->getParentSceneNode()->showBoundingBox(false);
                 mCurrentObject = NULL;
         }
 
@@ -110,6 +111,39 @@ void DrawManager::selectObject (wxMouseEvent& evt)
 
         mouseRay = mCamera->getCameraToViewportRay(evt.GetX()/(float)mViewport->getActualWidth(), evt.GetY()/(float)mViewport->getActualHeight());
 
+
+#if DEBUG
+	/* drawing the ray */
+	Ogre::Vector3 origin = mouseRay.getOrigin();
+	Ogre::Vector3 dest = mouseRay.getOrigin() + (mouseRay.getDirection()*10000);
+	std::cout << "origin,dest: " << origin << "," << dest << std::endl;
+	Ogre::ManualObject *m;
+	try {
+		m = mSceneMgr->getManualObject ("ray");
+	}catch (Ogre::Exception ex){
+		m = mSceneMgr->createManualObject ("ray");
+	}
+	m->clear();
+	m->begin ("VisuApp/MPI_SEND", Ogre::RenderOperation::OT_LINE_STRIP);
+	m->position (origin);
+	m->position (dest);
+	m->end();
+	m->setQueryFlags(AMBIENT_MASK);
+	Ogre::SceneNode *msn;
+	try {
+		msn = mSceneMgr->getRootSceneNode()->createChildSceneNode ("raysn");
+		msn->setInheritScale (false);
+	}catch (Ogre::Exception ex){
+		msn = mSceneMgr->getSceneNode("raysn");
+	}
+		
+	try {
+		msn->getAttachedObject("ray");
+	}catch (Ogre::Exception ex){
+		msn->attachObject (m);
+	}
+#endif
+
         mRaySceneQuery->setRay(mouseRay);
         mRaySceneQuery->setSortByDistance(true,10);
         mRaySceneQuery->setQueryTypeMask(Ogre::SceneManager::ENTITY_TYPE_MASK);
@@ -118,26 +152,12 @@ void DrawManager::selectObject (wxMouseEvent& evt)
         Ogre::RaySceneQueryResult &result = mRaySceneQuery->execute();
         Ogre::RaySceneQueryResult::iterator itr;
 
-
-        Ogre::SceneNode *mainSN = NULL;
         Ogre::Vector3 hitAt;
-
-
         for ( itr = result.begin(); itr != result.end(); itr++ ) {
-                if ( itr->worldFragment ) {
-                        Ogre::Vector3 location;
-                        location = itr->worldFragment->singleIntersection;
-                } else  if ( itr->movable ) {
-                        if (mainSN == NULL){
-                                mCurrentObject = itr->movable;
-                                mainSN = mCurrentObject->getParentSceneNode()->getParentSceneNode();
-                                hitAt = mouseRay.getPoint( itr->distance );
-                        }else{
-                                if (mainSN == itr->movable->getParentSceneNode()->getParentSceneNode()){
-                                        mCurrentObject = itr->movable;
-                                        hitAt =mouseRay.getPoint(itr->distance);
-                                }
-                        }
+                if ( itr->movable ) {
+			mCurrentObject = itr->movable;
+			hitAt = mouseRay.getPoint( itr->distance );
+			break;
                 }
         }
         if (mCurrentObject){

@@ -1,7 +1,7 @@
 #include "TrivaController.h"
 
 extern wxString NSSTRINGtoWXSTRING (NSString *ns);
-Ogre::MovableObject *selectedObject = NULL;
+//Ogre::MovableObject *selectedObject = NULL;
 
 void TrivaController::selectContainer (Ogre::MovableObject
 *objectToSelect, Ogre::Vector3 hitAt)
@@ -58,11 +58,7 @@ void TrivaController::selectState (Ogre::MovableObject
 					[fet endTime],
 					[fet duration]];
 		statusBar->SetStatusText (NSSTRINGtoWXSTRING(info));
-		if (selectedObject != NULL){
-			selectedObject->getParentSceneNode()->showBoundingBox(false);
-		}
-		selectedObject = objectToSelect;
-		selectedObject->getParentSceneNode()->showBoundingBox(true);
+		objectToSelect->getParentSceneNode()->showBoundingBox(true);
 
 		DrawManager *m = [view drawManager];
 		Ogre::ColourValue og = m->getMaterialColor (std::string([[fet name] cString]));
@@ -115,7 +111,7 @@ void TrivaController::selectLink (Ogre::MovableObject
 					[fet endTime],
 					[fet duration]];
 		statusBar->SetStatusText (NSSTRINGtoWXSTRING(info));
-		selectedObject = objectToSelect;
+		objectToSelect->getParentSceneNode()->showBoundingBox(true);
 
 		DrawManager *m = [view drawManager];
 		Ogre::ColourValue og = m->getMaterialColor (std::string([[fet name] cString]));
@@ -130,16 +126,14 @@ void TrivaController::selectLink (Ogre::MovableObject
 void TrivaController::selectObjectIdentifier (Ogre::MovableObject
 *objectToSelect, Ogre::Vector3 hitAt)
 {
-	if (objectToSelect == NULL){
-		return;
-	}else if (objectToSelect->getQueryFlags() == CONTAINER_MASK){
+	if (objectToSelect->getQueryFlags() == CONTAINER_MASK){
 		this->selectContainer (objectToSelect, hitAt);
 	}else if (objectToSelect->getQueryFlags() == STATE_MASK){
 		this->selectState (objectToSelect, hitAt);
 	}else if (objectToSelect->getQueryFlags() == LINK_MASK){
+		std::cout << "aqui" << std::endl;
 		this->selectLink (objectToSelect, hitAt);
 	}
-
 }
 
 wxColour TrivaController::convertOgreColor (Ogre::ColourValue og)
@@ -167,9 +161,6 @@ Ogre::ColourValue TrivaController::convertWxColor (wxColor c)
 void TrivaController::unselectObjectIdentifier (std::string name)
 {
 	statusBar->SetStatusText (wxString());
-	if (selectedObject){
-		selectedObject->getParentSceneNode()->showBoundingBox(false);
-	}
 	colorButton->SetBackgroundColour (wxSystemSettings::GetColour( wxSYS_COLOUR_MENU ));
 	colorButton->SetLabel(wxT("Color"));
 	colorButton->Disable();
