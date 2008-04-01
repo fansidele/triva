@@ -66,6 +66,8 @@ private:
 *objectToSelect, Ogre::Vector3 hitAt);
 	void selectState (Ogre::MovableObject
 *objectToSelect, Ogre::Vector3 hitAt);
+	void selectLink (Ogre::MovableObject
+*objectToSelect, Ogre::Vector3 hitAt);
 
 public:
 	void selectObjectIdentifier (Ogre::MovableObject *objectToSelect, Ogre::Vector3 hitAt);

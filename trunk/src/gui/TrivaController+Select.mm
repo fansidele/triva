@@ -23,7 +23,6 @@ void TrivaController::selectState (Ogre::MovableObject
 	Ogre::Any any = containerEntity->getUserAny();
 	std::string str;
 	str = Ogre::any_cast<std::string>(containerEntity->getUserAny());
-//	std::cout << str << std::endl;
 
 	NSString *containerName = [[[NSString stringWithFormat: @"%s", str.c_str()] componentsSeparatedByString: @"-#-#-"] objectAtIndex: 0];
 	NSString *entityTypeName = [[[NSString stringWithFormat: @"%s", str.c_str()] componentsSeparatedByString: @"-#-#-"] objectAtIndex: 1];
@@ -31,19 +30,16 @@ void TrivaController::selectState (Ogre::MovableObject
 	PajeEntityType *entityType = [view entityTypeWithName: entityTypeName];
 	PajeContainer *container = [view containerWithName: containerName
 						type: entityType];
-//	NSLog (@"entityType=%@ - container=%@", entityType, container);
 
 	/* search for time of selected object */
 	Ogre::Vector3 pos = objectToSelect->getParentSceneNode()->getPosition();
 	double time;
 	time = pos.y;
 //	time = hitAt.y;
-//	NSLog (@"hitAt.y=%f pos.y=%f", hitAt.y, pos.y);
 
 	/* search for objectEntityType */
 	NSString *objectEntityTypeName = [[[NSString stringWithFormat: @"%s", objectToSelect->getName().c_str()] componentsSeparatedByString: @"-#-#-"] objectAtIndex: 2];
 	PajeEntityType *objectEntityType = [view entityTypeWithName: objectEntityTypeName];
-//	NSLog (@"objectEntityTypeName=%@ - objectEntityType=%@ allEntitiesTypes=%@",objectEntityTypeName,objectEntityType,[view allEntityTypes]);
 
 	/* obtaining objects */
 	NSEnumerator *en = [view enumeratorOfEntitiesTyped: objectEntityType
@@ -52,11 +48,6 @@ void TrivaController::selectState (Ogre::MovableObject
 		toTime: [NSDate dateWithTimeIntervalSinceReferenceDate: time]
 		minDuration: 0];
 	PajeEntity *fet = [en nextObject];
-	PajeEntity *et = fet;
-//	NSLog (@"%@", et);
-	while ((et = [en nextObject]) != nil){
-//		NSLog (@"%@", et);
-	}
 
 	if (fet != nil){
 		NSString *info = [NSString stringWithFormat: 
@@ -73,7 +64,58 @@ void TrivaController::selectState (Ogre::MovableObject
 		selectedObject = objectToSelect;
 		selectedObject->getParentSceneNode()->showBoundingBox(true);
 
-//		colorWindow->setMaterialToBeChanged (NSSTRINGtoWXSTRING([fet name]));
+		DrawManager *m = [view drawManager];
+		Ogre::ColourValue og = m->getMaterialColor (std::string([[fet name] cString]));
+		wxColour c = this->convertOgreColor (og);
+		colorButton->SetBackgroundColour (c);
+		colorButton->SetLabel (NSSTRINGtoWXSTRING([fet name]));
+		colorButton->Enable();
+		selectedEntity = fet;
+	}
+}
+
+void TrivaController::selectLink (Ogre::MovableObject
+*objectToSelect, Ogre::Vector3 hitAt)
+{
+        Ogre::Root *mRoot;
+        Ogre::SceneManager *mSceneMgr;
+
+        mRoot = Ogre::Root::getSingletonPtr();
+        mSceneMgr = mRoot->getSceneManager("VisuSceneManager");
+
+        /* search for container */
+        std::string str = objectToSelect->getName();
+        NSString *containerName = [[[NSString stringWithFormat: @"%s", str.c_str()] componentsSeparatedByString: @"-#-#-"] objectAtIndex: 1];
+        NSString *entityTypeName = [[[NSString stringWithFormat: @"%s", str.c_str()] componentsSeparatedByString: @"-#-#-"] objectAtIndex: 3];
+        PajeEntityType *entityType = [view entityTypeWithName: entityTypeName];
+        PajeContainer *container = [view containerWithName: containerName
+                                                type: entityType];
+
+        /* search for time of selected object */
+	double time = (double)hitAt.y/yScale;
+
+        /* search for objectEntityType */
+        NSString *objectEntityTypeName = [[[NSString stringWithFormat: @"%s", objectToSelect->getName().c_str()] componentsSeparatedByString: @"-#-#-"] objectAtIndex: 2];
+        PajeEntityType *objectEntityType = [view entityTypeWithName: objectEntityTypeName];
+
+        /* obtaining objects */
+        NSEnumerator *en = [view enumeratorOfEntitiesTyped: objectEntityType
+                inContainer: container
+                fromTime: [NSDate dateWithTimeIntervalSinceReferenceDate:time]
+                toTime: [NSDate dateWithTimeIntervalSinceReferenceDate: time]
+                minDuration: 0];
+        PajeEntity *fet = [en nextObject];
+
+	if (fet != nil){
+		NSString *info = [NSString stringWithFormat: 
+					@"%@ - %@ (%@:%@) %f",
+					[container name],
+					[fet name],
+					[fet startTime],
+					[fet endTime],
+					[fet duration]];
+		statusBar->SetStatusText (NSSTRINGtoWXSTRING(info));
+		selectedObject = objectToSelect;
 
 		DrawManager *m = [view drawManager];
 		Ogre::ColourValue og = m->getMaterialColor (std::string([[fet name] cString]));
@@ -83,22 +125,6 @@ void TrivaController::selectState (Ogre::MovableObject
 		colorButton->Enable();
 		selectedEntity = fet;
 	}
-		
-		
-
-/*
-	if (view){
-		NSString *identifier;
-		identifier = [NSString stringWithFormat: @"%s", name.c_str()];
-		[view selectObjectIdentifier: identifier];
-		XState *s = (XState *)[view objectWithIdentifier: identifier];
-		NSMutableString *info = [NSMutableString string];
-		[info appendString: [NSString stringWithFormat: @"%@ - %@,%@",
-[s type], [s start], [s end]]];
-		statusBar->SetStatusText (NSSTRINGtoWXSTRING(info));
-	}
-*/
-
 }
 
 void TrivaController::selectObjectIdentifier (Ogre::MovableObject
@@ -110,6 +136,8 @@ void TrivaController::selectObjectIdentifier (Ogre::MovableObject
 		this->selectContainer (objectToSelect, hitAt);
 	}else if (objectToSelect->getQueryFlags() == STATE_MASK){
 		this->selectState (objectToSelect, hitAt);
+	}else if (objectToSelect->getQueryFlags() == LINK_MASK){
+		this->selectLink (objectToSelect, hitAt);
 	}
 
 }
@@ -133,7 +161,7 @@ Ogre::ColourValue TrivaController::convertWxColor (wxColor c)
 	g = c.Green();
 	b = c.Blue();
 	a = c.Alpha();
-	return Ogre::ColourValue((float)r/255, (float)g/255, (float)b/255, 0.5);//a/255);
+	return Ogre::ColourValue((float)r/255, (float)g/255, (float)b/255, 0.5);
 }
 
 void TrivaController::unselectObjectIdentifier (std::string name)
@@ -146,10 +174,4 @@ void TrivaController::unselectObjectIdentifier (std::string name)
 	colorButton->SetLabel(wxT("Color"));
 	colorButton->Disable();
 	selectedEntity = nil;
-/*
-	if (view){
-		[view unselectObjectIdentifier: [NSString stringWithFormat: @"%s",
-name.c_str()]];
-	}
-*/
 }
