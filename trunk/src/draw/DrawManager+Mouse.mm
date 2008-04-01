@@ -112,7 +112,7 @@ void DrawManager::selectObject (wxMouseEvent& evt)
         mouseRay = mCamera->getCameraToViewportRay(evt.GetX()/(float)mViewport->getActualWidth(), evt.GetY()/(float)mViewport->getActualHeight());
 
 
-#if DEBUG
+#if TRIVADEBUG
 	/* drawing the ray */
 	Ogre::Vector3 origin = mouseRay.getOrigin();
 	Ogre::Vector3 dest = mouseRay.getOrigin() + (mouseRay.getDirection()*10000);
