@@ -173,3 +173,40 @@ void CameraManager::createViewport (Ogre::RenderWindow *win)
 	mCamera->setAspectRatio (Ogre::Real(mViewport->getActualWidth()) /
 				Ogre::Real(mViewport->getActualHeight()));
 }
+
+void CameraManager::cameraForward ()
+{
+        mDirection.z -= mMove;
+        moveCamera();
+}
+
+void CameraManager::cameraBackward ()
+{
+        mDirection.z += mMove;
+        moveCamera();
+}
+
+void CameraManager::cameraLeft ()
+{
+        mDirection.x -= mMove;
+        moveCamera();
+}
+
+void CameraManager::cameraRight ()
+{
+        mDirection.x += mMove;
+        moveCamera();
+}
+
+void CameraManager::cameraUp ()
+{
+        mDirection.y += mMove;
+        moveCamera();
+}
+
+void CameraManager::cameraDown ()
+{
+        mDirection.y -= mMove;
+        moveCamera();
+}
+
