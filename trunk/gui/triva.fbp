@@ -328,6 +328,101 @@
                     </object>
                 </object>
                 <object class="wxMenu" expanded="1">
+                    <property name="label">Camera</property>
+                    <property name="name">navigation</property>
+                    <property name="permission">protected</property>
+                    <object class="wxMenuItem" expanded="1">
+                        <property name="bitmap"></property>
+                        <property name="checked">0</property>
+                        <property name="enabled">1</property>
+                        <property name="help"></property>
+                        <property name="id">wxID_ANY</property>
+                        <property name="kind">wxITEM_NORMAL</property>
+                        <property name="label">Forward</property>
+                        <property name="name">forward</property>
+                        <property name="permission">none</property>
+                        <property name="shortcut">ALT+8</property>
+                        <property name="unchecked_bitmap"></property>
+                        <event name="OnMenuSelection">cameraForward</event>
+                        <event name="OnUpdateUI"></event>
+                    </object>
+                    <object class="wxMenuItem" expanded="1">
+                        <property name="bitmap"></property>
+                        <property name="checked">0</property>
+                        <property name="enabled">1</property>
+                        <property name="help"></property>
+                        <property name="id">wxID_ANY</property>
+                        <property name="kind">wxITEM_NORMAL</property>
+                        <property name="label">Backward</property>
+                        <property name="name">backward</property>
+                        <property name="permission">none</property>
+                        <property name="shortcut">ALT+2</property>
+                        <property name="unchecked_bitmap"></property>
+                        <event name="OnMenuSelection">cameraBackward</event>
+                        <event name="OnUpdateUI"></event>
+                    </object>
+                    <object class="wxMenuItem" expanded="1">
+                        <property name="bitmap"></property>
+                        <property name="checked">0</property>
+                        <property name="enabled">1</property>
+                        <property name="help"></property>
+                        <property name="id">wxID_ANY</property>
+                        <property name="kind">wxITEM_NORMAL</property>
+                        <property name="label">Left</property>
+                        <property name="name">left</property>
+                        <property name="permission">none</property>
+                        <property name="shortcut">ALT+6</property>
+                        <property name="unchecked_bitmap"></property>
+                        <event name="OnMenuSelection">cameraLeft</event>
+                        <event name="OnUpdateUI"></event>
+                    </object>
+                    <object class="wxMenuItem" expanded="1">
+                        <property name="bitmap"></property>
+                        <property name="checked">0</property>
+                        <property name="enabled">1</property>
+                        <property name="help"></property>
+                        <property name="id">wxID_ANY</property>
+                        <property name="kind">wxITEM_NORMAL</property>
+                        <property name="label">Right</property>
+                        <property name="name">right</property>
+                        <property name="permission">none</property>
+                        <property name="shortcut">ALT+6</property>
+                        <property name="unchecked_bitmap"></property>
+                        <event name="OnMenuSelection">cameraRight</event>
+                        <event name="OnUpdateUI"></event>
+                    </object>
+                    <object class="wxMenuItem" expanded="1">
+                        <property name="bitmap"></property>
+                        <property name="checked">0</property>
+                        <property name="enabled">1</property>
+                        <property name="help"></property>
+                        <property name="id">wxID_ANY</property>
+                        <property name="kind">wxITEM_NORMAL</property>
+                        <property name="label">Up</property>
+                        <property name="name">up</property>
+                        <property name="permission">none</property>
+                        <property name="shortcut">ALT+7</property>
+                        <property name="unchecked_bitmap"></property>
+                        <event name="OnMenuSelection">cameraUp</event>
+                        <event name="OnUpdateUI"></event>
+                    </object>
+                    <object class="wxMenuItem" expanded="1">
+                        <property name="bitmap"></property>
+                        <property name="checked">0</property>
+                        <property name="enabled">1</property>
+                        <property name="help"></property>
+                        <property name="id">wxID_ANY</property>
+                        <property name="kind">wxITEM_NORMAL</property>
+                        <property name="label">Down</property>
+                        <property name="name">down</property>
+                        <property name="permission">none</property>
+                        <property name="shortcut">ALT+1</property>
+                        <property name="unchecked_bitmap"></property>
+                        <event name="OnMenuSelection">cameraDown</event>
+                        <event name="OnUpdateUI"></event>
+                    </object>
+                </object>
+                <object class="wxMenu" expanded="1">
                     <property name="label">Help</property>
                     <property name="name">m_menu6</property>
                     <property name="permission">protected</property>
@@ -348,7 +443,7 @@
                     </object>
                 </object>
             </object>
-            <object class="wxToolBar" expanded="1">
+            <object class="wxToolBar" expanded="0">
                 <property name="bg"></property>
                 <property name="bitmapsize"></property>
                 <property name="context_help"></property>
