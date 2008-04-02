@@ -131,7 +131,6 @@ void TrivaController::selectObjectIdentifier (Ogre::MovableObject
 	}else if (objectToSelect->getQueryFlags() == STATE_MASK){
 		this->selectState (objectToSelect, hitAt);
 	}else if (objectToSelect->getQueryFlags() == LINK_MASK){
-		std::cout << "aqui" << std::endl;
 		this->selectLink (objectToSelect, hitAt);
 	}
 }
