@@ -188,7 +188,6 @@
 
 - (void)startChunk:(int)chunkNumber
 {
-//	NSLog (@"%s - chunkNumber:%d", __FUNCTION__, chunkNumber);
     [reader startChunk:chunkNumber];
     if ([reader hasMoreData] && (unsigned int)chunkNumber >= [chunkDates count]) {
         [chunkDates addObject:[simulator currentTime]];
@@ -198,7 +197,6 @@
 
 - (void)endOfChunkLast:(BOOL)last
 {
-//	NSLog (@"%s - last:%d", __FUNCTION__, last);
     [reader endOfChunkLast:last];
     if (timeLimitsChanged) {
         [encapsulator timeLimitsChanged];
@@ -208,15 +206,12 @@
 
 - (void)missingChunk:(int)chunkNumber
 {
-//	NSLog (@"%s - chunkNumber:%d", __FUNCTION__, chunkNumber);
     [self readChunk:chunkNumber];
 }
 
 - (void)readNextChunk:(id)sender
 {
-//	NSLog (@"%s - senderr:%@", __FUNCTION__, sender);
 	[self readChunk:[chunkDates count]];
-//	NSLog (@"%s - sender :%@ (AFTER)", __FUNCTION__, sender);
 }
 
 - (void)createComponentGraph
@@ -230,20 +225,12 @@
 
 - (void)chunkFault:(NSNotification *)notification
 {
-//	NSLog (@"%s", __FUNCTION__);
     int chunkNumber;
 
     chunkNumber = [[[notification userInfo]
                           objectForKey:@"ChunkNumber"] intValue];
     [self readChunk:chunkNumber];
 }
-
-/*
-- (void)setInputFilename:(NSString *)name
-{
-    [reader setInputFilename:name];
-}
-*/
 
 - (BOOL) setOutputFilter: (id) output
 {
