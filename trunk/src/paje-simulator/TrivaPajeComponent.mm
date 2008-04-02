@@ -177,56 +177,13 @@
 
 - (void)readChunk:(int)chunkNumber
 {
-//	NSLog (@"%s - chunkNumber:%d", __FUNCTION__, chunkNumber);
-
     int i;
-    //NSDate *start, *end, *e2;
-  //  double t, t2;
-//    NSAutoreleasePool *pool;
-
-//    pool = [NSAutoreleasePool new];
-//    start = [NSDate date];
-
-//    NS_DURING
         [self startChunk:chunkNumber];
         i = -(int)[simulator eventCount];
         if ([reader hasMoreData]) {
-      //      NSDebugMLLog(@"tim", @"will read chunk starting at %@",
-    //                                [simulator currentTime]);
-//            NSLog(@"will read chunk starting at %@",
-  //                                  [simulator currentTime]);
             [reader readNextChunk];
         }
-//	NSLog (@"fini: %d", [reader hasMoreData]);
         [self endOfChunkLast:![reader hasMoreData]];
-
-//    NS_HANDLER
-//		NSLog (@" exception = %@"
-//			"reason = %@"
-//			"userInfo = %@", [localException name],
-//					[localException reason],
-//					[localException userInfo]);
-	
-//        if (NSRunAlertPanel([localException name], @"%@\n%@",
-//                            @"Continue", @"Abort", nil,
-//                            [localException reason],
-//                            [localException userInfo]
-                            //[[[localException userInfo] objectEnumerator] 
-                            //allObjects]
-//                            ) != NSAlertDefaultReturn)
-//            [[NSApplication sharedApplication] terminate:self];
-//    NS_ENDHANDLER
-
-//    end = [[NSDate date] retain];
-//    t = [end timeIntervalSinceDate:start];
-//    i += [simulator eventCount];
-
-//    [pool release];
-
-//    e2 = [NSDate date];
-//    t2 = [e2 timeIntervalSinceDate:end];
-//    [end release];
-    //NSLog(@"%@: %d events in %f seconds = %f e/s; rel=%f", [reader inputFilename], i, t, i/t, t2);
 }
 
 - (void)startChunk:(int)chunkNumber
