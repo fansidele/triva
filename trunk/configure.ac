@@ -64,7 +64,6 @@ AC_SUBST(LIBS)
 AC_CONFIG_FILES(GNUmakefile 
 src/GNUmakefile 
 src/core/GNUmakefile
-src/general/GNUmakefile
 src/reader/GNUmakefile
 src/paje-simulator/GNUmakefile
 src/gui/GNUmakefile
