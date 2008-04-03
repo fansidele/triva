@@ -7,19 +7,23 @@
 	if (self != nil){
 		integrator = [[IntegratorLib alloc] init];
 		moreData = YES;	
-		currentChunk = 0;
-		chunkInfo = [[NSMutableArray alloc] init];
-		dataChunk = nil;
+		currentChunk = -1;
+		dataChunk = [[NSMutableData alloc] init];
 	}
 	return self;
 }
 
 - (void)startChunk:(int)chunkNumber
 {
-//	NSLog (@"%s chunkNumber=%d", __FUNCTION__,chunkNumber);
-	// go to chunkNumber, so next chunk read will be chunkNumber 
-	if (chunkNumber != currentChunk) {
+	if (currentChunk == -1){
 		currentChunk = chunkNumber;
+	}else{
+		int dif = chunkNumber - currentChunk;
+		if (dif != 1){
+			//problem, i don't know how to re-read
+		}else{
+			currentChunk = chunkNumber;
+		}
 	}
 
 	// notify others that chunkNumber is starting 
@@ -28,13 +32,6 @@
 
 - (void)endOfChunkLast:(BOOL)last
 {
-//	NSLog (@"%s - %d", __FUNCTION__, last);
-	currentChunk++;
-	// the currentChunk has ended 
-	// ...
-	//if (!last) {}
-	
-	// notify others about this
 	[super endOfChunkLast: last];
 }
 
@@ -94,11 +91,6 @@
 			break;
 		}
 	}
-	if (events == nil){
-		moreData = NO;
-		NSLog (@"%s: End Of Data", __FUNCTION__);
-		return data;
-	}
 
 	static int flag = 0;
 	if (!flag){
@@ -119,17 +111,14 @@
 
 - (BOOL)canEndChunk
 {
-	if (moreData == NO){
+	if (![self hasMoreData]){
 		return YES;
 	}
 	NSData *data = [self readDataFromDIMVisual];
 	NSData *data2 = [[NSData alloc] initWithData: data];
 	BOOL x = [super canEndChunkBefore:data2];
 	[data2 release];
-	if (x) {
-		if (dataChunk == nil){
-			dataChunk = [[NSMutableData alloc] init];
-		}
+	if (x == YES) {
 		[dataChunk appendData: data];
 		return YES;
 	}else{
@@ -140,35 +129,35 @@
 - (void) readNextChunk
 {
 	if (moreData == NO){
-		return;
-	}
-	int nextChunk = currentChunk +1;
-	if (nextChunk < [chunkInfo count]) {
-	}else{
-		GSDebugAllocationActive(YES);
-		NSMutableData *data = [self readDataFromDIMVisual];
-		if (dataChunk == nil){
+		if ([dataChunk length] != 0){
+			[self outputEntity: dataChunk];
+			[dataChunk release];
 			dataChunk = [[NSMutableData alloc] init];
 		}
+		return;
+	}
+
+	NSMutableData *data = [self readDataFromDIMVisual];
+	if ([dataChunk length] != 0){
 		[dataChunk appendData: data];
 		[self outputEntity: dataChunk];
 		[dataChunk release];
-		dataChunk = nil;
-		while (![self canEndChunk]) {
-			;
-		}
+		dataChunk = [[NSMutableData alloc] init];
+	}else{
+		[self outputEntity: data];
 	}
-
-
-	if (moreData == NO){
-		NSLog (@"%s End Of Data", __FUNCTION__);
+	while (![self canEndChunk]) {
+		;
 	}
-	return;
 }
 
 - (BOOL) hasMoreData
 {
-	return moreData;
+	if ([dataChunk length] != 0 || moreData){
+		return YES;
+	}else{
+		return NO;
+	}
 }
 
 /* other non-paje related stuff, but important for triva */
