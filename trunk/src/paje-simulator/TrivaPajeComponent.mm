@@ -206,7 +206,13 @@
 
 - (void)missingChunk:(int)chunkNumber
 {
-    [self readChunk:chunkNumber];
+	NSString *str;
+	str = [NSString stringWithFormat:
+		@"%@: %s received by TrivaPajeComponent.", self, __FUNCTION__];
+	[[NSException exceptionWithName: @"Triva" 
+				reason: str
+				userInfo: nil] raise];
+//    [self readChunk:chunkNumber];
 }
 
 - (void)readNextChunk:(id)sender
