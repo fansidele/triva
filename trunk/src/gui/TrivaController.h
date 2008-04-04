@@ -61,10 +61,11 @@ protected:
 /* Select category */
 private:
 	PajeEntity *selectedEntity;
+	Ogre::MovableObject *selectedObject;
 
 private:
-	void selectContainer (Ogre::MovableObject
-*objectToSelect, Ogre::Vector3 hitAt);
+	void unselectSelected ();
+	void selectContainer (Ogre::MovableObject *objectToSelect);
 	void selectState (Ogre::MovableObject
 *objectToSelect, Ogre::Vector3 hitAt);
 	void selectLink (Ogre::MovableObject
@@ -72,7 +73,6 @@ private:
 
 public:
 	void selectObjectIdentifier (Ogre::MovableObject *objectToSelect, Ogre::Vector3 hitAt);
-	void unselectObjectIdentifier (std::string name);
 	wxColour convertOgreColor (Ogre::ColourValue v);
 	Ogre::ColourValue convertWxColor (wxColor c);
 
