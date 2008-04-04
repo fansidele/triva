@@ -25,7 +25,7 @@ void TrivaController::selectContainer (Ogre::MovableObject *objectToSelect)
 						type: entityType];
 	NSLog (@"entityType=%@ container=%@", entityType, container);
 	objectToSelect->getParentSceneNode()->showBoundingBox(true);
-	
+	containersSelected.push_back (objectToSelect);
 }
 
 void TrivaController::selectState (Ogre::MovableObject
@@ -154,6 +154,14 @@ void TrivaController::unselectSelected ()
 		colorButton->SetLabel(wxT("Color"));
 		colorButton->Disable();
 		selectedEntity = nil;
+	}
+
+	if (!containersSelected.empty()){
+		std::vector<Ogre::MovableObject*>::iterator it;
+		for (it=containersSelected.begin(); it!=containersSelected.end(); it++){
+			(*it)->getParentSceneNode()->showBoundingBox(false);
+		}
+		containersSelected.clear();
 	}
 }
 

@@ -62,6 +62,7 @@ protected:
 private:
 	PajeEntity *selectedEntity;
 	Ogre::MovableObject *selectedObject;
+	std::vector<Ogre::MovableObject*> containersSelected;
 
 private:
 	void unselectSelected ();
