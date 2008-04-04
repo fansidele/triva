@@ -146,6 +146,7 @@ void DrawManager::selectObject (wxMouseEvent& evt, unsigned int mask)
         Ogre::RaySceneQueryResult &result = mRaySceneQuery->execute();
         Ogre::RaySceneQueryResult::iterator itr;
 
+	mCurrentObject = NULL;
         Ogre::Vector3 hitAt;
         for ( itr = result.begin(); itr != result.end(); itr++ ) {
                 if ( itr->movable ) {
