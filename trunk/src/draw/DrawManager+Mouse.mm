@@ -94,12 +94,6 @@ void DrawManager::selectObject (wxMouseEvent& evt, unsigned int mask)
 {
         Ogre::Ray mouseRay;
 
-        if (mCurrentObject){
-                trivaController->unselectObjectIdentifier(mCurrentObject->getName());
-		mCurrentObject->getParentSceneNode()->showBoundingBox(false);
-                mCurrentObject = NULL;
-        }
-
         Ogre::Viewport *mViewport;
         Ogre::Camera *mCamera;
         Ogre::SceneManager *mSceneMgr;
@@ -164,7 +158,7 @@ void DrawManager::selectObject (wxMouseEvent& evt, unsigned int mask)
 //                hitAt.normalise();
                 trivaController->selectObjectIdentifier(mCurrentObject, hitAt);
         }else{
-                trivaController->unselectObjectIdentifier("");
+                trivaController->selectObjectIdentifier(NULL, Ogre::Vector3::ZERO);
         }
         mRaySceneQuery->clearResults();
 }

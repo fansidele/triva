@@ -71,7 +71,7 @@ private:
 	Ogre::MovableObject *mCurrentObject;
 	bool mLMouseDown, mRMouseDown;
 protected:
-	void selectObject (wxMouseEvent& evt);
+	void selectObject (wxMouseEvent& evt, unsigned int mask);
 	void moveObject (wxMouseEvent& evt);
 	void moveMouseCursors (wxMouseEvent& evt);
 	void createMouseCursors ();
