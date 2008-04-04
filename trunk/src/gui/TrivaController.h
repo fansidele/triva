@@ -40,6 +40,7 @@ protected:
 	void pauseClicked( wxCommandEvent& event );
 	void cameraCheckbox ( wxCommandEvent& event );
 	void changeColor( wxCommandEvent& event );
+	void mergeSelected (wxCommandEvent& event);
 	
 public:
 	ProtoView *getView () { return view; };

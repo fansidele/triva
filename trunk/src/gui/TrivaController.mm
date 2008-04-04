@@ -185,3 +185,8 @@ void TrivaController::changeColor( wxCommandEvent& event )
 	m->registerColor (std::string([[[selectedEntity entityType] name]
 cString]), std::string([[selectedEntity name] cString]), og);
 }
+
+void TrivaController::mergeSelected (wxCommandEvent& event)
+{
+
+}
