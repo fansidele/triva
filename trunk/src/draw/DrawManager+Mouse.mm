@@ -90,7 +90,7 @@ void DrawManager::moveObject (wxMouseEvent& evt)
 	}
 }
 
-void DrawManager::selectObject (wxMouseEvent& evt)
+void DrawManager::selectObject (wxMouseEvent& evt, unsigned int mask)
 {
         Ogre::Ray mouseRay;
 
@@ -147,7 +147,7 @@ void DrawManager::selectObject (wxMouseEvent& evt)
         mRaySceneQuery->setRay(mouseRay);
         mRaySceneQuery->setSortByDistance(true,10);
         mRaySceneQuery->setQueryTypeMask(Ogre::SceneManager::ENTITY_TYPE_MASK);
-        mRaySceneQuery->setQueryMask (STATE_MASK|CONTAINER_MASK|LINK_MASK);
+        mRaySceneQuery->setQueryMask (mask);
 
         Ogre::RaySceneQueryResult &result = mRaySceneQuery->execute();
         Ogre::RaySceneQueryResult::iterator itr;
@@ -171,9 +171,12 @@ void DrawManager::selectObject (wxMouseEvent& evt)
 
 void DrawManager::onMouseEvent(wxMouseEvent& evt)
 {
-	if (evt.LeftDown()){
-		this->selectObject (evt);
+	if (evt.LeftDown() && evt.AltDown()){
+		this->selectObject (evt, CONTAINER_MASK);
+	}else if (evt.LeftDown()){
+		this->selectObject (evt, STATE_MASK|LINK_MASK);
 	}
+
 	if (evt.LeftIsDown() && evt.ControlDown()){
 		this->moveObject (evt);
 	}
