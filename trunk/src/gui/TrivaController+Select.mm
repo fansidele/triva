@@ -78,6 +78,7 @@ void TrivaController::selectState (Ogre::MovableObject
 					[fet duration]];
 		statusBar->SetStatusText (NSSTRINGtoWXSTRING(info));
 		objectToSelect->getParentSceneNode()->showBoundingBox(true);
+		selectedObject = objectToSelect;
 
 		DrawManager *m = [view drawManager];
 		Ogre::ColourValue og = m->getMaterialColor (std::string([[fet name] cString]));
@@ -131,6 +132,7 @@ void TrivaController::selectLink (Ogre::MovableObject
 					[fet duration]];
 		statusBar->SetStatusText (NSSTRINGtoWXSTRING(info));
 		objectToSelect->getParentSceneNode()->showBoundingBox(true);
+		selectedObject = objectToSelect;
 
 		DrawManager *m = [view drawManager];
 		Ogre::ColourValue og = m->getMaterialColor (std::string([[fet name] cString]));
@@ -172,7 +174,6 @@ void TrivaController::selectObjectIdentifier (Ogre::MovableObject
 		this->unselectSelected ();
 		this->selectLink (objectToSelect, hitAt);
 	}
-	selectedObject = objectToSelect;
 }
 
 wxColour TrivaController::convertOgreColor (Ogre::ColourValue og)
