@@ -75,10 +75,13 @@
 {
     NSArray *graph;
 
-	graph = [@"( ( PajeEventDecoder, \
+	graph = [@"( ( TrivaPajeReader, \
+		   PajeEventDecoder, \
                    PajeSimulator, \
                    StorageController, \
-                   AggregatingFilter \
+                   AggregatingFilter, \
+		   TrivaFusion, \
+		   ProtoView \
 		) )" propertyList];
 
 
@@ -254,8 +257,7 @@
 - (void)createComponentGraph
 {
 	[self addComponentSequences:[[self class] defaultComponentGraph]];
-//	reader = [self componentWithName:@"FileReader"];
-	reader = nil;
+	reader = [self componentWithName:@"TrivaPajeReader"];
 	simulator = [self componentWithName:@"PajeSimulator"];
 	encapsulator = [self componentWithName:@"StorageController"];
 }
@@ -267,23 +269,5 @@
     chunkNumber = [[[notification userInfo]
                           objectForKey:@"ChunkNumber"] intValue];
     [self readChunk:chunkNumber];
-}
-
-- (BOOL) setOutputFilter: (id) output
-{
-	id lastComponent;
-	lastComponent = [self componentWithName: @"AggregatingFilter"];
-	[self connectComponent: lastComponent toComponent: output];
-	return YES;
-
-}
-
-- (BOOL) setInputFilter: (id<PajeReader>) input
-{
-	id firstComponent;
-	firstComponent = [self componentWithName: @"PajeEventDecoder"];
-	[self connectComponent: input toComponent: firstComponent];
-	reader = (TrivaPajeReader*)input;
-	return YES;
 }
 @end

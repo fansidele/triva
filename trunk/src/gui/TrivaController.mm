@@ -41,14 +41,14 @@ TrivaController::TrivaController( wxWindow* parent, wxWindowID id, const wxStrin
 	ambientManager = new AmbientManager ();
 
 	trivaPaje = [[TrivaPajeComponent alloc] init];
-	view = (ProtoView *)[ProtoView componentWithController: (id)trivaPaje];
+	view = (ProtoView *) [trivaPaje componentWithName: @"ProtoView"];
+	reader = (TrivaPajeReader *) [trivaPaje componentWithName: @"TrivaPajeReader"];
+	fusion = (TrivaFusion *) [trivaPaje componentWithName: @"TrivaFusion"];
 	[view drawManager]->setTrivaController(this);
-	reader = [[TrivaPajeReader alloc] initWithController: (id)trivaPaje];
-	[trivaPaje setOutputFilter: view];
-	[trivaPaje setInputFilter: reader];
 	NSLog (@"trivaPajeComponent = %@", [trivaPaje description]);
 	NSLog (@"pajeReader = %@", reader);
 	NSLog (@"pajeView = %@", view);
+	NSLog (@"fusion = %@", fusion);
 
 	/* configuring 3d frame */
 	m3DFrame->addInputListener (cameraManager);

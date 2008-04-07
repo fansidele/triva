@@ -31,8 +31,4 @@
 - (void)startChunk:(int)chunkNumber;
 - (void)endOfChunkLast:(BOOL)last;
 - (int)readNextChunk:(id)sender;
-
-/* Triva special methods */
-- (BOOL) setOutputFilter: (id) output;
-- (BOOL) setInputFilter: (id<PajeReader>) input;
 @end
