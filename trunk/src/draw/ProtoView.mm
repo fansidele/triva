@@ -1,15 +1,15 @@
 #include "ProtoView.h"
 
 @implementation ProtoView
-- (void) initialize
+- (id)initWithController:(PajeTraceController *)c
 {
-//	statesLabelsAppearance = true;
-//	containersLabelsAppearance = true;
-
-	mRoot = Ogre::Root::getSingletonPtr ();
-	NSLog (@"initializating drawManager");
-	drawManager = new DrawManager (self);
-//        mRoot->addFrameListener (drawManager);
+        self = [super initWithController: c];
+        if (self != nil){
+		mRoot = Ogre::Root::getSingletonPtr ();
+		NSLog (@"initializating drawManager");
+		drawManager = new DrawManager (self);
+        }
+        return self;
 }
 
 //- (void) setColorWindow: (TrivaColorWindowEvents *) window
