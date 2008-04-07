@@ -26,6 +26,12 @@ void TrivaController::selectContainer (Ogre::MovableObject *objectToSelect)
 	NSLog (@"entityType=%@ container=%@", entityType, container);
 	objectToSelect->getParentSceneNode()->showBoundingBox(true);
 	containersSelected.push_back (objectToSelect);
+
+	NSMutableSet *containers;
+	containers = [[view selectedContainers] mutableCopy];
+	[containers addObject: container];
+	[view setSelectedContainers:containers];
+	[containers release];
 }
 
 void TrivaController::selectState (Ogre::MovableObject
@@ -162,6 +168,10 @@ void TrivaController::unselectSelected ()
 			(*it)->getParentSceneNode()->showBoundingBox(false);
 		}
 		containersSelected.clear();
+
+		NSMutableSet *containers = [[NSMutableSet alloc] init];
+		[view setSelectedContainers: containers];
+		[containers release];
 	}
 }
 
