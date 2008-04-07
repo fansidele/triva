@@ -42,7 +42,6 @@ TrivaController::TrivaController( wxWindow* parent, wxWindowID id, const wxStrin
 
 	trivaPaje = [[TrivaPajeComponent alloc] init];
 	view = (ProtoView *)[ProtoView componentWithController: (id)trivaPaje];
-	[view initialize];
 	[view drawManager]->setTrivaController(this);
 	reader = [[TrivaPajeReader alloc] initWithController: (id)trivaPaje];
 	[trivaPaje setOutputFilter: view];
