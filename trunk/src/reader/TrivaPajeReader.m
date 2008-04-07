@@ -9,30 +9,9 @@
 		moreData = YES;	
 		currentChunk = -1;
 		dataChunk = [[NSMutableData alloc] init];
+		counter = 0;
 	}
 	return self;
-}
-
-- (void)startChunk:(int)chunkNumber
-{
-	if (currentChunk == -1){
-		currentChunk = chunkNumber;
-	}else{
-		int dif = chunkNumber - currentChunk;
-		if (dif != 1){
-			//problem, i don't know how to re-read
-		}else{
-			currentChunk = chunkNumber;
-		}
-	}
-
-	// notify others that chunkNumber is starting 
-	[super startChunk: chunkNumber];
-}
-
-- (void)endOfChunkLast:(BOOL)last
-{
-	[super endOfChunkLast: last];
 }
 
 
@@ -106,12 +85,13 @@
 		}
 		[data appendData: [[ev printWithProvider: headerCenter] dataUsingEncoding: NSASCIIStringEncoding]];
 	}
+	counter += [data length];
 	return data;
 }
 
 - (BOOL)canEndChunk
 {
-	if (![self hasMoreData]){
+	if (moreData == NO){
 		return YES;
 	}
 	NSData *data = [self readDataFromDIMVisual];
@@ -151,6 +131,31 @@
 	}
 }
 
+- (void)startChunk:(int)chunkNumber
+{
+/*
+	if (currentChunk == -1){
+		currentChunk = chunkNumber;
+	}else{
+		int dif = chunkNumber - currentChunk;
+		if (dif != 1){
+			//problem, i don't know how to re-read
+		}else{
+			currentChunk = chunkNumber;
+		}
+	}
+*/
+
+	// notify others that chunkNumber is starting 
+	[super startChunk: chunkNumber];
+}
+
+- (void)endOfChunkLast:(BOOL)last
+{
+	counter = 0;
+	[super endOfChunkLast: last];
+}
+
 - (BOOL) hasMoreData
 {
 	if ([dataChunk length] != 0 || moreData){
@@ -158,6 +163,11 @@
 	}else{
 		return NO;
 	}
+}
+
+- (unsigned) getCounter
+{
+	return counter;
 }
 
 /* other non-paje related stuff, but important for triva */

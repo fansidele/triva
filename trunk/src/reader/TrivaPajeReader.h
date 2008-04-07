@@ -14,11 +14,13 @@
 
 	NSMutableData *dataChunk;
 
+	unsigned counter;
 	unsigned currentChunk;
 	NSMutableArray *chunkInfo;
 }
 - (id)initWithController:(PajeTraceController *)c;
 
+- (unsigned) getCounter;
 - (void)setInputFilename:(NSString *)filename;
 - (NSString *)inputFilename;
 

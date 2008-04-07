@@ -145,8 +145,9 @@ void TrivaController::oneBundleConfigured()
 void TrivaController::checkRead(wxTimerEvent& event)
 {
 NS_DURING
-	if ([reader hasMoreData]){
-		[trivaPaje readNextChunk: nil];
+	static int flag = 1;
+	if (flag){
+		flag = [trivaPaje readNextChunk: nil];
 	}else{
 		static int flag = 0;
 		if (!flag){

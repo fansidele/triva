@@ -1,10 +1,11 @@
 #include <Foundation/Foundation.h>
 #include <General/PajeFilter.h>
 #include <General/PSortedArray.h>
+#include "reader/TrivaPajeReader.h"
 
 @interface TrivaPajeComponent : NSObject
 {
-	id <PajeReader> reader;
+	TrivaPajeReader *reader;
 	id simulator;
 	id encapsulator;
 
@@ -29,7 +30,7 @@
 - (void)createComponentGraph;
 - (void)startChunk:(int)chunkNumber;
 - (void)endOfChunkLast:(BOOL)last;
-- (void)readNextChunk:(id)sender;
+- (int)readNextChunk:(id)sender;
 
 /* Triva special methods */
 - (BOOL) setOutputFilter: (id) output;

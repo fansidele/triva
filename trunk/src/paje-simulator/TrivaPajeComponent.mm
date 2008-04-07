@@ -177,13 +177,7 @@
 
 - (void)readChunk:(int)chunkNumber
 {
-    int i;
-        [self startChunk:chunkNumber];
-        i = -(int)[simulator eventCount];
-        if ([reader hasMoreData]) {
-            [reader readNextChunk];
-        }
-        [self endOfChunkLast:![reader hasMoreData]];
+	[reader readNextChunk];
 }
 
 - (void)startChunk:(int)chunkNumber
@@ -215,9 +209,46 @@
 //    [self readChunk:chunkNumber];
 }
 
-- (void)readNextChunk:(id)sender
+#define CHUNK_SIZE 1500000
+//#define CADA
+
+- (int)readNextChunk:(id)sender
 {
-	[self readChunk:[chunkDates count]];
+#ifdef CADA
+//	static int s = 1;
+//	if (s){
+		[self startChunk: [chunkDates count]];
+//		s = 0;
+//	}
+	[self readChunk: -1 /* method ignores this number */];
+//	if (![reader hasMoreData]){
+		[self endOfChunkLast: ![reader hasMoreData]];
+//	}
+#else
+	static BOOL chunkStarted = NO;
+	if (!chunkStarted){
+		[self startChunk: [chunkDates count]];
+		chunkStarted = YES;
+	}
+
+	[self readChunk: -1 /* method ignores this number */];
+
+	if ([reader getCounter] > CHUNK_SIZE){
+		[self endOfChunkLast:![reader hasMoreData]];
+		chunkStarted = NO;
+	}
+
+	if (![reader hasMoreData] && chunkStarted){
+		[self endOfChunkLast: ![reader hasMoreData]];
+		chunkStarted = NO;
+	}
+#endif
+
+	if ([reader hasMoreData]){
+		return 1;
+	}else{
+		return 0;
+	}
 }
 
 - (void)createComponentGraph
@@ -252,7 +283,7 @@
 	id firstComponent;
 	firstComponent = [self componentWithName: @"PajeEventDecoder"];
 	[self connectComponent: input toComponent: firstComponent];
-	reader = input;
+	reader = (TrivaPajeReader*)input;
 	return YES;
 }
 @end
