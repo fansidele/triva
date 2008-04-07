@@ -1,0 +1,19 @@
+#GNUSTEP_INSTALLATION_DOMAIN = USER
+#
+include $(GNUSTEP_MAKEFILES)/common.make
+
+CC=$(CXX)
+
+SUBPROJECT_NAME=fusion
+fusion_OBJC_FILES=TrivaFusion.m
+fusion_OBJCC_FILES=
+
+fusion_INCLUDE_DIRS += @CPPFLAGS@
+fusion_LIB_DIRS += @LIBS@
+fusion_LDFLAGS += @LDFLAGS@
+
+include $(GNUSTEP_MAKEFILES)/subproject.make
+
+after-distclean::
+after-all::
+after-clean:: 

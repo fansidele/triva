@@ -65,6 +65,7 @@ AC_CONFIG_FILES(GNUmakefile
 src/GNUmakefile 
 src/core/GNUmakefile
 src/reader/GNUmakefile
+src/fusion/GNUmakefile
 src/paje-simulator/GNUmakefile
 src/gui/GNUmakefile
 src/gui/camera/GNUmakefile
