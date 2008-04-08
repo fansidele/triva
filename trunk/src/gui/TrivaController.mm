@@ -188,5 +188,5 @@ cString]), std::string([[selectedEntity name] cString]), og);
 
 void TrivaController::mergeSelected (wxCommandEvent& event)
 {
-
+	[fusion mergeSelectedContainers];
 }

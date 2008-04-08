@@ -32,6 +32,10 @@ void TrivaController::selectContainer (Ogre::MovableObject *objectToSelect)
 	[containers addObject: container];
 	[view setSelectedContainers:containers];
 	[containers release];
+
+	if (containersSelected.size() >= 2){
+		mergeButton->Enable(true);
+	}
 }
 
 void TrivaController::selectState (Ogre::MovableObject
@@ -172,6 +176,8 @@ void TrivaController::unselectSelected ()
 		NSMutableSet *containers = [[NSMutableSet alloc] init];
 		[view setSelectedContainers: containers];
 		[containers release];
+
+		mergeButton->Enable(false);
 	}
 }
 
