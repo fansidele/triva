@@ -5,7 +5,7 @@ include $(GNUSTEP_MAKEFILES)/common.make
 CC=$(CXX)
 
 SUBPROJECT_NAME=fusion
-fusion_OBJC_FILES=TrivaFusion.m
+fusion_OBJC_FILES=TrivaFusion.m FusionContainer.m FusionState.m
 fusion_OBJCC_FILES=
 
 fusion_INCLUDE_DIRS += @CPPFLAGS@
