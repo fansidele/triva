@@ -63,6 +63,8 @@ TrivaController::TrivaController( wxWindow* parent, wxWindowID id, const wxStrin
 	/* set application instance state to Initialized */
 	this->setState(Initialized);
 
+	selectedObject = NULL;
+	selectedEntity = nil;
 }
 
 TrivaController::~TrivaController()
