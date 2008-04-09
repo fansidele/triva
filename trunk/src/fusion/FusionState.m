@@ -31,4 +31,9 @@
 {
 	endTime = time;
 }
+
+- (NSDate *) time
+{
+	return endTime;
+}
 @end
