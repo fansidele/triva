@@ -188,5 +188,14 @@ cString]), std::string([[selectedEntity name] cString]), og);
 
 void TrivaController::mergeSelected (wxCommandEvent& event)
 {
+NS_DURING
 	[fusion mergeSelectedContainers];
+NS_HANDLER
+        NSLog (@"Exception = %@", localException);
+        wxString m = NSSTRINGtoWXSTRING ([localException reason]);
+        wxString n = NSSTRINGtoWXSTRING ([localException name]);
+        wxMessageDialog *dial = new wxMessageDialog(NULL, m, n, wxOK |
+wxICON_ERROR);
+        dial->ShowModal();
+NS_ENDHANDLER
 }
