@@ -100,6 +100,7 @@
 				ofContainer: mergedContainer
 				withContainer: container];
 		NSLog (@"mergedContainer = %@", [mergedContainer class]);
+		break;
 	}
 	[super hierarchyChanged];
 }
@@ -126,11 +127,16 @@
 	chunk = [[EntityChunk alloc] initWithEntityType: type
 			container: merged];
 	while ((statev = [containerEnumerator nextObject])){
+		FusionState *s = [[FusionState alloc] initWithType: type
+					name: [statev name]
+					container: mergedContainer];
+		[s setStartTime: [statev startTime]];
+		[s setEndTime: [statev endTime]];
 		if ([chunk startTime] == nil){
-			[chunk setStartTime: [statev startTime]];
+			[chunk setStartTime: [s startTime]];
 		}
-		[chunk setEndTime: [statev endTime]];
-		[chunk addEntity: statev];
+		[chunk setEndTime: [s endTime]];
+		[chunk addEntity: s];
 	}
 	[chunk freeze];
 	[merged addChunk: chunk];
