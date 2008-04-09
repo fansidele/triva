@@ -2,6 +2,7 @@
 #define __FUSIONSTATE_H
 #include <Foundation/Foundation.h>
 #include <General/PajeContainer.h>
+#include <General/EntityChunk.h>
 
 @interface FusionState : PajeEntity
 {

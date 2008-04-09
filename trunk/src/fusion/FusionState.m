@@ -1,6 +1,17 @@
 #include "FusionState.h"
 
 @implementation FusionState
+- (id)initWithType:(PajeEntityType *)type
+              name:(NSString *)n
+         container:(PajeContainer *)c
+{
+	self = [super initWithType: type name: n container: c];
+	if (self != nil){
+		//
+	}
+	return self;
+}
+
 - (NSDate *) startTime
 {
 	return startTime;
