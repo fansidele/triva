@@ -121,11 +121,6 @@
 			toTime: [self endTime]
 			minDuration: 0];
 
-	static int flag = 0;
-	if (flag){
-		return merged;
-	}
-
 	id statev;
 	FusionChunk *chunk;
 	chunk = [[EntityChunk alloc] initWithEntityType: type
@@ -139,7 +134,6 @@
 	}
 	[chunk freeze];
 	[merged addChunk: chunk];
-	flag = 1;
 	return merged;
 }
 
@@ -187,7 +181,7 @@
                                   inContainer:(PajeContainer *)container
 {
 //	NSLog (@"%s:%d", __FUNCTION__, __LINE__);
-	if (container == [mergedContainer container]){
+	if (entityType == [mergedContainer entityType]){
 //		NSLog (@"Colocar o container mergeado na resposta");
 		NSEnumerator *en;
 		en = [super enumeratorOfContainersTyped: entityType 
@@ -201,5 +195,4 @@
 			inContainer: container];
 	}
 }
-
 @end
