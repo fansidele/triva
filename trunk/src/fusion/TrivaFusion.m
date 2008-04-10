@@ -13,7 +13,6 @@
 
 - (void)setSelectedContainers:(NSSet *)cont
 {
-	NSLog (@"%@ containers=%@", self, containers);
 	if (containers != nil){
 		[containers release];
 	}
@@ -24,8 +23,6 @@
 
 - (void) mergeSelectedContainers
 {
-	NSLog (@"%@ %s containers=%@", self, __FUNCTION__, containers);
-
 	if (containers == nil){
 		return;
 	}
@@ -67,7 +64,6 @@
 		[name appendString: [cont name]];
 	}
 	[name appendString: @"-MERGED"];
-	NSLog (@"startTime = %@, endTime = %@", startTime, endTime);
 	en1 = [containers objectEnumerator];
 	cont = [en1 nextObject];
 
@@ -86,8 +82,6 @@
 			break;
 		}
 	}
-	NSLog (@"state to be merged is: %@", stateType);
-	NSLog (@"name = %@", name);
 	mergedContainer = [FusionContainer containerWithType: containerType
 				name: name
 				container: container];
@@ -95,11 +89,9 @@
 	en1 = [containers objectEnumerator];
 	PajeContainer *containerAux;
 	while ((containerAux = [en1 nextObject])){
-		NSLog (@"%@", [containerAux class]);
 		mergedContainer = [self mergeType: stateType
 				ofContainer: mergedContainer
-				withContainer: container];
-		NSLog (@"mergedContainer = %@", [mergedContainer class]);
+				withContainer: containerAux];
 		break;
 	}
 	[super hierarchyChanged];
@@ -132,12 +124,14 @@
 					container: mergedContainer];
 		[s setStartTime: [statev startTime]];
 		[s setEndTime: [statev endTime]];
-		if ([chunk startTime] == nil){
-			[chunk setStartTime: [s startTime]];
+		if ([chunk endTime] == nil){
+			[chunk setEndTime: [s endTime]];
 		}
-		[chunk setEndTime: [s endTime]];
+		[chunk setStartTime: [s startTime]];
 		[chunk addEntity: s];
 	}
+	[merged setStartTime: [chunk startTime]];
+	[merged setEndTime: [chunk endTime]];
 	[chunk freeze];
 	[merged addChunk: chunk];
 	return merged;
@@ -149,9 +143,7 @@
                                      toTime:(NSDate *)end
                                 minDuration:(double)minDuration
 {
-//	NSLog (@"%s:%d", __FUNCTION__, __LINE__);
 	if (container == mergedContainer){
-		NSLog (@"retornar objetos do container mergeado");
 		return [mergedContainer enumeratorOfEntitiesTyped: entityType
 				fromTime: start toTime: end];
 	}else{
@@ -169,11 +161,8 @@
                                      toTime:(NSDate *)end
                                 minDuration:(double)minDuration
 {
-//	NSLog (@"%s:%d", __FUNCTION__, __LINE__);
 	if (container == mergedContainer){
-		NSLog (@"retornar objetos do container mergeado");
-		return [mergedContainer enumeratorOfCompleteEntitiesTyped: entityType
-				fromTime: start toTime: end];
+		return [mergedContainer enumeratorOfCompleteEntitiesTyped: entityType fromTime: start toTime: end];
 	}else{
 		return [super enumeratorOfCompleteEntitiesTyped: entityType
 			inContainer: container
@@ -186,9 +175,7 @@
 - (NSEnumerator *)enumeratorOfContainersTyped:(PajeEntityType *)entityType
                                   inContainer:(PajeContainer *)container
 {
-//	NSLog (@"%s:%d", __FUNCTION__, __LINE__);
 	if (entityType == [mergedContainer entityType]){
-//		NSLog (@"Colocar o container mergeado na resposta");
 		NSEnumerator *en;
 		en = [super enumeratorOfContainersTyped: entityType 
 			inContainer: container];
