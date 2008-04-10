@@ -40,7 +40,7 @@ void DrawManager::drawStates (PajeEntityType *et, id container)
 		double end;
 		int imbric;
 
-		start = [[[ent time] description] doubleValue];
+		start = [[[ent startTime] description] doubleValue];
 		end = [[[ent endTime] description] doubleValue];
 		imbric = [ent imbricationLevel];
 
