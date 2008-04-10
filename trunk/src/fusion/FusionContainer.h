@@ -8,6 +8,8 @@
 {
 //	NSMutableDictionary *userEntities; //key = entityType
 	ChunkArray *mergedState;
+	NSDate *startTime;
+	NSDate *endTime;
 }
 @end
 

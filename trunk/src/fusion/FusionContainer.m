@@ -19,6 +19,8 @@
                      container:c];
     if (self) {
 	mergedState = [[ChunkArray alloc] init];
+	startTime = nil;
+	endTime = nil;
     }
     return self;
 }
@@ -33,8 +35,6 @@
                                    fromTime:(NSDate *)start
                                      toTime:(NSDate *)end
 {
-	NSLog (@"%s mergedState = %@", __FUNCTION__, mergedState);
-	NSLog (@"start=%@ end=%@", start, end);
 	return [mergedState enumeratorOfEntitiesFromTime: start
 			toTime: end];
 }
@@ -43,14 +43,40 @@
                                            fromTime:(NSDate *)start
                                              toTime:(NSDate *)end
 {
-	NSLog (@"%s mergedState = %@", __FUNCTION__, mergedState);
 	return [mergedState enumeratorOfCompleteEntitiesFromTime: start
 			untilTime: end];
 }
 
 - (void) addChunk: (EntityChunk *) chunk
 {
-	NSLog (@"adding chunk %@", chunk);
 	[mergedState addChunk: chunk];
+}
+
+- (NSDate *) startTime
+{
+	return startTime;
+}
+
+- (NSDate *) endTime
+{
+	return endTime;
+}
+
+- (void) setStartTime: (NSDate *) time
+{
+	if (startTime != nil){
+		[startTime release];
+	}
+	startTime = time;
+	[startTime retain];
+}
+
+- (void) setEndTime: (NSDate *) time
+{
+	if (endTime != nil){
+		[endTime release];
+	}
+	endTime = time;
+	[endTime retain];
 }
 @end
