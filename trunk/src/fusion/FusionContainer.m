@@ -47,8 +47,12 @@
 			untilTime: end];
 }
 
-- (void) addChunk: (EntityChunk *) chunk
+- (void) setChunk: (EntityChunk *) chunk
 {
+	if (mergedState != nil){
+		[mergedState release];
+	}
+	mergedState = [[ChunkArray alloc] init];
 	[mergedState addChunk: chunk];
 }
 

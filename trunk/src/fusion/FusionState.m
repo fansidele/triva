@@ -36,4 +36,13 @@
 {
 	return endTime;
 }
+
+- (void) setName: (NSString *) n
+{
+	if (name != nil){
+		[name release];
+	}
+	name = n;
+	[name retain];
+}
 @end

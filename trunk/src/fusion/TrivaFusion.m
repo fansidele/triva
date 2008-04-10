@@ -92,9 +92,45 @@
 		mergedContainer = [self mergeType: stateType
 				ofContainer: mergedContainer
 				withContainer: containerAux];
-		break;
 	}
 	[super hierarchyChanged];
+}
+
+NSDate *menor (id x, id y, NSMutableSet *ps)
+{
+	NSMutableSet *aux = [NSMutableSet set];
+	if (x != nil){
+		[aux addObject: [x startTime]];
+		[aux addObject: [x endTime]];
+	}else if (y != nil){
+		[aux addObject: [y startTime]];
+		[aux addObject: [y endTime]];
+	}
+	NSEnumerator *en = [aux objectEnumerator];
+	NSDate *ret = [NSDate distantPast];
+	id k;
+	while ((k = [en nextObject])){
+		if (![ps containsObject: k]){
+			if ([ret compare: k] == NSOrderedAscending){
+				ret = k;
+			}
+		}
+	}
+	if ([ret compare: [NSDate distantPast]] == NSOrderedSame){
+		NSEnumerator *a = [ps objectEnumerator];
+		id t;
+		while ((t = [a nextObject])){
+			NSLog (@"t=%@", t);
+		}
+		NSString *str;
+		str = [NSString stringWithFormat:
+			@"Error when comparing dates"];
+		[[NSException exceptionWithName:@"TrivaFusion"
+			reason: str userInfo: nil] raise];
+	}
+
+	[ps addObject: ret];
+	return ret;
 }
 
 - (FusionContainer *) mergeType: (PajeEntityType *) type
@@ -114,26 +150,75 @@
 			toTime: [self endTime]
 			minDuration: 0];
 
-	id statev;
-	FusionChunk *chunk;
-	chunk = [[EntityChunk alloc] initWithEntityType: type
-			container: merged];
-	while ((statev = [containerEnumerator nextObject])){
-		FusionState *s = [[FusionState alloc] initWithType: type
-					name: [statev name]
-					container: mergedContainer];
-		[s setStartTime: [statev startTime]];
-		[s setEndTime: [statev endTime]];
-		if ([chunk endTime] == nil){
-			[chunk setEndTime: [s endTime]];
+	id x;
+	x = [mergedEnumerator nextObject];
+	if (x == nil){
+		id statev;
+		FusionChunk *chunk;
+		chunk = [[EntityChunk alloc] initWithEntityType: type
+				container: merged];
+		while ((statev = [containerEnumerator nextObject])){
+			FusionState *s = [[FusionState alloc] initWithType: type
+						name: [statev name]
+						container: mergedContainer];
+			[s setStartTime: [statev startTime]];
+			[s setEndTime: [statev endTime]];
+			if ([chunk endTime] == nil){
+				[chunk setEndTime: [s endTime]];
+			}
+			[chunk setStartTime: [s startTime]];
+			[chunk addEntity: s];
 		}
-		[chunk setStartTime: [s startTime]];
-		[chunk addEntity: s];
+		[merged setStartTime: [chunk startTime]];
+		[merged setEndTime: [chunk endTime]];
+		[chunk freeze];
+		[merged setChunk: chunk];
+	}else{
+		id y = [containerEnumerator nextObject];
+		NSDate *p1, *p2;
+		NSMutableSet *ps = [NSMutableSet set];
+
+		FusionChunk *chunk;
+		chunk = [[EntityChunk alloc] initWithEntityType: type
+				container: merged];
+		p1 = menor (x, y, ps);
+		do {
+			p2 = menor (x, y, ps);
+//			NSLog (@"(%@,%@) between (%@-%@)", 
+//				[x name], [y name],
+//				p2, p1);
+			FusionState *s = [[FusionState alloc] initWithType: type
+						name: @""
+						container: mergedContainer];
+			[s setStartTime: p2];
+			[s setEndTime: p1];
+			if ([chunk endTime] == nil){
+				[chunk setEndTime: p1];
+			}
+			[chunk setStartTime: p2];
+			if (x == nil){
+				[s setName: [y name]];
+			}else if (y == nil){
+				[s setName: [x name]];
+			}else{
+				[s setName: [NSString stringWithFormat: @"%@-%@", [x name], [y name]]];
+			}
+			[chunk addEntity: s];
+			p1 = p2;
+			if (x != nil && 
+			     [p1 compare: [x startTime]] == NSOrderedSame){
+				x = [mergedEnumerator nextObject];
+			}else if (y != nil && 
+			     [p1 compare: [y startTime]] == NSOrderedSame){
+				y = [containerEnumerator nextObject];
+			}
+		}while (x != nil || y != nil);
+		[merged setStartTime: [chunk startTime]];
+		[merged setEndTime: [chunk endTime]];
+		[chunk freeze];
+		[merged setChunk: chunk];
+		NSLog (@"%@", chunk);
 	}
-	[merged setStartTime: [chunk startTime]];
-	[merged setEndTime: [chunk endTime]];
-	[chunk freeze];
-	[merged addChunk: chunk];
 	return merged;
 }
 
