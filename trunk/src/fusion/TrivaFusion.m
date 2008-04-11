@@ -96,9 +96,10 @@
 	[super hierarchyChanged];
 }
 
-NSDate *menor (id x, id y, NSCountedSet *ps)
+NSDate *maior (id x, id y, NSMutableSet *ps)
 {
-	NSCountedSet *aux = [NSCountedSet set];
+	NSDate *ret = [NSDate distantPast];
+	NSMutableSet *aux = [NSMutableSet set];
 	if (x != nil){
 		[aux addObject: [x startTime]];
 		[aux addObject: [x endTime]];
@@ -108,39 +109,14 @@ NSDate *menor (id x, id y, NSCountedSet *ps)
 		[aux addObject: [y endTime]];
 	}
 	NSEnumerator *en = [aux objectEnumerator];
-	NSDate *ret = [NSDate distantPast];
 	id k;
 	while ((k = [en nextObject])){
 		if (![ps containsObject: k]){
 			if ([ret compare: k] == NSOrderedAscending){
 				ret = k;
 			}
-		}else{
-			int c = [aux countForObject: k];
-			if (c > 1){
-				if ([ret compare: k] == NSOrderedAscending){
-					ret = k;
-				}
-			}
 		}
 	}
-	if ([ret compare: [NSDate distantPast]] == NSOrderedSame){
-		NSEnumerator *a = [ps objectEnumerator];
-		id t;
-		while ((t = [a nextObject])){
-			NSLog (@"t=%@", t);
-		}
-		a = [aux objectEnumerator];
-		while ((t = [a nextObject])){
-			NSLog (@"a=%@", t);
-		}
-		NSString *str;
-		str = [NSString stringWithFormat:
-			@"Error when comparing dates"];
-		[[NSException exceptionWithName:@"TrivaFusion"
-			reason: str userInfo: nil] raise];
-	}
-
 	[ps addObject: ret];
 	return ret;
 }
@@ -169,7 +145,8 @@ NSDate *menor (id x, id y, NSCountedSet *ps)
 		FusionChunk *chunk;
 		chunk = [[EntityChunk alloc] initWithEntityType: type
 				container: merged];
-		while ((statev = [containerEnumerator nextObject])){
+		NSEnumerator *en = [[containerEnumerator allObjects] reverseObjectEnumerator];
+		while ((statev = [en nextObject])){
 			FusionState *s = [[FusionState alloc] initWithType: type
 						name: [statev name]
 						container: mergedContainer];
@@ -188,14 +165,14 @@ NSDate *menor (id x, id y, NSCountedSet *ps)
 	}else{
 		id y = [containerEnumerator nextObject];
 		NSDate *p1, *p2;
-		NSCountedSet *ps = [NSCountedSet set];
+		NSMutableSet *ps = [NSMutableSet set];
 
 		FusionChunk *chunk;
 		chunk = [[EntityChunk alloc] initWithEntityType: type
 				container: merged];
-		p1 = menor (x, y, ps);
+		p1 = maior (x, y, ps);
 		do {
-			p2 = menor (x, y, ps);
+			p2 = maior (x, y, ps);
 //			NSLog (@"(%@,%@) between (%@-%@)", 
 //				[x name], [y name],
 //				p2, p1);
@@ -218,10 +195,14 @@ NSDate *menor (id x, id y, NSCountedSet *ps)
 			[chunk addEntity: s];
 			p1 = p2;
 			if (x != nil && 
-			     [p1 compare: [x startTime]] == NSOrderedSame){
+			   ([p1 compare: [x startTime]] == NSOrderedAscending ||
+			    [p1 compare: [x startTime]] == NSOrderedSame)){
 				x = [mergedEnumerator nextObject];
-			}else if (y != nil && 
-			     [p1 compare: [y startTime]] == NSOrderedSame){
+			}
+
+			if (y != nil && 
+			   ([p1 compare: [y startTime]] == NSOrderedAscending ||
+			    [p1 compare: [y startTime]] == NSOrderedSame)){
 				y = [containerEnumerator nextObject];
 			}
 		}while (x != nil || y != nil);
