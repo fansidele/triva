@@ -96,13 +96,14 @@
 	[super hierarchyChanged];
 }
 
-NSDate *menor (id x, id y, NSMutableSet *ps)
+NSDate *menor (id x, id y, NSCountedSet *ps)
 {
-	NSMutableSet *aux = [NSMutableSet set];
+	NSCountedSet *aux = [NSCountedSet set];
 	if (x != nil){
 		[aux addObject: [x startTime]];
 		[aux addObject: [x endTime]];
-	}else if (y != nil){
+	}
+	if (y != nil){
 		[aux addObject: [y startTime]];
 		[aux addObject: [y endTime]];
 	}
@@ -114,6 +115,13 @@ NSDate *menor (id x, id y, NSMutableSet *ps)
 			if ([ret compare: k] == NSOrderedAscending){
 				ret = k;
 			}
+		}else{
+			int c = [aux countForObject: k];
+			if (c > 1){
+				if ([ret compare: k] == NSOrderedAscending){
+					ret = k;
+				}
+			}
 		}
 	}
 	if ([ret compare: [NSDate distantPast]] == NSOrderedSame){
@@ -121,6 +129,10 @@ NSDate *menor (id x, id y, NSMutableSet *ps)
 		id t;
 		while ((t = [a nextObject])){
 			NSLog (@"t=%@", t);
+		}
+		a = [aux objectEnumerator];
+		while ((t = [a nextObject])){
+			NSLog (@"a=%@", t);
 		}
 		NSString *str;
 		str = [NSString stringWithFormat:
@@ -176,7 +188,7 @@ NSDate *menor (id x, id y, NSMutableSet *ps)
 	}else{
 		id y = [containerEnumerator nextObject];
 		NSDate *p1, *p2;
-		NSMutableSet *ps = [NSMutableSet set];
+		NSCountedSet *ps = [NSCountedSet set];
 
 		FusionChunk *chunk;
 		chunk = [[EntityChunk alloc] initWithEntityType: type
@@ -217,7 +229,6 @@ NSDate *menor (id x, id y, NSMutableSet *ps)
 		[merged setEndTime: [chunk endTime]];
 		[chunk freeze];
 		[merged setChunk: chunk];
-		NSLog (@"%@", chunk);
 	}
 	return merged;
 }
