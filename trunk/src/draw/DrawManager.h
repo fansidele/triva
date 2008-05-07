@@ -70,6 +70,7 @@ private:
 	Ogre::RaySceneQuery *mRaySceneQuery;
 	Ogre::MovableObject *mCurrentObject;
 	bool mLMouseDown, mRMouseDown;
+	std::vector<Ogre::MovableObject*> containersSelected;
 protected:
 	void selectObject (wxMouseEvent& evt, unsigned int mask);
 	void moveObject (wxMouseEvent& evt);

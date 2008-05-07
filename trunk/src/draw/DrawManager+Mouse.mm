@@ -158,6 +158,9 @@ void DrawManager::selectObject (wxMouseEvent& evt, unsigned int mask)
         if (mCurrentObject){
 //                hitAt.normalise();
                 trivaController->selectObjectIdentifier(mCurrentObject, hitAt);
+		if (mCurrentObject->getQueryFlags () == CONTAINER_MASK){
+			containersSelected.push_back(mCurrentObject);
+		}
         }else{
                 trivaController->selectObjectIdentifier(NULL, Ogre::Vector3::ZERO);
         }
