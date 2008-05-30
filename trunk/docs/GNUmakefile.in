@@ -29,6 +29,6 @@ after-distclean::
 	rm -f config.log config.cache config.status
 
 after-all::
-	txt2tags index.t2t download.t2t forge.t2t
+	txt2tags index.t2t download.t2t forge.t2t contact.t2t
 
 after-clean:: 
