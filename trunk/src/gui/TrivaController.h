@@ -43,6 +43,9 @@ protected:
 	void cameraCheckbox ( wxCommandEvent& event );
 	void changeColor( wxCommandEvent& event );
 	void mergeSelected (wxCommandEvent& event);
+	void squarifiedTreemap( wxCommandEvent& event );
+	void originalTreemap( wxCommandEvent& event );
+
 	
 public:
 	ProtoView *getView () { return view; };
