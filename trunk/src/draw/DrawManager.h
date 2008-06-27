@@ -83,8 +83,8 @@ public:
 	void setTrivaController (TrivaController *triva);
 
 // (VISUALIZATION) BASE CATEGORY
- 	void drawTreemap (TrivaTreemap *root, Ogre::SceneNode *node);
-	void drawSquarifiedTreemap (TrivaTreemapSquarified *root);
+ 	void treemapRecursiveDraw (TrivaTreemap *root, Ogre::SceneNode *node);
+	void squarifiedTreemapDraw (TrivaTreemapSquarified *root);
 };
 
 #include "ProtoView.h"

@@ -3,7 +3,7 @@
 
 extern wxString NSSTRINGtoWXSTRING (NSString *ns);
 
-void DrawManager::drawTreemap (TrivaTreemap *root, Ogre::SceneNode *node)
+void DrawManager::treemapRecursiveDraw (TrivaTreemap *root, Ogre::SceneNode *node)
 {
 //        NSLog (@"%.0f name:%@ area (%.1f x %.1f) x=%.1f y=%.1f",
 //		[root depth],
@@ -47,16 +47,16 @@ void DrawManager::drawTreemap (TrivaTreemap *root, Ogre::SceneNode *node)
         if (children != nil){
                 unsigned int i;
                 for (i = 0; i < [children count]; i++){
-                        this->drawTreemap ((TrivaTreemap *)[children
+                        this->treemapRecursiveDraw ((TrivaTreemap *)[children
 objectAtIndex: i], n1);
                 }
         }
 }
 
-void DrawManager::drawSquarifiedTreemap (TrivaTreemapSquarified *root)
+void DrawManager::squarifiedTreemapDraw (TrivaTreemapSquarified *root)
 {
 	if (!currentVisuNode){
 		this->resetCurrentVisualization();
 	}
-	this->drawTreemap (root, currentVisuNode);
+	this->treemapRecursiveDraw (root, currentVisuNode);
 }

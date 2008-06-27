@@ -19,7 +19,7 @@
 	squarifiedTreemap = [TrivaTreemapSquarified treemapWithDictionary:dict];
 	[squarifiedTreemap calculateWithWidth: 500 height: 400];
 
-	drawManager->drawSquarifiedTreemap (squarifiedTreemap);
+	drawManager->squarifiedTreemapDraw (squarifiedTreemap);
 
 	baseState = SquarifiedTreemap;	
 	return YES;
