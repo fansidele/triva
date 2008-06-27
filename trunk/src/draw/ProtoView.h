@@ -5,6 +5,13 @@
 #include <General/PajeFilter.h>
 #include "draw/DrawManager.h"
 
+//which method to be used in the Base category
+enum TrivaVisualizationBaseState {
+	SquarifiedTreemap, 
+	OriginalTreemap,
+	ResourcesGraph,
+	ApplicationGraph };
+
 @interface ProtoView  : PajeFilter
 {
 	Ogre::Root *mRoot;
@@ -12,6 +19,9 @@
 	Ogre::SceneManager *mSceneMgr;
 
 	DrawManager *drawManager;
+
+	//variables to be used by Base category
+	TrivaVisualizationBaseState baseState;	
 }
 - (DrawManager *) drawManager;
 @end
@@ -23,6 +33,9 @@
 @interface ProtoView (Base)
 - (BOOL) squarifiedTreemapWithFile: (NSString *) file;
 - (BOOL) originalTreemapWithFile: (NSString *) file;
+- (BOOL) resourcesGraphWithFile: (NSString *) file;
+- (BOOL) applicationGraph;
+- (void) disableVisualizationBase: (TrivaVisualizationBaseState) baseCode;
 @end
 
 #endif
