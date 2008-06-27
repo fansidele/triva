@@ -46,12 +46,14 @@ void TrivaController::squarifiedTreemap( wxCommandEvent& event )
 void TrivaController::originalTreemap( wxCommandEvent& event )
 {
 	event.Skip(); 
+	//[view originalTreemapWithFile: (NSString *) file];
 	treemap_original->Check (false);
 }
 
 void TrivaController::resourcesGraph( wxCommandEvent& event )
 {
 	event.Skip(); 
+	//[view resourcesGraphWithFile: (NSString *) file];
 	graph_resources->Check (false);
 }
 
@@ -62,6 +64,6 @@ void TrivaController::applicationGraph( wxCommandEvent& event )
 	treemap_original->Check (false);
 	graph_resources->Check (false);
 
-
 	/* do something */
+	[view applicationGraph];
 }
