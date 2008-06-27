@@ -8,6 +8,17 @@ void DrawManager::treemapRecursiveDraw (TrivaTreemap *root, Ogre::SceneNode *nod
 //        NSLog (@"%.0f name:%@ area (%.1f x %.1f) x=%.1f y=%.1f",
 //		[root depth],
 //                [root name], [root width], [root height], [root x], [root y]);
+
+	if (root == nil || node == NULL){
+		return;
+	}
+
+	if ([root depth] == -1){
+		//this node must have value = 0, sot it is not drawable
+		//just return
+		return;
+	}
+
 	Ogre::SceneNode *n1 = node->createChildSceneNode();
 	n1->setPosition ([root x], 0, [root y]);
 	Ogre::Entity *e;
