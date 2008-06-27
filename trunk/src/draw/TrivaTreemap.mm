@@ -40,8 +40,9 @@
 	name = tree;
 	[name retain];
 	children = nil;
-	value = 1;
+	value = 0;
 	type = nil;
+	width = height = x = y = depth = -1;
 	return self;
 }
 
