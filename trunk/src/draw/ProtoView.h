@@ -20,4 +20,9 @@
 - (void) createMaterialNamed: (NSString *) materialName;
 @end
 
+@interface ProtoView (Base)
+- (BOOL) squarifiedTreemapWithFile: (NSString *) file;
+- (BOOL) originalTreemapWithFile: (NSString *) file;
+@end
+
 #endif

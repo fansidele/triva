@@ -5,6 +5,7 @@
 #include <Foundation/Foundation.h>
 #include <General/PajeType.h>
 #include "gui/wxInputEventListener.h"
+#include "TrivaTreemapSquarified.h"
 
 class TrivaController;
 @class ProtoView;
@@ -80,6 +81,10 @@ protected:
 	void onKeyDownEvent(wxKeyEvent& evt);
 public:
 	void setTrivaController (TrivaController *triva);
+
+// (VISUALIZATION) BASE CATEGORY
+ 	void drawTreemap (TrivaTreemap *root, Ogre::SceneNode *node);
+	void drawSquarifiedTreemap (TrivaTreemapSquarified *root);
 };
 
 #include "ProtoView.h"
