@@ -22,12 +22,14 @@
 	self = [super init];
 	[name = [tree objectForKey: @"name"] retain];
 	[type = [tree objectForKey: @"type"] retain];
-	value = [[tree objectForKey: @"value"] floatValue];
 	children = [[NSMutableArray alloc] init];
-	int i;
+	unsigned int i;
 	NSArray *ar = [tree objectForKey: @"children"];
+	value = 0;
 	for (i = 0; i < [ar count]; i++){
 		[children addObject: [TrivaTreemap treemapWithDictionary: [ar objectAtIndex: i]]];
+		TrivaTreemap *child = [children objectAtIndex: i];
+		value += [child value];
 	}
 	return self;
 }
