@@ -5,9 +5,9 @@ extern wxString NSSTRINGtoWXSTRING (NSString *ns);
 
 void DrawManager::drawTreemap (TrivaTreemap *root, Ogre::SceneNode *node)
 {
-        NSLog (@"%.0f name:%@ area (%.1f x %.1f) x=%.1f y=%.1f",
-		[root depth],
-                [root name], [root width], [root height], [root x], [root y]);
+//        NSLog (@"%.0f name:%@ area (%.1f x %.1f) x=%.1f y=%.1f",
+//		[root depth],
+//                [root name], [root width], [root height], [root x], [root y]);
 	Ogre::SceneNode *n1 = node->createChildSceneNode();
 	n1->setPosition ([root x], 0, [root y]);
 	Ogre::Entity *e;
