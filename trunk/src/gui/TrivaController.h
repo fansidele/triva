@@ -43,8 +43,6 @@ protected:
 	void cameraCheckbox ( wxCommandEvent& event );
 	void changeColor( wxCommandEvent& event );
 	void mergeSelected (wxCommandEvent& event);
-	void squarifiedTreemap( wxCommandEvent& event );
-	void originalTreemap( wxCommandEvent& event );
 
 	
 public:
@@ -122,6 +120,13 @@ protected:
 	void cameraRight( wxCommandEvent& event );
 	void cameraUp( wxCommandEvent& event );
 	void cameraDown( wxCommandEvent& event );
+
+/* base category */
+protected:
+	void squarifiedTreemap( wxCommandEvent& event );
+	void originalTreemap( wxCommandEvent& event );
+	void resourcesGraph( wxCommandEvent& event );
+	void applicationGraph( wxCommandEvent& event );
 };
 
 #endif // __TrivaController__

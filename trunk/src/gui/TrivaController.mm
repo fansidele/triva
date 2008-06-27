@@ -201,13 +201,3 @@ wxICON_ERROR);
         dial->ShowModal();
 NS_ENDHANDLER
 }
-
-void TrivaController::squarifiedTreemap( wxCommandEvent& event )
-{
-	event.Skip(); 
-}
-
-void TrivaController::originalTreemap( wxCommandEvent& event )
-{
-	event.Skip(); 
-}
