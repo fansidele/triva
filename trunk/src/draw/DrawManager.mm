@@ -46,6 +46,9 @@ DrawManager::DrawManager (ProtoView *view)
 	mRMouseDown = false;
 	mRaySceneQuery = mSceneMgr->createRayQuery(Ogre::Ray());
 	this->createMouseCursors();
+
+	//initializing Base category
+	this->initializeBaseCategory();
 } 
 
 DrawManager::~DrawManager()

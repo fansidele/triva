@@ -85,6 +85,8 @@ public:
 // (VISUALIZATION) BASE CATEGORY
  	void treemapRecursiveDraw (TrivaTreemap *root, Ogre::SceneNode *node);
 	void squarifiedTreemapDraw (TrivaTreemapSquarified *root);
+	Ogre::SceneNode *baseSceneNode;
+	void initializeBaseCategory ();
 };
 
 #include "ProtoView.h"
