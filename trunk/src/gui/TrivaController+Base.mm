@@ -14,7 +14,7 @@ void TrivaController::squarifiedTreemap( wxCommandEvent& event )
 				wxOPEN|wxFILE_MUST_EXIST, wxDefaultPosition);
 
 	NSUserDefaults *d = [NSUserDefaults standardUserDefaults];
-	NSString *v = [d stringForKey:@"LastOpenDirectory"];
+	NSString *v = [d stringForKey:@"LastOpenBaseDirectory"];
 	if (v != nil){
 		wxString dir = NSSTRINGtoWXSTRING(v);
 		f->SetPath (dir);
@@ -27,7 +27,7 @@ void TrivaController::squarifiedTreemap( wxCommandEvent& event )
 		snprintf (sa, 100, "%S", path.c_str());
 
 		[d setObject: [NSString stringWithFormat:@"%s", sa] forKey:
-@"LastOpenDirectory"];
+@"LastOpenBaseDirectory"];
 		[d synchronize];
 
 		if ([view squarifiedTreemapWithFile: 
