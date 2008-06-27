@@ -1,5 +1,4 @@
 #include "ProtoView.h"
-#include "TrivaTreemapSquarified.h"
 
 @implementation ProtoView (Base)
 - (BOOL) squarifiedTreemapWithFile: (NSString *) file
@@ -12,13 +11,15 @@
 	if (dict == nil){
 		return NO;
 	}
-	TrivaTreemapSquarified *root;
-	root = [TrivaTreemapSquarified treemapWithDictionary: dict];
-	[root calculateWithWidth: 500 height: 400];
-//	[root navigate];
+	if (squarifiedTreemap != nil){
+		[squarifiedTreemap release];
+		squarifiedTreemap = nil;
+	}
 
+	squarifiedTreemap = [TrivaTreemapSquarified treemapWithDictionary:dict];
+	[squarifiedTreemap calculateWithWidth: 500 height: 400];
 
-	drawManager->drawSquarifiedTreemap (root);
+	drawManager->drawSquarifiedTreemap (squarifiedTreemap);
 
 	baseState = SquarifiedTreemap;	
 	return YES;

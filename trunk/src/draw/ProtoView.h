@@ -4,6 +4,7 @@
 #include <Foundation/Foundation.h>
 #include <General/PajeFilter.h>
 #include "draw/DrawManager.h"
+#include "TrivaTreemapSquarified.h"
 
 //which method to be used in the Base category
 enum TrivaVisualizationBaseState {
@@ -22,6 +23,7 @@ enum TrivaVisualizationBaseState {
 
 	//variables to be used by Base category
 	TrivaVisualizationBaseState baseState;	
+	TrivaTreemapSquarified *squarifiedTreemap;
 }
 - (DrawManager *) drawManager;
 @end
