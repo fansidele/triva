@@ -35,6 +35,10 @@
 
 - (void) calculateWithWidth: (float) w height: (float) h
 {
+	if (value == 0){
+		//nothing to calculate
+		return;
+	}
 	float area = w * h;
 	float factor = area/value;
 	width = w;
@@ -84,6 +88,11 @@
         Want = Hant = 0;
         while (i < inputSize){
 		child = [children objectAtIndex: i];
+		float aux2 = SCALE([child value]);
+		if (aux2 == 0){
+			i++; // do not consider it
+			continue;
+		}
                 aux += SCALE([child value]);
 
                 float nw, nh;
