@@ -97,9 +97,11 @@
 
 - (void)hierarchyChanged
 {
-	drawManager->resetCurrentVisualization();
-	drawManager->createHierarchy ();
-	drawManager->createTimestampedObjects ();
+	if (baseState == ApplicationGraph){
+		drawManager->resetCurrentVisualization();
+		drawManager->createHierarchy ();
+		drawManager->createTimestampedObjects ();
+	}
 //	[self printAll];
 }
 
