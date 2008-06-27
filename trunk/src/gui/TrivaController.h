@@ -127,6 +127,7 @@ protected:
 	void originalTreemap( wxCommandEvent& event );
 	void resourcesGraph( wxCommandEvent& event );
 	void applicationGraph( wxCommandEvent& event );
+	void initializeBaseCategory ();
 };
 
 #endif // __TrivaController__

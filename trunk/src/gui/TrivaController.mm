@@ -65,6 +65,9 @@ TrivaController::TrivaController( wxWindow* parent, wxWindowID id, const wxStrin
 
 	selectedObject = NULL;
 	selectedEntity = nil;
+
+	/* initialize visualization base configuration */
+	this->initializeBaseCategory();
 }
 
 TrivaController::~TrivaController()

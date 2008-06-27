@@ -67,3 +67,14 @@ void TrivaController::applicationGraph( wxCommandEvent& event )
 	/* do something */
 	[view applicationGraph];
 }
+
+void TrivaController::initializeBaseCategory ()
+{
+	//default is application graph
+	treemap_squarified->Check (false);
+	treemap_original->Check (false);
+	graph_resources->Check (false);
+	graph_application->Check (true);
+	[view applicationGraph];
+}
+
