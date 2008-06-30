@@ -38,6 +38,7 @@ enum TrivaVisualizationBaseState {
 - (BOOL) resourcesGraphWithFile: (NSString *) file;
 - (BOOL) applicationGraph;
 - (void) disableVisualizationBase: (TrivaVisualizationBaseState) baseCode;
+- (TrivaTreemap *) searchWithPartialName: (NSString *) partialName;
 @end
 
 #endif

@@ -31,6 +31,9 @@
 - (NSString *) name;
 - (NSString *) type;
 - (NSArray *) children;
+
+//Search Methods
+- (id) searchWithPartialName: (NSString *) partialName;
 @end
 
 #endif

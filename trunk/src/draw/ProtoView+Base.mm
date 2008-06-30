@@ -66,4 +66,13 @@
 		//launch exception?
 	}
 }
+
+- (TrivaTreemap *) searchWithPartialName: (NSString *) partialName
+{
+	if (baseState == SquarifiedTreemap){
+		return [squarifiedTreemap searchWithPartialName: partialName];
+	}else{
+		return nil;
+	}
+}
 @end

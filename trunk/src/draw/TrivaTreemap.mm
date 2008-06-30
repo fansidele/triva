@@ -138,4 +138,29 @@
                 }
         }
 }
+
+- (id) searchWithPartialName: (NSString *) partialName
+{
+	if (children != nil){
+		unsigned int i;
+		for (i = 0; i < [children count]; i++){
+			id ret = [[children objectAtIndex: i]
+				searchWithPartialName: partialName];
+			if (ret != nil){
+				return ret;
+			}
+		}
+		return nil;
+	}
+
+	NSString *aux = [[partialName componentsSeparatedByString: @"_"]
+				lastObject];
+	NSRange aaa = NSIntersectionRange ([name rangeOfString: aux],
+			[aux rangeOfString: name]);
+	if (aaa.location != NSNotFound){
+		return self;
+	}else{
+		return nil;
+	}
+}
 @end
