@@ -39,6 +39,10 @@
 		//nothing to calculate
 		return;
 	}
+	//save width and height for later use
+	mainWidth = w;
+	mainHeight = h;
+
 	float area = w * h;
 	float factor = area/value;
 	width = w;
@@ -202,5 +206,10 @@
 	free (xvec);
 	free (yvec);
 #undef SCALE
+}
+
+- (void) recalculate
+{
+	[self calculateWithWidth: mainWidth height: mainHeight];
 }
 @end

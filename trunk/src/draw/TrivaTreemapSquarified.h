@@ -6,6 +6,8 @@
 
 @interface TrivaTreemapSquarified : TrivaTreemap
 {
+	float mainWidth;
+	float mainHeight;
 }
 + (id) treemapWithDictionary: (id) tree;
 - (void) calculateWithWidth: (float) w height: (float) h;
@@ -13,6 +15,7 @@
               height: (float) H
               factor: (float) factor
 		depth: (float) d;
+- (void) recalculate;
 @end
 
 #endif
