@@ -177,9 +177,13 @@
 - (void) recalculateValuesBottomUp
 {
 	unsigned int i;
-	NSArray *ar = [tree objectForKey: @"children"];
+	
+	if (children == nil){
+		return;
+	}
+
 	value = 0;
-	for (i = 0; i < [ar count]; i++){
+	for (i = 0; i < [children count]; i++){
 		TrivaTreemap *child = [children objectAtIndex: i];
 		[child recalculateValuesBottomUp];
 		value += [child value];
