@@ -210,6 +210,7 @@
 
 - (void) recalculate
 {
+	[self recalculateValuesBottomUp];
 	[self calculateWithWidth: mainWidth height: mainHeight];
 }
 @end
