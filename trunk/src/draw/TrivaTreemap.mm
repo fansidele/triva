@@ -163,4 +163,26 @@
 		return nil;
 	}
 }
+
+- (void) incrementValue
+{
+	value++;
+}
+
+- (void) decrementValue
+{
+	value--;
+}
+
+- (void) recalculateValuesBottomUp
+{
+	unsigned int i;
+	NSArray *ar = [tree objectForKey: @"children"];
+	value = 0;
+	for (i = 0; i < [ar count]; i++){
+		TrivaTreemap *child = [children objectAtIndex: i];
+		[child recalculateValuesBottomUp];
+		value += [child value];
+	}
+}
 @end

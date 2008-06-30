@@ -32,6 +32,13 @@
 - (NSString *) type;
 - (NSArray *) children;
 
+//Change Methods
+- (void) incrementValue;
+- (void) decrementValue;
+
+//Methods to update values (after changing leaf's values)
+- (void) recalculateValuesBottomUp;
+
 //Search Methods
 - (id) searchWithPartialName: (NSString *) partialName;
 @end
