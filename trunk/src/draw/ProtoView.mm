@@ -101,6 +101,10 @@
 		drawManager->resetCurrentVisualization();
 		drawManager->createHierarchy ();
 		drawManager->createTimestampedObjects ();
+	}else if (baseState == SquarifiedTreemap){
+		[self recalculateSquarifiedTreemapWithApplicationData];
+		drawManager->squarifiedTreemapDraw (squarifiedTreemap);
+		drawManager->drawContainersIntoTreemapBase ();
 	}
 //	[self printAll];
 }
