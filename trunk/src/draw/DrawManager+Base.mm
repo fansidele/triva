@@ -13,6 +13,11 @@ void DrawManager::treemapRecursiveDraw (TrivaTreemap *root, Ogre::SceneNode *nod
 		return;
 	}
 
+	if ([root value] <= 0){
+		//no value, just return
+		return;
+	}
+
 	if ([root depth] == -1){
 		//this node must have value = 0, sot it is not drawable
 		//just return
