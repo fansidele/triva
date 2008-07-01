@@ -118,6 +118,7 @@
 
 				[child setWidth: wvec[k]];
 				[child setHeight: hvec[k]];
+				[child setDepth: depth+1];
                         }
                 }else{
                         nh = aux/W;
@@ -128,6 +129,7 @@
 
 				[child setWidth: wvec[k]];
 				[child setHeight: hvec[k]];
+				[child setDepth: depth+1];
                         }
                 }
                 //calcular ratio do quadrado i
@@ -141,6 +143,7 @@
 			child = [children objectAtIndex: i];
 			[child setX: xvec[i]];
 			[child setY: yvec[i]];			
+			[child setDepth: depth+1];
 
                         i++;
                 }else{
