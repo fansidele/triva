@@ -55,6 +55,7 @@
 	value = 0;
 	type = nil;
 	width = height = x = y = depth = -1;
+	[self initializeGraphvizCategory];
 	return self;
 }
 

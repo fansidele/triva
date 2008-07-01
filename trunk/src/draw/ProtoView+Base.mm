@@ -102,6 +102,7 @@
 					NSLog (@"error, throw exception?");
 				}else{
 					[treemap incrementValue];
+					[treemap incrementNumberOfContainers];
 				}
 			}
 		}

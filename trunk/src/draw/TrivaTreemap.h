@@ -1,6 +1,7 @@
 #ifndef __TRIVA_TREEMAP_H
 #define __TRIVA_TREEMAP_H
 #include <Foundation/Foundation.h>
+#include <gvc.h>
 
 @interface TrivaTreemap : NSObject
 {
@@ -15,6 +16,12 @@
 	NSMutableArray *children;
 
 	TrivaTreemap *parent;
+
+	/* Category Graphviz: to render containers insider a leaf node */
+	int nContainers;
+	graph_t *g;
+	GVC_t *gvc;
+	float maxW, maxH;
 }
 + (id) treemapWithDictionary: (id) tree;
 - (id) initWithDictionary: (id) tree;
@@ -45,6 +52,14 @@
 
 //Search Methods
 - (id) searchWithPartialName: (NSString *) partialName;
+@end
+
+@interface TrivaTreemap (Graphviz)
+- (void) initializeGraphvizCategory;
+- (void) incrementNumberOfContainers;
+- (void) decrementNumberOfContainers;
+- (NSPoint) nextLocation;
+- (void) calculateMaxWandH;
 @end
 
 #endif
