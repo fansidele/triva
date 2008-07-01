@@ -24,11 +24,22 @@
 	self = [super initWithDictionary: tree];
 	//HACK
 	[children release];
-	unsigned int i;
+	unsigned int i, j;
 	NSArray *ar = [tree objectForKey: @"children"];
 	children = [[NSMutableArray alloc] init];
 	for (i = 0; i < [ar count]; i++){
-		[children addObject: [TrivaTreemapSquarified treemapWithDictionary: [ar objectAtIndex: i]]];
+		TrivaTreemapSquarified *child = [TrivaTreemapSquarified treemapWithDictionary: [ar objectAtIndex: i]];
+		float val = [child value];
+		/* find position for child */
+		for (j = 0; j < [children count]; j++){
+			TrivaTreemap *child2 = [children objectAtIndex: j];
+			float val2 = [child2 value];
+			if (val2 < val){
+				break;
+			}
+		}
+		/* insert at position j */
+		[children insertObject: child atIndex: j];
 	}
 	return self;
 }
