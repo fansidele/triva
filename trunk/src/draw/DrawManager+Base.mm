@@ -18,12 +18,6 @@ void DrawManager::treemapRecursiveDraw (TrivaTreemap *root, Ogre::SceneNode *nod
 		return;
 	}
 
-	if ([root depth] == -1){
-		//this node must have value = 0, sot it is not drawable
-		//just return
-		return;
-	}
-
 	Ogre::SceneNode *n1 = node->createChildSceneNode();
 	n1->setPosition ([root x], 0, [root y]);
 	Ogre::Entity *e;
@@ -63,8 +57,7 @@ void DrawManager::treemapRecursiveDraw (TrivaTreemap *root, Ogre::SceneNode *nod
         if (children != nil){
                 unsigned int i;
                 for (i = 0; i < [children count]; i++){
-                        this->treemapRecursiveDraw ((TrivaTreemap *)[children
-objectAtIndex: i], n1);
+                        this->treemapRecursiveDraw ((TrivaTreemap *)[children objectAtIndex: i], n1);
                 }
         }
 }
