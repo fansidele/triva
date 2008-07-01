@@ -87,6 +87,15 @@ public:
 	void squarifiedTreemapDraw (TrivaTreemapSquarified *root);
 	Ogre::SceneNode *baseSceneNode;
 	void initializeBaseCategory ();
+
+// CATEGORY: Squarified (functions to draw applic. data over a treemap base)
+public:
+ 	void drawContainersIntoTreemapBase ();
+private:
+	void drawContainersIntoTreemapBase (id entity);
+	void drawOneContainerIntoTreemapbase (id container, Ogre::SceneNode *n,
+			NSPoint loc);
+
 };
 
 #include "ProtoView.h"
