@@ -38,7 +38,12 @@ enum TrivaVisualizationBaseState {
 - (BOOL) resourcesGraphWithFile: (NSString *) file;
 - (BOOL) applicationGraph;
 - (void) disableVisualizationBase: (TrivaVisualizationBaseState) baseCode;
+
+//to interact with the squarifiedTreemap objects
 - (TrivaTreemap *) searchWithPartialName: (NSString *) partialName;
+
+//to call methods of previous paje filters
+- (void) recalculateSquarifiedTreemapWithApplicationData;
 @end
 
 #endif

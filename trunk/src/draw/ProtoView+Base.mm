@@ -17,9 +17,9 @@
 	}
 
 	squarifiedTreemap = [TrivaTreemapSquarified treemapWithDictionary:dict];
+	[squarifiedTreemap setMainWidth: 500];
+	[squarifiedTreemap setMainHeight: 400];
 	[squarifiedTreemap calculateWithWidth: 500 height: 400];
-
-	drawManager->squarifiedTreemapDraw (squarifiedTreemap);
 
 	baseState = SquarifiedTreemap;	
 	return YES;
@@ -74,5 +74,44 @@
 	}else{
 		return nil;
 	}
+}
+
+- (void) recalculateSquarifiedTreemapsWith: (id) entity;
+{
+	/* TODO: this method must be configurable because it updates
+		the squarified treemap visualization base based on the
+		application data (paje trace) 
+		
+		For now, it uses the presence of a container in a
+		treemap node to change its value and recalculate the
+		squarified treemap.
+
+		After calling this method, the visualization base must
+		be updated.
+	*/
+	PajeEntityType *et;
+	NSEnumerator *en = [[self containedTypesForContainerType:[self entityTypeForEntity: entity]] objectEnumerator];
+	while ((et = [en nextObject]) != nil) {
+		if ([self isContainerEntityType:et]) {
+			PajeContainer *sub;
+			NSEnumerator *en2 = [self enumeratorOfContainersTyped:et inContainer: entity];
+			while ((sub = [en2 nextObject]) != nil) {
+				TrivaTreemap *treemap = [self
+					searchWithPartialName: [sub name]];
+				if (treemap == nil){
+					NSLog (@"error, throw exception?");
+				}else{
+					[treemap incrementValue];
+				}
+			}
+		}
+	}
+}
+
+- (void) recalculateSquarifiedTreemapWithApplicationData
+{
+	id instance = [self rootInstance];
+	[self recalculateSquarifiedTreemapsWith: instance];
+	[squarifiedTreemap recalculate];
 }
 @end
