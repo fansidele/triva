@@ -39,10 +39,6 @@
 		//nothing to calculate
 		return;
 	}
-	//save width and height for later use
-	mainWidth = w;
-	mainHeight = h;
-
 	float area = w * h;
 	float factor = area/value;
 	width = w;
@@ -212,5 +208,15 @@
 {
 	[self recalculateValuesBottomUp];
 	[self calculateWithWidth: mainWidth height: mainHeight];
+}
+
+- (void) setMainWidth: (float) mw
+{
+	mainWidth = mw;
+}
+
+- (void) setMainHeight: (float) mh
+{
+	mainHeight = mh;
 }
 @end

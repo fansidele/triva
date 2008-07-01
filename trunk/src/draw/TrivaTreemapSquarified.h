@@ -16,6 +16,8 @@
               factor: (float) factor
 		depth: (float) d;
 - (void) recalculate;
+- (void) setMainWidth: (float) mw; //set only for root node
+- (void) setMainHeight: (float) mh; //set only for root node
 @end
 
 #endif
