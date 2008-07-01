@@ -31,15 +31,13 @@ void DrawManager::treemapRecursiveDraw (TrivaTreemap *root, Ogre::SceneNode *nod
 	materialname.append ([[NSString stringWithFormat: @"%.0f", [root depth]] cString]);	
 
 	e->setMaterialName (materialname);
-	Ogre::SceneNode *n2 = n1->createChildSceneNode();
+
+	std::string orname = std::string ([[root name] cString]);
+	Ogre::SceneNode *n2 = n1->createChildSceneNode(orname);
 	n2->attachObject (e);
 	n2->setInheritScale (false);
 	n2->setScale (([root width]*.9)/100, .01, ([root height]*.9)/100);
 	n2->setPosition (0, [root depth], 0);
-
-	std::string orname = std::string ([[root name] cString]);
-	std::string name = std::string (orname);
-	name.append ("-#-#-");
 
 //	MovableText *text;
 //	text = new MovableText (name, name);
