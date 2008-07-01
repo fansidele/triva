@@ -182,11 +182,14 @@
 		return;
 	}
 
-	value = 0;
+	float nvalue = 0;
 	for (i = 0; i < [children count]; i++){
 		TrivaTreemap *child = [children objectAtIndex: i];
 		[child recalculateValuesBottomUp];
-		value += [child value];
+		nvalue += [child value];
+	}
+	if (nvalue > 0){
+		value = nvalue;
 	}
 }
 @end
