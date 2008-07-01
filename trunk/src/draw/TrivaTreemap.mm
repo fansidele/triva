@@ -26,6 +26,7 @@
 	unsigned int i, j;
 	NSArray *ar = [tree objectForKey: @"children"];
 	value = 0;
+	parent = nil;
 	for (i = 0; i < [ar count]; i++){
 		TrivaTreemap *child = [TrivaTreemap treemapWithDictionary: [ar objectAtIndex: i]];
 		float val = [child value];
@@ -181,6 +182,10 @@
 		return;
 	}
 	[children sortUsingSelector: @selector(compare:)];
+	if (parent == nil){
+		return;
+	}
+	[parent reorder];
 }
 
 - (void) incrementValue
