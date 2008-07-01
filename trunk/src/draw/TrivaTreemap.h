@@ -13,6 +13,8 @@
 	float depth;
 
 	NSMutableArray *children;
+
+	TrivaTreemap *parent;
 }
 + (id) treemapWithDictionary: (id) tree;
 - (id) initWithDictionary: (id) tree;
@@ -31,6 +33,8 @@
 - (NSString *) name;
 - (NSString *) type;
 - (NSArray *) children;
+- (void) setParent: (TrivaTreemap *) p;
+- (void) reorder;
 
 //Change Methods
 - (void) incrementValue;

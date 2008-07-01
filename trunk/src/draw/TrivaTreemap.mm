@@ -39,6 +39,7 @@
 		}
 		/* insert at position j */
 		[children insertObject: child atIndex: j];
+		[child setParent: self];
 		value += [child value];
 	}
 	return self;
@@ -174,14 +175,24 @@
 	}
 }
 
+- (void) reorder
+{
+	if (children == nil){
+		return;
+	}
+	[children sortUsingSelector: @selector(compare:)];
+}
+
 - (void) incrementValue
 {
 	value++;
+	[parent reorder];
 }
 
 - (void) decrementValue
 {
 	value--;
+	[parent reorder];
 }
 
 - (void) recalculateValuesBottomUp
@@ -200,6 +211,22 @@
 	}
 	if (nvalue > 0){
 		value = nvalue;
+	}
+}
+
+- (void) setParent: (TrivaTreemap *) p
+{
+	parent = p;
+}
+
+- (NSComparisonResult) compare: (TrivaTreemap *) other
+{
+	if (value < [other value]){
+		return NSOrderedAscending;
+	}else if (value > [other value]){
+		return NSOrderedDescending;
+	}else{
+		return NSOrderedSame;
 	}
 }
 @end

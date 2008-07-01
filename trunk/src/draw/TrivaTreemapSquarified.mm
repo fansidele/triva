@@ -40,6 +40,7 @@
 		}
 		/* insert at position j */
 		[children insertObject: child atIndex: j];
+		[child setParent: self];
 	}
 	return self;
 }
