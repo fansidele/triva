@@ -221,9 +221,9 @@
 
 - (NSComparisonResult) compare: (TrivaTreemap *) other
 {
-	if (value < [other value]){
+	if (value > [other value]){
 		return NSOrderedAscending;
-	}else if (value > [other value]){
+	}else if (value < [other value]){
 		return NSOrderedDescending;
 	}else{
 		return NSOrderedSame;
