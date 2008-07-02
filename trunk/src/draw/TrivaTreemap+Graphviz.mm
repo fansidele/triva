@@ -56,7 +56,7 @@
 - (NSPoint) nextLocation
 {
 	NSPoint ret = {0,0};
-	int next = 0;
+	static int next = 0;
 
 	if (nContainers == 0){
 		return ret;
@@ -66,8 +66,10 @@
 	snprintf (str, 100, "n%d", next);
 	Agnode_t *node = agfindnode (g, str);
 	if (node != NULL){
-		ret.x = (ND_coord_i(node).x * width) / maxW;
-		ret.y = (ND_coord_i(node).y * height) / maxH;
+		float oldx = ND_coord_i(node).x;
+		float oldy = ND_coord_i(node).y;
+		ret.x = ((ND_coord_i(node).x * width) / maxW) - width/2;
+		ret.y = ((ND_coord_i(node).y * height) / maxH) - height/2;
 	}
 	next = (next + 1)%nContainers;
 	return ret;
