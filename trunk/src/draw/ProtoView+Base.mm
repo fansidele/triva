@@ -20,6 +20,7 @@
 	[squarifiedTreemap setMainWidth: 500];
 	[squarifiedTreemap setMainHeight: 400];
 	[squarifiedTreemap calculateWithWidth: 500 height: 400];
+	drawManager->squarifiedTreemapDraw (squarifiedTreemap);
 
 	baseState = SquarifiedTreemap;	
 	return YES;
