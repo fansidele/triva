@@ -52,7 +52,7 @@
 	name = tree;
 	[name retain];
 	children = nil;
-	value = 0;
+	value = 1;
 	type = nil;
 	width = height = x = y = depth = -1;
 	[self initializeGraphvizCategory];
