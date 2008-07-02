@@ -13,19 +13,9 @@
 
 - (void) calculateMaxWandH
 {
-	int i;
-	maxW = maxH = 0;
-	for (i = 0; i < nContainers; i++){
-		char str[100];
-		snprintf (str, 100, "n%d", i);
-		Agnode_t *node = agfindnode (g, str);
-		if (ND_coord_i(node).x > maxW){
-			maxW = ND_coord_i(node).x;
-		}
-		if (ND_coord_i(node).y > maxH){
-			maxH = ND_coord_i(node).y;
-		}
-	}
+	maxW = GD_bb(g).UR.x + 10;
+	maxH = GD_bb(g).UR.y + 10;
+	return;
 }
 
 - (void) incrementNumberOfContainers
@@ -53,10 +43,34 @@
 	[self calculateMaxWandH];
 }
 
+- (void) recursiveResetNumberOfContainers
+{
+	if (children == nil){
+		[self resetNumberOfContainers];
+	}else{
+		unsigned int i;
+		for (i = 0; i < [children count]; i++){
+			TrivaTreemap *child = [children objectAtIndex: i];
+			[child recursiveResetNumberOfContainers];
+		}
+	}
+}
+
+- (void) resetNumberOfContainers
+{
+	int i;
+	for (i = 0; i <= nContainers; i++){
+		char str[100];
+		snprintf (str, 100, "n%d", i);
+		agdelete (g, str);
+	}	
+	nContainers = 0;
+	next = 0;
+}
+
 - (NSPoint) nextLocation
 {
 	NSPoint ret = {0,0};
-	static int next = 0;
 
 	if (nContainers == 0){
 		return ret;
@@ -68,8 +82,8 @@
 	if (node != NULL){
 		float oldx = ND_coord_i(node).x;
 		float oldy = ND_coord_i(node).y;
-		ret.x = ((ND_coord_i(node).x * width) / maxW) - width/2;
-		ret.y = ((ND_coord_i(node).y * height) / maxH) - height/2;
+		ret.x = ((oldx * width) / maxW) - width/2;
+		ret.y = ((oldy * height) / maxH) - height/2;
 	}
 	next = (next + 1)%nContainers;
 	return ret;

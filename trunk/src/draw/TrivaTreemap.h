@@ -18,7 +18,7 @@
 	TrivaTreemap *parent;
 
 	/* Category Graphviz: to render containers insider a leaf node */
-	int nContainers;
+	int nContainers, next;
 	graph_t *g;
 	GVC_t *gvc;
 	float maxW, maxH;
@@ -56,6 +56,8 @@
 
 @interface TrivaTreemap (Graphviz)
 - (void) initializeGraphvizCategory;
+- (void) recursiveResetNumberOfContainers;
+- (void) resetNumberOfContainers;
 - (void) incrementNumberOfContainers;
 - (void) decrementNumberOfContainers;
 - (NSPoint) nextLocation;
