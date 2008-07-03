@@ -113,6 +113,7 @@
 - (void) recalculateSquarifiedTreemapWithApplicationData
 {
 	id instance = [self rootInstance];
+	[squarifiedTreemap recursiveResetValue];
 	[squarifiedTreemap recursiveResetNumberOfContainers];
 	[self recalculateSquarifiedTreemapsWith: instance];
 	[squarifiedTreemap recalculate];
