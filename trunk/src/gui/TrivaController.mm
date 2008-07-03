@@ -75,6 +75,11 @@ TrivaController::TrivaController( wxWindow* parent, wxWindowID id, const wxStrin
 
 	/* initialize visualization base configuration */
 	this->initializeBaseCategory();
+
+
+	/* configuration of other windows */
+	guiBaseWindow = new GUI_Base(this);
+	guiBaseWindow->setController (this);
 }
 
 TrivaController::~TrivaController()
@@ -210,4 +215,13 @@ NS_HANDLER
 wxICON_ERROR);
         dial->ShowModal();
 NS_ENDHANDLER
+}
+
+void TrivaController::guiBaseSelection( wxCommandEvent& event )
+{
+	if (guiBaseWindow->IsShown()){
+		guiBaseWindow->Hide();
+	}else{
+		guiBaseWindow->Show();
+	}
 }

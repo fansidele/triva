@@ -16,8 +16,11 @@
 #include "paje-simulator/TrivaPajeComponent.h"
 #include "reader/TrivaPajeReader.h"
 
+#include "gui/GUI_Base.h"
+
 class TrivaColorWindowEvents;
 class BundleGUIEvents;
+class GUI_Base;
 
 enum TrivaApplicationState {Initialized,Configured,Running,Paused};
 
@@ -31,6 +34,10 @@ private:
 	TrivaPajeComponent *trivaPaje;
 	Ogre::RenderWindow *mWindow;
 	std::vector<BundleGUIEvents*> bundlesGUI;
+
+	GUI_Base *guiBaseWindow;
+protected:
+	void guiBaseSelection( wxCommandEvent& event );
 
 protected:
 	// Handlers for TRIVAGUI events.
