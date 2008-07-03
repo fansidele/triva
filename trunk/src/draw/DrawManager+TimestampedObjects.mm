@@ -35,7 +35,16 @@ void DrawManager::drawStates (PajeEntityType *et, id container)
 
 		ste->setMaterialName ([[ent name] cString]);
 		ste->setQueryFlags(STATE_MASK);
-		ssn->attachObject (ste);
+		try {
+			ssn->attachObject (ste);
+		} catch (Ogre::Exception ex){
+//			std::cout <<
+//				"Error: visual object " << 
+//				ste->getName() << 
+//				"already present in the visualization." <<
+//				" Ignoring." <<
+//				std::endl;
+		}
 		double start;
 		double end;
 		int imbric;
@@ -97,7 +106,10 @@ void DrawManager::drawLinks (PajeEntityType *et, id container)
 		ste->end();
 		ste->setQueryFlags (LINK_MASK);
 		Ogre::SceneNode *dsn = n->createChildSceneNode();
-		dsn->attachObject (ste);
+		try{
+			dsn->attachObject (ste);
+		}catch (Ogre::Exception ex){
+		}
 	}
 }
 
