@@ -105,6 +105,7 @@
 		[self recalculateSquarifiedTreemapWithApplicationData];
 		drawManager->squarifiedTreemapDraw (squarifiedTreemap);
 		drawManager->drawContainersIntoTreemapBase ();
+		drawManager->createTimestampedObjects ();
 	}
 //	[self printAll];
 }
