@@ -82,4 +82,11 @@ AutoGUI_Base ( parent, ide,
 title, pos, size,
 style )
 {
+	TrivaController *c = (TrivaController *)parent;
+	ProtoView *view = c->getView();
+	[view applicationGraph];
+
+	base_type->SetStringSelection(NSSTRINGtoWXSTRING(@"Application Graph"));
+	wxCommandEvent e;
+	this->choice (e);
 }
