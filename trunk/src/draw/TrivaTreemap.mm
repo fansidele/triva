@@ -201,6 +201,24 @@
 	[parent reorder];
 }
 
+- (void) recursiveResetValue
+{
+	unsigned int i;
+	if (children == nil){
+		[self resetValue];
+	}else{
+		for (i = 0; i < [children count]; i++){
+			TrivaTreemap *child = [children objectAtIndex: i];
+			[child recursiveResetValue];
+		}
+	}
+}
+
+- (void) resetValue
+{
+	value = 1;
+}
+
 - (void) recalculateValuesBottomUp
 {
 	unsigned int i;

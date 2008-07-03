@@ -46,6 +46,8 @@
 //Change Methods
 - (void) incrementValue;
 - (void) decrementValue;
+- (void) recursiveResetValue;
+- (void) resetValue;
 
 //Methods to update values (after changing leaf's values)
 - (void) recalculateValuesBottomUp;
