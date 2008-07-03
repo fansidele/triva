@@ -6,7 +6,37 @@ void DrawManager::createHierarchy ()
 {
 	id instance = [viewController rootInstance];
 
+	if (position != nil){
+		[position release];
+		position = nil;
+	}
+	position = [Position positionWithAlgorithm: @"graphviz"];
 	[position newHierarchyOrganization: this->createContainersDictionary(instance)];
+
+	NSEnumerator *en = [[viewController
+containedTypesForContainerType:[viewController entityTypeForEntity:instance]]
+objectEnumerator];
+	PajeEntityType *et;
+	while ((et = [en nextObject]) != nil) {
+		if ([et isKindOfClass: [PajeLinkType class]]){
+			NSEnumerator *en4;
+			en4 = [viewController enumeratorOfEntitiesTyped: et
+                        inContainer: instance
+                        fromTime:[viewController startTime]
+                        toTime:[viewController endTime]
+                        minDuration: 0];
+			PajeEntity *ent;
+			while ((ent = [en4 nextObject]) != nil) {
+				NSString *sn = [[ent sourceContainer] name];
+				NSString *dn = [[ent destContainer] name];
+				[position addLinkBetweenNode: sn andNode: dn];
+
+			}
+
+		}
+	}
+
+
 	pos =  [position positionForAllNodes];
 	this->drawContainers (instance, currentVisuNode);
 }
