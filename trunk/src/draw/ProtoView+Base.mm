@@ -2,6 +2,7 @@
 
 @implementation ProtoView (Base)
 - (BOOL) squarifiedTreemapWithFile: (NSString *) file
+	andWidth: (float) w andHeight: (float) h
 {
 	if (baseState != SquarifiedTreemap){
 		[self disableVisualizationBase: baseState];
@@ -17,9 +18,9 @@
 	}
 
 	squarifiedTreemap = [TrivaTreemapSquarified treemapWithDictionary:dict];
-	[squarifiedTreemap setMainWidth: 500];
-	[squarifiedTreemap setMainHeight: 400];
-	[squarifiedTreemap calculateWithWidth: 500 height: 400];
+	[squarifiedTreemap setMainWidth: w];
+	[squarifiedTreemap setMainHeight: h];
+	[squarifiedTreemap calculateWithWidth: w height: h];
 	drawManager->squarifiedTreemapDraw (squarifiedTreemap);
 
 	baseState = SquarifiedTreemap;	

@@ -33,7 +33,8 @@ enum TrivaVisualizationBaseState {
 @end
 
 @interface ProtoView (Base)
-- (BOOL) squarifiedTreemapWithFile: (NSString *) file;
+- (BOOL) squarifiedTreemapWithFile: (NSString *) file
+	andWidth: (float) w andHeight: (float) h;
 - (BOOL) originalTreemapWithFile: (NSString *) file;
 - (BOOL) resourcesGraphWithFile: (NSString *) file;
 - (BOOL) applicationGraph;

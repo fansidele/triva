@@ -35,11 +35,11 @@ void GUI_Base::apply ( wxCommandEvent& event )
 	}else if (option.compare ("Resources Squarified Treemap") == 0){
 		wxString path = configuration_file->GetLabel();
 		NSString *file = WXSTRINGtoNSSTRING (path);
-		[view squarifiedTreemapWithFile: file];
 
-		std::cout << "Width: " << WXSTRINGtoSTDSTRING(width->GetValue())
-			<< " Height: " << WXSTRINGtoSTDSTRING(height->GetValue())
-			<< std::endl;
+		float w = atof(WXSTRINGtoSTDSTRING(width->GetValue()).c_str());
+		float h = atof(WXSTRINGtoSTDSTRING(height->GetValue()).c_str());
+		[view squarifiedTreemapWithFile: file
+			andWidth: w andHeight: h];
 	}
 }
 
