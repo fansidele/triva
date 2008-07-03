@@ -18,7 +18,8 @@ void DrawManager::treemapRecursiveDraw (TrivaTreemap *root, Ogre::SceneNode *nod
 		return;
 	}
 
-	Ogre::SceneNode *n1 = node->createChildSceneNode();
+	std::string orname = std::string ([[root name] cString]);
+	Ogre::SceneNode *n1 = node->createChildSceneNode(orname);
 	n1->setPosition ([root x], 0, [root y]);
 	Ogre::Entity *e;
 	try {
@@ -32,8 +33,7 @@ void DrawManager::treemapRecursiveDraw (TrivaTreemap *root, Ogre::SceneNode *nod
 
 	e->setMaterialName (materialname);
 
-	std::string orname = std::string ([[root name] cString]);
-	Ogre::SceneNode *n2 = n1->createChildSceneNode(orname);
+	Ogre::SceneNode *n2 = n1->createChildSceneNode();
 	n2->attachObject (e);
 	n2->setInheritScale (false);
 	n2->setScale (([root width])/100, .01, ([root height])/100);
