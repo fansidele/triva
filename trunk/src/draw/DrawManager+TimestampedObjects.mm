@@ -62,7 +62,7 @@ void DrawManager::drawStates (PajeEntityType *et, id container)
 
 void DrawManager::drawLinks (PajeEntityType *et, id container)
 {
-	Ogre::SceneNode *n = mSceneMgr->getSceneNode ([[container name] cString]);
+	Ogre::SceneNode *n;
 	NSEnumerator *en4;
 	en4 = [viewController enumeratorOfCompleteEntitiesTyped: et
 			inContainer: container
@@ -83,6 +83,7 @@ void DrawManager::drawLinks (PajeEntityType *et, id container)
 	        Ogre::Vector3 op = mSceneMgr->getSceneNode ([sn cString])->getWorldPosition();
 		Ogre::Vector3 dp = mSceneMgr->getSceneNode ([dn cString])->getWorldPosition();
 
+		n = mSceneMgr->getRootSceneNode ();
 		Ogre::Vector3 dif = dp - op;
 		
 		double start;
