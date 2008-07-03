@@ -38,7 +38,7 @@ void GUI_Base::apply ( wxCommandEvent& event )
 
 		float w = atof(WXSTRINGtoSTDSTRING(width->GetValue()).c_str());
 		float h = atof(WXSTRINGtoSTDSTRING(height->GetValue()).c_str());
-		[view squarifiedTreemapWithFile: file
+		BOOL x = [view squarifiedTreemapWithFile: file
 			andWidth: w andHeight: h];
         
 		NSUserDefaults *d = [NSUserDefaults standardUserDefaults];
@@ -47,6 +47,12 @@ void GUI_Base::apply ( wxCommandEvent& event )
 		[d setObject: [NSString stringWithFormat: @"%.0f", h]
 			forKey: @"HeightTreemapBaseConfiguration"];
 		[d synchronize];
+
+		if (x){
+			status->SetStatusText (NSSTRINGtoWXSTRING(@"Dynamic Squarified Treemap OK"));
+		}else{
+			status->SetStatusText (NSSTRINGtoWXSTRING(@"error, check file format"));
+		}
 	}
 }
 
