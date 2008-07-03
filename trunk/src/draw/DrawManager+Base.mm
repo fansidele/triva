@@ -37,7 +37,7 @@ void DrawManager::treemapRecursiveDraw (TrivaTreemap *root, Ogre::SceneNode *nod
 	n2->attachObject (e);
 	n2->setInheritScale (false);
 	n2->setScale (([root width])/100, .01, ([root height])/100);
-	n2->setPosition (0, [root depth], 0);
+	n2->setPosition (0, 0, 0);
 
 //	MovableText *text;
 //	text = new MovableText (name, name);
