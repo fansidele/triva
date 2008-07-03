@@ -40,6 +40,13 @@ void GUI_Base::apply ( wxCommandEvent& event )
 		float h = atof(WXSTRINGtoSTDSTRING(height->GetValue()).c_str());
 		[view squarifiedTreemapWithFile: file
 			andWidth: w andHeight: h];
+        
+		NSUserDefaults *d = [NSUserDefaults standardUserDefaults];
+		[d setObject: [NSString stringWithFormat: @"%.0f", w]
+			forKey: @"WidthTreemapBaseConfiguration"];
+		[d setObject: [NSString stringWithFormat: @"%.0f", h]
+			forKey: @"HeightTreemapBaseConfiguration"];
+		[d synchronize];
 	}
 }
 
@@ -89,4 +96,16 @@ style )
 	base_type->SetStringSelection(NSSTRINGtoWXSTRING(@"Application Graph"));
 	wxCommandEvent e;
 	this->choice (e);
+        
+	NSUserDefaults *d = [NSUserDefaults standardUserDefaults];
+        NSString *w = [d stringForKey:@"WidthTreemapBaseConfiguration"];
+        if (w != nil){
+                wxString val = NSSTRINGtoWXSTRING(w);
+                width->SetValue (val);
+        }
+        NSString *h = [d stringForKey:@"HeightTreemapBaseConfiguration"];
+        if (h != nil){
+                wxString val = NSSTRINGtoWXSTRING(h);
+                height->SetValue (val);
+        }
 }
