@@ -39,6 +39,7 @@ void TrivaController::squarifiedTreemap( wxCommandEvent& event )
 			treemap_original->Check (false);
 			graph_resources->Check (false);
 			graph_application->Check (false);
+			statusBar->SetStatusText(NSSTRINGtoWXSTRING(@"Dynamic Squarified Treemap active..."));
 		}
 	}
 }
@@ -66,6 +67,7 @@ void TrivaController::applicationGraph( wxCommandEvent& event )
 
 	/* do something */
 	[view applicationGraph];
+	statusBar->SetStatusText(NSSTRINGtoWXSTRING(@"Application Graph active..."));
 }
 
 void TrivaController::initializeBaseCategory ()
