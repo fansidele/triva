@@ -28,7 +28,7 @@ void DrawManager::drawOneContainerIntoTreemapbase
 	Ogre::SceneNode *entn = n->createChildSceneNode();
 	entn->attachObject (e);
 	entn->setScale (.3,.01,.3);
-//	entn->setInheritScale (false);
+	entn->setInheritScale (false);
 
 	MovableText *text;
 	Ogre::SceneNode *entnt = n->createChildSceneNode();
@@ -36,7 +36,7 @@ void DrawManager::drawOneContainerIntoTreemapbase
 	text = new MovableText ([textid cString], [textid cString]);
 	text->setColor (Ogre::ColourValue::Blue);
 	text->setCharacterHeight (15);
-//	entnt->setInheritScale (false);
+	entnt->setInheritScale (false);
 	entnt->attachObject (text);
 
 	n->setPosition (loc.x, 0, loc.y);
