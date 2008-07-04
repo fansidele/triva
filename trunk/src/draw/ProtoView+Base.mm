@@ -24,6 +24,7 @@
 	drawManager->squarifiedTreemapDraw (squarifiedTreemap);
 
 	baseState = SquarifiedTreemap;	
+	[self hierarchyChanged];
 	return YES;
 }
 
@@ -51,6 +52,7 @@
 		[self disableVisualizationBase: baseState];
 	}
 	baseState = ApplicationGraph;
+	[self hierarchyChanged];
 	return YES;
 }
 
@@ -179,5 +181,6 @@
                 }
         }
 	//applicationGraphPosition contains PositionGraphviz
+	[applicationGraphPosition refresh];
 }
 @end
