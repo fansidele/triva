@@ -98,6 +98,7 @@
 - (void)hierarchyChanged
 {
 	if (baseState == ApplicationGraph){
+		[self recalculateApplicationGraphWithApplicationData];
 		drawManager->resetCurrentVisualization();
 		drawManager->createHierarchy ();
 		drawManager->createTimestampedObjects ();

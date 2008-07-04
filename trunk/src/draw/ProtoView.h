@@ -24,6 +24,9 @@ enum TrivaVisualizationBaseState {
 	//variables to be used by Base category
 	TrivaVisualizationBaseState baseState;	
 	TrivaTreemapSquarified *squarifiedTreemap;
+
+	//variables to bse used by Base category - application graph
+	Position *applicationGraphPosition;
 }
 - (DrawManager *) drawManager;
 @end
@@ -45,6 +48,10 @@ enum TrivaVisualizationBaseState {
 
 //to call methods of previous paje filters
 - (void) recalculateSquarifiedTreemapWithApplicationData;
+
+//to application graph
+- (NSMutableDictionary *) dictionaryForApplicationGraph: (id) entity;
+- (void) recalculateApplicationGraphWithApplicationData;
 @end
 
 #endif

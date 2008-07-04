@@ -119,4 +119,65 @@
 	[self recalculateSquarifiedTreemapsWith: instance];
 	[squarifiedTreemap recalculate];
 }
+
+// for application graph
+- (NSMutableDictionary *) dictionaryForApplicationGraph: (id) entity
+{
+        NSMutableDictionary *ret = [[NSMutableDictionary alloc] init];
+        NSMutableDictionary *me = [[NSMutableDictionary alloc] init];
+
+        NSEnumerator *en = [[self containedTypesForContainerType:[self entityTypeForEntity:entity]] objectEnumerator];
+        PajeEntityType *et;
+        while ((et = [en nextObject]) != nil) {
+                if ([self isContainerEntityType:et]) {
+                        NSEnumerator *en2;
+                        PajeContainer *sub;
+                        en2 = [self enumeratorOfContainersTyped:et inContainer:entity];
+                        while ((sub = [en2 nextObject]) != nil) {
+                                NSMutableDictionary *d;
+				d = [self dictionaryForApplicationGraph: sub];
+                                [me addEntriesFromDictionary: d];
+                        }
+                }
+        }
+        [ret setObject: me forKey: [entity name]];
+        [me release];
+        [ret autorelease];
+        return ret;
+}
+
+- (void) recalculateApplicationGraphWithApplicationData
+{
+	id instance = [self rootInstance];
+	if (applicationGraphPosition != nil){
+		[applicationGraphPosition release];
+		applicationGraphPosition = nil;
+	}	
+	applicationGraphPosition = [Position positionWithAlgorithm:@"graphviz"];
+	[applicationGraphPosition newHierarchyOrganization: 
+			[self dictionaryForApplicationGraph: instance]];
+
+        NSEnumerator *en = [[self containedTypesForContainerType:[self entityTypeForEntity:instance]] objectEnumerator];
+        PajeEntityType *et;
+        while ((et = [en nextObject]) != nil) {
+                if ([et isKindOfClass: [PajeLinkType class]]){
+                        NSEnumerator *en4;
+                        en4 = [self enumeratorOfEntitiesTyped: et
+                        inContainer: instance
+                        fromTime:[self startTime]
+                        toTime:[self endTime]
+                        minDuration: 0];
+                        PajeEntity *ent;
+                        while ((ent = [en4 nextObject]) != nil) {
+                                NSString *sn = [[ent sourceContainer] name];
+                                NSString *dn = [[ent destContainer] name];
+                                [applicationGraphPosition 
+					addLinkBetweenNode: sn andNode: dn];
+
+                        }
+
+                }
+        }
+	//applicationGraphPosition contains PositionGraphviz
+}
 @end
