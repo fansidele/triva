@@ -28,10 +28,13 @@ void GUI_Base::apply ( wxCommandEvent& event )
 	std::string option;
 	ProtoView *view = controller->getView();
 
+	NSUserDefaults *d = [NSUserDefaults standardUserDefaults];
 	option = WXSTRINGtoSTDSTRING(base_type->GetStringSelection());
 	if (option.compare ("Application Graph") == 0){
 		[view applicationGraph];
 		status->SetStatusText (NSSTRINGtoWXSTRING(@"Application Graph OK"));
+		[d setObject: [NSString stringWithFormat: @"%s", option.c_str()]
+			forKey: @"BaseConfigurationOption"];
 	}else if (option.compare ("Resources Squarified Treemap") == 0){
 		wxString path = configuration_file->GetLabel();
 		NSString *file = WXSTRINGtoNSSTRING (path);
@@ -41,19 +44,21 @@ void GUI_Base::apply ( wxCommandEvent& event )
 		BOOL x = [view squarifiedTreemapWithFile: file
 			andWidth: w andHeight: h];
         
-		NSUserDefaults *d = [NSUserDefaults standardUserDefaults];
 		[d setObject: [NSString stringWithFormat: @"%.0f", w]
 			forKey: @"WidthTreemapBaseConfiguration"];
 		[d setObject: [NSString stringWithFormat: @"%.0f", h]
 			forKey: @"HeightTreemapBaseConfiguration"];
-		[d synchronize];
 
 		if (x){
 			status->SetStatusText (NSSTRINGtoWXSTRING(@"Dynamic Squarified Treemap OK"));
+
+			[d setObject: [NSString stringWithFormat: @"%s", option.c_str()]
+				forKey: @"BaseConfigurationOption"];
 		}else{
 			status->SetStatusText (NSSTRINGtoWXSTRING(@"error, check file format"));
 		}
 	}
+	[d synchronize];
 }
 
 void GUI_Base::load( wxCommandEvent& event )
@@ -99,9 +104,6 @@ style )
 	ProtoView *view = c->getView();
 	[view applicationGraph];
 
-	base_type->SetStringSelection(NSSTRINGtoWXSTRING(@"Application Graph"));
-	wxCommandEvent e;
-	this->choice (e);
         
 	NSUserDefaults *d = [NSUserDefaults standardUserDefaults];
         NSString *w = [d stringForKey:@"WidthTreemapBaseConfiguration"];
@@ -114,4 +116,20 @@ style )
                 wxString val = NSSTRINGtoWXSTRING(h);
                 height->SetValue (val);
         }
+
+	NSString *v = [d stringForKey:@"LastOpenBaseDirectory"];
+	if (v != nil){
+		wxString dir = NSSTRINGtoWXSTRING(v);
+		configuration_file->SetLabel (dir);
+	}
+
+	NSString *o = [d stringForKey:@"BaseConfigurationOption"];
+	if (o != nil){
+		wxString opt = NSSTRINGtoWXSTRING(v);
+		base_type->SetStringSelection(opt);
+	}else{
+		base_type->SetStringSelection(NSSTRINGtoWXSTRING(@"Application Graph"));
+	}
+	wxCommandEvent e;
+	this->choice (e);
 }
