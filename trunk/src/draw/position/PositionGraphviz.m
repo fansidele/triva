@@ -23,6 +23,7 @@
 - (void) refresh
 {
 	int i;
+	gvFreeLayout (gvc, g);
 	gvLayout (gvc, g, (char *)[algorithm cString]);
 	NSArray *ar = [allNodesIdentifiers allKeys];
 	for (i = 0; i < [ar count]; i++){
@@ -36,7 +37,6 @@
 		[b release];
 	}
 //	gvRenderFilename (gvc, g, "png", "out.png");
-	gvFreeLayout (gvc, g);
 }
 
 - (void) addNode: (NSString *) nodeName
