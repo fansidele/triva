@@ -83,7 +83,8 @@ void DrawManager::moveObject (wxMouseEvent& evt)
 		/* register position */
 		NSString *name;
 		name = [NSString stringWithFormat:@"%s", sn->getName().c_str()];
-		NSMutableArray *b = [pos objectForKey: name];
+		NSMutableArray *b = [NSArray arrayWithObjects: @"0", @"0",
+nil];//TODO [pos objectForKey: name];
 		[b replaceObjectAtIndex: 0 withObject:[NSString stringWithFormat:@"%d", (int)x]];
 		[b replaceObjectAtIndex: 1 withObject:[NSString stringWithFormat:@"%d", (int)z]];
 		this->updateLinksPositions();
