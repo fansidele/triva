@@ -39,15 +39,15 @@ private:
 
 //PAJE CATEGORY
 public:
-	void createHierarchy ();
+//	void createHierarchy ();
 	void resetCurrentVisualization();
 	void createTimestampedObjects ();
 
 private:
-	NSMutableDictionary *pos;
-	NSMutableDictionary *createContainersDictionary (id entity);
+//	NSMutableDictionary *pos;
+//	NSMutableDictionary *createContainersDictionary (id entity);
 	void destroyAllChildren (Ogre::SceneNode *node);
-	void drawContainers (id entity, Ogre::SceneNode *node);
+//	void drawContainers (id entity, Ogre::SceneNode *node);
 	void updateLinksPositions ();
 	void updateLinksPositions (id entity);
 	void updateLinksPositions (PajeEntityType *et, id container);
@@ -87,6 +87,9 @@ public:
 	void squarifiedTreemapDraw (TrivaTreemapSquarified *root);
 	Ogre::SceneNode *baseSceneNode;
 	void initializeBaseCategory ();
+	void applicationGraphRecursiveDraw (id entity, Position *position, 
+		Ogre::SceneNode *node);
+	void applicationGraphDraw (Position *position);
 
 // CATEGORY: Squarified (functions to draw applic. data over a treemap base)
 public:
