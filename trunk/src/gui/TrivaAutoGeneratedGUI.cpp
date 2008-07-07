@@ -56,6 +56,10 @@ AutoGUI_Triva::AutoGUI_Triva( wxWindow* parent, wxWindowID id, const wxString& t
 	m_menuItem17 = new wxMenuItem( m_menu3, wxID_ANY, wxString( wxT("Visualization Base") ) , wxEmptyString, wxITEM_CHECK );
 	m_menu3->Append( m_menuItem17 );
 	
+	wxMenuItem* m_menuItem14;
+	m_menuItem14 = new wxMenuItem( m_menu3, wxID_ANY, wxString( wxT("Preferences") ) , wxEmptyString, wxITEM_CHECK );
+	m_menu3->Append( m_menuItem14 );
+	
 	m_menubar2->Append( m_menu3, wxT("View") );
 	
 	navigation = new wxMenu();
@@ -128,6 +132,7 @@ AutoGUI_Triva::AutoGUI_Triva( wxWindow* parent, wxWindowID id, const wxString& t
 	this->Connect( clabels->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( AutoGUI_Triva::containerLabels ) );
 	this->Connect( slabels->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( AutoGUI_Triva::stateLabels ) );
 	this->Connect( m_menuItem17->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( AutoGUI_Triva::guiBaseSelection ) );
+	this->Connect( m_menuItem14->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( AutoGUI_Triva::guiPreferencesSelection ) );
 	this->Connect( forward->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( AutoGUI_Triva::cameraForward ) );
 	this->Connect( backward->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( AutoGUI_Triva::cameraBackward ) );
 	this->Connect( left->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( AutoGUI_Triva::cameraLeft ) );
@@ -153,6 +158,7 @@ AutoGUI_Triva::~AutoGUI_Triva()
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( AutoGUI_Triva::containerLabels ) );
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( AutoGUI_Triva::stateLabels ) );
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( AutoGUI_Triva::guiBaseSelection ) );
+	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( AutoGUI_Triva::guiPreferencesSelection ) );
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( AutoGUI_Triva::cameraForward ) );
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( AutoGUI_Triva::cameraBackward ) );
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( AutoGUI_Triva::cameraLeft ) );
@@ -434,4 +440,64 @@ AutoGUI_Base::~AutoGUI_Base()
 	configuration_file->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( AutoGUI_Base::load ), NULL, this );
 	m_button17->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( AutoGUI_Base::apply ), NULL, this );
 	m_button18->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( AutoGUI_Base::close ), NULL, this );
+}
+
+AutoGUI_Preferences::AutoGUI_Preferences( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxFrame( parent, id, title, pos, size, style )
+{
+	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
+	
+	wxBoxSizer* bSizer15;
+	bSizer15 = new wxBoxSizer( wxVERTICAL );
+	
+	m_panel13 = new wxPanel( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	wxBoxSizer* bSizer10;
+	bSizer10 = new wxBoxSizer( wxVERTICAL );
+	
+	wxFlexGridSizer* fgSizer3;
+	fgSizer3 = new wxFlexGridSizer( 2, 2, 0, 0 );
+	fgSizer3->AddGrowableCol( 1 );
+	fgSizer3->SetFlexibleDirection( wxBOTH );
+	fgSizer3->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
+	
+	m_staticText7 = new wxStaticText( m_panel13, wxID_ANY, wxT("Time Window:"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText7->Wrap( -1 );
+	fgSizer3->Add( m_staticText7, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxTOP|wxBOTTOM|wxLEFT, 5 );
+	
+	m_textCtrl13 = new wxTextCtrl( m_panel13, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+	fgSizer3->Add( m_textCtrl13, 0, wxALL|wxEXPAND, 5 );
+	
+	bSizer10->Add( fgSizer3, 1, wxEXPAND, 5 );
+	
+	m_staticline3 = new wxStaticLine( m_panel13, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL );
+	bSizer10->Add( m_staticline3, 0, wxEXPAND | wxALL, 5 );
+	
+	wxBoxSizer* bSizer111;
+	bSizer111 = new wxBoxSizer( wxHORIZONTAL );
+	
+	m_button17 = new wxButton( m_panel13, wxID_ANY, wxT("&Apply"), wxDefaultPosition, wxDefaultSize, 0 );
+	bSizer111->Add( m_button17, 0, wxALL, 5 );
+	
+	m_button18 = new wxButton( m_panel13, wxID_ANY, wxT("&Close"), wxDefaultPosition, wxDefaultSize, 0 );
+	bSizer111->Add( m_button18, 0, wxALL, 5 );
+	
+	bSizer10->Add( bSizer111, 0, wxALIGN_RIGHT, 5 );
+	
+	m_panel13->SetSizer( bSizer10 );
+	m_panel13->Layout();
+	bSizer10->Fit( m_panel13 );
+	bSizer15->Add( m_panel13, 1, wxEXPAND | wxALL, 5 );
+	
+	this->SetSizer( bSizer15 );
+	this->Layout();
+	
+	// Connect Events
+	m_button17->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( AutoGUI_Preferences::apply ), NULL, this );
+	m_button18->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( AutoGUI_Preferences::close ), NULL, this );
+}
+
+AutoGUI_Preferences::~AutoGUI_Preferences()
+{
+	// Disconnect Events
+	m_button17->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( AutoGUI_Preferences::apply ), NULL, this );
+	m_button18->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( AutoGUI_Preferences::close ), NULL, this );
 }

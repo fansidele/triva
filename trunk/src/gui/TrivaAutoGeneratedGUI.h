@@ -73,6 +73,7 @@ class AutoGUI_Triva : public wxFrame
 		virtual void containerLabels( wxCommandEvent& event ){ event.Skip(); }
 		virtual void stateLabels( wxCommandEvent& event ){ event.Skip(); }
 		virtual void guiBaseSelection( wxCommandEvent& event ){ event.Skip(); }
+		virtual void guiPreferencesSelection( wxCommandEvent& event ){ event.Skip(); }
 		virtual void cameraForward( wxCommandEvent& event ){ event.Skip(); }
 		virtual void cameraBackward( wxCommandEvent& event ){ event.Skip(); }
 		virtual void cameraLeft( wxCommandEvent& event ){ event.Skip(); }
@@ -188,6 +189,32 @@ class AutoGUI_Base : public wxFrame
 	public:
 		AutoGUI_Base( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Visualization Base Configuration"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 650,300 ), long style = wxCAPTION|wxTAB_TRAVERSAL );
 		~AutoGUI_Base();
+	
+};
+
+///////////////////////////////////////////////////////////////////////////////
+/// Class AutoGUI_Preferences
+///////////////////////////////////////////////////////////////////////////////
+class AutoGUI_Preferences : public wxFrame 
+{
+	private:
+	
+	protected:
+		wxPanel* m_panel13;
+		wxStaticText* m_staticText7;
+		wxTextCtrl* m_textCtrl13;
+		wxStaticLine* m_staticline3;
+		wxButton* m_button17;
+		wxButton* m_button18;
+		
+		// Virtual event handlers, overide them in your derived class
+		virtual void apply( wxCommandEvent& event ){ event.Skip(); }
+		virtual void close( wxCommandEvent& event ){ event.Skip(); }
+		
+	
+	public:
+		AutoGUI_Preferences( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Triva Preferences"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 252,210 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
+		~AutoGUI_Preferences();
 	
 };
 
