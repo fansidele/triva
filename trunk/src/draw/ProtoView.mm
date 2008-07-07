@@ -97,6 +97,7 @@
 
 - (void)hierarchyChanged
 {
+	drawManager->resetCurrentVisualization();
 	if (baseState == ApplicationGraph){
 		[self recalculateApplicationGraphWithApplicationData];
 		drawManager->applicationGraphDraw (applicationGraphPosition);
