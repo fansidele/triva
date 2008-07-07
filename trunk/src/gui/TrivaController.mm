@@ -76,6 +76,8 @@ TrivaController::TrivaController( wxWindow* parent, wxWindowID id, const wxStrin
 	/* configuration of other windows */
 	guiBaseWindow = new GUI_Base(this);
 	guiBaseWindow->setController (this);
+
+	m3DFrame->SetFocus();
 }
 
 TrivaController::~TrivaController()
