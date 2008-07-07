@@ -18,7 +18,6 @@ private:
 	TrivaController *controller;
 
 protected:
-	void choice( wxCommandEvent& event );
 	void load( wxCommandEvent& event );
 	void apply( wxCommandEvent& event );
 	void close( wxCommandEvent& event );

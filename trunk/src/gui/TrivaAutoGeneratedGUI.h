@@ -33,6 +33,7 @@ class Triva3DFrame;
 #include <wx/choice.h>
 #include <wx/textctrl.h>
 #include <wx/notebook.h>
+#include <wx/checkbox.h>
 #include <wx/statline.h>
 
 ///////////////////////////////////////////////////////////////////////////
@@ -160,29 +161,32 @@ class AutoGUI_Base : public wxFrame
 	private:
 	
 	protected:
-		wxPanel* m_panel6;
-		wxStaticText* m_staticText6;
-		wxChoice* base_type;
+		wxPanel* m_panel11;
+		wxNotebook* base_type;
+		wxPanel* m_panel7;
 		wxStaticText* m_staticText7;
 		wxButton* configuration_file;
 		wxStaticText* m_staticText8;
 		wxTextCtrl* width;
 		wxStaticText* m_staticText9;
 		wxTextCtrl* height;
-		wxStaticLine* m_staticline1;
+		wxStaticText* m_staticText20;
+		wxCheckBox* m_checkBox1;
+		wxPanel* m_panel8;
+		wxStaticText* m_staticText21;
+		wxStaticLine* m_staticline3;
 		wxButton* m_button17;
 		wxButton* m_button18;
 		wxStatusBar* status;
 		
 		// Virtual event handlers, overide them in your derived class
-		virtual void choice( wxCommandEvent& event ){ event.Skip(); }
 		virtual void load( wxCommandEvent& event ){ event.Skip(); }
 		virtual void apply( wxCommandEvent& event ){ event.Skip(); }
 		virtual void close( wxCommandEvent& event ){ event.Skip(); }
 		
 	
 	public:
-		AutoGUI_Base( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Visualization Base"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 380,270 ), long style = wxCAPTION|wxTAB_TRAVERSAL );
+		AutoGUI_Base( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Visualization Base Configuration"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 650,300 ), long style = wxCAPTION|wxTAB_TRAVERSAL );
 		~AutoGUI_Base();
 	
 };

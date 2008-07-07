@@ -328,81 +328,101 @@ BundleGUI::~BundleGUI()
 
 AutoGUI_Base::AutoGUI_Base( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxFrame( parent, id, title, pos, size, style )
 {
-	this->SetSizeHints( wxSize( 380,270 ), wxSize( 380,270 ) );
+	this->SetSizeHints( wxSize( 650,300 ), wxSize( 650,300 ) );
 	
-	wxBoxSizer* bSizer9;
-	bSizer9 = new wxBoxSizer( wxHORIZONTAL );
+	wxBoxSizer* bSizer15;
+	bSizer15 = new wxBoxSizer( wxVERTICAL );
 	
-	m_panel6 = new wxPanel( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
-	wxBoxSizer* bSizer12;
-	bSizer12 = new wxBoxSizer( wxVERTICAL );
+	m_panel11 = new wxPanel( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	wxBoxSizer* bSizer10;
+	bSizer10 = new wxBoxSizer( wxVERTICAL );
 	
+	base_type = new wxNotebook( m_panel11, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxNB_FLAT|wxNB_LEFT|wxNB_MULTILINE|wxNB_NOPAGETHEME|wxNB_RIGHT|wxNB_TOP );
+	m_panel7 = new wxPanel( base_type, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	wxFlexGridSizer* fgSizer3;
 	fgSizer3 = new wxFlexGridSizer( 2, 2, 0, 0 );
 	fgSizer3->AddGrowableCol( 1 );
 	fgSizer3->SetFlexibleDirection( wxBOTH );
 	fgSizer3->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
 	
-	m_staticText6 = new wxStaticText( m_panel6, wxID_ANY, wxT("Base Type:"), wxDefaultPosition, wxDefaultSize, 0 );
-	m_staticText6->Wrap( -1 );
-	fgSizer3->Add( m_staticText6, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxTOP|wxBOTTOM|wxLEFT, 5 );
-	
-	wxString base_typeChoices[] = { wxT("Resources Squarified Treemap"), wxT("Application Graph") };
-	int base_typeNChoices = sizeof( base_typeChoices ) / sizeof( wxString );
-	base_type = new wxChoice( m_panel6, wxID_ANY, wxDefaultPosition, wxDefaultSize, base_typeNChoices, base_typeChoices, 0 );
-	base_type->SetSelection( 0 );
-	fgSizer3->Add( base_type, 0, wxALL|wxEXPAND, 5 );
-	
-	m_staticText7 = new wxStaticText( m_panel6, wxID_ANY, wxT("Configuration File:"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText7 = new wxStaticText( m_panel7, wxID_ANY, wxT("Configuration File:"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText7->Wrap( -1 );
 	fgSizer3->Add( m_staticText7, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxTOP|wxBOTTOM|wxLEFT, 5 );
 	
-	configuration_file = new wxButton( m_panel6, wxID_ANY, wxT("(no file loaded)"), wxDefaultPosition, wxDefaultSize, 0 );
+	configuration_file = new wxButton( m_panel7, wxID_ANY, wxT("(no file loaded)"), wxDefaultPosition, wxDefaultSize, 0 );
 	fgSizer3->Add( configuration_file, 0, wxALL|wxEXPAND, 5 );
 	
-	m_staticText8 = new wxStaticText( m_panel6, wxID_ANY, wxT("Width:"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText8 = new wxStaticText( m_panel7, wxID_ANY, wxT("Width:"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText8->Wrap( -1 );
 	fgSizer3->Add( m_staticText8, 0, wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL|wxTOP|wxBOTTOM|wxLEFT, 5 );
 	
-	width = new wxTextCtrl( m_panel6, wxID_ANY, wxT("600"), wxDefaultPosition, wxDefaultSize, wxTE_CENTRE|wxTE_DONTWRAP|wxTE_PROCESS_ENTER );
+	width = new wxTextCtrl( m_panel7, wxID_ANY, wxT("600"), wxDefaultPosition, wxDefaultSize, wxTE_CENTRE|wxTE_DONTWRAP|wxTE_PROCESS_ENTER );
 	fgSizer3->Add( width, 0, wxALL|wxEXPAND, 5 );
 	
-	m_staticText9 = new wxStaticText( m_panel6, wxID_ANY, wxT("Height:"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText9 = new wxStaticText( m_panel7, wxID_ANY, wxT("Height:"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText9->Wrap( -1 );
 	fgSizer3->Add( m_staticText9, 0, wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL|wxTOP|wxBOTTOM|wxLEFT, 5 );
 	
-	height = new wxTextCtrl( m_panel6, wxID_ANY, wxT("600"), wxDefaultPosition, wxDefaultSize, wxTE_CENTRE|wxTE_DONTWRAP|wxTE_PROCESS_ENTER );
+	height = new wxTextCtrl( m_panel7, wxID_ANY, wxT("600"), wxDefaultPosition, wxDefaultSize, wxTE_CENTRE|wxTE_DONTWRAP|wxTE_PROCESS_ENTER );
 	fgSizer3->Add( height, 0, wxALL|wxEXPAND, 5 );
 	
-	bSizer12->Add( fgSizer3, 1, wxEXPAND, 5 );
+	m_staticText20 = new wxStaticText( m_panel7, wxID_ANY, wxT("Dynamic Size:"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText20->Wrap( -1 );
+	fgSizer3->Add( m_staticText20, 0, wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL|wxTOP|wxBOTTOM|wxLEFT, 5 );
 	
-	m_staticline1 = new wxStaticLine( m_panel6, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL );
-	bSizer12->Add( m_staticline1, 0, wxEXPAND | wxALL, 5 );
+	m_checkBox1 = new wxCheckBox( m_panel7, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
 	
-	wxBoxSizer* bSizer11;
-	bSizer11 = new wxBoxSizer( wxHORIZONTAL );
+	m_checkBox1->Enable( false );
 	
-	m_button17 = new wxButton( m_panel6, wxID_ANY, wxT("&Apply"), wxDefaultPosition, wxDefaultSize, 0 );
-	bSizer11->Add( m_button17, 0, wxALL, 5 );
+	fgSizer3->Add( m_checkBox1, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	m_button18 = new wxButton( m_panel6, wxID_ANY, wxT("&Close"), wxDefaultPosition, wxDefaultSize, 0 );
-	bSizer11->Add( m_button18, 0, wxALL, 5 );
+	m_panel7->SetSizer( fgSizer3 );
+	m_panel7->Layout();
+	fgSizer3->Fit( m_panel7 );
+	base_type->AddPage( m_panel7, wxT("Resources Squarified Treemap"), true );
+	m_panel8 = new wxPanel( base_type, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	m_panel8->Enable( false );
 	
-	bSizer12->Add( bSizer11, 0, wxALIGN_RIGHT, 5 );
+	wxBoxSizer* bSizer17;
+	bSizer17 = new wxBoxSizer( wxVERTICAL );
 	
-	m_panel6->SetSizer( bSizer12 );
-	m_panel6->Layout();
-	bSizer12->Fit( m_panel6 );
-	bSizer9->Add( m_panel6, 1, wxEXPAND|wxALIGN_CENTER_VERTICAL, 5 );
+	m_staticText21 = new wxStaticText( m_panel8, wxID_ANY, wxT("Nothing to configure here."), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText21->Wrap( -1 );
+	bSizer17->Add( m_staticText21, 0, wxALL|wxALIGN_CENTER_HORIZONTAL, 5 );
 	
-	this->SetSizer( bSizer9 );
+	m_panel8->SetSizer( bSizer17 );
+	m_panel8->Layout();
+	bSizer17->Fit( m_panel8 );
+	base_type->AddPage( m_panel8, wxT("Application Graph"), false );
+	
+	bSizer10->Add( base_type, 1, wxEXPAND | wxALL, 5 );
+	
+	m_staticline3 = new wxStaticLine( m_panel11, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL );
+	bSizer10->Add( m_staticline3, 0, wxEXPAND | wxALL, 5 );
+	
+	wxBoxSizer* bSizer111;
+	bSizer111 = new wxBoxSizer( wxHORIZONTAL );
+	
+	m_button17 = new wxButton( m_panel11, wxID_ANY, wxT("&Apply"), wxDefaultPosition, wxDefaultSize, 0 );
+	bSizer111->Add( m_button17, 0, wxALL, 5 );
+	
+	m_button18 = new wxButton( m_panel11, wxID_ANY, wxT("&Close"), wxDefaultPosition, wxDefaultSize, 0 );
+	bSizer111->Add( m_button18, 0, wxALL, 5 );
+	
+	bSizer10->Add( bSizer111, 0, wxALIGN_RIGHT, 5 );
+	
+	m_panel11->SetSizer( bSizer10 );
+	m_panel11->Layout();
+	bSizer10->Fit( m_panel11 );
+	bSizer15->Add( m_panel11, 1, wxEXPAND | wxALL, 5 );
+	
+	this->SetSizer( bSizer15 );
 	this->Layout();
 	status = this->CreateStatusBar( 1, wxST_SIZEGRIP, wxID_ANY );
 	
 	this->Centre( wxBOTH );
 	
 	// Connect Events
-	base_type->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( AutoGUI_Base::choice ), NULL, this );
 	configuration_file->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( AutoGUI_Base::load ), NULL, this );
 	m_button17->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( AutoGUI_Base::apply ), NULL, this );
 	m_button18->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( AutoGUI_Base::close ), NULL, this );
@@ -411,7 +431,6 @@ AutoGUI_Base::AutoGUI_Base( wxWindow* parent, wxWindowID id, const wxString& tit
 AutoGUI_Base::~AutoGUI_Base()
 {
 	// Disconnect Events
-	base_type->Disconnect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( AutoGUI_Base::choice ), NULL, this );
 	configuration_file->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( AutoGUI_Base::load ), NULL, this );
 	m_button17->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( AutoGUI_Base::apply ), NULL, this );
 	m_button18->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( AutoGUI_Base::close ), NULL, this );

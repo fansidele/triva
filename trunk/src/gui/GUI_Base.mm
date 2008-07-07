@@ -4,32 +4,13 @@ extern std::string WXSTRINGtoSTDSTRING (wxString wsa);
 extern wxString NSSTRINGtoWXSTRING (NSString *ns);
 extern NSString *WXSTRINGtoNSSTRING (wxString wsa);
 
-void GUI_Base::choice ( wxCommandEvent& event )
-{
-	std::string option;
-
-	option = WXSTRINGtoSTDSTRING(base_type->GetStringSelection());
-	if (option.compare ("Application Graph") == 0){
-		configuration_file->Disable();
-		width->Disable();
-		height->Disable();
-	}else if (option.compare ("Resources Squarified Treemap") == 0){
-		configuration_file->Enable();
-		width->Enable();
-		height->Enable();
-	}else{
-		// do nothing
-	}
-	status->SetStatusText (NSSTRINGtoWXSTRING(@""));
-}
-
 void GUI_Base::apply ( wxCommandEvent& event )
 {
 	std::string option;
 	ProtoView *view = controller->getView();
 
 	NSUserDefaults *d = [NSUserDefaults standardUserDefaults];
-	option = WXSTRINGtoSTDSTRING(base_type->GetStringSelection());
+	option = WXSTRINGtoSTDSTRING(base_type->GetPageText(base_type->GetSelection()));
 	if (option.compare ("Application Graph") == 0){
 		[view applicationGraph];
 		status->SetStatusText (NSSTRINGtoWXSTRING(@"Application Graph OK"));
@@ -125,11 +106,13 @@ style )
 
 	NSString *o = [d stringForKey:@"BaseConfigurationOption"];
 	if (o != nil){
-		wxString opt = NSSTRINGtoWXSTRING(v);
-		base_type->SetStringSelection(opt);
-	}else{
-		base_type->SetStringSelection(NSSTRINGtoWXSTRING(@"Application Graph"));
+		wxString opt = NSSTRINGtoWXSTRING(o);
+		unsigned int i;
+		for (i = 0; i < base_type->GetPageCount(); i++){
+			if (opt == base_type->GetPageText(i)){
+				base_type->SetSelection(i);
+				break;
+			}
+		}
 	}
-	wxCommandEvent e;
-	this->choice (e);
 }
