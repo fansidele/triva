@@ -14,7 +14,15 @@ void DrawManager::drawOneContainerIntoTreemapbase
 	name.append ("-#-#-");
 	name.append ([[[entity entityType] name] cString]);
 
-	Ogre::SceneNode *n = node->createChildSceneNode(orname);
+	Ogre::SceneNode *n;
+	try {
+		n = node->createChildSceneNode (orname);
+
+	}catch (Ogre::Exception ex){
+		n = mSceneMgr->getSceneNode (orname);
+		n->setPosition(loc.x, 0, loc.y);
+		return;
+	}
 	Ogre::Entity *e;
 	try {
 		e = mSceneMgr->getEntity(orname);
