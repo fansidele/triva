@@ -8,7 +8,21 @@ SUBPROJECT_NAME=draw
 draw_OBJC_FILES=
 
 draw_SUBPROJECTS=layout position ambient extras
-draw_OBJCC_FILES=DrawManager.mm DrawManager+Mouse.mm DrawManager+Paje.mm DrawManager+Hierarchy.mm DrawManager+TimestampedObjects.mm DrawManager+Materials.mm ProtoView.mm ProtoView+Materials.mm ProtoView+Base.mm TrivaTreemap.mm TrivaTreemapSquarified.mm DrawManager+ApplicationGraph.mm DrawManager+SquarifiedTreemap.mm TrivaTreemap+Graphviz.mm
+draw_OBJCC_FILES= \
+	DrawManager.mm \
+	DrawManager+Mouse.mm \
+	DrawManager+Paje.mm \
+	DrawManager+Hierarchy.mm \
+	DrawManager+TimestampedObjects.mm \
+	DrawManager+Materials.mm \
+	DrawManager+ApplicationGraph.mm \
+	DrawManager+SquarifiedTreemap.mm \
+	ProtoView.mm \
+	ProtoView+Materials.mm \
+	ProtoView+Base.mm \
+	TrivaTreemap.mm \
+	TrivaTreemapSquarified.mm \
+	TrivaTreemap+Graphviz.mm
 
 draw_INCLUDE_DIRS += @CPPFLAGS@
 draw_LIB_DIRS += @LIBS@
