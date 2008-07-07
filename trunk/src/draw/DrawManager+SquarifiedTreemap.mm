@@ -165,16 +165,21 @@ void DrawManager::squarifiedTreemapDraw (TrivaTreemapSquarified *root)
 	if (!currentVisuNode){
 		this->resetCurrentVisualization();
 	}
+	this->squarifiedTreemapDelete();
+	baseSceneNode = currentVisuNode->createChildSceneNode();
+	this->treemapRecursiveDraw (root, baseSceneNode);
+}
+
+void DrawManager::squarifiedTreemapDelete ()
+{
 	if (baseSceneNode){
 		baseSceneNode->removeAndDestroyAllChildren();
 		mSceneMgr->destroySceneNode (baseSceneNode->getName());
 		baseSceneNode = NULL;
 	}
-	baseSceneNode = currentVisuNode->createChildSceneNode();
-	this->treemapRecursiveDraw (root, baseSceneNode);
 }
 
-void DrawManager::initializeBaseCategory ()
+void DrawManager::initializeSquarifiedTreemapCategory ()
 {
 	baseSceneNode = NULL;
 }

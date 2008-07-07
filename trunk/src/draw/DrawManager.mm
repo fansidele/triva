@@ -48,7 +48,7 @@ DrawManager::DrawManager (ProtoView *view)
 	this->createMouseCursors();
 
 	//initializing Base category
-	this->initializeBaseCategory();
+	this->initializeSquarifiedTreemapCategory();
 } 
 
 DrawManager::~DrawManager()

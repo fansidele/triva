@@ -59,7 +59,7 @@
 - (void) disableVisualizationBase: (TrivaVisualizationBaseState) baseCode
 {
 	if (baseCode == SquarifiedTreemap){
-
+		drawManager->squarifiedTreemapDelete ();
 	}else if (baseCode == OriginalTreemap){
 
 	}else if (baseCode == ResourcesGraph){

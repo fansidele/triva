@@ -82,19 +82,20 @@ protected:
 public:
 	void setTrivaController (TrivaController *triva);
 
-// (VISUALIZATION) BASE CATEGORY
- 	void treemapRecursiveDraw (TrivaTreemap *root, Ogre::SceneNode *node);
-	void squarifiedTreemapDraw (TrivaTreemapSquarified *root);
-	Ogre::SceneNode *baseSceneNode;
-	void initializeBaseCategory ();
+// CATEGORY: ApplicationGraph
 	void applicationGraphRecursiveDraw (id entity, Position *position, 
 		Ogre::SceneNode *node);
 	void applicationGraphDraw (Position *position);
 
-// CATEGORY: Squarified (functions to draw applic. data over a treemap base)
+// CATEGORY: SquarifiedTreemap
 public:
  	void drawContainersIntoTreemapBase ();
+	void squarifiedTreemapDraw (TrivaTreemapSquarified *root);
+	void squarifiedTreemapDelete ();
 private:
+	Ogre::SceneNode *baseSceneNode;
+ 	void treemapRecursiveDraw (TrivaTreemap *root, Ogre::SceneNode *node);
+	void initializeSquarifiedTreemapCategory ();
 	void drawContainersIntoTreemapBase (id entity);
 	void drawOneContainerIntoTreemapbase (id container, Ogre::SceneNode *n,
 			NSPoint loc);
