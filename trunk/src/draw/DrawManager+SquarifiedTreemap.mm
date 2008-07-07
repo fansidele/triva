@@ -162,11 +162,12 @@ void DrawManager::treemapRecursiveDraw (TrivaTreemap *root, Ogre::SceneNode *nod
 
 void DrawManager::squarifiedTreemapDraw (TrivaTreemapSquarified *root)
 {
-	if (!currentVisuNode){
-		this->resetCurrentVisualization();
+	try{
+		baseSceneNode = currentVisuNode->createChildSceneNode("SquarifiedTreemap");
+	}catch (Ogre::Exception ex){
+		baseSceneNode = mSceneMgr->getSceneNode ("SquarifiedTreemap");
+		baseSceneNode->removeAndDestroyAllChildren();
 	}
-	this->squarifiedTreemapDelete();
-	baseSceneNode = currentVisuNode->createChildSceneNode();
 	this->treemapRecursiveDraw (root, baseSceneNode);
 }
 
