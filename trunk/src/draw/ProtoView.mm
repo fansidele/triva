@@ -111,6 +111,11 @@
 //	[self printAll];
 }
 
+- (void) timeLimitsChanged
+{
+	drawManager->createTimestampedObjects ();
+}
+
 - (DrawManager *) drawManager
 {
 	return drawManager;
