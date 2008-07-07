@@ -54,6 +54,9 @@ private:
 	void drawStates (PajeEntityType *et, id container);
 	void drawLinks (PajeEntityType *et, id container);
 
+	Ogre::SceneNode *drawOneContainer (id cont, Ogre::SceneNode *node,
+					float x,float y);
+
 
 //MATERIALS CATEGORY
 private:

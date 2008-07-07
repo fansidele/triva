@@ -9,57 +9,7 @@ void DrawManager::drawContainersIntoTreemapBase ()
 void DrawManager::drawOneContainerIntoTreemapbase 
 		(id entity, Ogre::SceneNode *node, NSPoint loc)
 {
-	std::string orname = std::string ([[entity name] cString]);
-	std::string name = std::string(orname);
-	name.append ("-#-#-");
-	name.append ([[[entity entityType] name] cString]);
-
-	Ogre::SceneNode *n;
-	try {
-		n = node->createChildSceneNode (orname);
-
-	}catch (Ogre::Exception ex){
-		n = mSceneMgr->getSceneNode (orname);
-		n->setPosition(loc.x, 0, loc.y);
-		return;
-	}
-	Ogre::Entity *e;
-	try {
-		e = mSceneMgr->getEntity(orname);
-	}catch (Ogre::Exception ex){
-		e = mSceneMgr->createEntity (orname, 
-				Ogre::SceneManager::PT_CUBE);
-	}
-	e->setUserAny (Ogre::Any (name));
-	e->setMaterialName ("VisuApp/Base");
-	e->setQueryFlags(CONTAINER_MASK);
-	Ogre::SceneNode *entn = n->createChildSceneNode();
-	entn->attachObject (e);
-	entn->setScale (.3,.01,.3);
-	entn->setInheritScale (false);
-
-	MovableText *text;
-	Ogre::SceneNode *entnt = n->createChildSceneNode();
-	NSString *textid = [NSString stringWithFormat: @"%@-t", [entity name]];
-	text = new MovableText ([textid cString], [textid cString]);
-	text->setColor (Ogre::ColourValue::Blue);
-	text->setCharacterHeight (15);
-	entnt->setInheritScale (false);
-	entnt->attachObject (text);
-
-	n->setPosition (loc.x, 0, loc.y);
-
-/*
-	Ogre::Vector3 newPos;
-	NSArray *nodePos = [pos objectForKey: [entity name]];
-	if ([nodePos count] == 2){
-		newPos =  Ogre::Vector3 (Ogre::Real([[nodePos objectAtIndex: 0]
-doubleValue]*2), 0, Ogre::Real([[nodePos objectAtIndex: 1] doubleValue]*2));	
-	}else{
-		newPos =  Ogre::Vector3 (0,0,0);
-	}
-	n->setPosition (newPos);
-*/
+	this->drawOneContainer (entity, node, loc.x, loc.y);
 }
 
 
