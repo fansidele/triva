@@ -20,14 +20,16 @@ void DrawManager::destroyAllChildren (Ogre::SceneNode *node)
 
 void DrawManager::resetCurrentVisualization ()
 {
-//	NSLog (@"currentVisuNode = %p", currentVisuNode);
-	if (currentVisuNode){
+	Ogre::SceneNode *root = mSceneMgr->getRootSceneNode();
+	try {
+		currentVisuNode = root->createChildSceneNode("CurrentVisu");
+	}catch(Ogre::Exception ex){
+		//already exists, what to do?
+		currentVisuNode = mSceneMgr->getSceneNode ("CurrentVisu");
+
+		//remove everything
 		currentVisuNode->removeAndDestroyAllChildren();
-//		std::cout<<"Destroying "<<currentVisuNode->getName()<<std::endl;
-		mSceneMgr->destroySceneNode (currentVisuNode->getName());
-		currentVisuNode = NULL;
 	}
-	currentVisuNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 }
 
 
