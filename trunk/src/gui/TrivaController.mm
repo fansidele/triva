@@ -78,6 +78,11 @@ TrivaController::TrivaController( wxWindow* parent, wxWindowID id, const wxStrin
 	guiBaseWindow->setController (this);
 
 	m3DFrame->SetFocus();
+
+	/* configuring scrollbar */
+	scrollbarPosition = 0;
+	scrollbarRange = 0;
+	scrollbarPage = 0;
 }
 
 TrivaController::~TrivaController()
