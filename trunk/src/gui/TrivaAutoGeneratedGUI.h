@@ -47,7 +47,6 @@ class AutoGUI_Triva : public wxFrame
 	private:
 	
 	protected:
-		Triva3DFrame* m3DFrame;
 		wxScrollBar* scrollbar;
 		wxMenuBar* m_menubar2;
 		wxMenu* application;
@@ -91,6 +90,7 @@ class AutoGUI_Triva : public wxFrame
 		
 	
 	public:
+		Triva3DFrame* m3DFrame;
 		AutoGUI_Triva( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("TRIVA"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 585,480 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
 		~AutoGUI_Triva();
 	
