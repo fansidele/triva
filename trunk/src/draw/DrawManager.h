@@ -68,8 +68,8 @@ public:
 	void registerColor (std::string state, std::string value, Ogre::ColourValue col);
 
 // MOUSE CATEGORY
-private:
 	TrivaController *trivaController;
+private:
 	Ogre::RaySceneQuery *mRaySceneQuery;
 	Ogre::MovableObject *mCurrentObject;
 	bool mLMouseDown, mRMouseDown;
