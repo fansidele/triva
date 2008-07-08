@@ -41,6 +41,19 @@ void CameraManager::moveCamera ()
 	mDirection = Ogre::Vector3::ZERO;
 }
 
+void CameraManager::moveCameraToY (float y)
+{
+	Ogre::Vector3 cameraPos;
+	cameraPos = mCamera->getPosition();
+	cameraPos.y = y;
+	mCamera->setPosition (cameraPos);
+}
+
+float CameraManager::getYPosition ()
+{
+	return mCamera->getPosition().y;
+}
+
 void CameraManager::onKeyDownEvent(wxKeyEvent& evt)
 { 
 //	std::cout << __FILE__ << "::" << __FUNCTION__ << std::endl;
