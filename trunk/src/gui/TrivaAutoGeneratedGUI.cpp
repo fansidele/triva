@@ -16,13 +16,13 @@ AutoGUI_Triva::AutoGUI_Triva( wxWindow* parent, wxWindowID id, const wxString& t
 	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
 	
 	wxBoxSizer* bSizer3;
-	bSizer3 = new wxBoxSizer( wxVERTICAL );
+	bSizer3 = new wxBoxSizer( wxHORIZONTAL );
 	
 	m3DFrame = new Triva3DFrame( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	bSizer3->Add( m3DFrame, 1, wxEXPAND|wxALL|wxALIGN_CENTER_HORIZONTAL, 0 );
 	
-	m_scrollBar2 = new wxScrollBar( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSB_HORIZONTAL );
-	bSizer3->Add( m_scrollBar2, 0, wxALL|wxEXPAND, 5 );
+	scrollbar = new wxScrollBar( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSB_VERTICAL );
+	bSizer3->Add( scrollbar, 0, wxALL|wxEXPAND, 5 );
 	
 	this->SetSizer( bSizer3 );
 	this->Layout();
@@ -127,6 +127,15 @@ AutoGUI_Triva::AutoGUI_Triva( wxWindow* parent, wxWindowID id, const wxString& t
 	// Connect Events
 	this->Connect( wxEVT_KILL_FOCUS, wxFocusEventHandler( AutoGUI_Triva::killFocus ) );
 	this->Connect( wxEVT_SET_FOCUS, wxFocusEventHandler( AutoGUI_Triva::setFocus ) );
+	scrollbar->Connect( wxEVT_SCROLL_TOP, wxScrollEventHandler( AutoGUI_Triva::scrollbarEvent ), NULL, this );
+	scrollbar->Connect( wxEVT_SCROLL_BOTTOM, wxScrollEventHandler( AutoGUI_Triva::scrollbarEvent ), NULL, this );
+	scrollbar->Connect( wxEVT_SCROLL_LINEUP, wxScrollEventHandler( AutoGUI_Triva::scrollbarEvent ), NULL, this );
+	scrollbar->Connect( wxEVT_SCROLL_LINEDOWN, wxScrollEventHandler( AutoGUI_Triva::scrollbarEvent ), NULL, this );
+	scrollbar->Connect( wxEVT_SCROLL_PAGEUP, wxScrollEventHandler( AutoGUI_Triva::scrollbarEvent ), NULL, this );
+	scrollbar->Connect( wxEVT_SCROLL_PAGEDOWN, wxScrollEventHandler( AutoGUI_Triva::scrollbarEvent ), NULL, this );
+	scrollbar->Connect( wxEVT_SCROLL_THUMBTRACK, wxScrollEventHandler( AutoGUI_Triva::scrollbarEvent ), NULL, this );
+	scrollbar->Connect( wxEVT_SCROLL_THUMBRELEASE, wxScrollEventHandler( AutoGUI_Triva::scrollbarEvent ), NULL, this );
+	scrollbar->Connect( wxEVT_SCROLL_CHANGED, wxScrollEventHandler( AutoGUI_Triva::scrollbarEvent ), NULL, this );
 	this->Connect( m_menuItem6->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( AutoGUI_Triva::loadBundle ) );
 	this->Connect( m_menuItem5->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( AutoGUI_Triva::exit ) );
 	this->Connect( clabels->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( AutoGUI_Triva::containerLabels ) );
@@ -153,6 +162,15 @@ AutoGUI_Triva::~AutoGUI_Triva()
 	// Disconnect Events
 	this->Disconnect( wxEVT_KILL_FOCUS, wxFocusEventHandler( AutoGUI_Triva::killFocus ) );
 	this->Disconnect( wxEVT_SET_FOCUS, wxFocusEventHandler( AutoGUI_Triva::setFocus ) );
+	scrollbar->Disconnect( wxEVT_SCROLL_TOP, wxScrollEventHandler( AutoGUI_Triva::scrollbarEvent ), NULL, this );
+	scrollbar->Disconnect( wxEVT_SCROLL_BOTTOM, wxScrollEventHandler( AutoGUI_Triva::scrollbarEvent ), NULL, this );
+	scrollbar->Disconnect( wxEVT_SCROLL_LINEUP, wxScrollEventHandler( AutoGUI_Triva::scrollbarEvent ), NULL, this );
+	scrollbar->Disconnect( wxEVT_SCROLL_LINEDOWN, wxScrollEventHandler( AutoGUI_Triva::scrollbarEvent ), NULL, this );
+	scrollbar->Disconnect( wxEVT_SCROLL_PAGEUP, wxScrollEventHandler( AutoGUI_Triva::scrollbarEvent ), NULL, this );
+	scrollbar->Disconnect( wxEVT_SCROLL_PAGEDOWN, wxScrollEventHandler( AutoGUI_Triva::scrollbarEvent ), NULL, this );
+	scrollbar->Disconnect( wxEVT_SCROLL_THUMBTRACK, wxScrollEventHandler( AutoGUI_Triva::scrollbarEvent ), NULL, this );
+	scrollbar->Disconnect( wxEVT_SCROLL_THUMBRELEASE, wxScrollEventHandler( AutoGUI_Triva::scrollbarEvent ), NULL, this );
+	scrollbar->Disconnect( wxEVT_SCROLL_CHANGED, wxScrollEventHandler( AutoGUI_Triva::scrollbarEvent ), NULL, this );
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( AutoGUI_Triva::loadBundle ) );
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( AutoGUI_Triva::exit ) );
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( AutoGUI_Triva::containerLabels ) );

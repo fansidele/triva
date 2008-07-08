@@ -18,6 +18,7 @@ view_OBJCC_FILES= \
 	TrivaController+Draw.mm \
 	TrivaController+Select.mm \
 	TrivaController+Camera.mm \
+	TrivaController+Scrollbar.mm \
 	BundleGUIEvents.mm \
 	GUI_Base.mm
 

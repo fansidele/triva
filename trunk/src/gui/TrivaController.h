@@ -127,6 +127,15 @@ protected:
 	void cameraRight( wxCommandEvent& event );
 	void cameraUp( wxCommandEvent& event );
 	void cameraDown( wxCommandEvent& event );
+
+/* scrollbar category */
+protected:
+	int scrollbarPosition;
+	int scrollbarRange;
+	int scrollbarPage;
+	void scrollbarEvent( wxScrollEvent& event );
+public:
+	void scrollbarUpdate (float start, float end);
 };
 
 #endif // __TrivaController__

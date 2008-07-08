@@ -48,7 +48,7 @@ class AutoGUI_Triva : public wxFrame
 	
 	protected:
 		Triva3DFrame* m3DFrame;
-		wxScrollBar* m_scrollBar2;
+		wxScrollBar* scrollbar;
 		wxMenuBar* m_menubar2;
 		wxMenu* application;
 		wxMenu* m_menu3;
@@ -68,6 +68,7 @@ class AutoGUI_Triva : public wxFrame
 		// Virtual event handlers, overide them in your derived class
 		virtual void killFocus( wxFocusEvent& event ){ event.Skip(); }
 		virtual void setFocus( wxFocusEvent& event ){ event.Skip(); }
+		virtual void scrollbarEvent( wxScrollEvent& event ){ event.Skip(); }
 		virtual void loadBundle( wxCommandEvent& event ){ event.Skip(); }
 		virtual void exit( wxCommandEvent& event ){ event.Skip(); }
 		virtual void containerLabels( wxCommandEvent& event ){ event.Skip(); }
