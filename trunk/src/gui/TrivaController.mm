@@ -80,9 +80,10 @@ TrivaController::TrivaController( wxWindow* parent, wxWindowID id, const wxStrin
 	m3DFrame->SetFocus();
 
 	/* configuring scrollbar */
-	scrollbarPosition = 0;
-	scrollbarRange = 0;
-	scrollbarPage = 0;
+	scrollbarPosition = cameraManager->getYPosition();
+	scrollbarRange = 10000;
+	scrollbarPage = 100;
+	this->adjustScrollbar();
 }
 
 TrivaController::~TrivaController()

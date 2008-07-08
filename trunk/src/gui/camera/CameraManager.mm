@@ -39,6 +39,7 @@ void CameraManager::moveCamera ()
 	mRotX = 0;
 	mRotY = 0;
 	mDirection = Ogre::Vector3::ZERO;
+	controller->cameraMoved();
 }
 
 void CameraManager::moveCameraToY (float y)

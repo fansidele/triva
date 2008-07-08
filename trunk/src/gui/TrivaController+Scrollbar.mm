@@ -1,21 +1,35 @@
 #include "TrivaController.h"
 
-void TrivaController::scrollbarUpdate(float s, float e)
+void TrivaController::scrollbarUpdate(float start, float end)
 {
-	//all values in microseconds (because scrollbar holds only int's, so we
-	//need to get numbers at least greater than 1)
-	int start = s * 1000000;
-	int end = e * 1000000;
-	int windowSize = 1000000;
-
 	scrollbarRange = end - start;
 	scrollbarPage = (float)scrollbarRange * .10;
-	scrollbar->SetScrollbar (scrollbarPosition, windowSize,
-		scrollbarRange, scrollbarPage, true);
+	this->adjustScrollbar();
+}
+
+#define SCROLLBAR_T 100
+
+void TrivaController::cameraMoved ()
+{
+	scrollbarPosition = cameraManager->getYPosition();
+	adjustScrollbar();
 }
 
 void TrivaController::scrollbarEvent( wxScrollEvent& event )
 {
-	scrollbarPosition = event.GetPosition();\
-	std::cout << scrollbarPosition << std::endl;
+	scrollbarPosition = event.GetPosition();
+	cameraManager->moveCameraToY (scrollbarPosition/SCROLLBAR_T);
 }
+
+void TrivaController::adjustScrollbar()
+{
+	float windowSize = 1000;
+	int pos = scrollbarPosition*SCROLLBAR_T;
+	int thumbsize = windowSize*SCROLLBAR_T;
+	int range = scrollbarRange*SCROLLBAR_T;
+	int page = scrollbarPage*SCROLLBAR_T;
+	scrollbar->SetScrollbar (pos, thumbsize, range, page);
+
+}
+
+#undef MICROSECONDS

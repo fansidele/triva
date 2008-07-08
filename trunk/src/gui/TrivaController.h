@@ -130,11 +130,13 @@ protected:
 
 /* scrollbar category */
 protected:
-	int scrollbarPosition;
-	int scrollbarRange;
-	int scrollbarPage;
+	float scrollbarPosition;
+	float scrollbarRange;
+	float scrollbarPage;
 	void scrollbarEvent( wxScrollEvent& event );
+	void adjustScrollbar ();
 public:
+	void cameraMoved ();
 	void scrollbarUpdate (float start, float end);
 };
 
