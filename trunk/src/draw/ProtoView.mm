@@ -114,6 +114,12 @@
 - (void) timeLimitsChanged
 {
 	drawManager->createTimestampedObjects ();
+
+	//updating scroll bar
+	float s, e;
+	s = [[NSString stringWithFormat: @"%@", [self startTime]] floatValue];
+	e = [[NSString stringWithFormat: @"%@", [self endTime]] floatValue];
+	drawManager->trivaController->scrollbarUpdate (s, e);
 }
 
 - (DrawManager *) drawManager
