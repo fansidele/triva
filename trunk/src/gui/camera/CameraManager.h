@@ -19,6 +19,8 @@ public:
 	void cameraRight ();
 	void cameraUp ();
 	void cameraDown ();
+	void moveCameraToY (float y);
+	float getYPosition ();
 
 protected:
 	void onKeyDownEvent(wxKeyEvent& evt);
