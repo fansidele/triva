@@ -77,9 +77,13 @@ TrivaController::TrivaController( wxWindow* parent, wxWindowID id, const wxStrin
 	guiBaseWindow = new GUI_Base(this);
 	guiBaseWindow->setController (this);
 
+	guiPreferencesWindow = new GUI_Preferences(this);
+	guiPreferencesWindow->setController (this);
+
 	m3DFrame->SetFocus();
 
 	/* configuring scrollbar */
+	timeWindow = 0;
 	scrollbarPosition = cameraManager->getYPosition();
 	scrollbarRange = 10000;
 	scrollbarPage = 100;
@@ -227,5 +231,14 @@ void TrivaController::guiBaseSelection( wxCommandEvent& event )
 		guiBaseWindow->Hide();
 	}else{
 		guiBaseWindow->Show();
+	}
+}
+
+void TrivaController::guiPreferencesSelection( wxCommandEvent& event )
+{
+	if (guiPreferencesWindow->IsShown()){
+		guiPreferencesWindow->Hide();
+	}else{
+		guiPreferencesWindow->Show();
 	}
 }

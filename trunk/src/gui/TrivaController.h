@@ -17,10 +17,12 @@
 #include "reader/TrivaPajeReader.h"
 
 #include "gui/GUI_Base.h"
+#include "gui/GUI_Preferences.h"
 
 class TrivaColorWindowEvents;
 class BundleGUIEvents;
 class GUI_Base;
+class GUI_Preferences;
 
 enum TrivaApplicationState {Initialized,Configured,Running,Paused};
 
@@ -36,8 +38,10 @@ private:
 	std::vector<BundleGUIEvents*> bundlesGUI;
 
 	GUI_Base *guiBaseWindow;
+	GUI_Preferences *guiPreferencesWindow;
 protected:
 	void guiBaseSelection( wxCommandEvent& event );
+	void guiPreferencesSelection( wxCommandEvent& event );
 
 protected:
 	// Handlers for TRIVAGUI events.
@@ -133,11 +137,13 @@ protected:
 	float scrollbarPosition;
 	float scrollbarRange;
 	float scrollbarPage;
+	float timeWindow;
 	void scrollbarEvent( wxScrollEvent& event );
 	void adjustScrollbar ();
 public:
 	void cameraMoved ();
 	void scrollbarUpdate (float start, float end);
+	void setTimeWindow (float t);
 };
 
 #endif // __TrivaController__
