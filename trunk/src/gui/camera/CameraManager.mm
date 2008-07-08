@@ -44,10 +44,13 @@ void CameraManager::moveCamera ()
 
 void CameraManager::moveCameraToY (float y)
 {
+	static float anty = 0;
+	
 	Ogre::Vector3 cameraPos;
 	cameraPos = mCamera->getPosition();
-	cameraPos.y = y;
+	cameraPos.y += (y - anty);
 	mCamera->setPosition (cameraPos);
+	anty = y;
 }
 
 float CameraManager::getYPosition ()
