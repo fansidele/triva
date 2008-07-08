@@ -101,6 +101,7 @@ void CameraManager::onKeyUpEvent (wxKeyEvent& evt)
 
 void CameraManager::onMouseEvent(wxMouseEvent& evt)
 {
+	controller->m3DFrame->SetFocus();
 	static int lx = 0, ly = 0;
 	if (evt.RightDown()){
 		lx = evt.GetX();
