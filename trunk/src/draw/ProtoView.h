@@ -27,8 +27,12 @@ enum TrivaVisualizationBaseState {
 
 	//variables to bse used by Base category - application graph
 	Position *applicationGraphPosition;
+
+	double pointsPerSecond;
 }
 - (DrawManager *) drawManager;
+- (void) setPointsPerSecond: (double) nv;
+- (double) pointsPerSecond;
 @end
 
 @interface ProtoView (Materials)

@@ -3,13 +3,17 @@
 void TrivaController::configureZoom ()
 {
 	NSUserDefaults *d = [NSUserDefaults standardUserDefaults];
-	NSString *v = [d stringForKey:@"yScale"];
+	NSString *v = [d stringForKey:@"pointsPerSecond"];
+	double nv;
 	if (v != nil){
-		yScale = [v doubleValue];
+		nv = [v doubleValue];
 	}else{
-		yScale = 1.0;
+		nv = 1.0;
 	}
-	xScale = zScale = 1.0;
+
+	[view setPointsPerSecond: nv];
+
+	xScale = zScale = yScale = 1.0;
 
 	Ogre::Root *mRoot;
 	Ogre::SceneManager *mSceneMgr;
@@ -20,31 +24,23 @@ void TrivaController::configureZoom ()
 
 void TrivaController::zoomIn ( wxCommandEvent& event )
 {
-	Ogre::Root *mRoot;
-	Ogre::SceneManager *mSceneMgr;
-	mRoot = Ogre::Root::getSingletonPtr ();
-	mSceneMgr = mRoot->getSceneManager("VisuSceneManager");
+	[view setPointsPerSecond: ([view pointsPerSecond] * 2)];
 
-	yScale += yScale/5;
-	mSceneMgr->getRootSceneNode()->setScale (xScale,yScale,zScale);
-	
 	NSUserDefaults *d = [NSUserDefaults standardUserDefaults];
-	[d setObject: [NSString stringWithFormat: @"%f", yScale] forKey: @"yScale"];
+	[d setObject: [NSString stringWithFormat: @"%f",
+				[view pointsPerSecond]]
+		forKey: @"pointsPerSecond"];
 	[d synchronize];
 }
 
 void TrivaController::zoomOut ( wxCommandEvent& event )
 {
-	Ogre::Root *mRoot;
-	Ogre::SceneManager *mSceneMgr;
-	mRoot = Ogre::Root::getSingletonPtr ();
-	mSceneMgr = mRoot->getSceneManager("VisuSceneManager");
-
-	yScale -= yScale/5;
-	mSceneMgr->getRootSceneNode()->setScale (xScale,yScale,zScale);
+	[view setPointsPerSecond: ([view pointsPerSecond] / 2)];
 
 	NSUserDefaults *d = [NSUserDefaults standardUserDefaults];
-	[d setObject: [NSString stringWithFormat: @"%f", yScale] forKey: @"yScale"];
+	[d setObject: [NSString stringWithFormat: @"%f",
+				[view pointsPerSecond]]
+		forKey: @"pointsPerSecond"];
 	[d synchronize];
 }
 

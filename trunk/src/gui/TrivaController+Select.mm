@@ -63,7 +63,7 @@ void TrivaController::selectState (Ogre::MovableObject
 	/* search for time of selected object */
 	Ogre::Vector3 pos = objectToSelect->getParentSceneNode()->getPosition();
 	double time;
-	time = pos.y;
+	time = pos.y / [view pointsPerSecond];
 //	time = hitAt.y;
 
 	/* search for objectEntityType */

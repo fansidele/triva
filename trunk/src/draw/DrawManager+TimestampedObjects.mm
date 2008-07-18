@@ -16,7 +16,7 @@ void DrawManager::drawStates (PajeEntityType *et, id container)
 			inContainer: container
 			fromTime:[viewController startTime]
 			toTime:[viewController endTime]
-			minDuration: 0];
+			minDuration: 1/[viewController pointsPerSecond]];
 	PajeEntity *ent;
 	while ((ent = [en3 nextObject]) != nil) {
 		Ogre::SceneNode *ssn;
@@ -50,7 +50,9 @@ void DrawManager::drawStates (PajeEntityType *et, id container)
 		int imbric;
 
 		start = [[[ent startTime] description] doubleValue];
+		start *= [viewController pointsPerSecond];
 		end = [[[ent endTime] description] doubleValue];
+		end *= [viewController pointsPerSecond];
 		imbric = [ent imbricationLevel];
 
 		double kk = 0.3-(0.3/5*imbric);
@@ -68,7 +70,7 @@ void DrawManager::drawLinks (PajeEntityType *et, id container)
 			inContainer: container
 			fromTime:[viewController startTime]
 			toTime:[viewController endTime]
-			minDuration: 0];
+			minDuration: 1/[viewController pointsPerSecond]];
 	PajeEntity *ent;
 	while ((ent = [en4 nextObject]) != nil) {
 		NSString *ide = [NSString stringWithFormat: @"%@-#-#-%@-#-#-%@-#-#-%@", [ent description], [container name], [et name], [[container entityType] name]];
@@ -89,7 +91,9 @@ void DrawManager::drawLinks (PajeEntityType *et, id container)
 		double start;
 		double end;
 		start = [[[ent time] description] doubleValue];
+		start *= [viewController pointsPerSecond];
 		end = [[[ent endTime] description] doubleValue];
+		end *= [viewController pointsPerSecond];
 
 		Ogre::ManualObject *ste;
 		try {
@@ -142,7 +146,7 @@ void DrawManager::updateLinksPositions (PajeEntityType *et, id container)
 			inContainer: container
 			fromTime:[viewController startTime]
 			toTime:[viewController endTime]
-			minDuration: 0];
+			minDuration: 1/[viewController pointsPerSecond]];
 	PajeEntity *ent;
 	while ((ent = [en4 nextObject]) != nil) {
 		NSString *ide = [NSString stringWithFormat: @"%@-#-#-%@-#-#-%@-#-#-%@", [ent description], [container name], [et name], [[container entityType] name]];
@@ -160,7 +164,9 @@ void DrawManager::updateLinksPositions (PajeEntityType *et, id container)
 		double start;
 		double end;
 		start = [[[ent time] description] doubleValue];
+		start *= [viewController pointsPerSecond];
 		end = [[[ent endTime] description] doubleValue];
+		end *= [viewController pointsPerSecond];
 
 		Ogre::ManualObject *ste;
 		try {

@@ -168,7 +168,7 @@
                         inContainer: instance
                         fromTime:[self startTime]
                         toTime:[self endTime]
-                        minDuration: 0];
+                        minDuration: 1/pointsPerSecond];
                         PajeEntity *ent;
                         while ((ent = [en4 nextObject]) != nil) {
                                 NSString *sn = [[ent sourceContainer] name];

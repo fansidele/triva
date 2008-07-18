@@ -80,7 +80,7 @@
                                       inContainer:instance
                                          fromTime:[self startTime]
                                            toTime:[self endTime]
-                                      minDuration:0];
+                                      minDuration:1/pointsPerSecond];
             while ((ent = [en3 nextObject]) != nil) {
                 NSLog(@"e%*.*s%@", level+2, level+2, "", [self descriptionForEntity:ent]);
             }
@@ -125,5 +125,17 @@
 - (DrawManager *) drawManager
 {
 	return drawManager;
+}
+
+- (void) setPointsPerSecond: (double) nv
+{
+	pointsPerSecond = nv;
+	NSLog (@"pointsPerSecond is %f", nv);
+	[self hierarchyChanged];
+}
+
+- (double) pointsPerSecond
+{
+	return pointsPerSecond;
 }
 @end
