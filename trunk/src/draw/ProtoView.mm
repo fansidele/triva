@@ -108,18 +108,13 @@
 		drawManager->drawContainersIntoTreemapBase ();
 		drawManager->createTimestampedObjects ();
 	}
-//	[self printAll];
+	[self updateScrollbar];
 }
 
 - (void) timeLimitsChanged
 {
 	drawManager->createTimestampedObjects ();
-
-	//updating scroll bar
-	float s, e;
-	s = [[NSString stringWithFormat: @"%@", [self startTime]] floatValue];
-	e = [[NSString stringWithFormat: @"%@", [self endTime]] floatValue];
-	drawManager->trivaController->scrollbarUpdate (s, e);
+	[self updateScrollbar];
 }
 
 - (DrawManager *) drawManager
@@ -137,5 +132,16 @@
 - (double) pointsPerSecond
 {
 	return pointsPerSecond;
+}
+
+- (void) updateScrollbar
+{
+	//updating scroll bar
+	float s, e;
+	s = [[NSString stringWithFormat: @"%@", [self startTime]] floatValue];
+	e = [[NSString stringWithFormat: @"%@", [self endTime]] floatValue];
+	s = s * pointsPerSecond;
+	e = e * pointsPerSecond;
+	drawManager->trivaController->scrollbarUpdate (s, e);
 }
 @end

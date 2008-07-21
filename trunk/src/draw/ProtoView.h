@@ -33,6 +33,7 @@ enum TrivaVisualizationBaseState {
 - (DrawManager *) drawManager;
 - (void) setPointsPerSecond: (double) nv;
 - (double) pointsPerSecond;
+- (void) updateScrollbar;
 @end
 
 @interface ProtoView (Materials)
