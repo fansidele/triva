@@ -34,3 +34,8 @@ bool AmbientManager::frameStarted (const Ogre::FrameEvent& evt)
 { 
 	return true; 
 } 
+
+void AmbientManager::newPointsPerSecond (double pps)
+{
+	origin.yAxis->newPointsPerSecond (pps);
+}

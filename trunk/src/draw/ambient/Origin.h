@@ -15,7 +15,6 @@ protected:
 	Ogre::SceneManager *sceneMgr;
 	
 	XAxis *xAxis;
-	YAxis *yAxis;
 	ZAxis *zAxis;
 	Ground *ground;
 
@@ -29,6 +28,7 @@ public:
 	void setZAxis (ZAxis *axis) { zAxis = axis; };
 	void setGround (Ground *g)  { ground = g; };
 	Ogre::SceneNode *getNode () { return node; };
+	YAxis *yAxis;
 };
 
 #include "XAxis.h"

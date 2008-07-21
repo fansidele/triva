@@ -18,6 +18,7 @@ class AmbientManager : public Ogre::FrameListener,
 public:
 	AmbientManager ();
 	~AmbientManager ();
+	void newPointsPerSecond (double pps);
 
 private:
 	bool frameStarted (const Ogre::FrameEvent& evt);
