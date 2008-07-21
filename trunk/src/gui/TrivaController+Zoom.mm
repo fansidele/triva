@@ -13,13 +13,7 @@ void TrivaController::configureZoom ()
 
 	[view setPointsPerSecond: nv];
 
-	xScale = zScale = yScale = 1.0;
-
-	Ogre::Root *mRoot;
-	Ogre::SceneManager *mSceneMgr;
-	mRoot = Ogre::Root::getSingletonPtr ();
-	mSceneMgr = mRoot->getSceneManager("VisuSceneManager");
-	mSceneMgr->getRootSceneNode()->setScale (xScale,yScale,zScale);
+	ambientManager->newPointsPerSecond ([view pointsPerSecond]);
 }
 
 void TrivaController::zoomIn ( wxCommandEvent& event )
@@ -31,6 +25,8 @@ void TrivaController::zoomIn ( wxCommandEvent& event )
 				[view pointsPerSecond]]
 		forKey: @"pointsPerSecond"];
 	[d synchronize];
+
+	ambientManager->newPointsPerSecond ([view pointsPerSecond]);
 }
 
 void TrivaController::zoomOut ( wxCommandEvent& event )
@@ -42,5 +38,7 @@ void TrivaController::zoomOut ( wxCommandEvent& event )
 				[view pointsPerSecond]]
 		forKey: @"pointsPerSecond"];
 	[d synchronize];
+
+	ambientManager->newPointsPerSecond ([view pointsPerSecond]);
 }
 
