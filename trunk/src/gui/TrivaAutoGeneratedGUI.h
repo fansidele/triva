@@ -182,6 +182,7 @@ class AutoGUI_Base : public wxFrame
 		wxStatusBar* status;
 		
 		// Virtual event handlers, overide them in your derived class
+		virtual void onClose( wxCloseEvent& event ){ event.Skip(); }
 		virtual void load( wxCommandEvent& event ){ event.Skip(); }
 		virtual void apply( wxCommandEvent& event ){ event.Skip(); }
 		virtual void close( wxCommandEvent& event ){ event.Skip(); }

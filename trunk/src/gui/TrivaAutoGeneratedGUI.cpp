@@ -53,7 +53,7 @@ AutoGUI_Triva::AutoGUI_Triva( wxWindow* parent, wxWindowID id, const wxString& t
 	m_menuItem61->Enable( false );
 	
 	wxMenuItem* m_menuItem17;
-	m_menuItem17 = new wxMenuItem( m_menu3, wxID_ANY, wxString( wxT("Visualization Base") ) , wxEmptyString, wxITEM_CHECK );
+	m_menuItem17 = new wxMenuItem( m_menu3, wxID_ANY, wxString( wxT("Visualization Base") ) , wxEmptyString, wxITEM_NORMAL );
 	m_menu3->Append( m_menuItem17 );
 	
 	wxMenuItem* m_menuItem14;
@@ -447,6 +447,7 @@ AutoGUI_Base::AutoGUI_Base( wxWindow* parent, wxWindowID id, const wxString& tit
 	this->Centre( wxBOTH );
 	
 	// Connect Events
+	this->Connect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( AutoGUI_Base::onClose ) );
 	configuration_file->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( AutoGUI_Base::load ), NULL, this );
 	m_button17->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( AutoGUI_Base::apply ), NULL, this );
 	m_button18->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( AutoGUI_Base::close ), NULL, this );
@@ -455,6 +456,7 @@ AutoGUI_Base::AutoGUI_Base( wxWindow* parent, wxWindowID id, const wxString& tit
 AutoGUI_Base::~AutoGUI_Base()
 {
 	// Disconnect Events
+	this->Disconnect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( AutoGUI_Base::onClose ) );
 	configuration_file->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( AutoGUI_Base::load ), NULL, this );
 	m_button17->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( AutoGUI_Base::apply ), NULL, this );
 	m_button18->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( AutoGUI_Base::close ), NULL, this );

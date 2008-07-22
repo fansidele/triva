@@ -116,3 +116,12 @@ style )
 		}
 	}
 }
+
+void GUI_Base::onClose( wxCloseEvent& event )
+{
+	if (!event.CanVeto()){
+		Close();
+	}else{
+		Hide();
+	}
+}
