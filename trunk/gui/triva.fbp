@@ -325,6 +325,9 @@
                         <event name="OnMenuSelection"></event>
                         <event name="OnUpdateUI"></event>
                     </object>
+                    <object class="separator" expanded="1">
+                        <property name="permission">none</property>
+                    </object>
                     <object class="wxMenuItem" expanded="1">
                         <property name="bitmap"></property>
                         <property name="checked">0</property>
@@ -346,7 +349,7 @@
                         <property name="enabled">1</property>
                         <property name="help"></property>
                         <property name="id">wxID_ANY</property>
-                        <property name="kind">wxITEM_CHECK</property>
+                        <property name="kind">wxITEM_NORMAL</property>
                         <property name="label">Preferences</property>
                         <property name="name">m_menuItem14</property>
                         <property name="permission">none</property>
@@ -3001,7 +3004,7 @@
             <event name="OnActivate"></event>
             <event name="OnActivateApp"></event>
             <event name="OnChar"></event>
-            <event name="OnClose"></event>
+            <event name="OnClose">onClose</event>
             <event name="OnEnterWindow"></event>
             <event name="OnEraseBackground"></event>
             <event name="OnHibernate"></event>

@@ -20,6 +20,7 @@ private:
 protected:
 	void apply( wxCommandEvent& event );
 	void close( wxCommandEvent& event );
+	void onClose( wxCloseEvent& event );
 
 public:
 	void setController (TrivaController *t) { controller = t; };

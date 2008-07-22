@@ -23,3 +23,12 @@ title, pos, size,
 style )
 {
 }
+
+void GUI_Preferences::onClose( wxCloseEvent& event )
+{
+        if (!event.CanVeto()){
+                Close();
+        }else{
+                Hide();
+        }
+}

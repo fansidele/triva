@@ -52,12 +52,14 @@ AutoGUI_Triva::AutoGUI_Triva( wxWindow* parent, wxWindowID id, const wxString& t
 	m_menu3->Append( m_menuItem61 );
 	m_menuItem61->Enable( false );
 	
+	m_menu3->AppendSeparator();
+	
 	wxMenuItem* m_menuItem17;
 	m_menuItem17 = new wxMenuItem( m_menu3, wxID_ANY, wxString( wxT("Visualization Base") ) , wxEmptyString, wxITEM_NORMAL );
 	m_menu3->Append( m_menuItem17 );
 	
 	wxMenuItem* m_menuItem14;
-	m_menuItem14 = new wxMenuItem( m_menu3, wxID_ANY, wxString( wxT("Preferences") ) , wxEmptyString, wxITEM_CHECK );
+	m_menuItem14 = new wxMenuItem( m_menu3, wxID_ANY, wxString( wxT("Preferences") ) , wxEmptyString, wxITEM_NORMAL );
 	m_menu3->Append( m_menuItem14 );
 	
 	m_menubar2->Append( m_menu3, wxT("View") );
@@ -511,6 +513,7 @@ AutoGUI_Preferences::AutoGUI_Preferences( wxWindow* parent, wxWindowID id, const
 	this->Layout();
 	
 	// Connect Events
+	this->Connect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( AutoGUI_Preferences::onClose ) );
 	m_button17->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( AutoGUI_Preferences::apply ), NULL, this );
 	m_button18->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( AutoGUI_Preferences::close ), NULL, this );
 }
@@ -518,6 +521,7 @@ AutoGUI_Preferences::AutoGUI_Preferences( wxWindow* parent, wxWindowID id, const
 AutoGUI_Preferences::~AutoGUI_Preferences()
 {
 	// Disconnect Events
+	this->Disconnect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( AutoGUI_Preferences::onClose ) );
 	m_button17->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( AutoGUI_Preferences::apply ), NULL, this );
 	m_button18->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( AutoGUI_Preferences::close ), NULL, this );
 }
