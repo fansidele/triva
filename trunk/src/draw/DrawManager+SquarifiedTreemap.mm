@@ -70,7 +70,7 @@ void DrawManager::treemapRecursiveDraw (TrivaTreemap *root, Ogre::SceneNode *nod
 
 	std::string orname = std::string ([[root name] cString]);
 	Ogre::SceneNode *n1 = node->createChildSceneNode(orname);
-	n1->setPosition ([root x], 0, [root y]);
+	n1->setPosition ([root x], .10, [root y]);
 	Ogre::Entity *e;
 	try {
 		e = mSceneMgr->getEntity ([[root name] cString]);
