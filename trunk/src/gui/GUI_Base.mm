@@ -38,6 +38,28 @@ void GUI_Base::apply ( wxCommandEvent& event )
 		}else{
 			status->SetStatusText (NSSTRINGtoWXSTRING(@"error, check file format"));
 		}
+	}else if (option.compare ("Resources Graph") == 0){
+		wxString path = rg_configuration_file->GetLabel();
+		NSString *file = WXSTRINGtoNSSTRING (path);
+
+		wxString algo = rg_choice->GetStringSelection();
+		NSString *algorithm = WXSTRINGtoNSSTRING (algo);
+
+		[d setObject: algorithm forKey: @"LastGraphvizAlgorithm"];
+
+		BOOL x = true;
+		[view resourcesGraphWithFile: file
+				andGraphvizAlgorithm: algorithm];
+		if (x){
+			status->SetStatusText (NSSTRINGtoWXSTRING 
+					(@"Resources Graph OK"));
+			[d setObject: [NSString stringWithFormat: @"%s",
+					option.c_str()]
+				forKey: @"BaseConfigurationOption"];
+		}else{
+			status->SetStatusText (NSSTRINGtoWXSTRING(@"error, check file format"));
+		}
+
 	}
 	[d synchronize];
 }
@@ -115,6 +137,18 @@ style )
 			}
 		}
 	}
+
+	//resources graph
+	o = [d stringForKey:@"LastOpenResourcesGraphBaseDirectory"];
+	if (o != nil){
+		wxString opt = NSSTRINGtoWXSTRING(o);
+		rg_configuration_file->SetLabel (opt);
+	}
+	o = [d stringForKey:@"LastGraphvizAlgorithm"];
+	if (o != nil){
+		wxString opt = NSSTRINGtoWXSTRING(o);
+		rg_choice->SetStringSelection (opt);
+	}
 }
 
 void GUI_Base::onClose( wxCloseEvent& event )
@@ -123,5 +157,32 @@ void GUI_Base::onClose( wxCloseEvent& event )
 		Close();
 	}else{
 		Hide();
+	}
+}
+
+void GUI_Base::rg_load_graph( wxCommandEvent& event )
+{
+        wxFileDialog *f;
+        f = new wxFileDialog (NULL, wxT("Choose one file"),
+                                wxT(""), wxT(""), wxT("*.dot"),
+                                wxOPEN|wxFILE_MUST_EXIST, wxDefaultPosition);
+
+        NSUserDefaults *d = [NSUserDefaults standardUserDefaults];
+        NSString *v = [d stringForKey:@"LastOpenResourcesGraphBaseDirectory"];
+        if (v != nil){
+                wxString dir = NSSTRINGtoWXSTRING(v);
+                f->SetPath (dir);
+        }
+
+        if (f->ShowModal() == wxID_OK){
+                wxString path = f->GetPath();
+		rg_configuration_file->SetLabel (path);
+
+		char sa[100];
+		snprintf (sa, 100, "%S", path.c_str());
+
+		[d setObject: [NSString stringWithFormat:@"%s", sa] 
+			forKey: @"LastOpenResourcesGraphBaseDirectory"];
+		[d synchronize];
 	}
 }

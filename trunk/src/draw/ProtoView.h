@@ -44,7 +44,8 @@ enum TrivaVisualizationBaseState {
 - (BOOL) squarifiedTreemapWithFile: (NSString *) file
 	andWidth: (float) w andHeight: (float) h;
 - (BOOL) originalTreemapWithFile: (NSString *) file;
-- (BOOL) resourcesGraphWithFile: (NSString *) file;
+- (BOOL) resourcesGraphWithFile: (NSString *) file
+		andGraphvizAlgorithm: (NSString *) algo;
 - (BOOL) applicationGraph;
 - (void) disableVisualizationBase: (TrivaVisualizationBaseState) baseCode;
 

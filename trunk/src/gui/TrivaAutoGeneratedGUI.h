@@ -176,6 +176,11 @@ class AutoGUI_Base : public wxFrame
 		wxCheckBox* m_checkBox1;
 		wxPanel* m_panel8;
 		wxStaticText* m_staticText21;
+		wxPanel* m_panel10;
+		wxStaticText* m_staticText71;
+		wxButton* rg_configuration_file;
+		wxStaticText* m_staticText18;
+		wxChoice* rg_choice;
 		wxStaticLine* m_staticline3;
 		wxButton* m_button17;
 		wxButton* m_button18;
@@ -184,6 +189,7 @@ class AutoGUI_Base : public wxFrame
 		// Virtual event handlers, overide them in your derived class
 		virtual void onClose( wxCloseEvent& event ){ event.Skip(); }
 		virtual void load( wxCommandEvent& event ){ event.Skip(); }
+		virtual void rg_load_graph( wxCommandEvent& event ){ event.Skip(); }
 		virtual void apply( wxCommandEvent& event ){ event.Skip(); }
 		virtual void close( wxCommandEvent& event ){ event.Skip(); }
 		

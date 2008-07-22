@@ -38,6 +38,7 @@
 }
 
 - (BOOL) resourcesGraphWithFile: (NSString *) file
+                andGraphvizAlgorithm: (NSString *) algo;
 {
 	if (baseState != ResourcesGraph){
 		[self disableVisualizationBase: baseState];

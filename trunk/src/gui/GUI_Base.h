@@ -23,6 +23,9 @@ protected:
 	void close( wxCommandEvent& event );
 	void onClose (wxCloseEvent& event );
 
+	//resources graph
+	void rg_load_graph( wxCommandEvent& event );
+
 public:
 	void setController (TrivaController *t) { controller = t; };
 	GUI_Base( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Visualization Base"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 380,250 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );

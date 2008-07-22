@@ -420,6 +420,34 @@ AutoGUI_Base::AutoGUI_Base( wxWindow* parent, wxWindowID id, const wxString& tit
 	m_panel8->Layout();
 	bSizer17->Fit( m_panel8 );
 	base_type->AddPage( m_panel8, wxT("Application Graph"), false );
+	m_panel10 = new wxPanel( base_type, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	wxFlexGridSizer* fgSizer31;
+	fgSizer31 = new wxFlexGridSizer( 2, 2, 0, 0 );
+	fgSizer31->AddGrowableCol( 1 );
+	fgSizer31->SetFlexibleDirection( wxBOTH );
+	fgSizer31->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
+	
+	m_staticText71 = new wxStaticText( m_panel10, wxID_ANY, wxT("Configuration File:"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText71->Wrap( -1 );
+	fgSizer31->Add( m_staticText71, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxTOP|wxBOTTOM|wxLEFT, 5 );
+	
+	rg_configuration_file = new wxButton( m_panel10, wxID_ANY, wxT("(no file loaded)"), wxDefaultPosition, wxDefaultSize, 0 );
+	fgSizer31->Add( rg_configuration_file, 0, wxALL|wxEXPAND, 5 );
+	
+	m_staticText18 = new wxStaticText( m_panel10, wxID_ANY, wxT("GraphViz Algorithm:"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText18->Wrap( -1 );
+	fgSizer31->Add( m_staticText18, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxTOP|wxBOTTOM|wxLEFT, 5 );
+	
+	wxString rg_choiceChoices[] = { wxT("dot"), wxT("neato"), wxT("fdp"), wxT("twopi"), wxT("circo") };
+	int rg_choiceNChoices = sizeof( rg_choiceChoices ) / sizeof( wxString );
+	rg_choice = new wxChoice( m_panel10, wxID_ANY, wxDefaultPosition, wxDefaultSize, rg_choiceNChoices, rg_choiceChoices, 0 );
+	rg_choice->SetSelection( 2 );
+	fgSizer31->Add( rg_choice, 0, wxALL|wxEXPAND, 5 );
+	
+	m_panel10->SetSizer( fgSizer31 );
+	m_panel10->Layout();
+	fgSizer31->Fit( m_panel10 );
+	base_type->AddPage( m_panel10, wxT("Resources Graph"), false );
 	
 	bSizer10->Add( base_type, 1, wxEXPAND | wxALL, 5 );
 	
@@ -451,6 +479,7 @@ AutoGUI_Base::AutoGUI_Base( wxWindow* parent, wxWindowID id, const wxString& tit
 	// Connect Events
 	this->Connect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( AutoGUI_Base::onClose ) );
 	configuration_file->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( AutoGUI_Base::load ), NULL, this );
+	rg_configuration_file->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( AutoGUI_Base::rg_load_graph ), NULL, this );
 	m_button17->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( AutoGUI_Base::apply ), NULL, this );
 	m_button18->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( AutoGUI_Base::close ), NULL, this );
 }
@@ -460,6 +489,7 @@ AutoGUI_Base::~AutoGUI_Base()
 	// Disconnect Events
 	this->Disconnect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( AutoGUI_Base::onClose ) );
 	configuration_file->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( AutoGUI_Base::load ), NULL, this );
+	rg_configuration_file->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( AutoGUI_Base::rg_load_graph ), NULL, this );
 	m_button17->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( AutoGUI_Base::apply ), NULL, this );
 	m_button18->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( AutoGUI_Base::close ), NULL, this );
 }
