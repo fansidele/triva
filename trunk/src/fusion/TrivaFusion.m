@@ -1,5 +1,6 @@
 #include "TrivaFusion.h"
 #include "FusionState.h"
+#include "FusionLink.h"
 #include "FusionChunk.h"
 
 @implementation TrivaFusion
@@ -77,11 +78,23 @@
 					objectEnumerator];
 
 	while ((stateType = [aux nextObject]) != nil) {
+		NSLog (@"type=%@", stateType);
 		if ([stateType isKindOfClass: [PajeStateType class]]){
 			//for now, only merge StateType 
 			break;
 		}
 	}
+
+//	aux = [[self containedTypesForContainerType:
+//			[self entityTypeForEntity: container]]
+//				objectEnumerator];
+//	NSLog (@"fathers contained types:");
+//	while ((stateType = [aux nextObject]) != nil) {
+//		NSLog (@"type=%@", stateType);
+//	}
+
+//	return;
+
 	mergedContainer = [FusionContainer containerWithType: containerType
 				name: name
 				container: container];
@@ -223,6 +236,9 @@ NSDate *maior (id x, id y, NSMutableSet *ps)
 	if (container == mergedContainer){
 		return [mergedContainer enumeratorOfEntitiesTyped: entityType
 				fromTime: start toTime: end];
+	}else if (container == [mergedContainer container]){
+		NSLog (@"pai do cara é %@", [container name]);
+	
 	}else{
 		return [super enumeratorOfEntitiesTyped: entityType
 			inContainer: container
@@ -230,6 +246,55 @@ NSDate *maior (id x, id y, NSMutableSet *ps)
 			toTime: end
 			minDuration: minDuration];
 	}
+}
+
+- (PajeContainer *) filterContainer: (PajeContainer *) container
+{
+	NSEnumerator *en = [containers objectEnumerator];
+	id cont;
+	while ((cont = [en nextObject])){
+		if (cont == container){
+			NSLog (@"cont = %@, container = %@ returning %@",
+			[cont name], [container name], [mergedContainer name]);
+			return mergedContainer;
+		}
+	}
+	return container;
+}
+
+- (NSEnumerator *) filterLinksOfType: (PajeEntityType *)entityType
+		inContainer:(PajeContainer *)container
+		fromTime:(NSDate *)start
+		toTime:(NSDate *)end
+		minDuration:(double)minDuration
+{
+	if (![entityType isKindOf: [PajeLinkType class]]){
+		return [super enumeratorOfCompleteEntitiesTyped: entityType
+			inContainer: container
+			fromTime: start
+			toTime: end
+			minDuration: minDuration];
+	}
+	NSMutableArray *ret = [NSMutableArray array];
+	NSEnumerator *en;
+	en = [super enumeratorOfCompleteEntitiesTyped: entityType
+		inContainer: container
+		fromTime: start
+		toTime: end
+		minDuration: minDuration];
+	id link;
+	while ((link = [en nextObject])){
+		NSLog (@"link=%@ %@", [link name], [link class]);
+		FusionLink *nlink = [[FusionLink alloc] initWithType: entityType
+						name: [link name]
+						container: container];
+		[nlink setSourceContainer: [self filterContainer: [link sourceContainer]]];
+		[nlink setDestContainer: [self filterContainer: [link destContainer]]];
+		[nlink setStartTime: [link startTime]];
+		[nlink setEndTime: [link endTime]];
+		[ret addObject: nlink];
+	}
+	return [ret objectEnumerator];
 }
 
 - (NSEnumerator *)enumeratorOfCompleteEntitiesTyped:(PajeEntityType *)entityType
@@ -240,6 +305,13 @@ NSDate *maior (id x, id y, NSMutableSet *ps)
 {
 	if (container == mergedContainer){
 		return [mergedContainer enumeratorOfCompleteEntitiesTyped: entityType fromTime: start toTime: end];
+	}else if (container == [mergedContainer container]){
+		//substitute merged containers in links by containers
+		return [self filterLinksOfType: entityType
+			inContainer: container
+			fromTime: start
+			toTime: end
+			minDuration: minDuration];
 	}else{
 		return [super enumeratorOfCompleteEntitiesTyped: entityType
 			inContainer: container
@@ -259,10 +331,31 @@ NSDate *maior (id x, id y, NSMutableSet *ps)
 		NSMutableArray *ar;
 		ar = [NSMutableArray arrayWithArray: [en allObjects]];
 		[ar addObject: mergedContainer];
+
+		//remove merged containers
+		en = [containers objectEnumerator];
+		id cont;
+		while ((cont = [en nextObject])){
+			[ar removeObject: cont];
+		}
+	
+		//merge links ??
+		//just when answering
+
 		return [ar objectEnumerator];
 	}else{
 		return [super enumeratorOfContainersTyped: entityType
 			inContainer: container];
+	}
+}
+
+- (PajeContainer *)containerWithName:(NSString *)n
+                                type:(PajeEntityType *)t
+{
+	if ([n isEqualToString: [mergedContainer name]]){
+		return mergedContainer;
+	}else{
+		[super containerWithName: n type: t];
 	}
 }
 @end
