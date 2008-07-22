@@ -86,7 +86,6 @@ void DrawManager::treemapRecursiveDraw (TrivaTreemap *root, Ogre::SceneNode *nod
 	Ogre::SceneNode *n2 = n1->createChildSceneNode();
 	n2->attachObject (e);
 	n2->setInheritScale (false);
-std::cout << orname << " width: " << (([root width])/100)*.9 << std::endl;
 	n2->setScale ((([root width])/100)-([root depth]*.05),
 			.01,
 			((([root height])/100))-([root depth]*.05));
