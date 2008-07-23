@@ -22,7 +22,8 @@ draw_OBJCC_FILES= \
 	ProtoView+Base.mm \
 	TrivaTreemap.mm \
 	TrivaTreemapSquarified.mm \
-	TrivaTreemap+Graphviz.mm
+	TrivaTreemap+Graphviz.mm \
+	TrivaResourcesGraph.mm
 
 draw_INCLUDE_DIRS += @CPPFLAGS@
 draw_LIB_DIRS += @LIBS@
