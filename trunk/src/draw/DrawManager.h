@@ -6,6 +6,7 @@
 #include <General/PajeType.h>
 #include "gui/wxInputEventListener.h"
 #include "TrivaTreemapSquarified.h"
+#include "TrivaResourcesGraph.h"
 
 class TrivaController;
 @class ProtoView;
@@ -102,6 +103,9 @@ private:
 	void drawOneContainerIntoTreemapbase (id container, Ogre::SceneNode *n,
 			NSPoint loc);
 
+// CATEGORY: ResourcesGraph
+public:
+	void resourcesGraphDraw (TrivaResourcesGraph *graph);
 };
 
 #include "ProtoView.h"

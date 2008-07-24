@@ -17,6 +17,7 @@ draw_OBJCC_FILES= \
 	DrawManager+Materials.mm \
 	DrawManager+ApplicationGraph.mm \
 	DrawManager+SquarifiedTreemap.mm \
+	DrawManager+ResourcesGraph.mm \
 	ProtoView.mm \
 	ProtoView+Materials.mm \
 	ProtoView+Base.mm \
