@@ -43,6 +43,11 @@
 	if (baseState != ResourcesGraph){
 		[self disableVisualizationBase: baseState];
 	}
+
+	resourcesGraph = [[TrivaResourcesGraph alloc] initWithFile: file];
+	[resourcesGraph setAlgorithm: algo];
+	drawManager->resourcesGraphDraw (resourcesGraph);
+
 	baseState = ResourcesGraph;
 	return YES;
 }
@@ -72,10 +77,45 @@
 	}
 }
 
+//for resource graph
+- (void) recalculateResourcesGraphWith: (id) entity 
+{
+	PajeEntityType *et;
+	NSEnumerator *en = [[self containedTypesForContainerType:[self entityTypeForEntity: entity]] objectEnumerator];
+	while ((et = [en nextObject]) != nil) {
+		if ([self isContainerEntityType:et]) {
+			PajeContainer *sub;
+			NSEnumerator *en2 = [self enumeratorOfContainersTyped:et inContainer: entity];
+			while ((sub = [en2 nextObject]) != nil) {
+				NSString *n = [sub name];
+				NSString *nf;
+				
+				nf = [resourcesGraph searchWithPartialName: n];
+				if (nf == nil){
+					NSLog (@"error, throw exception?");
+				}else{
+					[resourcesGraph incrementNumberOfContainersOf: nf];
+				}
+			}
+		}
+	}
+}
+
+- (void) recalculateResourcesGraphWithApplicationData
+{
+	id instance = [self rootInstance];
+	[resourcesGraph resetNumberOfContainers];
+	[self recalculateResourcesGraphWith: instance];
+}
+
+
+//for squarified treemap
 - (TrivaTreemap *) searchWithPartialName: (NSString *) partialName
 {
 	if (baseState == SquarifiedTreemap){
 		return [squarifiedTreemap searchWithPartialName: partialName];
+	}else if (baseState == ResourcesGraph) {
+		return [resourcesGraph searchWithpartialName: partialName];
 	}else{
 		return nil;
 	}

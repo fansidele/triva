@@ -15,5 +15,15 @@
 }
 - (id) initWithFile: (NSString *) f;
 - (void) setAlgorithm: (NSString *) algo;
+- (NSArray *) allNodes;
+- (int) positionXForNode: (NSString *) node;
+- (int) positionYForNode: (NSString *) node;
+- (double) widthForNode: (NSString *) node;
+- (double) heightForNode: (NSString *) node;
+
+- (void) resetNumberOfContainers;
+- (NSString *) searchWithPartialName: (NSString *) partialName;
+- (void) incrementNumberOfContainersOf: (NSString *) node;
+
 @end
 #endif

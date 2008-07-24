@@ -107,6 +107,9 @@
 		drawManager->squarifiedTreemapDraw (squarifiedTreemap);
 		drawManager->drawContainersIntoTreemapBase ();
 		drawManager->createTimestampedObjects ();
+	}else if (baseState == ResourcesGraph){
+		[self recalculateResourcesGraphWithApplicationData];
+		drawManager->resourcesGraphDraw (resourcesGraph);
 	}
 	[self updateScrollbar];
 }

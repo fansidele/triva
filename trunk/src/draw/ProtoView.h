@@ -5,6 +5,7 @@
 #include <General/PajeFilter.h>
 #include "draw/DrawManager.h"
 #include "TrivaTreemapSquarified.h"
+#include "TrivaResourcesGraph.h"
 
 //which method to be used in the Base category
 enum TrivaVisualizationBaseState {
@@ -24,6 +25,7 @@ enum TrivaVisualizationBaseState {
 	//variables to be used by Base category
 	TrivaVisualizationBaseState baseState;	
 	TrivaTreemapSquarified *squarifiedTreemap;
+	TrivaResourcesGraph *resourcesGraph;
 
 	//variables to bse used by Base category - application graph
 	Position *applicationGraphPosition;
@@ -58,6 +60,10 @@ enum TrivaVisualizationBaseState {
 //to application graph
 - (NSMutableDictionary *) dictionaryForApplicationGraph: (id) entity;
 - (void) recalculateApplicationGraphWithApplicationData;
+
+//resources graph
+- (void) recalculateResourcesGraphWithApplicationData;
+- (void) recalculateResourcesGraphWith: (id) entity;
 @end
 
 #endif
