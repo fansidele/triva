@@ -38,6 +38,7 @@
 }
 
 - (BOOL) resourcesGraphWithFile: (NSString *) file
+		andSize: (NSString *) size
                 andGraphvizAlgorithm: (NSString *) algo;
 {
 	if (baseState != ResourcesGraph){
@@ -52,11 +53,17 @@
 	return YES;
 }
 
-- (BOOL) applicationGraph
+- (BOOL) applicationGraphWithSize: (NSString *) sizeStr andGraphvizAlgorithm: (NSString *) algo;
 {
 	if (baseState != ApplicationGraph){
 		[self disableVisualizationBase: baseState];
 	}
+
+	if (applicationGraphPosition == nil){
+		applicationGraphPosition = [Position positionWithAlgorithm:@"graphviz"];
+	}
+	[applicationGraphPosition setSubAlgorithm: algo];
+
 	baseState = ApplicationGraph;
 	[self hierarchyChanged];
 	return YES;
@@ -192,11 +199,6 @@
 - (void) recalculateApplicationGraphWithApplicationData
 {
 	id instance = [self rootInstance];
-	if (applicationGraphPosition != nil){
-		[applicationGraphPosition release];
-		applicationGraphPosition = nil;
-	}	
-	applicationGraphPosition = [Position positionWithAlgorithm:@"graphviz"];
 	[applicationGraphPosition newHierarchyOrganization: 
 			[self dictionaryForApplicationGraph: instance]];
 
