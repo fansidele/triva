@@ -23,6 +23,7 @@ void GUI_Base::apply ( wxCommandEvent& event )
 			[d setObject: [NSString stringWithFormat: @"%s", option.c_str()]
 				forKey: @"BaseConfigurationOption"];
 			[d setObject: size forKey: @"ApplicationGraphSize"];
+			[d setObject: algorithm forKey: @"LastApplicationGraphAlgorithm"];
 		}else{
 			status->SetStatusText (NSSTRINGtoWXSTRING(@"error in application graph configuration"));
 		}
@@ -69,6 +70,7 @@ void GUI_Base::apply ( wxCommandEvent& event )
 			[d setObject: [NSString stringWithFormat: @"%s",
 					option.c_str()]
 				forKey: @"BaseConfigurationOption"];
+			[d setObject: size forKey: @"ResourcesGraphSize"];
 		}else{
 			status->SetStatusText (NSSTRINGtoWXSTRING(@"error, check file format"));
 		}
@@ -159,6 +161,23 @@ style )
 	if (o != nil){
 		wxString opt = NSSTRINGtoWXSTRING(o);
 		rg_choice->SetStringSelection (opt);
+	}
+	o = [d stringForKey: @"ResourcesGraphSize"];
+	if (o != nil){
+		wxString opt = NSSTRINGtoWXSTRING(o);
+		rg_size->SetValue (opt);
+	}
+
+	//application graph
+	o = [d stringForKey: @"ApplicationGraphSize"];
+	if (o != nil){
+		wxString opt = NSSTRINGtoWXSTRING(o);
+		appgraph_size->SetValue (opt);
+	}
+	o = [d stringForKey: @"LastApplicationGraphAlgorithm"];
+	if (o != nil){
+		wxString opt = NSSTRINGtoWXSTRING(o);
+		appgraph_choice1->SetStringSelection (opt);
 	}
 }
 
