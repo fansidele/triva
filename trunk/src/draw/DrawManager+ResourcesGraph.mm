@@ -34,8 +34,8 @@ void DrawManager::resourcesGraphDraw (TrivaResourcesGraph *graph)
 		Ogre::SceneNode *n2 = n1->createChildSceneNode();
 		n2->attachObject (e);
 		n2->setInheritScale (false);
-		n2->setScale ((width/100)*10,
+		n2->setScale ((width*72/100),
 					.01,
-				(height/100)*10);
+				(height*72/100));
 	}
 }
