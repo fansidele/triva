@@ -179,6 +179,9 @@ style )
 		wxString opt = NSSTRINGtoWXSTRING(o);
 		appgraph_choice1->SetStringSelection (opt);
 	}
+
+	//default visualization base
+	[view applicationGraphWithSize: @"600" andGraphvizAlgorithm: @"fdp"];
 }
 
 void GUI_Base::onClose( wxCloseEvent& event )
