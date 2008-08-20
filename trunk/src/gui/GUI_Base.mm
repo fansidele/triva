@@ -12,10 +12,20 @@ void GUI_Base::apply ( wxCommandEvent& event )
 	NSUserDefaults *d = [NSUserDefaults standardUserDefaults];
 	option = WXSTRINGtoSTDSTRING(base_type->GetPageText(base_type->GetSelection()));
 	if (option.compare ("Application Graph") == 0){
-		[view applicationGraph];
-		status->SetStatusText (NSSTRINGtoWXSTRING(@"Application Graph OK"));
-		[d setObject: [NSString stringWithFormat: @"%s", option.c_str()]
-			forKey: @"BaseConfigurationOption"];
+		NSString *size = WXSTRINGtoNSSTRING(appgraph_size->GetValue());
+
+		wxString algo = appgraph_choice1->GetStringSelection();
+		NSString *algorithm = WXSTRINGtoNSSTRING (algo);
+
+		BOOL x = [view applicationGraphWithSize: size andGraphvizAlgorithm: algorithm];
+		if (x){
+			status->SetStatusText (NSSTRINGtoWXSTRING(@"Application Graph OK"));
+			[d setObject: [NSString stringWithFormat: @"%s", option.c_str()]
+				forKey: @"BaseConfigurationOption"];
+			[d setObject: size forKey: @"ApplicationGraphSize"];
+		}else{
+			status->SetStatusText (NSSTRINGtoWXSTRING(@"error in application graph configuration"));
+		}
 	}else if (option.compare ("Resources Squarified Treemap") == 0){
 		wxString path = configuration_file->GetLabel();
 		NSString *file = WXSTRINGtoNSSTRING (path);
@@ -45,10 +55,13 @@ void GUI_Base::apply ( wxCommandEvent& event )
 		wxString algo = rg_choice->GetStringSelection();
 		NSString *algorithm = WXSTRINGtoNSSTRING (algo);
 
+		NSString *size = WXSTRINGtoNSSTRING(rg_size->GetValue());
+
 		[d setObject: algorithm forKey: @"LastGraphvizAlgorithm"];
 
 		BOOL x = true;
 		[view resourcesGraphWithFile: file
+				andSize: size
 				andGraphvizAlgorithm: algorithm];
 		if (x){
 			status->SetStatusText (NSSTRINGtoWXSTRING 
@@ -105,8 +118,6 @@ style )
 {
 	TrivaController *c = (TrivaController *)parent;
 	ProtoView *view = c->getView();
-	[view applicationGraph];
-
         
 	NSUserDefaults *d = [NSUserDefaults standardUserDefaults];
         NSString *w = [d stringForKey:@"WidthTreemapBaseConfiguration"];
