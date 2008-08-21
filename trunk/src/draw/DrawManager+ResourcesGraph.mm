@@ -38,4 +38,35 @@ void DrawManager::resourcesGraphDraw (TrivaResourcesGraph *graph)
 					.01,
 				(height*72/100));
 	}
+	ar = [graph allEdges];
+	for (i = 0; i < [ar count]; i++){
+		NSArray *edge = [ar objectAtIndex: i];
+		NSString *head = [edge objectAtIndex: 0];
+		NSString *tail = [edge objectAtIndex: 1];
+
+		std::string name = std::string ([head cString]);
+		name.append ([tail cString]);
+
+		Ogre::Vector3 op, dp;
+		op=mSceneMgr->getSceneNode ([head cString])->getWorldPosition();
+		dp=mSceneMgr->getSceneNode ([tail cString])->getWorldPosition();
+
+		Ogre::ManualObject *ste;
+		try {
+			ste = mSceneMgr->getManualObject (name);
+		}catch (Ogre::Exception ex){
+			ste = mSceneMgr->createManualObject (name);
+		}
+		ste->clear();
+		ste->begin ("VisuApp/MPI_RECV",
+			Ogre::RenderOperation::OT_LINE_STRIP);
+		ste->position (op.x, 0, op.z);
+		ste->position (dp.x, 0, dp.z);
+		ste->end();
+ 		Ogre::SceneNode *root = mSceneMgr->getRootSceneNode();
+		Ogre::SceneNode *n = root->createChildSceneNode();
+		try {
+			n->attachObject (ste);
+		}catch (Ogre::Exception ex){}
+	}
 }
