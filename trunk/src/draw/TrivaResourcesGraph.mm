@@ -22,6 +22,8 @@
 
 	fclose (fo);
 
+	agsafeset (g, "overlap", "false", "false");
+
 	Agnode_t *n = agfstnode (g);
 	while (n != NULL){
 		agset (n, "trivaValue", "1");
@@ -46,6 +48,29 @@
 	algorithm = algo;
 	[algorithm retain];
 	char str[100];
+	snprintf (str, 100, "%s", [algorithm cString]);
+	gvLayout (gvc, g, str);	
+}
+
+- (void) setSize: (NSString *) s
+{
+	[size release];
+	size = s;
+	[size retain];
+	//do nothing for now
+}
+
+- (void) setSeparationRate: (NSString *) s
+{
+	[sepRate release];
+	sepRate = s;
+	[sepRate retain];
+
+	char str[100];
+	snprintf (str, 100, "%s", [sepRate cString]);
+
+	agsafeset (g, "sep", str, "");
+
 	snprintf (str, 100, "%s", [algorithm cString]);
 	gvLayout (gvc, g, str);	
 }

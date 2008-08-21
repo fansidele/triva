@@ -48,6 +48,7 @@ enum TrivaVisualizationBaseState {
 - (BOOL) originalTreemapWithFile: (NSString *) file;
 - (BOOL) resourcesGraphWithFile: (NSString *) file
 		andSize: (NSString *) size
+		andSeparationRate: (NSString *) sep
 		andGraphvizAlgorithm: (NSString *) algo;
 - (BOOL) applicationGraphWithSize: (NSString *) sizeStr andGraphvizAlgorithm: (NSString *) algo;
 - (void) disableVisualizationBase: (TrivaVisualizationBaseState) baseCode;

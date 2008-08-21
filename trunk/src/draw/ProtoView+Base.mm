@@ -39,6 +39,7 @@
 
 - (BOOL) resourcesGraphWithFile: (NSString *) file
 		andSize: (NSString *) size
+		andSeparationRate: (NSString *) sep
                 andGraphvizAlgorithm: (NSString *) algo;
 {
 	if (baseState != ResourcesGraph){
@@ -47,6 +48,8 @@
 
 	resourcesGraph = [[TrivaResourcesGraph alloc] initWithFile: file];
 	[resourcesGraph setAlgorithm: algo];
+	[resourcesGraph setSize: size];
+	[resourcesGraph setSeparationRate: sep];
 	drawManager->resourcesGraphDraw (resourcesGraph);
 
 	baseState = ResourcesGraph;

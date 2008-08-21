@@ -12,9 +12,13 @@
 	graph_t *g;
 	GVC_t *gvc;
 	float maxW, maxH;
+
+	NSString *size, *sepRate;
 }
 - (id) initWithFile: (NSString *) f;
 - (void) setAlgorithm: (NSString *) algo;
+- (void) setSize: (NSString *) s;
+- (void) setSeparationRate: (NSString *) s;
 - (NSArray *) allNodes;
 - (int) positionXForNode: (NSString *) node;
 - (int) positionYForNode: (NSString *) node;
