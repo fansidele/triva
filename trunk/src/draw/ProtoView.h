@@ -66,6 +66,7 @@ enum TrivaVisualizationBaseState {
 //resources graph
 - (void) recalculateResourcesGraphWithApplicationData;
 - (void) recalculateResourcesGraphWith: (id) entity;
+- (NSString *) searchRGWithPartialName: (NSString *) partialName;
 @end
 
 #endif

@@ -118,6 +118,10 @@
 	[self recalculateResourcesGraphWith: instance];
 }
 
+- (NSString *) searchRGWithPartialName: (NSString *) partialName
+{
+	return [resourcesGraph searchWithPartialName: partialName];
+}
 
 //for squarified treemap
 - (TrivaTreemap *) searchWithPartialName: (NSString *) partialName
