@@ -58,11 +58,14 @@ void GUI_Base::apply ( wxCommandEvent& event )
 
 		NSString *size = WXSTRINGtoNSSTRING(rg_size->GetValue());
 
+		NSString *sep = WXSTRINGtoNSSTRING(rg_sep->GetValue());
+
 		[d setObject: algorithm forKey: @"LastGraphvizAlgorithm"];
 
 		BOOL x = true;
 		[view resourcesGraphWithFile: file
 				andSize: size
+				andSeparationRate: sep
 				andGraphvizAlgorithm: algorithm];
 		if (x){
 			status->SetStatusText (NSSTRINGtoWXSTRING 
@@ -71,6 +74,7 @@ void GUI_Base::apply ( wxCommandEvent& event )
 					option.c_str()]
 				forKey: @"BaseConfigurationOption"];
 			[d setObject: size forKey: @"ResourcesGraphSize"];
+			[d setObject: sep forKey: @"ResourcesGraphSepRate"];
 		}else{
 			status->SetStatusText (NSSTRINGtoWXSTRING(@"error, check file format"));
 		}
@@ -166,6 +170,12 @@ style )
 	if (o != nil){
 		wxString opt = NSSTRINGtoWXSTRING(o);
 		rg_size->SetValue (opt);
+	}
+
+	o = [d stringForKey: @"ResourcesGraphSepRate"];
+	if (o != nil){
+		wxString opt = NSSTRINGtoWXSTRING(o);
+		rg_sep->SetValue (opt);
 	}
 
 	//application graph

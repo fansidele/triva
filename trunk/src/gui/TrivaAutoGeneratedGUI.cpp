@@ -405,7 +405,7 @@ AutoGUI_Base::AutoGUI_Base( wxWindow* parent, wxWindowID id, const wxString& tit
 	m_panel7->SetSizer( fgSizer3 );
 	m_panel7->Layout();
 	fgSizer3->Fit( m_panel7 );
-	base_type->AddPage( m_panel7, wxT("Resources Squarified Treemap"), true );
+	base_type->AddPage( m_panel7, wxT("Resources Squarified Treemap"), false );
 	m_panel8 = new wxPanel( base_type, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	wxFlexGridSizer* fgSizer311;
 	fgSizer311 = new wxFlexGridSizer( 2, 2, 0, 0 );
@@ -421,14 +421,25 @@ AutoGUI_Base::AutoGUI_Base( wxWindow* parent, wxWindowID id, const wxString& tit
 	int appgraph_choice1NChoices = sizeof( appgraph_choice1Choices ) / sizeof( wxString );
 	appgraph_choice1 = new wxChoice( m_panel8, wxID_ANY, wxDefaultPosition, wxDefaultSize, appgraph_choice1NChoices, appgraph_choice1Choices, 0 );
 	appgraph_choice1->SetSelection( 2 );
-	fgSizer311->Add( appgraph_choice1, 0, wxALL|wxEXPAND, 5 );
+	fgSizer311->Add( appgraph_choice1, 0, wxALL, 5 );
 	
 	m_staticText81 = new wxStaticText( m_panel8, wxID_ANY, wxT("Size:"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText81->Wrap( -1 );
 	fgSizer311->Add( m_staticText81, 0, wxALL|wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL, 5 );
 	
 	appgraph_size = new wxTextCtrl( m_panel8, wxID_ANY, wxT("600"), wxDefaultPosition, wxDefaultSize, wxTE_CENTRE|wxTE_DONTWRAP|wxTE_PROCESS_ENTER );
-	fgSizer311->Add( appgraph_size, 0, wxALL|wxEXPAND, 5 );
+	appgraph_size->Enable( false );
+	
+	fgSizer311->Add( appgraph_size, 0, wxALL, 5 );
+	
+	m_staticText15 = new wxStaticText( m_panel8, wxID_ANY, wxT("Separation Rate:"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText15->Wrap( -1 );
+	fgSizer311->Add( m_staticText15, 0, wxALL|wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL, 5 );
+	
+	m_textCtrl8 = new wxTextCtrl( m_panel8, wxID_ANY, wxT("2.0"), wxDefaultPosition, wxDefaultSize, wxTE_CENTRE );
+	m_textCtrl8->Enable( false );
+	
+	fgSizer311->Add( m_textCtrl8, 0, wxALL, 5 );
 	
 	m_panel8->SetSizer( fgSizer311 );
 	m_panel8->Layout();
@@ -456,19 +467,28 @@ AutoGUI_Base::AutoGUI_Base( wxWindow* parent, wxWindowID id, const wxString& tit
 	int rg_choiceNChoices = sizeof( rg_choiceChoices ) / sizeof( wxString );
 	rg_choice = new wxChoice( m_panel10, wxID_ANY, wxDefaultPosition, wxDefaultSize, rg_choiceNChoices, rg_choiceChoices, 0 );
 	rg_choice->SetSelection( 2 );
-	fgSizer31->Add( rg_choice, 0, wxALL|wxEXPAND, 5 );
+	fgSizer31->Add( rg_choice, 0, wxALL, 5 );
 	
 	m_staticText811 = new wxStaticText( m_panel10, wxID_ANY, wxT("Size:"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText811->Wrap( -1 );
 	fgSizer31->Add( m_staticText811, 0, wxALL|wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT, 5 );
 	
 	rg_size = new wxTextCtrl( m_panel10, wxID_ANY, wxT("600"), wxDefaultPosition, wxDefaultSize, wxTE_CENTRE|wxTE_DONTWRAP|wxTE_PROCESS_ENTER );
-	fgSizer31->Add( rg_size, 0, wxALL|wxEXPAND, 5 );
+	rg_size->Enable( false );
+	
+	fgSizer31->Add( rg_size, 0, wxALL, 5 );
+	
+	m_staticText14 = new wxStaticText( m_panel10, wxID_ANY, wxT("Separation Rate:"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText14->Wrap( -1 );
+	fgSizer31->Add( m_staticText14, 0, wxALL|wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL, 5 );
+	
+	rg_sep = new wxTextCtrl( m_panel10, wxID_ANY, wxT("2.0"), wxDefaultPosition, wxDefaultSize, wxTE_CENTRE );
+	fgSizer31->Add( rg_sep, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
 	m_panel10->SetSizer( fgSizer31 );
 	m_panel10->Layout();
 	fgSizer31->Fit( m_panel10 );
-	base_type->AddPage( m_panel10, wxT("Resources Graph"), false );
+	base_type->AddPage( m_panel10, wxT("Resources Graph"), true );
 	
 	bSizer10->Add( base_type, 1, wxEXPAND | wxALL, 5 );
 	

@@ -179,6 +179,8 @@ class AutoGUI_Base : public wxFrame
 		wxChoice* appgraph_choice1;
 		wxStaticText* m_staticText81;
 		wxTextCtrl* appgraph_size;
+		wxStaticText* m_staticText15;
+		wxTextCtrl* m_textCtrl8;
 		wxPanel* m_panel10;
 		wxStaticText* m_staticText71;
 		wxButton* rg_configuration_file;
@@ -186,6 +188,8 @@ class AutoGUI_Base : public wxFrame
 		wxChoice* rg_choice;
 		wxStaticText* m_staticText811;
 		wxTextCtrl* rg_size;
+		wxStaticText* m_staticText14;
+		wxTextCtrl* rg_sep;
 		wxStaticLine* m_staticline3;
 		wxButton* m_button17;
 		wxButton* m_button18;
