@@ -83,6 +83,27 @@
 		[ar addObject: [NSString stringWithFormat: @"%s", n->name]];
 		n = agnxtnode (g, n);
 	}
+	[ar autorelease];
+	return ar;
+}
+
+- (NSArray *) allEdges
+{
+	NSMutableArray *ar = [[NSMutableArray alloc] init];
+	Agnode_t *n = agfstnode (g);
+	while (n){
+		Agedge_t *e = agfstedge (g, n);
+		while (e){
+			NSArray *edge = [NSArray arrayWithObjects:
+  			  [NSString stringWithFormat: @"%s", e->head->name],
+			  [NSString stringWithFormat: @"%s", e->tail->name],
+			  nil];
+			[ar addObject: edge];
+			e = agnxtedge (g, e, n);
+		}
+		n = agnxtnode (g, n);
+	}
+	[ar autorelease];
 	return ar;
 }
 

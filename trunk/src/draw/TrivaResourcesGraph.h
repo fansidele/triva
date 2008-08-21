@@ -20,6 +20,7 @@
 - (void) setSize: (NSString *) s;
 - (void) setSeparationRate: (NSString *) s;
 - (NSArray *) allNodes;
+- (NSArray *) allEdges;
 - (int) positionXForNode: (NSString *) node;
 - (int) positionYForNode: (NSString *) node;
 - (double) widthForNode: (NSString *) node;
