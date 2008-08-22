@@ -29,6 +29,7 @@
 - (void) resetNumberOfContainers;
 - (NSString *) searchWithPartialName: (NSString *) partialName;
 - (void) incrementNumberOfContainersOf: (NSString *) node;
+- (void) refreshLayout;
 
 @end
 #endif

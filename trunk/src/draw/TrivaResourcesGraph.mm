@@ -208,4 +208,11 @@
 		return 0;
 	}
 }
+
+- (void) refreshLayout
+{
+	char str[100];
+	snprintf (str, 100, "%s", [algorithm cString]);
+	gvLayout (gvc, g, str);	
+}
 @end
