@@ -152,7 +152,7 @@
 		x = x + 1;
 		char str[100];
 		snprintf (str, 100, "%d", x);
-		agset (node, "numberOfContainers", str);
+		agsafeset (node, "numberOfContainers", str, str);
 	}else{
 		//exception?
 	}
