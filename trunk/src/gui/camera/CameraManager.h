@@ -2,6 +2,7 @@
 #define __CAMERA2_MANAGER_H
 
 #include "gui/wxInputEventListener.h"
+#undef TRUE
 #include <Ogre.h>
 #include "draw/QueryFlags.h"
 

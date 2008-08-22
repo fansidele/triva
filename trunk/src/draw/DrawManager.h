@@ -5,6 +5,7 @@
 #include <Foundation/Foundation.h>
 #include <General/PajeType.h>
 #include "gui/wxInputEventListener.h"
+#undef TRUE
 #include "TrivaTreemapSquarified.h"
 #include "TrivaResourcesGraph.h"
 

@@ -7,6 +7,7 @@
 #include <wx/wxprec.h>
 #include <wx/wx.h>
 #include "gui/BundleGUIEvents.h"
+#undef TRUE
 #include "draw/ProtoView.h"
 #include "fusion/TrivaFusion.h"
 #include "gui/camera/CameraManager.h"

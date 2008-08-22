@@ -3,6 +3,7 @@
 
 #include <wx/wxprec.h>
 #include <wx/wx.h>
+#undef TRUE
 #include <Foundation/Foundation.h>
 #include "gui/TrivaController.h"
 #include "core/OgreConfigure.h"
