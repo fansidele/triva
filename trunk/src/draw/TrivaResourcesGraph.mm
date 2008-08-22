@@ -28,6 +28,7 @@
 	Agnode_t *n = agfstnode (g);
 	while (n != NULL){
 		agset (n, "trivaValue", "1");
+		agsafeset (n, "shape", "rectangle", "ellipse");
 		n = agnxtnode (g, n);
 	}
 
