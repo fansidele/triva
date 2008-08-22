@@ -106,6 +106,10 @@ private:
 // CATEGORY: ResourcesGraph
 public:
 	void resourcesGraphDraw (TrivaResourcesGraph *graph);
+	void drawContainersIntoResourcesGraphBase ();
+	void drawContainersIntoResourcesGraphBase (id entity);
+	void drawOneContainerIntoResourcesGraphBase (id container,
+		Ogre::SceneNode *n, NSPoint loc);
 };
 
 #include "ProtoView.h"

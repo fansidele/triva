@@ -1,5 +1,10 @@
 #include "DrawManager.h"
 
+void DrawManager::drawOneContainerIntoResourcesGraphBase
+                (id entity, Ogre::SceneNode *node, NSPoint loc)
+{
+	this->drawOneContainer (entity, node, loc.x, loc.y);
+}
 
 void DrawManager::resourcesGraphDraw (TrivaResourcesGraph *graph)
 {
@@ -69,4 +74,39 @@ void DrawManager::resourcesGraphDraw (TrivaResourcesGraph *graph)
 			n->attachObject (ste);
 		}catch (Ogre::Exception ex){}
 	}
+}
+
+void DrawManager::drawContainersIntoResourcesGraphBase (id entity)
+{
+        PajeEntityType *et;
+	NSEnumerator *en = [[viewController containedTypesForContainerType:[viewController entityTypeForEntity: entity]] objectEnumerator];
+	while ((et = [en nextObject]) != nil) {
+		if ([viewController isContainerEntityType:et]) {
+			PajeContainer *sub;
+			NSEnumerator *en2 = [viewController enumeratorOfContainersTyped:et inContainer: entity];
+			while ((sub = [en2 nextObject]) != nil) {
+				NSString *name;
+				name = [viewController
+					searchRGWithPartialName: [sub name]];
+				if (name == nil){
+					NSLog (@"ERROR");
+				}else{
+					Ogre::SceneNode *node;
+					node = mSceneMgr->getSceneNode(
+						[name cString]);
+					NSPoint loc;
+					loc.x=loc.y=0;
+//					loc = [resourcesGraph nextLocationForNodeName: name];
+					this->drawOneContainerIntoResourcesGraphBase ((id) sub, node, loc);
+				}
+				this->drawContainersIntoResourcesGraphBase((id)sub);
+			}
+		}
+	}
+}
+
+void DrawManager::drawContainersIntoResourcesGraphBase ()
+{
+        id instance = [viewController rootInstance];
+        this->drawContainersIntoResourcesGraphBase (instance);
 }
