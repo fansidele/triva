@@ -1,4 +1,5 @@
 #include "TrivaResourcesGraph.h"
+#include <math.h>
 
 @implementation TrivaResourcesGraph
 - (id) initWithFile: (NSString *) f
@@ -153,6 +154,12 @@
 		char str[100];
 		snprintf (str, 100, "%d", x);
 		agsafeset (node, "numberOfContainers", str, str);
+
+		//setting width and height of the node
+		double x2 = sqrt ((double)x);
+		snprintf (str, 100, "%.f", x2);
+		agsafeset (node, "width", str, str);
+		agsafeset (node, "height", str, str);
 	}else{
 		//exception?
 	}
