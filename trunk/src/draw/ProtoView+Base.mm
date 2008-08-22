@@ -116,6 +116,7 @@
 	id instance = [self rootInstance];
 	[resourcesGraph resetNumberOfContainers];
 	[self recalculateResourcesGraphWith: instance];
+	[resourcesGraph refreshLayout];
 }
 
 - (NSString *) searchRGWithPartialName: (NSString *) partialName
