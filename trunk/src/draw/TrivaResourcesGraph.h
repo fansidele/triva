@@ -14,6 +14,8 @@
 	float maxW, maxH;
 
 	NSString *size, *sepRate;
+
+	NSMutableDictionary *graphs, *nextLocations;
 }
 - (id) initWithFile: (NSString *) f;
 - (void) setAlgorithm: (NSString *) algo;
@@ -31,5 +33,6 @@
 - (void) incrementNumberOfContainersOf: (NSString *) node;
 - (void) refreshLayout;
 
+- (NSPoint) nextLocationForNodeName: (NSString *) node;
 @end
 #endif

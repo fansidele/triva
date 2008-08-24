@@ -124,13 +124,18 @@
 	return [resourcesGraph searchWithPartialName: partialName];
 }
 
+- (NSPoint) nextLocationRGForNodeName: (NSString *) nodeName
+{
+	return [resourcesGraph nextLocationForNodeName: nodeName];
+}
+
 //for squarified treemap
 - (TrivaTreemap *) searchWithPartialName: (NSString *) partialName
 {
 	if (baseState == SquarifiedTreemap){
 		return [squarifiedTreemap searchWithPartialName: partialName];
 	}else if (baseState == ResourcesGraph) {
-		return [resourcesGraph searchWithpartialName: partialName];
+		return [resourcesGraph searchWithPartialName: partialName];
 	}else{
 		return nil;
 	}

@@ -1,5 +1,6 @@
 #include "TrivaResourcesGraph.h"
 #include <math.h>
+#include "src/draw/position/PositionGraphviz.h"
 
 @implementation TrivaResourcesGraph
 - (id) initWithFile: (NSString *) f
@@ -23,15 +24,24 @@
 
 	fclose (fo);
 
+	graphs = [[NSMutableDictionary alloc] init];
+	nextLocations = [[NSMutableDictionary alloc] init];
+
 	agsafeset (g, "overlap", "false", "false");
 
 	Agnode_t *n = agfstnode (g);
 	while (n != NULL){
 		agset (n, "trivaValue", "1");
 		agsafeset (n, "shape", "rectangle", "ellipse");
+
+		NSString *nodename;
+		nodename = [NSString stringWithFormat: @"%s", n->name];
+		PositionGraphviz *pos = [[PositionGraphviz alloc] init];
+		[graphs setObject: pos forKey: nodename];
+		[pos release];
+
 		n = agnxtnode (g, n);
 	}
-
 	return self;
 }
 
@@ -39,6 +49,9 @@
 {
 	[file release];
 	[algorithm release];
+
+	[graphs release];
+	[nextLocations release];
 	[super dealloc];
 }
 
@@ -111,9 +124,20 @@
 
 - (void) resetNumberOfContainers
 {
+	[nextLocations release];
+	nextLocations = [[NSMutableDictionary alloc] init];
+
+	[graphs release];
+	graphs = [[NSMutableDictionary alloc] init];
+
 	Agnode_t *n = agfstnode (g);
 	while (n != NULL){
 		agset (n, "numberOfContainers", "0");
+
+		PositionGraphviz *pos = [[PositionGraphviz alloc] init];
+		[graphs setObject: pos forKey: [NSString stringWithFormat: @"%s", n->name]];
+		[pos release];
+
 		n = agnxtnode (g, n);
 	}
 }
@@ -161,6 +185,11 @@
 		snprintf (str, 100, "%.f", x2);
 		agsafeset (node, "width", str, str);
 		agsafeset (node, "height", str, str);
+
+		//for application containers
+		PositionGraphviz *pos = [graphs objectForKey: nodeName];
+		[pos addNode: [NSString stringWithFormat: @"n%d", x]];
+		[nextLocations setObject: @"0" forKey: nodeName];
 	}else{
 		//exception?
 	}
@@ -215,5 +244,44 @@
 	char str[100];
 	snprintf (str, 100, "%s", [algorithm cString]);
 	gvLayout (gvc, g, str);	
+
+	//refreshing layout for application containers position
+	int i;
+	NSArray *allkeys = [graphs allKeys];
+	for (i = 0; i < [allkeys count]; i++){
+		[[graphs objectForKey: [allkeys objectAtIndex: i]] refresh];
+	}
+}
+
+- (NSPoint) nextLocationForNodeName: (NSString *) node
+{
+	NSPoint ret = {0,0};
+
+	if ([nextLocations count] == 0){
+		return ret;
+	}
+
+	//getting next location for container in node 
+	NSString *p = [nextLocations objectForKey: node];
+	int x = atoi ([p cString]);
+	PositionGraphviz *pos = [graphs objectForKey: node];
+	ret.x = [pos positionXForNode: [NSString stringWithFormat: @"n%d", x]];
+	ret.y = [pos positionYForNode: [NSString stringWithFormat: @"n%d", x]];
+
+	//compensating the width/height of resource square
+	char *name = (char *)[node cString];
+	Agnode_t *n = agfindnode (g, name);
+	char *vstr = agget (n, "width");
+	int width = atoi (vstr);
+	vstr = agget (n, "height");
+	int height = atoi (vstr);
+	ret.x -= (width/2*72);
+	ret.y -= (height/2*72);
+
+	//registering next container to be read
+	x = x + 1;
+	[nextLocations setObject: [NSString stringWithFormat: @"%d", x] 
+			forKey: node];
+	return ret;
 }
 @end
