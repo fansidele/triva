@@ -44,8 +44,7 @@
 	char *name = (char *)[nodeName cString];
 	Agnode_t *newnode = agnode (g, name);
 	if (newnode != NULL){
-		agINSnode (g, newnode);
-		[allNodesIdentifiers setObject: [NSArray array] forKey: nodeName];
+		[allNodesIdentifiers setObject:[NSArray array] forKey:nodeName];
 	}else{
 	}
 }
