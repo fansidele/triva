@@ -41,12 +41,6 @@
 
 - (void) addNode: (NSString *) nodeName
 {
-        NSString *str;
-           str = [NSString stringWithFormat: @"%@: %s not implemented", self, __FUNCTION__];
-            [[NSException exceptionWithName: @"PositionGraphviz"
-                   reason: str userInfo: nil] raise];
-	return;
-/*
 	char *name = (char *)[nodeName cString];
 	Agnode_t *newnode = agnode (g, name);
 	if (newnode != NULL){
@@ -54,7 +48,6 @@
 		[allNodesIdentifiers setObject: [NSArray array] forKey: nodeName];
 	}else{
 	}
-*/
 }
 
 - (void) delNode: (NSString *) nodeName
