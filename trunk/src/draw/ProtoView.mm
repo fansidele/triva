@@ -110,6 +110,7 @@
 	}else if (baseState == ResourcesGraph){
 		[self recalculateResourcesGraphWithApplicationData];
 		drawManager->resourcesGraphDraw (resourcesGraph);
+		drawManager->drawContainersIntoResourcesGraphBase ();
 	}
 	[self updateScrollbar];
 }
