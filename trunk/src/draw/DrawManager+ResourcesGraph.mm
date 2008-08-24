@@ -95,8 +95,7 @@ void DrawManager::drawContainersIntoResourcesGraphBase (id entity)
 					node = mSceneMgr->getSceneNode(
 						[name cString]);
 					NSPoint loc;
-					loc.x=loc.y=0;
-//					loc = [resourcesGraph nextLocationForNodeName: name];
+					loc = [viewController nextLocationRGForNodeName: name];
 					this->drawOneContainerIntoResourcesGraphBase ((id) sub, node, loc);
 				}
 				this->drawContainersIntoResourcesGraphBase((id)sub);
