@@ -79,7 +79,7 @@
 	}else if (baseCode == OriginalTreemap){
 
 	}else if (baseCode == ResourcesGraph){
-
+		drawManager->resourcesGraphDelete();
 	}else if (baseCode == ApplicationGraph){
 
 	}else{

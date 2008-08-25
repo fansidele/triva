@@ -6,14 +6,22 @@ void DrawManager::drawOneContainerIntoResourcesGraphBase
 	this->drawOneContainer (entity, node, loc.x, loc.y);
 }
 
+void DrawManager::resourcesGraphDelete ()
+{
+	if (baseSceneNode){
+		baseSceneNode->removeAndDestroyAllChildren();
+		mSceneMgr->destroySceneNode(baseSceneNode->getName());
+		baseSceneNode = NULL;
+	}
+}
+
 void DrawManager::resourcesGraphDraw (TrivaResourcesGraph *graph)
 {
-	Ogre::SceneNode *resourcesGraphSceneNode;
 	try {
-		resourcesGraphSceneNode = currentVisuNode->createChildSceneNode("ResourcesGraph");
+		baseSceneNode = currentVisuNode->createChildSceneNode("ResourcesGraph");
 	}catch (Ogre::Exception ex){
-		resourcesGraphSceneNode =  mSceneMgr->getSceneNode ("ResourcesGraph");
-		resourcesGraphSceneNode->removeAndDestroyAllChildren();
+		baseSceneNode =  mSceneMgr->getSceneNode ("ResourcesGraph");
+		baseSceneNode->removeAndDestroyAllChildren();
 	}
 
 	NSArray *ar = [graph allNodes];
@@ -26,7 +34,7 @@ void DrawManager::resourcesGraphDraw (TrivaResourcesGraph *graph)
 		float height = (float)[graph heightForNode: nodeName];
 
 		std::string orname = std::string ([nodeName cString]);
-		Ogre::SceneNode *n1 = resourcesGraphSceneNode->createChildSceneNode(orname);
+		Ogre::SceneNode *n1 = baseSceneNode->createChildSceneNode(orname);
 		n1->setPosition (x, 0, y);
 		Ogre::Entity *e;
 		try {

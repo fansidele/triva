@@ -106,6 +106,7 @@ private:
 
 // CATEGORY: ResourcesGraph
 public:
+	void resourcesGraphDelete ();
 	void resourcesGraphDraw (TrivaResourcesGraph *graph);
 	void drawContainersIntoResourcesGraphBase ();
 	void drawContainersIntoResourcesGraphBase (id entity);
