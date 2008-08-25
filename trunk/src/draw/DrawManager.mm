@@ -64,3 +64,10 @@ DrawManager::~DrawManager()
 	//mouse category
 	delete mRaySceneQuery;
 }
+
+void DrawManager::onRenderTimer(wxTimerEvent& evt)
+{
+	if (mAnimationState){
+		mAnimationState->addTime (evt.GetInterval());
+	}
+}

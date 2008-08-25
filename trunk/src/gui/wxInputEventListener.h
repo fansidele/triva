@@ -87,6 +87,12 @@ public:
    ****************************************************************/
    virtual void onInputEventLost(void)            { }
 
+
+   /**
+    * This event is sent every time a frame is rendered.
+    * We add this later to support animations in Triva. (Lucas,25aug2008)
+    */
+   virtual void onRenderTimer (wxTimerEvent& evt) { evt.Skip(); }
 protected:
    virtual ~wxInputEventListener() {}
 };

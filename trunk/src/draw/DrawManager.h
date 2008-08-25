@@ -38,6 +38,8 @@ private:
 
 	Ogre::SceneNode *currentVisuNode;
 
+//for animations
+	void onRenderTimer(wxTimerEvent& evt); //implemnented in DrawManager.mm
 
 //PAJE CATEGORY
 public:

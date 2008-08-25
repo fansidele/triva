@@ -433,6 +433,13 @@ void wxOgreRenderWindow::OnRenderTimer(wxTimerEvent& evt)
          Update();
 
       lastFrameTime = sw.Time();
+
+      if (mListenersEnabled){
+	for (InputListenerList::iterator iter = mInputListeners.begin();
+               mInputListeners.end() != iter; ++iter)
+              (*iter)->onRenderTimer (evt);
+      }
+
    }
 }
 //----------------------------------------------------------------------------
