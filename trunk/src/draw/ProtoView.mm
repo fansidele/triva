@@ -111,6 +111,7 @@
 		[self recalculateResourcesGraphWithApplicationData];
 		drawManager->resourcesGraphDraw (resourcesGraph);
 		drawManager->drawContainersIntoResourcesGraphBase ();
+		drawManager->createTimestampedObjects ();
 	}
 	[self updateScrollbar];
 }
