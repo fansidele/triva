@@ -50,9 +50,9 @@
 	[resourcesGraph setAlgorithm: algo];
 	[resourcesGraph setSize: size];
 	[resourcesGraph setSeparationRate: sep];
-	drawManager->resourcesGraphDraw (resourcesGraph);
 
 	baseState = ResourcesGraph;
+	[self hierarchyChanged];
 	return YES;
 }
 
