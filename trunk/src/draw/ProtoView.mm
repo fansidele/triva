@@ -118,8 +118,7 @@
 
 - (void) timeLimitsChanged
 {
-	drawManager->createTimestampedObjects ();
-	[self updateScrollbar];
+	[self hierarchyChanged];
 }
 
 - (DrawManager *) drawManager
