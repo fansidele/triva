@@ -27,13 +27,13 @@ Ogre::SceneNode *DrawManager::drawOneContainer (id cont, Ogre::SceneNode *node,
 	/* creating or re-using the container scene node */
         Ogre::SceneNode *n;
         try {
-                n = node->createChildSceneNode (orname);
-        	n->setPosition (x, 0, y);
-        }catch (Ogre::Exception ex){
                 n = mSceneMgr->getSceneNode (orname);
-                n->setPosition(x, 0, y);
+        	n->setPosition (x, 0, y);
                 return n;
+        }catch (Ogre::Exception ex){
+                n = node->createChildSceneNode (orname);
         }
+        n->setPosition(x, 0, y);
 
 	/* creating or re-using the visual representation of the container */
         Ogre::Entity *e;
@@ -52,12 +52,12 @@ Ogre::SceneNode *DrawManager::drawOneContainer (id cont, Ogre::SceneNode *node,
 	visualSceneNodeName.append("visualRepresentation");
 	Ogre::SceneNode *entn;
 	try {
+		entn = mSceneMgr->getSceneNode (visualSceneNodeName);
+	}catch (Ogre::Exception ex){
 		entn = n->createChildSceneNode(visualSceneNodeName);
 		entn->attachObject (e);
 		entn->setScale (.3,.01,.3);
 		entn->setInheritScale (false);
-	}catch (Ogre::Exception ex){
-		entn = mSceneMgr->getSceneNode (visualSceneNodeName);
 	}
 
 	/* creating or re-using the text scene node of the container */
@@ -65,6 +65,8 @@ Ogre::SceneNode *DrawManager::drawOneContainer (id cont, Ogre::SceneNode *node,
 	textSceneNodeName.append("textRepresentation");
 	Ogre::SceneNode *entnt;
 	try{	
+                entnt = mSceneMgr->getSceneNode (textSceneNodeName);
+        }catch(Ogre::Exception ex){
                 entnt = n->createChildSceneNode (textSceneNodeName);
                 MovableText *text;
                 NSString *textid;
@@ -74,8 +76,6 @@ Ogre::SceneNode *DrawManager::drawOneContainer (id cont, Ogre::SceneNode *node,
                 text->setCharacterHeight (15);
                 entnt->setInheritScale (false);
                 entnt->attachObject (text);
-        }catch(Ogre::Exception ex){
-                entnt = mSceneMgr->getSceneNode (textSceneNodeName);
         }
 	return n;
 }
