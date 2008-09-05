@@ -17,7 +17,7 @@ void CameraManager::createCamera (Ogre::Vector3 position, Ogre::Vector3 directio
 	childNode->attachObject (mCamera);
 
         mRotate = 0.13;
-        mMove = 5;
+        mMove = 35;
 	mDirection = Ogre::Vector3::ZERO;
 
 	movingCamera = false;
