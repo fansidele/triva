@@ -56,7 +56,9 @@ private:
 	void updateLinksPositions (PajeEntityType *et, id container);
 	void drawTimestampedObjects (id entity);
 	void drawStates (PajeEntityType *et, id container);
+	void drawOneState (Ogre::SceneNode *visualContainer, id state);
 	void drawLinks (PajeEntityType *et, id container);
+	void drawOneLink (id link);
 
 	Ogre::SceneNode *drawOneContainer (id cont, Ogre::SceneNode *node,
 					float x,float y);
