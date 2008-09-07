@@ -2,119 +2,161 @@
 #include "draw/position/Position.h"
 #include "draw/layout/Layout.h"
 
+//extern double gettime();
+//double t1, t2;
+//t1 = gettime();
+//t2 = gettime();
+//NSLog (@"%f", t2-t1);
+
 void DrawManager::createTimestampedObjects ()
 {
 	id instance = [viewController rootInstance];
 	this->drawTimestampedObjects (instance);
 }
 
+void DrawManager::drawOneState (Ogre::SceneNode *visualContainer,
+		id state)
+{
+	id container = [state container];
+	id et = [state entityType];
+
+	NSString *ide = [NSString stringWithFormat: @"%@-%@-%@-%@", 
+		[state startTime], [state value], [et name], [container name]];
+	NSString *idesn = [NSString stringWithFormat: @"%@-sn", ide];
+
+	Ogre::SceneNode *ssn;
+	try {
+		ssn = mSceneMgr->getSceneNode ([idesn cString]);
+	}catch (Ogre::Exception ex){
+		ssn = visualContainer->createChildSceneNode([idesn cString]);
+	}
+		
+	Ogre::Entity *ste;
+	std::string name = std::string ([ide cString]);
+	try {
+		ste = mSceneMgr->getEntity(name);
+	}catch (Ogre::Exception ex){
+		ste = mSceneMgr->createEntity (name,
+			Ogre::SceneManager::PT_CUBE);
+		Ogre::ColourValue ogreColor;
+		ogreColor = this->getRegisteredColor (
+			std::string([[[state entityType] name] cString]),
+			[[state name] cString]);
+		this->createMaterial(std::string([[state name] cString]),
+			ogreColor);
+
+		ste->setMaterialName ([[state name] cString]);
+		ste->setQueryFlags(STATE_MASK);
+
+		ssn->attachObject (ste);
+	}
+	double start;
+	double end;
+	int imbric;
+
+	start = [[[state startTime] description] doubleValue];
+	start *= [viewController pointsPerSecond];
+	end = [[[state endTime] description] doubleValue];
+	end *= [viewController pointsPerSecond];
+	imbric = [state imbricationLevel];
+
+	double kk = 0.3-(0.3/5*imbric);
+
+	ssn->setPosition (0,(end-start)/2+start,0);
+	ssn->setScale (kk,(end-start)/100,kk);
+}
+
 void DrawManager::drawStates (PajeEntityType *et, id container)
 {
-	Ogre::SceneNode *n = mSceneMgr->getSceneNode ([[container name] cString]);
+	Ogre::SceneNode *n;
+	n = mSceneMgr->getSceneNode ([[container name] cString]);
 	NSEnumerator *en3;
 	en3 = [viewController enumeratorOfEntitiesTyped: et
 			inContainer: container
 			fromTime:[viewController startTime]
 			toTime:[viewController endTime]
 			minDuration: 1/[viewController pointsPerSecond]];
-	PajeEntity *ent;
+	id ent;
 	while ((ent = [en3 nextObject]) != nil) {
-		Ogre::SceneNode *ssn;
-		ssn = n->createChildSceneNode();
-		NSString *ide = [NSString stringWithFormat: @"%@-#-#-%@-#-#-%@-#-#-%@", [ent description], [container name], [et name], [[container entityType] name]];
-		Ogre::Entity *ste;
-		std::string name = std::string ([ide cString]);
-		try {
-			ste = mSceneMgr->getEntity(name);
-		}catch (Ogre::Exception ex){
-			ste = mSceneMgr->createEntity (name,
-				Ogre::SceneManager::PT_CUBE);
-		}
-		Ogre::ColourValue ogreColor = this->getRegisteredColor (std::string([[[ent entityType] name] cString]), [[ent name] cString]);
-		this->createMaterial(std::string([[ent name] cString]), ogreColor);
+//		if ([[ent endTime] isEqualToDate: [viewController endTime]]){
+			this->drawOneState (n, ent);
+//		}
+	}
+}
 
-		ste->setMaterialName ([[ent name] cString]);
-		ste->setQueryFlags(STATE_MASK);
-		try {
-			ssn->attachObject (ste);
-		} catch (Ogre::Exception ex){
-//			std::cout <<
-//				"Error: visual object " << 
-//				ste->getName() << 
-//				"already present in the visualization." <<
-//				" Ignoring." <<
-//				std::endl;
-		}
-		double start;
-		double end;
-		int imbric;
+void DrawManager::drawOneLink (id link)
+{
+	id container = [link container];
+	id et = [link entityType];
 
-		start = [[[ent startTime] description] doubleValue];
-		start *= [viewController pointsPerSecond];
-		end = [[[ent endTime] description] doubleValue];
-		end *= [viewController pointsPerSecond];
-		imbric = [ent imbricationLevel];
+	NSString *ide = [NSString stringWithFormat: @"%@-%@-%@-%@",
+		[link startTime], [link value], [et name], [container name]];
 
-		double kk = 0.3-(0.3/5*imbric);
+	std::string name = std::string ([ide cString]);
 
-		ssn->setPosition (0,(end-start)/2+start,0);
-		ssn->setScale (kk,(end-start)/100,kk);
+	NSString *sn = [[link sourceContainer] name];
+	NSString *dn = [[link destContainer] name];
+
+//	[position addLinkBetweenNode: sn andNode: dn];
+
+	Ogre::Vector3 op, dp;
+	op = mSceneMgr->getSceneNode ([sn cString])->getWorldPosition();
+	dp = mSceneMgr->getSceneNode ([dn cString])->getWorldPosition();
+
+	Ogre::SceneNode *n = mSceneMgr->getRootSceneNode ();
+
+	Ogre::Vector3 dif = dp - op;
+	
+	double start;
+	double end;
+	start = [[[link time] description] doubleValue];
+	start *= [viewController pointsPerSecond];
+	end = [[[link endTime] description] doubleValue];
+	end *= [viewController pointsPerSecond];
+
+	Ogre::ManualObject *ste;
+	try {
+		ste = mSceneMgr->getManualObject(name);
+	}catch (Ogre::Exception ex){
+		ste = mSceneMgr->createManualObject(name);
+		Ogre::ColourValue ogreColor;
+		ogreColor = this->getRegisteredColor (
+			std::string([[[link entityType] name] cString]),
+			[[link name] cString]);
+		this->createMaterial(std::string([[link name] cString]),
+			ogreColor);
+
+		ste->clear();
+		ste->begin(std::string([[link name] cString]),
+			Ogre::RenderOperation::OT_LINE_STRIP);
+		ste->position (op.x, start, op.z);
+		ste->position (dp.x, end, dp.z);
+		ste->end();
+		ste->setQueryFlags (LINK_MASK);
+	}
+
+	NSString *idescenenode = [NSString stringWithFormat: @"%@-sn", ide];
+	Ogre::SceneNode *dsn;
+	try{
+		dsn = mSceneMgr->getSceneNode ([idescenenode cString]);
+	}catch (Ogre::Exception ex){
+		dsn = n->createChildSceneNode([idescenenode cString]);
+		dsn->attachObject (ste);
 	}
 }
 
 void DrawManager::drawLinks (PajeEntityType *et, id container)
 {
-	Ogre::SceneNode *n;
+	return;
 	NSEnumerator *en4;
 	en4 = [viewController enumeratorOfCompleteEntitiesTyped: et
 			inContainer: container
 			fromTime:[viewController startTime]
 			toTime:[viewController endTime]
 			minDuration: 1/[viewController pointsPerSecond]];
-	PajeEntity *ent;
+	id ent;
 	while ((ent = [en4 nextObject]) != nil) {
-		NSString *ide = [NSString stringWithFormat: @"%@-#-#-%@-#-#-%@-#-#-%@", [ent description], [container name], [et name], [[container entityType] name]];
-		std::string name;
-		name = std::string ([ide cString]);
-
-		NSString *sn = [[ent sourceContainer] name];
-		NSString *dn = [[ent destContainer] name];
-
-//		[position addLinkBetweenNode: sn andNode: dn];
-
-	        Ogre::Vector3 op = mSceneMgr->getSceneNode ([sn cString])->getWorldPosition();
-		Ogre::Vector3 dp = mSceneMgr->getSceneNode ([dn cString])->getWorldPosition();
-
-		n = mSceneMgr->getRootSceneNode ();
-		Ogre::Vector3 dif = dp - op;
-		
-		double start;
-		double end;
-		start = [[[ent time] description] doubleValue];
-		start *= [viewController pointsPerSecond];
-		end = [[[ent endTime] description] doubleValue];
-		end *= [viewController pointsPerSecond];
-
-		Ogre::ManualObject *ste;
-		try {
-			ste = mSceneMgr->getManualObject(name);
-		}catch (Ogre::Exception ex){
-			ste = mSceneMgr->createManualObject(name);
-		}
-		Ogre::ColourValue ogreColor = this->getRegisteredColor (std::string([[[ent entityType] name] cString]), [[ent name] cString]);
-		this->createMaterial(std::string([[ent name] cString]), ogreColor);
-
-		ste->clear();
-		ste->begin(std::string([[ent name] cString]), Ogre::RenderOperation::OT_LINE_STRIP);
-		ste->position (op.x, start, op.z);
-		ste->position (dp.x, end, dp.z);
-		ste->end();
-		ste->setQueryFlags (LINK_MASK);
-		Ogre::SceneNode *dsn = n->createChildSceneNode();
-		try{
-			dsn->attachObject (ste);
-		}catch (Ogre::Exception ex){
-		}
+		this->drawOneLink (ent);
 	}
 }
 
