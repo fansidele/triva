@@ -12,7 +12,7 @@ void DrawManager::resetCurrentVisualization ()
 		currentVisuNode = mSceneMgr->getSceneNode ("CurrentVisu");
 
 		//remove everything
-		currentVisuNode->removeAndDestroyAllChildren();
+		//currentVisuNode->removeAndDestroyAllChildren();
 	}
 }
 
