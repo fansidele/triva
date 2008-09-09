@@ -52,8 +52,6 @@ private:
 //	NSMutableDictionary *createContainersDictionary (id entity);
 	void destroyAllChildren (Ogre::SceneNode *node);
 	void updateLinksPositions ();
-	void updateLinksPositions (id entity);
-	void updateLinksPositions (PajeEntityType *et, id container);
 	void drawTimestampedObjects (id entity);
 	void drawStates (PajeEntityType *et, id container);
 	void drawOneState (Ogre::SceneNode *visualContainer, id state);
