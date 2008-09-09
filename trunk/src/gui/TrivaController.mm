@@ -169,6 +169,7 @@ void TrivaController::oneBundleConfigured()
 void TrivaController::checkRead(wxTimerEvent& event)
 {
 NS_DURING
+	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	static int flag = 1;
 	if (flag){
 		flag = [trivaPaje readNextChunk: nil];
@@ -179,6 +180,7 @@ NS_DURING
 			flag = 1;
 		}
 	}
+	[pool release];
 NS_HANDLER
         NSLog (@"Exception = %@", localException);
         wxString m = NSSTRINGtoWXSTRING ([localException reason]);
