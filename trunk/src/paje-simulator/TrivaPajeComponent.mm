@@ -212,22 +212,10 @@
 //    [self readChunk:chunkNumber];
 }
 
-#define CHUNK_SIZE 1500000
-//#define CADA
+#define CHUNK_SIZE (10*1024*1024)
 
 - (int)readNextChunk:(id)sender
 {
-#ifdef CADA
-//	static int s = 1;
-//	if (s){
-		[self startChunk: [chunkDates count]];
-//		s = 0;
-//	}
-	[self readChunk: -1 /* method ignores this number */];
-//	if (![reader hasMoreData]){
-		[self endOfChunkLast: ![reader hasMoreData]];
-//	}
-#else
 	static BOOL chunkStarted = NO;
 	if (!chunkStarted){
 		[self startChunk: [chunkDates count]];
@@ -245,7 +233,6 @@
 		[self endOfChunkLast: ![reader hasMoreData]];
 		chunkStarted = NO;
 	}
-#endif
 
 	if ([reader hasMoreData]){
 		return 1;
