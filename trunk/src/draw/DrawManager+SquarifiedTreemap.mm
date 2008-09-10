@@ -68,28 +68,44 @@ void DrawManager::treemapRecursiveDraw (TrivaTreemap *root, Ogre::SceneNode *nod
 		return;
 	}
 
-	std::string orname = std::string ([[root name] cString]);
-	Ogre::SceneNode *n1 = node->createChildSceneNode(orname);
+	NSString *squareId, *squareDrawingId;
+
+	squareId = [root name];
+	squareDrawingId = [NSString stringWithFormat: @"%@-draw", squareId];
+
+	std::string orname = std::string ([squareId cString]);
+	Ogre::SceneNode *n1;
+	try {
+		n1 = mSceneMgr->getSceneNode(orname);
+	}catch (Ogre::Exception ex){
+		n1 = node->createChildSceneNode(orname);
+	}
 	n1->setPosition ([root x], .10, [root y]);
+
 	Ogre::Entity *e;
 	try {
-		e = mSceneMgr->getEntity ([[root name] cString]);
+		e = mSceneMgr->getEntity ([squareId cString]);
 	}catch (Ogre::Exception ex){
-		e = mSceneMgr->createEntity ([[root name] cString],
+		e = mSceneMgr->createEntity ([squareId cString],
 				Ogre::SceneManager::PT_CUBE);
+
+		std::string materialname = "Triva/Treemap/";
+		materialname.append ([[NSString stringWithFormat: @"%.0f", [root depth]] cString]);	
+		e->setMaterialName (materialname);
 	}
-	std::string materialname = "Triva/Treemap/";
-	materialname.append ([[NSString stringWithFormat: @"%.0f", [root depth]] cString]);	
 
-	e->setMaterialName (materialname);
-
-	Ogre::SceneNode *n2 = n1->createChildSceneNode();
-	n2->attachObject (e);
-	n2->setInheritScale (false);
+	Ogre::SceneNode *n2;
+	try {
+		n2 = mSceneMgr->getSceneNode ([squareDrawingId cString]);
+	} catch (Ogre::Exception ex){
+		n2 = n1->createChildSceneNode([squareDrawingId cString]);
+		n2->attachObject (e);
+		n2->setInheritScale (false);
+		n2->setPosition (0, 0, 0);
+	}
 	n2->setScale ((([root width])/100)-([root depth]*.05),
 			.01,
 			((([root height])/100))-([root depth]*.05));
-	n2->setPosition (0, 0, 0);
 
 //	MovableText *text;
 //	text = new MovableText (name, name);
