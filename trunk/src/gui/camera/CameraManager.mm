@@ -3,7 +3,7 @@
 void CameraManager::createCamera (Ogre::Vector3 position, Ogre::Vector3 direction)
 {
 	Ogre::SceneNode *node = mSceneMgr->getRootSceneNode();
-	Ogre::SceneNode *childNode = node->createChildSceneNode();
+	Ogre::SceneNode *childNode = node->createChildSceneNode("CameraNode");
 
 	mCamera = mSceneMgr->createCamera ("CameraManager-DefaultCamera");
 	mCamera->setNearClipDistance (1);
