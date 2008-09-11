@@ -219,6 +219,17 @@
 	value = 1;
 }
 
+- (void) setValue: (float) v
+{
+	if (v == 0){
+		//the value must be greater than zero.
+		//if value is zero, the treemap algorithm loop will not end
+		v = 1;
+	}
+	value = v;
+	[parent reorder];
+}
+
 - (void) recalculateValuesBottomUp
 {
 	unsigned int i;
