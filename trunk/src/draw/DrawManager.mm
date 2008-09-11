@@ -34,7 +34,6 @@ DrawManager::DrawManager (ProtoView *view)
         pointer->attachObject (line);
 
 	
-	currentVisuNode = NULL;
 	mAnimationState = NULL;
 
 	Ogre::MaterialPtr(Ogre::MaterialManager::getSingleton().getByName("BaseWhiteNoLighting"))->setAmbient(Ogre::ColourValue::Black);
@@ -47,8 +46,11 @@ DrawManager::DrawManager (ProtoView *view)
 	mRaySceneQuery = mSceneMgr->createRayQuery(Ogre::Ray());
 	this->createMouseCursors();
 
-	//initializing Base category
-	this->initializeSquarifiedTreemapCategory();
+	/* initialization of main scene nodes */
+	currentVisuNode = root->createChildSceneNode("CurrentVisu");
+
+	baseSceneNode = currentVisuNode->createChildSceneNode ("VisuBase");
+	containerPosition = currentVisuNode->createChildSceneNode ("ContPosit");
 } 
 
 DrawManager::~DrawManager()

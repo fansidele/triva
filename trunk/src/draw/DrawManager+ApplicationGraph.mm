@@ -11,7 +11,7 @@ void DrawManager::applicationGraphRecursiveDraw (id entity,
 	int x = [position positionXForNode: [entity name]];
 	int y = [position positionYForNode: [entity name]];
 
-	Ogre::SceneNode *n = this->drawOneContainer (entity, node, x, y);
+	this->drawOneContainer (entity, node, x, y);
 
 	/* recursive */
 	NSEnumerator *en = [[viewController containedTypesForContainerType:[viewController entityTypeForEntity:entity]] objectEnumerator];
@@ -23,7 +23,7 @@ void DrawManager::applicationGraphRecursiveDraw (id entity,
 			en2 = [viewController enumeratorOfContainersTyped:et inContainer:entity];
 			while ((sub = [en2 nextObject]) != nil) {
 				this->applicationGraphRecursiveDraw((id)sub, 
-					position, n);
+					position, node);
 			}
 		}
 	}
@@ -32,14 +32,6 @@ void DrawManager::applicationGraphRecursiveDraw (id entity,
 void DrawManager::applicationGraphDraw (Position *position)
 {
 	id instance = [viewController rootInstance];
-	if (!currentVisuNode){
-		this->resetCurrentVisualization();
-	}
-//	if (baseSceneNode){
-//		baseSceneNode->removeAndDestroyAllChildren();
-//		mSceneMgr->destroySceneNode (baseSceneNode->getName());
-//		baseSceneNode = NULL;
-//	}
-//	baseSceneNode = currentVisuNode->createChildSceneNode();
-	this->applicationGraphRecursiveDraw (instance, position, currentVisuNode);
+	this->applicationGraphRecursiveDraw (instance, position,
+			containerPosition);
 }

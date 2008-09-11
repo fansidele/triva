@@ -3,25 +3,30 @@
 void DrawManager::drawOneContainerIntoResourcesGraphBase
                 (id entity, Ogre::SceneNode *node, NSPoint loc)
 {
-	this->drawOneContainer (entity, node, loc.x, loc.y);
+        Ogre::Vector3 relLocation (loc.x, 0, loc.y);
+        Ogre::Vector3 nodeLocation = node->getWorldPosition();
+        Ogre::Vector3 r = nodeLocation+relLocation;
+	this->drawOneContainer (entity, containerPosition, r.x, r.z);
 }
 
 void DrawManager::resourcesGraphDelete ()
 {
-	if (baseSceneNode){
-		baseSceneNode->removeAndDestroyAllChildren();
-		mSceneMgr->destroySceneNode(baseSceneNode->getName());
-		baseSceneNode = NULL;
-	}
+	Ogre::SceneNode *node;
+	try {
+		node = mSceneMgr->getSceneNode ("ResourcesGraph");
+		node->removeAndDestroyAllChildren();
+		mSceneMgr->destroySceneNode ("ResourcesGraph");
+	}catch(Ogre::Exception ex){}
 }
 
 void DrawManager::resourcesGraphDraw (TrivaResourcesGraph *graph)
 {
+	Ogre::SceneNode *node;
 	try {
-		baseSceneNode = currentVisuNode->createChildSceneNode("ResourcesGraph");
+		node = baseSceneNode->createChildSceneNode("ResourcesGraph");
 	}catch (Ogre::Exception ex){
-		baseSceneNode =  mSceneMgr->getSceneNode ("ResourcesGraph");
-		baseSceneNode->removeAndDestroyAllChildren();
+		node =  mSceneMgr->getSceneNode ("ResourcesGraph");
+		node->removeAndDestroyAllChildren();
 	}
 
 	NSArray *ar = [graph allNodes];
@@ -34,7 +39,7 @@ void DrawManager::resourcesGraphDraw (TrivaResourcesGraph *graph)
 		float height = (float)[graph heightForNode: nodeName];
 
 		std::string orname = std::string ([nodeName cString]);
-		Ogre::SceneNode *n1 = baseSceneNode->createChildSceneNode(orname);
+		Ogre::SceneNode *n1 = node->createChildSceneNode(orname);
 		n1->setPosition (x, 0, y);
 		Ogre::Entity *e;
 		try {
@@ -76,10 +81,10 @@ void DrawManager::resourcesGraphDraw (TrivaResourcesGraph *graph)
 		ste->position (op.x, 0, op.z);
 		ste->position (dp.x, 0, dp.z);
 		ste->end();
- 		Ogre::SceneNode *root = mSceneMgr->getRootSceneNode();
-		Ogre::SceneNode *n = root->createChildSceneNode();
+ //		Ogre::SceneNode *root = mSceneMgr->getRootSceneNode();
+//		Ogre::SceneNode *n = root->createChildSceneNode();
 		try {
-			n->attachObject (ste);
+			node->attachObject (ste);
 		}catch (Ogre::Exception ex){}
 	}
 }

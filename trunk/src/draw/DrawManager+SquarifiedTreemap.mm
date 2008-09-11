@@ -9,7 +9,10 @@ void DrawManager::drawContainersIntoTreemapBase ()
 void DrawManager::drawOneContainerIntoTreemapbase 
 		(id entity, Ogre::SceneNode *node, NSPoint loc)
 {
-	this->drawOneContainer (entity, node, loc.x, loc.y);
+	Ogre::Vector3 relLocation (loc.x, 0, loc.y);
+	Ogre::Vector3 nodeLocation = node->getWorldPosition();
+	Ogre::Vector3 r = nodeLocation+relLocation;
+	this->drawOneContainer (entity, containerPosition, r.x, r.z);
 }
 
 
@@ -130,26 +133,22 @@ void DrawManager::treemapRecursiveDraw (TrivaTreemap *root, Ogre::SceneNode *nod
 
 void DrawManager::squarifiedTreemapDraw (TrivaTreemapSquarified *root)
 {
+	Ogre::SceneNode *node;
 	try{
-		baseSceneNode = currentVisuNode->createChildSceneNode("SquarifiedTreemap");
+		node = baseSceneNode->createChildSceneNode("SquarifiedTreemap");
 	}catch (Ogre::Exception ex){
-		baseSceneNode = mSceneMgr->getSceneNode ("SquarifiedTreemap");
-		baseSceneNode->removeAndDestroyAllChildren();
+		node = mSceneMgr->getSceneNode ("SquarifiedTreemap");
+		node->removeAndDestroyAllChildren();
 	}
-	this->treemapRecursiveDraw (root, baseSceneNode);
+	this->treemapRecursiveDraw (root, node);
 }
 
 void DrawManager::squarifiedTreemapDelete ()
 {
-	if (baseSceneNode){
-		baseSceneNode->removeAndDestroyAllChildren();
-		mSceneMgr->destroySceneNode (baseSceneNode->getName());
-		baseSceneNode = NULL;
-	}
+	Ogre::SceneNode *node;
+	try {
+		node = mSceneMgr->getSceneNode ("SquarifiedTreemap");
+		node->removeAndDestroyAllChildren();
+		mSceneMgr->destroySceneNode ("SquarifiedTreemap");
+	}catch (Ogre::Exception ex){}
 }
-
-void DrawManager::initializeSquarifiedTreemapCategory ()
-{
-	baseSceneNode = NULL;
-}
-

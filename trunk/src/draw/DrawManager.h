@@ -36,15 +36,20 @@ private:
 	Ogre::SceneManager* mSceneMgr;
 	Ogre::AnimationState *mAnimationState;
 
+	//main scene node of the current visualization,
+	//it has two children (baseSceneNode and containerPosition)
 	Ogre::SceneNode *currentVisuNode;
+
+	//One scenenode to the visualization base
+	Ogre::SceneNode *baseSceneNode;
+	//and another to hold containers positions
+	Ogre::SceneNode *containerPosition;
 
 //for animations
 	void onRenderTimer(wxTimerEvent& evt); //implemnented in DrawManager.mm
 
-//PAJE CATEGORY
+//TIMESTAMPED OBJECTS CATEGORY
 public:
-//	void createHierarchy ();
-	void resetCurrentVisualization();
 	void createTimestampedObjects ();
 
 private:
@@ -58,6 +63,7 @@ private:
 	void drawLinks (PajeEntityType *et, id container);
 	void drawOneLink (id link);
 
+//PAJE CATEGORY
 	Ogre::SceneNode *drawOneContainer (id cont, Ogre::SceneNode *node,
 					float x,float y);
 
@@ -99,9 +105,7 @@ public:
 	void squarifiedTreemapDraw (TrivaTreemapSquarified *root);
 	void squarifiedTreemapDelete ();
 private:
-	Ogre::SceneNode *baseSceneNode;
  	void treemapRecursiveDraw (TrivaTreemap *root, Ogre::SceneNode *node);
-	void initializeSquarifiedTreemapCategory ();
 	void drawContainersIntoTreemapBase (id entity);
 	void drawOneContainerIntoTreemapbase (id container, Ogre::SceneNode *n,
 			NSPoint loc);
