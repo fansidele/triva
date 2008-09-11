@@ -149,16 +149,25 @@
 	NSString *aux = [[aux2 componentsSeparatedByString: @"-"] objectAtIndex:
 0];
 
+	NSString *save = nil;
+
 	Agnode_t *n = agfstnode (g);
 	while (n != NULL){
 		NSString *name = [NSString stringWithFormat: @"%s", n->name];
 
-		NSRange aaa = NSIntersectionRange ([name rangeOfString: aux],
-                        [aux rangeOfString: name]);
+		NSRange aaa = NSIntersectionRange ([name rangeOfString: aux2],
+                        [aux2 rangeOfString: name]);
 	        if (aaa.location != NSNotFound){
-        	        return name;
+			save = name;
 	        }
+
+		if ([name isEqualToString: partialName]){
+			return name;
+		}
 		n = agnxtnode (g, n);
+	}
+	if (save != nil){
+		return save;
 	}
 	return nil;
 }
