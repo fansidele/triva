@@ -154,6 +154,9 @@ void TrivaController::playClicked( wxCommandEvent& event )
 		this->currentState() == Paused){
 		this->setState(Running);
 	}
+	if (this->currentState() == Running){
+		[view hierarchyChanged];
+	}
 }
 
 void TrivaController::pauseClicked( wxCommandEvent& event )

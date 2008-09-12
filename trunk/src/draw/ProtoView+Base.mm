@@ -6,6 +6,7 @@
 	[entityTypesChosen release];
 	entityTypesChosen = d;
 	[entityTypesChosen retain];
+	[self hierarchyChanged];
 }
 
 - (float) combinedValueFor: (id) entityType inContainer: (id) container
