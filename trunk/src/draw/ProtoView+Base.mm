@@ -1,6 +1,77 @@
 #include "ProtoView.h"
 
 @implementation ProtoView (Base)
+- (void) setCombinedCounterConfiguration: (NSDictionary *) d
+{
+	[entityTypesChosen release];
+	entityTypesChosen = d;
+	[entityTypesChosen retain];
+}
+
+- (float) combinedValueFor: (id) entityType inContainer: (id) container
+	andConfig: (NSDictionary *) config
+{
+	/* 
+	config is dictionary of multiple: values -> weight 
+	of the corresponding entityType passed as parameter
+	*/
+	float ret = 0;
+	NSEnumerator *en;
+	PajeEntity *ent;
+	en = [self enumeratorOfEntitiesTyped: entityType
+                          inContainer: container
+                             fromTime: [self startTime]
+                               toTime: [self endTime]
+                          minDuration: 1/pointsPerSecond];
+	while ((ent = [en nextObject]) != nil) {
+		NSString *weight = [config objectForKey: [ent value]];
+		if (weight != nil){
+			ret += [weight floatValue];
+		}
+	}
+	return ret;
+}
+
+- (float) calculateValueForContainer: (id) container
+{
+	/* 
+	input: (id) container,
+	from config.: (NSDictionary *) entityTypesChosen
+		key is the name of the entity type
+		value is a dictionary
+			keys are possible values
+			values are corresponding weights 
+	*/
+	/* return value */
+	float ret = 1;
+
+	if (entityTypesChosen == nil){
+		return ret;
+	}
+
+	NSSet *auxSet = [NSSet setWithArray: [entityTypesChosen allKeys]];
+
+	PajeEntityType *et;
+	NSEnumerator *en;
+	en = [[self containedTypesForContainerType:
+		[self entityTypeForEntity: container]] objectEnumerator];
+	while ((et = [en nextObject]) != nil) {
+		if (![self isContainerEntityType: et]){
+			/*1 - check is et is present in configuredEntityTypes */
+			if ([auxSet containsObject: [et name]]){
+				NSDictionary *config;
+				config = [entityTypesChosen objectForKey:
+							[et name]];
+				ret += [self combinedValueFor: et
+						inContainer: container
+						andConfig: config];
+			}
+		}
+	}
+	return ret;
+}
+
+/*============================================================================*/
 - (BOOL) squarifiedTreemapWithFile: (NSString *) file
 	andWidth: (float) w andHeight: (float) h
 {
@@ -143,32 +214,25 @@
 
 - (void) recalculateSquarifiedTreemapsWith: (id) entity;
 {
-	/* TODO: this method must be configurable because it updates
-		the squarified treemap visualization base based on the
-		application data (paje trace) 
-		
-		For now, it uses the presence of a container in a
-		treemap node to change its value and recalculate the
-		squarified treemap.
+	TrivaTreemap *treemap = [self
+		searchWithPartialName: [entity name]];
+	if (treemap != nil){
+		float ret;
+		ret = [self calculateValueForContainer: entity];
+		[treemap setValue: ret]; /* TODO: what if we have multiple
+			containers for the same treemap node */
+	}
 
-		After calling this method, the visualization base must
-		be updated.
-	*/
 	PajeEntityType *et;
 	NSEnumerator *en = [[self containedTypesForContainerType:[self entityTypeForEntity: entity]] objectEnumerator];
 	while ((et = [en nextObject]) != nil) {
 		if ([self isContainerEntityType:et]) {
 			PajeContainer *sub;
-			NSEnumerator *en2 = [self enumeratorOfContainersTyped:et inContainer: entity];
+			NSEnumerator *en2;
+			en2 = [self enumeratorOfContainersTyped: et
+						inContainer: entity];
 			while ((sub = [en2 nextObject]) != nil) {
-				TrivaTreemap *treemap = [self
-					searchWithPartialName: [sub name]];
-				if (treemap == nil){
-					NSLog (@"error, throw exception?");
-				}else{
-					[treemap incrementValue];
-					[treemap incrementNumberOfContainers];
-				}
+				[self recalculateSquarifiedTreemapsWith: sub];
 			}
 		}
 	}

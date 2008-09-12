@@ -16,18 +16,18 @@ class GUI_CombinedCounter : public AutoGUI_CombinedCounter
 {
 private:
 	TrivaController *controller;
+	NSMutableDictionary *configuration;
 
 protected:
-	wxComboBox* stateTypeListValues;
-	wxTextCtrl* stateTypeWeight;
-
 	void addStateType( wxCommandEvent& event );
+	void clear( wxCommandEvent& event );
 	void apply( wxCommandEvent& event );
 	void close( wxCommandEvent& event );
 	void onClose (wxCloseEvent& event );
 
 public:
 	void setController (TrivaController *t) { controller = t; };
+	void reconfigure ();
 	GUI_CombinedCounter( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Combined Counter Configuration"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 500,362 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
 };
 

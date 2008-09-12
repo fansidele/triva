@@ -31,6 +31,9 @@ enum TrivaVisualizationBaseState {
 	Position *applicationGraphPosition;
 
 	double pointsPerSecond;
+
+	//
+	NSDictionary *entityTypesChosen; /* set by GUI_CombinedCounter */
 }
 - (DrawManager *) drawManager;
 - (void) setPointsPerSecond: (double) nv;
@@ -43,6 +46,7 @@ enum TrivaVisualizationBaseState {
 @end
 
 @interface ProtoView (Base)
+- (void) setCombinedCounterConfiguration: (NSDictionary *) d;
 - (BOOL) squarifiedTreemapWithFile: (NSString *) file
 	andWidth: (float) w andHeight: (float) h;
 - (BOOL) originalTreemapWithFile: (NSString *) file;
