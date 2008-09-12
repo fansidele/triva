@@ -11,6 +11,13 @@ void TrivaController::applicationIsInitialized()
 void TrivaController::applicationIsConfigured()
 {
 	std::cout << __FUNCTION__ << std::endl;
+	/* read the start of event flow just to make sure we have 
+	the initial paje hierarchy definition */
+	wxTimerEvent event;
+	this->checkRead (event);
+
+	/* enable the possibility to open the Combined Counter Window */
+	guiCombinedCounterWindow->reconfigure();
 }
 
 void TrivaController::applicationIsRunning()
