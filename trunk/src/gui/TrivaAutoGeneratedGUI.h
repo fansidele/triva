@@ -35,7 +35,6 @@ class Triva3DFrame;
 #include <wx/notebook.h>
 #include <wx/checkbox.h>
 #include <wx/statline.h>
-#include <wx/combobox.h>
 
 ///////////////////////////////////////////////////////////////////////////
 
@@ -252,11 +251,12 @@ class AutoGUI_CombinedCounter : public wxFrame
 		wxStaticText* m_staticText18;
 		
 		
-		wxComboBox* stateTypeListValues;
+		wxChoice* stateTypeListValues;
 		wxTextCtrl* stateTypeWeight;
 		wxButton* stateTypeAdd;
 		wxTextCtrl* combinedConfiguration;
 		wxStaticLine* m_staticline5;
+		wxButton* m_button21;
 		wxButton* m_button22;
 		wxButton* m_button23;
 		wxStatusBar* m_statusBar3;
@@ -264,6 +264,7 @@ class AutoGUI_CombinedCounter : public wxFrame
 		// Virtual event handlers, overide them in your derived class
 		virtual void onClose( wxCloseEvent& event ){ event.Skip(); }
 		virtual void addStateType( wxCommandEvent& event ){ event.Skip(); }
+		virtual void clear( wxCommandEvent& event ){ event.Skip(); }
 		virtual void apply( wxCommandEvent& event ){ event.Skip(); }
 		virtual void close( wxCommandEvent& event ){ event.Skip(); }
 		

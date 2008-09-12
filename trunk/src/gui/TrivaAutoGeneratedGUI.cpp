@@ -634,7 +634,9 @@ AutoGUI_CombinedCounter::AutoGUI_CombinedCounter( wxWindow* parent, wxWindowID i
 	
 	fgSizer8->Add( 0, 0, 1, wxEXPAND, 5 );
 	
-	stateTypeListValues = new wxComboBox( m_panel15, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, wxCB_READONLY|wxCB_SIMPLE ); 
+	wxArrayString stateTypeListValuesChoices;
+	stateTypeListValues = new wxChoice( m_panel15, wxID_ANY, wxDefaultPosition, wxDefaultSize, stateTypeListValuesChoices, 0 );
+	stateTypeListValues->SetSelection( 0 );
 	fgSizer8->Add( stateTypeListValues, 0, wxALL, 5 );
 	
 	stateTypeWeight = new wxTextCtrl( m_panel15, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
@@ -662,6 +664,9 @@ AutoGUI_CombinedCounter::AutoGUI_CombinedCounter( wxWindow* parent, wxWindowID i
 	wxBoxSizer* bSizer20;
 	bSizer20 = new wxBoxSizer( wxHORIZONTAL );
 	
+	m_button21 = new wxButton( m_panel14, wxID_ANY, wxT("Clear"), wxDefaultPosition, wxDefaultSize, 0 );
+	bSizer20->Add( m_button21, 0, wxALL, 5 );
+	
 	m_button22 = new wxButton( m_panel14, wxID_ANY, wxT("&Apply"), wxDefaultPosition, wxDefaultSize, 0 );
 	bSizer20->Add( m_button22, 0, wxALL, 5 );
 	
@@ -684,6 +689,7 @@ AutoGUI_CombinedCounter::AutoGUI_CombinedCounter( wxWindow* parent, wxWindowID i
 	// Connect Events
 	this->Connect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( AutoGUI_CombinedCounter::onClose ) );
 	stateTypeAdd->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( AutoGUI_CombinedCounter::addStateType ), NULL, this );
+	m_button21->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( AutoGUI_CombinedCounter::clear ), NULL, this );
 	m_button22->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( AutoGUI_CombinedCounter::apply ), NULL, this );
 	m_button23->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( AutoGUI_CombinedCounter::close ), NULL, this );
 }
@@ -693,6 +699,7 @@ AutoGUI_CombinedCounter::~AutoGUI_CombinedCounter()
 	// Disconnect Events
 	this->Disconnect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( AutoGUI_CombinedCounter::onClose ) );
 	stateTypeAdd->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( AutoGUI_CombinedCounter::addStateType ), NULL, this );
+	m_button21->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( AutoGUI_CombinedCounter::clear ), NULL, this );
 	m_button22->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( AutoGUI_CombinedCounter::apply ), NULL, this );
 	m_button23->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( AutoGUI_CombinedCounter::close ), NULL, this );
 }
