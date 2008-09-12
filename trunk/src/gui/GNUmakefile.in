@@ -21,6 +21,7 @@ view_OBJCC_FILES= \
 	TrivaController+Scrollbar.mm \
 	BundleGUIEvents.mm \
 	GUI_Base.mm \
+	GUI_CombinedCounter.mm \
 	GUI_Preferences.mm
 
 view_INCLUDE_DIRS += @CPPFLAGS@

@@ -77,6 +77,9 @@ TrivaController::TrivaController( wxWindow* parent, wxWindowID id, const wxStrin
 	guiBaseWindow = new GUI_Base(this);
 	guiBaseWindow->setController (this);
 
+	guiCombinedCounterWindow = new GUI_CombinedCounter (this);
+	guiCombinedCounterWindow->setController (this);
+
 	guiPreferencesWindow = new GUI_Preferences(this);
 	guiPreferencesWindow->setController (this);
 
@@ -233,6 +236,15 @@ void TrivaController::guiBaseSelection( wxCommandEvent& event )
 		guiBaseWindow->Hide();
 	}else{
 		guiBaseWindow->Show();
+	}
+}
+
+void TrivaController::guiCombinedCounterSelection( wxCommandEvent& event )
+{
+	if (guiCombinedCounterWindow->IsShown()){
+		guiCombinedCounterWindow->Hide();
+	}else{
+		guiCombinedCounterWindow->Show();
 	}
 }
 

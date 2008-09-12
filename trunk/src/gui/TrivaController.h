@@ -18,11 +18,13 @@
 #include "reader/TrivaPajeReader.h"
 
 #include "gui/GUI_Base.h"
+#include "gui/GUI_CombinedCounter.h"
 #include "gui/GUI_Preferences.h"
 
 class TrivaColorWindowEvents;
 class BundleGUIEvents;
 class GUI_Base;
+class GUI_CombinedCounter;
 class GUI_Preferences;
 
 enum TrivaApplicationState {Initialized,Configured,Running,Paused};
@@ -39,9 +41,11 @@ private:
 	std::vector<BundleGUIEvents*> bundlesGUI;
 
 	GUI_Base *guiBaseWindow;
+	GUI_CombinedCounter *guiCombinedCounterWindow;
 	GUI_Preferences *guiPreferencesWindow;
 protected:
 	void guiBaseSelection( wxCommandEvent& event );
+	void guiCombinedCounterSelection( wxCommandEvent& event );
 	void guiPreferencesSelection( wxCommandEvent& event );
 
 protected:

@@ -35,6 +35,7 @@ class Triva3DFrame;
 #include <wx/notebook.h>
 #include <wx/checkbox.h>
 #include <wx/statline.h>
+#include <wx/combobox.h>
 
 ///////////////////////////////////////////////////////////////////////////
 
@@ -73,6 +74,7 @@ class AutoGUI_Triva : public wxFrame
 		virtual void containerLabels( wxCommandEvent& event ){ event.Skip(); }
 		virtual void stateLabels( wxCommandEvent& event ){ event.Skip(); }
 		virtual void guiBaseSelection( wxCommandEvent& event ){ event.Skip(); }
+		virtual void guiCombinedCounterSelection( wxCommandEvent& event ){ event.Skip(); }
 		virtual void guiPreferencesSelection( wxCommandEvent& event ){ event.Skip(); }
 		virtual void cameraForward( wxCommandEvent& event ){ event.Skip(); }
 		virtual void cameraBackward( wxCommandEvent& event ){ event.Skip(); }
@@ -233,6 +235,42 @@ class AutoGUI_Preferences : public wxFrame
 	public:
 		AutoGUI_Preferences( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Triva Preferences"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 252,210 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
 		~AutoGUI_Preferences();
+	
+};
+
+///////////////////////////////////////////////////////////////////////////////
+/// Class AutoGUI_CombinedCounter
+///////////////////////////////////////////////////////////////////////////////
+class AutoGUI_CombinedCounter : public wxFrame 
+{
+	private:
+	
+	protected:
+		wxPanel* m_panel14;
+		wxPanel* m_panel13;
+		wxPanel* m_panel15;
+		wxStaticText* m_staticText18;
+		
+		
+		wxComboBox* stateTypeListValues;
+		wxTextCtrl* stateTypeWeight;
+		wxButton* stateTypeAdd;
+		wxTextCtrl* combinedConfiguration;
+		wxStaticLine* m_staticline5;
+		wxButton* m_button22;
+		wxButton* m_button23;
+		wxStatusBar* m_statusBar3;
+		
+		// Virtual event handlers, overide them in your derived class
+		virtual void onClose( wxCloseEvent& event ){ event.Skip(); }
+		virtual void addStateType( wxCommandEvent& event ){ event.Skip(); }
+		virtual void apply( wxCommandEvent& event ){ event.Skip(); }
+		virtual void close( wxCommandEvent& event ){ event.Skip(); }
+		
+	
+	public:
+		AutoGUI_CombinedCounter( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Combined Counter Configuration"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 500,362 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
+		~AutoGUI_CombinedCounter();
 	
 };
 
