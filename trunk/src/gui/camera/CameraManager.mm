@@ -3,18 +3,15 @@
 void CameraManager::createCamera (Ogre::Vector3 position, Ogre::Vector3 direction)
 {
 	Ogre::SceneNode *node = mSceneMgr->getRootSceneNode();
-	Ogre::SceneNode *childNode = node->createChildSceneNode("CameraNode");
 
 	mCamera = mSceneMgr->createCamera ("CameraManager-DefaultCamera");
 	mCamera->setNearClipDistance (1);
-	mCamera->setPosition (Ogre::Vector3 (500, 500, 500));
-	mCamera->lookAt (Ogre::Vector3 (100,0,100));
 	mCamera->setQueryFlags(CAMERA_MASK);
-
-	mCamera->setPosition (position);
 	mCamera->setDirection (direction);
 
-	childNode->attachObject (mCamera);
+	camNode = node->createChildSceneNode("CameraNode");
+	camNode->attachObject (mCamera);
+	camNode->setPosition (position);
 
         mRotate = 0.13;
         mMove = 35;
@@ -27,13 +24,13 @@ void CameraManager::moveCamera ()
 {
 	mCamera->yaw (mRotX);
 	mCamera->pitch (mRotY);
-	mCamera->moveRelative (mDirection);
+	camNode->translate (mCamera->getOrientation() * mDirection);
 
 	Ogre::Vector3 cameraPos;
-	cameraPos = mCamera->getPosition();
+	cameraPos = camNode->getPosition();
 
 	if (cameraPos.y < 0){
-		mCamera->moveRelative (-mDirection);
+		camNode->translate (mCamera->getOrientation() * -mDirection);
 	}
 
 	mRotX = 0;
@@ -47,15 +44,15 @@ void CameraManager::moveCameraToY (float y)
 	static float anty = 0;
 	
 	Ogre::Vector3 cameraPos;
-	cameraPos = mCamera->getPosition();
+	cameraPos = camNode->getPosition();
 	cameraPos.y += (y - anty);
-	mCamera->setPosition (cameraPos);
+	camNode->setPosition (cameraPos);
 	anty = y;
 }
 
 float CameraManager::getYPosition ()
 {
-	return mCamera->getPosition().y;
+	return camNode->getPosition().y;
 }
 
 void CameraManager::onKeyDownEvent(wxKeyEvent& evt)
@@ -131,10 +128,9 @@ void CameraManager::onMouseEvent(wxMouseEvent& evt)
 
 CameraManager::~CameraManager ()
 {
-
 	NSUserDefaults *d = [NSUserDefaults standardUserDefaults];
 	Ogre::Vector3 direction = mCamera->getDirection();
-	Ogre::Vector3 position = mCamera->getPosition();
+	Ogre::Vector3 position = camNode->getPosition();
 	[d setObject: [NSString stringWithFormat: @"%f", direction.x] 
 		forKey: @"cameraDirection-X"];
 	[d setObject: [NSString stringWithFormat: @"%f", direction.y] 

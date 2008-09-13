@@ -39,6 +39,7 @@ private:
 	Ogre::Real mMove;
 	Ogre::Viewport* mViewport;
 	Ogre::Camera* mCamera;
+	Ogre::SceneNode *camNode;
 	bool movingCamera;
 
         Ogre::Root *mRoot;
