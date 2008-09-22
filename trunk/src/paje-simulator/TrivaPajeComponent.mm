@@ -79,8 +79,6 @@
 		   PajeEventDecoder, \
                    PajeSimulator, \
                    StorageController, \
-                   AggregatingFilter, \
-		   TrivaFusion, \
 		   ProtoView \
 		) )" propertyList];
 
