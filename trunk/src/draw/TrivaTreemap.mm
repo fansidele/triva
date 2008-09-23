@@ -230,6 +230,12 @@
 	[parent reorder];
 }
 
+- (void) addValue: (float) v
+{
+	value += v;
+	[parent reorder];
+}
+
 - (void) recalculateValuesBottomUp
 {
 	unsigned int i;
