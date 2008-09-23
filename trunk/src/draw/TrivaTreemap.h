@@ -49,6 +49,7 @@
 - (void) recursiveResetValue;
 - (void) resetValue;
 - (void) setValue: (float) v;
+- (void) addValue: (float) v;
 
 //Methods to update values (after changing leaf's values)
 - (void) recalculateValuesBottomUp;
