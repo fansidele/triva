@@ -220,8 +220,9 @@
 	if (treemap != nil){
 		float ret;
 		ret = [self calculateValueForContainer: entity];
-		[treemap setValue: ret]; /* TODO: what if we have multiple
-			containers for the same treemap node */
+		[treemap addValue: ret]; /* TODO: what if we have multiple
+			cddontainers for the same treemap node */
+		[treemap incrementNumberOfContainers];
 	}
 
 	PajeEntityType *et;
