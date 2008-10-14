@@ -72,6 +72,7 @@ class AutoGUI_Triva : public wxFrame
 		virtual void exit( wxCommandEvent& event ){ event.Skip(); }
 		virtual void containerLabels( wxCommandEvent& event ){ event.Skip(); }
 		virtual void stateLabels( wxCommandEvent& event ){ event.Skip(); }
+		virtual void fullscreenSelection( wxCommandEvent& event ){ event.Skip(); }
 		virtual void guiBaseSelection( wxCommandEvent& event ){ event.Skip(); }
 		virtual void guiCombinedCounterSelection( wxCommandEvent& event ){ event.Skip(); }
 		virtual void guiPreferencesSelection( wxCommandEvent& event ){ event.Skip(); }

@@ -48,9 +48,8 @@ AutoGUI_Triva::AutoGUI_Triva( wxWindow* parent, wxWindowID id, const wxString& t
 	slabels->Check( true );
 	
 	wxMenuItem* m_menuItem61;
-	m_menuItem61 = new wxMenuItem( m_menu3, wxID_ANY, wxString( wxT("Fullscreen") ) , wxEmptyString, wxITEM_CHECK );
+	m_menuItem61 = new wxMenuItem( m_menu3, wxID_ANY, wxString( wxT("Fullscreen") ) + wxT('\t') + wxT("ALT+F"), wxEmptyString, wxITEM_CHECK );
 	m_menu3->Append( m_menuItem61 );
-	m_menuItem61->Enable( false );
 	
 	m_menu3->AppendSeparator();
 	
@@ -146,6 +145,7 @@ AutoGUI_Triva::AutoGUI_Triva( wxWindow* parent, wxWindowID id, const wxString& t
 	this->Connect( m_menuItem5->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( AutoGUI_Triva::exit ) );
 	this->Connect( clabels->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( AutoGUI_Triva::containerLabels ) );
 	this->Connect( slabels->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( AutoGUI_Triva::stateLabels ) );
+	this->Connect( m_menuItem61->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( AutoGUI_Triva::fullscreenSelection ) );
 	this->Connect( m_menuItem17->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( AutoGUI_Triva::guiBaseSelection ) );
 	this->Connect( m_menuItem15->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( AutoGUI_Triva::guiCombinedCounterSelection ) );
 	this->Connect( m_menuItem14->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( AutoGUI_Triva::guiPreferencesSelection ) );
@@ -182,6 +182,7 @@ AutoGUI_Triva::~AutoGUI_Triva()
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( AutoGUI_Triva::exit ) );
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( AutoGUI_Triva::containerLabels ) );
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( AutoGUI_Triva::stateLabels ) );
+	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( AutoGUI_Triva::fullscreenSelection ) );
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( AutoGUI_Triva::guiBaseSelection ) );
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( AutoGUI_Triva::guiCombinedCounterSelection ) );
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( AutoGUI_Triva::guiPreferencesSelection ) );

@@ -44,6 +44,7 @@ private:
 	GUI_CombinedCounter *guiCombinedCounterWindow;
 	GUI_Preferences *guiPreferencesWindow;
 protected:
+	void fullscreenSelection (wxCommandEvent& event );
 	void guiBaseSelection( wxCommandEvent& event );
 	void guiCombinedCounterSelection( wxCommandEvent& event );
 	void guiPreferencesSelection( wxCommandEvent& event );

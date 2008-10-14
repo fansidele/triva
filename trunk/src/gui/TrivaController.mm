@@ -233,6 +233,15 @@ wxICON_ERROR);
 NS_ENDHANDLER
 }
 
+void TrivaController::fullscreenSelection (wxCommandEvent& event )
+{
+	if (this->IsFullScreen()){
+		this->ShowFullScreen (false);
+	}else{
+		this->ShowFullScreen (true);
+	}
+}
+
 void TrivaController::guiBaseSelection( wxCommandEvent& event )
 {
 	if (guiBaseWindow->IsShown()){
