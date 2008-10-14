@@ -5,6 +5,8 @@ extern wxString NSSTRINGtoWXSTRING (NSString *ns);
 
 void TrivaController::selectContainer (Ogre::MovableObject *objectToSelect)
 {
+	return;
+
 	Ogre::Root *mRoot;
 	Ogre::SceneManager *mSceneMgr;
 
@@ -41,6 +43,8 @@ void TrivaController::selectContainer (Ogre::MovableObject *objectToSelect)
 void TrivaController::selectState (Ogre::MovableObject
 *objectToSelect, Ogre::Vector3 hitAt)
 {
+	return;
+
 	Ogre::Root *mRoot;
 	Ogre::SceneManager *mSceneMgr;
 
@@ -103,6 +107,8 @@ void TrivaController::selectState (Ogre::MovableObject
 void TrivaController::selectLink (Ogre::MovableObject
 *objectToSelect, Ogre::Vector3 hitAt)
 {
+	return;
+
         Ogre::Root *mRoot;
         Ogre::SceneManager *mSceneMgr;
 
