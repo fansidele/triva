@@ -255,4 +255,14 @@
                           objectForKey:@"ChunkNumber"] intValue];
     [self readChunk:chunkNumber];
 }
+
+- (NSDate *) startTime
+{
+	return [encapsulator startTime];
+}
+
+- (NSDate *) endTime
+{
+	return [encapsulator endTime];
+}
 @end

@@ -31,4 +31,7 @@
 - (void)startChunk:(int)chunkNumber;
 - (void)endOfChunkLast:(BOOL)last;
 - (int)readNextChunk:(id)sender;
+
+- (NSDate *) startTime; //starttime of the encapsulator
+- (NSDate *) endTime; //endtime of the encapsulator
 @end
