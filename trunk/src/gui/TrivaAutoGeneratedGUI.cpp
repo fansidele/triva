@@ -41,10 +41,12 @@ AutoGUI_Triva::AutoGUI_Triva( wxWindow* parent, wxWindowID id, const wxString& t
 	m_menu3 = new wxMenu();
 	clabels = new wxMenuItem( m_menu3, wxID_ANY, wxString( wxT("Containers Labels") ) , wxEmptyString, wxITEM_CHECK );
 	m_menu3->Append( clabels );
+	clabels->Enable( false );
 	clabels->Check( true );
 	
 	slabels = new wxMenuItem( m_menu3, wxID_ANY, wxString( wxT("States Labels") ) , wxEmptyString, wxITEM_CHECK );
 	m_menu3->Append( slabels );
+	slabels->Enable( false );
 	slabels->Check( true );
 	
 	wxMenuItem* m_menuItem61;
