@@ -181,6 +181,7 @@ NS_DURING
 	if (flag){
 		flag = [trivaPaje readNextChunk: nil];
 	}else{
+		this->applicationIsPaused();
 		static int flag = 0;
 		if (!flag){
 			[view hierarchyChanged];
