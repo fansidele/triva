@@ -147,4 +147,29 @@
 	e = e * pointsPerSecond;
 	drawManager->trivaController->scrollbarUpdate (s, e);
 }
+
+- (NSDate *) startTime
+{
+	NSDate *ret;
+	float s = drawManager->trivaController->windowStartTime ();
+	if (s < 0){
+		ret = [super startTime];
+	}else{
+		ret = [NSDate dateWithTimeIntervalSinceReferenceDate: s];
+	}
+	return ret;
+}
+
+- (NSDate *) endTime
+{
+	NSDate *ret;
+	float s = drawManager->trivaController->windowEndTime ();
+	if (s < 0){
+		ret = [super endTime];
+	}else{
+		NSDate *d = [NSDate dateWithTimeIntervalSinceReferenceDate: s];
+		ret = [d earlierDate: [super endTime]];
+	}
+	return ret;
+}
 @end
