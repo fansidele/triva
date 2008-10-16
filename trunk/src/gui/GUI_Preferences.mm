@@ -13,8 +13,11 @@ void GUI_Preferences::startTimeSliderChanged( wxScrollEvent& event )
 		startTimeSlider->SetValue (endTimeSlider->GetValue());
 	}else{
 		float s = this->windowStartTime();
+		float e = this->windowEndTime();
 		statusBar->SetStatusText (NSSTRINGtoWXSTRING(
 			[NSString stringWithFormat: @"start time: %f", s]));
+		timeWindowText->SetLabel (NSSTRINGtoWXSTRING(
+			[NSString stringWithFormat: @"%f - %f", s, e]));
 	}
 }
 		
@@ -24,9 +27,12 @@ void GUI_Preferences::endTimeSliderChanged( wxScrollEvent& event )
 	if (endTimeSlider->GetValue() < startTimeSlider->GetValue()){
 		endTimeSlider->SetValue (startTimeSlider->GetValue());
 	}else{
-		float s = this->windowEndTime();
+		float s = this->windowStartTime();
+		float e = this->windowEndTime();
 		statusBar->SetStatusText (NSSTRINGtoWXSTRING(
-			[NSString stringWithFormat: @"end time: %f", s]));
+			[NSString stringWithFormat: @"end time: %f", e]));
+		timeWindowText->SetLabel (NSSTRINGtoWXSTRING(
+			[NSString stringWithFormat: @"%f - %f", s, e]));
 	}
 }
 
@@ -65,7 +71,7 @@ void GUI_Preferences::setMinMaxTime (float min, float max)
 	minp = min;
 	maxp = max;
 
-	totalTimeText->SetValue (NSSTRINGtoWXSTRING(
+	totalTimeText->SetLabel (NSSTRINGtoWXSTRING(
 		[NSString stringWithFormat: @"%f", max]));
 }
 

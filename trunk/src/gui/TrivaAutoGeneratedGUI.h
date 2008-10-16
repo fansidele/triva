@@ -223,7 +223,10 @@ class AutoGUI_Preferences : public wxFrame
 		wxPanel* m_panel13;
 		wxStaticText* m_staticText18;
 		wxStaticText* m_staticText19;
+		wxStaticText* m_staticText22;
+		wxStaticText* timeWindowText;
 		wxStaticText* m_staticText20;
+		wxStaticText* totalTimeText;
 		wxStaticLine* m_staticline3;
 		wxButton* m_button17;
 		wxButton* m_button18;
@@ -240,7 +243,6 @@ class AutoGUI_Preferences : public wxFrame
 	public:
 		wxSlider* startTimeSlider;
 		wxSlider* endTimeSlider;
-		wxTextCtrl* totalTimeText;
 		AutoGUI_Preferences( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Triva Preferences"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 252,250 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
 		~AutoGUI_Preferences();
 	

@@ -575,12 +575,21 @@ AutoGUI_Preferences::AutoGUI_Preferences( wxWindow* parent, wxWindowID id, const
 	endTimeSlider = new wxSlider( m_panel13, wxID_ANY, 100, 0, 100, wxDefaultPosition, wxDefaultSize, wxSL_HORIZONTAL );
 	fgSizer3->Add( endTimeSlider, 0, wxALL|wxEXPAND, 5 );
 	
+	m_staticText22 = new wxStaticText( m_panel13, wxID_ANY, wxT("Time Window:"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText22->Wrap( -1 );
+	fgSizer3->Add( m_staticText22, 0, wxALL, 5 );
+	
+	timeWindowText = new wxStaticText( m_panel13, wxID_ANY, wxT("0"), wxDefaultPosition, wxDefaultSize, 0 );
+	timeWindowText->Wrap( -1 );
+	fgSizer3->Add( timeWindowText, 0, wxALL, 5 );
+	
 	m_staticText20 = new wxStaticText( m_panel13, wxID_ANY, wxT("Total Time:"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText20->Wrap( -1 );
 	fgSizer3->Add( m_staticText20, 0, wxALL|wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	totalTimeText = new wxTextCtrl( m_panel13, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_READONLY );
-	fgSizer3->Add( totalTimeText, 0, wxALL|wxEXPAND|wxALIGN_CENTER_VERTICAL, 5 );
+	totalTimeText = new wxStaticText( m_panel13, wxID_ANY, wxT("0"), wxDefaultPosition, wxDefaultSize, 0 );
+	totalTimeText->Wrap( -1 );
+	fgSizer3->Add( totalTimeText, 0, wxALL, 5 );
 	
 	bSizer10->Add( fgSizer3, 1, wxEXPAND, 5 );
 	
