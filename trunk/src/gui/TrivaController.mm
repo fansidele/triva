@@ -244,6 +244,17 @@ void TrivaController::fullscreenSelection (wxCommandEvent& event )
 	}
 }
 
+void TrivaController::viewSwitchSelection (wxCommandEvent& event )
+{
+	if (m3DFrame->IsShown()){
+		m3DFrame->Show(false);
+		m2DFrame->Show(true);
+	}else{
+		m3DFrame->Show(true);
+		m2DFrame->Show(false);
+	}
+}
+
 void TrivaController::guiBaseSelection( wxCommandEvent& event )
 {
 	if (guiBaseWindow->IsShown()){

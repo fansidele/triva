@@ -21,6 +21,11 @@ AutoGUI_Triva::AutoGUI_Triva( wxWindow* parent, wxWindowID id, const wxString& t
 	m3DFrame = new Triva3DFrame( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	bSizer3->Add( m3DFrame, 1, wxEXPAND|wxALL|wxALIGN_CENTER_HORIZONTAL, 0 );
 	
+	m2DFrame = new wxPanel( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	m2DFrame->Hide();
+	
+	bSizer3->Add( m2DFrame, 1, wxEXPAND | wxALL, 5 );
+	
 	scrollbar = new wxScrollBar( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSB_VERTICAL );
 	bSizer3->Add( scrollbar, 0, wxALL|wxEXPAND, 5 );
 	
@@ -52,6 +57,10 @@ AutoGUI_Triva::AutoGUI_Triva( wxWindow* parent, wxWindowID id, const wxString& t
 	wxMenuItem* m_menuItem61;
 	m_menuItem61 = new wxMenuItem( m_menu3, wxID_ANY, wxString( wxT("Fullscreen") ) + wxT('\t') + wxT("ALT+F"), wxEmptyString, wxITEM_CHECK );
 	m_menu3->Append( m_menuItem61 );
+	
+	wxMenuItem* m_menuItem16;
+	m_menuItem16 = new wxMenuItem( m_menu3, wxID_ANY, wxString( wxT("2D x 3D Switch") ) , wxEmptyString, wxITEM_NORMAL );
+	m_menu3->Append( m_menuItem16 );
 	
 	m_menu3->AppendSeparator();
 	
@@ -148,6 +157,7 @@ AutoGUI_Triva::AutoGUI_Triva( wxWindow* parent, wxWindowID id, const wxString& t
 	this->Connect( clabels->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( AutoGUI_Triva::containerLabels ) );
 	this->Connect( slabels->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( AutoGUI_Triva::stateLabels ) );
 	this->Connect( m_menuItem61->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( AutoGUI_Triva::fullscreenSelection ) );
+	this->Connect( m_menuItem16->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( AutoGUI_Triva::viewSwitchSelection ) );
 	this->Connect( m_menuItem17->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( AutoGUI_Triva::guiBaseSelection ) );
 	this->Connect( m_menuItem15->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( AutoGUI_Triva::guiCombinedCounterSelection ) );
 	this->Connect( m_menuItem14->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( AutoGUI_Triva::guiPreferencesSelection ) );
@@ -185,6 +195,7 @@ AutoGUI_Triva::~AutoGUI_Triva()
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( AutoGUI_Triva::containerLabels ) );
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( AutoGUI_Triva::stateLabels ) );
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( AutoGUI_Triva::fullscreenSelection ) );
+	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( AutoGUI_Triva::viewSwitchSelection ) );
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( AutoGUI_Triva::guiBaseSelection ) );
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( AutoGUI_Triva::guiCombinedCounterSelection ) );
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( AutoGUI_Triva::guiPreferencesSelection ) );

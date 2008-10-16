@@ -74,6 +74,7 @@ class AutoGUI_Triva : public wxFrame
 		virtual void containerLabels( wxCommandEvent& event ){ event.Skip(); }
 		virtual void stateLabels( wxCommandEvent& event ){ event.Skip(); }
 		virtual void fullscreenSelection( wxCommandEvent& event ){ event.Skip(); }
+		virtual void viewSwitchSelection( wxCommandEvent& event ){ event.Skip(); }
 		virtual void guiBaseSelection( wxCommandEvent& event ){ event.Skip(); }
 		virtual void guiCombinedCounterSelection( wxCommandEvent& event ){ event.Skip(); }
 		virtual void guiPreferencesSelection( wxCommandEvent& event ){ event.Skip(); }
@@ -94,6 +95,7 @@ class AutoGUI_Triva : public wxFrame
 	
 	public:
 		Triva3DFrame* m3DFrame;
+		wxPanel* m2DFrame;
 		AutoGUI_Triva( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("TRIVA"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 585,480 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
 		~AutoGUI_Triva();
 	
