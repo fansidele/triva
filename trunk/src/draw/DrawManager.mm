@@ -70,6 +70,11 @@ DrawManager::~DrawManager()
 void DrawManager::onRenderTimer(wxTimerEvent& evt)
 {
 	if (mAnimationState){
-		mAnimationState->addTime (evt.GetInterval());
+		if (!mAnimationState->hasEnded()){
+			float t = (float)evt.GetInterval();
+			t /= 1000;
+			Ogre::Real tempoPassado = Ogre::Real(t);
+			mAnimationState->addTime (tempoPassado);
+		}
 	}
 }
