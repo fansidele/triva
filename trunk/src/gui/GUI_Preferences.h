@@ -18,11 +18,16 @@ private:
 	TrivaController *controller;
 
 protected:
+	void startTimeSliderChanged( wxScrollEvent& event );
+	void endTimeSliderChanged( wxScrollEvent& event );
 	void apply( wxCommandEvent& event );
 	void close( wxCommandEvent& event );
 	void onClose( wxCloseEvent& event );
 
 public:
+	void setMinMaxTime (float min, float max);
+	float windowStartTime ();
+	float windowEndTime ();
 	void setController (TrivaController *t) { controller = t; };
 	GUI_Preferences( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Visualization Base"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 380,250 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
 

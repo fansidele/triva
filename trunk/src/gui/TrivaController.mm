@@ -57,6 +57,9 @@ TrivaController::TrivaController( wxWindow* parent, wxWindowID id, const wxStrin
 	NSLog (@"pajeView = %@", view);
 	NSLog (@"fusion = %@", fusion);
 
+	guiPreferencesWindow = new GUI_Preferences(this);
+	guiPreferencesWindow->setController (this);
+
 	/* configuring 3d frame */
 	m3DFrame->addInputListener (cameraManager);
 	m3DFrame->addInputListener ([view drawManager]);
@@ -80,8 +83,6 @@ TrivaController::TrivaController( wxWindow* parent, wxWindowID id, const wxStrin
 	guiCombinedCounterWindow = new GUI_CombinedCounter (this);
 	guiCombinedCounterWindow->setController (this);
 
-	guiPreferencesWindow = new GUI_Preferences(this);
-	guiPreferencesWindow->setController (this);
 
 	m3DFrame->SetFocus();
 

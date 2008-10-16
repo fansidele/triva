@@ -150,6 +150,8 @@ public:
 	void cameraMoved ();
 	void scrollbarUpdate (float start, float end);
 	void setTimeWindow (float t);
+	float windowStartTime ();
+	float windowEndTime ();
 };
 
 #endif // __TrivaController__

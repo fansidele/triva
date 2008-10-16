@@ -561,12 +561,26 @@ AutoGUI_Preferences::AutoGUI_Preferences( wxWindow* parent, wxWindowID id, const
 	fgSizer3->SetFlexibleDirection( wxBOTH );
 	fgSizer3->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
 	
-	m_staticText7 = new wxStaticText( m_panel13, wxID_ANY, wxT("Time Window:"), wxDefaultPosition, wxDefaultSize, 0 );
-	m_staticText7->Wrap( -1 );
-	fgSizer3->Add( m_staticText7, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxTOP|wxBOTTOM|wxLEFT, 5 );
+	m_staticText18 = new wxStaticText( m_panel13, wxID_ANY, wxT("Start Time:"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText18->Wrap( -1 );
+	fgSizer3->Add( m_staticText18, 0, wxALL|wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	m_textCtrl13 = new wxTextCtrl( m_panel13, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
-	fgSizer3->Add( m_textCtrl13, 0, wxALL|wxEXPAND, 5 );
+	startTimeSlider = new wxSlider( m_panel13, wxID_ANY, 0, 0, 100, wxDefaultPosition, wxDefaultSize, wxSL_HORIZONTAL );
+	fgSizer3->Add( startTimeSlider, 0, wxALL|wxEXPAND, 5 );
+	
+	m_staticText19 = new wxStaticText( m_panel13, wxID_ANY, wxT("End Time:"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText19->Wrap( -1 );
+	fgSizer3->Add( m_staticText19, 0, wxALL|wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL, 5 );
+	
+	endTimeSlider = new wxSlider( m_panel13, wxID_ANY, 100, 0, 100, wxDefaultPosition, wxDefaultSize, wxSL_HORIZONTAL );
+	fgSizer3->Add( endTimeSlider, 0, wxALL|wxEXPAND, 5 );
+	
+	m_staticText20 = new wxStaticText( m_panel13, wxID_ANY, wxT("Total Time:"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText20->Wrap( -1 );
+	fgSizer3->Add( m_staticText20, 0, wxALL|wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL, 5 );
+	
+	totalTimeText = new wxTextCtrl( m_panel13, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_READONLY );
+	fgSizer3->Add( totalTimeText, 0, wxALL|wxEXPAND|wxALIGN_CENTER_VERTICAL, 5 );
 	
 	bSizer10->Add( fgSizer3, 1, wxEXPAND, 5 );
 	
@@ -591,9 +605,28 @@ AutoGUI_Preferences::AutoGUI_Preferences( wxWindow* parent, wxWindowID id, const
 	
 	this->SetSizer( bSizer15 );
 	this->Layout();
+	statusBar = this->CreateStatusBar( 1, wxST_SIZEGRIP, wxID_ANY );
 	
 	// Connect Events
 	this->Connect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( AutoGUI_Preferences::onClose ) );
+	startTimeSlider->Connect( wxEVT_SCROLL_TOP, wxScrollEventHandler( AutoGUI_Preferences::startTimeSliderChanged ), NULL, this );
+	startTimeSlider->Connect( wxEVT_SCROLL_BOTTOM, wxScrollEventHandler( AutoGUI_Preferences::startTimeSliderChanged ), NULL, this );
+	startTimeSlider->Connect( wxEVT_SCROLL_LINEUP, wxScrollEventHandler( AutoGUI_Preferences::startTimeSliderChanged ), NULL, this );
+	startTimeSlider->Connect( wxEVT_SCROLL_LINEDOWN, wxScrollEventHandler( AutoGUI_Preferences::startTimeSliderChanged ), NULL, this );
+	startTimeSlider->Connect( wxEVT_SCROLL_PAGEUP, wxScrollEventHandler( AutoGUI_Preferences::startTimeSliderChanged ), NULL, this );
+	startTimeSlider->Connect( wxEVT_SCROLL_PAGEDOWN, wxScrollEventHandler( AutoGUI_Preferences::startTimeSliderChanged ), NULL, this );
+	startTimeSlider->Connect( wxEVT_SCROLL_THUMBTRACK, wxScrollEventHandler( AutoGUI_Preferences::startTimeSliderChanged ), NULL, this );
+	startTimeSlider->Connect( wxEVT_SCROLL_THUMBRELEASE, wxScrollEventHandler( AutoGUI_Preferences::startTimeSliderChanged ), NULL, this );
+	startTimeSlider->Connect( wxEVT_SCROLL_CHANGED, wxScrollEventHandler( AutoGUI_Preferences::startTimeSliderChanged ), NULL, this );
+	endTimeSlider->Connect( wxEVT_SCROLL_TOP, wxScrollEventHandler( AutoGUI_Preferences::endTimeSliderChanged ), NULL, this );
+	endTimeSlider->Connect( wxEVT_SCROLL_BOTTOM, wxScrollEventHandler( AutoGUI_Preferences::endTimeSliderChanged ), NULL, this );
+	endTimeSlider->Connect( wxEVT_SCROLL_LINEUP, wxScrollEventHandler( AutoGUI_Preferences::endTimeSliderChanged ), NULL, this );
+	endTimeSlider->Connect( wxEVT_SCROLL_LINEDOWN, wxScrollEventHandler( AutoGUI_Preferences::endTimeSliderChanged ), NULL, this );
+	endTimeSlider->Connect( wxEVT_SCROLL_PAGEUP, wxScrollEventHandler( AutoGUI_Preferences::endTimeSliderChanged ), NULL, this );
+	endTimeSlider->Connect( wxEVT_SCROLL_PAGEDOWN, wxScrollEventHandler( AutoGUI_Preferences::endTimeSliderChanged ), NULL, this );
+	endTimeSlider->Connect( wxEVT_SCROLL_THUMBTRACK, wxScrollEventHandler( AutoGUI_Preferences::endTimeSliderChanged ), NULL, this );
+	endTimeSlider->Connect( wxEVT_SCROLL_THUMBRELEASE, wxScrollEventHandler( AutoGUI_Preferences::endTimeSliderChanged ), NULL, this );
+	endTimeSlider->Connect( wxEVT_SCROLL_CHANGED, wxScrollEventHandler( AutoGUI_Preferences::endTimeSliderChanged ), NULL, this );
 	m_button17->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( AutoGUI_Preferences::apply ), NULL, this );
 	m_button18->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( AutoGUI_Preferences::close ), NULL, this );
 }
@@ -602,6 +635,24 @@ AutoGUI_Preferences::~AutoGUI_Preferences()
 {
 	// Disconnect Events
 	this->Disconnect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( AutoGUI_Preferences::onClose ) );
+	startTimeSlider->Disconnect( wxEVT_SCROLL_TOP, wxScrollEventHandler( AutoGUI_Preferences::startTimeSliderChanged ), NULL, this );
+	startTimeSlider->Disconnect( wxEVT_SCROLL_BOTTOM, wxScrollEventHandler( AutoGUI_Preferences::startTimeSliderChanged ), NULL, this );
+	startTimeSlider->Disconnect( wxEVT_SCROLL_LINEUP, wxScrollEventHandler( AutoGUI_Preferences::startTimeSliderChanged ), NULL, this );
+	startTimeSlider->Disconnect( wxEVT_SCROLL_LINEDOWN, wxScrollEventHandler( AutoGUI_Preferences::startTimeSliderChanged ), NULL, this );
+	startTimeSlider->Disconnect( wxEVT_SCROLL_PAGEUP, wxScrollEventHandler( AutoGUI_Preferences::startTimeSliderChanged ), NULL, this );
+	startTimeSlider->Disconnect( wxEVT_SCROLL_PAGEDOWN, wxScrollEventHandler( AutoGUI_Preferences::startTimeSliderChanged ), NULL, this );
+	startTimeSlider->Disconnect( wxEVT_SCROLL_THUMBTRACK, wxScrollEventHandler( AutoGUI_Preferences::startTimeSliderChanged ), NULL, this );
+	startTimeSlider->Disconnect( wxEVT_SCROLL_THUMBRELEASE, wxScrollEventHandler( AutoGUI_Preferences::startTimeSliderChanged ), NULL, this );
+	startTimeSlider->Disconnect( wxEVT_SCROLL_CHANGED, wxScrollEventHandler( AutoGUI_Preferences::startTimeSliderChanged ), NULL, this );
+	endTimeSlider->Disconnect( wxEVT_SCROLL_TOP, wxScrollEventHandler( AutoGUI_Preferences::endTimeSliderChanged ), NULL, this );
+	endTimeSlider->Disconnect( wxEVT_SCROLL_BOTTOM, wxScrollEventHandler( AutoGUI_Preferences::endTimeSliderChanged ), NULL, this );
+	endTimeSlider->Disconnect( wxEVT_SCROLL_LINEUP, wxScrollEventHandler( AutoGUI_Preferences::endTimeSliderChanged ), NULL, this );
+	endTimeSlider->Disconnect( wxEVT_SCROLL_LINEDOWN, wxScrollEventHandler( AutoGUI_Preferences::endTimeSliderChanged ), NULL, this );
+	endTimeSlider->Disconnect( wxEVT_SCROLL_PAGEUP, wxScrollEventHandler( AutoGUI_Preferences::endTimeSliderChanged ), NULL, this );
+	endTimeSlider->Disconnect( wxEVT_SCROLL_PAGEDOWN, wxScrollEventHandler( AutoGUI_Preferences::endTimeSliderChanged ), NULL, this );
+	endTimeSlider->Disconnect( wxEVT_SCROLL_THUMBTRACK, wxScrollEventHandler( AutoGUI_Preferences::endTimeSliderChanged ), NULL, this );
+	endTimeSlider->Disconnect( wxEVT_SCROLL_THUMBRELEASE, wxScrollEventHandler( AutoGUI_Preferences::endTimeSliderChanged ), NULL, this );
+	endTimeSlider->Disconnect( wxEVT_SCROLL_CHANGED, wxScrollEventHandler( AutoGUI_Preferences::endTimeSliderChanged ), NULL, this );
 	m_button17->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( AutoGUI_Preferences::apply ), NULL, this );
 	m_button18->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( AutoGUI_Preferences::close ), NULL, this );
 }

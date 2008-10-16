@@ -14,6 +14,12 @@ void TrivaController::scrollbarUpdate(float start, float end)
 {
 	scrollbarRange = (end - start);
 	this->adjustScrollbar();
+
+	/* configuring preferences window with new time limits */
+	float s, e;
+	s = [[NSString stringWithFormat: @"%@", [trivaPaje startTime]] floatValue];
+	e = [[NSString stringWithFormat: @"%@", [trivaPaje endTime]] floatValue];
+	guiPreferencesWindow->setMinMaxTime (s, e);
 }
 
 void TrivaController::cameraMoved ()
@@ -39,5 +45,16 @@ void TrivaController::adjustScrollbar()
 	statusBar->SetStatusText(NSSTRINGtoWXSTRING ([NSString stringWithFormat: @"Current Time: %f", scrollbarPosition]));
 
 }
+
+float TrivaController::windowStartTime ()
+{
+	return guiPreferencesWindow->windowStartTime();
+}
+
+float TrivaController::windowEndTime ()
+{
+	return guiPreferencesWindow->windowEndTime();
+}
+
 
 #undef MICROSECONDS

@@ -35,6 +35,7 @@ class Triva3DFrame;
 #include <wx/notebook.h>
 #include <wx/checkbox.h>
 #include <wx/statline.h>
+#include <wx/slider.h>
 
 ///////////////////////////////////////////////////////////////////////////
 
@@ -220,20 +221,27 @@ class AutoGUI_Preferences : public wxFrame
 	
 	protected:
 		wxPanel* m_panel13;
-		wxStaticText* m_staticText7;
-		wxTextCtrl* m_textCtrl13;
+		wxStaticText* m_staticText18;
+		wxStaticText* m_staticText19;
+		wxStaticText* m_staticText20;
 		wxStaticLine* m_staticline3;
 		wxButton* m_button17;
 		wxButton* m_button18;
+		wxStatusBar* statusBar;
 		
 		// Virtual event handlers, overide them in your derived class
 		virtual void onClose( wxCloseEvent& event ){ event.Skip(); }
+		virtual void startTimeSliderChanged( wxScrollEvent& event ){ event.Skip(); }
+		virtual void endTimeSliderChanged( wxScrollEvent& event ){ event.Skip(); }
 		virtual void apply( wxCommandEvent& event ){ event.Skip(); }
 		virtual void close( wxCommandEvent& event ){ event.Skip(); }
 		
 	
 	public:
-		AutoGUI_Preferences( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Triva Preferences"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 252,210 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
+		wxSlider* startTimeSlider;
+		wxSlider* endTimeSlider;
+		wxTextCtrl* totalTimeText;
+		AutoGUI_Preferences( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Triva Preferences"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 252,250 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
 		~AutoGUI_Preferences();
 	
 };
