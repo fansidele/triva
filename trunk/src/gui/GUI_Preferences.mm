@@ -73,6 +73,11 @@ void GUI_Preferences::setMinMaxTime (float min, float max)
 
 	totalTimeText->SetLabel (NSSTRINGtoWXSTRING(
 		[NSString stringWithFormat: @"%f", max]));
+
+	float s = this->windowStartTime();
+	float e = this->windowEndTime();
+	timeWindowText->SetLabel (NSSTRINGtoWXSTRING(
+		[NSString stringWithFormat: @"%f - %f", s, e]));
 }
 
 float GUI_Preferences::windowStartTime ()
