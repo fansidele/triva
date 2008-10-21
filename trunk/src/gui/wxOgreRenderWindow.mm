@@ -106,7 +106,7 @@ void wxOgreRenderWindow::Init ()
    mRenderWindow = 0;
    mRenderTimer = 0;
    mRenderTimerPeriod = 0;
-   mCallRenderFrameOnTimer = false;
+   mCallRenderFrameOnTimer = true;
    mListenersEnabled = true;
 }
 //----------------------------------------------------------------------------
