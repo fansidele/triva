@@ -99,7 +99,8 @@
 {
 	if (baseState == ApplicationGraph){
 		[self recalculateApplicationGraphWithApplicationData];
-		drawManager->applicationGraphDraw (applicationGraphPosition);
+		drawManager->applicationAnimatedGraphDraw
+					(applicationGraphPosition, 0.4);
 		drawManager->createTimestampedObjects ();
 	}else if (baseState == SquarifiedTreemap){
 		[self recalculateSquarifiedTreemapWithApplicationData];

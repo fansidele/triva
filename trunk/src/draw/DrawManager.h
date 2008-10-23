@@ -48,6 +48,22 @@ private:
 //for animations
 	void onRenderTimer(wxTimerEvent& evt); //implemnented in DrawManager.mm
 
+//Animation Category
+public:
+	void moveSceneNodesToNewPositions (
+		std::vector<Ogre::SceneNode*> *vectSceneNodesX,
+		std::vector<Ogre::Vector3> *vectPosDestX, float animTime);
+	Ogre::SceneNode *getOneContainerPosition (id cont,
+		Ogre::SceneNode *node, float x,float y,
+		std::vector<Ogre::SceneNode*> *vectSceneNodes,
+		std::vector<Ogre::Vector3> *PosDestino);
+	void applicationAnimatedGraphRecursiveDraw (id entity,
+			Position *position, Ogre::SceneNode *node,
+			std::vector<Ogre::SceneNode*> *vectSceneNodes,
+			std::vector<Ogre::Vector3> *PosDestino);
+	void applicationAnimatedGraphDraw (Position *position,
+					float animationTime);
+
 //TIMESTAMPED OBJECTS CATEGORY
 public:
 	void createTimestampedObjects ();
