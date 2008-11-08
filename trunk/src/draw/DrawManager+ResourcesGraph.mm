@@ -4,7 +4,11 @@ void DrawManager::drawOneContainerIntoResourcesGraphBase
                 (id entity, Ogre::SceneNode *node, NSPoint loc)
 {
         Ogre::Vector3 relLocation (loc.x, 0, loc.y);
+#if OGRE_VERSION_MAJOR == 1 && OGRE_VERSION_MINOR == 6
         Ogre::Vector3 nodeLocation = node->_getDerivedPosition();
+#else
+	Ogre::Vector3 nodeLocation = node->getWorldPosition();
+#endif
         Ogre::Vector3 r = nodeLocation+relLocation;
 	this->drawOneContainer (entity, containerPosition, r.x, r.z);
 }
@@ -66,8 +70,13 @@ void DrawManager::resourcesGraphDraw (TrivaResourcesGraph *graph)
 		name.append ([tail cString]);
 
 		Ogre::Vector3 op, dp;
+#if OGRE_VERSION_MAJOR == 1 && OGRE_VERSION_MINOR == 6
 		op=mSceneMgr->getSceneNode ([head cString])->_getDerivedPosition();
 		dp=mSceneMgr->getSceneNode ([tail cString])->_getDerivedPosition();
+#else
+		op=mSceneMgr->getSceneNode ([head cString])->getWorldPosition();
+		dp=mSceneMgr->getSceneNode ([tail cString])->getWorldPosition();
+#endif
 
 		Ogre::ManualObject *ste;
 		try {

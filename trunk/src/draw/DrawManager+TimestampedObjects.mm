@@ -100,8 +100,13 @@ void DrawManager::drawOneLink (id link)
 //	[position addLinkBetweenNode: sn andNode: dn];
 
 	Ogre::Vector3 op, dp;
+#if OGRE_VERSION_MAJOR == 1 && OGRE_VERSION_MINOR == 6
 	op = mSceneMgr->getSceneNode ([sn cString])->_getDerivedPosition();
 	dp = mSceneMgr->getSceneNode ([dn cString])->_getDerivedPosition();
+#else
+	op = mSceneMgr->getSceneNode ([sn cString])->getWorldPosition();
+	dp = mSceneMgr->getSceneNode ([dn cString])->getWorldPosition();
+#endif
 
 	Ogre::SceneNode *n = mSceneMgr->getRootSceneNode ();
 

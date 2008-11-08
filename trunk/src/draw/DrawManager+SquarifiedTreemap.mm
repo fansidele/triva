@@ -10,7 +10,11 @@ void DrawManager::drawOneContainerIntoTreemapbase
 		(id entity, Ogre::SceneNode *node, NSPoint loc)
 {
 	Ogre::Vector3 relLocation (loc.x, 0, loc.y);
+#if OGRE_VERSION_MAJOR == 1 && OGRE_VERSION_MINOR == 6
 	Ogre::Vector3 nodeLocation = node->_getDerivedPosition();
+#else
+	Ogre::Vector3 nodeLocation = node->getWorldPosition();
+#endif
 	Ogre::Vector3 r = nodeLocation+relLocation;
 	this->drawOneContainer (entity, containerPosition, r.x, r.z);
 }

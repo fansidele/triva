@@ -51,6 +51,10 @@ protected:
 
     /******************************** public methods ******************************/
 public:
+#if OGRE_VERSION_MAJOR == 1 && OGRE_VERSION_MINOR == 6
+	void visitRenderables(Ogre::Renderable::Visitor*, bool){};
+#endif
+
 	MovableText(const Ogre::String & name, const Ogre::UTFString & caption,
 		const Ogre::String & fontName = "BlueHighway", int charHeight = 32,
 		const Ogre::ColourValue & color = Ogre::ColourValue::White);
