@@ -47,6 +47,7 @@ private:
 protected:
 	void fullscreenSelection (wxCommandEvent& event );
 	void viewSwitchSelection( wxCommandEvent& event );
+	void viewSwitchSelection();
 	void guiBaseSelection( wxCommandEvent& event );
 	void guiCombinedCounterSelection( wxCommandEvent& event );
 	void guiPreferencesSelection( wxCommandEvent& event );
