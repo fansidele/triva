@@ -248,9 +248,13 @@ void TrivaController::viewSwitchSelection (wxCommandEvent& event )
 {
 	if (m3DFrame->IsShown()){
 		m3DFrame->Show(false);
+		m3DFrame->pauseRenderTimer();
+
 		m2DFrame->Show(true);
 	}else{
 		m3DFrame->Show(true);
+		m3DFrame->resumeRenderTimer();
+
 		m2DFrame->Show(false);
 	}
 }
