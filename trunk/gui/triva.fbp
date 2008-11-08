@@ -141,7 +141,7 @@
                         <property name="permission">public</property>
                         <property name="pos"></property>
                         <property name="size"></property>
-                        <property name="subclass"></property>
+                        <property name="subclass">Triva2DFrame; Triva2DFrame.h</property>
                         <property name="tooltip"></property>
                         <property name="window_extra_style"></property>
                         <property name="window_name"></property>
