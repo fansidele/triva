@@ -80,6 +80,9 @@
                    PajeSimulator, \
                    StorageController, \
 		   ProtoView \
+		), \
+		(  StorageController, \
+		   TimeSlice, \
 		) )" propertyList];
 
 
