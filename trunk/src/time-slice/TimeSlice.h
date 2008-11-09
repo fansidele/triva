@@ -2,7 +2,7 @@
 #define __TIMESLICE_H
 #include <Foundation/Foundation.h>
 #include <General/PajeFilter.h>
-#include "TreeValue.h"
+#include "Treemap.h"
 
 @interface TimeSlice  : PajeFilter
 {
@@ -11,8 +11,8 @@
 }
 - (void) timeSliceAt: (id) instance 
 	      ofType: (id) type
-	    withNode: (TreeValue *) node;
-- (TreeValue *) pajeHierarchy: (id) instance parent:(TreeValue *) parent;
+	    withNode: (Treemap *) node;
+- (Treemap *) pajeHierarchy: (id) instance parent:(Treemap *) parent;
 @end
 
 #endif

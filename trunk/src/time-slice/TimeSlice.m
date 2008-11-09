@@ -12,7 +12,7 @@
 
 - (void) timeSliceAt: (id) instance
               ofType: (id) type
-            withNode: (TreeValue *) node
+            withNode: (Treemap *) node
 {
 	NSEnumerator *en3;
 	PajeEntity *ent;
@@ -31,12 +31,12 @@
 		NSString *name = [ent name];
 		float duration = [ent duration];
 
-		TreeValue *entity;
-		entity = (TreeValue *)[node searchChildByName: name];
+		Treemap *entity;
+		entity = (Treemap *)[node searchChildByName: name];
 		if (entity){
 			[entity addValue: duration];
 		}else{
-			entity = [[TreeValue alloc] init];
+			entity = [[Treemap alloc] init];
 			[entity setName: name];
 			[entity setParent: node];
 			[entity setValue: duration];
@@ -45,9 +45,9 @@
 	}
 }
 
-- (TreeValue *) pajeHierarchy: (id) instance parent:(TreeValue *) parent
+- (Treemap *) pajeHierarchy: (id) instance parent:(Treemap *) parent
 {
-	TreeValue *node = [[TreeValue alloc] init];
+	Treemap *node = [[Treemap alloc] init];
 	PajeEntityType *et = [self entityTypeForEntity: instance];
 	[node setName: [et name]];
 	[node setParent: parent];
@@ -62,13 +62,13 @@
 			en2 = [self enumeratorOfContainersTyped: et
 						    inContainer:instance];
 			while ((sub = [en2 nextObject]) != nil) {
-				TreeValue *child;
+				Treemap *child;
 				child = [self pajeHierarchy:sub parent: node];
 				
 				[node addChild: child];
 			}
 		}else{
-			TreeValue *child = [[TreeValue alloc] init];
+			Treemap *child = [[Treemap alloc] init];
 			[child setName: [et name]];
 			[child setParent: node];
 
@@ -83,7 +83,8 @@
 
 - (void) hierarchyChanged
 {
-	TreeValue *tree = [self pajeHierarchy: [self rootInstance] parent: nil];
+	Treemap *tree = [self pajeHierarchy: [self rootInstance] parent: nil];
+	[tree calculateWithWidth: 200 andHeight: 200];
 	NSLog (@"%s %@", __FUNCTION__, tree);
 }
 

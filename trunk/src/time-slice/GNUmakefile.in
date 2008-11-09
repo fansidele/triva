@@ -8,7 +8,8 @@ SUBPROJECT_NAME=time-slice
 time-slice_OBJC_FILES= \
 		TimeSlice.m \
 		Tree.m \
-		TreeValue.m
+		TreeValue.m \
+		Treemap.m
 time-slice_OBJCC_FILES=
 
 time-slice_INCLUDE_DIRS += @CPPFLAGS@
