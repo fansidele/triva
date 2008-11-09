@@ -8,4 +8,6 @@
 - (float) value;
 - (float) setValue: (float) v;
 - (float) addValue: (float) v;
+
+- (void) recalculateValues;
 @end

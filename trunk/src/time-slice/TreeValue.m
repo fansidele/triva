@@ -24,4 +24,13 @@
 	value += v;
 	return value;
 }
+
+- (void) recalculateValues
+{
+	int i;
+	for (i = 0; i < [children count]; i++){
+		[[children objectAtIndex: i] recalculateValues];
+		[self addValue: [(TreeValue*)[children objectAtIndex:i] value]];
+	}
+}
 @end
