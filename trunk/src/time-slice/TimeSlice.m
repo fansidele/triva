@@ -10,6 +10,41 @@
 	return self;
 }
 
+- (void) timeSliceAt: (id) instance
+              ofType: (id) type
+            withNode: (TreeValue *) node
+{
+	NSEnumerator *en3;
+	PajeEntity *ent;
+
+	//limitating for now the algorithm to state types
+	if (![type isKindOf: [PajeStateType class]]){
+		return;
+	}
+
+	en3 = [self enumeratorOfEntitiesTyped:type
+		inContainer:instance
+		fromTime:[self startTime]
+		toTime:[self endTime]
+		minDuration:0.001];
+	while ((ent = [en3 nextObject]) != nil) {
+		NSString *name = [ent name];
+		float duration = [ent duration];
+
+		TreeValue *entity;
+		entity = (TreeValue *)[node searchChildByName: name];
+		if (entity){
+			[entity addValue: duration];
+		}else{
+			entity = [[TreeValue alloc] init];
+			[entity setName: name];
+			[entity setParent: node];
+			[entity setValue: duration];
+			[node addChild: entity];
+		}
+	}
+}
+
 - (TreeValue *) pajeHierarchy: (id) instance parent:(TreeValue *) parent
 {
 	TreeValue *node = [[TreeValue alloc] init];
@@ -33,37 +68,13 @@
 				[node addChild: child];
 			}
 		}else{
-			NSEnumerator *en3;
-			PajeEntity *ent;
-
 			TreeValue *child = [[TreeValue alloc] init];
 			[child setName: [et name]];
 			[child setParent: node];
 
 			[node addChild: child];
 
-			en3 = [self enumeratorOfEntitiesTyped:et
-				inContainer:instance
-				fromTime:[self startTime]
-				toTime:[self endTime]
-				minDuration:0.001];
-			while ((ent = [en3 nextObject]) != nil) {
-				NSString *name = [ent name];
-				float duration = [ent duration];
-
-				TreeValue *instance;
-				instance = (TreeValue *)[child
-						searchChildByName: name];
-				if (instance){
-					[instance addValue: duration];
-				}else{
-					instance = [[TreeValue alloc] init];
-					[instance setName: name];
-					[instance setParent: child];
-					[instance setValue: duration];
-					[child addChild: instance];
-				}
-			}
+			[self timeSliceAt: instance ofType: et withNode: child];
 		}
         }
 	[node autorelease];
