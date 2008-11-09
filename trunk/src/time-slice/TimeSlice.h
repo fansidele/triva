@@ -8,11 +8,14 @@
 {
 	NSDate *sliceStartTime;
 	NSDate *sliceEndTime;
+
+	Treemap *treemap;
 }
 - (void) timeSliceAt: (id) instance 
 	      ofType: (id) type
 	    withNode: (Treemap *) node;
 - (Treemap *) pajeHierarchy: (id) instance parent:(Treemap *) parent;
+- (Treemap *) treemapWithWidth: (int) width andHeight: (int) height;
 @end
 
 #endif

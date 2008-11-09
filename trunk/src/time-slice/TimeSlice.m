@@ -83,13 +83,25 @@
 
 - (void) hierarchyChanged
 {
-	Treemap *tree = [self pajeHierarchy: [self rootInstance] parent: nil];
-	[tree calculateWithWidth: 200 andHeight: 200];
-	NSLog (@"%s %@", __FUNCTION__, tree);
+	if (treemap != nil){
+		[treemap release];
+	}
+	treemap = [self pajeHierarchy: [self rootInstance] parent: nil];
+	[treemap retain];
 }
 
 - (void) timeLimitsChanged
 {
-	NSLog (@"%s", __FUNCTION__);
+	[self hierarchyChanged];
+}
+
+- (Treemap *) treemapWithWidth: (int) width andHeight: (int) height
+{
+	if (treemap == nil){
+		return nil;
+	}else{
+		[treemap calculateWithWidth: width andHeight: height];
+		return treemap;
+	}
 }
 @end
