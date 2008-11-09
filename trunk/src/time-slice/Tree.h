@@ -9,6 +9,7 @@
 - (NSString *) name;
 - (NSArray *) children;
 - (Tree *) parent;
+- (Tree *) searchChildByName: (NSString *) n;
 
 - (void) setName: (NSString *) n;
 - (void) setParent: (Tree *) p;

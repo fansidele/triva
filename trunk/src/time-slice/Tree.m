@@ -23,6 +23,18 @@
 	return parent;
 }
 
+- (Tree *) searchChildByName: (NSString *) n
+{
+	int i;
+	//look up among children
+	for (i = 0; i < [children count]; i++){
+		if ([n isEqualToString: [[children objectAtIndex: i] name]]){
+			return [children objectAtIndex: i];
+		}
+	}
+	return nil;
+}
+
 - (void) setName: (NSString *) n
 {
 	if (name != nil){

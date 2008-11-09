@@ -10,9 +10,9 @@
 	return self;
 }
 
-- (Tree *) pajeHierarchy: (id) instance parent:(Tree *) parent
+- (TreeValue *) pajeHierarchy: (id) instance parent:(TreeValue *) parent
 {
-	Tree *node = [[Tree alloc] init];
+	TreeValue *node = [[TreeValue alloc] init];
 	PajeEntityType *et = [self entityTypeForEntity: instance];
 	[node setName: [et name]];
 	[node setParent: parent];
@@ -27,20 +27,43 @@
 			en2 = [self enumeratorOfContainersTyped: et
 						    inContainer:instance];
 			while ((sub = [en2 nextObject]) != nil) {
-				Tree *child;
+				TreeValue *child;
 				child = [self pajeHierarchy:sub parent: node];
 				
 				[node addChild: child];
 			}
 		}else{
-			Tree *child = [[Tree alloc] init];
+			NSEnumerator *en3;
+			PajeEntity *ent;
+
+			TreeValue *child = [[TreeValue alloc] init];
 			[child setName: [et name]];
 			[child setParent: node];
 
 			[node addChild: child];
 
-//			NSLog (@"child %@ from parent %@", [child name],
-//					[[child parent] name]);
+			en3 = [self enumeratorOfEntitiesTyped:et
+				inContainer:instance
+				fromTime:[self startTime]
+				toTime:[self endTime]
+				minDuration:0.001];
+			while ((ent = [en3 nextObject]) != nil) {
+				NSString *name = [ent name];
+				float duration = [ent duration];
+
+				TreeValue *instance;
+				instance = (TreeValue *)[child
+						searchChildByName: name];
+				if (instance){
+					[instance addValue: duration];
+				}else{
+					instance = [[TreeValue alloc] init];
+					[instance setName: name];
+					[instance setParent: child];
+					[instance setValue: duration];
+					[child addChild: instance];
+				}
+			}
 		}
         }
 	[node autorelease];
@@ -49,7 +72,7 @@
 
 - (void) hierarchyChanged
 {
-	Tree *tree = [self pajeHierarchy: [self rootInstance] parent: nil];
+	TreeValue *tree = [self pajeHierarchy: [self rootInstance] parent: nil];
 	NSLog (@"%s %@", __FUNCTION__, tree);
 }
 
