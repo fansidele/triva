@@ -30,9 +30,15 @@ class GUI_Preferences;
 
 enum TrivaApplicationState {Initialized,Configured,Running,Paused};
 
+@class TimeSlice;
 
 class TrivaController : public AutoGUI_Triva
 {
+private:
+	TimeSlice *timeslice;
+public:
+	TimeSlice *getTimeSlice() { return timeslice; };
+
 private:
 	ProtoView *view;
 	TrivaFusion *fusion;

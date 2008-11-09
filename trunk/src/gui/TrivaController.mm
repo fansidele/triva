@@ -60,6 +60,10 @@ TrivaController::TrivaController( wxWindow* parent, wxWindowID id, const wxStrin
 	guiPreferencesWindow = new GUI_Preferences(this);
 	guiPreferencesWindow->setController (this);
 
+	/* configuring 2d frame */
+	timeslice = [trivaPaje componentWithName: @"TimeSlice"];
+	m2DFrame->setController (this);
+
 	/* configuring 3d frame */
 	m3DFrame->addInputListener (cameraManager);
 	m3DFrame->addInputListener ([view drawManager]);
