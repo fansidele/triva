@@ -9,5 +9,7 @@
 - (float) setValue: (float) v;
 - (float) addValue: (float) v;
 
+- (void) recursiveResetValues;
+- (void) recalculateValuesBottomUp;
 - (void) recalculateValues;
 @end
