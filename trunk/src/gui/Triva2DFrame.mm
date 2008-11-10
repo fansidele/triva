@@ -59,11 +59,14 @@ Triva2DFrame::~Triva2DFrame()
 
 void Triva2DFrame::Init()
 {
+	maxDepthToDraw = 0;
 }
 
 void Triva2DFrame::Update()
 {
 	wxPaintDC dc(this);
+	dc.Clear();
+
 	wxCoord w, h;
 	dc.GetSize(&w, &h);
 
@@ -80,7 +83,16 @@ void Triva2DFrame::OnSize(wxSizeEvent& evt)
 
 void Triva2DFrame::OnMouseEvent(wxMouseEvent& evt)
 {
-	evt.Skip();
+	if (evt.GetWheelRotation() != 0){
+		if (evt.GetWheelRotation() > 0){
+			maxDepthToDraw++;
+		}else{
+			if (maxDepthToDraw != 0){
+				maxDepthToDraw--;
+			}
+		}
+		Update();
+	}
 }
 
 void Triva2DFrame::OnMouseCapureLost(wxMouseCaptureLostEvent& evt)
@@ -130,6 +142,11 @@ void Triva2DFrame::drawTreemap (id treemap)
 
 	if ([[treemap children] count] == 0)
 		return;
+
+	int depth = [treemap depth];
+	if ((int)depth == (int)maxDepthToDraw){
+		return;
+	}
 	
 	unsigned int i;
 	for (i = 0; i < [[treemap children] count]; i++){

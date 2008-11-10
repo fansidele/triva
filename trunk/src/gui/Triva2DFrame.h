@@ -17,6 +17,8 @@ class Triva2DFrame : public wxControl
 
 private:
 	TrivaController *controller;
+	int maxDepthToDraw;
+
 public:
 	void setController (TrivaController *c) { controller = c; };
 
