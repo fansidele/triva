@@ -64,8 +64,8 @@
         float factor = area/value;
         width = w;
         height = h;
-        x = w/2;
-        y = h/2;
+        x = 0;
+        y = 0;
         depth = 0;
         [self calculateWithWidth: w height: h factor: factor depth: depth];
 }
@@ -103,8 +103,8 @@
         aux = 0;
         //salvando o W e H originais, pra relacionar os centros ao centro do
         //quadrado original
-        Worig = W;
-        Horig = H;
+        Worig = x;
+        Horig = y;
         //para achar o centro dos quadrados
         Want = Hant = 0;
         while (i < inputSize){
@@ -145,8 +145,8 @@
                 if (nratio < ratio){
                         ratio = nratio;
 
-                        xvec[i] = (Want + wvec[i]/2) - Worig/2;
-                        yvec[i] = (Hant + hvec[i]/2) - Horig/2;
+			xvec[i] = (Want) + Worig;
+                        yvec[i] = (Hant) + Horig;
 
                         child = [children objectAtIndex: i];
                         [child setX: xvec[i]];
@@ -166,8 +166,8 @@
                                         wvec[k] = nw;
                                         hvec[k] = SCALE([child value])/nw;
 
-                                        xvec[k] = (Want + wvec[k]/2) - Worig/2;
-                                        yvec[k] = (Hant + ycum + hvec[k]/2) - Horig/2;
+                                        xvec[k] = (Want) + Worig;
+                                        yvec[k] = (Hant + ycum) + Horig;
 
                                         ycum += hvec[k];
 
@@ -191,8 +191,8 @@
                                         wvec[k] = SCALE([child value])/nh;
                                         hvec[k] = nh;
 
-                                        xvec[k] = (Want + xcum + wvec[k]/2) - Worig/2;
-                                        yvec[k] = (Hant + hvec[k]/2) - Horig/2;
+                                        xvec[k] = (Want + xcum) + Worig;
+                                        yvec[k] = (Hant) + Horig;
 
                                         xcum += wvec[k];
 
