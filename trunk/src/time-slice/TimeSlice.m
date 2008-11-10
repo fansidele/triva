@@ -49,7 +49,7 @@
 {
 	Treemap *node = [[Treemap alloc] init];
 	PajeEntityType *et = [self entityTypeForEntity: instance];
-	[node setName: [et name]];
+	[node setName: [instance name]];
 	[node setParent: parent];
 
 	NSEnumerator *en;
