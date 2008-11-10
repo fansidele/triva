@@ -1,6 +1,8 @@
 #ifndef __TRIVA2DFRAME_H__
 #define __TRIVA2DFRAME_H__
 
+#include <Foundation/Foundation.h>
+
 #include "wx/wxprec.h"
 #include "wx/wx.h"
 #include "wx/xrc/xmlres.h"
@@ -43,6 +45,9 @@ protected:
    virtual void OnKeyUpEvent(wxKeyEvent& evt);
    virtual void OnRenderTimer(wxTimerEvent& evt);
    virtual void OnPaint(wxPaintEvent& evt);
+
+private:
+   void drawTreemap (id treemap);
 };
 
 #endif   // __TRIVA2DFRAME_H__ 

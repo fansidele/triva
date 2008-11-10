@@ -61,10 +61,18 @@ void Triva2DFrame::Init()
 
 void Triva2DFrame::Update()
 {
+	wxPaintDC dc(this);
+	wxCoord w, h;
+	dc.GetSize(&w, &h);
+
+	TimeSlice *filter = controller->getTimeSlice();
+	Treemap *tree = [filter treemapWithWidth: w andHeight: h];
+	this->drawTreemap ((id)tree);
 }
 
 void Triva2DFrame::OnSize(wxSizeEvent& evt)
 {
+	Update();
 	evt.Skip();
 }
 
@@ -98,16 +106,27 @@ void Triva2DFrame::OnRenderTimer(wxTimerEvent& evt)
 
 void Triva2DFrame::OnPaint(wxPaintEvent& evt)
 {
-   // An instance of wxPaintDC must be created always in OnPaint event
-   // (even if it's not used).
-   wxPaintDC dc(this);
-
-	wxCoord w, h;
-	dc.GetSize(&w, &h);
-
-	TimeSlice *filter = controller->getTimeSlice();
-	Treemap *tree = [filter treemapWithWidth: w andHeight: h];
-
-   // FIXME: Thread-safty!
    Update();
 }
+
+void Triva2DFrame::drawTreemap (id treemap)
+{
+	wxPaintDC dc(this);
+
+	float x, y, w, h;
+	x = [treemap x];
+	y = [treemap y];
+	w = [treemap width];
+	h = [treemap height];
+
+	dc.DrawRectangle (x, y, w, h);
+
+	if ([[treemap children] count] == 0)
+		return;
+	
+	int i;
+	for (i = 0; i < [[treemap children] count]; i++){
+		this->drawTreemap ([[treemap children] objectAtIndex: i]);
+	}
+}
+
