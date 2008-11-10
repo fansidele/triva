@@ -1,4 +1,6 @@
 #include "Triva2DFrame.h"
+#include "gui/TrivaController.h"
+#include "time-slice/TimeSlice.h"
 
 #if defined(__WXGTK__)
    // NOTE: Find the GTK install config with `pkg-config --cflags gtk+-2.0`
@@ -99,6 +101,12 @@ void Triva2DFrame::OnPaint(wxPaintEvent& evt)
    // An instance of wxPaintDC must be created always in OnPaint event
    // (even if it's not used).
    wxPaintDC dc(this);
+
+	wxCoord w, h;
+	dc.GetSize(&w, &h);
+
+	TimeSlice *filter = controller->getTimeSlice();
+	Treemap *tree = [filter treemapWithWidth: w andHeight: h];
 
    // FIXME: Thread-safty!
    Update();

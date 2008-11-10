@@ -5,11 +5,18 @@
 #include "wx/wx.h"
 #include "wx/xrc/xmlres.h"
 
+class TrivaController;
+
 class Triva2DFrame : public wxControl
 {
    DECLARE_CLASS( Triva2DFrame )
    DECLARE_EVENT_TABLE()
    DECLARE_NO_COPY_CLASS( Triva2DFrame )
+
+private:
+	TrivaController *controller;
+public:
+	void setController (TrivaController *c) { controller = c; };
 
 public:
    Triva2DFrame();
