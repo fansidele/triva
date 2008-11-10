@@ -82,6 +82,7 @@
 		   ProtoView \
 		), \
 		(  StorageController, \
+		   Interval, \
 		   TimeSlice, \
 		) )" propertyList];
 
