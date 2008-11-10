@@ -97,6 +97,7 @@
 
 - (Treemap *) treemapWithWidth: (int) width andHeight: (int) height
 {
+	[self hierarchyChanged];
 	if (treemap == nil){
 		return nil;
 	}else{
