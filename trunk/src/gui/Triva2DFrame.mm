@@ -2,6 +2,8 @@
 #include "gui/TrivaController.h"
 #include "time-slice/TimeSlice.h"
 
+extern wxString NSSTRINGtoWXSTRING (NSString *ns);
+
 #if defined(__WXGTK__)
    // NOTE: Find the GTK install config with `pkg-config --cflags gtk+-2.0`
    #include "gtk/gtk.h"
@@ -113,6 +115,10 @@ void Triva2DFrame::drawTreemap (id treemap)
 {
 	wxPaintDC dc(this);
 
+	if ([treemap value] == 0){
+		return;
+	}
+
 	float x, y, w, h;
 	x = [treemap x];
 	y = [treemap y];
@@ -120,11 +126,12 @@ void Triva2DFrame::drawTreemap (id treemap)
 	h = [treemap height];
 
 	dc.DrawRectangle (x, y, w, h);
+	dc.DrawText (NSSTRINGtoWXSTRING([treemap name]), x+5, y+5);
 
 	if ([[treemap children] count] == 0)
 		return;
 	
-	int i;
+	unsigned int i;
 	for (i = 0; i < [[treemap children] count]; i++){
 		this->drawTreemap ([[treemap children] objectAtIndex: i]);
 	}
