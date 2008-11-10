@@ -5,23 +5,23 @@
 {
 	float width, height;
 	float x, y;
-	float depth;
+	int depth;
 }
 - (float) width;
 - (float) height;
 - (float) x;
 - (float) y;
-- (float) depth;
+- (int) depth;
 
 - (void) setWidth: (float) w;
 - (void) setHeight: (float) h;
 - (void) setX: (float) xp;
 - (void) setY: (float) yp;
-- (void) setDepth: (float) d;
+- (void) setDepth: (int) d;
 
 - (void) calculateWithWidth: (float) w andHeight: (float) h;
 - (void) calculateWithWidth: (float) W
               height: (float) H
               factor: (float) factor
-                depth: (float) d;
+                depth: (int) d;
 @end

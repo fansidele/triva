@@ -23,7 +23,7 @@
         return y;
 }
 
-- (float) depth
+- (int) depth
 {
         return depth;
 }
@@ -48,7 +48,7 @@
         y = yp;
 }
 
-- (void) setDepth: (float) d
+- (void) setDepth: (int) d
 {
         depth = d;
 }
@@ -73,7 +73,7 @@
 - (void) calculateWithWidth: (float) W
               height: (float) H
               factor: (float) factor
-                depth: (float) d
+                depth: (int) d
 {
         if (children == nil){
                 return;
@@ -127,7 +127,7 @@
 
                                 [child setWidth: wvec[k]];
                                 [child setHeight: hvec[k]];
-                                [child setDepth: depth+1];
+                                [child setDepth: d+1];
                         }
                 }else{
                         nh = aux/W;
@@ -137,7 +137,7 @@
                                 hvec[k] = nh;
                                 [child setWidth: wvec[k]];
                                 [child setHeight: hvec[k]];
-                                [child setDepth: depth+1];
+                                [child setDepth: d+1];
                         }
                 }
                 //calcular ratio do quadrado i
@@ -151,7 +151,7 @@
                         child = [children objectAtIndex: i];
                         [child setX: xvec[i]];
                         [child setY: yvec[i]];
-                        [child setDepth: depth+1];
+                        [child setDepth: d+1];
 
                         i++;
                 }else{
@@ -175,7 +175,7 @@
                                         [child setHeight: hvec[k]];
                                         [child setX: xvec[k]];
                                         [child setY: yvec[k]];
-                                        [child setDepth: depth+1];
+                                        [child setDepth: d+1];
                                 }
                                 //atualizando W
                                 W = W - wvec[i-1];
@@ -200,7 +200,7 @@
                                         [child setHeight: hvec[k]];
                                         [child setX: xvec[k]];
                                         [child setY: yvec[k]];
-                                        [child setDepth: depth+1];
+                                        [child setDepth: d+1];
                                 }
                                 //atualizando H 
                                 H = H - hvec[i-1];
@@ -215,7 +215,7 @@
         for (i = 0; i < inputSize; i++){
                 child = [children objectAtIndex: i];
                 [child calculateWithWidth: [child width] height: [child height]
-                        factor: factor depth: depth+1];
+                        factor: factor depth: d+1];
         }
 
         free (wvec);
