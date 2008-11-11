@@ -49,7 +49,13 @@
 		minDuration:0.001];
 	while ((ent = [en3 nextObject]) != nil) {
 		NSString *name = [ent name];
-		float duration = [ent duration];
+		NSDate *entSTime = [ent startTime];
+		NSDate *entETime = [ent endTime];
+
+		entSTime = [entSTime earlierDate: sliceStartTime];
+		entETime = [entETime laterDate: sliceEndTime];
+
+		float duration = [entETime timeIntervalSinceDate: entSTime];
 
 		Treemap *entity;
 		entity = (Treemap *)[node searchChildByName: name];
