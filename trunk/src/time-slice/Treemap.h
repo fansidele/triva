@@ -1,3 +1,5 @@
+#ifndef __TREEMAP_H_
+#define __TREEMAP_H_
 #include <Foundation/Foundation.h>
 #include "TreeValue.h"
 
@@ -27,3 +29,5 @@
 
 - (int) maxDepth;
 @end
+
+#endif

@@ -1,3 +1,5 @@
+#ifndef __TREEVALUE_H_
+#define __TREEVALUE_H_
 #include <Foundation/Foundation.h>
 #include "Tree.h"
 
@@ -13,3 +15,5 @@
 - (void) recalculateValuesBottomUp;
 - (void) recalculateValues;
 @end
+
+#endif

@@ -1,3 +1,6 @@
+#ifndef __TREE_H_
+#define __TREE_H_
+
 #include <Foundation/Foundation.h>
 
 @interface Tree : NSObject
@@ -15,3 +18,5 @@
 - (void) setParent: (Tree *) p;
 - (void) addChild: (Tree *) c;
 @end
+
+#endif
