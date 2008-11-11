@@ -82,8 +82,12 @@ void Triva2DFrame::updateTreemap()
 	dc.GetSize(&w, &h);
         
 	TimeSlice *filter = controller->getTimeSlice();
-	Treemap *tree = [filter treemapWithWidth: w andHeight: h];
-	this->drawTreemap ((id)tree);
+	if (current != nil){
+		[current release];
+	}
+	current = [filter treemapWithWidth: w andHeight: h];
+	[current retain];
+	this->drawTreemap ((id)current);
 }
 
 void Triva2DFrame::updateTimeline()

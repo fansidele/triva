@@ -2,6 +2,7 @@
 #define __TRIVA2DFRAME_H__
 
 #include <Foundation/Foundation.h>
+#include "time-slice/Treemap.h"
 
 #include "wx/wxprec.h"
 #include "wx/wx.h"
@@ -27,6 +28,8 @@ private:
 
 	void updateTreemap ();
 	void updateTimeline ();
+
+	Treemap *current;
 
 public:
 	void setController (TrivaController *c) { controller = c; };
