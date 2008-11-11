@@ -8,6 +8,8 @@
 	float width, height;
 	float x, y;
 	int depth;
+
+	id pajeEntity; /* the paje entity connected to this node */
 }
 - (float) width;
 - (float) height;
@@ -28,6 +30,9 @@
                 depth: (int) d;
 
 - (int) maxDepth;
+
+- (void) setPajeEntity: (id) entity;
+- (id) pajeEntity;
 @end
 
 #endif

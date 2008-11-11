@@ -233,4 +233,14 @@
 		return [[children objectAtIndex: 0] maxDepth];
 	}
 }
+
+- (void) setPajeEntity: (id) entity
+{
+	pajeEntity = entity; //not retained
+}
+
+- (id) pajeEntity
+{
+	return pajeEntity;
+}
 @end
