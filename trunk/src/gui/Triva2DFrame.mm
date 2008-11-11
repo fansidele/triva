@@ -133,7 +133,7 @@ void Triva2DFrame::updateTimeline()
 	nStartTime = [NSDate dateWithTimeIntervalSinceReferenceDate: s];
 	nEndTime = [NSDate dateWithTimeIntervalSinceReferenceDate: e];
 	[filter setSliceStartTime: nStartTime];
-	[filter setSliceEndTime: nStartTime];
+	[filter setSliceEndTime: nEndTime];
 	dc.SetPen (wxPen (black, 1, wxSOLID));
 	dc.DrawText (NSSTRINGtoWXSTRING (
 		[nStartTime description]),
