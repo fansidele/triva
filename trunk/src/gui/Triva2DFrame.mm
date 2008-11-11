@@ -152,8 +152,6 @@ void Triva2DFrame::Update()
 		this->updateTreemap();
 	}else if (state == TimeState){
 		this->updateTimeline();
-		this->updateTreemap();
-		this->updateTimeline();
 	}
 }
 
