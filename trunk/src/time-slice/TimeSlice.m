@@ -67,6 +67,10 @@
 			[entity setParent: node];
 			[entity setValue: duration];
 			[node addChild: entity];
+			[entity setPajeEntity: ent]; /* it may have more than
+							one entity to the same
+							treemap node. we take
+							just the first one. */
 		}
 	}
 }
@@ -77,6 +81,7 @@
 	PajeEntityType *et = [self entityTypeForEntity: instance];
 	[node setName: [instance name]];
 	[node setParent: parent];
+	[node setPajeEntity: instance];
 
 	NSEnumerator *en;
 	en = [[self containedTypesForContainerType:
@@ -130,5 +135,25 @@
 		[treemap calculateWithWidth: width andHeight: height];
 		return treemap;
 	}
+}
+
+- (NSString *) descriptionForNode: (Treemap *) node
+{
+	if (node == nil){
+		return nil;
+	}
+	if ([node pajeEntity] == nil){
+		return nil;
+	}
+	NSMutableString *ret = [NSMutableString string];
+	[ret appendString: [[[node pajeEntity] entityType] name]];
+	[ret appendString: @" "];
+	[ret appendString: [[[node pajeEntity] container] name]];
+	[ret appendString: @" "];
+	[ret appendString: [NSString stringWithFormat: @"%f", [node value]]];
+	[ret appendString: @"/"];
+	[ret appendString: [NSString stringWithFormat: @"%f",
+		[sliceEndTime timeIntervalSinceDate:sliceStartTime]]];
+	return ret;
 }
 @end

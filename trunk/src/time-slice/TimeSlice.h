@@ -18,6 +18,7 @@
 	    withNode: (Treemap *) node;
 - (Treemap *) pajeHierarchy: (id) instance parent:(Treemap *) parent;
 - (Treemap *) treemapWithWidth: (int) width andHeight: (int) height;
+- (NSString *) descriptionForNode: (Treemap *) node;
 @end
 
 #endif
