@@ -52,8 +52,8 @@
 		NSDate *entSTime = [ent startTime];
 		NSDate *entETime = [ent endTime];
 
-		entSTime = [entSTime earlierDate: sliceStartTime];
-		entETime = [entETime laterDate: sliceEndTime];
+		entSTime = [entSTime laterDate: sliceStartTime];
+		entETime = [entETime earlierDate: sliceEndTime];
 
 		float duration = [entETime timeIntervalSinceDate: entSTime];
 
