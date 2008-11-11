@@ -146,7 +146,7 @@
 		return nil;
 	}
 	NSMutableString *ret = [NSMutableString string];
-	[ret appendString: [[[node pajeEntity] entityType] name]];
+	[ret appendString: [[node pajeEntity] value]];
 	[ret appendString: @" "];
 	[ret appendString: [[[node pajeEntity] container] name]];
 	[ret appendString: @" "];
