@@ -31,6 +31,8 @@ private:
 
 	Treemap *current;
 
+	Treemap *searchNodeAt (int x, int y, Treemap *node);
+
 public:
 	void setController (TrivaController *c) { controller = c; };
 

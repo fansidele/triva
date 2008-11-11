@@ -67,10 +67,11 @@ Triva2DFrame::~Triva2DFrame()
 
 void Triva2DFrame::Init()
 {
-	maxDepthToDraw = 10;
+	maxDepthToDraw = 0;
 	startInterval = 0.0;
 	endInterval = 1.0;
 	state = TreemapState;
+	current = nil;
 }
 
 void Triva2DFrame::updateTreemap()
@@ -173,9 +174,13 @@ void Triva2DFrame::OnMouseEvent(wxMouseEvent& evt)
 	if (state == TreemapState){
 		if (evt.GetWheelRotation() != 0){
 			if (evt.GetWheelRotation() > 0){
-				maxDepthToDraw++;
+				if (current != nil){
+					if (maxDepthToDraw<[current maxDepth]){
+						maxDepthToDraw++;
+					}
+				}
 			}else{
-				if (maxDepthToDraw != 0){
+				if (maxDepthToDraw > 0){
 					maxDepthToDraw--;
 				}
 			}
@@ -189,7 +194,18 @@ void Triva2DFrame::OnMouseEvent(wxMouseEvent& evt)
 		if (y > (h-3)){
 			state = TimeState;
 			Update();
+			return;
 		}
+
+		/* trying to find which object is under the mouse */
+		long x = evt.GetX();
+		if (evt.LeftDown()){
+			Treemap *node = this->searchNodeAt (x, y, current);
+			TimeSlice *filter = controller->getTimeSlice();
+			NSString *desc = [filter descriptionForNode: node];
+			//TODO
+		}
+		
 	}else if (state == TimeState){
 		//Time state
 		long y = evt.GetY();
@@ -303,3 +319,33 @@ void Triva2DFrame::drawTreemap (id treemap)
 	}
 }
 
+Treemap *Triva2DFrame::searchNodeAt (int x, int y, Treemap *node)
+{
+	if (node == nil){
+		return nil;
+	}
+	int depth = [node depth];
+	if (depth == maxDepthToDraw){
+		float xr, yr, wr, hr;
+		xr = [node x];
+		yr = [node y];
+		wr = [node width];
+		hr = [node height];
+	
+		if (x >= xr && x <= (xr+wr) &&
+			y >= yr && y <= (yr+hr)){
+			return node;
+		}
+	}else{
+		unsigned int i;
+		for (i = 0; i < [[node children] count]; i++){
+			Treemap *child, *ret;
+			child = [[node children] objectAtIndex: i];
+			ret = this->searchNodeAt (x, y, child);
+			if (ret != nil){
+				return ret;
+			}
+		}
+	}
+	return nil;
+}
