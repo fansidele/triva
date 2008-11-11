@@ -7,7 +7,27 @@
 	if (self != nil){
 	}
 	NSLog (@"%@ initialized", self);
+	sliceStartTime = [NSDate dateWithTimeIntervalSinceReferenceDate: 0];
+	sliceEndTime = [NSDate dateWithTimeIntervalSinceReferenceDate: 0];
 	return self;
+}
+
+- (void) setSliceStartTime: (NSDate *) time
+{
+	if (sliceStartTime != nil){
+		[sliceStartTime release];
+	}
+	sliceStartTime = time;
+	[sliceStartTime retain];
+}
+
+- (void) setSliceEndTime: (NSDate *) time
+{
+	if (sliceEndTime != nil){
+		[sliceEndTime release];
+	}
+	sliceEndTime = time;
+	[sliceEndTime retain];
 }
 
 - (void) timeSliceAt: (id) instance
@@ -24,8 +44,8 @@
 
 	en3 = [self enumeratorOfEntitiesTyped:type
 		inContainer:instance
-		fromTime:[self startTime]
-		toTime:[self endTime]
+		fromTime: sliceStartTime
+		toTime: sliceEndTime 
 		minDuration:0.001];
 	while ((ent = [en3 nextObject]) != nil) {
 		NSString *name = [ent name];

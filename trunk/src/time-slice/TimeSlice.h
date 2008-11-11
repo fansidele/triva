@@ -11,6 +11,8 @@
 
 	Treemap *treemap;
 }
+- (void) setSliceStartTime: (NSDate *) time;
+- (void) setSliceEndTime: (NSDate *) time;
 - (void) timeSliceAt: (id) instance 
 	      ofType: (id) type
 	    withNode: (Treemap *) node;
