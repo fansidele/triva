@@ -8,6 +8,8 @@
 #include "wx/xrc/xmlres.h"
 
 class TrivaController;
+	
+enum Triva2DFrameState {TreemapState,TimeState,DetailState};
 
 class Triva2DFrame : public wxControl
 {
@@ -18,6 +20,13 @@ class Triva2DFrame : public wxControl
 private:
 	TrivaController *controller;
 	int maxDepthToDraw;
+	Triva2DFrameState state;
+
+        float startInterval;
+        float endInterval;
+
+	void updateTreemap ();
+	void updateTimeline ();
 
 public:
 	void setController (TrivaController *c) { controller = c; };
