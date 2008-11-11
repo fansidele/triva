@@ -28,10 +28,15 @@ private:
 
 	void updateTreemap ();
 	void updateTimeline ();
+	void updateDetail();
 
 	Treemap *current;
 
 	Treemap *searchNodeAt (int x, int y, Treemap *node);
+
+	long detailx, detaily;
+	NSString *detailDescription;
+	void searchAndShowDescriptionAt (long x, long y);
 
 public:
 	void setController (TrivaController *c) { controller = c; };

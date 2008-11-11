@@ -151,12 +151,37 @@ void Triva2DFrame::updateTimeline()
 	endTimeIntervalX = endX;
 }
 
+void Triva2DFrame::updateDetail ()
+{
+	if (detailDescription == nil){
+		state = TreemapState;
+		Update();
+		return;
+	}
+	wxPaintDC dc(this);
+	wxCoord w, h;
+	dc.GetSize(&w, &h);
+	wxCoord w1, h1;
+	dc.GetTextExtent (NSSTRINGtoWXSTRING(detailDescription), &w1, &h1);
+	
+	if (w - detailx < w1){
+		detailx = detailx - (w1 - (w - detailx));
+	}
+	if (h - detaily < h1){
+		detaily = detaily - (h1 - (h - detaily));
+	}
+	dc.DrawRectangle (detailx, detaily, w1, h1);
+	dc.DrawText (NSSTRINGtoWXSTRING(detailDescription), detailx, detaily);
+}
+
 void Triva2DFrame::Update()
 {
 	if (state == TreemapState){
 		this->updateTreemap();
 	}else if (state == TimeState){
 		this->updateTimeline();
+	}else if (state == DetailState){
+		this->updateDetail();
 	}
 }
 
@@ -200,10 +225,9 @@ void Triva2DFrame::OnMouseEvent(wxMouseEvent& evt)
 		/* trying to find which object is under the mouse */
 		long x = evt.GetX();
 		if (evt.LeftDown()){
-			Treemap *node = this->searchNodeAt (x, y, current);
-			TimeSlice *filter = controller->getTimeSlice();
-			NSString *desc = [filter descriptionForNode: node];
-			//TODO
+			this->searchAndShowDescriptionAt (x, y);
+			state = DetailState;
+			Update();
 		}
 		
 	}else if (state == TimeState){
@@ -256,6 +280,15 @@ void Triva2DFrame::OnMouseEvent(wxMouseEvent& evt)
 			}
 			Update();
 		}
+	}else if (state == DetailState){
+		long y = evt.GetY();
+		long x = evt.GetX();
+		if (evt.LeftDown()){
+			this->searchAndShowDescriptionAt (x, y);
+		}else if (evt.RightDown()){
+			state = TreemapState;
+		}
+		Update();	
 	}
 }
 
@@ -348,4 +381,13 @@ Treemap *Triva2DFrame::searchNodeAt (int x, int y, Treemap *node)
 		}
 	}
 	return nil;
+}
+
+void Triva2DFrame::searchAndShowDescriptionAt (long x, long y)
+{
+	Treemap *node = this->searchNodeAt (x, y, current);
+	TimeSlice *filter = controller->getTimeSlice();
+	detailDescription = [filter descriptionForNode: node];
+	detailx = x; 
+	detaily = y;
 }
