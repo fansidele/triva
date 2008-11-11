@@ -24,4 +24,6 @@
               height: (float) H
               factor: (float) factor
                 depth: (int) d;
+
+- (int) maxDepth;
 @end

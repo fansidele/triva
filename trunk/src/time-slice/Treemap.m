@@ -224,4 +224,13 @@
         free (yvec);
 #undef SCALE
 }
+
+- (int) maxDepth
+{
+	if ([children count] == 0){
+		return depth;
+	}else{
+		return [[children objectAtIndex: 0] maxDepth];
+	}
+}
 @end
