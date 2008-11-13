@@ -229,9 +229,17 @@
 {
 	if ([children count] == 0){
 		return depth;
-	}else{
-		return [[children objectAtIndex: 0] maxDepth];
 	}
+
+	int max = 0;
+	int i;
+	for (i = 0; i < [children count]; i++){
+		int d = [[children objectAtIndex: i] maxDepth];
+		if (d > max){
+			max = d;
+		}
+	}
+	return max;
 }
 
 - (void) setPajeEntity: (id) entity
