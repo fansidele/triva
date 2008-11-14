@@ -150,10 +150,10 @@
 	[ret appendString: @" "];
 	[ret appendString: [[[node pajeEntity] container] name]];
 	[ret appendString: @" "];
-	[ret appendString: [NSString stringWithFormat: @"%f", [node value]]];
-	[ret appendString: @"/"];
-	[ret appendString: [NSString stringWithFormat: @"%f",
-		[sliceEndTime timeIntervalSinceDate:sliceStartTime]]];
+	double timeSlice = [sliceEndTime timeIntervalSinceDate:sliceStartTime];
+	double nodeValue = [node value];
+	double porcentage = nodeValue/timeSlice * 100;
+	[ret appendString: [NSString stringWithFormat: @"%f\%", porcentage]];
 	return ret;
 }
 @end
