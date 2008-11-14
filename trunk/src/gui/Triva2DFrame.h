@@ -71,5 +71,4 @@ private:
    void drawTreemap (id treemap);
 };
 
-#include "gui/TrivaController.h"
 #endif   // __TRIVA2DFRAME_H__ 

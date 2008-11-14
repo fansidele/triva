@@ -1,5 +1,5 @@
 #include "Triva2DFrame.h"
-
+#include "gui/TrivaController.h"
 #include "time-slice/TimeSlice.h"
 
 extern wxString NSSTRINGtoWXSTRING (NSString *ns);
