@@ -1,5 +1,5 @@
 #include "Triva2DFrame.h"
-#include "gui/TrivaController.h"
+
 #include "time-slice/TimeSlice.h"
 
 extern wxString NSSTRINGtoWXSTRING (NSString *ns);
@@ -336,8 +336,13 @@ void Triva2DFrame::drawTreemap (id treemap)
 	h = [treemap height];
 
 	dc.DrawRectangle (x, y, w, h);
-	dc.DrawText (NSSTRINGtoWXSTRING([treemap name]), x+5, y+5);
 
+	wxCoord w1, h1;
+	dc.GetTextExtent (NSSTRINGtoWXSTRING([treemap name]), &w1, &h1);
+	if (w1 < w-5 && h1 < h-5){
+		dc.DrawText (NSSTRINGtoWXSTRING([treemap name]), x+5, y+5);
+	}
+	
 	if ([[treemap children] count] == 0)
 		return;
 
