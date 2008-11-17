@@ -70,6 +70,8 @@
         [self calculateWithWidth: w height: h factor: factor depth: depth];
 }
 
+#define P 0
+
 - (void) calculateWithWidth: (float) W
               height: (float) H
               factor: (float) factor
@@ -122,8 +124,8 @@
                         for (k = j; k <= i; k++){
                                 child = [children objectAtIndex: k];
 
-                                wvec[k] = nw;
-                                hvec[k] = SCALE([child value])/nw;
+                                wvec[k] = nw - P*2;
+                                hvec[k] = SCALE([child value])/nw - P*2;
 
                                 [child setWidth: wvec[k]];
                                 [child setHeight: hvec[k]];
@@ -133,8 +135,8 @@
                         nh = aux/W;
                         for (k = j; k <= i; k++){
                                 child = [children objectAtIndex: k];
-                                wvec[k] = SCALE([child value])/nh;
-                                hvec[k] = nh;
+                                wvec[k] = SCALE([child value])/nh - P*2;
+                                hvec[k] = nh - P*2;
                                 [child setWidth: wvec[k]];
                                 [child setHeight: hvec[k]];
                                 [child setDepth: d+1];
@@ -145,8 +147,8 @@
                 if (nratio < ratio){
                         ratio = nratio;
 
-			xvec[i] = (Want) + Worig;
-                        yvec[i] = (Hant) + Horig;
+			xvec[i] = (Want) + Worig + P;
+                        yvec[i] = (Hant) + Horig + P;
 
                         child = [children objectAtIndex: i];
                         [child setX: xvec[i]];
@@ -163,13 +165,13 @@
                                 ycum = 0;
                                 for (k = j; k <= i; k++){
                                         child = [children objectAtIndex: k];
-                                        wvec[k] = nw;
-                                        hvec[k] = SCALE([child value])/nw;
+                                        wvec[k] = nw - P*2;
+                                        hvec[k] = SCALE([child value])/nw-P*2;
 
-                                        xvec[k] = (Want) + Worig;
-                                        yvec[k] = (Hant + ycum) + Horig;
+                                        xvec[k] = (Want) + Worig + P;
+                                        yvec[k] = (Hant + ycum) + Horig + P;
 
-                                        ycum += hvec[k];
+                                        ycum += hvec[k] + P;
 
                                         [child setWidth: wvec[k]];
                                         [child setHeight: hvec[k]];
@@ -178,8 +180,8 @@
                                         [child setDepth: d+1];
                                 }
                                 //atualizando W
-                                W = W - wvec[i-1];
-                                Want += wvec[i-1];
+                                W = W - wvec[i-1] - P;
+                                Want += wvec[i-1] + P;
                         }else{
                                 child = [children objectAtIndex: i];
                                 //retornando sem o quadrado i
@@ -188,13 +190,13 @@
                                 xcum = 0;
                                 for (k = j; k <= i; k++){
                                         child = [children objectAtIndex: k];
-                                        wvec[k] = SCALE([child value])/nh;
-                                        hvec[k] = nh;
+                                        wvec[k] = SCALE([child value])/nh-P*2;
+                                        hvec[k] = nh - P*2;
 
-                                        xvec[k] = (Want + xcum) + Worig;
-                                        yvec[k] = (Hant) + Horig;
+                                        xvec[k] = (Want + xcum) + Worig + P;
+                                        yvec[k] = (Hant) + Horig + P;
 
-                                        xcum += wvec[k];
+                                        xcum += wvec[k] + P;
 
                                         [child setWidth: wvec[k]];
                                         [child setHeight: hvec[k]];
@@ -203,8 +205,8 @@
                                         [child setDepth: d+1];
                                 }
                                 //atualizando H 
-                                H = H - hvec[i-1];
-                                Hant += hvec[i-1];
+                                H = H - hvec[i-1] - P;
+                                Hant += hvec[i-1] + P;
                         }
                        //avancando
                         aux = 0;
@@ -214,8 +216,9 @@
         }
         for (i = 0; i < inputSize; i++){
                 child = [children objectAtIndex: i];
+		float nfactor = [child width]*[child height]/[child value];
                 [child calculateWithWidth: [child width] height: [child height]
-                        factor: factor depth: d+1];
+                        factor: nfactor depth: d+1];
         }
 
         free (wvec);
