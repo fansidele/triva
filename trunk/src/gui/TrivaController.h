@@ -73,6 +73,7 @@ protected:
 
 	
 public:
+	void openPajeTraceFile( wxString path);
 	ProtoView *getView () { return view; };
 
 	/** Constructor */

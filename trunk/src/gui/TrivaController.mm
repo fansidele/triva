@@ -304,10 +304,16 @@ void TrivaController::openPajeTraceFile ( wxCommandEvent& event )
 						wxDefaultPosition);
 
 	if (f->ShowModal() == wxID_OK){
-		NSString *path = WXSTRINGtoNSSTRING (f->GetPath());
-		id reader = [trivaPaje componentWithName: @"FileReader"];
-		[reader setInputFilename: path];
-		[trivaPaje setReaderWithName: @"FileReader"];
-		this->setState (Configured);
+		this->openPajeTraceFile (f->GetPath());
 	}
+}
+
+void TrivaController::openPajeTraceFile (wxString path)
+{
+	NSString *filename = WXSTRINGtoNSSTRING (path);
+	id reader = [trivaPaje componentWithName: @"FileReader"];
+	[reader setInputFilename: filename];
+	[trivaPaje setReaderWithName: @"FileReader"];
+	this->setState (Configured);
+	this->setState (Running);
 }

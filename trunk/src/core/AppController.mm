@@ -20,6 +20,10 @@ bool ProtoController::OnInit()
 	TrivaController *gui = new TrivaController (0, wxID_ANY);
 	gui->Show();
 
+	if (argc == 2){
+		//a trace file was passed as parameter (*.trace)
+		gui->openPajeTraceFile (argv[1]);
+	}
 	return true;
 }
 
