@@ -174,6 +174,7 @@ void TrivaController::pauseClicked( wxCommandEvent& event )
 
 void TrivaController::oneBundleConfigured()
 {
+	[trivaPaje setReaderWithName: @"TrivaPajeReader"];
 	this->setState (Configured);
 }
 
