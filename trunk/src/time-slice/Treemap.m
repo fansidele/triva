@@ -1,6 +1,7 @@
 #include "Treemap.h"
+#include <float.h>
 
-#define BIGFLOAT 1000000
+#define BIGFLOAT FLT_MAX
 
 @implementation Treemap
 - (float) width
