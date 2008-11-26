@@ -294,3 +294,20 @@ void TrivaController::guiPreferencesSelection( wxCommandEvent& event )
 		guiPreferencesWindow->Show();
 	}
 }
+
+void TrivaController::openPajeTraceFile ( wxCommandEvent& event )
+{
+	wxFileDialog *f = new wxFileDialog (NULL, wxT("Choose Paje Trace File"),
+						wxT(""), wxT(""),
+						wxT("*.trace"),
+						wxOPEN|wxFILE_MUST_EXIST,
+						wxDefaultPosition);
+
+	if (f->ShowModal() == wxID_OK){
+		NSString *path = WXSTRINGtoNSSTRING (f->GetPath());
+		id reader = [trivaPaje componentWithName: @"FileReader"];
+		[reader setInputFilename: path];
+		[trivaPaje setReaderWithName: @"FileReader"];
+		this->setState (Configured);
+	}
+}

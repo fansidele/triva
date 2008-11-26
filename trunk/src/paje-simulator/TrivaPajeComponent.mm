@@ -75,8 +75,14 @@
 {
     NSArray *graph;
 
-	graph = [@"( ( TrivaPajeReader, \
-		   PajeEventDecoder, \
+	graph = [@"(  \
+		( FileReader, \
+		  PajeEventDecoder \
+		), \
+		( TrivaPajeReader, \
+		   PajeEventDecoder \
+		), \
+		(  PajeEventDecoder, \
                    PajeSimulator, \
                    StorageController, \
 		   ProtoView \
@@ -226,7 +232,8 @@
 
 	[self readChunk: -1 /* method ignores this number */];
 
-	if ([reader getCounter] > CHUNK_SIZE){
+	if ([reader isKindOfClass: [TrivaPajeReader class]] &&
+			[reader getCounter] > CHUNK_SIZE){
 		[self endOfChunkLast:![reader hasMoreData]];
 		chunkStarted = NO;
 	}
@@ -268,5 +275,10 @@
 - (NSDate *) endTime
 {
 	return [encapsulator endTime];
+}
+
+- (void) setReaderWithName: (NSString *) readerName
+{
+	reader = [self componentWithName: readerName];
 }
 @end

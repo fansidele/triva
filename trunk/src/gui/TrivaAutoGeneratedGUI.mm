@@ -38,6 +38,10 @@ AutoGUI_Triva::AutoGUI_Triva( wxWindow* parent, wxWindowID id, const wxString& t
 	m_menuItem6 = new wxMenuItem( application, wxID_OPEN, wxString( wxT("Load &KAAPI Bundle") ) , wxEmptyString, wxITEM_NORMAL );
 	application->Append( m_menuItem6 );
 	
+	wxMenuItem* m_menuItem171;
+	m_menuItem171 = new wxMenuItem( application, wxID_ANY, wxString( wxT("Open Pajé Trace File") ) , wxEmptyString, wxITEM_NORMAL );
+	application->Append( m_menuItem171 );
+	
 	wxMenuItem* m_menuItem5;
 	m_menuItem5 = new wxMenuItem( application, wxID_EXIT, wxString( wxT("E&xit") ) , wxEmptyString, wxITEM_NORMAL );
 	application->Append( m_menuItem5 );
@@ -154,6 +158,7 @@ AutoGUI_Triva::AutoGUI_Triva( wxWindow* parent, wxWindowID id, const wxString& t
 	scrollbar->Connect( wxEVT_SCROLL_THUMBRELEASE, wxScrollEventHandler( AutoGUI_Triva::scrollbarEvent ), NULL, this );
 	scrollbar->Connect( wxEVT_SCROLL_CHANGED, wxScrollEventHandler( AutoGUI_Triva::scrollbarEvent ), NULL, this );
 	this->Connect( m_menuItem6->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( AutoGUI_Triva::loadBundle ) );
+	this->Connect( m_menuItem171->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( AutoGUI_Triva::openPajeTraceFile ) );
 	this->Connect( m_menuItem5->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( AutoGUI_Triva::exit ) );
 	this->Connect( clabels->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( AutoGUI_Triva::containerLabels ) );
 	this->Connect( slabels->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( AutoGUI_Triva::stateLabels ) );
@@ -192,6 +197,7 @@ AutoGUI_Triva::~AutoGUI_Triva()
 	scrollbar->Disconnect( wxEVT_SCROLL_THUMBRELEASE, wxScrollEventHandler( AutoGUI_Triva::scrollbarEvent ), NULL, this );
 	scrollbar->Disconnect( wxEVT_SCROLL_CHANGED, wxScrollEventHandler( AutoGUI_Triva::scrollbarEvent ), NULL, this );
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( AutoGUI_Triva::loadBundle ) );
+	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( AutoGUI_Triva::openPajeTraceFile ) );
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( AutoGUI_Triva::exit ) );
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( AutoGUI_Triva::containerLabels ) );
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( AutoGUI_Triva::stateLabels ) );

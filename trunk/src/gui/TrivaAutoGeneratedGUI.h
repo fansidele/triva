@@ -71,6 +71,7 @@ class AutoGUI_Triva : public wxFrame
 		virtual void setFocus( wxFocusEvent& event ){ event.Skip(); }
 		virtual void scrollbarEvent( wxScrollEvent& event ){ event.Skip(); }
 		virtual void loadBundle( wxCommandEvent& event ){ event.Skip(); }
+		virtual void openPajeTraceFile( wxCommandEvent& event ){ event.Skip(); }
 		virtual void exit( wxCommandEvent& event ){ event.Skip(); }
 		virtual void containerLabels( wxCommandEvent& event ){ event.Skip(); }
 		virtual void stateLabels( wxCommandEvent& event ){ event.Skip(); }

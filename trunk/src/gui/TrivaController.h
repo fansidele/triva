@@ -61,6 +61,7 @@ protected:
 protected:
 	// Handlers for TRIVAGUI events.
 	void loadBundle( wxCommandEvent& event );
+	void openPajeTraceFile( wxCommandEvent& event );
 	void exit( wxCommandEvent& event );
 	void about( wxCommandEvent& event );
 	void bundlesView ( wxCommandEvent& event );
