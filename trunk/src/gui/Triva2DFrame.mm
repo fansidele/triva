@@ -176,6 +176,10 @@ void Triva2DFrame::updateDetail ()
 
 void Triva2DFrame::Update()
 {
+	if (filter == nil){
+		filter = controller->getTimeSlice();
+	}
+
 	if (state == TreemapState){
 		this->updateTreemap();
 	}else if (state == TimeState){
@@ -335,13 +339,56 @@ void Triva2DFrame::drawTreemap (id treemap)
 	w = [treemap width];
 	h = [treemap height];
 
-	dc.DrawRectangle (x, y, w, h);
-
-	wxCoord w1, h1;
-	dc.GetTextExtent (NSSTRINGtoWXSTRING([treemap name]), &w1, &h1);
-	if (w1 < w-5 && h1 < h-5){
-		dc.DrawText (NSSTRINGtoWXSTRING([treemap name]), x+5, y+5);
+	wxColour color;
+	wxColour white = (wxT("#FFFFFF"));
+	dc.SetBrush (wxBrush (white));
+	if (filter && ![filter isContainerEntityType: 
+			[[treemap pajeEntity] entityType]]) {
+		NSColor *c = [filter colorForValue: [treemap name]
+			ofEntityType: [[treemap pajeEntity] entityType]];
+		if (c != nil){
+			if ([[c colorSpaceName] isEqualToString:
+					@"NSCalibratedRGBColorSpace"]){
+				float red, green, blue, alpha;
+				[c getRed: &red green: &green
+					blue: &blue alpha: &alpha];
+				unsigned char r = (unsigned char)(red*255);
+				unsigned char g = (unsigned char)(green*255);
+				unsigned char b = (unsigned char)(blue*255);
+				unsigned char a = (unsigned char)(alpha*255);
+				color = wxColour (r,g,b,a);
+				dc.SetBrush (wxBrush(color));
+			}
+		}
 	}
+	wxRect rect (x, y, w, h);
+
+	if ([[treemap children] count] == 0) {
+		wxColour white = (wxT("#FFFFFF"));
+		if (w > h){
+			dc.GradientFillLinear (rect, white, color, wxNORTH);
+		}else{
+			dc.GradientFillLinear (rect, white, color, wxEAST);
+		}
+	}
+
+//	dc.SetPen (wxPen(white, 0, wxSOLID));
+//   	dc.DrawRectangle (x, y, w, h);
+
+	wxPoint points[5];
+	points[0] = wxPoint (x,y);
+	points[1] = wxPoint (x+w, y);
+	points[2] = wxPoint (x+w, y+h);
+	points[3] = wxPoint (x, y+h);
+	points[4] = wxPoint (x,y);
+
+     
+     	wxCoord w1, h1;
+     	dc.GetTextExtent (NSSTRINGtoWXSTRING([treemap name]), &w1, &h1);
+     	if (w1 < w-5 && h1 < h-5){
+     		dc.DrawText (NSSTRINGtoWXSTRING([treemap name]), x+5, y+5);
+	}
+
 	
 	if ([[treemap children] count] == 0)
 		return;
@@ -354,6 +401,13 @@ void Triva2DFrame::drawTreemap (id treemap)
 	unsigned int i;
 	for (i = 0; i < [[treemap children] count]; i++){
 		this->drawTreemap ([[treemap children] objectAtIndex: i]);
+	}
+
+	/* after drawing everything */
+	if (depth < maxDepthToDraw-1){
+		color = wxColour (wxT("#000000"));	
+		dc.SetPen(wxPen(color, (maxDepthToDraw-depth), wxSOLID));
+		dc.DrawLines (5, points);
 	}
 }
 
@@ -390,9 +444,10 @@ Treemap *Triva2DFrame::searchNodeAt (int x, int y, Treemap *node)
 
 void Triva2DFrame::searchAndShowDescriptionAt (long x, long y)
 {
-	Treemap *node = this->searchNodeAt (x, y, current);
-	TimeSlice *filter = controller->getTimeSlice();
-	detailDescription = [filter descriptionForNode: node];
-	detailx = x; 
-	detaily = y;
+	if (filter){
+		Treemap *node = this->searchNodeAt (x, y, current);
+		detailDescription = [filter descriptionForNode: node];
+		detailx = x; 
+		detaily = y;
+	}
 }

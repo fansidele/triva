@@ -38,6 +38,8 @@ private:
 	NSString *detailDescription;
 	void searchAndShowDescriptionAt (long x, long y);
 
+	id filter;
+
 public:
 	void setController (TrivaController *c) { controller = c; };
 
