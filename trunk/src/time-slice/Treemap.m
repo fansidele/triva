@@ -113,7 +113,11 @@
         while (i < inputSize){
                 child = [children objectAtIndex: i];
                 float aux2 = SCALE([child value]);
-                if (aux2 == 0){
+                if (W < 0 || H < 0){
+                        break;
+                }
+
+                if (aux2 <= 0){
                         i++; // do not consider it
                         continue;
                 }
@@ -215,8 +219,8 @@
                         ratio = BIGFLOAT;
                 }
         }
-        for (i = 0; i < inputSize; i++){
-                child = [children objectAtIndex: i];
+        for (j = 0; j < i; j++){
+                child = [children objectAtIndex: j];
 		float nfactor = [child width]*[child height]/[child value];
                 [child calculateWithWidth: [child width] height: [child height]
                         factor: nfactor depth: d+1];
