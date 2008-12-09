@@ -63,7 +63,12 @@ public:
 			std::vector<Ogre::Vector3> *PosDestino);
 	void applicationAnimatedGraphDraw (Position *position,
 					float animationTime);
+	void fillVectorSceneNodes (Position *position,
+                std::vector<Ogre::SceneNode*> *vectSceneNodes);
 
+	float  avarageDistance(std::vector<Ogre::SceneNode*> vectSceneNodes, Ogre::SceneNode *sceneNodePrinc);
+	
+	std::vector<Ogre::Vector3> calcNewPositions (std::vector<Ogre::SceneNode*> vectSceneNodes, Ogre::SceneNode *sceneNodePrinc, float varFactorOfDistance, float rayOfAction);
 //TIMESTAMPED OBJECTS CATEGORY
 public:
 	void createTimestampedObjects ();

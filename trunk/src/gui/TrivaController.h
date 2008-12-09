@@ -98,8 +98,10 @@ private:
 private:
 	void unselectSelected ();
 	void selectContainer (Ogre::MovableObject *objectToSelect);
-	void selectState (Ogre::MovableObject
-*objectToSelect, Ogre::Vector3 hitAt);
+ 	void selectState (Ogre::MovableObject *objectToSelect,
+				Ogre::Vector3 hitAt,
+				float distanceFactor,
+				float rayOfAction, float animTime);
 	void selectLink (Ogre::MovableObject
 *objectToSelect, Ogre::Vector3 hitAt);
 

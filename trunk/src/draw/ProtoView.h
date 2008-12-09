@@ -36,6 +36,7 @@ enum TrivaVisualizationBaseState {
 	NSDictionary *entityTypesChosen; /* set by GUI_CombinedCounter */
 }
 - (DrawManager *) drawManager;
+- (Position *) getApplicationGraphPosition;
 - (void) setPointsPerSecond: (double) nv;
 - (double) pointsPerSecond;
 - (void) updateScrollbar;

@@ -41,9 +41,63 @@ void TrivaController::selectContainer (Ogre::MovableObject *objectToSelect)
 }
 
 void TrivaController::selectState (Ogre::MovableObject
-*objectToSelect, Ogre::Vector3 hitAt)
+				*objectToSelect, Ogre::Vector3 hitAt, float distanceFactor, float rayOfAction, float animTime)
 {
-	return;
+	Ogre::SceneNode *scnode;
+	scnode = objectToSelect->getParentSceneNode();
+	std::vector<Ogre::SceneNode*> *vectSceneNodes;
+	vectSceneNodes = new std::vector<Ogre::SceneNode*>;
+
+	DrawManager *varDrawManager = [view drawManager];
+	Position *varApplicationGraphPosition = [view getApplicationGraphPosition];
+
+	varDrawManager->fillVectorSceneNodes(varApplicationGraphPosition, vectSceneNodes);
+
+	std::string nameSelectedObj;
+	nameSelectedObj = objectToSelect->getName();
+	nameSelectedObj.erase(0,22);
+	if (nameSelectedObj[0] == '-')
+	{
+           nameSelectedObj.erase(0,1);
+	}
+
+	Ogre::SceneNode *selectedScNode;
+	for(int i=0; i < vectSceneNodes->size(); i++)
+	{
+		if  ( vectSceneNodes->at(i)->getName() == nameSelectedObj)	
+		   {
+			selectedScNode = vectSceneNodes->at(i);
+			break;	
+		   }
+	}
+ 
+//	float fatorDeDistanciamento = 1.5, varRaioDeAcao = 400.0;
+
+	std::vector<Ogre::SceneNode*> vectSceneNodes2;
+
+        for(int i=0; i < vectSceneNodes->size(); i++)
+        {
+		vectSceneNodes2.push_back(vectSceneNodes->at(i));
+        }
+
+	std::vector<Ogre::Vector3> vectNewPositions;
+//	vectNewPositions = varDrawManager->calcNewPositions(vectSceneNodes2, selectedScNode, fatorDeDistanciamento, varRaioDeAcao);
+        vectNewPositions = varDrawManager->calcNewPositions(vectSceneNodes2, selectedScNode, distanceFactor, rayOfAction);
+
+	std::vector<Ogre::Vector3> *vectNewPositionsPt = new std::vector<Ogre::Vector3>;
+	Ogre::Vector3  position;
+
+	for(int i=0; i < vectNewPositions.size(); i++)
+        {
+		position = vectNewPositions.at(i);
+                vectNewPositionsPt->push_back(position);
+
+        }
+
+	varDrawManager->moveSceneNodesToNewPositions(vectSceneNodes, vectNewPositionsPt, animTime); 
+ 
+	delete vectNewPositionsPt;
+#if 0
 
 	Ogre::Root *mRoot;
 	Ogre::SceneManager *mSceneMgr;
@@ -102,6 +156,8 @@ void TrivaController::selectState (Ogre::MovableObject
 		colorButton->Enable();
 		selectedEntity = fet;
 	}
+		//return;
+#endif
 }
 
 void TrivaController::selectLink (Ogre::MovableObject
@@ -199,7 +255,7 @@ void TrivaController::selectObjectIdentifier (Ogre::MovableObject
 		this->selectContainer (objectToSelect);
 	}else if (objectToSelect->getQueryFlags() == STATE_MASK){
 		this->unselectSelected ();
-		this->selectState (objectToSelect, hitAt);
+		this->selectState (objectToSelect, hitAt, 1.5, 400.0, 1.0);
 	}else if (objectToSelect->getQueryFlags() == LINK_MASK){
 		this->unselectSelected ();
 		this->selectLink (objectToSelect, hitAt);

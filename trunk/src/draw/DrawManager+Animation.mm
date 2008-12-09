@@ -84,7 +84,9 @@ Ogre::SceneNode *DrawManager::getOneContainerPosition (id cont,
 		n = node->createChildSceneNode (orname);
         }
 	//new container, so no animation, just put it on the scene
-        n->setPosition(x, 0, y);
+        n->setPosition(pos);
+        vectSceneNodes->push_back(n);
+        PosDestino->push_back(pos);
 
 	/* creating or re-using the visual representation of the container */
         Ogre::Entity *e;
@@ -183,3 +185,70 @@ void DrawManager::applicationAnimatedGraphDraw (Position *position,
 }
 
 
+void DrawManager::fillVectorSceneNodes (Position *position,
+                std::vector<Ogre::SceneNode*> *vectSceneNodes)
+//return the vector with all the scene nodes
+{ 
+        id instance = [viewController rootInstance];
+
+        std::vector<Ogre::Vector3> *PosDestino; //ignore this, just created to reuse former methods
+	PosDestino = new std::vector<Ogre::Vector3>;
+
+        this->applicationAnimatedGraphRecursiveDraw (instance, position,
+                        containerPosition, vectSceneNodes, PosDestino);
+
+        delete PosDestino;
+
+}
+
+
+float DrawManager::avarageDistance (std::vector<Ogre::SceneNode*> vectSceneNodes, Ogre::SceneNode *sceneNodePrinc)
+{
+	float varAvarageDistance, distancesAdds;
+	distancesAdds = sceneNodePrinc->getPosition().distance(vectSceneNodes.at(0)->getPosition());
+
+	for (int i = 1; i < vectSceneNodes.size(); i++){
+		distancesAdds += sceneNodePrinc->getPosition().distance(vectSceneNodes.at(i)->getPosition());
+	}	
+	
+	varAvarageDistance = distancesAdds / vectSceneNodes.size();
+	return (varAvarageDistance);
+}
+//=====================================================================================================================================================
+//=====================================================================================================================================================
+std::vector<Ogre::Vector3> DrawManager::calcNewPositions (std::vector<Ogre::SceneNode*> vectSceneNodes, Ogre::SceneNode *sceneNodePrinc, float varFactorOfDistance, float rayOfAction)
+
+{
+	Ogre::Vector3 originalPos, NewCoordinate, distance, mainSceneNodePos;
+	std::vector<Ogre::Vector3> vectDestPos;
+
+	float avarageDist, incDist, distFromMainNode; 
+	
+	mainSceneNodePos = sceneNodePrinc->getPosition();
+
+	avarageDist = avarageDistance(vectSceneNodes, sceneNodePrinc);
+
+	incDist = avarageDist * varFactorOfDistance;
+	incDist -= avarageDist;
+
+	int i = 0;
+	while (i < vectSceneNodes.size()){
+		distFromMainNode = sceneNodePrinc->getPosition().distance(vectSceneNodes.at(i)->getPosition());
+
+		if (distFromMainNode < rayOfAction) {
+		originalPos = vectSceneNodes.at(i)->getPosition();
+		distance = originalPos - mainSceneNodePos;
+		distance.normalise();
+		distance *= incDist; 
+		NewCoordinate = distance + originalPos;
+		vectDestPos.push_back(NewCoordinate);	
+
+		}
+		else {
+			vectDestPos.push_back(vectSceneNodes.at(i)->getPosition());
+		}
+
+		i +=1;		
+	}
+	return(vectDestPos);	
+}

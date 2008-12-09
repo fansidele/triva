@@ -173,4 +173,10 @@
 	}
 	return ret;
 }
+
+- (Position *) getApplicationGraphPosition
+{
+        return applicationGraphPosition;
+}
+
 @end
