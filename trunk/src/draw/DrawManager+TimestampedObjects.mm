@@ -27,6 +27,10 @@ void DrawManager::drawOneState (Ogre::SceneNode *visualContainer,
 	Ogre::SceneNode *ssn;
 	try {
 		ssn = mSceneMgr->getSceneNode ([idesn cString]);
+		/* when objects were removed by the time slice */
+		try {
+			visualContainer->addChild (ssn);
+		}catch(Ogre::Exception ex2){}
 	}catch (Ogre::Exception ex){
 		ssn = visualContainer->createChildSceneNode([idesn cString]);
 	}
@@ -82,6 +86,34 @@ void DrawManager::drawStates (PajeEntityType *et, id container)
 			this->drawOneState (n, ent);
 //		}
 	}
+	/* removing from the scene the objects outside the selected timeslice */
+	en3 = [viewController enumeratorOfEntitiesTyped: et
+			inContainer: container
+			fromTime: [viewController endTime]
+			toTime: [viewController globalEndTime]
+			minDuration: 1/[viewController pointsPerSecond]];
+	while ((ent = [en3 nextObject]) != nil) {
+		NSString *ide = [NSString stringWithFormat: @"%@-%@-%@-%@", 
+		[ent startTime], [ent value], [et name], [container name]];
+		NSString *idesn = [NSString stringWithFormat: @"%@-sn", ide];
+		try {
+			n->removeChild([idesn cString]);
+		}catch(Ogre::Exception ex){}
+	}
+	en3 = [viewController enumeratorOfEntitiesTyped: et
+			inContainer: container
+			fromTime: [viewController globalStartTime]
+			toTime: [viewController startTime]
+			minDuration: 1/[viewController pointsPerSecond]];
+	while ((ent = [en3 nextObject]) != nil) {
+		NSString *ide = [NSString stringWithFormat: @"%@-%@-%@-%@", 
+		[ent startTime], [ent value], [et name], [container name]];
+		NSString *idesn = [NSString stringWithFormat: @"%@-sn", ide];
+		try {
+			n->removeChild([idesn cString]);
+		}catch(Ogre::Exception ex){}
+	}
+	
 }
 
 void DrawManager::drawOneLink (id link)
@@ -144,6 +176,10 @@ void DrawManager::drawOneLink (id link)
 	Ogre::SceneNode *dsn;
 	try{
 		dsn = mSceneMgr->getSceneNode ([idescenenode cString]);
+		/* when objects were removed by the time slice */
+		try {
+			n->addChild (dsn);
+		}catch(Ogre::Exception ex2){}
 	}catch (Ogre::Exception ex){
 		dsn = n->createChildSceneNode([idescenenode cString]);
 		dsn->attachObject (ste);
@@ -161,6 +197,37 @@ void DrawManager::drawLinks (PajeEntityType *et, id container)
 	id ent;
 	while ((ent = [en4 nextObject]) != nil) {
 		this->drawOneLink (ent);
+	}
+	/* removing from the scene the objects outside the selected timeslice */
+	en4 = [viewController enumeratorOfEntitiesTyped: et
+			inContainer: container
+			fromTime: [viewController endTime]
+			toTime: [viewController globalEndTime]
+			minDuration: 1/[viewController pointsPerSecond]];
+	while ((ent = [en4 nextObject]) != nil) {
+		NSString *ide = [NSString stringWithFormat: @"%@-%@-%@-%@",
+		[ent startTime], [ent value], [et name], [container name]];
+		NSString *idescenenode;
+		idescenenode = [NSString stringWithFormat: @"%@-sn", ide];
+		Ogre::SceneNode *n = mSceneMgr->getRootSceneNode ();
+		try {
+			n->removeChild([idescenenode cString]);
+		}catch(Ogre::Exception ex){}
+	}
+	en4 = [viewController enumeratorOfEntitiesTyped: et
+			inContainer: container
+			fromTime: [viewController globalStartTime]
+			toTime: [viewController startTime]
+			minDuration: 1/[viewController pointsPerSecond]];
+	while ((ent = [en4 nextObject]) != nil) {
+		NSString *ide = [NSString stringWithFormat: @"%@-%@-%@-%@",
+		[ent startTime], [ent value], [et name], [container name]];
+		NSString *idescenenode;
+		idescenenode = [NSString stringWithFormat: @"%@-sn", ide];
+		Ogre::SceneNode *n = mSceneMgr->getRootSceneNode ();
+		try {
+			n->removeChild([idescenenode cString]);
+		}catch(Ogre::Exception ex){}
 	}
 }
 
