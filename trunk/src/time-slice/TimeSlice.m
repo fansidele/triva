@@ -9,6 +9,9 @@
 	NSLog (@"%@ initialized", self);
 	sliceStartTime = [NSDate dateWithTimeIntervalSinceReferenceDate: 0];
 	sliceEndTime = [NSDate dateWithTimeIntervalSinceReferenceDate: 0];
+
+	/* starting configuration */
+	fillWithEmptyNodes = NO;
 	return self;
 }
 
@@ -61,6 +64,30 @@
 		entity = (Treemap *)[node searchChildByName: name];
 		if (entity){
 			[entity addValue: duration];
+
+			if (fillWithEmptyNodes){
+				/* updating empty value - 1*/
+				Treemap *empty;
+				empty = [node searchChildByName: @"NOTHING"];
+				if (!empty){
+					double x;
+					x = [sliceEndTime
+						timeIntervalSinceDate:
+							sliceStartTime];
+					x -= duration;
+                                
+					Treemap *empty = [[Treemap alloc] init];
+					[empty setName: @"NOTHING"];
+					[empty setParent: node];
+					[empty setValue: x];
+					[empty setPajeEntity: nil];
+					[node addChild: empty];
+				}else{
+					double x = [empty value];
+					x -= duration;
+					[empty setValue: x];
+				}
+			}
 		}else{
 			entity = [[Treemap alloc] init];
 			[entity setName: name];
@@ -71,6 +98,30 @@
 							one entity to the same
 							treemap node. we take
 							just the first one. */
+
+			if (fillWithEmptyNodes){
+				/* updating empty value */
+				Treemap *empty;
+				empty = [node searchChildByName: @"NOTHING"];
+				if (!empty){
+					double x;
+					x = [sliceEndTime
+						timeIntervalSinceDate:
+							sliceStartTime];
+					x -= duration;
+        
+					Treemap *empty = [[Treemap alloc] init];
+					[empty setName: @"NOTHING"];
+					[empty setParent: node];
+					[empty setValue: x];
+					[empty setPajeEntity: nil];
+					[node addChild: empty];
+				}else{
+					double x = [empty value];
+					x -= duration;
+					[empty setValue: x];
+				}
+			}
 		}
 	}
 }

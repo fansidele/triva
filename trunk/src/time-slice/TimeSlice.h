@@ -10,6 +10,9 @@
 	NSDate *sliceEndTime;
 
 	Treemap *treemap;
+
+	/* Configuration */
+	BOOL fillWithEmptyNodes;
 }
 - (void) setSliceStartTime: (NSDate *) time;
 - (void) setSliceEndTime: (NSDate *) time;
