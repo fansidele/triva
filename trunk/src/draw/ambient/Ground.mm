@@ -27,9 +27,7 @@ Ground::Ground (double si, double sc, Origin *origin)
 	groundNode = node->createChildSceneNode ("GroundNode");
 	groundNode->attachObject (plane);
 	groundNode->setScale (si, 0, si);
-
-
-
+	groundNode->setPosition (0, -1, 0);
 
 	Ogre::ManualObject *line;
 	for (i = (int)-si/2; i < si/2; i += SPACE_BETWEEN_LINES){

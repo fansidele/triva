@@ -4,7 +4,7 @@
 #include <Ogre.h>
 #include "Origin.h"
 
-#define SPACE_BETWEEN_LINES 50
+#define SPACE_BETWEEN_LINES 200
 
 class Ground 
 {
