@@ -10,6 +10,7 @@
 - (float) value;
 - (float) setValue: (float) v;
 - (float) addValue: (float) v;
+- (float) subtractValue: (float) v;
 
 - (void) recursiveResetValues;
 - (void) recalculateValuesBottomUp;

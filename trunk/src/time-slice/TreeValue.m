@@ -25,6 +25,12 @@
 	return value;
 }
 
+- (float) subtractValue: (float) v
+{
+	value -= v;
+	return value;
+}
+
 - (void) recursiveResetValues
 {
 	if ([children count] == 0){
