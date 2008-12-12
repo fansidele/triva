@@ -12,6 +12,7 @@
 
 	/* starting configuration */
 	fillWithEmptyNodes = NO;
+	considerExclusiveDuration = YES;
 	return self;
 }
 
@@ -59,6 +60,13 @@
 		entETime = [entETime earlierDate: sliceEndTime];
 
 		float duration = [entETime timeIntervalSinceDate: entSTime];
+
+		if (considerExclusiveDuration){
+			float exclusiveDuration = [ent exclusiveDuration];
+			if (exclusiveDuration < duration){
+				duration = exclusiveDuration;
+			}
+		}
 
 		Treemap *entity;
 		entity = (Treemap *)[node searchChildByName: name];

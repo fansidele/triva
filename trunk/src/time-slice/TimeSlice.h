@@ -13,6 +13,7 @@
 
 	/* Configuration */
 	BOOL fillWithEmptyNodes;
+	BOOL considerExclusiveDuration;
 }
 - (void) setSliceStartTime: (NSDate *) time;
 - (void) setSliceEndTime: (NSDate *) time;
