@@ -40,6 +40,9 @@ enum TrivaVisualizationBaseState {
 - (void) setPointsPerSecond: (double) nv;
 - (double) pointsPerSecond;
 - (void) updateScrollbar;
+
+- (NSDate *) globalStartTime;
+- (NSDate *) globalEndTime;
 @end
 
 @interface ProtoView (Materials)

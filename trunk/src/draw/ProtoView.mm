@@ -179,4 +179,13 @@
         return applicationGraphPosition;
 }
 
+- (NSDate *) globalStartTime
+{
+	return [super startTime];
+}
+
+- (NSDate *) globalEndTime
+{
+	return [super endTime];
+}
 @end
