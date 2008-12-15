@@ -21,7 +21,10 @@
 	      ofType: (id) type
 	    withNode: (Treemap *) node;
 - (Treemap *) pajeHierarchy: (id) instance parent:(Treemap *) parent;
-- (Treemap *) treemapWithWidth: (int) width andHeight: (int) height;
+- (void) limitTreemap: (Treemap *) tree toDepth: (int) depth;
+- (Treemap *) treemapWithWidth: (int) width
+		     andHeight: (int) height
+		      andDepth: (int) depth;
 - (NSString *) descriptionForNode: (Treemap *) node;
 @end
 

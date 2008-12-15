@@ -87,6 +87,7 @@
 					Treemap *empty = [[Treemap alloc] init];
 					[empty setName: @"NOTHING"];
 					[empty setParent: node];
+					[empty setDepth: [node depth]+1];
 					[empty setValue: x];
 					[empty setPajeEntity: nil];
 					[node addChild: empty];
@@ -100,6 +101,7 @@
 			entity = [[Treemap alloc] init];
 			[entity setName: name];
 			[entity setParent: node];
+			[entity setDepth: [node depth]+1];
 			[entity setValue: duration];
 			[node addChild: entity];
 			[entity setPajeEntity: ent]; /* it may have more than
@@ -121,6 +123,7 @@
 					Treemap *empty = [[Treemap alloc] init];
 					[empty setName: @"NOTHING"];
 					[empty setParent: node];
+					[empty setDepth: [node depth]+1];
 					[empty setValue: x];
 					[empty setPajeEntity: nil];
 					[node addChild: empty];
@@ -141,6 +144,11 @@
 	[node setName: [instance name]];
 	[node setParent: parent];
 	[node setPajeEntity: instance];
+	if (parent != nil){
+		[node setDepth: [parent depth] + 1];
+	}else{
+		[node setDepth: 0];
+	}
 
 	NSEnumerator *en;
 	en = [[self containedTypesForContainerType:
@@ -161,6 +169,7 @@
 			Treemap *child = [[Treemap alloc] init];
 			[child setName: [et name]];
 			[child setParent: node];
+			[child setDepth: [node depth] + 1];
 
 			[node addChild: child];
 
@@ -185,12 +194,15 @@
 	[self hierarchyChanged];
 }
 
-- (Treemap *) treemapWithWidth: (int) width andHeight: (int) height
+- (Treemap *) treemapWithWidth: (int) width
+                     andHeight: (int) height
+                      andDepth: (int) depth
 {
 	[self hierarchyChanged];
 	if (treemap == nil){
 		return nil;
 	}else{
+		[self limitTreemap: treemap toDepth: depth]; 
 		[treemap calculateWithWidth: width andHeight: height];
 		return treemap;
 	}
@@ -214,5 +226,89 @@
 	double porcentage = nodeValue/timeSlice * 100;
 	[ret appendString: [NSString stringWithFormat: @"%f\%", porcentage]];
 	return ret;
+}
+
+- (NSMutableArray *) findAllLeaves: (Treemap *) tree
+{
+	NSMutableArray *ret = [NSMutableArray new];
+	if ([[tree children] count] == 0){
+		[ret addObject: tree];
+	}else{
+		int i;
+		NSArray *children = [tree children];
+		for (i = 0; i < [children count]; i++){
+			[ret addObjectsFromArray:
+				[self findAllLeaves:
+					[children objectAtIndex: i]]];
+		}
+	}
+	return ret;
+}
+
+- (NSMutableArray *) summarizeLeaves: (NSArray *) all
+{
+	/* creating dictionary: key is name, value is value */
+	NSMutableDictionary *dict = [NSMutableDictionary new];
+	NSMutableDictionary *dict2 = [NSMutableDictionary new];
+	int i;
+	for (i = 0; i < [all count]; i++){
+		Treemap *node = [all objectAtIndex: i];
+		NSString *name = [node name];
+		NSString *value = [dict objectForKey: name];
+		if (value == nil){
+			value = [NSString stringWithFormat: @"%f",[node value]];
+			[dict setObject: value forKey: name];
+			if ([node pajeEntity]){
+				[dict2 setObject:[node pajeEntity] forKey:name];
+			}
+		}else{
+			double x = [value doubleValue];
+			x += [node value];
+			value = [NSString stringWithFormat: @"%f", x];
+			[dict setObject: value forKey: name];
+		}
+	}
+
+	/* creating return: an array with Treemap objects */
+	NSMutableArray *ret = [NSMutableArray new];
+	NSArray *allDictKeys = [dict allKeys];
+	for (i = 0; i < [allDictKeys count]; i++){
+		NSString *name = [allDictKeys objectAtIndex: i];
+		NSString *value = [dict objectForKey: name];
+
+		Treemap *node = [[Treemap alloc] init];
+		[node setName: name];
+		[node setValue: [value doubleValue]];
+		[node setPajeEntity: [dict2 objectForKey: name]];
+		[ret addObject: node];
+		[node release];
+	}
+	return ret;
+}
+
+- (void) limitTreemap: (Treemap *) tree toDepth: (int) depth
+{
+	if ([tree depth] == depth && [tree depth] != [treemap maxDepth]){
+		/* summarize */
+		NSArray *allLeaves = [self findAllLeaves: tree];
+		[tree removeAllChildren];
+		NSArray *sumLeaves = [self summarizeLeaves: allLeaves];
+		int i;
+		for (i = 0; i < [sumLeaves count]; i++){
+			Treemap *child = [sumLeaves objectAtIndex: i];
+			[child setParent: tree];
+			[child setDepth: [tree depth]+1];
+			[tree addChild: child];
+		}
+		return;
+	}
+
+	/* recurse */
+	int i;
+	NSArray *children = [tree children];
+	for (i = 0; i < [children count]; i++){
+		Treemap *child = [children objectAtIndex: i];
+		[self limitTreemap: child toDepth: depth];
+	}
 }
 @end
