@@ -65,4 +65,9 @@
 	[children release];
 	[super dealloc];
 }
+
+- (void) removeAllChildren
+{
+	[children removeAllObjects];
+}
 @end

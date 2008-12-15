@@ -17,6 +17,7 @@
 - (void) setName: (NSString *) n;
 - (void) setParent: (Tree *) p;
 - (void) addChild: (Tree *) c;
+- (void) removeAllChildren;
 @end
 
 #endif
