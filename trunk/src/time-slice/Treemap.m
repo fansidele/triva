@@ -113,12 +113,12 @@
         while (i < inputSize){
                 child = [children objectAtIndex: i];
 
-                if ([child value] == 0){
+                if ([child val] == 0){
                         i++;
                         continue;
                 }
 
-                float aux2 = SCALE([child value]);
+                float aux2 = SCALE([child val]);
                 if (W < 0 || H < 0){
                         break;
                 }
@@ -127,7 +127,7 @@
                         i++; // do not consider it
                         continue;
                 }
-                aux += SCALE([child value]);
+                aux += SCALE([child val]);
 
                 float nw, nh;
                 if (W > H){
@@ -136,7 +136,7 @@
                                 child = [children objectAtIndex: k];
 
                                 wvec[k] = nw - P*2;
-                                hvec[k] = SCALE([child value])/nw - P*2;
+                                hvec[k] = SCALE([child val])/nw - P*2;
 
                                 [child setWidth: wvec[k]];
                                 [child setHeight: hvec[k]];
@@ -146,7 +146,7 @@
                         nh = aux/W;
                         for (k = j; k <= i; k++){
                                 child = [children objectAtIndex: k];
-                                wvec[k] = SCALE([child value])/nh - P*2;
+                                wvec[k] = SCALE([child val])/nh - P*2;
                                 hvec[k] = nh - P*2;
                                 [child setWidth: wvec[k]];
                                 [child setHeight: hvec[k]];
@@ -171,13 +171,13 @@
                         if (W > H){
                                 child = [children objectAtIndex: i];
                                 //retornando sem o quadrado i
-                                aux -= SCALE([child value]);
+                                aux -= SCALE([child val]);
                                 nw = aux/H;
                                 ycum = 0;
                                 for (k = j; k <= i; k++){
                                         child = [children objectAtIndex: k];
                                         wvec[k] = nw - P*2;
-                                        hvec[k] = SCALE([child value])/nw-P*2;
+                                        hvec[k] = SCALE([child val])/nw-P*2;
 
                                         xvec[k] = (Want) + Worig + P;
                                         yvec[k] = (Hant + ycum) + Horig + P;
@@ -196,12 +196,12 @@
                         }else{
                                 child = [children objectAtIndex: i];
                                 //retornando sem o quadrado i
-                                aux -= SCALE([child value]);
+                                aux -= SCALE([child val]);
                                 nh = aux/W;
                                 xcum = 0;
                                 for (k = j; k <= i; k++){
                                         child = [children objectAtIndex: k];
-                                        wvec[k] = SCALE([child value])/nh-P*2;
+                                        wvec[k] = SCALE([child val])/nh-P*2;
                                         hvec[k] = nh - P*2;
 
                                         xvec[k] = (Want + xcum) + Worig + P;
@@ -227,7 +227,7 @@
         }
         for (j = 0; j < i; j++){
                 child = [children objectAtIndex: j];
-		float nfactor = [child width]*[child height]/[child value];
+		float nfactor = [child width]*[child height]/[child val];
                 [child calculateWithWidth: [child width] height: [child height]
                         factor: nfactor depth: d+1];
         }

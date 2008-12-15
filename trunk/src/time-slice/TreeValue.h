@@ -7,7 +7,7 @@
 {
 	float value;
 }
-- (float) value;
+- (float) val;
 - (float) setValue: (float) v;
 - (float) addValue: (float) v;
 - (float) subtractValue: (float) v;

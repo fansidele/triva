@@ -8,7 +8,7 @@
 	return self;
 }
 
-- (float) value;
+- (float) val;
 {
 	return value;
 }
@@ -55,7 +55,7 @@
 	for (i = 0; i < [children count]; i++){
 		TreeValue *child = [children objectAtIndex: i];
 		[child recalculateValuesBottomUp];
-		nvalue += [child value];
+		nvalue += [child val];
 	}
 	if (nvalue > 0){
 		value = nvalue;

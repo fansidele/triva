@@ -92,7 +92,7 @@
 					[empty setPajeEntity: nil];
 					[node addChild: empty];
 				}else{
-					double x = [empty value];
+					double x = [empty val];
 					x -= duration;
 					[empty setValue: x];
 				}
@@ -128,7 +128,7 @@
 					[empty setPajeEntity: nil];
 					[node addChild: empty];
 				}else{
-					double x = [empty value];
+					double x = [empty val];
 					x -= duration;
 					[empty setValue: x];
 				}
@@ -222,7 +222,7 @@
 	[ret appendString: [[[node pajeEntity] container] name]];
 	[ret appendString: @" "];
 	double timeSlice = [sliceEndTime timeIntervalSinceDate:sliceStartTime];
-	double nodeValue = [node value];
+	double nodeValue = [node val];
 	double porcentage = nodeValue/timeSlice * 100;
 	[ret appendString: [NSString stringWithFormat: @"%f\%", porcentage]];
 	return ret;
@@ -256,14 +256,14 @@
 		NSString *name = [node name];
 		NSString *value = [dict objectForKey: name];
 		if (value == nil){
-			value = [NSString stringWithFormat: @"%f",[node value]];
+			value = [NSString stringWithFormat: @"%f",[node val]];
 			[dict setObject: value forKey: name];
 			if ([node pajeEntity]){
 				[dict2 setObject:[node pajeEntity] forKey:name];
 			}
 		}else{
 			double x = [value doubleValue];
-			x += [node value];
+			x += [node val];
 			value = [NSString stringWithFormat: @"%f", x];
 			[dict setObject: value forKey: name];
 		}
