@@ -331,7 +331,7 @@ void Triva2DFrame::drawTreemap (id treemap)
 {
 	wxPaintDC dc(this);
 
-	if ([treemap value] == 0){
+	if ([treemap val] == 0){
 		return;
 	}
 
