@@ -86,7 +86,9 @@ void Triva2DFrame::updateTreemap()
 	if (current != nil){
 		[current release];
 	}
-	current = [filter treemapWithWidth: w andHeight: h];
+	current = [filter treemapWithWidth: w
+				 andHeight: h
+				  andDepth: maxDepthToDraw];
 	[current retain];
 	this->drawTreemap ((id)current);
 }
@@ -394,7 +396,7 @@ void Triva2DFrame::drawTreemap (id treemap)
 		return;
 
 	int depth = [treemap depth];
-	if ((int)depth == (int)maxDepthToDraw){
+	if ((int)depth == (int)maxDepthToDraw+1){
 		return;
 	}
 	
