@@ -112,6 +112,12 @@
         Want = Hant = 0;
         while (i < inputSize){
                 child = [children objectAtIndex: i];
+
+                if ([child value] == 0){
+                        i++;
+                        continue;
+                }
+
                 float aux2 = SCALE([child value]);
                 if (W < 0 || H < 0){
                         break;
