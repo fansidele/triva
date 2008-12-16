@@ -419,7 +419,8 @@ Treemap *Triva2DFrame::searchNodeAt (int x, int y, Treemap *node)
 		return nil;
 	}
 	int depth = [node depth];
-	if (depth == maxDepthToDraw){
+	if (depth == maxDepthToDraw+1 || 
+		depth == [node maxDepth]){
 		float xr, yr, wr, hr;
 		xr = [node x];
 		yr = [node y];
