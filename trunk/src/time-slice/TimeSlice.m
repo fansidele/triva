@@ -163,17 +163,16 @@
 				Treemap *child;
 				child = [self pajeHierarchy:sub parent: node];
 				
-				[node addChild: child];
+				if ([[child children] count] == 1){
+					[node addChild:
+						[[child children]
+							objectAtIndex: 0]];
+				}else{
+					[node addChild: child];
+				}
 			}
 		}else{
-			Treemap *child = [[Treemap alloc] init];
-			[child setName: [et name]];
-			[child setParent: node];
-			[child setDepth: [node depth] + 1];
-
-			[node addChild: child];
-
-			[self timeSliceAt: instance ofType: et withNode: child];
+			[self timeSliceAt: instance ofType: et withNode: node];
 		}
         }
 	[node autorelease];
