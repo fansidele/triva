@@ -220,9 +220,12 @@
 	timeSlice = [sliceEndTime timeIntervalSinceDate:sliceStartTime];
 	double rootValue = [treemap val];
 	double nodeValue = [node val];
-	double porcentage = nodeValue/rootValue * timeSlice;
-	if ([node pajeEntity] != nil){
-		[ret appendString: [[node pajeEntity] value]];
+	double porcentage = (nodeValue/rootValue * timeSlice)/timeSlice*100;
+	if ([node parent] != nil){
+		[ret appendString: @" "];
+		[ret appendString: [[[node parent] pajeEntity] name]];
+	}
+	if (![node isKindOfClass: [TreeIntegrated class]]){
 		[ret appendString: @" "];
 		[ret appendString: [[[node pajeEntity] container] name]];
 		[ret appendString: @" "];
@@ -280,7 +283,7 @@
 		NSString *name = [allDictKeys objectAtIndex: i];
 		NSString *value = [dict objectForKey: name];
 
-		Treemap *node = [[Treemap alloc] init];
+		TreeIntegrated *node = [[TreeIntegrated alloc] init];
 		[node setName: name];
 		[node setValue: [value doubleValue]];
 		[node setPajeEntity: [dict2 objectForKey: name]];

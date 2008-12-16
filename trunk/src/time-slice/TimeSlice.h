@@ -3,6 +3,7 @@
 #include <Foundation/Foundation.h>
 #include <General/PajeFilter.h>
 #include "Treemap.h"
+#include "TreeIntegrated.h"
 
 @interface TimeSlice  : PajeFilter
 {
