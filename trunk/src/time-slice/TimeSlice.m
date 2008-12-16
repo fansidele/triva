@@ -210,21 +210,25 @@
 
 - (NSString *) descriptionForNode: (Treemap *) node
 {
+	NSMutableString *ret = nil;
 	if (node == nil){
 		return nil;
 	}
-	if ([node pajeEntity] == nil){
-		return nil;
-	}
-	NSMutableString *ret = [NSMutableString string];
-	[ret appendString: [[node pajeEntity] value]];
-	[ret appendString: @" "];
-	[ret appendString: [[[node pajeEntity] container] name]];
-	[ret appendString: @" "];
-	double timeSlice = [sliceEndTime timeIntervalSinceDate:sliceStartTime];
+	ret = [NSMutableString string];
+	[ret appendString: [node name]];
+	double timeSlice;
+	timeSlice = [sliceEndTime timeIntervalSinceDate:sliceStartTime];
+	double rootValue = [treemap val];
 	double nodeValue = [node val];
-	double porcentage = nodeValue/timeSlice * 100;
-	[ret appendString: [NSString stringWithFormat: @"%f\%", porcentage]];
+	double porcentage = nodeValue/rootValue * timeSlice;
+	if ([node pajeEntity] != nil){
+		[ret appendString: [[node pajeEntity] value]];
+		[ret appendString: @" "];
+		[ret appendString: [[[node pajeEntity] container] name]];
+		[ret appendString: @" "];
+	}
+	[ret appendString:
+		[NSString stringWithFormat: @" %.2f s", porcentage]];
 	return ret;
 }
 
