@@ -63,6 +63,7 @@ public:
 			std::vector<Ogre::Vector3> *PosDestino);
 	void applicationAnimatedGraphDraw (Position *position,
 					float animationTime);
+	void applicationGraphDrawLines (Position *position);
 	void fillVectorSceneNodes (Position *position,
                 std::vector<Ogre::SceneNode*> *vectSceneNodes);
 

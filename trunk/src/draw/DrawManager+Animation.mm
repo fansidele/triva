@@ -162,6 +162,77 @@ void DrawManager::applicationAnimatedGraphRecursiveDraw (id entity,
 	}
 }
 
+void DrawManager::applicationGraphDrawLines (Position *position)
+{
+	Ogre::SceneNode *glsn;
+	try {
+		glsn = mSceneMgr->getSceneNode ("GL-SN");
+		glsn->detachAllObjects(); //this causes memory leak
+	}catch (Ogre::Exception ex){
+		glsn = mSceneMgr->getRootSceneNode(
+					)->createChildSceneNode("GL-SN");
+	}
+
+	NSEnumerator *en = [[position allLinks] objectEnumerator];
+	id oneLink;
+	while ((oneLink = [en nextObject]) != nil){
+		if ([oneLink count] < 2 || [oneLink count] > 2){
+			continue;
+		}
+		NSString *head = [[oneLink allObjects] objectAtIndex: 0];
+		NSString *tail = [[oneLink allObjects] objectAtIndex: 1];
+		std::string headname = std::string ([head cString]);
+		std::string tailname = std::string ([tail cString]);
+        	Ogre::SceneNode *headnode;
+        	try {
+	        	headnode = mSceneMgr->getSceneNode (headname);
+		}catch (Ogre::Exception ex){
+			continue;
+        	}
+		Ogre::SceneNode *tailnode;
+		try {
+			tailnode = mSceneMgr->getSceneNode (tailname);
+		}catch (Ogre::Exception ex){
+			continue;
+		}
+
+		NSString *linkName = [NSString stringWithFormat: @"BL-%@-%@",
+				head, tail];
+		std::string linkname = std::string ([linkName cString]);
+
+		Ogre::ManualObject *ste;
+		try {
+			ste = mSceneMgr->getManualObject(linkname);
+		}catch (Ogre::Exception ex){
+			ste = mSceneMgr->createManualObject(linkname);
+		}
+
+		//obtaining 3d positions
+		Ogre::Vector3 op, dp;
+#if OGRE_VERSION_MAJOR == 1 && OGRE_VERSION_MINOR == 6
+		op = headnode->_getDerivedPosition();	
+		dp = tailnode->_getDerivedPosition();
+#else
+		op = headnode->getWorldPosition();
+		dp = tailnode->getWorldPosition();
+#endif
+
+		//drawing the line
+		ste->clear ();
+		ste->begin ("VisuApp/MPI_RECV",
+			Ogre::RenderOperation::OT_LINE_STRIP);
+		ste->position (op.x, 0, op.z);
+		ste->position (dp.x, 0, dp.z);
+		ste->end();
+
+		try {
+			glsn->attachObject (ste);
+		}catch (Ogre::Exception ex){
+			//already attached
+		}
+	}
+}
+
 void DrawManager::applicationAnimatedGraphDraw (Position *position,
 		float animationTime)
 {
@@ -180,6 +251,7 @@ void DrawManager::applicationAnimatedGraphDraw (Position *position,
 			PosDestino, animationTime);
 	}
 
+	this->applicationGraphDrawLines (position);
 	vectSceneNodes->~vector();
 	delete PosDestino;
 }
