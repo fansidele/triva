@@ -17,6 +17,9 @@
 - (void) dealloc
 {
 	[allNodesIdentifiers release];
+	[algorithm release];
+	gvFreeLayout (gvc, g);
+	gvFreeContext (gvc);
 	[super dealloc];
 }
 
@@ -121,6 +124,22 @@
 	return allNodesIdentifiers;
 }
 
+- (NSSet *) allLinks
+{
+	NSMutableSet *ret = [NSMutableSet set];
+	Agnode_t    *n;
+	Agedge_t    *e;
+	for (n = agfstnode(g); n; n = agnxtnode(g,n)){
+		for (e = agfstout(g,n); e; e = agnxtout(g,e)){
+			[ret addObject: [NSSet setWithObjects:
+			   [NSString stringWithFormat: @"%s", e->head->name], 
+			   [NSString stringWithFormat: @"%s", e->tail->name],
+			   nil]];
+		}
+	}
+	return ret;
+}
+
 - (void) setSubAlgorithm: (NSString *) newSubAlgorithm;
 {
 	NSLog (@"%s -> %@", __FUNCTION__, newSubAlgorithm);
@@ -186,6 +205,10 @@
 
 - (void) newHierarchyOrganization: (NSDictionary *) h
 {
+	gvFreeContext(gvc);
+	gvc = gvContext();
+	agclose (g);
+	g = agopen("Positioning-Graph", AGRAPHSTRICT);
 	[self recreatingGraphWithDictionary: h withinSubGraph: g];
 }
 

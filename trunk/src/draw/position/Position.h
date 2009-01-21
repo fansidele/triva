@@ -14,6 +14,7 @@
 - (void) setPositionX: (int) x forNode: (NSString *) nodeName;
 - (void) setPositionY: (int) y forNode: (NSString *) nodeName;
 - (NSMutableDictionary *) positionForAllNodes;
+- (NSSet *) allLinks;
 - (void) newHierarchyOrganization: (NSDictionary *) hierarchy;
 @end
 
