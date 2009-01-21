@@ -65,6 +65,9 @@
 	char *name2 = (char *)[nodeName2 cString];
 	Agnode_t *one = agfindnode (g, name);
 	Agnode_t *two = agfindnode (g, name2);
+	if (one == NULL || two == NULL){
+		return;
+	}
 
 	Agedge_t *e = agfindedge (g, one, two);
 	if (e == NULL){
