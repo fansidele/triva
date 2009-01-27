@@ -168,6 +168,7 @@ void DrawManager::applicationGraphDrawLines (Position *position)
 	try {
 		glsn = mSceneMgr->getSceneNode ("GL-SN");
 		glsn->detachAllObjects(); //this causes memory leak
+		glsn->removeAllChildren(); //this may cause memory leak
 	}catch (Ogre::Exception ex){
 		glsn = mSceneMgr->getRootSceneNode(
 					)->createChildSceneNode("GL-SN");
@@ -199,6 +200,8 @@ void DrawManager::applicationGraphDrawLines (Position *position)
 		NSString *linkName = [NSString stringWithFormat: @"BL-%@-%@",
 				head, tail];
 		std::string linkname = std::string ([linkName cString]);
+		std::string linknamear = linkname;
+		linknamear.append("ar");
 
 		Ogre::ManualObject *ste;
 		try {
@@ -224,6 +227,41 @@ void DrawManager::applicationGraphDrawLines (Position *position)
 		ste->position (op.x, 0, op.z);
 		ste->position (dp.x, 0, dp.z);
 		ste->end();
+
+
+		//arrow
+		Ogre::Entity *arrow;
+		std::string x = linknamear;
+		x.append("entity");
+		try {
+			arrow = mSceneMgr->getEntity (x);
+		}catch(Ogre::Exception ex){
+			arrow = mSceneMgr->createEntity(x,"cone.mesh");
+			arrow->setMaterialName ("VisuApp/MPI_RECV");
+		}
+		//scene node for the arrow
+		Ogre::SceneNode *arrowsn;
+		try{
+			arrowsn = mSceneMgr->getSceneNode (linknamear);
+			if (!arrowsn->isInSceneGraph()){
+				glsn->addChild (arrowsn);
+			}
+		}catch (Ogre::Exception ex){
+			arrowsn = glsn->createChildSceneNode (linknamear);
+		}
+		try{
+			arrowsn->attachObject (arrow);
+		}catch(Ogre::Exception ex){
+			//was already attached
+		}
+		arrowsn->setScale (5,5,5);
+		arrowsn->setPosition (dp.x, 2, dp.z);
+
+		arrowsn->resetOrientation();
+		Ogre::Vector3 src = arrowsn->getOrientation() *
+						Ogre::Vector3::UNIT_Y;
+		Ogre::Quaternion quat = src.getRotationTo (dp-op);
+		arrowsn->rotate (quat);
 
 		try {
 			glsn->attachObject (ste);
