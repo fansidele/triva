@@ -219,6 +219,9 @@ void DrawManager::applicationGraphDrawLines (Position *position)
 		op = headnode->getWorldPosition();
 		dp = tailnode->getWorldPosition();
 #endif
+		op.y = dp.y = 0;
+		Ogre::Vector3 dif = (dp - op) * .10; //10% of difference
+		dp = dp - dif;
 
 		//drawing the line
 		ste->clear ();
