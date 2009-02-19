@@ -18,6 +18,12 @@ void CameraManager::createCamera (Ogre::Vector3 position, Ogre::Vector3 directio
 	mDirection = Ogre::Vector3::ZERO;
 
 	movingCamera = false;
+
+	//creating a light attached to the camera's scenenode
+	Ogre::Light *light;
+	light = mSceneMgr->createLight("CameraLight");
+	light->setType(Ogre::Light::LT_POINT);
+	camNode->attachObject(light);
 }
 
 void CameraManager::moveCamera ()
