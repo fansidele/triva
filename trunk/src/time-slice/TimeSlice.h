@@ -60,7 +60,7 @@
  * applies to this structure the time slice algorithm, through the timeSliceAt
  * method.
  */
-- (Treemap *) pajeHierarchy: (id) instance parent:(Treemap *) parent;
+- (Treemap *) createInstanceHierarchy: (id) instance parent:(Treemap *) parent;
 
 /**
  * Internal method to limit the treemap to a certain depth. Its

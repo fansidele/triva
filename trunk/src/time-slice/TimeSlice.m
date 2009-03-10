@@ -137,7 +137,7 @@
 	}
 }
 
-- (Treemap *) pajeHierarchy: (id) instance parent:(Treemap *) parent
+- (Treemap *) createInstanceHierarchy: (id) instance parent:(Treemap *) parent
 {
 	Treemap *node = [[Treemap alloc] init];
 	PajeEntityType *et = [self entityTypeForEntity: instance];
@@ -161,7 +161,8 @@
 						    inContainer:instance];
 			while ((sub = [en2 nextObject]) != nil) {
 				Treemap *child;
-				child = [self pajeHierarchy:sub parent: node];
+				child = [self createInstanceHierarchy: sub
+							parent: node];
 				
 				if ([[child children] count] == 1){
 					[node addChild:
@@ -184,7 +185,8 @@
 	if (treemap != nil){
 		[treemap release];
 	}
-	treemap = [self pajeHierarchy: [self rootInstance] parent: nil];
+	treemap = [self createInstanceHierarchy: [self rootInstance]
+				parent: nil];
 	[treemap retain];
 }
 
