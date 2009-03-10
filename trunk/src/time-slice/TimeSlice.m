@@ -236,6 +236,11 @@
 	return ret;
 }
 
+
+/**
+ * Internal method used by limitTree. Obtain all children of a certain
+ * node putting them into a new array.
+ */
 - (NSMutableArray *) findAllLeaves: (Treemap *) tree
 {
 	NSMutableArray *ret = [NSMutableArray new];
@@ -253,6 +258,10 @@
 	return ret;
 }
 
+/**
+ * Internal method used by limitTree. This method implements the aggregating
+ * algorithm by summarizing the values of the tree nodes listed in the array.
+ */
 - (NSMutableArray *) summarizeLeaves: (NSArray *) all
 {
 	/* creating dictionary: key is name, value is value */
