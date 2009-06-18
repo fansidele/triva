@@ -53,6 +53,7 @@ void DrawManager::resourcesGraphDraw (TrivaResourcesGraph *graph)
 				Ogre::SceneManager::PT_CUBE);
 			e->setMaterialName ("VisuApp/MPI_SEND");
 		}
+		/* TODO: next function probably causes memory leak */
 		Ogre::SceneNode *n2 = n1->createChildSceneNode();
 		n2->attachObject (e);
 		n2->setInheritScale (false);
