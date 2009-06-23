@@ -1,0 +1,10 @@
+Capitulo  |   Terminado  |  Navaux   |   Guillaume
+
+1 - intro
+2 - relat        x             x             x
+3 - probl        x             x             x
+4 - 3dime        x             x
+5 - aggre        x
+6 - triva        x
+7 - resul
+8 - concl
