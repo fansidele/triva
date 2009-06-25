@@ -70,4 +70,31 @@
 {
 	[children removeAllObjects];
 }
+
+- (int) maxDepth
+{
+        if ([children count] == 0){
+                return depth;
+        }
+
+        int max = 0;
+        int i;
+        for (i = 0; i < [children count]; i++){
+                int d = [[children objectAtIndex: i] maxDepth];
+                if (d > max){
+                        max = d;
+                }
+        }
+        return max;
+}
+
+- (int) depth
+{
+        return depth;
+}
+
+- (void) setDepth: (int) d
+{
+        depth = d;
+}
 @end

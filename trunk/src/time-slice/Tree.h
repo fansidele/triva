@@ -8,7 +8,12 @@
 	NSString *name;
 	Tree *parent;
 	NSMutableArray *children;
+	int depth;
 }
+- (int) depth;
+- (void) setDepth: (int) d;
+- (int) maxDepth;
+
 - (NSString *) name;
 - (NSArray *) children;
 - (Tree *) parent;
