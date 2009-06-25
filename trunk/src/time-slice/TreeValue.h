@@ -11,6 +11,7 @@
 - (float) setValue: (float) v;
 - (float) addValue: (float) v;
 - (float) subtractValue: (float) v;
+- (NSComparisonResult) compareValue: (TreeValue *) other;
 
 - (void) recursiveResetValues;
 - (void) recalculateValuesBottomUp;

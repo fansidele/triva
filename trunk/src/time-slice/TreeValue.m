@@ -13,6 +13,17 @@
 	return value;
 }
 
+- (NSComparisonResult) compareValue: (TreeValue *) other
+{
+	if (value < [other val]){
+		return NSOrderedAscending;
+	}else if (value > [other val]){
+		return NSOrderedDescending;
+	}else{
+		return NSOrderedSame;
+	}
+}
+
 - (float) setValue: (float) v
 {
 	value = v;
@@ -66,5 +77,10 @@
 {
 	[self recursiveResetValues];
 	[self recalculateValuesBottomUp];
+}
+
+- (NSString *) description
+{
+	return [NSString stringWithFormat: @"%f", value];
 }
 @end
