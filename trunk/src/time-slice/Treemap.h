@@ -44,6 +44,9 @@
                 andFactor: (double) factor;
 - (void) calculateTreemapRecursiveWithFactor: (double) factor;
 - (void) calculateTreemapWithWidth: (float) w andHeight: (float) h;
+
+/* search-based methods */
+- (Treemap *) searchWithX: (long) x andY: (long) y;
 @end
 
 #endif
