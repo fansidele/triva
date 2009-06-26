@@ -82,7 +82,6 @@ void Triva2DFrame::updateTreemap()
 	wxCoord w, h;
 	dc.GetSize(&w, &h);
         
-	TimeSlice *filter = controller->getTimeSlice();
 	if (current != nil){
 		[current release];
 	}
@@ -112,7 +111,6 @@ void Triva2DFrame::updateTimeline()
 	dc.DrawLine (w-TL_BORDER, h-7, w-TL_BORDER, h-3);
 
 	/* drawing the max and min time */
-	TimeSlice *filter = controller->getTimeSlice();
 	NSString *start = [[filter startTime] description];
 	NSString *end = [[filter endTime] description];
 	dc.DrawText (NSSTRINGtoWXSTRING(start), TL_BORDER, h-29);
@@ -178,9 +176,7 @@ void Triva2DFrame::updateDetail ()
 
 void Triva2DFrame::Update()
 {
-	if (filter == nil){
-		filter = controller->getTimeSlice();
-	}
+	filter = controller->getTimeSlice();
 
 	if (state == TreemapState){
 		this->updateTreemap();
@@ -329,24 +325,48 @@ void Triva2DFrame::OnPaint(wxPaintEvent& evt)
 
 void Triva2DFrame::drawTreemap (id treemap, wxDC &dc)
 {
+	/* do not consider the part of the three with value 0 */
 	if ([treemap val] == 0){
 		return;
 	}
 
+	/* only draw leaf-nodes */
+	if ([[treemap children] count] != 0) {
+		/* recurse */	
+		unsigned int i;
+		for (i = 0; i < [[treemap children] count]; i++){
+			this->drawTreemap ([[treemap children] objectAtIndex: i], dc);
+		}
+		return;
+	}
+
+	/* get x,y,w,h from the treemap node */
 	float x, y, w, h;
 	x = [[treemap rect] x];
 	y = [[treemap rect] y];
 	w = [[treemap rect] width];
 	h = [[treemap rect] height];
 
+	/* draw the rectangle */
+	wxPoint points[5];
+	points[0] = wxPoint (x,y);
+	points[1] = wxPoint (x+w, y);
+	points[2] = wxPoint (x+w, y+h);
+	points[3] = wxPoint (x, y+h);
+	points[4] = wxPoint (x,y);
+
+	/* try to find a color already used by the paje filters */
 	wxColour color;
-	wxColour white = (wxT("#FFFFFF"));
-	dc.SetBrush (wxBrush (white));
 	if (filter && ![filter isContainerEntityType: 
-			[[treemap pajeEntity] entityType]]) {
+			(PajeEntityType *)[[treemap pajeEntity] entityType]]) {
 		NSColor *c = [filter colorForValue: [treemap name]
-			ofEntityType: [[treemap pajeEntity] entityType]];
+			ofEntityType: (PajeEntityType *)[[treemap pajeEntity] entityType]];
 		if (c != nil){
+			float red, green, blue, alpha;
+			c = [c colorUsingColorSpaceName:
+				@"NSCalibratedRGBColorSpace"];
+			[c getRed: &red green: &green
+				blue: &blue alpha: &alpha];
 			if ([[c colorSpaceName] isEqualToString:
 					@"NSCalibratedRGBColorSpace"]){
 				float red, green, blue, alpha;
@@ -357,58 +377,17 @@ void Triva2DFrame::drawTreemap (id treemap, wxDC &dc)
 				unsigned char b = (unsigned char)(blue*255);
 				unsigned char a = (unsigned char)(alpha*255);
 				color = wxColour (r,g,b,a);
-				dc.SetBrush (wxBrush(color));
 			}
 		}
+	}else{
+		/* fallback to white color */
+		color = wxColour (wxT("#FFFFFF"));	
 	}
-	wxRect rect (x, y, w, h);
-
-	if ([[treemap children] count] == 0) {
-		wxColour white = (wxT("#FFFFFF"));
-		if (w > h){
-			dc.GradientFillLinear (rect, white, color, wxNORTH);
-		}else{
-			dc.GradientFillLinear (rect, white, color, wxEAST);
-		}
-	}
-
-//	dc.SetPen (wxPen(white, 0, wxSOLID));
-//   	dc.DrawRectangle (x, y, w, h);
-
-	wxPoint points[5];
-	points[0] = wxPoint (x,y);
-	points[1] = wxPoint (x+w, y);
-	points[2] = wxPoint (x+w, y+h);
-	points[3] = wxPoint (x, y+h);
-	points[4] = wxPoint (x,y);
-
-     
-     	wxCoord w1, h1;
-     	dc.GetTextExtent (NSSTRINGtoWXSTRING([treemap name]), &w1, &h1);
-     	if (w1 < w-5 && h1 < h-5){
-     		dc.DrawText (NSSTRINGtoWXSTRING([treemap name]), x+5, y+5);
-	}
-
-	
-	if ([[treemap children] count] == 0)
-		return;
-
-	int depth = [treemap depth];
-	if ((int)depth == (int)maxDepthToDraw+1){
-		return;
-	}
-	
-	unsigned int i;
-	for (i = 0; i < [[treemap children] count]; i++){
-		this->drawTreemap ([[treemap children] objectAtIndex: i], dc);
-	}
-
-	/* after drawing everything */
-	if (depth < maxDepthToDraw-1){
-		color = wxColour (wxT("#000000"));	
-		dc.SetPen(wxPen(color, (maxDepthToDraw-depth), wxSOLID));
-		dc.DrawLines (5, points);
-	}
+	/* draw a rectangle with the color found and a gray outline */
+	dc.SetBrush (color);
+	wxColour grayColor = wxColour (wxT("#c0c0c0"));
+	dc.SetPen(wxPen(grayColor, 1, wxSOLID));
+	dc.DrawPolygon (5, points);
 }
 
 Treemap *Triva2DFrame::searchNodeAt (int x, int y, Treemap *node)
