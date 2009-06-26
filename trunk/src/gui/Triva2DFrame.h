@@ -73,7 +73,7 @@ private:
    void highlightTreemapNode (long x, long y);
    void unhighlightTreemapNode (wxDC &dc);
    void drawHighlightTreemapNode (Treemap *node, wxDC &dc);
-   void drawTreemapNode (Treemap *node, wxBrush &brush,
+   void drawTreemapNode (Treemap *node, int offset, wxBrush &brush,
 			wxColour &color, wxDC &dc);
 };
 

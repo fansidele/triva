@@ -382,7 +382,7 @@ void Triva2DFrame::drawTreemap (id treemap, wxDC &dc)
 	dc.SetBrush (color);
 	wxBrush brush (color, wxSOLID);
 	wxColour grayColor = wxColour (wxT("#c0c0c0"));
-	this->drawTreemapNode ((Treemap *)treemap, brush, grayColor, dc);
+	this->drawTreemapNode ((Treemap *)treemap, 0, brush, grayColor, dc);
 }
 
 void Triva2DFrame::searchAndShowDescriptionAt (long x, long y)
@@ -412,18 +412,24 @@ void Triva2DFrame::drawHighlightTreemapNode (Treemap *node, wxDC &dc)
 {
 	wxColour color (wxT("#000000"));
 	wxBrush brush (color, wxTRANSPARENT);
-	this->drawTreemapNode (node, brush, color, dc);
+	this->drawTreemapNode (node, 1, brush, color, dc);
+
+	Treemap *parent = (Treemap *)[node parent];
+	this->drawTreemapNode (parent, 0, brush, color, dc);
 }
 
 void Triva2DFrame::unhighlightTreemapNode (wxDC &dc)
 {
-	wxColour color (wxT("#000000"));
-	wxBrush brush (color, wxTRANSPARENT);
+	wxColour color (wxT("#FFFFFF"));
+	wxBrush brush (color, wxSOLID);
 	wxColour grayColor = wxColour (wxT("#c0c0c0"));
-	this->drawTreemapNode (highlighted, brush, grayColor, dc);
+	Treemap *parent = (Treemap *)[highlighted parent];
+	this->drawTreemapNode (parent, 0, brush, grayColor, dc);
+	this->drawTreemapNode (highlighted, 0, brush, grayColor, dc);
+
 }
 
-void Triva2DFrame::drawTreemapNode (Treemap *node,
+void Triva2DFrame::drawTreemapNode (Treemap *node, int offset,
 			wxBrush &brush, wxColour &color,
 			wxDC &dc)
 {
@@ -440,11 +446,11 @@ void Triva2DFrame::drawTreemapNode (Treemap *node,
 
 	/* highlight the treemap node */
 	wxPoint points[5];
-	points[0] = wxPoint (x,y);
-	points[1] = wxPoint (x+w, y);
-	points[2] = wxPoint (x+w, y+h);
-	points[3] = wxPoint (x, y+h);
-	points[4] = wxPoint (x,y);
+	points[0] = wxPoint (x+offset,y+offset);
+	points[1] = wxPoint (x+w-offset, y+offset);
+	points[2] = wxPoint (x+w-offset, y+h-offset);
+	points[3] = wxPoint (x+offset, y+h-offset);
+	points[4] = wxPoint (x+offset,y+offset);
 
 	/* draw a rectangle with the color found and a gray outline */
 	dc.SetBrush (brush);
