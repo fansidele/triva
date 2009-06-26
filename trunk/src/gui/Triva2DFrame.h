@@ -32,8 +32,6 @@ private:
 
 	Treemap *current;
 
-	Treemap *searchNodeAt (int x, int y, Treemap *node);
-
 	long detailx, detaily;
 	NSString *detailDescription;
 	void searchAndShowDescriptionAt (long x, long y);
@@ -71,6 +69,7 @@ protected:
 
 private:
    void drawTreemap (id treemap, wxDC &dc);
+   void highlightTreemapNode (long x, long y);
 };
 
 #endif   // __TRIVA2DFRAME_H__ 

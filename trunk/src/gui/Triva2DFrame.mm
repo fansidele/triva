@@ -78,7 +78,7 @@ void Triva2DFrame::updateTreemap()
 {
 	wxPaintDC dc(this);
 	dc.Clear();
-        
+
 	wxCoord w, h;
 	dc.GetSize(&w, &h);
         
@@ -89,6 +89,8 @@ void Triva2DFrame::updateTreemap()
 				 andHeight: h
 				  andDepth: maxDepthToDraw];
 	[current retain];
+
+        
 	this->drawTreemap ((id)current, dc);
 }
 
@@ -176,7 +178,13 @@ void Triva2DFrame::updateDetail ()
 
 void Triva2DFrame::Update()
 {
+	bool firsttime = false;
 	filter = controller->getTimeSlice();
+	if (!firsttime){
+		[filter setSliceStartTime: [filter startTime]];
+		[filter setSliceEndTime: [filter endTime]];
+		firsttime = true;
+	}
 
 	if (state == TreemapState){
 		this->updateTreemap();
@@ -196,6 +204,8 @@ void Triva2DFrame::OnSize(wxSizeEvent& evt)
 void Triva2DFrame::OnMouseEvent(wxMouseEvent& evt)
 {
 	static int xant;
+
+	this->highlightTreemapNode (evt.GetX(), evt.GetY());
 
 	this->SetFocus();
 	if (state == TreemapState){
@@ -390,44 +400,19 @@ void Triva2DFrame::drawTreemap (id treemap, wxDC &dc)
 	dc.DrawPolygon (5, points);
 }
 
-Treemap *Triva2DFrame::searchNodeAt (int x, int y, Treemap *node)
-{
-	if (node == nil){
-		return nil;
-	}
-	int depth = [node depth];
-	if (depth == maxDepthToDraw+1 || 
-		depth == [node maxDepth]){
-		float xr, yr, wr, hr;
-		xr = [[node rect] x];
-		yr = [[node rect] y];
-		wr = [[node rect] width];
-		hr = [[node rect] height];
-	
-		if (x >= xr && x <= (xr+wr) &&
-			y >= yr && y <= (yr+hr)){
-			return node;
-		}
-	}else{
-		unsigned int i;
-		for (i = 0; i < [[node children] count]; i++){
-			Treemap *child, *ret;
-			child = [[node children] objectAtIndex: i];
-			ret = this->searchNodeAt (x, y, child);
-			if (ret != nil){
-				return ret;
-			}
-		}
-	}
-	return nil;
-}
-
 void Triva2DFrame::searchAndShowDescriptionAt (long x, long y)
 {
 	if (filter){
-		Treemap *node = this->searchNodeAt (x, y, current);
+		Treemap *node = [current searchWithX: x andY: y];
 		detailDescription = [filter descriptionForNode: node];
 		detailx = x; 
 		detaily = y;
+	}
+}
+
+void Triva2DFrame::highlightTreemapNode (long x, long y)
+{
+	if (current){
+		Treemap *highlighted = [current searchWithX: x andY: y];
 	}
 }
