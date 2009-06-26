@@ -70,7 +70,7 @@ protected:
    virtual void OnPaint(wxPaintEvent& evt);
 
 private:
-   void drawTreemap (id treemap);
+   void drawTreemap (id treemap, wxDC &dc);
 };
 
 #endif   // __TRIVA2DFRAME_H__ 

@@ -90,7 +90,7 @@ void Triva2DFrame::updateTreemap()
 				 andHeight: h
 				  andDepth: maxDepthToDraw];
 	[current retain];
-	this->drawTreemap ((id)current);
+	this->drawTreemap ((id)current, dc);
 }
 
 void Triva2DFrame::updateTimeline()
@@ -327,10 +327,8 @@ void Triva2DFrame::OnPaint(wxPaintEvent& evt)
    Update();
 }
 
-void Triva2DFrame::drawTreemap (id treemap)
+void Triva2DFrame::drawTreemap (id treemap, wxDC &dc)
 {
-	wxPaintDC dc(this);
-
 	if ([treemap val] == 0){
 		return;
 	}
@@ -402,7 +400,7 @@ void Triva2DFrame::drawTreemap (id treemap)
 	
 	unsigned int i;
 	for (i = 0; i < [[treemap children] count]; i++){
-		this->drawTreemap ([[treemap children] objectAtIndex: i]);
+		this->drawTreemap ([[treemap children] objectAtIndex: i], dc);
 	}
 
 	/* after drawing everything */
