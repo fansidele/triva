@@ -3,36 +3,47 @@
 #include <Foundation/Foundation.h>
 #include "TreeValue.h"
 
-@interface Treemap : TreeValue 
+@interface TreemapRect : NSObject
 {
-	float width, height;
-	float x, y;
-	int depth;
-
-	id pajeEntity; /* the paje entity connected to this node */
+        float width;
+        float height;
+        float x;
+        float y;
 }
 - (float) width;
 - (float) height;
 - (float) x;
 - (float) y;
-- (int) depth;
-
 - (void) setWidth: (float) w;
 - (void) setHeight: (float) h;
-- (void) setX: (float) xp;
-- (void) setY: (float) yp;
-- (void) setDepth: (int) d;
+- (void) setX: (float) xis;
+- (void) setY: (float) ipslon;
+@end
 
-- (void) calculateWithWidth: (float) w andHeight: (float) h;
-- (void) calculateWithWidth: (float) W
-              height: (float) H
-              factor: (float) factor
-                depth: (int) d;
+@interface Treemap : TreeValue 
+{
+	TreemapRect *rect;
 
-- (int) maxDepth;
-
+	id pajeEntity; /* the paje entity connected to this node */
+}
+- (TreemapRect *) rect;
+- (void) setRect: (TreemapRect *)r;
 - (void) setPajeEntity: (id) entity;
 - (id) pajeEntity;
+
+/* squarified treemap methods */
+- (double) worstf: (NSArray *) list
+                withSmallerSize: (double) w
+                withFactor: (double) factor;
+- (TreemapRect *)layoutRow: (NSArray *) row
+                withSmallerSize: (double) w
+                withinRectangle: (TreemapRect *) r
+                withFactor: (double) factor;
+- (void) squarifyWithOrderedChildren: (NSMutableArray *) list
+                andSmallerSize: (double) w
+                andFactor: (double) factor;
+- (void) calculateTreemapRecursiveWithFactor: (double) factor;
+- (void) calculateTreemapWithWidth: (float) w andHeight: (float) h;
 @end
 
 #endif

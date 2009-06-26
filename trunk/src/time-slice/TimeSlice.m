@@ -204,7 +204,8 @@
 		return nil;
 	}else{
 		[self limitTreemap: treemap toDepth: depth]; 
-		[treemap calculateWithWidth: width andHeight: height];
+		[treemap recalculateValues];
+		[treemap calculateTreemapWithWidth: width andHeight: height];
 		return treemap;
 	}
 }
