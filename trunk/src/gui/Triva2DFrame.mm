@@ -336,10 +336,10 @@ void Triva2DFrame::drawTreemap (id treemap)
 	}
 
 	float x, y, w, h;
-	x = [treemap x];
-	y = [treemap y];
-	w = [treemap width];
-	h = [treemap height];
+	x = [[treemap rect] x];
+	y = [[treemap rect] y];
+	w = [[treemap rect] width];
+	h = [[treemap rect] height];
 
 	wxColour color;
 	wxColour white = (wxT("#FFFFFF"));
@@ -422,10 +422,10 @@ Treemap *Triva2DFrame::searchNodeAt (int x, int y, Treemap *node)
 	if (depth == maxDepthToDraw+1 || 
 		depth == [node maxDepth]){
 		float xr, yr, wr, hr;
-		xr = [node x];
-		yr = [node y];
-		wr = [node width];
-		hr = [node height];
+		xr = [[node rect] x];
+		yr = [[node rect] y];
+		wr = [[node rect] width];
+		hr = [[node rect] height];
 	
 		if (x >= xr && x <= (xr+wr) &&
 			y >= yr && y <= (yr+hr)){
