@@ -350,21 +350,6 @@ void Triva2DFrame::drawTreemap (id treemap, wxDC &dc)
 		return;
 	}
 
-	/* get x,y,w,h from the treemap node */
-	float x, y, w, h;
-	x = [[treemap rect] x];
-	y = [[treemap rect] y];
-	w = [[treemap rect] width];
-	h = [[treemap rect] height];
-
-	/* draw the rectangle */
-	wxPoint points[5];
-	points[0] = wxPoint (x,y);
-	points[1] = wxPoint (x+w, y);
-	points[2] = wxPoint (x+w, y+h);
-	points[3] = wxPoint (x, y+h);
-	points[4] = wxPoint (x,y);
-
 	/* try to find a color already used by the paje filters */
 	wxColour color;
 	if (filter && ![filter isContainerEntityType: 
@@ -395,9 +380,9 @@ void Triva2DFrame::drawTreemap (id treemap, wxDC &dc)
 	}
 	/* draw a rectangle with the color found and a gray outline */
 	dc.SetBrush (color);
+	wxBrush brush (color, wxSOLID);
 	wxColour grayColor = wxColour (wxT("#c0c0c0"));
-	dc.SetPen(wxPen(grayColor, 1, wxSOLID));
-	dc.DrawPolygon (5, points);
+	this->drawTreemapNode ((Treemap *)treemap, brush, grayColor, dc);
 }
 
 void Triva2DFrame::searchAndShowDescriptionAt (long x, long y)
@@ -413,6 +398,56 @@ void Triva2DFrame::searchAndShowDescriptionAt (long x, long y)
 void Triva2DFrame::highlightTreemapNode (long x, long y)
 {
 	if (current){
-		Treemap *highlighted = [current searchWithX: x andY: y];
+		Treemap *node = [current searchWithX: x andY: y];
+		if (node != highlighted){
+			wxPaintDC dc(this);
+			this->unhighlightTreemapNode(dc);
+			this->drawHighlightTreemapNode (node, dc);
+			highlighted = node;
+		}
 	}
+}
+
+void Triva2DFrame::drawHighlightTreemapNode (Treemap *node, wxDC &dc)
+{
+	wxColour color (wxT("#000000"));
+	wxBrush brush (color, wxTRANSPARENT);
+	this->drawTreemapNode (node, brush, color, dc);
+}
+
+void Triva2DFrame::unhighlightTreemapNode (wxDC &dc)
+{
+	wxColour color (wxT("#000000"));
+	wxBrush brush (color, wxTRANSPARENT);
+	wxColour grayColor = wxColour (wxT("#c0c0c0"));
+	this->drawTreemapNode (highlighted, brush, grayColor, dc);
+}
+
+void Triva2DFrame::drawTreemapNode (Treemap *node,
+			wxBrush &brush, wxColour &color,
+			wxDC &dc)
+{
+	if (node == nil){
+		return;
+	}
+
+	/* get x,y,w,h from the treemap node */
+	float x, y, w, h;
+	x = [[node rect] x];
+	y = [[node rect] y];
+	w = [[node rect] width];
+	h = [[node rect] height];
+
+	/* highlight the treemap node */
+	wxPoint points[5];
+	points[0] = wxPoint (x,y);
+	points[1] = wxPoint (x+w, y);
+	points[2] = wxPoint (x+w, y+h);
+	points[3] = wxPoint (x, y+h);
+	points[4] = wxPoint (x,y);
+
+	/* draw a rectangle with the color found and a gray outline */
+	dc.SetBrush (brush);
+	dc.SetPen(wxPen(color, 1, wxSOLID));
+	dc.DrawPolygon (5, points);
 }

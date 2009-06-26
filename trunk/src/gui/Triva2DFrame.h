@@ -31,6 +31,7 @@ private:
 	void updateDetail();
 
 	Treemap *current;
+	Treemap *highlighted;
 
 	long detailx, detaily;
 	NSString *detailDescription;
@@ -70,6 +71,10 @@ protected:
 private:
    void drawTreemap (id treemap, wxDC &dc);
    void highlightTreemapNode (long x, long y);
+   void unhighlightTreemapNode (wxDC &dc);
+   void drawHighlightTreemapNode (Treemap *node, wxDC &dc);
+   void drawTreemapNode (Treemap *node, wxBrush &brush,
+			wxColour &color, wxDC &dc);
 };
 
 #endif   // __TRIVA2DFRAME_H__ 
