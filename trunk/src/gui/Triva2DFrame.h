@@ -75,6 +75,7 @@ private:
    void drawHighlightTreemapNode (Treemap *node, wxDC &dc);
    void drawTreemapNode (Treemap *node, int offset, wxBrush &brush,
 			wxColour &color, wxDC &dc);
+   wxColour findColorForNode (Treemap *node);
 };
 
 #endif   // __TRIVA2DFRAME_H__ 

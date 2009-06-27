@@ -352,33 +352,8 @@ void Triva2DFrame::drawTreemap (id treemap, wxDC &dc)
 	}
 
 	/* try to find a color already used by the paje filters */
-	wxColour color;
-	if (filter && ![filter isContainerEntityType: 
-			(PajeEntityType *)[[treemap pajeEntity] entityType]]) {
-		NSColor *c = [filter colorForValue: [treemap name]
-			ofEntityType: (PajeEntityType *)[[treemap pajeEntity] entityType]];
-		if (c != nil){
-			float red, green, blue, alpha;
-			c = [c colorUsingColorSpaceName:
-				@"NSCalibratedRGBColorSpace"];
-			[c getRed: &red green: &green
-				blue: &blue alpha: &alpha];
-			if ([[c colorSpaceName] isEqualToString:
-					@"NSCalibratedRGBColorSpace"]){
-				float red, green, blue, alpha;
-				[c getRed: &red green: &green
-					blue: &blue alpha: &alpha];
-				unsigned char r = (unsigned char)(red*255);
-				unsigned char g = (unsigned char)(green*255);
-				unsigned char b = (unsigned char)(blue*255);
-				unsigned char a = (unsigned char)(alpha*255);
-				color = wxColour (r,g,b,a);
-			}
-		}
-	}else{
-		/* fallback to white color */
-		color = wxColour (wxT("#FFFFFF"));	
-	}
+	wxColour color = findColorForNode ((Treemap *)treemap);
+
 	/* draw a rectangle with the color found and a gray outline */
 	dc.SetBrush (color);
 	wxBrush brush (color, wxSOLID);
@@ -411,12 +386,15 @@ void Triva2DFrame::highlightTreemapNode (long x, long y)
 
 void Triva2DFrame::drawHighlightTreemapNode (Treemap *node, wxDC &dc)
 {
-	wxColour color (wxT("#000000"));
+	wxColour blackColor = wxColour (wxT("#000000"));
+	wxColour color = findColorForNode (node);
 	wxBrush brush (color, wxTRANSPARENT);
-	this->drawTreemapNode (node, 1, brush, color, dc);
+	this->drawTreemapNode (node, 1, brush, blackColor, dc);
 
 	Treemap *parent = (Treemap *)[node parent];
-	this->drawTreemapNode (parent, 0, brush, color, dc);
+	color = findColorForNode (parent);
+	brush = wxBrush (color, wxTRANSPARENT);
+	this->drawTreemapNode (parent, 0, brush, blackColor, dc);
 
 	NSMutableString *message;
 	message = [NSMutableString stringWithFormat: @"%.3f - %@",
@@ -431,11 +409,15 @@ void Triva2DFrame::drawHighlightTreemapNode (Treemap *node, wxDC &dc)
 
 void Triva2DFrame::unhighlightTreemapNode (wxDC &dc)
 {
-	wxColour color (wxT("#FFFFFF"));
-	wxBrush brush (color, wxSOLID);
 	wxColour grayColor = wxColour (wxT("#c0c0c0"));
-	Treemap *parent = (Treemap *)[highlighted parent];
+
+	Treemap *parent = [highlighted parent];
+	wxColour color = findColorForNode (parent);
+	wxBrush brush (color, wxTRANSPARENT);
 	this->drawTreemapNode (parent, 0, brush, grayColor, dc);
+
+	color = findColorForNode (highlighted);
+	brush = wxBrush (color, wxSOLID);
 	this->drawTreemapNode (highlighted, 0, brush, grayColor, dc);
 
 }
@@ -467,4 +449,36 @@ void Triva2DFrame::drawTreemapNode (Treemap *node, int offset,
 	dc.SetBrush (brush);
 	dc.SetPen(wxPen(color, 1, wxSOLID));
 	dc.DrawPolygon (5, points);
+}
+
+wxColour Triva2DFrame::findColorForNode (Treemap *treemap)
+{
+	wxColour color;
+	if (filter && ![filter isContainerEntityType: 
+			(PajeEntityType *)[[treemap pajeEntity] entityType]]) {
+		NSColor *c = [filter colorForValue: [treemap name]
+			ofEntityType: (PajeEntityType *)[[treemap pajeEntity] entityType]];
+		if (c != nil){
+			float red, green, blue, alpha;
+			c = [c colorUsingColorSpaceName:
+				@"NSCalibratedRGBColorSpace"];
+			[c getRed: &red green: &green
+				blue: &blue alpha: &alpha];
+			if ([[c colorSpaceName] isEqualToString:
+					@"NSCalibratedRGBColorSpace"]){
+				float red, green, blue, alpha;
+				[c getRed: &red green: &green
+					blue: &blue alpha: &alpha];
+				unsigned char r = (unsigned char)(red*255);
+				unsigned char g = (unsigned char)(green*255);
+				unsigned char b = (unsigned char)(blue*255);
+				unsigned char a = (unsigned char)(alpha*255);
+				color = wxColour (r,g,b,a);
+			}
+		}
+	}else{
+		/* fallback to white color */
+		color = wxColour (wxT("#FFFFFF"));	
+	}
+	return color;
 }
