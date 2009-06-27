@@ -162,16 +162,28 @@
 
 - (void) calculateTreemapRecursiveWithFactor: (double) factor
 {
-	/* make descending order of children by value */
+	/* make ascending order of children by value */
 	NSMutableArray *sortedCopy = [NSMutableArray array];
 	[sortedCopy addObjectsFromArray: 
 		[children sortedArrayUsingSelector: @selector(compareValue:)]];
+
+	/* remove children with value equal to zero */
+	int i;
+	for (i = 0; i < [sortedCopy count]; i++){
+		if ([[sortedCopy objectAtIndex: i] val] != 0){
+			break;
+		}
+	}
+	NSRange range;
+	range.location = 0;
+	range.length = i;
+	[sortedCopy removeObjectsInRange: range];
 	
 	/* calculate the smaller size */
 	double w = [rect width] < [rect height] ? [rect width] : [rect height];
 
 	/* call my squarified method with:
-		- the list of children
+		- the list of children with values dif from zero
 		- the smaller size
 		- the copy of my rect
 		- and factor */
@@ -179,7 +191,6 @@
 			andSmallerSize: w
 			andFactor: factor];
 
-	int i;
 	for (i = 0; i < [children count]; i++){
 		[[children objectAtIndex: i]
 			calculateTreemapRecursiveWithFactor: factor];
