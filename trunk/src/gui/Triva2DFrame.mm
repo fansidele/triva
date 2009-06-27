@@ -417,6 +417,16 @@ void Triva2DFrame::drawHighlightTreemapNode (Treemap *node, wxDC &dc)
 
 	Treemap *parent = (Treemap *)[node parent];
 	this->drawTreemapNode (parent, 0, brush, color, dc);
+
+	NSMutableString *message;
+	message = [NSMutableString stringWithFormat: @"%.3f - %@",
+				[node val], [node name]];
+	while (parent){
+		[message appendString: [NSString stringWithFormat: @" - %@",
+			[parent name]]];
+		parent = (Treemap *)[parent parent];
+	}
+	controller->setStatusMessage (NSSTRINGtoWXSTRING(message));
 }
 
 void Triva2DFrame::unhighlightTreemapNode (wxDC &dc)
