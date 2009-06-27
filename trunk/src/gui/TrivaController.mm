@@ -320,3 +320,8 @@ void TrivaController::openPajeTraceFile (wxString path)
 	this->setState (Configured);
 	this->setState (Running);
 }
+
+void TrivaController::setStatusMessage (wxString message)
+{
+	statusBar->SetStatusText (message);
+}
