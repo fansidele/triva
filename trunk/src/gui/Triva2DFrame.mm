@@ -221,6 +221,7 @@ void Triva2DFrame::OnMouseEvent(wxMouseEvent& evt)
 					maxDepthToDraw--;
 				}
 			}
+			highlighted = nil;
 			Update();
 		}
 		/* conditionaly moving to Time state */
