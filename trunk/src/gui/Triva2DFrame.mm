@@ -340,10 +340,18 @@ void Triva2DFrame::drawHighlightTreemapNode (Treemap *node, wxDC &dc)
 	this->drawTreemapNode (node, 1, brush, blackColor, dc);
 
 	Treemap *parent = (Treemap *)[node parent];
-	color = findColorForNode (parent);
-	brush = wxBrush (color, wxTRANSPARENT);
-	this->drawTreemapNode (parent, 0, brush, blackColor, dc);
+	while (parent){
+		color = findColorForNode (parent);
+		brush = wxBrush (color, wxTRANSPARENT);
+		this->drawTreemapNode (parent, 0, brush, blackColor, dc);
+		if ([parent parent] == nil){
+			break;
+		}else{
+			parent = (Treemap *)[parent parent];
+		}
+	}
 
+	/* setting message in the status bar */
 	NSMutableString *message;
 	message = [NSMutableString stringWithFormat: @"%.3f - %@",
 				[node val], [node name]];
@@ -358,11 +366,20 @@ void Triva2DFrame::drawHighlightTreemapNode (Treemap *node, wxDC &dc)
 void Triva2DFrame::unhighlightTreemapNode (wxDC &dc)
 {
 	wxColour grayColor = wxColour (wxT("#c0c0c0"));
+	wxColour color;
+	wxBrush brush;
 
 	Treemap *parent = (Treemap *)[highlighted parent];
-	wxColour color = findColorForNode (parent);
-	wxBrush brush (color, wxTRANSPARENT);
-	this->drawTreemapNode (parent, 0, brush, grayColor, dc);
+	while (parent){
+		color = findColorForNode (parent);
+		brush = wxBrush (color, wxTRANSPARENT);
+		this->drawTreemapNode (parent, 0, brush, grayColor, dc);
+		if ([parent parent] == nil){
+			break;
+		}else{
+			parent = (Treemap *)[parent parent];
+		}
+	}
 
 	color = findColorForNode (highlighted);
 	brush = wxBrush (color, wxSOLID);
