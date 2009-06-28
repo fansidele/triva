@@ -81,6 +81,6 @@
 
 - (NSString *) description
 {
-	return [NSString stringWithFormat: @"%f", value];
+	return [NSString stringWithFormat: @"%@ %f", name, value];
 }
 @end
