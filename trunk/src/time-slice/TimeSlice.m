@@ -91,6 +91,7 @@
 					[empty setValue: x];
 					[empty setPajeEntity: nil];
 					[node addChild: empty];
+					[empty release];
 				}else{
 					double x = [empty val];
 					x -= duration;
@@ -108,6 +109,7 @@
 							one entity to the same
 							treemap node. we take
 							just the first one. */
+			[entity release];
 
 			if (fillWithEmptyNodes){
 				/* updating empty value */
@@ -127,6 +129,7 @@
 					[empty setValue: x];
 					[empty setPajeEntity: nil];
 					[node addChild: empty];
+					[empty release];
 				}else{
 					double x = [empty val];
 					x -= duration;
