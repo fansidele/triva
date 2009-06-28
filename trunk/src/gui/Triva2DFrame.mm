@@ -336,7 +336,7 @@ void Triva2DFrame::drawTreemap (id treemap, wxDC &dc)
 
 void Triva2DFrame::highlightTreemapNode (long x, long y)
 {
-	if (current){
+	if (current && state == TreemapState){
 		Treemap *node = [current searchWithX: x andY: y];
 		if (node != highlighted){
 			wxPaintDC dc(this);
