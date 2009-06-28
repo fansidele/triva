@@ -339,26 +339,22 @@ void Triva2DFrame::drawHighlightTreemapNode (Treemap *node, wxDC &dc)
 	wxBrush brush (color, wxTRANSPARENT);
 	this->drawTreemapNode (node, 1, brush, blackColor, dc);
 
+	/* setting message in the status bar and drawing parents */
+	NSMutableString *message;
+	message = [NSMutableString stringWithFormat: @"%.3f - %@",
+				[node val], [node name]];
 	Treemap *parent = (Treemap *)[node parent];
 	while (parent){
 		color = findColorForNode (parent);
 		brush = wxBrush (color, wxTRANSPARENT);
 		this->drawTreemapNode (parent, 0, brush, blackColor, dc);
-		if ([parent parent] == nil){
+		[message appendString: [NSString stringWithFormat: @" - %@",
+			[parent name]]];
+		if ([[parent parent] depth] == 0){
 			break;
 		}else{
 			parent = (Treemap *)[parent parent];
 		}
-	}
-
-	/* setting message in the status bar */
-	NSMutableString *message;
-	message = [NSMutableString stringWithFormat: @"%.3f - %@",
-				[node val], [node name]];
-	while (parent){
-		[message appendString: [NSString stringWithFormat: @" - %@",
-			[parent name]]];
-		parent = (Treemap *)[parent parent];
 	}
 	controller->setStatusMessage (NSSTRINGtoWXSTRING(message));
 }
