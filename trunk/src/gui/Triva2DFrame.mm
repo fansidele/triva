@@ -153,29 +153,6 @@ void Triva2DFrame::updateTimeline()
 	endTimeIntervalX = endX;
 }
 
-void Triva2DFrame::updateDetail ()
-{
-	if (detailDescription == nil){
-		state = TreemapState;
-		Update();
-		return;
-	}
-	wxPaintDC dc(this);
-	wxCoord w, h;
-	dc.GetSize(&w, &h);
-	wxCoord w1, h1;
-	dc.GetTextExtent (NSSTRINGtoWXSTRING(detailDescription), &w1, &h1);
-	
-	if (w - detailx < w1){
-		detailx = detailx - (w1 - (w - detailx));
-	}
-	if (h - detaily < h1){
-		detaily = detaily - (h1 - (h - detaily));
-	}
-	dc.DrawRectangle (detailx, detaily, w1, h1);
-	dc.DrawText (NSSTRINGtoWXSTRING(detailDescription), detailx, detaily);
-}
-
 void Triva2DFrame::Update()
 {
 	bool firsttime = false;
@@ -190,8 +167,6 @@ void Triva2DFrame::Update()
 		this->updateTreemap();
 	}else if (state == TimeState){
 		this->updateTimeline();
-	}else if (state == DetailState){
-		this->updateDetail();
 	}
 }
 
@@ -233,14 +208,6 @@ void Triva2DFrame::OnMouseEvent(wxMouseEvent& evt)
 			state = TimeState;
 			Update();
 			return;
-		}
-
-		/* trying to find which object is under the mouse */
-		long x = evt.GetX();
-		if (evt.LeftDown()){
-			this->searchAndShowDescriptionAt (x, y);
-			state = DetailState;
-			Update();
 		}
 		
 	}else if (state == TimeState){
@@ -293,15 +260,6 @@ void Triva2DFrame::OnMouseEvent(wxMouseEvent& evt)
 			}
 			Update();
 		}
-	}else if (state == DetailState){
-		long y = evt.GetY();
-		long x = evt.GetX();
-		if (evt.LeftDown()){
-			this->searchAndShowDescriptionAt (x, y);
-		}else if (evt.RightDown()){
-			state = TreemapState;
-		}
-		Update();	
 	}
 }
 
@@ -361,16 +319,6 @@ void Triva2DFrame::drawTreemap (id treemap, wxDC &dc)
 	this->drawTreemapNode ((Treemap *)treemap, 0, brush, grayColor, dc);
 }
 
-void Triva2DFrame::searchAndShowDescriptionAt (long x, long y)
-{
-	if (filter){
-		Treemap *node = [current searchWithX: x andY: y];
-		detailDescription = [filter descriptionForNode: node];
-		detailx = x; 
-		detaily = y;
-	}
-}
-
 void Triva2DFrame::highlightTreemapNode (long x, long y)
 {
 	if (current){
@@ -411,7 +359,7 @@ void Triva2DFrame::unhighlightTreemapNode (wxDC &dc)
 {
 	wxColour grayColor = wxColour (wxT("#c0c0c0"));
 
-	Treemap *parent = [highlighted parent];
+	Treemap *parent = (Treemap *)[highlighted parent];
 	wxColour color = findColorForNode (parent);
 	wxBrush brush (color, wxTRANSPARENT);
 	this->drawTreemapNode (parent, 0, brush, grayColor, dc);

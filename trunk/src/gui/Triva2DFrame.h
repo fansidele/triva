@@ -10,7 +10,7 @@
 
 class TrivaController;
 	
-enum Triva2DFrameState {TreemapState,TimeState,DetailState};
+enum Triva2DFrameState {TreemapState,TimeState};
 
 class Triva2DFrame : public wxControl
 {
@@ -28,14 +28,9 @@ private:
 
 	void updateTreemap ();
 	void updateTimeline ();
-	void updateDetail();
 
 	Treemap *current;
 	Treemap *highlighted;
-
-	long detailx, detaily;
-	NSString *detailDescription;
-	void searchAndShowDescriptionAt (long x, long y);
 
 	id filter;
 
