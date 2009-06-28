@@ -222,23 +222,29 @@
  */
 - (Treemap *) searchWithX: (long) x andY: (long) y
 {
-	/* search always for a leaf-node */
 	Treemap *ret = nil;
-	if ([children count] != 0){
-		unsigned int i;
-		for (i = 0; i < [children count]; i++){
-			Treemap *child = [children objectAtIndex: i];
-			ret = [child searchWithX: x andY: y];
-			if (ret != nil){
-				break;
-			}
-		}
-	}else{
-		if (x >= [rect x] &&
-		    x <= [rect x]+[rect width] &&
-		    y >= [rect y] &&
-		    y <= [rect y]+[rect height]){
+	/* Check to see if x,y are in my area */
+	if (x >= [rect x] &&
+	    x <= [rect x]+[rect width] &&
+	    y >= [rect y] &&
+	    y <= [rect y]+[rect height]){
+		/* It is in my area, so let's see if I am a leaf-node */
+		if ([children count] == 0){
+			/* I am a leaf node, good! They searched for me */
 			ret = self;
+		}
+	}
+	if (ret == nil){
+		/* it's not in my area, and it's not me, recurse to children */
+		if ([children count] != 0){
+			unsigned int i;
+			for (i = 0; i < [children count]; i++){
+				Treemap *child = [children objectAtIndex: i];
+				ret = [child searchWithX: x andY: y];
+				if (ret != nil){
+					break;
+				}
+			}
 		}
 	}
 	return ret;
