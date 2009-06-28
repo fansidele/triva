@@ -26,7 +26,7 @@ private:
         float startInterval;
         float endInterval;
 
-	void updateTreemap ();
+	void updateTreemap (bool updateTreemap);
 	void updateTimeline ();
 
 	Treemap *current;
@@ -51,7 +51,7 @@ public:
 		const wxValidator &validator = wxDefaultValidator);
    ~Triva2DFrame();
    virtual void Init();
-   virtual void Update();
+   virtual void Update(bool updateTreemap);
 
 protected:
    virtual void OnSize(wxSizeEvent& evt);

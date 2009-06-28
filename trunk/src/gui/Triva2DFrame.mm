@@ -74,23 +74,35 @@ void Triva2DFrame::Init()
 	current = nil;
 }
 
-void Triva2DFrame::updateTreemap()
+void Triva2DFrame::updateTreemap(bool update)
 {
+	static wxCoord w = 0, h = 0;
+
 	wxPaintDC dc(this);
 	dc.Clear();
 
-	wxCoord w, h;
-	dc.GetSize(&w, &h);
-        
-	if (current != nil){
-		[current release];
+	/* check to see if size of the window changed */
+	wxCoord nw, nh;
+	dc.GetSize(&nw, &nh);
+	if (nw != w || nh != h){
+		w = nw;
+		h = nh;
+		update = true;
 	}
-	current = [filter treemapWithWidth: w
+        
+	if (current == nil){
+		update = true;
+	}
+
+	if (update){
+		if (current != nil){
+			[current release];
+		}
+		current = [filter treemapWithWidth: w
 				 andHeight: h
 				  andDepth: maxDepthToDraw];
-	[current retain];
-
-        
+		[current retain];
+	}
 	this->drawTreemap ((id)current, dc);
 }
 
@@ -153,18 +165,19 @@ void Triva2DFrame::updateTimeline()
 	endTimeIntervalX = endX;
 }
 
-void Triva2DFrame::Update()
+void Triva2DFrame::Update(bool updateTreemap)
 {
 	bool firsttime = false;
 	filter = controller->getTimeSlice();
 	if (!firsttime){
 		[filter setSliceStartTime: [filter startTime]];
 		[filter setSliceEndTime: [filter endTime]];
+		updateTreemap = true;
 		firsttime = true;
 	}
 
 	if (state == TreemapState){
-		this->updateTreemap();
+		this->updateTreemap(updateTreemap);
 	}else if (state == TimeState){
 		this->updateTimeline();
 	}
@@ -172,7 +185,7 @@ void Triva2DFrame::Update()
 
 void Triva2DFrame::OnSize(wxSizeEvent& evt)
 {
-	Update();
+	Update(false);
 	evt.Skip();
 }
 
@@ -197,7 +210,9 @@ void Triva2DFrame::OnMouseEvent(wxMouseEvent& evt)
 				}
 			}
 			highlighted = nil;
-			Update();
+			Update(true); /* TODO: the parameter should be
+false, but for that the timeslice must a return a complete tree (also with a
+separate aggregated value) so we do not need to ask again the data */
 		}
 		/* conditionaly moving to Time state */
 		long y = evt.GetY();
@@ -206,7 +221,7 @@ void Triva2DFrame::OnMouseEvent(wxMouseEvent& evt)
 		dc.GetSize(&w, &h);
 		if (y > (h-3)){
 			state = TimeState;
-			Update();
+			Update(false);
 			return;
 		}
 		
@@ -219,7 +234,7 @@ void Triva2DFrame::OnMouseEvent(wxMouseEvent& evt)
 		dc.GetSize(&w, &h);
 		if (y < (h-(TL_BOXHEIGHT*2))){
 			state = TreemapState;
-			Update();
+			Update(true);
 		}else{
 			if (fabs(x - startTimeIntervalX) < TL_PROXIMITY &&
 				fabs (y - (h-TL_BOXHEIGHT)) < TL_PROXIMITY){
@@ -247,7 +262,7 @@ void Triva2DFrame::OnMouseEvent(wxMouseEvent& evt)
 			if (startInterval > endInterval){
 				startInterval = endInterval;
 			}
-			Update();
+			Update(true);
 		}else if (evt.Dragging() && endProximity){
 			endTimeIntervalX = x-xant;
 			endInterval = (float)endTimeIntervalX /
@@ -258,7 +273,7 @@ void Triva2DFrame::OnMouseEvent(wxMouseEvent& evt)
 			if (endInterval < startInterval){
 				endInterval = startInterval;
 			}
-			Update();
+			Update(true);
 		}
 	}
 }
@@ -289,7 +304,7 @@ void Triva2DFrame::OnRenderTimer(wxTimerEvent& evt)
 
 void Triva2DFrame::OnPaint(wxPaintEvent& evt)
 {
-   Update();
+   Update(false);
 }
 
 void Triva2DFrame::drawTreemap (id treemap, wxDC &dc)
