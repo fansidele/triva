@@ -197,22 +197,27 @@ void Triva2DFrame::OnMouseEvent(wxMouseEvent& evt)
 
 	this->SetFocus();
 	if (state == TreemapState){
+		bool changed = false;
 		if (evt.GetWheelRotation() != 0){
 			if (evt.GetWheelRotation() > 0){
 				if (current != nil){
 					if (maxDepthToDraw<[current maxDepth]){
 						maxDepthToDraw++;
+						changed = true;
 					}
 				}
 			}else{
 				if (maxDepthToDraw > 0){
 					maxDepthToDraw--;
+					changed = true;
 				}
 			}
-			highlighted = nil;
-			Update(true); /* TODO: the parameter should be
+			if (changed){
+				highlighted = nil;
+				Update(true); /* TODO: the parameter should be
 false, but for that the timeslice must a return a complete tree (also with a
 separate aggregated value) so we do not need to ask again the data */
+			}
 		}
 		/* conditionaly moving to Time state */
 		long y = evt.GetY();
