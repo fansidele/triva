@@ -113,13 +113,13 @@
 	if (horiz){
 		[r setX: x];
 		[r setY: y+h];
-		[r setWidth: [rect width]];
-		[r setHeight: [rect height]-h];
+		[r setWidth: [r width]];
+		[r setHeight: [r height]-h];
 	}else{
 		[r setX: x+h];
 		[r setY: y];
-		[r setWidth: [rect width]-h];
-		[r setHeight: [rect height]];
+		[r setWidth: [r width]-h];
+		[r setHeight: [r height]];
 	}
 	return r;
 }
