@@ -77,7 +77,7 @@ void Triva2DFrame::Init()
 void Triva2DFrame::updateTreemap(bool update)
 {
 	static wxCoord w = 0, h = 0;
-
+	
 	wxPaintDC dc(this);
 	dc.Clear();
 
@@ -167,13 +167,13 @@ void Triva2DFrame::updateTimeline()
 
 void Triva2DFrame::Update(bool updateTreemap)
 {
-	bool firsttime = false;
+	static bool firsttime = true;
 	filter = controller->getTimeSlice();
-	if (!firsttime){
+	if (firsttime){
 		[filter setSliceStartTime: [filter startTime]];
 		[filter setSliceEndTime: [filter endTime]];
 		updateTreemap = true;
-		firsttime = true;
+		firsttime = false;
 	}
 
 	if (state == TreemapState){
@@ -212,12 +212,8 @@ void Triva2DFrame::OnMouseEvent(wxMouseEvent& evt)
 					changed = true;
 				}
 			}
-			if (changed){
-				highlighted = nil;
-				Update(true); /* TODO: the parameter should be
-false, but for that the timeslice must a return a complete tree (also with a
-separate aggregated value) so we do not need to ask again the data */
-			}
+			highlighted = nil;
+			Update(false);
 		}
 		/* conditionaly moving to Time state */
 		long y = evt.GetY();
@@ -309,7 +305,7 @@ void Triva2DFrame::OnRenderTimer(wxTimerEvent& evt)
 
 void Triva2DFrame::OnPaint(wxPaintEvent& evt)
 {
-   Update(false);
+	Update(false);
 }
 
 void Triva2DFrame::drawTreemap (id treemap, wxDC &dc)
@@ -319,14 +315,42 @@ void Triva2DFrame::drawTreemap (id treemap, wxDC &dc)
 		return;
 	}
 
-	/* only draw leaf-nodes */
-	if ([[treemap children] count] != 0) {
-		/* recurse */	
-		unsigned int i;
-		for (i = 0; i < [[treemap children] count]; i++){
-			this->drawTreemap ([[treemap children] objectAtIndex: i], dc);
+	/* check to see if normal tree or aggregated tree will be drawn */
+	if (maxDepthToDraw == [treemap maxDepth]){
+		/* only draw normal leaf-nodes */
+		if ([[treemap children] count] > 0){
+			/* recurse over children */	
+			unsigned int i;
+			for (i = 0; i < [[treemap children] count]; i++){
+				this->drawTreemap ([[treemap children]
+					objectAtIndex: i], dc);
+			}
+			return;
 		}
-		return;
+	}else{
+		if (maxDepthToDraw == [treemap depth]){
+			unsigned int nAggChildren;
+			nAggChildren = [[treemap aggregatedChildren] count];
+			if (nAggChildren > 0){
+				unsigned int i;
+				for (i = 0; i < nAggChildren; i++){
+					this->drawTreemap (
+						[[treemap aggregatedChildren]
+						objectAtIndex: i], dc);
+				}
+				return;
+			}
+		}else{
+			if ([[treemap children] count] > 0){
+				/* recurse over children */	
+				unsigned int i;
+				for (i = 0; i < [[treemap children]count]; i++){
+					this->drawTreemap ([[treemap children]
+						objectAtIndex: i], dc);
+				}
+				return;
+			}
+		}
 	}
 
 	/* try to find a color already used by the paje filters */
@@ -342,7 +366,8 @@ void Triva2DFrame::drawTreemap (id treemap, wxDC &dc)
 void Triva2DFrame::highlightTreemapNode (long x, long y)
 {
 	if (current && state == TreemapState){
-		Treemap *node = [current searchWithX: x andY: y];
+		Treemap *node = [current searchWithX: x
+				andY: y limitToDepth: maxDepthToDraw];
 		if (node != highlighted){
 			wxPaintDC dc(this);
 			this->unhighlightTreemapNode(dc);

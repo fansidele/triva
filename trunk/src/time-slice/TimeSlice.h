@@ -3,7 +3,6 @@
 #include <Foundation/Foundation.h>
 #include <General/PajeFilter.h>
 #include "Treemap.h"
-#include "TreeIntegrated.h"
 
 /**
  * <code>TimeSlice</code> interacts with other Paje filters (through
@@ -39,12 +38,6 @@
 - (Treemap *) treemapWithWidth: (int) width
 		     andHeight: (int) height
 		      andDepth: (int) depth;
-
-/**
- * Method returns a string describing a certain node of the treemap. The
- * description depends on the type of the node.
- */
-- (NSString *) descriptionForNode: (Treemap *) node;
 
 /**
  * Internal method that implements the time slice algorithm.

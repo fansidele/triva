@@ -24,6 +24,7 @@
 {
 	self = [super init];
 	rect = [[TreemapRect alloc] init];
+	aggregatedChildren = [[NSMutableArray alloc] init];
 	return self;
 }
 
@@ -166,6 +167,10 @@
 	NSMutableArray *sortedCopy = [NSMutableArray array];
 	[sortedCopy addObjectsFromArray: 
 		[children sortedArrayUsingSelector: @selector(compareValue:)]];
+	NSMutableArray *sortedCopyAggregated = [NSMutableArray array];
+	[sortedCopyAggregated addObjectsFromArray:
+		[aggregatedChildren sortedArrayUsingSelector:
+						@selector(compareValue:)]];
 
 	/* remove children with value equal to zero */
 	int i;
@@ -190,6 +195,10 @@
 	[self squarifyWithOrderedChildren: sortedCopy
 			andSmallerSize: w
 			andFactor: factor];
+	/* call also to set the rectangles of aggregated children */
+	[self squarifyWithOrderedChildren: sortedCopyAggregated
+			andSmallerSize: w
+			andFactor: factor];
 
 	for (i = 0; i < [children count]; i++){
 		[[children objectAtIndex: i]
@@ -201,7 +210,8 @@
 /*
  * Entry method
  */
-- (void) calculateTreemapWithWidth: (float) w andHeight: (float) h
+- (void) calculateTreemapWithWidth: (float) w
+			andHeight: (float) h
 {
         if (value == 0){
                 //nothing to calculate
@@ -220,7 +230,9 @@
 /*
  * Search method
  */
-- (Treemap *) searchWithX: (long) x andY: (long) y
+- (Treemap *) searchWithX: (long) x
+		andY: (long) y
+		limitToDepth: (int) d
 {
 	Treemap *ret = nil;
 	/* Check to see if x,y are in my area */
@@ -236,17 +248,51 @@
 	}
 	if (ret == nil){
 		/* it's not in my area, and it's not me, recurse to children */
-		if ([children count] != 0){
+		/* but first, check if the search is over an agg children */
+		if ([self depth] == d){
+			/* recurse to aggregated children */
 			unsigned int i;
-			for (i = 0; i < [children count]; i++){
-				Treemap *child = [children objectAtIndex: i];
-				ret = [child searchWithX: x andY: y];
+			for (i = 0; i < [aggregatedChildren count]; i++){
+				Treemap *child = [aggregatedChildren
+							objectAtIndex: i];
+				ret = [child searchWithX: x
+						andY: y limitToDepth: d];
 				if (ret != nil){
 					break;
+				}
+			}
+		}else{
+			if ([children count] != 0){
+				/* recurse to ordinary children */
+				unsigned int i;
+				for (i = 0; i < [children count]; i++){
+					Treemap *child;
+					child = [children objectAtIndex: i];
+					ret = [child searchWithX: x
+						andY: y limitToDepth: d];
+					if (ret != nil){
+						break;
+					}
 				}
 			}
 		}
 	}
 	return ret;
+}
+
+/* Aggregated Children Methods */
+- (void) addAggregatedChild: (Treemap *) child
+{
+	[aggregatedChildren addObject: child];
+}
+
+- (void) removeAllAggregatedChildren
+{
+	[aggregatedChildren removeAllObjects];
+}
+
+- (NSArray *) aggregatedChildren
+{
+	return aggregatedChildren;
 }
 @end

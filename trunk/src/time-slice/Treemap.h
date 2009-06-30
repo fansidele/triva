@@ -24,6 +24,8 @@
 {
 	TreemapRect *rect;
 
+	NSMutableArray *aggregatedChildren; /* to limitTreemap method */
+
 	id pajeEntity; /* the paje entity connected to this node */
 }
 - (TreemapRect *) rect;
@@ -46,7 +48,14 @@
 - (void) calculateTreemapWithWidth: (float) w andHeight: (float) h;
 
 /* search-based methods */
-- (Treemap *) searchWithX: (long) x andY: (long) y;
+- (Treemap *) searchWithX: (long) x
+			andY: (long) y
+			limitToDepth: (int) d;
+
+/* methods to be used by the TimeSlice.m's limitTreemap */
+- (void) addAggregatedChild: (Treemap *) child;
+- (void) removeAllAggregatedChildren;
+- (NSArray *) aggregatedChildren;
 @end
 
 #endif

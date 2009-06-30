@@ -202,44 +202,24 @@
                      andHeight: (int) height
                       andDepth: (int) depth
 {
+	if (width == 0 || height == 0){
+		return nil;
+	}
+
 	[self hierarchyChanged];
 	if (treemap == nil){
 		return nil;
 	}else{
-		[self limitTreemap: treemap toDepth: depth]; 
+		int maxDepth = [treemap maxDepth], i;
+		for (i = 0; i < maxDepth; i++){
+			[self limitTreemap: treemap toDepth: i]; 
+		}
 		[treemap recalculateValues];
-		[treemap calculateTreemapWithWidth: width andHeight: height];
+		[treemap calculateTreemapWithWidth: width
+				andHeight: height];
 		return treemap;
 	}
 }
-
-- (NSString *) descriptionForNode: (Treemap *) node
-{
-	NSMutableString *ret = nil;
-	if (node == nil){
-		return nil;
-	}
-	ret = [NSMutableString string];
-	[ret appendString: [node name]];
-	double timeSlice;
-	timeSlice = [sliceEndTime timeIntervalSinceDate:sliceStartTime];
-	double rootValue = [treemap val];
-	double nodeValue = [node val];
-	double porcentage = (nodeValue/rootValue * timeSlice)/timeSlice*100;
-	if ([node parent] != nil){
-		[ret appendString: @" "];
-		[ret appendString: [[[node parent] pajeEntity] name]];
-	}
-	if (![node isKindOfClass: [TreeIntegrated class]]){
-		[ret appendString: @" "];
-		[ret appendString: [[[node pajeEntity] container] name]];
-		[ret appendString: @" "];
-	}
-	[ret appendString:
-		[NSString stringWithFormat: @" %.2f s", porcentage]];
-	return ret;
-}
-
 
 /**
  * Internal method used by limitTree. Obtain all children of a certain
@@ -297,7 +277,7 @@
 		NSString *name = [allDictKeys objectAtIndex: i];
 		NSString *value = [dict objectForKey: name];
 
-		TreeIntegrated *node = [[TreeIntegrated alloc] init];
+		Treemap *node = [[Treemap alloc] init];
 		[node setName: name];
 		[node setValue: [value doubleValue]];
 		[node setPajeEntity: [dict2 objectForKey: name]];
@@ -312,14 +292,12 @@
 	if ([tree depth] == depth && [tree depth] != [treemap maxDepth]){
 		/* summarize */
 		NSArray *allLeaves = [self findAllLeaves: tree];
-		[tree removeAllChildren];
 		NSArray *sumLeaves = [self summarizeLeaves: allLeaves];
 		int i;
 		for (i = 0; i < [sumLeaves count]; i++){
 			Treemap *child = [sumLeaves objectAtIndex: i];
 			[child setParent: tree];
-			[child setDepth: [tree depth]+1];
-			[tree addChild: child];
+			[tree addAggregatedChild: child];
 		}
 		return;
 	}

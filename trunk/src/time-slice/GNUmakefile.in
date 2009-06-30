@@ -9,8 +9,7 @@ time-slice_OBJC_FILES= \
 		TimeSlice.m \
 		Tree.m \
 		TreeValue.m \
-		Treemap.m \
-		TreeIntegrated.m
+		Treemap.m
 time-slice_OBJCC_FILES=
 
 time-slice_INCLUDE_DIRS += @CPPFLAGS@
