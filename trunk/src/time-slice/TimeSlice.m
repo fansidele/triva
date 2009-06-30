@@ -23,6 +23,7 @@
 	}
 	sliceStartTime = time;
 	[sliceStartTime retain];
+	sliceTimeChanged = YES;
 }
 
 - (void) setSliceEndTime: (NSDate *) time
@@ -32,6 +33,7 @@
 	}
 	sliceEndTime = time;
 	[sliceEndTime retain];
+	sliceTimeChanged = YES;
 }
 
 - (void) timeSliceAt: (id) instance
@@ -185,12 +187,6 @@
 
 - (void) hierarchyChanged
 {
-	if (treemap != nil){
-		[treemap release];
-	}
-	treemap = [self createInstanceHierarchy: [self rootInstance]
-				parent: nil];
-	[treemap retain];
 }
 
 - (void) timeLimitsChanged
@@ -202,11 +198,20 @@
                      andHeight: (int) height
                       andDepth: (int) depth
 {
-	if (width == 0 || height == 0){
+	if (width == 0 || height == 0 || width > 1000000 || height > 1000000){
 		return nil;
 	}
 
-	[self hierarchyChanged];
+	if (sliceTimeChanged){
+		if (treemap != nil){
+			[treemap release];
+		}
+		treemap = [self createInstanceHierarchy: [self rootInstance]
+				parent: nil];
+		[treemap retain];
+		sliceTimeChanged = NO;
+	}
+
 	if (treemap == nil){
 		return nil;
 	}else{

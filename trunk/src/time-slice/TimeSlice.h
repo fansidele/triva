@@ -16,6 +16,8 @@
 
 	Treemap *treemap;
 
+	BOOL sliceTimeChanged; /* to control the hierarchy creation */
+
 	/* Configuration */
 	BOOL fillWithEmptyNodes;
 	BOOL considerExclusiveDuration;
