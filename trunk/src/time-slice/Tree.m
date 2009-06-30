@@ -5,6 +5,7 @@
 {
 	self = [super init];
 	children = [[NSMutableArray alloc] init];
+	maxDepth = -1;
 	return self;
 }
 
@@ -73,6 +74,10 @@
 
 - (int) maxDepth
 {
+	if (maxDepth != -1){
+		return maxDepth;
+	}
+
         if ([children count] == 0){
                 return depth;
         }
@@ -85,6 +90,7 @@
                         max = d;
                 }
         }
+	maxDepth = max;
         return max;
 }
 

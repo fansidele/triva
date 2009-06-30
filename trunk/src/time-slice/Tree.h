@@ -9,6 +9,7 @@
 	Tree *parent;
 	NSMutableArray *children;
 	int depth;
+	int maxDepth; /* for caching */
 }
 - (int) depth;
 - (void) setDepth: (int) d;
