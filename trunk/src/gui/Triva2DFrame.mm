@@ -305,7 +305,16 @@ void Triva2DFrame::OnRenderTimer(wxTimerEvent& evt)
 
 void Triva2DFrame::OnPaint(wxPaintEvent& evt)
 {
-	Update(false);
+	static bool firsttime = true;
+	filter = controller->getTimeSlice();
+	bool updateTreemap = false;
+	if (firsttime){
+		[filter setSliceStartTime: [filter startTime]];
+		[filter setSliceEndTime: [filter endTime]];
+		updateTreemap = true;
+		firsttime = false;
+	}
+	Update(updateTreemap);
 }
 
 void Triva2DFrame::drawTreemap (id treemap, wxDC &dc)
