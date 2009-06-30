@@ -203,6 +203,9 @@
 	}
 
 	if (sliceTimeChanged){
+		NSLog (@"sliceTimeChanged = true, re-creating hierarchy,"
+			" aggregation: this might take time depending "
+			"how big the hierarchy is");
 		if (treemap != nil){
 			[treemap release];
 		}
