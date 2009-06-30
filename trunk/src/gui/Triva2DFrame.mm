@@ -76,19 +76,11 @@ void Triva2DFrame::Init()
 
 void Triva2DFrame::updateTreemap(bool update)
 {
-	static wxCoord w = 0, h = 0;
-	
 	wxPaintDC dc(this);
 	dc.Clear();
 
-	/* check to see if size of the window changed */
-	wxCoord nw, nh;
-	dc.GetSize(&nw, &nh);
-	if (nw != w || nh != h){
-		w = nw;
-		h = nh;
-		update = true;
-	}
+	wxCoord w, h;
+	dc.GetSize(&w, &h);
         
 	if (current == nil){
 		update = true;
@@ -167,14 +159,7 @@ void Triva2DFrame::updateTimeline()
 
 void Triva2DFrame::Update(bool updateTreemap)
 {
-	static bool firsttime = true;
 	filter = controller->getTimeSlice();
-	if (firsttime){
-		[filter setSliceStartTime: [filter startTime]];
-		[filter setSliceEndTime: [filter endTime]];
-		updateTreemap = true;
-		firsttime = false;
-	}
 
 	if (state == TreemapState){
 		this->updateTreemap(updateTreemap);
@@ -185,8 +170,7 @@ void Triva2DFrame::Update(bool updateTreemap)
 
 void Triva2DFrame::OnSize(wxSizeEvent& evt)
 {
-	Update(false);
-	evt.Skip();
+	Update(true);
 }
 
 void Triva2DFrame::OnMouseEvent(wxMouseEvent& evt)
