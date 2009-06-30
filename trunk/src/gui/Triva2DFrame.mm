@@ -143,8 +143,6 @@ void Triva2DFrame::updateTimeline()
 	NSDate *nStartTime, *nEndTime;
 	nStartTime = [NSDate dateWithTimeIntervalSinceReferenceDate: s];
 	nEndTime = [NSDate dateWithTimeIntervalSinceReferenceDate: e];
-	[filter setSliceStartTime: nStartTime];
-	[filter setSliceEndTime: nEndTime];
 	dc.SetPen (wxPen (black, 1, wxSOLID));
 	dc.DrawText (NSSTRINGtoWXSTRING (
 		[nStartTime description]),
@@ -153,8 +151,23 @@ void Triva2DFrame::updateTimeline()
 		[nEndTime description]),
 		endX, h-29);
 	//saving startX and endX in global variable
-	startTimeIntervalX = startX;
-	endTimeIntervalX = endX;
+	//change the sliceStartTime and sliceEndTime in the filter
+	double nStartTimeDouble = [[nStartTime description] doubleValue];
+	static double startDouble = [[[filter startTime] description] doubleValue];
+
+	double nEndTimeDouble = [[nEndTime description] doubleValue];
+	static double endDouble = [[[filter endTime] description] doubleValue];
+
+	if (nStartTimeDouble != startDouble){
+		startTimeIntervalX = startX;
+		[filter setSliceStartTime: nStartTime];
+		startDouble = nStartTimeDouble;
+	}
+	if (nEndTimeDouble != endDouble){
+		endTimeIntervalX = endX;
+		[filter setSliceEndTime: nEndTime];
+		endDouble = nEndTimeDouble;
+	}
 }
 
 void Triva2DFrame::Update(bool updateTreemap)
