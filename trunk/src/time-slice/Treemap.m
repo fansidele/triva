@@ -139,8 +139,21 @@
 	[r setY: [rect y]];
 
 	while ([list count] > 0){
+		/* check if w is still valid */
+		if (w < 1){
+			/* w should not be smaller than 1 pixel
+			   no space left for other children to appear */
+			break;
+		}
+
 		[row addObject: [list objectAtIndex: [list count]-1]];
-		nworst = [self worstf: row withSmallerSize: w withFactor: factor];
+		nworst = [self worstf: row withSmallerSize: w
+					withFactor: factor];
+		if (nworst <= 1){
+			/* nworst should not be smaller than ratio 1,
+                           which is the perfect square */
+			break;
+		}
 		if (nworst <= worst){
 			[list removeLastObject];
 			worst = nworst;
