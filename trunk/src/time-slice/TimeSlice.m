@@ -209,17 +209,17 @@
 		treemap = [self createInstanceHierarchy: [self rootInstance]
 				parent: nil];
 		[treemap retain];
+		int maxDepth = [treemap maxDepth], i;
+		for (i = 0; i < maxDepth; i++){
+			[self limitTreemap: treemap toDepth: i]; 
+		}
+		[treemap recalculateValues];
 		sliceTimeChanged = NO;
 	}
 
 	if (treemap == nil){
 		return nil;
 	}else{
-		int maxDepth = [treemap maxDepth], i;
-		for (i = 0; i < maxDepth; i++){
-			[self limitTreemap: treemap toDepth: i]; 
-		}
-		[treemap recalculateValues];
 		[treemap calculateTreemapWithWidth: width
 				andHeight: height];
 		return treemap;
