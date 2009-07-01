@@ -1,6 +1,13 @@
 #!/bin/bash
 
-ps2epsi triva-output.ps
-eps2eps triva-output.epsi triva-output.eps
-rm triva-output.ps
-rm triva-output.epsi
+if [ -z $1 ]
+then
+   exit
+fi
+
+CORE=`echo $1 | cut -d"." -f1`
+
+ps2epsi $CORE.ps
+eps2eps $CORE.epsi $CORE.eps
+rm $CORE.ps
+rm $CORE.epsi
