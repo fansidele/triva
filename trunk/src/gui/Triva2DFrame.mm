@@ -1,6 +1,8 @@
 #include "Triva2DFrame.h"
 #include "gui/TrivaController.h"
 #include "time-slice/TimeSlice.h"
+#include <wx/dcps.h>
+#include <wx/paper.h>
 
 extern wxString NSSTRINGtoWXSTRING (NSString *ns);
 
@@ -288,8 +290,25 @@ void Triva2DFrame::OnCharEvent(wxKeyEvent& evt)
 
 void Triva2DFrame::OnKeyDownEvent(wxKeyEvent& evt)
 {
-	state = TreemapState;
-	evt.Skip();
+	if (evt.AltDown() && evt.GetKeyCode() == 80) { /* ALT + P */
+		wxPrintData data;
+		data.SetPrintMode (wxPRINT_MODE_FILE);
+		data.SetFilename (wxT("triva-output.ps"));
+		wxPostScriptDC dc(data);
+		if (!dc.Ok()){
+			NSString *msg = [NSString stringWithFormat:
+				@"Error in printing"];
+			controller->setStatusMessage (NSSTRINGtoWXSTRING(msg));
+                	return;
+        	}else{
+			dc.StartDoc(wxT("triva-output.ps"));
+			this->drawTreemap ((id)current, dc);
+			dc.EndDoc();
+			NSString *msg = [NSString stringWithFormat:
+				@"Printed to output.eps file"];
+			controller->setStatusMessage (NSSTRINGtoWXSTRING(msg));
+		}
+	}
 }
 
 void Triva2DFrame::OnKeyUpEvent(wxKeyEvent& evt)
