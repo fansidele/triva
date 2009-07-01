@@ -291,9 +291,14 @@ void Triva2DFrame::OnCharEvent(wxKeyEvent& evt)
 void Triva2DFrame::OnKeyDownEvent(wxKeyEvent& evt)
 {
 	if (evt.AltDown() && evt.GetKeyCode() == 80) { /* ALT + P */
+		wxClientDC screen(this);
+		wxCoord w, h;
+		screen.GetSize (&w, &h);
+		NSString *filename = [NSString stringWithFormat:
+			@"output-%d-%d-%d.ps", maxDepthToDraw, w, h];
 		wxPrintData data;
 		data.SetPrintMode (wxPRINT_MODE_FILE);
-		data.SetFilename (wxT("triva-output.ps"));
+		data.SetFilename (NSSTRINGtoWXSTRING(filename));
 		wxPostScriptDC dc(data);
 		if (!dc.Ok()){
 			NSString *msg = [NSString stringWithFormat:
@@ -301,11 +306,11 @@ void Triva2DFrame::OnKeyDownEvent(wxKeyEvent& evt)
 			controller->setStatusMessage (NSSTRINGtoWXSTRING(msg));
                 	return;
         	}else{
-			dc.StartDoc(wxT("triva-output.ps"));
+			dc.StartDoc(NSSTRINGtoWXSTRING(filename));
 			this->drawTreemap ((id)current, dc);
 			dc.EndDoc();
 			NSString *msg = [NSString stringWithFormat:
-				@"Printed to output.eps file"];
+				@"Printed to %@", filename];
 			controller->setStatusMessage (NSSTRINGtoWXSTRING(msg));
 		}
 	}
