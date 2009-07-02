@@ -68,6 +68,7 @@ void DrawManager::drawOneState (Ogre::SceneNode *visualContainer,
 
 	ssn->setPosition (0,(end-start)/2+start,0);
 	ssn->setScale (kk,(end-start)/100,kk);
+	ssn->showBoundingBox (true);
 }
 
 void DrawManager::drawStates (PajeEntityType *et, id container)
