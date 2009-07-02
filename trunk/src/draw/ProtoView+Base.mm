@@ -252,6 +252,10 @@
 // for application graph
 - (NSMutableDictionary *) dictionaryForApplicationGraph: (id) entity
 {
+	if (entity == nil){
+		return nil;
+	}
+
         NSMutableDictionary *ret = [[NSMutableDictionary alloc] init];
         NSMutableDictionary *me = [[NSMutableDictionary alloc] init];
 
