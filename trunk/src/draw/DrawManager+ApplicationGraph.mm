@@ -11,7 +11,9 @@ void DrawManager::applicationGraphRecursiveDraw (id entity,
 	int x = [position positionXForNode: [entity name]];
 	int y = [position positionYForNode: [entity name]];
 
-	this->drawOneContainer (entity, node, x, y);
+	if ([viewController mustDrawContainer: entity]){
+		this->drawOneContainer (entity, node, x, y);
+	}
 
 	/* recursive */
 	NSEnumerator *en = [[viewController containedTypesForContainerType:[viewController entityTypeForEntity:entity]] objectEnumerator];
