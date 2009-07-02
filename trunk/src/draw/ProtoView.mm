@@ -97,6 +97,9 @@
 
 - (void)hierarchyChanged
 {
+	if ([self rootInstance] == nil){
+		return;
+	}
 	if (baseState == ApplicationGraph){
 		[self recalculateApplicationGraphWithApplicationData];
 		drawManager->applicationAnimatedGraphDraw
