@@ -309,4 +309,22 @@
 	//applicationGraphPosition contains PositionGraphviz
 	[applicationGraphPosition refresh];
 }
+
+- (BOOL) mustDrawContainer: (id) container
+{
+	BOOL answer = NO;
+
+	NSEnumerator *en = [[self containedTypesForContainerType:
+		[self entityTypeForEntity: container]] objectEnumerator];
+
+	PajeEntityType *et;
+	while ((et = [en nextObject]) != nil) {
+		if ([et isKindOfClass: [PajeLinkType class]]){
+			answer = YES;
+		}else if ([et isKindOfClass: [PajeStateType class]]){
+			answer = YES;
+		}
+	}	
+	return answer;
+}
 @end

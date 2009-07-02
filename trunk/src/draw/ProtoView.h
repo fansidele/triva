@@ -60,6 +60,7 @@ enum TrivaVisualizationBaseState {
 		andGraphvizAlgorithm: (NSString *) algo;
 - (BOOL) applicationGraphWithSize: (NSString *) sizeStr andGraphvizAlgorithm: (NSString *) algo;
 - (void) disableVisualizationBase: (TrivaVisualizationBaseState) baseCode;
+- (BOOL) mustDrawContainer: (id) container;
 
 //to interact with the squarifiedTreemap objects
 - (TrivaTreemap *) searchWithPartialName: (NSString *) partialName;
