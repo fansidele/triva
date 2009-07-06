@@ -226,12 +226,19 @@ void Triva2DFrame::OnMouseEvent(wxMouseEvent& evt)
 		}
 		
 	}else if (state == TimeState){
+		static bool firsttime = true;
+
 		//Time state
 		long y = evt.GetY();
 		long x = evt.GetX();
 		wxPaintDC dc(this);
 		wxCoord w, h;
 		dc.GetSize(&w, &h);
+
+		if (firsttime){
+			endTimeIntervalX = w;
+			firsttime = false;
+		}
 		if (y < (h-(TL_BOXHEIGHT*2))){
 			state = TreemapState;
 			Update(true);
