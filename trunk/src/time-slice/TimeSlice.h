@@ -39,7 +39,8 @@
  */
 - (Treemap *) treemapWithWidth: (int) width
 		     andHeight: (int) height
-		      andDepth: (int) depth;
+		      andDepth: (int) depth
+		     andValues: (NSSet *) values;
 
 /**
  * Internal method that implements the time slice algorithm.
@@ -63,7 +64,9 @@
  * nodes annotated with a summary of leaf nodes. Leaf nodes are removed from
  * the structure.
  */
-- (void) limitTreemap: (Treemap *) tree toDepth: (int) depth;
+- (void) limitTreemap: (Treemap *) tree
+		toDepth: (int) depth
+		toValues: (NSSet *) values;
 
 @end
 

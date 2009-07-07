@@ -66,7 +66,7 @@
 	int i;
 	for (i = 0; i < [list count]; i++){
 		Treemap *child = (Treemap *)[list objectAtIndex: i];
-		double childValue = [child val]*factor;
+		double childValue = [child usedVal]*factor;
 		rmin = rmin < childValue ? rmin : childValue;
 		rmax = rmax > childValue ? rmax : childValue;
 		s += childValue;
@@ -85,7 +85,7 @@
 	double s = 0; // sum
 	int i;
 	for (i = 0; i < [row count]; i++){
-		s += [(Treemap *)[row objectAtIndex: i] val]*factor;
+		s += [(Treemap *)[row objectAtIndex: i] usedVal]*factor;
 	}
 	double x = [r x], y = [r y], d = 0;
 	double h = w==0 ? 0 : s/w;
@@ -100,7 +100,7 @@
 			[[child rect] setX: x];
 			[[child rect] setY: y+d];
 		}
-		double nw = [child val]*factor/h;
+		double nw = [child usedVal]*factor/h;
 		if (horiz){
 			[[child rect] setWidth: nw];
 			[[child rect] setHeight: h];
@@ -179,16 +179,17 @@
 	/* make ascending order of children by value */
 	NSMutableArray *sortedCopy = [NSMutableArray array];
 	[sortedCopy addObjectsFromArray: 
-		[children sortedArrayUsingSelector: @selector(compareValue:)]];
+		[children sortedArrayUsingSelector:
+						@selector(compareUsedValue:)]];
 	NSMutableArray *sortedCopyAggregated = [NSMutableArray array];
 	[sortedCopyAggregated addObjectsFromArray:
 		[aggregatedChildren sortedArrayUsingSelector:
-						@selector(compareValue:)]];
+						@selector(compareUsedValue:)]];
 
-	/* remove children with value equal to zero */
+	/* remove children with usedVal equal to zero */
 	int i;
 	for (i = 0; i < [sortedCopy count]; i++){
-		if ([[sortedCopy objectAtIndex: i] val] != 0){
+		if ([[sortedCopy objectAtIndex: i] usedVal] != 0){
 			break;
 		}
 	}
@@ -197,6 +198,16 @@
 	range.length = i;
 	[sortedCopy removeObjectsInRange: range];
 	
+	/* remove aggregated children with usedVal equal to zero */
+	for (i = 0; i < [sortedCopyAggregated count]; i++){
+		if ([[sortedCopyAggregated objectAtIndex: i] usedVal] != 0){
+			break;
+		}
+	}
+	range.location = 0;
+	range.length = i;
+	[sortedCopyAggregated removeObjectsInRange: range];
+
 	/* calculate the smaller size */
 	double w = [rect width] < [rect height] ? [rect width] : [rect height];
 
@@ -226,12 +237,12 @@
 - (void) calculateTreemapWithWidth: (float) w
 			andHeight: (float) h
 {
-        if (value == 0){
+        if (usedValue == 0){
                 //nothing to calculate
                 return;
         }
         double area = w * h;
-        double factor = area/value;
+        double factor = area/usedValue;
 
         [rect setWidth: w];
         [rect setHeight: h];
@@ -246,6 +257,7 @@
 - (Treemap *) searchWithX: (long) x
 		andY: (long) y
 		limitToDepth: (int) d
+		andSelectedValues: (NSSet *) values
 {
 	Treemap *ret = nil;
 	/* Check to see if x,y are in my area */
@@ -253,8 +265,11 @@
 	    x <= [rect x]+[rect width] &&
 	    y >= [rect y] &&
 	    y <= [rect y]+[rect height]){
-		/* It is in my area, so let's see if I am a leaf-node */
-		if ([children count] == 0){
+		/* It is in my area, so let's see if I am a leaf-node 
+			and my pajeEntity is contained in the NSSet */
+		if ([children count] == 0 && (
+			[values containsObject: [[self pajeEntity] value]]
+			|| [values count] == 0)){
 			/* I am a leaf node, good! They searched for me */
 			ret = self;
 		}
@@ -268,10 +283,16 @@
 			for (i = 0; i < [aggregatedChildren count]; i++){
 				Treemap *child = [aggregatedChildren
 							objectAtIndex: i];
-				ret = [child searchWithX: x
-						andY: y limitToDepth: d];
-				if (ret != nil){
-					break;
+				if ([child usedVal] &&
+					([values containsObject:
+						[[child pajeEntity] value]] ||
+					[values count] == 0)){
+					ret = [child searchWithX: x
+						andY: y limitToDepth: d
+						     andSelectedValues: values];
+					if (ret != nil){
+						break;
+					}
 				}
 			}
 		}else{
@@ -281,10 +302,13 @@
 				for (i = 0; i < [children count]; i++){
 					Treemap *child;
 					child = [children objectAtIndex: i];
-					ret = [child searchWithX: x
-						andY: y limitToDepth: d];
-					if (ret != nil){
-						break;
+					if ([child usedVal]){
+						ret = [child searchWithX: x
+						      andY: y limitToDepth: d
+						     andSelectedValues: values];
+						if (ret != nil){
+							break;
+						}
 					}
 				}
 			}
@@ -304,8 +328,43 @@
 	[aggregatedChildren removeAllObjects];
 }
 
+- (void) recursiveRemoveAllAggregatedChildren
+{
+	[self removeAllAggregatedChildren];
+	int i;
+	for (i = 0; i < [children count]; i++){
+		[[children objectAtIndex: i] recursiveRemoveAllAggregatedChildren];
+	}
+}
+
 - (NSArray *) aggregatedChildren
 {
 	return aggregatedChildren;
+}
+
+/* Re-implementing method of TreeValue since we need the pajeEntity from 
+ * Treemap class to know how to recalculate the values of the tree
+ */
+- (void) recalculateRecursiveBottomUpWithValues: (NSSet *) values
+{
+	if ([children count] == 0){
+		if ([values containsObject: [[self pajeEntity] value]]
+                        	|| [values count] == 0){
+	                usedValue = value;
+		}else{
+			usedValue = 0;
+		}
+	}else{
+		float nvalue = 0;
+		int i;
+		for (i = 0; i < [children count]; i++){
+		        TreeValue *child = [children objectAtIndex: i];
+		        [child recalculateRecursiveBottomUpWithValues: values];
+		        nvalue += [child usedVal];
+		}
+		if (nvalue > 0){
+		        usedValue = nvalue;
+		}
+	}
 }
 @end

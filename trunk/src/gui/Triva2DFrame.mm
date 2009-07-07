@@ -74,6 +74,7 @@ void Triva2DFrame::Init()
 	endInterval = 1.0;
 	state = TreemapState;
 	current = nil;
+	selectedValues = [[NSMutableArray alloc] init];
 }
 
 void Triva2DFrame::updateTreemap(bool update)
@@ -94,7 +95,8 @@ void Triva2DFrame::updateTreemap(bool update)
 		}
 		current = [filter treemapWithWidth: w
 				 andHeight: h
-				  andDepth: maxDepthToDraw];
+				  andDepth: maxDepthToDraw
+				andValues: selectedValues];
 		[current retain];
 	}
 	this->drawTreemap ((id)current, dc);
@@ -196,6 +198,25 @@ void Triva2DFrame::OnMouseEvent(wxMouseEvent& evt)
 
 	this->SetFocus();
 	if (state == TreemapState){
+		if (evt.LeftDown()){
+			/* find which paje entity's value the user clicked */
+			long x = evt.GetX();
+			long y = evt.GetY();
+			Treemap *node = [current searchWithX: x
+					andY: y
+					limitToDepth: maxDepthToDraw
+					andSelectedValues: selectedValues];
+			[selectedValues addObject: [[node pajeEntity] value]];
+			Update(true);
+			return;
+		}
+		if (evt.RightDown()){
+			/* reset the selection mechanism of value */
+			[selectedValues removeAllObjects];
+			Update(true);
+			return;
+		}
+
 		bool changed = false;
 		if (evt.GetWheelRotation() != 0){
 			if (evt.GetWheelRotation() > 0){
@@ -348,7 +369,7 @@ void Triva2DFrame::OnPaint(wxPaintEvent& evt)
 void Triva2DFrame::drawTreemap (id treemap, wxDC &dc)
 {
 	/* do not consider the part of the three with value 0 */
-	if ([treemap val] == 0){
+	if ([treemap usedVal] == 0){
 		return;
 	}
 
@@ -404,7 +425,9 @@ void Triva2DFrame::highlightTreemapNode (long x, long y)
 {
 	if (current && state == TreemapState){
 		Treemap *node = [current searchWithX: x
-				andY: y limitToDepth: maxDepthToDraw];
+				andY: y
+				limitToDepth: maxDepthToDraw
+				andSelectedValues: selectedValues];
 		if (node != highlighted){
 			wxPaintDC dc(this);
 			this->unhighlightTreemapNode(dc);
@@ -424,7 +447,7 @@ void Triva2DFrame::drawHighlightTreemapNode (Treemap *node, wxDC &dc)
 	/* setting message in the status bar and drawing parents */
 	NSMutableString *message;
 	message = [NSMutableString stringWithFormat: @"%.3f - %@",
-				[node val], [node name]];
+				[node usedVal], [node name]];
 	Treemap *parent = (Treemap *)[node parent];
 	while (parent){
 		color = findColorForNode (parent);

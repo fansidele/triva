@@ -31,6 +31,7 @@ private:
 
 	Treemap *current;
 	Treemap *highlighted;
+	NSMutableSet *selectedValues;
 
 	id filter;
 

@@ -78,7 +78,8 @@
 			if (fillWithEmptyNodes){
 				/* updating empty value - 1*/
 				Treemap *empty;
-				empty = [node searchChildByName: @"NOTHING"];
+				empty = (Treemap *)[node
+					searchChildByName: @"NOTHING"];
 				if (!empty){
 					double x;
 					x = [sliceEndTime
@@ -116,7 +117,8 @@
 			if (fillWithEmptyNodes){
 				/* updating empty value */
 				Treemap *empty;
-				empty = [node searchChildByName: @"NOTHING"];
+				empty = (Treemap *)[node
+					searchChildByName: @"NOTHING"];
 				if (!empty){
 					double x;
 					x = [sliceEndTime
@@ -197,8 +199,10 @@
 - (Treemap *) treemapWithWidth: (int) width
                      andHeight: (int) height
                       andDepth: (int) depth
+			andValues: (NSSet *) values
 {
-	if (width == 0 || height == 0 || width > 1000000 || height > 1000000){
+	if (width == 0 || height == 0 || width > 1000000 || height > 1000000
+		|| values == nil){
 		return nil;
 	}
 
@@ -212,17 +216,19 @@
 		treemap = [self createInstanceHierarchy: [self rootInstance]
 				parent: nil];
 		[treemap retain];
-		int maxDepth = [treemap maxDepth], i;
-		for (i = 0; i < maxDepth; i++){
-			[self limitTreemap: treemap toDepth: i]; 
-		}
-		[treemap recalculateValues];
 		sliceTimeChanged = NO;
 	}
 
 	if (treemap == nil){
 		return nil;
 	}else{
+		[treemap recursiveRemoveAllAggregatedChildren];
+		[treemap recalculateWithValues: values];
+		int maxDepth = [treemap maxDepth], i;
+		for (i = 0; i < maxDepth; i++){
+			[self limitTreemap: treemap
+				toDepth: i toValues: values]; 
+		}
 		[treemap calculateTreemapWithWidth: width
 				andHeight: height];
 		return treemap;
@@ -265,14 +271,15 @@
 		NSString *name = [node name];
 		NSString *value = [dict objectForKey: name];
 		if (value == nil){
-			value = [NSString stringWithFormat: @"%f",[node val]];
+			value = [NSString stringWithFormat: @"%f",
+							[node usedVal]];
 			[dict setObject: value forKey: name];
 			if ([node pajeEntity]){
 				[dict2 setObject:[node pajeEntity] forKey:name];
 			}
 		}else{
 			double x = [value doubleValue];
-			x += [node val];
+			x += [node usedVal];
 			value = [NSString stringWithFormat: @"%f", x];
 			[dict setObject: value forKey: name];
 		}
@@ -295,7 +302,9 @@
 	return ret;
 }
 
-- (void) limitTreemap: (Treemap *) tree toDepth: (int) depth
+- (void) limitTreemap: (Treemap *) tree
+		toDepth: (int) depth
+		toValues: (NSSet *) values
 {
 	if ([tree depth] == depth && [tree depth] != [treemap maxDepth]){
 		/* summarize */
@@ -304,8 +313,12 @@
 		int i;
 		for (i = 0; i < [sumLeaves count]; i++){
 			Treemap *child = [sumLeaves objectAtIndex: i];
-			[child setParent: tree];
-			[tree addAggregatedChild: child];
+			if ([values containsObject:[[child pajeEntity] value]] 
+				|| [values count] == 0){
+				[child setParent: tree];
+				[child setUsedValue: [child val]];
+				[tree addAggregatedChild: child];
+			}
 		}
 		return;
 	}
@@ -315,7 +328,7 @@
 	NSArray *children = [tree children];
 	for (i = 0; i < [children count]; i++){
 		Treemap *child = [children objectAtIndex: i];
-		[self limitTreemap: child toDepth: depth];
+		[self limitTreemap: child toDepth: depth toValues: values];
 	}
 }
 @end

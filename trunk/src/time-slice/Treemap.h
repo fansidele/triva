@@ -50,11 +50,13 @@
 /* search-based methods */
 - (Treemap *) searchWithX: (long) x
 			andY: (long) y
-			limitToDepth: (int) d;
+			limitToDepth: (int) d
+			andSelectedValues: (NSSet *) values;
 
 /* methods to be used by the TimeSlice.m's limitTreemap */
 - (void) addAggregatedChild: (Treemap *) child;
 - (void) removeAllAggregatedChildren;
+- (void) recursiveRemoveAllAggregatedChildren;
 - (NSArray *) aggregatedChildren;
 @end
 
