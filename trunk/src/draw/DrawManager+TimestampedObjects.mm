@@ -122,8 +122,7 @@ void DrawManager::drawOneLink (id link)
 	id container = [link container];
 	id et = [link entityType];
 
-	NSString *ide = [NSString stringWithFormat: @"%@-%@-%@-%@",
-		[link startTime], [link value], [et name], [container name]];
+	NSString *ide = [link key];
 
 	std::string name = std::string ([ide cString]);
 
