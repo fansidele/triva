@@ -252,18 +252,25 @@ void TrivaController::fullscreenSelection (wxCommandEvent& event )
 void TrivaController::viewSwitchSelection ()
 {
 	if (m3DFrame->IsShown()){
+		viewSelected = ThreeDimension;
 		m3DFrame->Show(false);
 		m3DFrame->pauseRenderTimer();
 
 		m2DFrame->Show(true);
 		m2DFrame->SetFocus();
 	}else{
+		viewSelected = SquarifiedTreemap2D;
 		m3DFrame->Show(true);
 		m3DFrame->resumeRenderTimer();
 		m3DFrame->SetFocus();
 
 		m2DFrame->Show(false);
 	}
+}
+
+TrivaViewSelected TrivaController::getViewSelected ()
+{
+	return viewSelected;
 }
 
 void TrivaController::viewSwitchSelection (wxCommandEvent& event )

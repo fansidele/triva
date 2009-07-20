@@ -29,6 +29,7 @@ class GUI_CombinedCounter;
 class GUI_Preferences;
 
 enum TrivaApplicationState {Initialized,Configured,Running,Paused};
+enum TrivaViewSelected {ThreeDimension,SquarifiedTreemap2D};
 
 @class TimeSlice;
 
@@ -46,6 +47,7 @@ private:
 	TrivaPajeComponent *trivaPaje;
 	Ogre::RenderWindow *mWindow;
 	std::vector<BundleGUIEvents*> bundlesGUI;
+	TrivaViewSelected viewSelected;
 
 	GUI_Base *guiBaseWindow;
 	GUI_CombinedCounter *guiCombinedCounterWindow;
@@ -73,6 +75,7 @@ protected:
 
 	
 public:
+	TrivaViewSelected getViewSelected ();
 	void openPajeTraceFile( wxString path);
 	ProtoView *getView () { return view; };
 	void setStatusMessage (wxString message);
