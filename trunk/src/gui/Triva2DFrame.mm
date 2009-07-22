@@ -326,6 +326,7 @@ void Triva2DFrame::OnKeyDownEvent(wxKeyEvent& evt)
 			@"output-%d-%d-%d.ps", maxDepthToDraw, w, h];
 		wxPrintData data;
 		data.SetPrintMode (wxPRINT_MODE_FILE);
+		data.SetPaperId(wxPAPER_A3);
 		data.SetFilename (NSSTRINGtoWXSTRING(filename));
 		wxPostScriptDC dc(data);
 		if (!dc.Ok()){
