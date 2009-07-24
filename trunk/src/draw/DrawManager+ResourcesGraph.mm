@@ -114,12 +114,15 @@ void DrawManager::drawContainersIntoResourcesGraphBase (id entity)
 				if (name == nil){
 					NSLog (@"ERROR");
 				}else{
-					Ogre::SceneNode *node;
-					node = mSceneMgr->getSceneNode(
-						[name cString]);
-					NSPoint loc;
-					loc = [viewController nextLocationRGForNodeName: name];
-					this->drawOneContainerIntoResourcesGraphBase ((id) sub, node, loc);
+					if ([viewController mustDrawContainer: sub]){
+						NSLog (@"Will draw %@", [sub name]);
+						Ogre::SceneNode *node;
+						node = mSceneMgr->getSceneNode(
+							[name cString]);
+						NSPoint loc;
+						loc = [viewController nextLocationRGForNodeName: name];
+						this->drawOneContainerIntoResourcesGraphBase ((id) sub, node, loc);
+					}
 				}
 				this->drawContainersIntoResourcesGraphBase((id)sub);
 			}
