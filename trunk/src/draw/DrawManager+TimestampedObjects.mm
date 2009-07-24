@@ -205,10 +205,8 @@ void DrawManager::drawLinks (PajeEntityType *et, id container)
 			toTime: [viewController globalEndTime]
 			minDuration: 1/[viewController pointsPerSecond]];
 	while ((ent = [en4 nextObject]) != nil) {
-		NSString *ide = [NSString stringWithFormat: @"%@-%@-%@-%@",
-		[ent startTime], [ent value], [et name], [container name]];
 		NSString *idescenenode;
-		idescenenode = [NSString stringWithFormat: @"%@-sn", ide];
+		idescenenode = [NSString stringWithFormat: @"%@-sn", [ent key]];
 		Ogre::SceneNode *n = mSceneMgr->getRootSceneNode ();
 		try {
 			n->removeChild([idescenenode cString]);
@@ -220,10 +218,8 @@ void DrawManager::drawLinks (PajeEntityType *et, id container)
 			toTime: [viewController startTime]
 			minDuration: 1/[viewController pointsPerSecond]];
 	while ((ent = [en4 nextObject]) != nil) {
-		NSString *ide = [NSString stringWithFormat: @"%@-%@-%@-%@",
-		[ent startTime], [ent value], [et name], [container name]];
 		NSString *idescenenode;
-		idescenenode = [NSString stringWithFormat: @"%@-sn", ide];
+		idescenenode = [NSString stringWithFormat: @"%@-sn", [ent key]];
 		Ogre::SceneNode *n = mSceneMgr->getRootSceneNode ();
 		try {
 			n->removeChild([idescenenode cString]);
