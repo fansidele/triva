@@ -184,13 +184,12 @@
 		}else{
 			x = atoi (vstr);
 		}
-		x = x + 1;
 		char str[100];
-		snprintf (str, 100, "%d", x);
+		snprintf (str, 100, "%d", x+1);
 		agsafeset (node, "numberOfContainers", str, str);
 
 		//setting width and height of the node
-		double x2 = sqrt ((double)x);
+		double x2 = sqrt ((double)x+1);
 		snprintf (str, 100, "%.f", x2);
 		agsafeset (node, "width", str, str);
 		agsafeset (node, "height", str, str);
