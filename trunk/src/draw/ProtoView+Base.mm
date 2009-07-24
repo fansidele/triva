@@ -320,6 +320,10 @@
 {
 	BOOL answer = NO;
 
+	if (container == [self rootInstance]){
+		return answer;
+	}
+
 	NSEnumerator *en = [[self containedTypesForContainerType:
 		[self entityTypeForEntity: container]] objectEnumerator];
 
