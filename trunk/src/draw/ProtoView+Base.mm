@@ -171,13 +171,19 @@
 			while ((sub = [en2 nextObject]) != nil) {
 				NSString *n = [sub name];
 				NSString *nf;
-				
-				nf = [resourcesGraph searchWithPartialName: n];
-				if (nf == nil){
-					NSLog (@"error, throw exception?");
-				}else{
-					[resourcesGraph incrementNumberOfContainersOf: nf];
+			
+				if ([self mustDrawContainer: sub]){
+					nf = [resourcesGraph searchWithPartialName:n];
+					if (nf == nil){
+						NSLog (@"Resource Graph Configuration\
+						file is complete: it should have a \
+						node named %@, according to the \
+						provided application data.", nf);
+					}else{
+						[resourcesGraph incrementNumberOfContainersOf: nf];
+					}
 				}
+				[self recalculateResourcesGraphWith: sub];
 			}
 		}
 	}
