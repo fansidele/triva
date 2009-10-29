@@ -2,39 +2,66 @@
 
 \frame
 {
-  \frametitle{Introduction}
-  \framesubtitle{Jean-Marc - 10 to 15 minutes}
-
-  \begin{itemize}
-  \item The institutions involved (UFRGS/UFSM/Grenoble/...)
-  \item The French-Brazilian collaboration in the domain
-  \item The importance of the visualization of parallel applications performance
-  \item The tutorial outline
-  \end{itemize}
+  \frametitle{Motivations}
+%  \framesubtitle{Jean-Marc - 10 to 15 minutes}
+\begin{block}{Scientific context}
+\begin{itemize}
+\item Potentially large size parallel applications.
+\item Executing on large size parallel systems:\\
+– Cluster and Grids \\
+- Desktop grids\\
+- P2P systems...
+\end{itemize}
+\end{block}
+\begin{block}{Keypoints}
+\begin{itemize}
+\item Distributed heterogeneous resources
+\item Dynamicity of the architecture
+\item Scalability (huge amount of data)
+\end{itemize}
+\end{block}
+%  \begin{itemize}
+%  \item The institutions involved (UFRGS/UFSM/Grenoble/...)
+%  \item The French-Brazilian collaboration in the domain
+%  \item The importance of the visualization of parallel applications performance
+%  \item The tutorial outline
+%  \end{itemize}
 }
+\begin{frame}
+\frametitle{Objective}
+\begin{block}{Help users find performance errors:}
+- Lack of parallelism, \\
+- bottlenecks, overheads.\\
+- Behavior analysis method
+\end{block}
+\begin{block}{Based on:}
+- Execution model\\
+- Measurement environment\\
+- Visualisation model
+\end{block}
+\end{frame}
+\begin{frame}
+\frametitle{Methodology}
+\begin{block}{Execution model}
+\begin{itemize}
+\item Abstraction of the parallel execution
+\item Observability of states
+\item Practical interest of states
+\item Quality of observation (interaction tracer/application)
+\end{itemize}
+\end{block}
+\begin{block}{Architecture model}
+\begin{itemize}
+\item Structured set of resources
+\item Datation model
+\item Manipulation language of states and events
+\end{itemize}
+\end{block}
+\end{frame}
 \begin{frame}
 
 \frametitle{Collaboration (a not so short story)}
-\begin{block}{Academic  work}
-\begin{description}
-\item Parallel computing in Grenoble (1990)
-\item Tracing and monitoring parallel programs
-\item Multi-threaded applications
-\item Generic visualization tool
-\item Distributed Java applications
-\item Trace d'architecture
-\item System monitoring 
-\item ...
-\end{description}
-\end{block}
-\begin{block}{Industrial aspects}
-\begin{description}
-\item ST microelectronics : embedded systems
-\item Bull : Middleware optimization
-\item Orange-lab : Distributed computing
-\item ...
-\end{description}
-\end{block}
+\includegraphics[width=0.8\textwidth]{img/collaboration.pdf}
 \end{frame}
 
 
