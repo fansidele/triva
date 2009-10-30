@@ -8,7 +8,7 @@
 \begin{itemize}
 \item Potentially large size parallel applications.
 \item Executing on large size parallel systems:\\
-– Cluster and Grids \\
+- Clusters and Grids \\
 - Desktop grids\\
 - P2P systems...
 \end{itemize}
@@ -47,7 +47,7 @@
 \begin{itemize}
 \item Program designer
 \item Program certifier
-\item Commercial selling parallel machines
+\item Parallel programs vendors
 \end{itemize}
 \end{block}
 \begin{block}{Why ?}
@@ -70,7 +70,7 @@
 \frametitle{Methodology}
 \begin{block}{Execution model}
 \begin{itemize}
-\item Abstraction of the parallel execution
+\item Abstraction of the parallel execution : state / event model
 \item Observability of states
 \item Practical interest of states
 \item Quality of observation (interaction tracer/application)
@@ -87,6 +87,7 @@
 \begin{frame}
 
 \frametitle{Collaboration (a not so short story)}
+\begin{center}\large{UFSM, UFRGS, University of Grenoble, INRIA}\end{center}
 \includegraphics[width=1.1\textwidth]{img/collaboration.pdf}
 \end{frame}
 
@@ -102,6 +103,7 @@ citer DeRose
 \frametitle{Main difficulties}
 \begin{description}
 \item Large scale
+\item 
 \item Dynamicity of the observed infrastructure
 \item Coherence of views
 \item Level of abstraction
@@ -109,13 +111,72 @@ citer DeRose
 \end{frame}
 
 \begin{frame}
-\frametitle{Typical examples (use case)}
-\begin{description}
-\item Multi-threaded application : un vieux (pierre-éric) ou un kaapi 
-\item Resource usage monitoring : monitoring de grille 
-\item Ad-hoc networks (distributed protocol) : travail de Corine
-\item 
-\item Object based distributed applications : multi-niveuau java
-\item Multi-agent systems : exemple paams
-\end{description}
+\frametitle{Multithreaded Applications (1999)}
+\includegraphics[width=\textwidth]{figures/Multithreaded.pdf}
+
 \end{frame}
+
+
+\begin{frame}
+\frametitle{Consensus in ad-hoc networks}
+\includegraphics[width=\textwidth]{figures/Consensus1.pdf}
+~\\
+~\\
+~\\
+\includegraphics[width=\textwidth]{figures/Consensus2.pdf}
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Coordinator Crashes}
+
+\includegraphics[width=\textwidth]{figures/trace3a.pdf}
+~\\
+~\\
+~\\
+\includegraphics[width=\textwidth]{figures/trace3b.pdf}
+~\\
+~\\
+~\\
+\includegraphics[width=\textwidth]{figures/trace3c.pdf}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{ Crash and recovery}
+
+\includegraphics[width=\textwidth]{figures/trace4a.pdf}
+~\\~\\
+\includegraphics[width=\textwidth]{figures/trace4b.pdf}
+~\\~\\
+\includegraphics[width=\textwidth]{figures/trace4c.pdf}%4d
+~\\~\\
+\includegraphics[width=\textwidth]{figures/trace4d.pdf}%5a
+
+\end{frame}
+
+
+%\begin{frame}
+%\frametitle{Sequence of crash}
+%\includegraphics[width=\textwidth]{figures/trace6a.pdf}
+%~\\
+%\includegraphics[width=\textwidth]{figures/trace6b.pdf}
+%~\\
+%\includegraphics[width=\textwidth]{figures/trace6c.pdf}
+%
+%
+%\end{frame}
+
+
+%\begin{frame}
+%\frametitle{Typical examples (use case)}
+%\begin{description}
+%\item Multi-threaded application : un vieux (pierre-éric) ou un kaapi 
+%\item Resource usage monitoring : monitoring de grille 
+%\item Ad-hoc networks (distributed protocol) : travail de Corine
+%\item 
+%\item Object based distributed applications : multi-niveau java
+%\item Multi-agent systems : exemple paams
+%\end{description}
+%\end{frame}
