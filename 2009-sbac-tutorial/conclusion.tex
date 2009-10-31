@@ -1,47 +1,94 @@
-\section{Conclusion}
+\section{Synthesis}
 
 \frame
 {
   \frametitle{Conclusion}
-  \framesubtitle{Jean-Marc - 10 minutes}
-  concept : trace de systèmes parallèles / multi-niveau (?) / structural information
-  algorithmic solutions : collecte de trace / moteur de simu / moteur de visualisation
-  Case studies : 
-  Industrial application :
+  \begin{block}{Concepts}
+  \begin{itemize}
+  \item Trace of parallel/distributed applications
+  \item Multi-level trace
+  \item Structural informations
+  \end{itemize}
+    \end{block}
+    \pause
+  \begin{block}{Algorithmic solutions}
+  \begin{itemize}
+  \item Trace collection (quality of tracers, time estimation...)
+  \item Simulation engine based on the state/event model
+  \item Visualization  engine (interactivity, extensibility, scalability) 
+  \end{itemize}
+    \end{block}
+    \pause
+  \begin{block}{Case studies}
+  \begin{itemize}
+  \item Parallel systems (MPI, Kaapi,...) Distributed middlewares, Wireless networks, Multi-agent systems,...
+  \item Industrial application :Embedded systems, Jboss analysis, resilient protocols 
+  \end{itemize}
+  \end{block}
 }
-
+\subsection{Research directions}
 \frame
 {
   \frametitle{Research directions}
-  
-- aggregation : modèles temps/espace/objets désagrégation
-- clustering
+\begin{block}{Scalability}
+\begin{itemize}
+\item Aggregation : in time, space, structure (level, operators,...)
+\item Clustering : criteria of clustering
+  \end{itemize}
+  \end{block}
+\pause
+\begin{block}{User capabilities}
+\begin{itemize}
+\item Observation environment : instrumentation, information synthesis
+\item Visualization environment : visual objects manipulation (time, objects, or structure selection),  coherent multiple views
+  \end{itemize}
+  \end{block}
+\pause
+\begin{block}{Global properties and trace mining}
+\begin{itemize}
+\item Query language for traces (filtering/aggregation/selection)
+\item Automatic data mining in the trace (patterns, properties)
+ \end{itemize}
+  \end{block}
 
-interaction with user 
-- measurment, trace,...
 
-au sens IHM
-- manipulation of the trace, selection de parties de trace
-
-Global properties
-- interrogation de la trace (langage)
-- automatic  pattern search
-
-P=NP
 }
 \begin{frame}
 \frametitle{Bibliography}
-papiers principaux
-
-
-thèse Benhur
-thèse Lucas
-chap chassin
+\tiny{
+\begin{block}{Main papers in the domain}
+\begin{itemize}
+\item \textbf{{P}erformance {M}easurement {I}ntrusion and {P}erturbation {A}nalysis},
+Malony, A. D., Reed, A., and Wijshoff, H.A.G., IEEE TPDS 3(4) 1992\\
+\item \textbf{What to Draw? When to Draw? An Essay on Parallel Program Visualization},
+Miller, B.P., JPDC, 18, 1993\\
+\item \textbf{SvPablo: A Multi-Language Architecture-Independent Performance Analysis System}
+DeRose, L. and Reed, D.A.,ICPP 1999\\
+\item \textbf{{VAMPIR}: Visualization and Analysis of {MPI} Resources} Nagel, W.E., Arnold, A. Weber, M., Hoppe, H-C.,  and Solchenbach, K. 
+Supercomputer 1996
+\end{itemize}
+\end{block}
+\begin{block}{Some of our papers}
+\begin{itemize}
+\item \textbf{Monitoring Parallel Programs for Performance Tuning in Cluster Environments} Chassin de Kergommeaux, J. and Maillet, E. and Vincent, J.-M.,
+chap 6 in book Parallel Program Development for Cluster Computing:
+Methodology, Tools and Integrated Environments, Nova Science, 2001
+\item \textbf{Visualisation interactive et extensible de programmes parall\`eles à base de processus légers} Benhur de Oliveira Stein PhD 1999
+\item \textbf{Observations et analyses quantitatives multi-niveaux d’applications \`a objets r\'eparties} François-Gael Ottogalli 2001
+\item \textbf{Some Visualization Model applied to the Analysis of Parallel Applications} Lucas Mello Schnorr 2009
+\end{itemize}
+\end{block}
+}
 \end{frame}
 \begin{frame}
 \frametitle{}
 Thanks for your attention
 
 
-The slides of the tutorial are \url{http://....}
+The slides of the tutorial will be at\\
+ \texttt{http://www.inf.ufrgs.br/$\sim$lmschnorr}
+
+\vfill
+
+Thanks to : Brazil/France collaboration projects, CAPES, CNPq, COFECUB, CNRS, INRIA, UFSM, UFRGS, UJF, Grenoble INP,  and many colleagues providing nice ideas, improving the code and sharing drinks with us
 \end{frame}

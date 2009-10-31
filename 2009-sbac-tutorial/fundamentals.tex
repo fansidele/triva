@@ -1,23 +1,112 @@
 \section{Trace Fundamentals}
-
+\subsection{Fundamentals}
+\newcommand\subitem[1]{\\{\scriptsize #1}}
 \frame
 {
-  \frametitle{Trace Fundamentals}
-  \framesubtitle{Benhur - 30 minutes}
+  \frametitle{Performance Analysis}
 
   \begin{itemize}
-  \item Techniques for trace collection
-  \item Clock synchronization
-  \item Performance Optimizations during trace generation (buffer, ...)
-  \item Language for Trace Description 
-  \item The Paj\'e Simulator and the Visualization Model
-       \begin{itemize}
-       \item Container,State,Event,Variable,Link
-       \end{itemize}
-  \item Visual Representation of common patterns with Paj\'e
-    \begin{itemize}
-    \item point-to-point and collective communications
-    \item ...
-    \end{itemize}
+     \item{Collect performance data}
+     \item{Process collected data}
+     \item{Visualize resulting data}
   \end{itemize}
 }
+\frame
+{
+  \frametitle{Performance data collection}
+  \begin{itemize}
+      \item Sampling
+\subitem{let the system run, and from time to time, take a look at the state of the system}
+%produces execution profiles
+      \item Event-driven
+\subitem{get informed of interesting changes in system state}
+\only<2>{
+      \begin{itemize}
+      \item Counting
+\subitem{count number of times event happened}
+      \item Timing
+\subitem{accumulate time passed between pairs of events}
+      \item Tracing
+\subitem{register events for later processing}
+\subitem{usually also registers sampling data}
+      \end{itemize}
+}
+  \end{itemize}
+}
+\frame
+{
+  \frametitle{Some tracing problems}
+  \begin{itemize}
+%Techniques for trace collection
+  \item Clock synchronization
+  \item Timer resolution
+  \item Intrusion
+\subitem{time / memory / I-O / influence in program behaviour}
+  \item Observability
+\subitem{level of abstraction}
+  \item Matching independently captured events
+\subitem{different machines or abstraction levels}
+  \item Amount of data
+  \item Bufferization
+  \item Trace file format
+  \end{itemize}
+}
+\frame
+{
+  \frametitle{Trace data processing}
+
+  \begin{itemize}
+  \item Merge / reorder
+  \item Complement information
+  \item Filter
+  \item Reduce
+  \item Prepare data for visualization
+  \end{itemize}
+}
+\subsection{Paj\'e}
+\frame
+{
+\frametitle{Paj\'e} 
+\begin{itemize}
+\item Generalize visualization tool, remove semantics
+\item Trace file contains
+\begin{itemize}
+\item{hierarchy of containers}
+\item{each can contain combination of containers and visualizable entities}
+\end{itemize}
+\item Entities can contain extra data, used for filtering and reducing; user knows semantics
+\item Tool keeps original data and processed data, user chooses views
+\end{itemize}
+}
+\frame
+{
+\frametitle{Paj\'e} 
+
+\begin{itemize}
+\item[] Possible entity types
+\begin{itemize}
+\item \textbf{event} to represent events that happen at a certain
+instant
+\item \textbf{state} to represent that
+a given container was in a certain state during a certain period of
+time
+\item\textbf{link} to represent a relation
+between two containers that started at a certain instant and
+finished at a possibly different instant
+\item\textbf{variable} used to represent the evolution in time of a
+certain value associated to a container
+\end{itemize}
+\end{itemize}
+}
+%  \begin{itemize}
+%  \item Language for Trace Description 
+%  \item The Paj\'e Simulator and the Visualization Model
+%       \begin{itemize}
+%       \item[] Container,State,Event,Variable,Link
+%       \end{itemize}
+%  \item Visual Representation of common patterns with Paj\'e
+%    \begin{itemize}
+%    \item point-to-point and collective communications
+%    \item ...
+%    \end{itemize}
+%  \end{itemize}
