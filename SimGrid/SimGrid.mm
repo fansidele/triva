@@ -105,8 +105,8 @@ SimGridDraw *draw = NULL;
 	NSEnumerator *en;
 	id host, link;
 	id platformType = [self entityTypeWithName: @"platform"];
-	id hostType = [self entityTypeWithName: @"host"];
-	id linkType = [self entityTypeWithName: @"link"];
+	id hostType = [self entityTypeWithName: @"HOST"];
+	id linkType = [self entityTypeWithName: @"LINK"];
 	id platformContainer = [self containerWithName: @"simgrid-platform" type: platformType];
 
 	/* find min and max power */
@@ -174,7 +174,7 @@ SimGridDraw *draw = NULL;
 - (NSArray *) getHosts
 {
 	id platformType = [self entityTypeWithName: @"platform"];
-	id hostType = [self entityTypeWithName: @"host"];
+	id hostType = [self entityTypeWithName: @"HOST"];
 	id platformContainer = [self containerWithName: @"simgrid-platform" type: platformType];
 
 	return [[self enumeratorOfContainersTyped: hostType inContainer: platformContainer] allObjects];
@@ -183,7 +183,7 @@ SimGridDraw *draw = NULL;
 - (NSArray *) getLinks
 {
 	id platformType = [self entityTypeWithName: @"platform"];
-	id linkType = [self entityTypeWithName: @"link"];
+	id linkType = [self entityTypeWithName: @"LINK"];
 	id platformContainer = [self containerWithName: @"simgrid-platform" type: platformType];
 
 	//removing loopback
