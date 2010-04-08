@@ -1,28 +1,38 @@
 include $(GNUSTEP_MAKEFILES)/common.make
 
-CC=$(CXX)
-
-PACKAGE_NAME=TimeInterval
-BUNDLE_NAME=TimeInterval
-BUNDLE_EXTENSION=.bundle
-BUNDLE_INSTALL_DIR=$(GNUSTEP_BUNDLES)/@PROJECT_NAME@
-TimeInterval_PRINCIPAL_CLASS=TimeInterval
-
-TimeInterval_OBJC_FILES = 
-TimeInterval_OBJCC_FILES= \
-	TimeInterval.mm \
-	TimeIntervalWindow.mm \
-	TimeIntervalWindowAuto.mm \
-	SliceDraw.mm
-
-TimeInterval_INCLUDE_DIRS += @CPPFLAGS@
-TimeInterval_LIB_DIRS += @LIBS@
-TimeInterval_LDFLAGS += @LDFLAGS@
-TimeInterval_BUNDLE_LIBS += -lGeneral
+VERSION = 0.1
+PACKAGE_NAME = TimeInterval
+BUNDLE_NAME = TimeInterval
+TimeInterval_PRINCIPAL_CLASS = TimeInterval
+BUNDLE_EXTENSION = .bundle
+BUNDLE_INSTALL_DIR = $(GNUSTEP_BUNDLES)/@PROJECT_NAME@
 
 
+#
+# Resource files
+#
+TimeInterval_RESOURCE_FILES = \
+Resources/TimeInterval.gorm \
+
+
+#
+# Header files
+#
+TimeInterval_HEADER_FILES = \
+TimeInterval.h \
+SliceView.h
+
+#
+# Class files
+#
+TimeInterval_OBJC_FILES = \
+TimeInterval.m \
+SliceView.m
+
+#
+# Makefiles
+#
+-include GNUmakefile.preamble
+include $(GNUSTEP_MAKEFILES)/aggregate.make
 include $(GNUSTEP_MAKEFILES)/bundle.make
-
-after-distclean::
-after-all::
-after-clean:: 
+-include GNUmakefile.postamble
