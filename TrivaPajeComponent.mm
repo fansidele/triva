@@ -140,6 +140,17 @@
 		   SquarifiedTreemap \
 		) )" propertyList];
 #endif
+#ifdef HAVE_GRAPHCONFIGURATION
+	graph = [@"(  \
+		( FileReader, \
+		   PajeEventDecoder, \
+                   PajeSimulator, \
+                   StorageController, \
+                   TimeSliceAggregation, \
+		   GraphConfiguration, \
+		   GraphView \
+		) )" propertyList];
+#endif
 #ifdef HAVE_SIMGRID
 	graph = [@"(  \
 		( FileReader, \
@@ -149,6 +160,7 @@
                    TypeFilter, \
 		   TimeInterval, \
                    TimeSliceAggregation, \
+		   GraphConfiguration, \
 		   SimGrid, \
 		   GraphView \
 		) )" propertyList];

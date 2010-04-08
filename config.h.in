@@ -12,6 +12,9 @@
 /* Define to 1 if you have the <float.h> header file. */
 #undef HAVE_FLOAT_H
 
+/* Enable GraphConfiguration */
+#undef HAVE_GRAPHCONFIGURATION
+
 /* Define if HCMReader visualization components is activated */
 #undef HAVE_HCMREADER
 

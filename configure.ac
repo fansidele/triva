@@ -132,6 +132,21 @@ if test x$enableSimGrid = xyes ; then
 	FLAG=yes
 fi
 
+##########################
+### GraphConfiguration ###
+##########################
+AC_ARG_ENABLE(GraphConfiguration,
+  [  --enable-GraphConfiguration],
+  [enableGraphConfiguration=yes])
+if test x$enableGraphConfiguration = xyes ; then
+	check_for_graphviz
+	check_for_cairo
+	CONFIG_FILES="$CONFIG_FILES TimeSliceAggregation/GNUmakefile GraphConfiguration/GNUmakefile GraphView/GNUmakefile"
+	PROJECTS="$PROJECTS TimeSliceAggregation GraphConfiguration GraphView"
+	AC_DEFINE([HAVE_GRAPHCONFIGURATION], [1], [Enable GraphConfiguration])
+	FLAG=yes
+fi
+
 #########################
 ### SquarifiedTreemap ###
 #########################
