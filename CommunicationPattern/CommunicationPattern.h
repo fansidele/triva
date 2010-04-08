@@ -31,8 +31,7 @@
 @end
 
 @interface CommunicationPattern (ProtoViewBase)
-- (BOOL) applicationGraphWithSize: (NSString *) sizeStr
-		andGraphvizAlgorithm: (NSString *) algo;
+- (BOOL) applicationGraphWithAlgorithm: (NSString *) algo;
 - (BOOL) mustDrawContainer: (id) container;
 
 //to call methods of previous paje filters

@@ -32,6 +32,7 @@
 	window->Show();
 	window->setController ((id)self);
 	window->configureZoom (nv);
+	window->get3DFrame()->setView((id)self);
 
 	/* configure myself */
 	applicationGraphPosition = [Position positionWithAlgorithm:@"graphviz"];

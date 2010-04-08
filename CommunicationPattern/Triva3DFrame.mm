@@ -22,6 +22,33 @@ Triva3DFrame::Triva3DFrame(wxWindow *parent, wxWindowID id,
 
 }
 
+/*
+       dot - filter for drawing directed graphs
+       neato - filter for drawing undirected graphs
+       twopi - filter for radial layouts of graphs
+       circo - filter for circular layout of graphs
+       fdp - filter for drawing undirected graphs
+*/
+
+
+void Triva3DFrame::OnKeyUpEvent(wxKeyEvent& evt)
+{
+	if (evt.GetKeyCode() == 80 && evt.AltDown()) { /* ALT + P */
+		this->takeScreenshot();
+	}else if (evt.GetKeyCode() == 49 && evt.AltDown()){ /* ALT + 1 - dot*/ 
+		[view applicationGraphWithAlgorithm: @"dot"];
+	}else if (evt.GetKeyCode() == 50 && evt.AltDown()){ /* ALT + 2 - neato*/
+		[view applicationGraphWithAlgorithm: @"neato"];
+	}else if (evt.GetKeyCode() == 51 && evt.AltDown()){ /* ALT + 3 - twopi*/
+		[view applicationGraphWithAlgorithm: @"twopi"];
+	}else if (evt.GetKeyCode() == 52 && evt.AltDown()){ /* ALT + 4 - circo*/
+		[view applicationGraphWithAlgorithm: @"circo"];
+	}else if (evt.GetKeyCode() == 53 && evt.AltDown()){ /* ALT + 5 - fdp*/
+		[view applicationGraphWithAlgorithm: @"fdp"];
+	}
+	evt.Skip();
+}
+
 void Triva3DFrame::takeScreenshot ()
 {
 	std::cout << mRenderWindow << std::endl;

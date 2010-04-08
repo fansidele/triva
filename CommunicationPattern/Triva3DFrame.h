@@ -1,6 +1,7 @@
 #ifndef _TRIVA3DFRAME_H_
 #define _TRIVA3DFRAME_H_
 
+#include <Foundation/Foundation.h>
 #include "wxOgreRenderWindow.h"
 
 class Triva3DFrame : public wxOgreRenderWindow
@@ -8,6 +9,7 @@ class Triva3DFrame : public wxOgreRenderWindow
 private:
 	Ogre::Root *mRoot;
 	Ogre::SceneManager *mSceneMgr;
+	id view;
 
 public:
 	Triva3DFrame();
@@ -17,6 +19,10 @@ public:
 			long style = wxSUNKEN_BORDER,
 			const wxValidator &validator = wxDefaultValidator);
 	void takeScreenshot ();
+	void setView (id v) { view = v; }
+
+
+	void OnKeyUpEvent(wxKeyEvent& evt);
 };
 
 #endif

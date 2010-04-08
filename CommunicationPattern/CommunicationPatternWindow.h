@@ -25,6 +25,7 @@ public:
 	void zoomOut();
 	void setController (id f) { filter = f; };
 	void configureZoom (double pointsPerSec);
+	Triva3DFrame *get3DFrame() {return m3DFrame; }
 };
 
 #endif // __CommunicationPatternWindow__

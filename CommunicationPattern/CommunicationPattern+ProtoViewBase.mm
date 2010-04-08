@@ -1,7 +1,7 @@
 #include "CommunicationPattern.h"
 
 @implementation CommunicationPattern (ProtoViewBase)
-- (BOOL) applicationGraphWithSize: (NSString *) sizeStr andGraphvizAlgorithm: (NSString *) algo;
+- (BOOL) applicationGraphWithAlgorithm: (NSString *) algo
 {
 	if (applicationGraphPosition == nil){
 		applicationGraphPosition = [Position positionWithAlgorithm:@"graphviz"];
