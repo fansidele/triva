@@ -36,6 +36,8 @@
 	nodes = nil;
 	edges = nil;
 
+	userPositions = NO;
+
 	return self;
 }
 
