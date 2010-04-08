@@ -175,6 +175,7 @@
 
 		/* calculate final value */
 		[tree doFinalValueWith: [NSSet set]];
+		NSLog (@"Done");
 	}
 	/* let notification goes on */
 	[outputComponent timeSelectionChanged];
