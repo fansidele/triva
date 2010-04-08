@@ -3,9 +3,6 @@
 /* Define to 1 if you have the `bzero' function. */
 #undef HAVE_BZERO
 
-/* Define if CommunicationPattern visualization components is activated */
-#undef HAVE_COMMUNICATIONPATTERN
-
 /* Define if Dot output is activated */
 #undef HAVE_DOT
 
@@ -33,21 +30,8 @@
 /* Define to 1 if you have the <memory.h> header file. */
 #undef HAVE_MEMORY_H
 
-/* Define if NetworkTopology visualization components is activated */
-#undef HAVE_NETWORKTOPOLOGY
-
-/* Define if NUCAView visualization components is activated */
-#undef HAVE_NUCAVIEW
-
-/* Define if SimGrid visualization components is activated */
-#undef HAVE_SIMGRID
-
 /* Define if SquarifiedTreemap visualization components is activated */
 #undef HAVE_SQUARIFIEDTREEMAP
-
-/* Define if SquarifiedTreemap-GNUstep visualization components is activated
-   */
-#undef HAVE_SQUARIFIEDTREEMAP_GNUSTEP
 
 /* Define to 1 if stdbool.h conforms to C99. */
 #undef HAVE_STDBOOL_H
