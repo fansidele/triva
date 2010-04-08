@@ -53,14 +53,12 @@
 
 /* search-based methods */
 - (Treemap *) searchWith: (NSPoint) point
-			limitToDepth: (int) d
-			andSelectedValues: (NSSet *) values;
+			limitToDepth: (int) d;
 
 - (NSComparisonResult) compareValue: (Treemap *) other;
 
 /* creating the tree */
-- (Treemap *) createTreeWithTimeSliceTree: (TimeSliceTree *) orig
-		withValues: (NSSet *) values;
+- (Treemap *) createTreeWithTimeSliceTree: (TimeSliceTree *) orig;
 
 /* highlight methods */
 - (BOOL) highlighted;

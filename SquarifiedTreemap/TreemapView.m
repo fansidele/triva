@@ -95,8 +95,7 @@
 {
 	NSRect b = [self bounds];
 	current = [filter treemapWithWidth: b.size.width
-                                         andHeight: b.size.height
-                                         andValues: [NSSet set]];
+                                         andHeight: b.size.height];
 	[self drawTreemap: current];
 }
 
@@ -143,8 +142,7 @@
 	NSPoint p;
 	p = [self convertPoint:[event locationInWindow] fromView:nil];
 
-	id node = [current searchWith: p limitToDepth: maxDepthToDraw
-		andSelectedValues: [NSSet set]];
+	id node = [current searchWith: p limitToDepth: maxDepthToDraw];
 	if (node != highlighted){
 		[self setHighlight: highlighted highlight: NO];
 		[self setHighlight: node highlight: YES];

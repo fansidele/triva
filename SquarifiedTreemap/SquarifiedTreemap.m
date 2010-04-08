@@ -36,6 +36,7 @@
 		[timeSliceTree release];
 	}
 	timeSliceTree = [self timeSliceTree];
+	[timeSliceTree doFinalValue];
 	[timeSliceTree retain];
 
 	if ([view maxDepthToDraw] > [timeSliceTree maxDepth]){
@@ -62,12 +63,10 @@
 
 - (Treemap *) treemapWithWidth: (int) width
                      andHeight: (int) height
-                     andValues: (NSSet *) values
 {
 	static double prev_w = 0, prev_h = 0;
 	if (width == 0 || height == 0
-				|| width > 1000000 || height > 1000000
-				|| values == nil){
+				|| width > 1000000 || height > 1000000){
 		return nil;
 	}
 	if (prev_w == width &&
@@ -76,13 +75,11 @@
             !mustBeUpdated){
 		return currentTreemap;
 	}
-	[timeSliceTree doFinalValueWith: values];
 	if (currentTreemap != nil){
 		[currentTreemap release];
 	}
 	currentTreemap = [[Treemap alloc] init];
-	[currentTreemap createTreeWithTimeSliceTree: timeSliceTree
-				withValues: values];
+	[currentTreemap createTreeWithTimeSliceTree: timeSliceTree];
 	[currentTreemap calculateTreemapWithWidth: (float)width
 				andHeight: (float)height];
 	prev_w = width;

@@ -59,7 +59,7 @@
 - (float) finalValue;
 - (void) setFinalValue: (float) f;
 - (void) doAggregation;
-- (float) doFinalValueWith: (NSSet *) set;
+- (float) doFinalValue;
 
 - (void) addChild: (TimeSliceTree*) child;
 - (NSMutableDictionary *) destinations;

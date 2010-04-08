@@ -222,27 +222,22 @@
 	[self setTimeSliceColors: colors];
 }
 
-- (float) doFinalValueWith: (NSSet *) set
+- (float) doFinalValue
 {
 	int i;
 	float value = 0;
 	if ([children count] != 0){
 		// bottom-up
 		for (i = 0; i < [children count]; i++){
-			value += [[children objectAtIndex: i] doFinalValueWith: set];
+			value += [[children objectAtIndex: i] doFinalValue];
 		}
 	}else{
 		// stop recursion
 		id key;
 		NSEnumerator *keys = [aggregatedValues keyEnumerator];
 		while ((key = [keys nextObject])){
-			if ([set count] != 0){
-				if ([set containsObject: key]){
-					value += [[aggregatedValues objectForKey: key] floatValue];
-				}
-			}else{
-				value += [[aggregatedValues objectForKey: key] floatValue];
-			}
+			value += [[aggregatedValues objectForKey: key]
+				floatValue];
 		}
 	}
 	[self setFinalValue: value];

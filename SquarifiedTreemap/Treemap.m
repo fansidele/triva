@@ -259,7 +259,6 @@
  */
 - (Treemap *) searchWith: (NSPoint) point
 		limitToDepth: (int) d
-		andSelectedValues: (NSSet *) values
 {
 	double x = point.x;
 	double y = point.y;
@@ -293,8 +292,7 @@
 				child = [children objectAtIndex: i];
 				if ([child val]){
 					ret = [child searchWith: point
-					      limitToDepth: d
-						andSelectedValues: values];
+					      limitToDepth: d];
 					if (ret != nil){
 						break;
 					}
@@ -333,7 +331,6 @@
 }
 
 - (Treemap *) createTreeWithTimeSliceTree: (TimeSliceTree *) orig
-	withValues: (NSSet *) values
 {
 	[self setName: [orig name]];
         [self setValue: [orig finalValue]];
@@ -351,29 +348,16 @@
 	NSEnumerator *keys = [aggValues keyEnumerator];
 	id key;
 	while ((key = [keys nextObject])){
-		if ([values count] != 0){
-			if ([values containsObject: key]){
-				Treemap *aggNode = [[Treemap alloc] init];
-				[aggNode setName: key];
-				[aggNode setValue: [[aggValues objectForKey: key] floatValue]];
-				[aggNode setDepth: [orig depth] + 1];
-				[aggNode setMaxDepth: [orig maxDepth]];
-				[aggNode setColor: [aggEntities objectForKey: key]];
-				[aggNode setParent: self];
-				[aggregatedChildren addObject: aggNode];
-				[aggNode release];
-			}
-		}else{
-			Treemap *aggNode = [[Treemap alloc] init];
-			[aggNode setName: key];
-			[aggNode setValue: [[aggValues objectForKey: key] floatValue]];
-			[aggNode setDepth: [orig depth] + 1];
-			[aggNode setMaxDepth: [orig maxDepth]];
-			[aggNode setColor: [aggEntities objectForKey: key]];
-			[aggNode setParent: self];
-			[aggregatedChildren addObject: aggNode];
-			[aggNode release];
-		}
+		Treemap *aggNode = [[Treemap alloc] init];
+		[aggNode setName: key];
+		[aggNode setValue: [[aggValues objectForKey: key] floatValue]];
+		[aggNode setDepth: [orig depth] + 1];
+		[aggNode setMaxDepth: [orig maxDepth]];
+		[aggNode setColor: [aggEntities objectForKey: key]];
+		[aggNode setParent: self];
+		[aggregatedChildren addObject: aggNode];
+		[aggNode release];
+		
 	}
 
 	/* recurse normally */
@@ -381,8 +365,7 @@
 	for (i = 0; i < [[orig children] count]; i++){
 		Treemap *node = [[Treemap alloc] init];
 		node = [node createTreeWithTimeSliceTree:
-				[[orig children] objectAtIndex: i]
-				withValues: values];
+				[[orig children] objectAtIndex: i]];
 		[node setParent: self];
 		[children addObject: node];
 		[node release];

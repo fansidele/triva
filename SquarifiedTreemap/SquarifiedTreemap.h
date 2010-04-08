@@ -34,8 +34,7 @@
 	BOOL mustBeUpdated;
 }
 - (Treemap *) treemapWithWidth: (int) width
-                     andHeight: (int) height
-                     andValues: (NSSet *) values;
+                     andHeight: (int) height;
 @end
 
 #include "TreemapView.h"
