@@ -23,6 +23,7 @@ int main (int argc, const char **argv){
 	NSApplication *app = [NSApplication sharedApplication];
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
   TrivaPajeComponent *triva = [[TrivaPajeComponent alloc] init];
+NS_DURING
 
   //parsing args
   struct arguments arguments;
@@ -53,6 +54,10 @@ int main (int argc, const char **argv){
   }
   NSLog (@"End of reading - %@ to %@.", [triva startTime], [triva endTime]);
   [triva setSelectionStartTime: [triva startTime] endTime: [triva endTime]];
+NS_HANDLER
+  NSLog (@"%@", localException);
+  return 1;
+NS_ENDHANDLER
 
   //run the application
   [app run];
