@@ -114,4 +114,35 @@
 	[ret setValues: values];
 	return [ret autorelease];
 }
+
+- (void) setGradientType: (NSString *) type withValue: (double) val
+                withMax: (double) max withMin: (double) min
+{
+	[gradientType release];
+	gradientType = type;
+	[gradientType retain];
+	gradientValue = val;
+	gradientMax = max;
+	gradientMin = min;
+}
+
+- (NSString *) gradientType
+{
+	return gradientType;
+}
+
+- (double) gradientValue
+{
+	return gradientValue;
+}
+
+- (double) gradientMax
+{
+	return gradientMax;
+}
+
+- (double) gradientMin
+{
+	return gradientMin;
+}
 @end

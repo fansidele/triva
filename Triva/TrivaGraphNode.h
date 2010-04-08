@@ -15,7 +15,11 @@
 	BOOL color; // indicates if a single color is used
 		//if color is YES, values has just one key = 1
 	BOOL gradient; //indicates if a gradient color is used
-		//if gradient is YES, values has a color, a max and a min value
+		//if gradient is YES, the following variables must be defined
+	NSString *gradientType;
+	double gradientValue;
+	double gradientMax;
+	double gradientMin;
 
 	BOOL drawable; //is it ready to draw?
 }
@@ -35,6 +39,13 @@
 - (BOOL) color;
 - (BOOL) gradient;
 - (BOOL) drawable;
+
+- (void) setGradientType: (NSString *) type withValue: (double) val
+		withMax: (double) max withMin: (double) min;
+- (NSString *) gradientType;
+- (double) gradientValue;
+- (double) gradientMax;
+- (double) gradientMin;
 @end
 
 #endif
