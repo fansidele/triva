@@ -128,7 +128,6 @@ void GraphDraw::drawNode (cairo_t *cr, TrivaGraphNode *node)
 				accum_y += type_nh;
 			}
 		}
-		return;
 	}else if ([node gradient]){
 		//TODO
 	}
