@@ -64,10 +64,10 @@ void GraphDraw::drawPlatformState (wxDC &dc)
 
 		id typesAndValues = [filter enumeratorOfValuesForNode: node];
 		en2 = [typesAndValues keyEnumerator];
-		int x = X(pos,bb,w);
-		int y = Y(pos,bb,h);
-		int nw = size.size.width;
-		int nh = size.size.height;
+		double x = X(pos,bb,w);
+		double y = Y(pos,bb,h);
+		double nw = size.size.width;
+		double nh = size.size.height;
 
 		double accum_y = 0;
 		while ((type = [en2 nextObject])){
@@ -76,13 +76,13 @@ void GraphDraw::drawPlatformState (wxDC &dc)
 			double value = [[typesAndValues objectForKey: type] doubleValue];
 			if (value){
 				dc.SetBrush(wxBrush(NSCOLORtoWXCOLOUR (color), wxSOLID));
-				int type_nw = nw;
-				int type_nh = nh*value;
+				double type_nw = nw;
+				double type_nh = nh*value;
 
-				int a = x - nw/2;
-				int b = y - nh/2 + accum_y;
-				int c = type_nw;
-				int d = type_nh;
+				double a = x - nw/2;
+				double b = y - nh/2 + accum_y;
+				double c = type_nw;
+				double d = type_nh;
 				dc.DrawRectangle (a, b, c, d);
 				accum_y += type_nh;
 			}
@@ -98,19 +98,17 @@ void GraphDraw::drawPlatformState (wxDC &dc)
 		NSPoint src_pos = [filter positionForNode: src];
 		NSPoint dst_pos = [filter positionForNode: dst];
 		NSRect bb = [filter sizeForGraph];
-		float bw = [filter sizeForEdge: edge].size.width;
-//		NSLog (@"%@ (%@ -- %@) bw=%f (%fpx)", [edge name], 
-//			[src name], [dst name], bw, TRANSFORM(bw));
+		double bw = [filter sizeForEdge: edge].size.width;
 
-		int x1 = src_pos.x / bb.size.width * w;
-		int y1 = src_pos.y / bb.size.height * h;
-		int x2 = dst_pos.x / bb.size.width * w;
-		int y2 = dst_pos.y / bb.size.height * h;
+		double x1 = src_pos.x / bb.size.width * w;
+		double y1 = src_pos.y / bb.size.height * h;
+		double x2 = dst_pos.x / bb.size.width * w;
+		double y2 = dst_pos.y / bb.size.height * h;
 
-		float distance = sqrt (	(x2*x2 - 2*x2*x1 + x1*x1) + (y2*y2 - 2*y2*y1 + y1*y1) );
-		float k = 10/distance; // remove 10% of the distance (5% on each endpoint)
-		int x = x1 + k*x2 - k*x1;
-		int y = y1 + k*y2 - k*y1;
+		double distance = sqrt (	(x2*x2 - 2*x2*x1 + x1*x1) + (y2*y2 - 2*y2*y1 + y1*y1) );
+		double k = 10/distance; // remove 10% of the distance (5% on each endpoint)
+		double x = x1 + k*x2 - k*x1;
+		double y = y1 + k*y2 - k*y1;
 		x1 = x;
 		y1 = y;
 		k = 1 - k;
@@ -119,16 +117,16 @@ void GraphDraw::drawPlatformState (wxDC &dc)
 		x2 = x;
 		y2 = y;
 
-		int ox1,oy1;
-		int ox2,oy2;
-		int ox3,oy3;
-		int ox4,oy4;
+		double ox1,oy1;
+		double ox2,oy2;
+		double ox3,oy3;
+		double ox4,oy4;
 
-		float topx = -y2 + y1;
-		float topy = x2 - x1;
-		float norma_de_top = sqrt ( (topx*topx) + (topy*topy) );
+		double topx = -y2 + y1;
+		double topy = x2 - x1;
+		double norma_de_top = sqrt ( (topx*topx) + (topy*topy) );
 
-		float bwe = bw/2; //split the value in 2 to calculate points
+		double bwe = bw/2; //split the value in 2 to calculate points
 
 		ox1 = topx/norma_de_top*bwe + x2;
 		oy1 = topy/norma_de_top*bwe + y2;
@@ -151,9 +149,7 @@ void GraphDraw::drawPlatformState (wxDC &dc)
 		while ((type = [en2 nextObject])){
 			NSColor *color = [filter colorForEntityType: [filter entityTypeWithName: type]];
 			double value = [[typesAndValues objectForKey: type] doubleValue];
-			float e = bw * value;
-//			NSLog (@"\t%@ -> %f\% (%fpx)", type, value, e);
-//			NSLog (@"\t%@ %f (value=%f, link_bw=%f) from %f", [type name], e, value, bw, TRANSFORM(bw));
+			double e = bw * value;
 			if (e){
 	
 				ox3 = lucx/norma_de_luc*e + ox1;
@@ -201,10 +197,10 @@ void GraphDraw::drawPlatform (wxDC &dc)
 		NSRect size = [filter sizeForNode: node];
 		NSRect bb = [filter sizeForGraph];
 
-		int x = X(pos,bb,w);
-		int y = Y(pos,bb,h);
-		int nw = size.size.width;
-		int nh = size.size.height;
+		double x = X(pos,bb,w);
+		double y = Y(pos,bb,h);
+		double nw = size.size.width;
+		double nh = size.size.height;
 
 		dc.SetPen(wxPen(wxT("Black"), 1, wxSOLID));
 		dc.SetBrush(wxBrush(wxT("White"), wxSOLID));
@@ -221,24 +217,24 @@ void GraphDraw::drawPlatform (wxDC &dc)
 		NSPoint dst_pos = [filter positionForNode: dst];
 
 		NSRect bb = [filter sizeForGraph];
-		float bw = [filter sizeForEdge: edge].size.width;
+		double bw = [filter sizeForEdge: edge].size.width;
 
-		int x1 = src_pos.x / bb.size.width * w;
-		int y1 = src_pos.y / bb.size.height * h;
-		int x2 = dst_pos.x / bb.size.width * w;
-		int y2 = dst_pos.y / bb.size.height * h;
+		double x1 = src_pos.x / bb.size.width * w;
+		double y1 = src_pos.y / bb.size.height * h;
+		double x2 = dst_pos.x / bb.size.width * w;
+		double y2 = dst_pos.y / bb.size.height * h;
 
-		float e = bw;
+		double e = bw;
 	
-		int ox1,oy1;
-		int ox2,oy2;
-		int ox3,oy3;
-		int ox4,oy4;
+		double ox1,oy1;
+		double ox2,oy2;
+		double ox3,oy3;
+		double ox4,oy4;
 
-		float distance = sqrt (	(x2*x2 - 2*x2*x1 + x1*x1) + (y2*y2 - 2*y2*y1 + y1*y1) );
-		float k = 10/distance; // remove 10% of the distance (5% on each endpoint)
-		int x = x1 + k*x2 - k*x1;
-		int y = y1 + k*y2 - k*y1;
+		double distance = sqrt (	(x2*x2 - 2*x2*x1 + x1*x1) + (y2*y2 - 2*y2*y1 + y1*y1) );
+		double k = 10/distance; // remove 10% of the distance (5% on each endpodouble)
+		double x = x1 + k*x2 - k*x1;
+		double y = y1 + k*y2 - k*y1;
 		x1 = x;
 		y1 = y;
 		k = 1 - k;
@@ -248,9 +244,9 @@ void GraphDraw::drawPlatform (wxDC &dc)
 		y2 = y;
 
 		//recalculate distance because x1,y1 and x2,y2 changed
-		float ndistance = sqrt ( (y2*y2 - 2*y2*y1 + y1*y1) + (x2*x2 - 2*x2*x1 + x1*x1) );
-		float top1 = y2 - y1;
-		float top2 = - x2 + x1;
+		double ndistance = sqrt ( (y2*y2 - 2*y2*y1 + y1*y1) + (x2*x2 - 2*x2*x1 + x1*x1) );
+		double top1 = y2 - y1;
+		double top2 = - x2 + x1;
 
 		e /= 2; //split the value in 2 to calculate points
 
@@ -311,10 +307,10 @@ id GraphDraw::findHostAt (int mx, int my)
 		NSRect size = [filter sizeForNode: node];
 		NSRect bb = [filter sizeForGraph];
 
-		int nw = size.size.width;
-		int nh = size.size.height;
-		int x = X(pos,bb,w);
-		int y = Y(pos,bb,h);
+		double nw = size.size.width;
+		double nh = size.size.height;
+		double x = X(pos,bb,w);
+		double y = Y(pos,bb,h);
 	
 		if (mx > (x - nw/2) && mx < (x + nw/2) &&
 			my > (y - nh/2) && my < (y + nh/2)){
