@@ -142,15 +142,6 @@ agsafeset (n, (char*)"height", str_height, default_size); \
 			__FUNCTION__, __LINE__);
 		return;
 	}
-	//setting requirements:
-	//	node size is related to what*
-	//	link size is related to what*
-	//*for now, it is related to fixed attributes (power, bandwidth)
-	//but it should be decided by the user
-	[self settingGraphvizLayoutAttributes];
-
-	//run graphviz layout function
-	[self doGraphvizLayout];
 
 	//take graphviz information (node position mainly)
 	//and prepare each TrivaGraphNode node/edge to be draw by next component
@@ -282,16 +273,17 @@ agsafeset (n, (char*)"height", str_height, default_size); \
 - (void) createPlatformGraph
 {
 	//close before starting a new one
-	if (platformGraph) {
+	if (platformGraph){
 		[nodes release];
 		[edges release];
 		[sizes release];
-		nodes = [[NSMutableArray alloc] init];
-		edges = [[NSMutableArray alloc] init];
-		sizes = [[NSMutableDictionary alloc] init];
 		agclose (platformGraph); 
+		platformGraph = NULL;
 	}
 	platformGraph = agopen ((char *)"platformGraph", AGRAPHSTRICT);
+	nodes = [[NSMutableArray alloc] init];
+	edges = [[NSMutableArray alloc] init];
+	sizes = [[NSMutableDictionary alloc] init];
 
 	//creating graph based on simgrid types
 	NSEnumerator *en;
@@ -401,6 +393,17 @@ agsafeset (n, (char*)"height", str_height, default_size); \
 	//	"\t Bandwidth [%f,%f] dif=%f",
 	//		minPower, maxPower, maxPower-minPower,
 	//		minBandwidth, maxBandwidth, maxBandwidth-minBandwidth);
+
+
+	//setting requirements:
+	//	node size is related to what*
+	//	link size is related to what*
+	//*for now, it is related to fixed attributes (power, bandwidth)
+	//but it should be decided by the user
+	[self settingGraphvizLayoutAttributes];
+
+	//run graphviz layout function
+	[self doGraphvizLayout];
 }
 
 
@@ -514,29 +517,37 @@ agsafeset (n, (char*)"height", str_height, default_size); \
 // notifications from previous components
 - (void) entitySelectionChanged
 {
-	[self hierarchyChanged];
+	[self createPlatformGraph];
+	[self timeSelectionChanged];
 }
 
 - (void) containerSelectionChanged
 {
-	[self hierarchyChanged];
+	[self createPlatformGraph];
+	[self timeSelectionChanged];
 }
 
 - (void) dataChangedForEntityType: (PajeEntityType *) type
 {
-	[self hierarchyChanged];
+	[self createPlatformGraph];
+	[self timeSelectionChanged];
 }
 
 - (void) timeSelectionChanged
 {
-	[self hierarchyChanged];
+	static int first_time = 1;
+	if (first_time){
+		first_time = 0;
+	}else{
+		[self redefinePlatformGraphLayout];
+		[super timeSelectionChanged];
+	}
 }
 
 - (void) hierarchyChanged
 {
 	[self createPlatformGraph];
-	[self redefinePlatformGraphLayout];
-	[super hierarchyChanged];
+	[self timeSelectionChanged];
 }
 
 
