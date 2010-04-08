@@ -4,6 +4,7 @@
 #include <wx/wx.h>
 #include <Foundation/Foundation.h>
 #include <GNUstepBase/GSConfig.h>
+#include "config.h"
 
 class TrivaApp : public wxApp
 {

@@ -36,11 +36,28 @@ bool TrivaApp::OnInit()
 //	SetTopWindow (window);
 //	SetExitOnFrameDelete (true);
 
+#ifdef HAVE_HCMREADER
+	TrivaPajeComponent *trivaPaje = [[TrivaPajeComponent alloc] init];
+	id reader = [trivaPaje componentWithName: @"HCMReader"];
+        /* 3 - thread to wait data from hcm and then send to paje */
+        [NSThread
+                detachNewThreadSelector: @selector (waitForDataFromHCM:)
+                toTarget:reader
+                withObject: nil];
+
+        /* simulator HCM producer */
+        [NSThread
+                detachNewThreadSelector: @selector (producer:)
+                toTarget:reader
+                withObject: nil];
+#endif
+
 	gnustepLoopTimer.SetOwner (this);
 	this->Connect (wxID_ANY, wxEVT_TIMER,
 		wxTimerEventHandler(TrivaApp::runGNUstepLoop));
 	gnustepLoopTimer.Start(5,wxTIMER_CONTINUOUS);
 
+#ifndef HAVE_HCMREADER
 	if (argc > 1){
 //		NSAutoreleasePool *poolread = [[NSAutoreleasePool alloc] init];
 		TrivaPajeComponent *trivaPaje = [[TrivaPajeComponent alloc] init];
@@ -65,6 +82,7 @@ bool TrivaApp::OnInit()
 		NSLog (@"Please, provide a .trace file");
 		exit(1);
 	}
+#endif
 	return true;
 }
 

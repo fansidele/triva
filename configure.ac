@@ -150,6 +150,19 @@ if test x$enableNUCAView = xyes ; then
 	FLAG=yes
 fi
 
+###################################
+### HCMReader + SquarifiedTreemap #
+###################################
+AC_ARG_ENABLE(HCMReader,
+  [  --enable-HCMReader],
+  [enableHCMReader=yes])
+if test x$enableHCMReader = xyes ; then
+	CONFIG_FILES="$CONFIG_FILES HCMReader/GNUmakefile TimeSliceAggregation/GNUmakefile SquarifiedTreemap/GNUmakefile"
+	PROJECTS="$PROJECTS HCMReader TimeSliceAggregation SquarifiedTreemap"
+	AC_DEFINE([HAVE_HCMREADER], [1], [Define if HCMReader visualization components is activated])
+	FLAG=yes
+fi
+
 check_for_gtk
 check_for_wx
 

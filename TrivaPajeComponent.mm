@@ -189,6 +189,16 @@
                    Dot \
 		) )" propertyList];
 #endif
+#ifdef HAVE_HCMREADER
+	graph = [@"(  \
+		( HCMReader, \
+		   PajeEventDecoder, \
+                   PajeSimulator, \
+                   StorageController, \
+		   TimeSliceAggregation, \
+		   SquarifiedTreemap \
+		) )" propertyList];
+#endif
     return graph;
 }
 
