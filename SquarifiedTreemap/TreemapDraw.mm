@@ -44,8 +44,10 @@ void TreemapDraw::OnPaint(wxPaintEvent& evt)
 
 void TreemapDraw::drawTimeSliceText (wxDC &dc)
 {
-	NSString *msg = [NSString stringWithFormat: @"%@-%@",
-		[filter selectionStartTime], [filter selectionEndTime]];
+	NSString *msg = [NSString stringWithFormat: @"%.4f - %.4f depth=%d",
+		[[[filter selectionStartTime] description] doubleValue],
+		[[[filter selectionEndTime] description] doubleValue],
+		maxDepthToDraw];
 	dc.DrawText (NSSTRINGtoWXSTRING(msg), 0, 0);
 }
 
