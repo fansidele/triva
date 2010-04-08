@@ -16,51 +16,112 @@
 	return self;
 }
 
-- (void) timeSliceAt: (id) instance
-              ofType: (id) type
-            withNode: (TimeSliceTree *) node
+/* VARIABLE: consider time-interval and value to aggregate */
+- (void) timeSliceOfVariableAt: (id) instance
+		withType: (id) type
+		withNode: (TimeSliceTree *) node
 {
-	NSEnumerator *en3;
-	PajeEntity *ent;
-	NSMutableDictionary *nodeValues;
-	NSMutableDictionary *nodeEntities;
+	NSMutableDictionary *timeSliceValues = nil;
+	NSMutableDictionary *timeSliceColors = nil;
+	NSString *name = [type name]; //the name is the variable type name
+	double integrated = 0;
+	id ent = nil;
 
-
-	nodeValues = [node timeSliceValues];	
-	if (!nodeValues){
-		nodeValues = [NSMutableDictionary dictionary];
-		[node setTimeSliceValues: nodeValues];
+	//getting the existing timeSliceValues for this node
+	timeSliceValues = [node timeSliceValues];	
+	if (!timeSliceValues){
+		timeSliceValues = [NSMutableDictionary dictionary];
+		[node setTimeSliceValues: timeSliceValues];
 	}
-	nodeEntities = [node pajeEntities];
-	if (!nodeEntities){
-		nodeEntities = [NSMutableDictionary dictionary];
-		[node setPajeEntities: nodeEntities];
-	}
-
-	//limitating for now the algorithm to state types
-	if (!([type isKindOf: [PajeVariableType class]] ||
-		[type isKindOf: [PajeStateType class]])){
-		return;
+	timeSliceColors = [node timeSliceColors];
+	if (!timeSliceColors){
+		timeSliceColors = [NSMutableDictionary dictionary];
+		[node setTimeSliceColors: timeSliceColors];
 	}
 
-	en3 = [self enumeratorOfEntitiesTyped:type
+	NSEnumerator *en;
+	en = [self enumeratorOfEntitiesTyped:type
 		inContainer:instance
 		fromTime: sliceStartTime
 		toTime: sliceEndTime 
-		minDuration:0.001];
-	while ((ent = [en3 nextObject]) != nil) {
-		NSString *name = [ent name];
-		NSDate *entSTime = [ent startTime];
-		NSDate *entETime = [ent endTime];
+		minDuration:0];
+	while ((ent = [en nextObject]) != nil) {
+		NSDate *start = [ent startTime];
+		NSDate *end = [ent endTime];
 
-		if ([name isEqualToString: @""]){
-			name = [ent entityType];
+		//controlling the time-slice border
+		start = [start laterDate: sliceStartTime];
+		end = [end earlierDate: sliceEndTime];
+
+		//calculting the duration and getting value
+		double duration = [end timeIntervalSinceDate: start];
+		double value = [[ent value] doubleValue];
+
+		//integrating in time
+		integrated += duration * value;
+	}
+	[timeSliceValues setValue: [NSNumber numberWithDouble: integrated]
+			   forKey: name];
+	[timeSliceColors setValue: [self colorForEntityType: type] forKey: name];
+}
+
+/* STATE: consider only time-interval to aggregate */
+- (void) timeSliceOfStateAt: (id) instance
+		withType: (id) type
+		withNode: (TimeSliceTree *) node
+{
+	NSMutableDictionary *timeSliceValues = nil;
+	NSMutableDictionary *timeSliceColors = nil;
+	NSEnumerator *en = nil;
+	id ent = nil;
+
+	//getting the existing timeSliceValues for this node
+	timeSliceValues = [node timeSliceValues];	
+	if (!timeSliceValues){
+		timeSliceValues = [NSMutableDictionary dictionary];
+		[node setTimeSliceValues: timeSliceValues];
+	}
+	timeSliceColors = [node timeSliceColors];
+	if (!timeSliceColors){
+		timeSliceColors = [NSMutableDictionary dictionary];
+		[node setTimeSliceColors: timeSliceColors];
+	}
+
+	//intializing state values to zero (in timeSliveValues dict) if they do not exist yet
+	NSArray *allValuesOfStateType = [self allValuesForEntityType: type];
+	en = [allValuesOfStateType objectEnumerator];
+	while ((ent = [en nextObject]) != nil) {
+		NSString *currentValue = [timeSliceValues objectForKey: ent];
+		if (!currentValue) {
+			[timeSliceValues setObject: [NSNumber numberWithDouble: 0]
+					    forKey: ent];
 		}
+	}
+	//setting colors for values of the entity type
+	en = [allValuesOfStateType objectEnumerator];
+	while ((ent = [en nextObject]) != nil) {
+		[timeSliceColors setObject: [self colorForValue: ent
+						   ofEntityType: type]
+			forKey: ent];
+	}
 
-		entSTime = [entSTime laterDate: sliceStartTime];
-		entETime = [entETime earlierDate: sliceEndTime];
+	//integrating in time for the selected time slice
+	en = [self enumeratorOfEntitiesTyped:type
+		inContainer:instance
+		fromTime: sliceStartTime
+		toTime: sliceEndTime 
+		minDuration:0];
+	while ((ent = [en nextObject]) != nil) {
+		NSDate *start = [ent startTime];
+		NSDate *end = [ent endTime];
+		NSString *name = [ent value]; //the name is the value of state
 
-		float duration = [entETime timeIntervalSinceDate: entSTime];
+		//controlling the time-slice border
+		start = [start laterDate: sliceStartTime];
+		end = [end earlierDate: sliceEndTime];
+
+		//calculting the duration and getting value
+		double duration = [end timeIntervalSinceDate: start];
 
 		if (considerExclusiveDuration){
 			float exclusiveDuration = [ent exclusiveDuration];
@@ -69,24 +130,35 @@
 			}
 		}
 
-		NSString *val = (NSString *)[nodeValues objectForKey: name];
-		if (val){
-			float value = [val floatValue];
-			value += duration;
-			NSString *newVal;
-			newVal = [NSString stringWithFormat: @"%f", value];
-			[nodeValues setObject: newVal forKey: name];	
-		}else{
-			NSString *newVal;
-			newVal = [NSString stringWithFormat: @"%f", duration];
-			[nodeValues setObject: newVal forKey: name];	
-		}
+		//integrating the value of state in time
+		double integrated = 1 * duration; //value of state is 1
 
-		//defining paje entities
-		if (![nodeEntities objectForKey: name]){
-			[nodeEntities setObject: ent forKey: name];
-		}
+		//getting the current value
+		double value = [[timeSliceValues objectForKey: name] doubleValue];
+		value += integrated;
+
+		//saving in the timeSliceValues dict
+		[timeSliceValues setObject: [NSNumber numberWithDouble: value]
+				    forKey: name];
 	}
+}
+
+		
+
+- (void) timeSliceAt: (id) instance
+              ofType: (id) type
+            withNode: (TimeSliceTree *) node
+{
+	if ([type isKindOf: [PajeVariableType class]]){
+		[self timeSliceOfVariableAt: instance
+			withType: type
+			withNode: node];
+	}else if ([type isKindOf: [PajeStateType class]]){
+		[self timeSliceOfStateAt: instance
+			withType: type
+			withNode: node];
+	}
+	return;
 }
 
 - (TimeSliceTree *) createInstanceHierarchy: (id) instance

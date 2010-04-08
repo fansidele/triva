@@ -59,14 +59,14 @@
 	[rect retain];
 }
 
-- (void) setPajeEntity: (id) entity
+- (void) setColor: (NSColor *) c
 {
-	pajeEntity = entity; //not retained
+	color = c;
 }
 
-- (id) pajeEntity
+- (NSColor *) color
 {
-	return pajeEntity;
+	return color;
 }
 
 - (NSArray *) aggregatedChildren
@@ -359,7 +359,7 @@
 	aggregatedChildren = [[NSMutableArray alloc] init];
 
 	NSDictionary *aggValues = [orig aggregatedValues];
-	NSDictionary *aggEntities = [orig pajeEntities];
+	NSDictionary *aggEntities = [orig timeSliceColors];
 	NSEnumerator *keys = [aggValues keyEnumerator];
 	id key;
 	while ((key = [keys nextObject])){
@@ -370,7 +370,7 @@
 				[aggNode setValue: [[aggValues objectForKey: key] floatValue]];
 				[aggNode setDepth: [orig depth] + 1];
 				[aggNode setMaxDepth: [orig maxDepth]];
-				[aggNode setPajeEntity: [aggEntities objectForKey: key]];
+				[aggNode setColor: [aggEntities objectForKey: key]];
 				[aggNode setParent: self];
 				[aggregatedChildren addObject: aggNode];
 				[aggNode release];
@@ -381,7 +381,7 @@
 			[aggNode setValue: [[aggValues objectForKey: key] floatValue]];
 			[aggNode setDepth: [orig depth] + 1];
 			[aggNode setMaxDepth: [orig maxDepth]];
-			[aggNode setPajeEntity: [aggEntities objectForKey: key]];
+			[aggNode setColor: [aggEntities objectForKey: key]];
 			[aggNode setParent: self];
 			[aggregatedChildren addObject: aggNode];
 			[aggNode release];

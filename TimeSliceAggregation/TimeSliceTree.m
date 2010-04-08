@@ -5,31 +5,31 @@
 {
 	self = [super init];
 	timeSliceValues = nil;
+	timeSliceColors = nil;
 	aggregatedValues = nil;
-	pajeEntities = nil;
 	return self;
 }
 
 - (void) dealloc
 {
-	[pajeEntities release];
 	[timeSliceValues release];
+	[timeSliceColors release];
 	[aggregatedValues release];
 	[super dealloc];
 }
 
-- (void) setPajeEntities: (NSMutableDictionary *) entities
+- (void) setTimeSliceColors: (NSMutableDictionary *) colors
 {
-	if (pajeEntities){
-		[pajeEntities release];
+	if (timeSliceColors){
+		[timeSliceColors release];
 	}
-	pajeEntities = entities;
-	[pajeEntities retain];
+	timeSliceColors = colors;
+	[timeSliceColors retain];
 }
 
-- (NSMutableDictionary *) pajeEntities
+- (NSMutableDictionary *) timeSliceColors
 {
-	return pajeEntities;
+	return timeSliceColors;
 }
 
 - (void) setTimeSliceValues: (NSMutableDictionary *) values
@@ -93,7 +93,7 @@
 			[[children objectAtIndex: i] testTree];
 		}
 	}
-	NSLog (@"%@ - %@ - %.2f", name, pajeEntities, finalValue);
+	NSLog (@"%@ - %@ - %.2f", name, timeSliceColors, finalValue);
 }
 
 - (void) doAggregation
@@ -127,7 +127,17 @@
 		}
 	}
 	[self setAggregatedValues: agg];
-	[self setPajeEntities: [[children objectAtIndex: 0] pajeEntities]];
+
+	//do the magic to define colors for this node
+	NSEnumerator *en;
+	id child;
+	en = [children objectEnumerator];
+	NSMutableDictionary *colors = [NSMutableDictionary dictionary];
+	//TODO: merge this loop with the previous for
+	while ((child = [en nextObject])){
+		[colors addEntriesFromDictionary: [child timeSliceColors]];
+	}
+	[self setTimeSliceColors: colors];
 }
 
 - (float) doFinalValueWith: (NSSet *) set

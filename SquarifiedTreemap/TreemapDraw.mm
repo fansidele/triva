@@ -59,7 +59,7 @@ void TreemapDraw::OnMouseEvent(wxMouseEvent& evt)
 		                andY: y
 		                limitToDepth: maxDepthToDraw
 				andSelectedValues: selectedValues];
-		[selectedValues addObject: [[node pajeEntity] value]];
+		[selectedValues addObject: [node name]];
 		highlighted = nil;
 		Refresh();
 		return;
@@ -231,34 +231,30 @@ void TreemapDraw::drawTreemapNode (id node, int offset,
 
 wxColour TreemapDraw::findColorForNode (id treemap)
 {
-        wxColour color;
-        if (filter && ![filter isContainerEntityType:
-                        (PajeEntityType *)[[treemap pajeEntity] entityType]]) {
-                NSColor *c = [filter colorForValue: [treemap name]
-                        ofEntityType: (PajeEntityType *)[[treemap pajeEntity] entityType]];
-                if (c != nil){
-                        float red, green, blue, alpha;
-                        c = [c colorUsingColorSpaceName:
-                                @"NSCalibratedRGBColorSpace"];
-                        [c getRed: &red green: &green
-                                blue: &blue alpha: &alpha];
-                        if ([[c colorSpaceName] isEqualToString:
-                                        @"NSCalibratedRGBColorSpace"]){
-                                float red, green, blue, alpha;
-                                [c getRed: &red green: &green
-                                        blue: &blue alpha: &alpha];
-                                unsigned char r = (unsigned char)(red*255);
-                                unsigned char g = (unsigned char)(green*255);
-                                unsigned char b = (unsigned char)(blue*255);
-                                unsigned char a = (unsigned char)(alpha*255);
-                                color = wxColour (r,g,b,a);
-                        }
-                }
-        }else{
-                /* fallback to white color */
-                color = wxColour (wxT("#FFFFFF"));
-        }
-        return color;
+	wxColour color;
+	NSColor *c = [treemap color];
+	if (c){
+		float red, green, blue, alpha;
+		c = [c colorUsingColorSpaceName:
+			@"NSCalibratedRGBColorSpace"];
+		[c getRed: &red green: &green
+			blue: &blue alpha: &alpha];
+		if ([[c colorSpaceName] isEqualToString:
+				@"NSCalibratedRGBColorSpace"]){
+			float red, green, blue, alpha;
+			[c getRed: &red green: &green
+				blue: &blue alpha: &alpha];
+			unsigned char r = (unsigned char)(red*255);
+			unsigned char g = (unsigned char)(green*255);
+			unsigned char b = (unsigned char)(blue*255);
+			unsigned char a = (unsigned char)(alpha*255);
+			color = wxColour (r,g,b,a);
+		}
+	}else{
+		/* fallback to white color */
+		color = wxColour (wxT("#FFFFFF"));
+	}
+	return color;
 }
 
 void TreemapDraw::drawTreemap (id treemap, wxDC &dc)

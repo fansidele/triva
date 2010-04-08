@@ -10,15 +10,14 @@
 	NSMutableDictionary *timeSliceValues;
 	float finalValue;
 
-	/* associating colors, containers ..., to values */
-	NSMutableDictionary *pajeEntities;
-	//PajeContainer *pajeContainer;
+	/* registering colors */
+	NSMutableDictionary *timeSliceColors;
 
 	/* for Aggregation category */
 	NSMutableDictionary *aggregatedValues;
 }
-- (void) setPajeEntities: (NSMutableDictionary *) entities;
-- (NSMutableDictionary *) pajeEntities;
+- (void) setTimeSliceColors: (NSMutableDictionary *) colors;
+- (NSMutableDictionary *) timeSliceColors;
 - (void) setTimeSliceValues: (NSMutableDictionary *) values;
 - (NSMutableDictionary *) timeSliceValues;
 - (void) setAggregatedValues: (NSMutableDictionary *) aggValues;

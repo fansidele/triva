@@ -1,6 +1,7 @@
 #ifndef __TREEMAP_H_
 #define __TREEMAP_H_
 #include <Foundation/Foundation.h>
+#include <AppKit/AppKit.h>
 #include "Tree.h"
 #include "TimeSliceAggregation/TimeSliceTree.h"
 
@@ -25,15 +26,15 @@
 {
 	TreemapRect *rect;
 	float value;
-	id pajeEntity; /* the paje entity connected to this node */
+	NSColor *color; //the color for this node
 	NSMutableArray *aggregatedChildren;
 }
 - (void) setValue: (float) v;
 - (float) val;
 - (TreemapRect *) treemapRect;
 - (void) setTreemapRect: (TreemapRect *)r;
-- (void) setPajeEntity: (id) entity;
-- (id) pajeEntity;
+- (void) setColor: (NSColor *) c;
+- (NSColor *) color;
 - (NSArray *) aggregatedChildren;
 
 /* squarified treemap methods */
