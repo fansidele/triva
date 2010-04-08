@@ -46,6 +46,7 @@ AC_SUBST(LIBS)
 
 AC_CONFIG_FILES(GNUmakefile
 TimeInterval/GNUmakefile
+OgreView/GNUmakefile
 MemoryAccess/GNUmakefile
 TimeSliceAggregation/GNUmakefile
 SquarifiedTreemap/GNUmakefile)
