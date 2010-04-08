@@ -20,6 +20,7 @@ class SliceDraw;
 #include <wx/statline.h>
 #include <wx/checkbox.h>
 #include <wx/slider.h>
+#include <wx/textctrl.h>
 #include <wx/button.h>
 #include <wx/panel.h>
 #include <wx/frame.h>
@@ -49,6 +50,7 @@ class TimeIntervalWindowAuto : public wxFrame
 		
 		// Virtual event handlers, overide them in your derived class
 		virtual void sliderChanged( wxScrollEvent& event ){ event.Skip(); }
+		virtual void preciseSliceEntered( wxCommandEvent& event ){ event.Skip(); }
 		virtual void apply( wxCommandEvent& event ){ event.Skip(); }
 		virtual void animationSliderChanged( wxScrollEvent& event ){ event.Skip(); }
 		virtual void play( wxCommandEvent& event ){ event.Skip(); }
@@ -61,8 +63,8 @@ class TimeIntervalWindowAuto : public wxFrame
 		wxCheckBox* timeSliceCheckBox;
 		wxSlider* startSlider;
 		wxSlider* sizeSlider;
-		wxStaticText* timeSelectionStart;
-		wxStaticText* timeSelectionEnd;
+		wxTextCtrl* timeSelectionStart;
+		wxTextCtrl* timeSelectionEnd;
 		SliceDraw* sliceDraw;
 		wxSlider* forwardSlider;
 		wxStaticText* forward;

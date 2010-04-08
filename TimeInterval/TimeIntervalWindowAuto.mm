@@ -78,17 +78,11 @@ TimeIntervalWindowAuto::TimeIntervalWindowAuto( wxWindow* parent, wxWindowID id,
 	wxGridSizer* gSizer15;
 	gSizer15 = new wxGridSizer( 1, 3, 0, 0 );
 	
-	timeSelectionStart = new wxStaticText( this, wxID_ANY, wxT("0"), wxDefaultPosition, wxDefaultSize, wxALIGN_CENTRE );
-	timeSelectionStart->Wrap( -1 );
-	timeSelectionStart->SetFont( wxFont( wxNORMAL_FONT->GetPointSize(), 70, 90, 90, false, wxEmptyString ) );
+	timeSelectionStart = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER );
+	gSizer15->Add( timeSelectionStart, 0, wxALL, 5 );
 	
-	gSizer15->Add( timeSelectionStart, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
-	
-	timeSelectionEnd = new wxStaticText( this, wxID_ANY, wxT("0"), wxDefaultPosition, wxDefaultSize, wxALIGN_CENTRE );
-	timeSelectionEnd->Wrap( -1 );
-	timeSelectionEnd->SetFont( wxFont( wxNORMAL_FONT->GetPointSize(), 70, 90, 90, false, wxEmptyString ) );
-	
-	gSizer15->Add( timeSelectionEnd, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
+	timeSelectionEnd = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER );
+	gSizer15->Add( timeSelectionEnd, 0, wxALL, 5 );
 	
 	m_button4 = new wxButton( this, wxID_ANY, wxT("Apply"), wxDefaultPosition, wxDefaultSize, 0 );
 	gSizer15->Add( m_button4, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
@@ -179,6 +173,8 @@ TimeIntervalWindowAuto::TimeIntervalWindowAuto( wxWindow* parent, wxWindowID id,
 	sizeSlider->Connect( wxEVT_SCROLL_THUMBTRACK, wxScrollEventHandler( TimeIntervalWindowAuto::sliderChanged ), NULL, this );
 	sizeSlider->Connect( wxEVT_SCROLL_THUMBRELEASE, wxScrollEventHandler( TimeIntervalWindowAuto::sliderChanged ), NULL, this );
 	sizeSlider->Connect( wxEVT_SCROLL_CHANGED, wxScrollEventHandler( TimeIntervalWindowAuto::sliderChanged ), NULL, this );
+	timeSelectionStart->Connect( wxEVT_COMMAND_TEXT_ENTER, wxCommandEventHandler( TimeIntervalWindowAuto::preciseSliceEntered ), NULL, this );
+	timeSelectionEnd->Connect( wxEVT_COMMAND_TEXT_ENTER, wxCommandEventHandler( TimeIntervalWindowAuto::preciseSliceEntered ), NULL, this );
 	m_button4->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( TimeIntervalWindowAuto::apply ), NULL, this );
 	forwardSlider->Connect( wxEVT_SCROLL_TOP, wxScrollEventHandler( TimeIntervalWindowAuto::animationSliderChanged ), NULL, this );
 	forwardSlider->Connect( wxEVT_SCROLL_BOTTOM, wxScrollEventHandler( TimeIntervalWindowAuto::animationSliderChanged ), NULL, this );
@@ -223,6 +219,8 @@ TimeIntervalWindowAuto::~TimeIntervalWindowAuto()
 	sizeSlider->Disconnect( wxEVT_SCROLL_THUMBTRACK, wxScrollEventHandler( TimeIntervalWindowAuto::sliderChanged ), NULL, this );
 	sizeSlider->Disconnect( wxEVT_SCROLL_THUMBRELEASE, wxScrollEventHandler( TimeIntervalWindowAuto::sliderChanged ), NULL, this );
 	sizeSlider->Disconnect( wxEVT_SCROLL_CHANGED, wxScrollEventHandler( TimeIntervalWindowAuto::sliderChanged ), NULL, this );
+	timeSelectionStart->Disconnect( wxEVT_COMMAND_TEXT_ENTER, wxCommandEventHandler( TimeIntervalWindowAuto::preciseSliceEntered ), NULL, this );
+	timeSelectionEnd->Disconnect( wxEVT_COMMAND_TEXT_ENTER, wxCommandEventHandler( TimeIntervalWindowAuto::preciseSliceEntered ), NULL, this );
 	m_button4->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( TimeIntervalWindowAuto::apply ), NULL, this );
 	forwardSlider->Disconnect( wxEVT_SCROLL_TOP, wxScrollEventHandler( TimeIntervalWindowAuto::animationSliderChanged ), NULL, this );
 	forwardSlider->Disconnect( wxEVT_SCROLL_BOTTOM, wxScrollEventHandler( TimeIntervalWindowAuto::animationSliderChanged ), NULL, this );

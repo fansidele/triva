@@ -19,6 +19,7 @@
 /* callbacks */
 - (void) animationSliderChanged;
 - (void) sliderChanged;
+- (void) preciseSliceEntered;
 - (void) apply;
 - (BOOL) play;
 - (BOOL) pause;

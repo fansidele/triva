@@ -23,6 +23,11 @@ void TimeIntervalWindow::animationSliderChanged( wxScrollEvent& event )
 	[filter animationSliderChanged];
 }
 
+void TimeIntervalWindow::preciseSliceEntered( wxCommandEvent& event )
+{
+	[filter preciseSliceEntered];
+}
+
 void TimeIntervalWindow::apply( wxCommandEvent& event )
 {
 	[filter apply];

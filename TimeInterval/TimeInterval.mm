@@ -85,8 +85,8 @@ TimeIntervalWindow *window;
 	window->traceEndTime->SetLabel (NSSTRINGtoWXSTRING([[self endTime] description]));
 
 	//slice
-	window->timeSelectionStart->SetLabel (NSSTRINGtoWXSTRING([selectionStartTime description]));
-	window->timeSelectionEnd->SetLabel (NSSTRINGtoWXSTRING([selectionEndTime description]));
+	window->timeSelectionStart->SetValue (NSSTRINGtoWXSTRING([selectionStartTime description]));
+	window->timeSelectionEnd->SetValue (NSSTRINGtoWXSTRING([selectionEndTime description]));
 
 	//animate
 	window->forward->SetLabel (NSSTRINGtoWXSTRING([NSString stringWithFormat: @"%.2f", forward]));
@@ -199,6 +199,33 @@ TimeIntervalWindow *window;
 	if (window->timeSliceCheckBox->IsChecked()){
 		[self apply];
 	}
+}
+
+- (void) preciseSliceEntered
+{
+	int position;
+	double s, e;
+	double traceEnd = [[[self endTime] description] doubleValue];
+
+	s = [WXSTRINGtoNSSTRING(window->timeSelectionStart->GetValue()) doubleValue];
+	e = [WXSTRINGtoNSSTRING(window->timeSelectionEnd->GetValue()) doubleValue];
+	if (e < s) {
+		NSLog (@"%s:%d value for start (%f) is bigger than the end (%f)",
+			__FUNCTION__, __LINE__, s, e);
+		return; //bad input
+	}
+
+	position = [self sliderPositionForTraceTime: s
+				withSize: traceEnd];
+	window->startSlider->SetValue (position);
+	position = [self sliderPositionForTraceTime: e-s
+				withSize: traceEnd];
+	window->sizeSlider->SetValue (position);
+
+	[self setTimeIntervalFrom: s to: e];
+	window->sliceDraw->Update();
+	window->sliceDraw->Refresh();
+	[self apply];
 }
 
 - (void) apply

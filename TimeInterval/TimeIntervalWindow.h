@@ -31,6 +31,7 @@ public:
 protected:
 	void sliderChanged( wxScrollEvent& event );
 	void animationSliderChanged( wxScrollEvent& event );
+	void preciseSliceEntered( wxCommandEvent& event );
 	void apply( wxCommandEvent& event );
 	void play( wxCommandEvent& event );
 	void pause( wxCommandEvent& event );
