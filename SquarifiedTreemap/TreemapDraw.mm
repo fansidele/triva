@@ -27,6 +27,7 @@ TreemapDraw::TreemapDraw (wxWindow *parent, wxWindowID id,
 	current = nil;
 	highlighted = nil;
 	maxDepthToDraw = 1;
+	selectedValues = [[NSMutableArray alloc] init];
 }
 
 void TreemapDraw::OnPaint(wxPaintEvent& evt)
@@ -35,7 +36,7 @@ void TreemapDraw::OnPaint(wxPaintEvent& evt)
 	wxCoord width, height;
 	dc.GetSize(&width, &height);
 	current = [filter treemapWithWidth: width andHeight: height
-			andDepth: 0 andValues: [NSSet set]];
+			andDepth: 0 andValues: selectedValues];
 	dc.Clear();
 	this->drawTreemap ((id)current, dc);
 }
@@ -119,7 +120,8 @@ void TreemapDraw::highlightTreemapNode (long x, long y)
         if (current){
                 id node = [current searchWithX: x
                                 andY: y
-                                limitToDepth: maxDepthToDraw];
+                                limitToDepth: maxDepthToDraw
+				andSelectedValues: selectedValues];
                 if (node != highlighted){
                         wxPaintDC dc(this);
                         this->unhighlightTreemapNode(dc);

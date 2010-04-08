@@ -53,7 +53,8 @@
 /* search-based methods */
 - (Treemap *) searchWithX: (long) x
 			andY: (long) y
-			limitToDepth: (int) d;
+			limitToDepth: (int) d
+			andSelectedValues: (NSSet *) values;
 
 - (NSComparisonResult) compareValue: (Treemap *) other;
 

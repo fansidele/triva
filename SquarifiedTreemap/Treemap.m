@@ -272,6 +272,7 @@
 - (Treemap *) searchWithX: (long) x
 		andY: (long) y
 		limitToDepth: (int) d
+		andSelectedValues: (NSSet *) values
 {
 	Treemap *ret = nil;
 	if (x >= [rect x] &&
@@ -303,7 +304,8 @@
 				child = [children objectAtIndex: i];
 				if ([child val]){
 					ret = [child searchWithX: x
-					      andY: y limitToDepth: d];
+					      andY: y limitToDepth: d
+						andSelectedValues: values];
 					if (ret != nil){
 						break;
 					}
