@@ -146,8 +146,11 @@
 		   PajeEventDecoder, \
                    PajeSimulator, \
                    StorageController, \
+                   TypeFilter, \
 		   TimeInterval, \
-		   SimGrid \
+                   TimeSliceAggregation, \
+		   SimGrid, \
+		   GraphView \
 		) )" propertyList];
 #endif
 #ifdef HAVE_NUCAVIEW
