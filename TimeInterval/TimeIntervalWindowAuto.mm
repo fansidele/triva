@@ -5,167 +5,243 @@
 // PLEASE DO "NOT" EDIT THIS FILE!
 ///////////////////////////////////////////////////////////////////////////
 
+#include "SliceDraw.h"
+
 #include "TimeIntervalWindowAuto.h"
 
 ///////////////////////////////////////////////////////////////////////////
 
 TimeIntervalWindowAuto::TimeIntervalWindowAuto( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxFrame( parent, id, title, pos, size, style )
 {
-	this->SetSizeHints( wxSize( 300,400 ), wxSize( 300,400 ) );
-	this->Enable( false );
+	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
 	
-	wxBoxSizer* bSizer2;
-	bSizer2 = new wxBoxSizer( wxVERTICAL );
+	wxBoxSizer* bSizer8;
+	bSizer8 = new wxBoxSizer( wxVERTICAL );
 	
-	wxFlexGridSizer* fgSizer2;
-	fgSizer2 = new wxFlexGridSizer( 2, 2, 0, 0 );
-	fgSizer2->SetFlexibleDirection( wxBOTH );
-	fgSizer2->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
+	wxGridSizer* gSizer14;
+	gSizer14 = new wxGridSizer( 1, 3, 0, 0 );
 	
-	m_staticText1 = new wxStaticText( this, wxID_ANY, wxT("Trace Start Time:"), wxDefaultPosition, wxDefaultSize, 0 );
-	m_staticText1->Wrap( -1 );
-	fgSizer2->Add( m_staticText1, 0, wxALL|wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT, 5 );
+	m_staticText73 = new wxStaticText( this, wxID_ANY, wxT("Trace Time:"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText73->Wrap( -1 );
+	gSizer14->Add( m_staticText73, 0, wxALL, 5 );
 	
-	traceStartTime = new wxStaticText( this, wxID_ANY, wxT("0"), wxDefaultPosition, wxDefaultSize, 0 );
+	traceStartTime = new wxStaticText( this, wxID_ANY, wxT("0"), wxDefaultPosition, wxDefaultSize, wxALIGN_CENTRE );
 	traceStartTime->Wrap( -1 );
-	fgSizer2->Add( traceStartTime, 1, wxALL, 5 );
+	traceStartTime->SetFont( wxFont( wxNORMAL_FONT->GetPointSize(), 70, 90, 90, false, wxEmptyString ) );
 	
-	m_staticText3 = new wxStaticText( this, wxID_ANY, wxT("Trace End Time:"), wxDefaultPosition, wxDefaultSize, 0 );
-	m_staticText3->Wrap( -1 );
-	fgSizer2->Add( m_staticText3, 0, wxALL|wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL, 5 );
+	gSizer14->Add( traceStartTime, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	traceEndTime = new wxStaticText( this, wxID_ANY, wxT("0"), wxDefaultPosition, wxDefaultSize, 0 );
+	traceEndTime = new wxStaticText( this, wxID_ANY, wxT("0"), wxDefaultPosition, wxDefaultSize, wxALIGN_CENTRE );
 	traceEndTime->Wrap( -1 );
-	fgSizer2->Add( traceEndTime, 0, wxALL|wxEXPAND, 5 );
+	traceEndTime->SetFont( wxFont( wxNORMAL_FONT->GetPointSize(), 70, 90, 90, false, wxEmptyString ) );
 	
-	bSizer2->Add( fgSizer2, 0, wxEXPAND, 5 );
+	gSizer14->Add( traceEndTime, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	
-	bSizer2->Add( 0, 20, 0, wxEXPAND, 5 );
-	
-	m_staticline3 = new wxStaticLine( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL );
-	bSizer2->Add( m_staticline3, 0, wxEXPAND|wxALL, 5 );
-	
-	wxBoxSizer* bSizer4;
-	bSizer4 = new wxBoxSizer( wxVERTICAL );
-	
-	wxGridSizer* gSizer1;
-	gSizer1 = new wxGridSizer( 1, 2, 0, 0 );
-	
-	m_staticText4 = new wxStaticText( this, wxID_ANY, wxT("Time Selection Start:"), wxDefaultPosition, wxDefaultSize, wxALIGN_CENTRE );
-	m_staticText4->Wrap( -1 );
-	gSizer1->Add( m_staticText4, 0, wxALL|wxALIGN_CENTER_HORIZONTAL, 5 );
-	
-	timeSelectionStart = new wxStaticText( this, wxID_ANY, wxT("0"), wxDefaultPosition, wxDefaultSize, 0 );
-	timeSelectionStart->Wrap( -1 );
-	gSizer1->Add( timeSelectionStart, 0, wxALL, 5 );
-	
-	bSizer4->Add( gSizer1, 0, 0, 5 );
-	
-	timeSelectionStartSlider = new wxSlider( this, wxID_ANY, 0, 0, 100, wxDefaultPosition, wxDefaultSize, wxSL_HORIZONTAL );
-	bSizer4->Add( timeSelectionStartSlider, 0, wxALL|wxEXPAND, 5 );
-	
-	m_staticline4 = new wxStaticLine( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL );
-	bSizer4->Add( m_staticline4, 0, wxEXPAND | wxALL, 5 );
-	
-	wxGridSizer* gSizer2;
-	gSizer2 = new wxGridSizer( 1, 2, 0, 0 );
-	
-	m_staticText5 = new wxStaticText( this, wxID_ANY, wxT("Time Selection End:"), wxDefaultPosition, wxDefaultSize, 0 );
-	m_staticText5->Wrap( -1 );
-	gSizer2->Add( m_staticText5, 0, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL, 5 );
-	
-	timeSelectionEnd = new wxStaticText( this, wxID_ANY, wxT("0"), wxDefaultPosition, wxDefaultSize, 0 );
-	timeSelectionEnd->Wrap( -1 );
-	gSizer2->Add( timeSelectionEnd, 0, wxALL, 5 );
-	
-	bSizer4->Add( gSizer2, 0, 0, 5 );
-	
-	timeSelectionEndSlider = new wxSlider( this, wxID_ANY, 0, 0, 100, wxDefaultPosition, wxDefaultSize, wxSL_HORIZONTAL );
-	bSizer4->Add( timeSelectionEndSlider, 0, wxEXPAND|wxALL, 5 );
-	
-	wxGridSizer* gSizer3;
-	gSizer3 = new wxGridSizer( 1, 3, 0, 0 );
-	
-	
-	gSizer3->Add( 0, 0, 1, wxEXPAND, 5 );
-	
-	m_staticText9 = new wxStaticText( this, wxID_ANY, wxT("Forward (s)"), wxDefaultPosition, wxDefaultSize, 0 );
-	m_staticText9->Wrap( -1 );
-	gSizer3->Add( m_staticText9, 0, wxALL|wxALIGN_BOTTOM|wxALIGN_CENTER_HORIZONTAL, 5 );
-	
-	m_staticText10 = new wxStaticText( this, wxID_ANY, wxT("Frequency (s)"), wxDefaultPosition, wxDefaultSize, 0 );
-	m_staticText10->Wrap( -1 );
-	gSizer3->Add( m_staticText10, 0, wxALL|wxALIGN_BOTTOM|wxALIGN_CENTER_HORIZONTAL, 5 );
-	
-	playButton = new wxToggleButton( this, wxID_ANY, wxT("Play"), wxDefaultPosition, wxDefaultSize, 0 );
-	gSizer3->Add( playButton, 0, wxALL|wxALIGN_CENTER_HORIZONTAL, 5 );
-	
-	m_textCtrl1 = new wxTextCtrl( this, wxID_ANY, wxT("1"), wxDefaultPosition, wxDefaultSize, 0 );
-	gSizer3->Add( m_textCtrl1, 1, wxALL|wxALIGN_CENTER_HORIZONTAL, 5 );
-	
-	m_textCtrl2 = new wxTextCtrl( this, wxID_ANY, wxT("0.05"), wxDefaultPosition, wxDefaultSize, 0 );
-	gSizer3->Add( m_textCtrl2, 0, wxALL, 5 );
-	
-	bSizer4->Add( gSizer3, 0, wxEXPAND, 5 );
-	
-	bSizer2->Add( bSizer4, 1, wxEXPAND, 5 );
+	bSizer8->Add( gSizer14, 0, wxALIGN_CENTER_HORIZONTAL|wxEXPAND, 5 );
 	
 	m_staticline11 = new wxStaticLine( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL );
-	bSizer2->Add( m_staticline11, 0, wxEXPAND | wxALL, 5 );
+	bSizer8->Add( m_staticline11, 0, wxEXPAND | wxALL, 5 );
 	
-	m_button1 = new wxButton( this, wxID_ANY, wxT("Apply"), wxDefaultPosition, wxDefaultSize, 0 );
-	bSizer2->Add( m_button1, 0, wxALL|wxALIGN_CENTER_HORIZONTAL, 5 );
+	wxBoxSizer* bSizer24;
+	bSizer24 = new wxBoxSizer( wxVERTICAL );
 	
-	this->SetSizer( bSizer2 );
+	timeSliceCheckBox = new wxCheckBox( this, wxID_ANY, wxT("Time Slice"), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT );
+	
+	timeSliceCheckBox->SetToolTip( wxT("Check here to update the visualization\nmodules when the time slice is update.") );
+	
+	bSizer24->Add( timeSliceCheckBox, 0, wxALL|wxALIGN_CENTER_HORIZONTAL, 5 );
+	
+	bSizer8->Add( bSizer24, 0, wxEXPAND, 5 );
+	
+	wxFlexGridSizer* fgSizer5;
+	fgSizer5 = new wxFlexGridSizer( 2, 2, 0, 0 );
+	fgSizer5->AddGrowableCol( 1 );
+	fgSizer5->SetFlexibleDirection( wxBOTH );
+	fgSizer5->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
+	
+	m_staticText4 = new wxStaticText( this, wxID_ANY, wxT("Start"), wxDefaultPosition, wxDefaultSize, wxALIGN_CENTRE );
+	m_staticText4->Wrap( -1 );
+	fgSizer5->Add( m_staticText4, 0, wxALL|wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT, 5 );
+	
+	startSlider = new wxSlider( this, wxID_ANY, 0, 0, 100, wxDefaultPosition, wxDefaultSize, wxSL_HORIZONTAL );
+	fgSizer5->Add( startSlider, 0, wxALL|wxALIGN_CENTER_VERTICAL|wxEXPAND, 5 );
+	
+	m_staticText83 = new wxStaticText( this, wxID_ANY, wxT("Size"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText83->Wrap( -1 );
+	fgSizer5->Add( m_staticText83, 0, wxALL|wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL, 5 );
+	
+	sizeSlider = new wxSlider( this, wxID_ANY, 0, 0, 100, wxDefaultPosition, wxDefaultSize, wxSL_HORIZONTAL );
+	fgSizer5->Add( sizeSlider, 0, wxEXPAND|wxALL, 5 );
+	
+	bSizer8->Add( fgSizer5, 0, wxEXPAND, 5 );
+	
+	wxGridSizer* gSizer15;
+	gSizer15 = new wxGridSizer( 1, 3, 0, 0 );
+	
+	timeSelectionStart = new wxStaticText( this, wxID_ANY, wxT("0"), wxDefaultPosition, wxDefaultSize, wxALIGN_CENTRE );
+	timeSelectionStart->Wrap( -1 );
+	timeSelectionStart->SetFont( wxFont( wxNORMAL_FONT->GetPointSize(), 70, 90, 90, false, wxEmptyString ) );
+	
+	gSizer15->Add( timeSelectionStart, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
+	
+	timeSelectionEnd = new wxStaticText( this, wxID_ANY, wxT("0"), wxDefaultPosition, wxDefaultSize, wxALIGN_CENTRE );
+	timeSelectionEnd->Wrap( -1 );
+	timeSelectionEnd->SetFont( wxFont( wxNORMAL_FONT->GetPointSize(), 70, 90, 90, false, wxEmptyString ) );
+	
+	gSizer15->Add( timeSelectionEnd, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
+	
+	m_button4 = new wxButton( this, wxID_ANY, wxT("Apply"), wxDefaultPosition, wxDefaultSize, 0 );
+	gSizer15->Add( m_button4, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
+	
+	bSizer8->Add( gSizer15, 0, wxEXPAND, 5 );
+	
+	sliceDraw = new SliceDraw( this, wxID_ANY, wxDefaultPosition, wxSize( -1,50 ), wxTAB_TRAVERSAL );
+	sliceDraw->SetMinSize( wxSize( -1,50 ) );
+	sliceDraw->SetMaxSize( wxSize( -1,50 ) );
+	
+	bSizer8->Add( sliceDraw, 0, wxEXPAND|wxALL, 5 );
+	
+	m_staticline15 = new wxStaticLine( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL );
+	bSizer8->Add( m_staticline15, 0, wxEXPAND | wxALL, 5 );
+	
+	m_staticText84 = new wxStaticText( this, wxID_ANY, wxT("Animation"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText84->Wrap( -1 );
+	bSizer8->Add( m_staticText84, 0, wxALL|wxALIGN_CENTER_HORIZONTAL, 5 );
+	
+	wxFlexGridSizer* fgSizer7;
+	fgSizer7 = new wxFlexGridSizer( 2, 3, 0, 0 );
+	fgSizer7->AddGrowableCol( 1 );
+	fgSizer7->SetFlexibleDirection( wxBOTH );
+	fgSizer7->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
+	
+	m_staticText85 = new wxStaticText( this, wxID_ANY, wxT("Forward (s)"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText85->Wrap( -1 );
+	fgSizer7->Add( m_staticText85, 0, wxALL|wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT, 5 );
+	
+	forwardSlider = new wxSlider( this, wxID_ANY, 0, 0, 100, wxDefaultPosition, wxDefaultSize, wxSL_HORIZONTAL );
+	forwardSlider->SetToolTip( wxT("Forward in seconds is bounded by the time slice.") );
+	
+	fgSizer7->Add( forwardSlider, 0, wxALL|wxEXPAND, 5 );
+	
+	forward = new wxStaticText( this, wxID_ANY, wxT("1"), wxDefaultPosition, wxDefaultSize, 0 );
+	forward->Wrap( -1 );
+	forward->SetMinSize( wxSize( 40,-1 ) );
+	
+	fgSizer7->Add( forward, 0, wxALL|wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT, 5 );
+	
+	m_staticText87 = new wxStaticText( this, wxID_ANY, wxT("Frequency (s)"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText87->Wrap( -1 );
+	fgSizer7->Add( m_staticText87, 0, wxALL|wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT, 5 );
+	
+	frequencySlider = new wxSlider( this, wxID_ANY, 0, 0, 100, wxDefaultPosition, wxDefaultSize, wxSL_HORIZONTAL );
+	frequencySlider->SetToolTip( wxT("Frequency is a value between 0.001 and 4 seconds.") );
+	
+	fgSizer7->Add( frequencySlider, 0, wxALL|wxEXPAND|wxALIGN_CENTER_VERTICAL|wxALIGN_CENTER_HORIZONTAL, 5 );
+	
+	frequency = new wxStaticText( this, wxID_ANY, wxT("0.001"), wxDefaultPosition, wxDefaultSize, 0 );
+	frequency->Wrap( -1 );
+	frequency->SetMinSize( wxSize( 40,-1 ) );
+	
+	fgSizer7->Add( frequency, 0, wxALL|wxALIGN_RIGHT, 5 );
+	
+	bSizer8->Add( fgSizer7, 0, wxEXPAND, 5 );
+	
+	wxBoxSizer* bSizer25;
+	bSizer25 = new wxBoxSizer( wxHORIZONTAL );
+	
+	playButton = new wxButton( this, wxID_ANY, wxT("Play"), wxDefaultPosition, wxDefaultSize, 0 );
+	bSizer25->Add( playButton, 0, wxALL, 5 );
+	
+	pauseButton = new wxButton( this, wxID_ANY, wxT("Pause"), wxDefaultPosition, wxDefaultSize, 0 );
+	bSizer25->Add( pauseButton, 0, wxALL, 5 );
+	
+	bSizer8->Add( bSizer25, 0, wxALIGN_CENTER_HORIZONTAL, 5 );
+	
+	this->SetSizer( bSizer8 );
 	this->Layout();
 	
 	// Connect Events
-	timeSelectionStartSlider->Connect( wxEVT_SCROLL_TOP, wxScrollEventHandler( TimeIntervalWindowAuto::startScroll ), NULL, this );
-	timeSelectionStartSlider->Connect( wxEVT_SCROLL_BOTTOM, wxScrollEventHandler( TimeIntervalWindowAuto::startScroll ), NULL, this );
-	timeSelectionStartSlider->Connect( wxEVT_SCROLL_LINEUP, wxScrollEventHandler( TimeIntervalWindowAuto::startScroll ), NULL, this );
-	timeSelectionStartSlider->Connect( wxEVT_SCROLL_LINEDOWN, wxScrollEventHandler( TimeIntervalWindowAuto::startScroll ), NULL, this );
-	timeSelectionStartSlider->Connect( wxEVT_SCROLL_PAGEUP, wxScrollEventHandler( TimeIntervalWindowAuto::startScroll ), NULL, this );
-	timeSelectionStartSlider->Connect( wxEVT_SCROLL_PAGEDOWN, wxScrollEventHandler( TimeIntervalWindowAuto::startScroll ), NULL, this );
-	timeSelectionStartSlider->Connect( wxEVT_SCROLL_THUMBTRACK, wxScrollEventHandler( TimeIntervalWindowAuto::startScroll ), NULL, this );
-	timeSelectionStartSlider->Connect( wxEVT_SCROLL_THUMBRELEASE, wxScrollEventHandler( TimeIntervalWindowAuto::startScroll ), NULL, this );
-	timeSelectionStartSlider->Connect( wxEVT_SCROLL_CHANGED, wxScrollEventHandler( TimeIntervalWindowAuto::startScroll ), NULL, this );
-	timeSelectionEndSlider->Connect( wxEVT_SCROLL_TOP, wxScrollEventHandler( TimeIntervalWindowAuto::endScroll ), NULL, this );
-	timeSelectionEndSlider->Connect( wxEVT_SCROLL_BOTTOM, wxScrollEventHandler( TimeIntervalWindowAuto::endScroll ), NULL, this );
-	timeSelectionEndSlider->Connect( wxEVT_SCROLL_LINEUP, wxScrollEventHandler( TimeIntervalWindowAuto::endScroll ), NULL, this );
-	timeSelectionEndSlider->Connect( wxEVT_SCROLL_LINEDOWN, wxScrollEventHandler( TimeIntervalWindowAuto::endScroll ), NULL, this );
-	timeSelectionEndSlider->Connect( wxEVT_SCROLL_PAGEUP, wxScrollEventHandler( TimeIntervalWindowAuto::endScroll ), NULL, this );
-	timeSelectionEndSlider->Connect( wxEVT_SCROLL_PAGEDOWN, wxScrollEventHandler( TimeIntervalWindowAuto::endScroll ), NULL, this );
-	timeSelectionEndSlider->Connect( wxEVT_SCROLL_THUMBTRACK, wxScrollEventHandler( TimeIntervalWindowAuto::endScroll ), NULL, this );
-	timeSelectionEndSlider->Connect( wxEVT_SCROLL_THUMBRELEASE, wxScrollEventHandler( TimeIntervalWindowAuto::endScroll ), NULL, this );
-	timeSelectionEndSlider->Connect( wxEVT_SCROLL_CHANGED, wxScrollEventHandler( TimeIntervalWindowAuto::endScroll ), NULL, this );
-	playButton->Connect( wxEVT_COMMAND_TOGGLEBUTTON_CLICKED, wxCommandEventHandler( TimeIntervalWindowAuto::play ), NULL, this );
-	m_textCtrl1->Connect( wxEVT_COMMAND_TEXT_ENTER, wxCommandEventHandler( TimeIntervalWindowAuto::timeStep ), NULL, this );
-	m_button1->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( TimeIntervalWindowAuto::apply ), NULL, this );
+	startSlider->Connect( wxEVT_SCROLL_TOP, wxScrollEventHandler( TimeIntervalWindowAuto::sliderChanged ), NULL, this );
+	startSlider->Connect( wxEVT_SCROLL_BOTTOM, wxScrollEventHandler( TimeIntervalWindowAuto::sliderChanged ), NULL, this );
+	startSlider->Connect( wxEVT_SCROLL_LINEUP, wxScrollEventHandler( TimeIntervalWindowAuto::sliderChanged ), NULL, this );
+	startSlider->Connect( wxEVT_SCROLL_LINEDOWN, wxScrollEventHandler( TimeIntervalWindowAuto::sliderChanged ), NULL, this );
+	startSlider->Connect( wxEVT_SCROLL_PAGEUP, wxScrollEventHandler( TimeIntervalWindowAuto::sliderChanged ), NULL, this );
+	startSlider->Connect( wxEVT_SCROLL_PAGEDOWN, wxScrollEventHandler( TimeIntervalWindowAuto::sliderChanged ), NULL, this );
+	startSlider->Connect( wxEVT_SCROLL_THUMBTRACK, wxScrollEventHandler( TimeIntervalWindowAuto::sliderChanged ), NULL, this );
+	startSlider->Connect( wxEVT_SCROLL_THUMBRELEASE, wxScrollEventHandler( TimeIntervalWindowAuto::sliderChanged ), NULL, this );
+	startSlider->Connect( wxEVT_SCROLL_CHANGED, wxScrollEventHandler( TimeIntervalWindowAuto::sliderChanged ), NULL, this );
+	sizeSlider->Connect( wxEVT_SCROLL_TOP, wxScrollEventHandler( TimeIntervalWindowAuto::sliderChanged ), NULL, this );
+	sizeSlider->Connect( wxEVT_SCROLL_BOTTOM, wxScrollEventHandler( TimeIntervalWindowAuto::sliderChanged ), NULL, this );
+	sizeSlider->Connect( wxEVT_SCROLL_LINEUP, wxScrollEventHandler( TimeIntervalWindowAuto::sliderChanged ), NULL, this );
+	sizeSlider->Connect( wxEVT_SCROLL_LINEDOWN, wxScrollEventHandler( TimeIntervalWindowAuto::sliderChanged ), NULL, this );
+	sizeSlider->Connect( wxEVT_SCROLL_PAGEUP, wxScrollEventHandler( TimeIntervalWindowAuto::sliderChanged ), NULL, this );
+	sizeSlider->Connect( wxEVT_SCROLL_PAGEDOWN, wxScrollEventHandler( TimeIntervalWindowAuto::sliderChanged ), NULL, this );
+	sizeSlider->Connect( wxEVT_SCROLL_THUMBTRACK, wxScrollEventHandler( TimeIntervalWindowAuto::sliderChanged ), NULL, this );
+	sizeSlider->Connect( wxEVT_SCROLL_THUMBRELEASE, wxScrollEventHandler( TimeIntervalWindowAuto::sliderChanged ), NULL, this );
+	sizeSlider->Connect( wxEVT_SCROLL_CHANGED, wxScrollEventHandler( TimeIntervalWindowAuto::sliderChanged ), NULL, this );
+	m_button4->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( TimeIntervalWindowAuto::apply ), NULL, this );
+	forwardSlider->Connect( wxEVT_SCROLL_TOP, wxScrollEventHandler( TimeIntervalWindowAuto::animationSliderChanged ), NULL, this );
+	forwardSlider->Connect( wxEVT_SCROLL_BOTTOM, wxScrollEventHandler( TimeIntervalWindowAuto::animationSliderChanged ), NULL, this );
+	forwardSlider->Connect( wxEVT_SCROLL_LINEUP, wxScrollEventHandler( TimeIntervalWindowAuto::animationSliderChanged ), NULL, this );
+	forwardSlider->Connect( wxEVT_SCROLL_LINEDOWN, wxScrollEventHandler( TimeIntervalWindowAuto::animationSliderChanged ), NULL, this );
+	forwardSlider->Connect( wxEVT_SCROLL_PAGEUP, wxScrollEventHandler( TimeIntervalWindowAuto::animationSliderChanged ), NULL, this );
+	forwardSlider->Connect( wxEVT_SCROLL_PAGEDOWN, wxScrollEventHandler( TimeIntervalWindowAuto::animationSliderChanged ), NULL, this );
+	forwardSlider->Connect( wxEVT_SCROLL_THUMBTRACK, wxScrollEventHandler( TimeIntervalWindowAuto::animationSliderChanged ), NULL, this );
+	forwardSlider->Connect( wxEVT_SCROLL_THUMBRELEASE, wxScrollEventHandler( TimeIntervalWindowAuto::animationSliderChanged ), NULL, this );
+	forwardSlider->Connect( wxEVT_SCROLL_CHANGED, wxScrollEventHandler( TimeIntervalWindowAuto::animationSliderChanged ), NULL, this );
+	frequencySlider->Connect( wxEVT_SCROLL_TOP, wxScrollEventHandler( TimeIntervalWindowAuto::animationSliderChanged ), NULL, this );
+	frequencySlider->Connect( wxEVT_SCROLL_BOTTOM, wxScrollEventHandler( TimeIntervalWindowAuto::animationSliderChanged ), NULL, this );
+	frequencySlider->Connect( wxEVT_SCROLL_LINEUP, wxScrollEventHandler( TimeIntervalWindowAuto::animationSliderChanged ), NULL, this );
+	frequencySlider->Connect( wxEVT_SCROLL_LINEDOWN, wxScrollEventHandler( TimeIntervalWindowAuto::animationSliderChanged ), NULL, this );
+	frequencySlider->Connect( wxEVT_SCROLL_PAGEUP, wxScrollEventHandler( TimeIntervalWindowAuto::animationSliderChanged ), NULL, this );
+	frequencySlider->Connect( wxEVT_SCROLL_PAGEDOWN, wxScrollEventHandler( TimeIntervalWindowAuto::animationSliderChanged ), NULL, this );
+	frequencySlider->Connect( wxEVT_SCROLL_THUMBTRACK, wxScrollEventHandler( TimeIntervalWindowAuto::animationSliderChanged ), NULL, this );
+	frequencySlider->Connect( wxEVT_SCROLL_THUMBRELEASE, wxScrollEventHandler( TimeIntervalWindowAuto::animationSliderChanged ), NULL, this );
+	frequencySlider->Connect( wxEVT_SCROLL_CHANGED, wxScrollEventHandler( TimeIntervalWindowAuto::animationSliderChanged ), NULL, this );
+	playButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( TimeIntervalWindowAuto::play ), NULL, this );
+	pauseButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( TimeIntervalWindowAuto::pause ), NULL, this );
 }
 
 TimeIntervalWindowAuto::~TimeIntervalWindowAuto()
 {
 	// Disconnect Events
-	timeSelectionStartSlider->Disconnect( wxEVT_SCROLL_TOP, wxScrollEventHandler( TimeIntervalWindowAuto::startScroll ), NULL, this );
-	timeSelectionStartSlider->Disconnect( wxEVT_SCROLL_BOTTOM, wxScrollEventHandler( TimeIntervalWindowAuto::startScroll ), NULL, this );
-	timeSelectionStartSlider->Disconnect( wxEVT_SCROLL_LINEUP, wxScrollEventHandler( TimeIntervalWindowAuto::startScroll ), NULL, this );
-	timeSelectionStartSlider->Disconnect( wxEVT_SCROLL_LINEDOWN, wxScrollEventHandler( TimeIntervalWindowAuto::startScroll ), NULL, this );
-	timeSelectionStartSlider->Disconnect( wxEVT_SCROLL_PAGEUP, wxScrollEventHandler( TimeIntervalWindowAuto::startScroll ), NULL, this );
-	timeSelectionStartSlider->Disconnect( wxEVT_SCROLL_PAGEDOWN, wxScrollEventHandler( TimeIntervalWindowAuto::startScroll ), NULL, this );
-	timeSelectionStartSlider->Disconnect( wxEVT_SCROLL_THUMBTRACK, wxScrollEventHandler( TimeIntervalWindowAuto::startScroll ), NULL, this );
-	timeSelectionStartSlider->Disconnect( wxEVT_SCROLL_THUMBRELEASE, wxScrollEventHandler( TimeIntervalWindowAuto::startScroll ), NULL, this );
-	timeSelectionStartSlider->Disconnect( wxEVT_SCROLL_CHANGED, wxScrollEventHandler( TimeIntervalWindowAuto::startScroll ), NULL, this );
-	timeSelectionEndSlider->Disconnect( wxEVT_SCROLL_TOP, wxScrollEventHandler( TimeIntervalWindowAuto::endScroll ), NULL, this );
-	timeSelectionEndSlider->Disconnect( wxEVT_SCROLL_BOTTOM, wxScrollEventHandler( TimeIntervalWindowAuto::endScroll ), NULL, this );
-	timeSelectionEndSlider->Disconnect( wxEVT_SCROLL_LINEUP, wxScrollEventHandler( TimeIntervalWindowAuto::endScroll ), NULL, this );
-	timeSelectionEndSlider->Disconnect( wxEVT_SCROLL_LINEDOWN, wxScrollEventHandler( TimeIntervalWindowAuto::endScroll ), NULL, this );
-	timeSelectionEndSlider->Disconnect( wxEVT_SCROLL_PAGEUP, wxScrollEventHandler( TimeIntervalWindowAuto::endScroll ), NULL, this );
-	timeSelectionEndSlider->Disconnect( wxEVT_SCROLL_PAGEDOWN, wxScrollEventHandler( TimeIntervalWindowAuto::endScroll ), NULL, this );
-	timeSelectionEndSlider->Disconnect( wxEVT_SCROLL_THUMBTRACK, wxScrollEventHandler( TimeIntervalWindowAuto::endScroll ), NULL, this );
-	timeSelectionEndSlider->Disconnect( wxEVT_SCROLL_THUMBRELEASE, wxScrollEventHandler( TimeIntervalWindowAuto::endScroll ), NULL, this );
-	timeSelectionEndSlider->Disconnect( wxEVT_SCROLL_CHANGED, wxScrollEventHandler( TimeIntervalWindowAuto::endScroll ), NULL, this );
-	playButton->Disconnect( wxEVT_COMMAND_TOGGLEBUTTON_CLICKED, wxCommandEventHandler( TimeIntervalWindowAuto::play ), NULL, this );
-	m_textCtrl1->Disconnect( wxEVT_COMMAND_TEXT_ENTER, wxCommandEventHandler( TimeIntervalWindowAuto::timeStep ), NULL, this );
-	m_button1->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( TimeIntervalWindowAuto::apply ), NULL, this );
+	startSlider->Disconnect( wxEVT_SCROLL_TOP, wxScrollEventHandler( TimeIntervalWindowAuto::sliderChanged ), NULL, this );
+	startSlider->Disconnect( wxEVT_SCROLL_BOTTOM, wxScrollEventHandler( TimeIntervalWindowAuto::sliderChanged ), NULL, this );
+	startSlider->Disconnect( wxEVT_SCROLL_LINEUP, wxScrollEventHandler( TimeIntervalWindowAuto::sliderChanged ), NULL, this );
+	startSlider->Disconnect( wxEVT_SCROLL_LINEDOWN, wxScrollEventHandler( TimeIntervalWindowAuto::sliderChanged ), NULL, this );
+	startSlider->Disconnect( wxEVT_SCROLL_PAGEUP, wxScrollEventHandler( TimeIntervalWindowAuto::sliderChanged ), NULL, this );
+	startSlider->Disconnect( wxEVT_SCROLL_PAGEDOWN, wxScrollEventHandler( TimeIntervalWindowAuto::sliderChanged ), NULL, this );
+	startSlider->Disconnect( wxEVT_SCROLL_THUMBTRACK, wxScrollEventHandler( TimeIntervalWindowAuto::sliderChanged ), NULL, this );
+	startSlider->Disconnect( wxEVT_SCROLL_THUMBRELEASE, wxScrollEventHandler( TimeIntervalWindowAuto::sliderChanged ), NULL, this );
+	startSlider->Disconnect( wxEVT_SCROLL_CHANGED, wxScrollEventHandler( TimeIntervalWindowAuto::sliderChanged ), NULL, this );
+	sizeSlider->Disconnect( wxEVT_SCROLL_TOP, wxScrollEventHandler( TimeIntervalWindowAuto::sliderChanged ), NULL, this );
+	sizeSlider->Disconnect( wxEVT_SCROLL_BOTTOM, wxScrollEventHandler( TimeIntervalWindowAuto::sliderChanged ), NULL, this );
+	sizeSlider->Disconnect( wxEVT_SCROLL_LINEUP, wxScrollEventHandler( TimeIntervalWindowAuto::sliderChanged ), NULL, this );
+	sizeSlider->Disconnect( wxEVT_SCROLL_LINEDOWN, wxScrollEventHandler( TimeIntervalWindowAuto::sliderChanged ), NULL, this );
+	sizeSlider->Disconnect( wxEVT_SCROLL_PAGEUP, wxScrollEventHandler( TimeIntervalWindowAuto::sliderChanged ), NULL, this );
+	sizeSlider->Disconnect( wxEVT_SCROLL_PAGEDOWN, wxScrollEventHandler( TimeIntervalWindowAuto::sliderChanged ), NULL, this );
+	sizeSlider->Disconnect( wxEVT_SCROLL_THUMBTRACK, wxScrollEventHandler( TimeIntervalWindowAuto::sliderChanged ), NULL, this );
+	sizeSlider->Disconnect( wxEVT_SCROLL_THUMBRELEASE, wxScrollEventHandler( TimeIntervalWindowAuto::sliderChanged ), NULL, this );
+	sizeSlider->Disconnect( wxEVT_SCROLL_CHANGED, wxScrollEventHandler( TimeIntervalWindowAuto::sliderChanged ), NULL, this );
+	m_button4->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( TimeIntervalWindowAuto::apply ), NULL, this );
+	forwardSlider->Disconnect( wxEVT_SCROLL_TOP, wxScrollEventHandler( TimeIntervalWindowAuto::animationSliderChanged ), NULL, this );
+	forwardSlider->Disconnect( wxEVT_SCROLL_BOTTOM, wxScrollEventHandler( TimeIntervalWindowAuto::animationSliderChanged ), NULL, this );
+	forwardSlider->Disconnect( wxEVT_SCROLL_LINEUP, wxScrollEventHandler( TimeIntervalWindowAuto::animationSliderChanged ), NULL, this );
+	forwardSlider->Disconnect( wxEVT_SCROLL_LINEDOWN, wxScrollEventHandler( TimeIntervalWindowAuto::animationSliderChanged ), NULL, this );
+	forwardSlider->Disconnect( wxEVT_SCROLL_PAGEUP, wxScrollEventHandler( TimeIntervalWindowAuto::animationSliderChanged ), NULL, this );
+	forwardSlider->Disconnect( wxEVT_SCROLL_PAGEDOWN, wxScrollEventHandler( TimeIntervalWindowAuto::animationSliderChanged ), NULL, this );
+	forwardSlider->Disconnect( wxEVT_SCROLL_THUMBTRACK, wxScrollEventHandler( TimeIntervalWindowAuto::animationSliderChanged ), NULL, this );
+	forwardSlider->Disconnect( wxEVT_SCROLL_THUMBRELEASE, wxScrollEventHandler( TimeIntervalWindowAuto::animationSliderChanged ), NULL, this );
+	forwardSlider->Disconnect( wxEVT_SCROLL_CHANGED, wxScrollEventHandler( TimeIntervalWindowAuto::animationSliderChanged ), NULL, this );
+	frequencySlider->Disconnect( wxEVT_SCROLL_TOP, wxScrollEventHandler( TimeIntervalWindowAuto::animationSliderChanged ), NULL, this );
+	frequencySlider->Disconnect( wxEVT_SCROLL_BOTTOM, wxScrollEventHandler( TimeIntervalWindowAuto::animationSliderChanged ), NULL, this );
+	frequencySlider->Disconnect( wxEVT_SCROLL_LINEUP, wxScrollEventHandler( TimeIntervalWindowAuto::animationSliderChanged ), NULL, this );
+	frequencySlider->Disconnect( wxEVT_SCROLL_LINEDOWN, wxScrollEventHandler( TimeIntervalWindowAuto::animationSliderChanged ), NULL, this );
+	frequencySlider->Disconnect( wxEVT_SCROLL_PAGEUP, wxScrollEventHandler( TimeIntervalWindowAuto::animationSliderChanged ), NULL, this );
+	frequencySlider->Disconnect( wxEVT_SCROLL_PAGEDOWN, wxScrollEventHandler( TimeIntervalWindowAuto::animationSliderChanged ), NULL, this );
+	frequencySlider->Disconnect( wxEVT_SCROLL_THUMBTRACK, wxScrollEventHandler( TimeIntervalWindowAuto::animationSliderChanged ), NULL, this );
+	frequencySlider->Disconnect( wxEVT_SCROLL_THUMBRELEASE, wxScrollEventHandler( TimeIntervalWindowAuto::animationSliderChanged ), NULL, this );
+	frequencySlider->Disconnect( wxEVT_SCROLL_CHANGED, wxScrollEventHandler( TimeIntervalWindowAuto::animationSliderChanged ), NULL, this );
+	playButton->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( TimeIntervalWindowAuto::play ), NULL, this );
+	pauseButton->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( TimeIntervalWindowAuto::pause ), NULL, this );
 }

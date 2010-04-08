@@ -12,7 +12,8 @@ TimeInterval_OBJC_FILES =
 TimeInterval_OBJCC_FILES= \
 	TimeInterval.mm \
 	TimeIntervalWindow.mm \
-	TimeIntervalWindowAuto.mm
+	TimeIntervalWindowAuto.mm \
+	SliceDraw.mm
 
 TimeInterval_INCLUDE_DIRS += @CPPFLAGS@
 TimeInterval_LIB_DIRS += @LIBS@

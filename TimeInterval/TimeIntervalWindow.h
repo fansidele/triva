@@ -26,19 +26,15 @@ public:
 	/** Constructor */
 	TimeIntervalWindow( wxWindow* parent );
 	void setController (id contr) { filter = contr; };
-	void setTraceStartTime (wxString str);
-	void setTraceEndTime (wxString str);
-	void setSelectionStartTime (wxString str);
-	void setSelectionEndTime (wxString str);
-	void setSlidersRange (int start, int end);
-	void setSlidersValue (int start, int end);
+	SliceDraw *getSliceDraw () { return sliceDraw; };
+	void animate (wxTimerEvent& event);
 
-	void forwardTime (wxTimerEvent& event);
 protected:
-	void startScroll( wxScrollEvent& event );
-	void endScroll( wxScrollEvent& event );
+	void sliderChanged( wxScrollEvent& event );
+	void animationSliderChanged( wxScrollEvent& event );
 	void apply( wxCommandEvent& event );
 	void play( wxCommandEvent& event );
+	void pause( wxCommandEvent& event );
 };
 
 #endif // __TimeIntervalWindow__
