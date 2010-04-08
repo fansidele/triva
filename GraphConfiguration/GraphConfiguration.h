@@ -29,8 +29,6 @@
         fromEnumerator: (NSEnumerator*) en;
 - (double) evaluateWithValues: (NSDictionary *) values
                 withExpr: (NSString *) expr;
-//- (NSArray *) getContainerTypes;
-//- (NSArray *) getEntityTypes;
 @end
 
 #endif

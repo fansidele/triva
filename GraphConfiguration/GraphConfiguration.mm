@@ -55,34 +55,6 @@
 	[self timeSelectionChanged];
 }
 
-/*
-- (NSArray *) getContainerTypes
-{
-	NSMutableArray *ret = [NSMutableArray array];
-	NSEnumerator *en = [[self allEntityTypes] objectEnumerator];
-	PajeEntityType *type;
-	while ((type = [en nextObject])){
-		if ([self isContainerEntityType: type]){
-			[ret addObject: type];
-		}
-	}
-	return ret;
-}
-
-- (NSArray *) getEntityTypes
-{
-	NSMutableArray *ret = [NSMutableArray array];
-	NSEnumerator *en = [[self allEntityTypes] objectEnumerator];
-	PajeEntityType *type;
-	while ((type = [en nextObject])){
-		if (![self isContainerEntityType: type]){
-			[ret addObject: type];
-		}
-	}
-	return ret;
-}
-*/
-
 - (void) setConfiguration: (NSDictionary *) conf
 {
 	if (configuration){
