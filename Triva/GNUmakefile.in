@@ -17,6 +17,8 @@ FRAMEWORK_NAME = @PROJECT_NAME@
 	TimeSliceTree.h \
 	TimeSliceGraph.h \
 	Tree.h \
-	TrivaTreemap.h
+	TrivaTreemap.h \
+	NSPointFunctions.h \
+	Triva.h
 
 include $(GNUSTEP_MAKEFILES)/framework.make
