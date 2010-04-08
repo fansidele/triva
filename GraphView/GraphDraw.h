@@ -37,6 +37,8 @@ private:
 	/* drawing functions */
 	void drawNode (cairo_t *cr, TrivaGraphNode *node);
 	void drawEdge (cairo_t *cr, TrivaGraphEdge *edge);
+	void getRGBColorFrom (NSString *typeName, float *red,
+	        float *green, float *blue);
 
 protected:
 	/* wxWidgets callbacks */

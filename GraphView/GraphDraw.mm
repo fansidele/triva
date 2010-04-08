@@ -48,6 +48,24 @@ wxColour NSCOLORtoWXCOLOUR (NSColor *color)
 	return wxColour (0,0,1,0);
 }
 
+void GraphDraw::getRGBColorFrom (NSString *typeName, float *red,
+	float *green, float *blue)
+{
+	float alpha;
+	*red = *green = *blue = 0;
+	if (!typeName || ![filter entityTypeWithName: typeName]){
+		return;
+	}
+	NSColor *color = [filter colorForEntityType:
+			[filter entityTypeWithName: typeName]];
+	if ([[color colorSpaceName] isEqualToString:
+			@"NSCalibratedRGBColorSpace"]){
+		[color getRed: red green: green
+			blue: blue alpha: &alpha];
+	}
+	return;
+}
+
 GraphDraw::GraphDraw (wxWindow *parent, wxWindowID id,
 	const wxPoint &pos, const wxSize &size, long style,
 	const wxValidator &validator)
@@ -58,7 +76,6 @@ GraphDraw::GraphDraw (wxWindow *parent, wxWindowID id,
 
 void GraphDraw::drawNode (cairo_t *cr, TrivaGraphNode *node)
 {
-	NSColor *color;
 	NSString *type;
 	NSEnumerator *en;
 	NSDictionary *types;
@@ -92,8 +109,6 @@ void GraphDraw::drawNode (cairo_t *cr, TrivaGraphNode *node)
 
 	double accum_y = 0;
 	while ((type = [en nextObject])){
-		color = [filter colorForEntityType:
-				[filter entityTypeWithName: type]];
 		double value = [[types objectForKey: type] doubleValue];
 		if (value){
 			double type_nw = nw;
@@ -103,15 +118,10 @@ void GraphDraw::drawNode (cairo_t *cr, TrivaGraphNode *node)
 			double b = y - nh/2 + accum_y;
 			double c = type_nw;
 			double d = type_nh;
-			if ([[color colorSpaceName] isEqualToString:
-						@"NSCalibratedRGBColorSpace"]){
-				float red, green, blue, alpha;
-				[color getRed: &red green: &green
-					blue: &blue alpha: &alpha];
-				cairo_set_source_rgb (cr, red, green, blue);
-			}else{
-				cairo_set_source_rgb (cr, 0, 0, 0);
-			}
+
+			float red, green, blue;
+			this->getRGBColorFrom (type, &red, &green, &blue);
+			cairo_set_source_rgb (cr, red, green, blue);
 			cairo_rectangle (cr, a, b, c, d);
 			cairo_fill (cr);
 			accum_y += type_nh;
@@ -215,15 +225,10 @@ void GraphDraw::drawEdge (cairo_t *cr, TrivaGraphEdge *edge)
 			points[3] = wxPoint (ox3, oy3);
 			points[2] = wxPoint (ox4, oy4);
 
-			if ([[color colorSpaceName] isEqualToString:
-					@"NSCalibratedRGBColorSpace"]){
-				float red, green, blue, alpha;
-				[color getRed: &red green: &green
-					blue: &blue alpha: &alpha];
-				cairo_set_source_rgb (cr, red, green, blue);
-			}else{
-				cairo_set_source_rgb (cr, 0, 0, 0);
-			}
+			float red, green, blue;
+			this->getRGBColorFrom (type, &red, &green, &blue);
+			cairo_set_source_rgb (cr, red, green, blue);
+
 			cairo_move_to (cr, ox1, oy1);
 			cairo_line_to (cr, ox2, oy2);
 			cairo_line_to (cr, ox4, oy4);
