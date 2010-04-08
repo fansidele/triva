@@ -246,10 +246,11 @@
 	NSMutableString *size_def = [NSMutableString stringWithString: expr];
 	NSEnumerator *en2 = [values keyEnumerator];
 	NSString *val;
+	int number = 0;
 	while ((val = [en2 nextObject])){
 		NSString *repl = [NSString stringWithFormat: @"%@",
 			[values objectForKey: val]];
-		[size_def replaceOccurrencesOfString: val
+		number += [size_def replaceOccurrencesOfString: val
 			withString: repl
 			options: NSLiteralSearch
 			range: NSMakeRange(0, [size_def length])];
@@ -266,6 +267,9 @@
 			__FUNCTION__, __LINE__, size_def);
 		return 0;
 	}else{
+		if (!number){
+			return -1; /* to indicate that is a numeric value */
+		}
 		double ret = evaluator_evaluate (f, 0, NULL, NULL);
 		evaluator_destroy (f);
 		return ret;
