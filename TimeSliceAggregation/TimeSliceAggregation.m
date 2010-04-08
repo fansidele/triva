@@ -9,6 +9,8 @@
 	sliceStartTime = [NSDate dateWithTimeIntervalSinceReferenceDate: 0];
 	sliceEndTime = [NSDate dateWithTimeIntervalSinceReferenceDate: 0];
 
+	nodeNames = [[NSMutableDictionary alloc] init];
+
 	/* starting configuration */
 	considerExclusiveDuration = YES;
 	tree = nil;
@@ -202,6 +204,9 @@
 			[self timeSliceAt: instance ofType: et withNode: node];
 		}
         }
+	//saving node name in the nodeNames dict
+	[nodeNames setObject: node forKey: [node name]];
+
 	[node autorelease];
 	return node;
 }
@@ -280,6 +285,8 @@
 	/* re-create hierarchy */
 	if (tree){
 		[tree release];
+		[nodeNames release];
+		nodeNames = [[NSMutableDictionary alloc] init];
 	}
 	tree = [self createInstanceHierarchy: [self rootInstance]
 				      parent: nil];	
