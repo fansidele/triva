@@ -49,13 +49,17 @@
 	id l = nil;
 
 	if (!processorType || !switchType || !cacheType){
-		NSLog (@"%s:%d: nuca types (processor=%@, switch=%@, cacheL2=%@) not defined",
-			__FUNCTION__, __LINE__, processorType, switchType, cacheType);
+		NSLog (@"%s:%d: nuca types (processor=%@, switch=%@, "
+			"cacheL2=%@) not defined",
+			__FUNCTION__, __LINE__, processorType,
+			switchType, cacheType);
 		return;
 	}
 	if (!psType || !bsType || !ssType){
-		NSLog (@"%s:%d: nuca types (ps=%@, bs=%@, ss=%@ bb=%@) not defined",
-			__FUNCTION__, __LINE__, psType, bsType, ssType);
+		NSLog (@"%s:%d: nuca types (ps=%@, bs=%@, ss=%@ bb=%@) "
+			"not defined",
+			__FUNCTION__, __LINE__, psType,
+			bsType, ssType);
 		return;
 	}
 
@@ -97,7 +101,7 @@
 			Agnode_t *s = agfindnode (graph, (char*)src);
 			Agnode_t *d = agfindnode (graph, (char*)dst);
 		
-			if (!s || !d) continue; //ignore if there is no src or dst
+			if (!s || !d)continue;//ignore if there is no src or dst
 			
 			agedge (graph, s, d);
 
