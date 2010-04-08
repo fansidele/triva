@@ -42,6 +42,7 @@
 {
 	NSMutableDictionary *timeSliceValues = nil;
 	NSMutableDictionary *timeSliceColors = nil;
+	NSMutableDictionary *timeSliceTypes = nil;
 	NSMutableDictionary *timeSliceDurations = nil;
 	NSString *name = [type name]; //the name is the variable type name
 	double integrated = 0;
@@ -50,6 +51,7 @@
 	//getting the existing timeSliceValues for this node
 	timeSliceValues = [node timeSliceValues];	
 	timeSliceColors = [node timeSliceColors];
+	timeSliceTypes = [node timeSliceTypes];
 	timeSliceDurations = [node timeSliceDurations];
 
 	NSEnumerator *en;
@@ -83,6 +85,7 @@
 	[timeSliceValues setValue: [NSNumber numberWithDouble: integrated]
 			   forKey: name];
 	[timeSliceColors setValue: [self colorForEntityType: type] forKey: name];
+	[timeSliceTypes setObject: type forKey: name];
 }
 
 /* STATE: consider only time-interval to aggregate */
@@ -92,6 +95,7 @@
 {
 	NSMutableDictionary *timeSliceValues = nil;
 	NSMutableDictionary *timeSliceColors = nil;
+	NSMutableDictionary *timeSliceTypes = nil;
 	NSMutableDictionary *timeSliceDurations = nil;
 	NSEnumerator *en = nil;
 	id ent = nil;
@@ -99,6 +103,7 @@
 	//getting the existing timeSliceValues for this node
 	timeSliceValues = [node timeSliceValues];	
 	timeSliceColors = [node timeSliceColors];
+	timeSliceTypes = [node timeSliceTypes];
 	timeSliceDurations = [node timeSliceDurations];
 
 	//intializing state values to zero (in timeSliveValues dict) if they do not exist yet
@@ -117,6 +122,7 @@
 		[timeSliceColors setObject: [self colorForValue: ent
 						   ofEntityType: type]
 			forKey: ent];
+		[timeSliceTypes setObject: type forKey: ent];
 	}
 
 	//integrating in time for the selected time slice

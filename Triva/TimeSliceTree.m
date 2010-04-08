@@ -28,6 +28,7 @@
 	aggregatedValues = [[NSMutableDictionary alloc] init];
 	timeSliceDurations = [[NSMutableDictionary alloc] init];
 	destinations = [[NSMutableDictionary alloc] init];
+	timeSliceTypes = [[NSMutableDictionary alloc] init];
 	return self;
 }
 
@@ -40,7 +41,22 @@
 	[aggregatedValues release];
 	[timeSliceDurations release];
 	[destinations release];
+	[timeSliceTypes release];
 	[super dealloc];
+}
+
+- (void) setTimeSliceTypes: (NSMutableDictionary *) types
+{
+	if (timeSliceTypes){
+		[timeSliceTypes release];
+	}
+	timeSliceTypes = types;
+	[timeSliceTypes retain];
+}
+
+- (NSMutableDictionary *) timeSliceTypes
+{
+	return timeSliceTypes;
 }
 
 - (void) setTimeSliceColors: (NSMutableDictionary *) colors
@@ -215,11 +231,14 @@
 	id child;
 	en = [children objectEnumerator];
 	NSMutableDictionary *colors = [NSMutableDictionary dictionary];
+	NSMutableDictionary *types = [NSMutableDictionary dictionary];
 	//TODO: merge this loop with the previous for
 	while ((child = [en nextObject])){
 		[colors addEntriesFromDictionary: [child timeSliceColors]];
+		[types addEntriesFromDictionary: [child timeSliceTypes]];
 	}
 	[self setTimeSliceColors: colors];
+	[self setTimeSliceTypes: types];
 }
 
 - (float) doFinalValue

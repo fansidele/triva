@@ -32,6 +32,9 @@
 	NSMutableDictionary *maxValues;
 	NSMutableDictionary *minValues;
 
+	/* registering the entity types */
+	NSMutableDictionary *timeSliceTypes;
+
 	/* registering colors */
 	NSMutableDictionary *timeSliceColors;
 
@@ -47,6 +50,8 @@
 }
 - (NSDictionary *) maxValues;
 - (NSDictionary *) minValues;
+- (void) setTimeSliceTypes: (NSMutableDictionary *) types;
+- (NSMutableDictionary *) timeSliceTypes;
 - (void) setTimeSliceColors: (NSMutableDictionary *) colors;
 - (NSMutableDictionary *) timeSliceColors;
 - (void) setTimeSliceValues: (NSMutableDictionary *) values;
