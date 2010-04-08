@@ -44,7 +44,7 @@
 @interface GraphConfiguration (Interface)
 - (void) initInterface;
 - (void) updateDefaults;
-- (void) refreshPopup;
+- (void) refreshPopupAndSelect: (NSString*)toselect;
 - (void) apply: (id)sender;
 - (void) new: (id)sender;
 - (void) change: (id)sender;

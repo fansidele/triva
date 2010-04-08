@@ -14,7 +14,11 @@
 	}
 
 	// gui configuration
-	[self refreshPopup];
+	NSString *lastSelected;
+	lastSelected = [defaults objectForKey: @"GraphConfigurationSelected"];
+	if (lastSelected){
+		[self refreshPopupAndSelect: lastSelected];
+	}
 	[conf setDelegate: self];
 }
 
@@ -24,14 +28,24 @@
 	defaults = [NSUserDefaults standardUserDefaults];
 	[defaults setObject: configurations
 		     forKey: @"GraphConfigurationItems"];
+
+	NSString *selected = [popup titleOfSelectedItem];
+	if (selected){
+		[defaults setObject: selected
+		     forKey: @"GraphConfigurationSelected"];
+	}
 	[defaults synchronize];
 }
 
-- (void) refreshPopup
+- (void) refreshPopupAndSelect: (NSString*)toselect
 {
 	[popup removeAllItems];
 	[popup addItemsWithTitles: [configurations allKeys]];
-	[popup selectItemAtIndex: 0];
+	int select = 0;
+	if ([configurations objectForKey: toselect]){
+		select = [popup indexOfItemWithTitle: toselect];
+	}
+	[popup selectItemAtIndex: select];
 	[self change: self];
 }
 
@@ -96,6 +110,7 @@
 	[title setStringValue: selected];
 	[conf setString: str];
 	[ok setState: NSOnState];
+	[self updateDefaults];
 }
 
 - (void) textDidChange: (id) sender
@@ -129,14 +144,14 @@
 	[configurations setObject: dict forKey: [title stringValue]];
 	[dict release];
 
-	[self refreshPopup];
+	[self refreshPopupAndSelect: nil];
 	[self updateDefaults];
 }
 
 - (void) del: (id) sender
 {
 	[configurations removeObjectForKey: [popup titleOfSelectedItem]];
-	[self refreshPopup];
+	[self refreshPopupAndSelect: nil];
 	[self updateDefaults];
 }
 
