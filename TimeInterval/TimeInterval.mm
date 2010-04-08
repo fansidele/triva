@@ -34,6 +34,7 @@ TimeIntervalWindow *window;
 	window = new TimeIntervalWindow ((wxWindow*)NULL);
 	window->Show();
 	window->setController ((id)self);
+	window->setSlidersRange (-INT_MAX, INT_MAX);
 
 	selectionStartTime = nil;
 	selectionEndTime = nil;
@@ -57,13 +58,6 @@ TimeIntervalWindow *window;
 		window->setTraceEndTime (NSSTRINGtoWXSTRING(trend));
 		window->setSelectionStartTime (NSSTRINGtoWXSTRING(trstart));
 		window->setSelectionEndTime (NSSTRINGtoWXSTRING(trend));
-
-		float start = [[self startTime] timeIntervalSinceReferenceDate];
-		start *= TRIVA_TI;
-		float end = [[self endTime] timeIntervalSinceReferenceDate];
-		end *= TRIVA_TI;
-		window->setSlidersRange ((int)start, (int)end);
-	
 		window->Enable();
 		enable = YES;
 	}else{
@@ -79,12 +73,16 @@ TimeIntervalWindow *window;
 
 - (void) setTimeIntervalFrom: (int) start to: (int) end
 {
+	double traceEnd = [[[self endTime] description] doubleValue];
+	double startPorcentage = (start + (double)INT_MAX)/(2*(double)INT_MAX);
+	double endPorcentage = (end + (double)INT_MAX)/(2*(double)INT_MAX);
+
 	[selectionStartTime release];
-	selectionStartTime = [NSDate dateWithTimeIntervalSinceReferenceDate:
-				(double)start/TRIVA_TI];
 	[selectionEndTime release];
+	selectionStartTime = [NSDate dateWithTimeIntervalSinceReferenceDate:
+				startPorcentage*traceEnd];
 	selectionEndTime = [NSDate dateWithTimeIntervalSinceReferenceDate:
-				(double)end/TRIVA_TI];
+				endPorcentage*traceEnd];
 	[super timeSelectionChanged];
 }
 
