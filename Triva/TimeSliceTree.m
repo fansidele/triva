@@ -147,6 +147,7 @@
 						aggValue] forKey: key];
 		}
 	}
+	[self setAggregatedValues: agg];
 
 	/* for max and min values */
 	for (i = 0; i < [children count]; i++){
@@ -174,7 +175,6 @@
 			}
 		}
 	}
-	[self setAggregatedValues: agg];
 
 	//do the magic to define colors for this node
 	NSEnumerator *en;
