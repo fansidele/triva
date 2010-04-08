@@ -30,17 +30,20 @@
 #include <Triva/TimeSliceTree.h>
 #include "Treemap.h"
 
+@class TreemapView;
+
 @interface SquarifiedTreemap  : TrivaFilter
 {
+	IBOutlet TreemapView *view;
+
 	TimeSliceTree *timeSliceTree;
 	Treemap *currentTreemap;
-	BOOL fastUpdate;
 }
 - (Treemap *) treemapWithWidth: (int) width
                      andHeight: (int) height
-                      andDepth: (int) depth
                      andValues: (NSSet *) values;
 @end
 
+#include "TreemapView.h"
 #endif // _SQUARIFIEDTREEMAP_H_
 

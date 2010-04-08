@@ -27,13 +27,20 @@
 
 #include <Foundation/Foundation.h>
 #include <AppKit/AppKit.h>
+#include "SquarifiedTreemap.h"
 
 @interface TreemapView : NSView
 {
+	int maxDepthToDraw;
+	SquarifiedTreemap *filter;
+	id current;
 
 }
-
+- (void) setMaxDepthToDraw: (int) d;
+- (int) maxDepthToDraw;
+- (void) setFilter: (SquarifiedTreemap *) f;
 @end
 
+#include "TreemapView.h"
 #endif // _TREEMAPVIEW_H_
 

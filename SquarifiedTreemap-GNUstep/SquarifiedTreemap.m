@@ -27,22 +27,12 @@
 @implementation SquarifiedTreemap
 - (id)initWithController:(PajeTraceController *)c
 {
-	NSLog (@"HOU");
 	self = [super initWithController: c];
 	if (self != nil){
 		[NSBundle loadNibNamed: @"SquarifiedTreemap" owner: self];
-
-
 	}
-//	TreemapWindow *window = new TreemapWindow ((wxWindow*)NULL);
-//	window->Show();
-//	draw = window->getTreemapDraw();
-//	draw->setController ((id)self);
-
-	NSLog (@"Hi %@", self);
-
+	[view setFilter: self];
 	currentTreemap = nil;
-	fastUpdate = YES;
 	return self;
 }
 
@@ -54,14 +44,10 @@
 	timeSliceTree = [self timeSliceTree];
 	[timeSliceTree retain];
 
-//	if (draw->getMaxDepthToDraw() > [timeSliceTree maxDepth]){
-//		draw->setMaxDepthToDraw([timeSliceTree maxDepth]);
-//	}
-//
-//	if (fastUpdate){
-//		draw->Refresh();
-//		draw->Update();
-//	}
+	if ([view maxDepthToDraw] > [timeSliceTree maxDepth]){
+		[view setMaxDepthToDraw: [timeSliceTree maxDepth]];
+	}
+	[view setNeedsDisplay: YES];
 }
 
 - (void) entitySelectionChanged
@@ -81,7 +67,6 @@
 
 - (Treemap *) treemapWithWidth: (int) width
                      andHeight: (int) height
-                      andDepth: (int) depth
                      andValues: (NSSet *) values
 {
 	if (width == 0 || height == 0
@@ -99,10 +84,5 @@
 	[currentTreemap calculateTreemapWithWidth: (float)width
 				andHeight: (float)height];
 	return currentTreemap;
-}
-
-- (void) setFastUpdate: (BOOL) v
-{
-	fastUpdate = v;
 }
 @end

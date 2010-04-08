@@ -25,15 +25,97 @@
 #include "TreemapView.h"
 
 @implementation TreemapView
+- (id)initWithFrame:(NSRect)frameRect
+{
+	self = [super initWithFrame: frameRect];
+	maxDepthToDraw = 0;
+	return self;
+}
+
+- (void) drawTreemapNode: (id) node
+{
+	NSRect space;
+	space.origin.x = [[node treemapRect] x];
+	space.origin.y = [[node treemapRect] y];
+	space.size.width = [[node treemapRect] width];
+	space.size.height = [[node treemapRect] height];
+
+	[[node color] set];
+	NSRectFill(space);
+	[NSBezierPath strokeRect: space];
+	[[NSColor lightGrayColor] set];
+	[NSBezierPath strokeRect: space];
+}
+
+- (void) drawTreemap: (id) treemap
+{
+	if ([treemap val] == 0){
+		return;
+	}
+	if ([treemap depth] == maxDepthToDraw){
+		//draw aggregates
+		int nAggChildren, i;
+		nAggChildren = [[treemap aggregatedChildren] count];
+		for (i = 0; i < nAggChildren; i++){
+			id child = [[treemap aggregatedChildren]
+					objectAtIndex: i];
+			//wxColour color = this->findColorForNode (child);
+			//dc.SetBrush (color);
+			//wxBrush brush (color, wxSOLID);
+			//wxColour grayColor = wxColour (wxT("#c0c0c0"));
+			[self drawTreemapNode: child];
+		}
+	}else{
+		//recurse
+		int i;
+		for (i = 0; i < [[treemap children] count]; i++){
+			[self drawTreemap: [[treemap children]
+						objectAtIndex: i]];
+		}
+	}
+}
+
+- (BOOL) isFlipped
+{
+	return YES;
+}
 
 - (void)drawRect:(NSRect)frame
 {
-	NSLog (@"hi %@", self);
-
-NSBezierPath *bp = [NSBezierPath bezierPathWithRect: [self bounds]];
-[[NSColor yellowColor] set];
-[bp fill];
-
+	NSRect b = [self bounds];
+	current = [filter treemapWithWidth: b.size.width
+                                 andHeight: b.size.height
+                                 andValues: [NSSet set]];
+	[self drawTreemap: current];
 }
 
+- (void) setMaxDepthToDraw: (int) d
+{
+	maxDepthToDraw = d;
+}
+
+- (int) maxDepthToDraw
+{
+	return maxDepthToDraw;
+}
+
+- (void) setFilter: (SquarifiedTreemap *) f
+{
+	filter = f;
+}
+
+- (void)scrollWheel:(NSEvent *)event
+{
+	if ([event deltaY] > 0){
+		if (maxDepthToDraw < [current maxDepth]){
+			maxDepthToDraw++;
+			[self setNeedsDisplay: YES];
+		}
+	}else{
+		if (maxDepthToDraw > 0){
+			maxDepthToDraw--;
+			[self setNeedsDisplay: YES];
+		}
+	}
+}
 @end

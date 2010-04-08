@@ -15,4 +15,12 @@
 	);
 	Super = NSObject;
     };
+    SquarifiedTreemap = {
+	Actions = (
+	);
+	Outlets = (
+	    view
+	);
+	Super = NSObject;
+    };
 }
