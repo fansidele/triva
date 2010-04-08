@@ -52,6 +52,7 @@ TimeSliceAggregation/GNUmakefile
 SquarifiedTreemap/GNUmakefile
 SimGrid/GNUmakefile
 CommunicationPattern/GNUmakefile
-NetworkTopology/GNUmakefile)
+NetworkTopology/GNUmakefile
+Marco/GNUmakefile)
 AC_OUTPUT
 

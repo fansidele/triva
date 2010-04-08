@@ -12,7 +12,8 @@ SUBPROJECTS = \
 	OgreView \
 	SimGrid \
 	CommunicationPattern \
-	NetworkTopology
+	NetworkTopology \
+	Marco
 
 @PACKAGE_TARNAME@_OBJCC_FILES = \
 	TrivaApp.mm \
