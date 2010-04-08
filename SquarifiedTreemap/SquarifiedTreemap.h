@@ -28,13 +28,7 @@
 @interface SquarifiedTreemap  : TrivaFilter
 {
 	IBOutlet TreemapView *view;
-
-	TimeSliceTree *timeSliceTree;
-	Treemap *currentTreemap;
-	BOOL mustBeUpdated;
 }
-- (Treemap *) treemapWithWidth: (int) width
-                     andHeight: (int) height;
 @end
 
 #include "TreemapView.h"

@@ -25,24 +25,11 @@
 		[NSBundle loadNibNamed: @"SquarifiedTreemap" owner: self];
 	}
 	[view setFilter: self];
-	currentTreemap = nil;
-	mustBeUpdated = YES;
 	return self;
 }
 
 - (void) timeSelectionChanged
 {
-	if (timeSliceTree != nil){
-		[timeSliceTree release];
-	}
-	timeSliceTree = [self timeSliceTree];
-	[timeSliceTree doFinalValue];
-	[timeSliceTree retain];
-
-	if ([view maxDepthToDraw] > [timeSliceTree maxDepth]){
-		[view setMaxDepthToDraw: [timeSliceTree maxDepth]];
-	}
-	mustBeUpdated = YES;
 	[view setNeedsDisplay: YES];
 }
 
@@ -59,31 +46,5 @@
 - (void) dataChangedForEntityType: (PajeEntityType *) type
 {
 	[self timeSelectionChanged];
-}
-
-- (Treemap *) treemapWithWidth: (int) width
-                     andHeight: (int) height
-{
-	static double prev_w = 0, prev_h = 0;
-	if (width == 0 || height == 0
-				|| width > 1000000 || height > 1000000){
-		return nil;
-	}
-	if (prev_w == width &&
-            prev_h == height &&
-            currentTreemap &&
-            !mustBeUpdated){
-		return currentTreemap;
-	}
-	if (currentTreemap != nil){
-		[currentTreemap release];
-	}
-	currentTreemap = [[Treemap alloc] initWithTimeSliceTree: timeSliceTree];
-	[currentTreemap calculateTreemapWithWidth: (float)width
-				andHeight: (float)height];
-	prev_w = width;
-	prev_h = height;
-	mustBeUpdated = NO;
-	return currentTreemap;
 }
 @end

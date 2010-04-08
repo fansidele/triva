@@ -23,19 +23,21 @@
 - (id) init
 {
 	self = [super init];
-	bb = NSZeroRect;
-	value = 0;
+	treemapValue = 0;
 	highlighted = NO;
+	provider = nil;
+	aggregatedChildren = nil;
 	return self;
 }
 
-- (id) initWithTimeSliceTree: (TimeSliceTree*) tree
+- (id) initWithTimeSliceTree: (TimeSliceTree*) tree andProvider: (id) prov
 {
 	self = [self init];
+	[self setProvider: prov];
 	[self setName: [tree name]];
-        [self setValue: [tree finalValue]];
-        [self setDepth: [tree depth]];
-        [self setMaxDepth: [tree maxDepth]];
+	[self setTreemapValue: [tree finalValue]];
+	[self setDepth: [tree depth]];
+	[self setMaxDepth: [tree maxDepth]];
 
 	/* create aggregated children */
 	if (aggregatedChildren){
@@ -44,27 +46,28 @@
 	aggregatedChildren = [[NSMutableArray alloc] init];
 
 	NSDictionary *aggValues = [tree aggregatedValues];
-	NSDictionary *aggEntities = [tree timeSliceColors];
 	NSEnumerator *keys = [aggValues keyEnumerator];
 	id key;
 	while ((key = [keys nextObject])){
 		Treemap *aggNode = [[Treemap alloc] init];
+		[aggNode setProvider: prov];
 		[aggNode setName: key];
-		[aggNode setValue: [[aggValues objectForKey: key] floatValue]];
+		[aggNode setTreemapValue:
+			[[aggValues objectForKey: key] floatValue]];
 		[aggNode setDepth: [tree depth] + 1];
 		[aggNode setMaxDepth: [tree maxDepth]];
-		[aggNode setColor: [aggEntities objectForKey: key]];
+		[aggNode setType: [[tree timeSliceTypes] objectForKey: key]];
 		[aggNode setParent: self];
 		[aggregatedChildren addObject: aggNode];
 		[aggNode release];
-		
 	}
 
 	/* recurse normally */
 	int i;
 	for (i = 0; i < [[tree children] count]; i++){
-		Treemap *node = [[Treemap alloc] initWithTimeSliceTree:
-					[[tree children] objectAtIndex: i]];
+		TimeSliceTree *child = [[tree children] objectAtIndex: i];
+		Treemap *node = [[Treemap alloc] initWithTimeSliceTree: child
+				                           andProvider: prov];
 		[node setParent: self];
 		[children addObject: node];
 		[node release];
@@ -72,40 +75,20 @@
 	return self;
 }
 
-- (void) setValue: (float) v
+- (void) setTreemapValue: (float) v
 {
-	value = v;
+	treemapValue = v;
 }
 
-- (float) val
+- (float) treemapValue
 {
-	return value;
+	return treemapValue;
 }
 
 - (void) dealloc
 {
 	[aggregatedChildren release];
 	[super dealloc];
-}
-
-- (NSRect) bb
-{
-	return bb;
-}
-
-- (void) setBoundingBox: (NSRect)r
-{
-	bb = r;
-}
-
-- (void) setColor: (NSColor *) c
-{
-	color = c;
-}
-
-- (NSColor *) color
-{
-	return color;
 }
 
 - (NSArray *) aggregatedChildren
@@ -121,7 +104,7 @@
 	int i;
 	for (i = 0; i < [list count]; i++){
 		Treemap *child = (Treemap *)[list objectAtIndex: i];
-		double childValue = [child val]*factor;
+		double childValue = [child treemapValue]*factor;
 		rmin = rmin < childValue ? rmin : childValue;
 		rmax = rmax > childValue ? rmax : childValue;
 		s += childValue;
@@ -140,7 +123,7 @@
 	double s = 0; // sum
 	int i;
 	for (i = 0; i < [row count]; i++){
-		s += [(Treemap *)[row objectAtIndex: i] val]*factor;
+		s += [(Treemap *)[row objectAtIndex: i] treemapValue]*factor;
 	}
 	double x = r.origin.x, y = r.origin.y, d = 0;
 	double h = w==0 ? 0 : s/w;
@@ -156,7 +139,7 @@
 			childRect.origin.x = x;
 			childRect.origin.y = y+d;
 		}
-		double nw = [child val]*factor/h;
+		double nw = [child treemapValue]*factor/h;
 		if (horiz){
 			childRect.size.width = nw;
 			childRect.size.height = h;
@@ -237,7 +220,7 @@
 	/* remove children with value equal to zero */
 	int i;
 	for (i = 0; i < [sortedCopy count]; i++){
-		if ([[sortedCopy objectAtIndex: i] val] != 0){
+		if ([[sortedCopy objectAtIndex: i] treemapValue] != 0){
 			break;
 		}
 	}
@@ -248,7 +231,7 @@
 	
 	/* remove aggregated children with value equal to zero */
 	for (i = 0; i < [sortedCopyAggregated count]; i++){
-		if ([[sortedCopyAggregated objectAtIndex: i] val] != 0){
+		if ([[sortedCopyAggregated objectAtIndex: i] treemapValue]!=0){
 			break;
 		}
 	}
@@ -283,18 +266,37 @@
 /*
  * Entry method
  */
-- (void) calculateTreemapWithWidth: (float) w
-			andHeight: (float) h
+- (void) refresh
 {
-        if (value == 0){
+        if ([self treemapValue] == 0){
                 //nothing to calculate
                 return;
         }
-        double area = w * h;
-        double factor = area/value;
-
-	bb = NSMakeRect (0,0,w,h);
+        double area = screenbb.size.width * screenbb.size.height;
+        double factor = area/[self treemapValue];
         [self calculateTreemapRecursiveWithFactor: factor];
+}
+
+/*
+ * draw
+ */
+- (void) draw
+{
+	[[provider colorForValue: name
+                   ofEntityType: [provider entityTypeWithName: type]] set];
+	NSRectFill(bb);
+	[NSBezierPath strokeRect: bb];
+	if (highlighted){
+		[[NSColor blackColor] set];
+		NSRect highlightedBorder = NSMakeRect (bb.origin.x + 1,
+                                                       bb.origin.y + 1,
+                                                       bb.size.width - 1,
+                                                       bb.size.height - 1);
+		[NSBezierPath strokeRect: highlightedBorder];
+	}else{
+		[[NSColor lightGrayColor] set];
+		[NSBezierPath strokeRect: bb];
+	}
 }
 
 /*
@@ -316,7 +318,7 @@
 			for (i = 0; i < [aggregatedChildren count]; i++){
 				Treemap *child = [aggregatedChildren
 							objectAtIndex: i];
-				if ([child val] &&
+				if ([child treemapValue] &&
 					x >= [child bb].origin.x &&
 				        x <= [child bb].origin.x+
 						[child bb].size.width&&
@@ -333,7 +335,7 @@
 			for (i = 0; i < [children count]; i++){
 				Treemap *child;
 				child = [children objectAtIndex: i];
-				if ([child val]){
+				if ([child treemapValue]){
 					ret = [child searchWith: point
 					      limitToDepth: d];
 					if (ret != nil){
@@ -348,9 +350,9 @@
 
 - (NSComparisonResult) compareValue: (Treemap *) other
 {
-        if (value < [other val]){
+        if ([self treemapValue] < [other treemapValue]){
                 return NSOrderedAscending;
-        }else if (value > [other val]){
+        }else if ([self treemapValue] > [other treemapValue]){
                 return NSOrderedDescending;
         }else{
                 return NSOrderedSame;
@@ -359,7 +361,7 @@
 
 - (NSString *) description
 {
-	return [NSString stringWithFormat: @"%@_%.2f", name, value];
+	return [NSString stringWithFormat: @"%@_%.2f",name,[self treemapValue]];
 }
 
 - (void) testTree
@@ -370,7 +372,7 @@
                         [[children objectAtIndex: i] testTree];
                 }
         }
-        NSLog (@"%@ - %@ %.2f", name, bb, [self val]);
+        NSLog (@"%@ - %@ %.2f", name, bb, [self treemapValue]);
 }
 
 - (BOOL) highlighted
@@ -381,5 +383,10 @@
 - (void) setHighlighted: (BOOL) v
 {
 	highlighted = v;
+}
+
+- (void) setProvider: (id) prov
+{
+	provider = prov;
 }
 @end

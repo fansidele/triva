@@ -20,25 +20,21 @@
 #include <AppKit/AppKit.h>
 #include <Triva/Tree.h>
 #include <Triva/TimeSliceTree.h>
+#include <Triva/TrivaGraphNode.h>
 
-@interface Treemap : Tree
+@interface Treemap : TrivaGraphNode
 {
-	NSRect bb;
-	float value;
-	NSColor *color; //the color for this node
+	float treemapValue;
 	NSMutableArray *aggregatedChildren;
 	BOOL highlighted;
+	id provider;
 }
-- (id) initWithTimeSliceTree: (TimeSliceTree*) tree;
-- (void) setValue: (float) v;
-- (float) val;
-- (NSRect) bb;
-- (void) setBoundingBox: (NSRect)r;
-- (void) setColor: (NSColor *) c;
-- (NSColor *) color;
+- (id) initWithTimeSliceTree: (TimeSliceTree*) tree andProvider: (id) prov;
+- (void) setTreemapValue: (float) v;
+- (float) treemapValue;
 - (NSArray *) aggregatedChildren;
 
-/* squarified treemap methods */
+/* squarified treemap algorithm */
 - (double) worstf: (NSArray *) list
                 withSmallerSize: (double) w
                 withFactor: (double) factor;
@@ -50,7 +46,6 @@
                 andSmallerSize: (double) w
                 andFactor: (double) factor;
 - (void) calculateTreemapRecursiveWithFactor: (double) factor;
-- (void) calculateTreemapWithWidth: (float) w andHeight: (float) h;
 
 /* search-based methods */
 - (Treemap *) searchWith: (NSPoint) point
@@ -61,6 +56,9 @@
 /* highlight methods */
 - (BOOL) highlighted;
 - (void) setHighlighted: (BOOL) v;
+
+/* provider */
+- (void) setProvider: (id) prov;
 @end
 
 #endif

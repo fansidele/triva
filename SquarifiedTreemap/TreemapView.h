@@ -26,8 +26,8 @@
 {
 	int maxDepthToDraw;
 	SquarifiedTreemap *filter;
-	id current, highlighted;
-
+	Treemap *current, *highlighted;
+	BOOL updateCurrentTreemap;
 }
 - (void) setMaxDepthToDraw: (int) d;
 - (int) maxDepthToDraw;

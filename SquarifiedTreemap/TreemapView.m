@@ -24,37 +24,13 @@
 	maxDepthToDraw = 0;
 	current = nil;
 	highlighted = nil;
+	updateCurrentTreemap = YES;
 	return self;
 }
 
-- (void) drawTreemapNode: (id) node
-              withOffset: (double) offset
-               withColor: (NSColor *)col
-         withBorderColor: (NSColor *)bor
+- (void) drawTreemap: (Treemap*) treemap
 {
-	double x, y, width, height;
-	NSRect space = [node bb];
-	x = space.origin.x;
-	y = space.origin.y;
-	width = space.size.width;
-	height = space.size.height;
-
-	[col set];
-	NSRectFill(space);
-	[NSBezierPath strokeRect: space];
-	[bor set];
-	NSBezierPath *path = [NSBezierPath bezierPath];
-	[path moveToPoint: NSMakePoint (x+offset,y+offset)];
-	[path lineToPoint: NSMakePoint (x+width-offset, y+offset)];
-	[path lineToPoint: NSMakePoint (x+width-offset, y+height-offset)];
-	[path lineToPoint: NSMakePoint (x+offset, y+height-offset)];
-	[path lineToPoint: NSMakePoint (x+offset, y+offset)];
-	[path stroke];
-}
-
-- (void) drawTreemap: (id) treemap
-{
-	if ([treemap val] == 0){
+	if ([treemap treemapValue] == 0){
 		return;
 	}
 	if ([treemap depth] == maxDepthToDraw){
@@ -62,19 +38,9 @@
 		int nAggChildren, i;
 		nAggChildren = [[treemap aggregatedChildren] count];
 		for (i = 0; i < nAggChildren; i++){
-			id child = [[treemap aggregatedChildren]
+			Treemap *child = [[treemap aggregatedChildren]
 					objectAtIndex: i];
-			if ([child highlighted]){
-				[self drawTreemapNode: child
-                                           withOffset: 1
-                                            withColor: [child color]
-                                      withBorderColor: [NSColor blackColor]];
-			}else{
-				[self drawTreemapNode: child
-                                           withOffset: 0
-                                            withColor: [child color]
-                                      withBorderColor:[NSColor lightGrayColor]];
-			}
+			[child draw];
 		}
 	}else{
 		//recurse
@@ -94,17 +60,25 @@
 - (void)drawRect:(NSRect)frame
 {
 	NSRect b = [self bounds];
-	current = [filter treemapWithWidth: b.size.width
-                                         andHeight: b.size.height];
+	if (updateCurrentTreemap){
+		TimeSliceTree *tree = [filter timeSliceTree];
+		[tree doFinalValue];
+        
+		if (maxDepthToDraw > [tree maxDepth]){
+			maxDepthToDraw = [tree maxDepth];
+		}
+        
+		if (current){
+			[current release];
+		}
+		current = [[Treemap alloc] initWithTimeSliceTree: tree
+				andProvider: filter];
+		[current setBoundingBox: b];
+		[current convertFrom: b to: b]; //nothing to convert
+		[current refresh];
+	}
 	[self drawTreemap: current];
-}
-
-- (void) setHighlight: (id) node highlight: (BOOL) highlight
-{
-	while (node){
-		[node setHighlighted: highlight];
-		node = [node parent];
-	}	
+	updateCurrentTreemap = YES;
 }
 
 - (void) setMaxDepthToDraw: (int) d
@@ -127,14 +101,24 @@
 	if ([event deltaY] > 0){
 		if (maxDepthToDraw < [current maxDepth]){
 			maxDepthToDraw++;
+			updateCurrentTreemap = NO;
 			[self setNeedsDisplay: YES];
 		}
 	}else{
 		if (maxDepthToDraw > 0){
 			maxDepthToDraw--;
+			updateCurrentTreemap = NO;
 			[self setNeedsDisplay: YES];
 		}
 	}
+}
+
+- (void) setHighlight: (id) node highlight: (BOOL) highlight
+{
+	while (node){
+		[node setHighlighted: highlight];
+		node = [node parent];
+	}	
 }
 
 - (void) mouseMoved:(NSEvent *)event
@@ -146,6 +130,7 @@
 	if (node != highlighted){
 		[self setHighlight: highlighted highlight: NO];
 		[self setHighlight: node highlight: YES];
+		updateCurrentTreemap = NO;
 		[self setNeedsDisplay: YES];
 		highlighted = node;
 	}
