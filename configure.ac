@@ -144,8 +144,8 @@ AC_ARG_ENABLE(NUCAView,
   [enableNUCAView=yes])
 if test x$enableNUCAView = xyes ; then
 	check_for_graphviz
-	CONFIG_FILES="$CONFIG_FILES NUCAView/GNUmakefile"
-	PROJECTS="$PROJECTS NUCAView"
+	CONFIG_FILES="$CONFIG_FILES TimeSliceAggregation/GNUmakefile NUCAView/GNUmakefile GraphView/GNUmakefile"
+	PROJECTS="$PROJECTS TimeSliceAggregation NUCAView GraphView"
 	AC_DEFINE([HAVE_NUCAVIEW], [1], [Define if NUCAView visualization components is activated])
 	FLAG=yes
 fi

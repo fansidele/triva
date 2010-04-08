@@ -160,7 +160,9 @@
                    PajeSimulator, \
                    StorageController, \
                    TimeInterval, \
-		   NUCAView \
+                   TimeSliceAggregation, \
+		   NUCAView, \
+		   GraphView \
 		) )" propertyList];
 #endif
 #ifdef HAVE_NETWORKTOPOLOGY
