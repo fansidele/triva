@@ -78,8 +78,7 @@
 	if (currentTreemap != nil){
 		[currentTreemap release];
 	}
-	currentTreemap = [[Treemap alloc] init];
-	[currentTreemap createTreeWithTimeSliceTree: timeSliceTree];
+	currentTreemap = [[Treemap alloc] initWithTimeSliceTree: timeSliceTree];
 	[currentTreemap calculateTreemapWithWidth: (float)width
 				andHeight: (float)height];
 	prev_w = width;

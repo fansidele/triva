@@ -29,6 +29,49 @@
 	return self;
 }
 
+- (id) initWithTimeSliceTree: (TimeSliceTree*) tree
+{
+	self = [self init];
+	[self setName: [tree name]];
+        [self setValue: [tree finalValue]];
+        [self setDepth: [tree depth]];
+        [self setMaxDepth: [tree maxDepth]];
+
+	/* create aggregated children */
+	if (aggregatedChildren){
+		[aggregatedChildren release];
+	}
+	aggregatedChildren = [[NSMutableArray alloc] init];
+
+	NSDictionary *aggValues = [tree aggregatedValues];
+	NSDictionary *aggEntities = [tree timeSliceColors];
+	NSEnumerator *keys = [aggValues keyEnumerator];
+	id key;
+	while ((key = [keys nextObject])){
+		Treemap *aggNode = [[Treemap alloc] init];
+		[aggNode setName: key];
+		[aggNode setValue: [[aggValues objectForKey: key] floatValue]];
+		[aggNode setDepth: [tree depth] + 1];
+		[aggNode setMaxDepth: [tree maxDepth]];
+		[aggNode setColor: [aggEntities objectForKey: key]];
+		[aggNode setParent: self];
+		[aggregatedChildren addObject: aggNode];
+		[aggNode release];
+		
+	}
+
+	/* recurse normally */
+	int i;
+	for (i = 0; i < [[tree children] count]; i++){
+		Treemap *node = [[Treemap alloc] initWithTimeSliceTree:
+					[[tree children] objectAtIndex: i]];
+		[node setParent: self];
+		[children addObject: node];
+		[node release];
+	}
+	return self;
+}
+
 - (void) setValue: (float) v
 {
 	value = v;
@@ -328,49 +371,6 @@
                 }
         }
         NSLog (@"%@ - %@ %.2f", name, rect, [self val]);
-}
-
-- (Treemap *) createTreeWithTimeSliceTree: (TimeSliceTree *) orig
-{
-	[self setName: [orig name]];
-        [self setValue: [orig finalValue]];
-        [self setDepth: [orig depth]];
-        [self setMaxDepth: [orig maxDepth]];
-
-	/* create aggregated children */
-	if (aggregatedChildren){
-		[aggregatedChildren release];
-	}
-	aggregatedChildren = [[NSMutableArray alloc] init];
-
-	NSDictionary *aggValues = [orig aggregatedValues];
-	NSDictionary *aggEntities = [orig timeSliceColors];
-	NSEnumerator *keys = [aggValues keyEnumerator];
-	id key;
-	while ((key = [keys nextObject])){
-		Treemap *aggNode = [[Treemap alloc] init];
-		[aggNode setName: key];
-		[aggNode setValue: [[aggValues objectForKey: key] floatValue]];
-		[aggNode setDepth: [orig depth] + 1];
-		[aggNode setMaxDepth: [orig maxDepth]];
-		[aggNode setColor: [aggEntities objectForKey: key]];
-		[aggNode setParent: self];
-		[aggregatedChildren addObject: aggNode];
-		[aggNode release];
-		
-	}
-
-	/* recurse normally */
-	int i;
-	for (i = 0; i < [[orig children] count]; i++){
-		Treemap *node = [[Treemap alloc] init];
-		node = [node createTreeWithTimeSliceTree:
-				[[orig children] objectAtIndex: i]];
-		[node setParent: self];
-		[children addObject: node];
-		[node release];
-	}
-	return self;
 }
 
 - (BOOL) highlighted

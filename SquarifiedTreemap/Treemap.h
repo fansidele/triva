@@ -29,6 +29,7 @@
 	NSMutableArray *aggregatedChildren;
 	BOOL highlighted;
 }
+- (id) initWithTimeSliceTree: (TimeSliceTree*) tree;
 - (void) setValue: (float) v;
 - (float) val;
 - (NSRect) treemapRect;
@@ -56,9 +57,6 @@
 			limitToDepth: (int) d;
 
 - (NSComparisonResult) compareValue: (Treemap *) other;
-
-/* creating the tree */
-- (Treemap *) createTreeWithTimeSliceTree: (TimeSliceTree *) orig;
 
 /* highlight methods */
 - (BOOL) highlighted;
