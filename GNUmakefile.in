@@ -1,16 +1,14 @@
 include $(GNUSTEP_MAKEFILES)/common.make
 
 AGGREGATE_NAME = @PROJECT_NAME@
-TOOL_NAME = @PROJECT_NAME@
+APP_NAME = @PROJECT_NAME@
 PACKAGE_NAME = @PROJECT_NAME@
 VERSION = @PACKAGE_VERSION@
 SUBPROJECTS = @PROJECTS@
 
-@PROJECT_NAME@_OBJCC_FILES = \
-	TrivaApp.mm \
-	TrivaPajeComponent.mm \
-	TrivaWindow.mm \
-	TrivaWindowAuto.mm
+@PROJECT_NAME@_OBJC_FILES = \
+	TrivaApp.m \
+	TrivaPajeComponent.m
 
 ifeq ($(FOUNDATION_LIB), apple)
 LDFLAGS += -F./Triva -framework Triva
@@ -18,12 +16,12 @@ else
 LDFLAGS += -L./Triva/Triva.framework -lTriva
 endif
 	
-@PROJECT_NAME@_INCLUDE_DIRS += @CPPFLAGS@
-@PROJECT_NAME@_LIB_DIRS += @LIBS@
+#@PROJECT_NAME@_INCLUDE_DIRS += @CPPFLAGS@
+#@PROJECT_NAME@_LIB_DIRS += @LIBS@
 @PROJECT_NAME@_LDFLAGS += -lGeneral
 
 include $(GNUSTEP_MAKEFILES)/aggregate.make
-include $(GNUSTEP_MAKEFILES)/tool.make
+include $(GNUSTEP_MAKEFILES)/application.make
 
 deb:
 	sudo checkinstall --pkgname @PROJECT_NAME@ -d 2 -si \
