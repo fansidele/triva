@@ -19,7 +19,6 @@ class TimeIntervalWindow : public TimeIntervalWindowAuto
 {
 private:
 	id filter;
-	wxTimer playTimer;
 	double timeStep;
 	void updateText ();
 public:
