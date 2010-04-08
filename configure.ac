@@ -44,6 +44,7 @@ CONFIG_FILES="
   GraphConfiguration/GNUmakefile \
   GraphView/GNUmakefile \
   Dot/GNUmakefile \
+  CheckTrace/GNUmakefile \
   LinkView/GNUmakefile \
   SquarifiedTreemap/GNUmakefile \
   TimeInterval/GNUmakefile \

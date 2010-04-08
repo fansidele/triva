@@ -1,0 +1,20 @@
+include $(GNUSTEP_MAKEFILES)/common.make
+
+PACKAGE_NAME=CheckTrace
+BUNDLE_NAME=CheckTrace
+BUNDLE_EXTENSION=.bundle
+BUNDLE_INSTALL_DIR=$(GNUSTEP_BUNDLES)/@PROJECT_NAME@
+CheckTrace_PRINCIPAL_CLASS=CheckTrace
+
+CheckTrace_OBJC_FILES=CheckTrace.m
+CheckTrace_OBJCC_FILES = 
+
+CheckTrace_INCLUDE_DIRS += @CPPFLAGS@
+CheckTrace_LIB_DIRS += @LIBS@
+CheckTrace_LDFLAGS += @LDFLAGS@
+
+include $(GNUSTEP_MAKEFILES)/bundle.make
+
+after-distclean::
+after-all::
+after-clean:: 

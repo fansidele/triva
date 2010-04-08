@@ -39,6 +39,7 @@
 + (NSArray *)treemapComponentGraph;
 + (NSArray *)graphComponentGraph;
 + (NSArray *)dotComponentGraph;
++ (NSArray *)checkTraceComponentGraph;
 - (id)createComponentWithName:(NSString *)componentName
                  ofClassNamed:(NSString *)className;
 - (void)connectComponent:(id)c1 toComponent:(id)c2;
@@ -51,6 +52,7 @@
 - (void)activateTreemap;
 - (void)activateGraph;
 - (void)activateDot;
+- (void)activateCheckTrace;
 - (void)defineMajorComponents;
 - (void)startChunk:(int)chunkNumber;
 - (void)endOfChunkLast:(BOOL)last;
