@@ -106,16 +106,7 @@
 				TimeSliceTree *child;
 				child = [self createInstanceHierarchy: sub
 							parent: node];
-				
-/*
-				if ([[child children] count] == 1){
-					[node addChild:
-						[[child children]
-							objectAtIndex: 0]];
-				}else{
-*/
-					[node addChild: child];
-//				}
+				[node addChild: child];
 			}
 		}else{
 			[self timeSliceAt: instance ofType: et withNode: node];
