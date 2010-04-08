@@ -1,17 +1,21 @@
 #ifndef __MARCO_H
 #define __MARCO_H
 #include <Foundation/Foundation.h>
-#include <General/PajeFilter.h>
+#include <Triva/TrivaFilter.h>
 #include <graphviz/gvc.h>
-#include "NUCAWindow.h"
+#include <limits.h>
+#include <float.h>
 
-@interface NUCA  : PajeFilter
+@interface NUCA  : TrivaFilter
 {
+	GVC_t *gvc;
+	graph_t *graph;
+
+	NSMutableArray *nodes;          // hosts
+	NSMutableArray *edges;          // links
+
+	double max, min;
 }
-- (void) dumpTraceInTextualFormat;
-- (BOOL) checkForNUCAHierarchy;
-- (NSArray *) findContainersAt: (id) instance;
-- (NSArray *) findLinksAt: (id) instance;
 @end
 
 #endif
