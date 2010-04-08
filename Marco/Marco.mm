@@ -158,8 +158,8 @@ MarcoDraw *draw = NULL;
             PajeEntity *ent;
             en3 = [self enumeratorOfEntitiesTyped:et
                                       inContainer:instance
-                                         fromTime:[self startTime]
-                                           toTime:[self endTime]
+                                         fromTime:[self selectionStartTime]
+                                           toTime:[self selectionEndTime]
                                       minDuration:0.0];
             while ((ent = [en3 nextObject]) != nil) {
                 NSLog(@"e%*.*s%@", level+2, level+2, "", [self descriptionForEntity:ent]);
