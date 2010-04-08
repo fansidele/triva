@@ -135,10 +135,13 @@ TimeIntervalWindow *window;
 
 	if (end > traceEnd){
 		if (start > traceEnd){
+			start = end;
 			[self pause];
-		}else{
-			end = traceEnd;
 		}
+		end = traceEnd;
+	}
+	if (start > end){
+		start = end;
 	}
 
 	[self setTimeIntervalFrom: start to: end];
