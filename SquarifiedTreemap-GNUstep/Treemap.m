@@ -25,6 +25,7 @@
 	self = [super init];
 	rect = [[TreemapRect alloc] init];
 	value = 0;
+	highlighted = NO;
 	return self;
 }
 
@@ -270,11 +271,12 @@
 /*
  * Search method
  */
-- (Treemap *) searchWithX: (long) x
-		andY: (long) y
+- (Treemap *) searchWith: (NSPoint) point
 		limitToDepth: (int) d
 		andSelectedValues: (NSSet *) values
 {
+	double x = point.x;
+	double y = point.y;
 	Treemap *ret = nil;
 	if (x >= [rect x] &&
 	    x <= [rect x]+[rect width] &&
@@ -304,8 +306,8 @@
 				Treemap *child;
 				child = [children objectAtIndex: i];
 				if ([child val]){
-					ret = [child searchWithX: x
-					      andY: y limitToDepth: d
+					ret = [child searchWith: point
+					      limitToDepth: d
 						andSelectedValues: values];
 					if (ret != nil){
 						break;
@@ -400,5 +402,15 @@
 		[node release];
 	}
 	return self;
+}
+
+- (BOOL) highlighted
+{
+	return highlighted;
+}
+
+- (void) setHighlighted: (BOOL) v
+{
+	highlighted = v;
 }
 @end

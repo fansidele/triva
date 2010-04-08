@@ -29,22 +29,35 @@
 {
 	self = [super initWithFrame: frameRect];
 	maxDepthToDraw = 0;
+	current = nil;
+	highlighted = nil;
 	return self;
 }
 
 - (void) drawTreemapNode: (id) node
+              withOffset: (double) offset
+               withColor: (NSColor *)col
+         withBorderColor: (NSColor *)bor
 {
+	double x, y, width, height;
 	NSRect space;
-	space.origin.x = [[node treemapRect] x];
-	space.origin.y = [[node treemapRect] y];
-	space.size.width = [[node treemapRect] width];
-	space.size.height = [[node treemapRect] height];
+	x = space.origin.x = [[node treemapRect] x];
+	y = space.origin.y = [[node treemapRect] y];
+	width = space.size.width = [[node treemapRect] width];
+	height = space.size.height = [[node treemapRect] height];
 
-	[[node color] set];
+
+	[col set];
 	NSRectFill(space);
 	[NSBezierPath strokeRect: space];
-	[[NSColor lightGrayColor] set];
-	[NSBezierPath strokeRect: space];
+	[bor set];
+	NSBezierPath *path = [NSBezierPath bezierPath];
+	[path moveToPoint: NSMakePoint (x+offset,y+offset)];
+	[path lineToPoint: NSMakePoint (x+width-offset, y+offset)];
+	[path lineToPoint: NSMakePoint (x+width-offset, y+height-offset)];
+	[path lineToPoint: NSMakePoint (x+offset, y+height-offset)];
+	[path lineToPoint: NSMakePoint (x+offset, y+offset)];
+	[path stroke];
 }
 
 - (void) drawTreemap: (id) treemap
@@ -59,11 +72,17 @@
 		for (i = 0; i < nAggChildren; i++){
 			id child = [[treemap aggregatedChildren]
 					objectAtIndex: i];
-			//wxColour color = this->findColorForNode (child);
-			//dc.SetBrush (color);
-			//wxBrush brush (color, wxSOLID);
-			//wxColour grayColor = wxColour (wxT("#c0c0c0"));
-			[self drawTreemapNode: child];
+			if ([child highlighted]){
+				[self drawTreemapNode: child
+                                           withOffset: 1
+                                            withColor: [child color]
+                                      withBorderColor: [NSColor blackColor]];
+			}else{
+				[self drawTreemapNode: child
+                                           withOffset: 0
+                                            withColor: [child color]
+                                      withBorderColor:[NSColor lightGrayColor]];
+			}
 		}
 	}else{
 		//recurse
@@ -84,9 +103,17 @@
 {
 	NSRect b = [self bounds];
 	current = [filter treemapWithWidth: b.size.width
-                                 andHeight: b.size.height
-                                 andValues: [NSSet set]];
+                                         andHeight: b.size.height
+                                         andValues: [NSSet set]];
 	[self drawTreemap: current];
+}
+
+- (void) setHighlight: (id) node highlight: (BOOL) highlight
+{
+	while (node){
+		[node setHighlighted: highlight];
+		node = [node parent];
+	}	
 }
 
 - (void) setMaxDepthToDraw: (int) d
@@ -118,4 +145,34 @@
 		}
 	}
 }
+
+- (void) mouseMoved:(NSEvent *)event
+{
+	NSPoint p;
+	p = [self convertPoint:[event locationInWindow] fromView:nil];
+
+	id node = [current searchWith: p limitToDepth: maxDepthToDraw
+		andSelectedValues: [NSSet set]];
+	if (node != highlighted){
+		[self setHighlight: highlighted highlight: NO];
+		[self setHighlight: node highlight: YES];
+		[self setNeedsDisplay: YES];
+		highlighted = node;
+	}
+}
+
+#ifdef GNUSTEP
+- (BOOL)acceptsFirstResponder
+{
+    return YES;
+}
+#endif
+
+
+- (BOOL)becomeFirstResponder
+{
+    [[self window] setAcceptsMouseMovedEvents: YES];
+    return YES;
+}
+
 @end

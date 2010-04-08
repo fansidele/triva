@@ -28,6 +28,7 @@
 	float value;
 	NSColor *color; //the color for this node
 	NSMutableArray *aggregatedChildren;
+	BOOL highlighted;
 }
 - (void) setValue: (float) v;
 - (float) val;
@@ -52,8 +53,7 @@
 - (void) calculateTreemapWithWidth: (float) w andHeight: (float) h;
 
 /* search-based methods */
-- (Treemap *) searchWithX: (long) x
-			andY: (long) y
+- (Treemap *) searchWith: (NSPoint) point
 			limitToDepth: (int) d
 			andSelectedValues: (NSSet *) values;
 
@@ -62,6 +62,10 @@
 /* creating the tree */
 - (Treemap *) createTreeWithTimeSliceTree: (TimeSliceTree *) orig
 		withValues: (NSSet *) values;
+
+/* highlight methods */
+- (BOOL) highlighted;
+- (void) setHighlighted: (BOOL) v;
 @end
 
 #endif

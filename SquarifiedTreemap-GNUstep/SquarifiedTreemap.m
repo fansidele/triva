@@ -69,10 +69,14 @@
                      andHeight: (int) height
                      andValues: (NSSet *) values
 {
+	static double prev_w = 0, prev_h = 0;
 	if (width == 0 || height == 0
 				|| width > 1000000 || height > 1000000
 				|| values == nil){
 		return nil;
+	}
+	if (prev_w == width && prev_h == height && currentTreemap){
+		return currentTreemap;
 	}
 	[timeSliceTree doFinalValueWith: values];
 	if (currentTreemap != nil){
@@ -83,6 +87,8 @@
 				withValues: values];
 	[currentTreemap calculateTreemapWithWidth: (float)width
 				andHeight: (float)height];
+	prev_w = width;
+	prev_h = height;
 	return currentTreemap;
 }
 @end
