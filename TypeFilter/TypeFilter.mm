@@ -96,19 +96,10 @@ static TypeFilterWindow *window = NULL;
 /* filtered queries */
 - (NSArray *)containedTypesForContainerType:(PajeEntityType *)containerType
 {
-	NSMutableArray *ret = [[NSMutableArray alloc] init];
-	[ret addObjectsFromArray: 
+	NSMutableSet *set = [NSMutableSet setWithArray:
 		[super containedTypesForContainerType: containerType]];
-
-	NSEnumerator *en = [ret objectEnumerator];
-	PajeEntityType *et;
-	while ((et = [en nextObject])){
-		if ([hiddenEntityTypes containsObject: et]){
-			[ret removeObjectIdenticalTo: et];
-		}
-	}
-	[ret autorelease];
-	return ret;
+	[set minusSet: hiddenEntityTypes];
+	return [set allObjects];
 }
 
 - (NSEnumerator *)enumeratorOfEntitiesTyped:(PajeEntityType *)entityType
