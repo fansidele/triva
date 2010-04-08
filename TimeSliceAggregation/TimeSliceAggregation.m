@@ -162,6 +162,7 @@
 		}
 		tree = [self createInstanceHierarchy: [self rootInstance]
 					      parent: nil];	
+	        [tree retain];
 		/* aggregate values */
 		[tree doAggregation];
 		NSLog (@"Done");
