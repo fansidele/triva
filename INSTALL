@@ -2,10 +2,6 @@
 | Triva INSTALL file (last update 2009-12-17)                                  |
 ================================================================================
 
-If you dont want to bother with all the details,
-just execute this command: "grep ^\\$ INSTALL | cut -d' ' -f2-"
-
-
 This file intends to give some guidelines to compile Triva. The 
 prototype needs a Objective-C and Objective-C++ compilation
 environment installed, the latest version of GNUstep, the SVN
@@ -19,8 +15,6 @@ to the compiling of the tool.
 | A. Pre-requisites for Triva2 |
 |                              |
 |------------------------------|
-
-$ mkdir /tmp/installing-triva/ ; pushcd /tmp/installing-triva
 
 |------------------------------|
 | A1. GNUstep                  |
@@ -39,7 +33,6 @@ $ wget http://ftpmain.gnustep.org/pub/gnustep/core/gnustep-startup-0.23.0.tar.gz
 $ tar xfz gnustep-startup-0.23.0.tar.gz
 $ cd gnustep-startup-0.23.0
 $ sudo ./InstallGNUstep
-$ cd ..
 
 The script will perform a series of tests to evaluate if your system has all
 the necessary libraries to install the GNUstep environment. If you installed
@@ -67,7 +60,6 @@ $ svn checkout svn://svn.forge.objectweb.org/svnroot/paje/trunk/Paje/
 $ cd Paje
 $ make
 $ make install GNUSTEP_INSTALLATION_DOMAIN=USER
-$ cd ..
 
 Paje will be installed in the $HOME/GNUstep directory. At this point, you can
 open paje to see if it is working, executing "openapp Paje"
@@ -111,7 +103,6 @@ as example the configuration for the SquarifiedTreemap view.
 
 $ ./configure --enable-SquarifiedTreemap
 $ make
-$ cd ..
 
 Now, you should have a binary ./obj/Triva2.
 Execute this file using a Paje trace file as parameter.
@@ -122,5 +113,3 @@ of the dot format file that contains a graph of the
 network topology.
 
 That's it.
-
-$ popcd
