@@ -2,16 +2,29 @@
     "## Comment" = "Do NOT change this file, Gorm maintains it";
     FirstResponder = {
 	Actions = (
-	    "apply:"
+	    "apply:",
+	    "change:",
+	    "del:",
+	    "new:",
+	    "newAction:",
+	    "updateTitle:"
 	);
 	Super = NSObject;
     };
     GraphConfiguration = {
 	Actions = (
-	    "apply:"
+	    "apply:",
+	    "new:",
+	    "change:",
+	    "updateTitle:",
+	    "del:",
+	    "copy:"
 	);
 	Outlets = (
-	    conf
+	    conf,
+	    popup,
+	    title,
+	    ok
 	);
 	Super = NSObject;
     };

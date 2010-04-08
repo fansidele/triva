@@ -21,11 +21,15 @@
 	double maxNode, minNode;
 	double maxEdge, minEdge;
 
-	NSDictionary *configuration;
+	NSMutableDictionary *configurations; /* nsstring -> nsstring */
+	NSDictionary *configuration; //TODO to be removed
+
 
   id conf;
+  id title;
+  id popup;
+  id ok;
 }
-- (void) apply: (id)sender;
 - (void) setConfiguration: (NSDictionary *) conf;
 - (void) createGraph;
 - (void) redefineNodesEdgesLayout;
@@ -35,6 +39,17 @@
         fromEnumerator: (NSEnumerator*) en;
 - (double) evaluateWithValues: (NSDictionary *) values
                 withExpr: (NSString *) expr;
+@end
+
+@interface GraphConfiguration (Interface)
+- (void) initInterface;
+- (void) updateDefaults;
+- (void) refreshPopup;
+- (void) apply: (id)sender;
+- (void) new: (id)sender;
+- (void) change: (id)sender;
+- (void) updateTitle: (id) sender;
+- (void) del: (id) sender;
 @end
 
 #endif

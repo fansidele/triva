@@ -28,7 +28,8 @@ GraphConfiguration.h
 # Class files
 #
 GraphConfiguration_OBJC_FILES = \
-GraphConfiguration.m
+GraphConfiguration.m \
+GraphConfiguration+Interface.m
 
 #
 # Makefiles

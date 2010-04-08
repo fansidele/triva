@@ -11,20 +11,9 @@
 {
 	self = [super initWithController: c];
 	if (self != nil){
-		NSLog (@"loading resource bundle...");
 		[NSBundle loadNibNamed: @"GraphConf" owner: self];
 	}
-
-	/* create configuration windowdow */
-//	GraphConfWindow *window = new GraphConfWindow((wxWindow*)NULL);
-//	window->setController ((id)self);
-
-	/* go through defaults, load the existing configurations */
-	//window->add_configuration (NSDictionary);
-	NSLog (@"%@ %s", self, __FUNCTION__);
-
-	/* show the windowdow */
-//	window->Show(true);
+	[self initInterface];
 
 	configuration = nil;
 	gvc = gvContext();
@@ -34,9 +23,11 @@
 
 	return self;
 }
+
 - (void) dealloc
 {
 	[configuration release];
+	[configurations release];
 	[super dealloc];
 }
 
@@ -518,11 +509,4 @@
 			withMax: maxEdge withMin: minEdge];
 	}
 }
-
-- (void) apply: (id)sender
-{
-  /* insert your code here */
-	NSLog (@"%s", __FUNCTION__);
-}
-
 @end

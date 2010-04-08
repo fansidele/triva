@@ -1,7 +1,8 @@
 {
     BUNDLE_EXTENSION = .bundle;
     CLASS_FILES = (
-	GraphConfiguration.m
+	GraphConfiguration.m,
+	GraphConfiguration+Interface.m
     );
     COMPILEROPTIONS = "";
     CPPOPTIONS = "";
