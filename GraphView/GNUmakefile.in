@@ -1,0 +1,41 @@
+include $(GNUSTEP_MAKEFILES)/common.make
+
+#
+# Bundle
+#
+VERSION = 0.1
+PACKAGE_NAME = GraphView
+BUNDLE_NAME = GraphView
+GraphView_PRINCIPAL_CLASS = GraphView
+BUNDLE_EXTENSION = .bundle
+BUNDLE_INSTALL_DIR = $(GNUSTEP_BUNDLES)/@PROJECT_NAME@
+
+
+#
+# Resource files
+#
+GraphView_RESOURCE_FILES = \
+Resources/Graph.gorm \
+
+
+#
+# Header files
+#
+GraphView_HEADER_FILES = \
+DrawView.h \
+GraphView.h
+
+#
+# Class files
+#
+GraphView_OBJC_FILES = \
+DrawView.m \
+GraphView.m
+
+#
+# Makefiles
+#
+-include GNUmakefile.preamble
+include $(GNUSTEP_MAKEFILES)/aggregate.make
+include $(GNUSTEP_MAKEFILES)/bundle.make
+-include GNUmakefile.postamble

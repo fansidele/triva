@@ -17,7 +17,7 @@
     );
     IMAGES = (
     );
-    INSTALLDIR = "$(GNUSTEP_BUNDLES)";
+    INSTALLDIR = "$(GNUSTEP_BUNDLES)/Triva";
     INTERFACES = (
 	Graph.gorm
     );

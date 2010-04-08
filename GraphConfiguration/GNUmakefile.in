@@ -1,0 +1,39 @@
+include $(GNUSTEP_MAKEFILES)/common.make
+
+#
+# Bundle
+#
+VERSION = 0.1
+PACKAGE_NAME = GraphConfiguration
+BUNDLE_NAME = GraphConfiguration
+GraphConfiguration_PRINCIPAL_CLASS = GraphConfiguration
+BUNDLE_EXTENSION = .bundle
+BUNDLE_INSTALL_DIR = $(GNUSTEP_BUNDLES)/@PROJECT_NAME@
+
+
+#
+# Resource files
+#
+GraphConfiguration_RESOURCE_FILES = \
+Resources/GraphConf.gorm \
+
+
+#
+# Header files
+#
+GraphConfiguration_HEADER_FILES = \
+GraphConfiguration.h
+
+#
+# Class files
+#
+GraphConfiguration_OBJC_FILES = \
+GraphConfiguration.m
+
+#
+# Makefiles
+#
+-include GNUmakefile.preamble
+include $(GNUSTEP_MAKEFILES)/aggregate.make
+include $(GNUSTEP_MAKEFILES)/bundle.make
+-include GNUmakefile.postamble
