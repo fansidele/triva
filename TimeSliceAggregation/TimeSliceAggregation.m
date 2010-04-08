@@ -454,6 +454,9 @@
 	/* aggregate values */
 	[tree doAggregation];
 
+	/* calculate the final value of the nodes (to be used by treemap)*/
+	[tree doFinalValue];
+
 	if (graphAggregationEnabled){
 		[tree doGraphAggregationWithNodeNames: nodeNames];
 	}

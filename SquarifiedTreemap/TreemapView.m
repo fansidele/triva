@@ -62,7 +62,6 @@
 	NSRect b = [self bounds];
 	if (updateCurrentTreemap){
 		TimeSliceTree *tree = [filter timeSliceTree];
-		[tree doFinalValue];
         
 		if (maxDepthToDraw > [tree maxDepth]){
 			maxDepthToDraw = [tree maxDepth];
