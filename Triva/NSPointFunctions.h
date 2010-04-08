@@ -85,4 +85,9 @@ static inline NSPoint LMSNormalizePoint (NSPoint p)
         return NSMakePoint (p.x / a, p.y / a );
 }
 
+static inline NSPoint LMSMultiplyPoint (NSPoint p, double val)
+{
+        return NSMakePoint (p.x * val, p.y *val);
+}
+
 #endif
