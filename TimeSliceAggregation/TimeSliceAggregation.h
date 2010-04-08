@@ -1,15 +1,15 @@
 #ifndef __TIMESLICE_H
 #define __TIMESLICE_H
 #include <Foundation/Foundation.h>
-#include <General/PajeFilter.h>
-#include "TimeSliceTree.h"
+#include <Triva/TrivaFilter.h>
+#include <Triva/TimeSliceTree.h>
 
 /**
  * <code>TimeSlice</code> interacts with other Paje filters (through
  * enumerators) to create a hierarchical structure that represents the
  * behavior of selected entity types instances for a certain interval of time.
  */
-@interface TimeSliceAggregation  : PajeFilter
+@interface TimeSliceAggregation  : TrivaFilter
 {
 	NSDate *sliceStartTime;
 	NSDate *sliceEndTime;
@@ -56,12 +56,6 @@
  * method.
  */
 - (TimeSliceTree *) createInstanceHierarchy: (id) instance parent:(TimeSliceTree *) parent;
-
-/**
- * Method so other Triva components can take an aggregated hierarchical
- * structure
- */
-- (TimeSliceTree *) timeSliceTree;
 @end
 
 #endif

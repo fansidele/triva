@@ -8,10 +8,14 @@ BUNDLE_EXTENSION=.bundle
 BUNDLE_INSTALL_DIR=$(GNUSTEP_BUNDLES)/Triva
 TimeSliceAggregation_PRINCIPAL_CLASS=TimeSliceAggregation
 
-TimeSliceAggregation_OBJC_FILES = \
-	Tree.m \
-	TimeSliceTree.m \
-	TimeSliceAggregation.m
+ifeq ($(FOUNDATION_LIB), apple)
+        LDFLAGS += -F../Triva -framework Triva
+else
+        LDFLAGS += -L../Triva/Triva.framework -lTriva
+        ADDITIONAL_LIB_DIRS += -L../Triva/Triva.framework/Versions/Current
+endif
+
+TimeSliceAggregation_OBJC_FILES = TimeSliceAggregation.m
 TimeSliceAggregation_OBJCC_FILES=
 
 TimeSliceAggregation_INCLUDE_DIRS += @CPPFLAGS@
