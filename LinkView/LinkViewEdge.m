@@ -50,25 +50,39 @@
 	NSPoint vNorm = LMSNormalizePoint (NSSubtractPoints(d, s));
 	NSPoint vNormPerp = NSMakePoint (-vNorm.y, vNorm.x);
 
-	//calculating the control point of the bezier curve
-	double dist = LMSDistanceBetweenPoints (d, s);
-	NSPoint middle = NSSubtractPoints (d, LMSMultiplyPoint(vNorm,dist/2));
-	NSPoint control = NSAddPoints (middle, LMSMultiplyPoint(vNormPerp,20));
-
-	//calculating the base of the arrow
-	NSPoint cNorm = LMSNormalizePoint (NSSubtractPoints (control, d));
-	NSPoint cNormPerp = NSMakePoint (-cNorm.y, cNorm.x);
-	NSPoint base = NSSubtractPoints (d , LMSMultiplyPoint(cNorm, -20));
-
 	double w = width/30;
 	if (w < 1) w = 1;
 
+	//calculating the control point of the bezier curve
+	double dist = LMSDistanceBetweenPoints (d, s);
+	NSPoint middle = NSSubtractPoints (d, LMSMultiplyPoint(vNorm,dist/2));
+	NSPoint control1 = NSAddPoints (middle, LMSMultiplyPoint(vNormPerp,50));
+	NSPoint control2;
+	if ([source isEqualToString: destination]){
+		control1 = NSMakePoint (s.x - w*3, s.y + w*3);
+		control2 = NSMakePoint (s.x + w*3, s.y + w*3);
+	}else{
+		control2 = control1;
+	}
+
+	//calculating the start of the line
+	double dist_ss = LMSDistanceBetweenPoints (control1, s);
+	NSPoint sNorm = LMSNormalizePoint (NSSubtractPoints (control1, s));
+	NSPoint ss = NSAddPoints (s, LMSMultiplyPoint(sNorm, dist_ss*.1));
+
+	//calculating the base of the arrow
+	double dist_base = LMSDistanceBetweenPoints (control2, d);
+	NSPoint cNorm = LMSNormalizePoint (NSSubtractPoints (control2, d));
+	NSPoint cNormPerp = NSMakePoint (-cNorm.y, cNorm.x);
+	NSPoint base = NSSubtractPoints (d , LMSMultiplyPoint(cNorm, -dist_base*.1));
+
 	NSBezierPath *linha = [NSBezierPath bezierPath];
+//	[linha setLineCapStyle: NSRoundLineCapStyle];
 	[linha setLineWidth: w];
-	[linha moveToPoint: s];
+	[linha moveToPoint: ss];
 	[linha curveToPoint: base
-		controlPoint1: control
-		controlPoint2: control];
+		controlPoint1: control1
+		controlPoint2: control2];
 	[linha stroke];
 
 	NSBezierPath *flecha = [NSBezierPath bezierPath];
