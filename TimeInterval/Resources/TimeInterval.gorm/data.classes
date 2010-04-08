@@ -47,9 +47,9 @@
 	    applyButton,
 	    sizeSlider,
 	    startSlider,
-	    timeSelectionEnd,
 	    timeSelectionStart,
-	    updateOnChange
+	    updateOnChange,
+	    timeSelectionSize
 	);
 	Super = NSObject;
     };

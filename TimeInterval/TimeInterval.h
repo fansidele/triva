@@ -17,7 +17,7 @@
   IBOutlet id applyButton;
   IBOutlet id sizeSlider;
   IBOutlet id startSlider;
-  IBOutlet id timeSelectionEnd;
+  IBOutlet id timeSelectionSize;
   IBOutlet id timeSelectionStart;
   IBOutlet id updateOnChange;
 

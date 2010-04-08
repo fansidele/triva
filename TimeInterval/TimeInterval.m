@@ -33,8 +33,8 @@
 - (void) apply: (id)sender
 {
 	double start = [timeSelectionStart doubleValue];
-	double end = [timeSelectionEnd doubleValue];
-	[self setTimeIntervalFrom: start to: end];
+	double size = [timeSelectionSize doubleValue];
+	[self setTimeIntervalFrom: start to: start+size];
 	if (![updateOnChange state]){
 		[self apply];
 	}
@@ -106,8 +106,9 @@
 - (void) updateLabels
 {
 	[timeSelectionStart setDoubleValue: selStart];
-	[timeSelectionEnd setDoubleValue: selEnd];
+	[timeSelectionSize setDoubleValue: selEnd-selStart];
 	[startSlider setDoubleValue: selStart];
+	[sizeSlider setDoubleValue: selEnd-selStart];
 
 	[forwardSlider setMinValue: 0];
 	[forwardSlider setMaxValue: selEnd-selStart];
