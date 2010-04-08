@@ -1,0 +1,45 @@
+include $(GNUSTEP_MAKEFILES)/common.make
+
+CC=$(CXX)
+
+PACKAGE_NAME=CommunicationPattern
+BUNDLE_NAME=CommunicationPattern
+BUNDLE_EXTENSION=.bundle
+BUNDLE_INSTALL_DIR=$(GNUSTEP_BUNDLES)/Triva
+CommunicationPattern_PRINCIPAL_CLASS=OgreView
+CommunicationPattern_RESOURCE_FILES= ogre.cfg resources.cfg plugins.cfg Media
+CommunicationPattern_HAS_RESOURCE_BUNDLE = yes
+
+CommunicationPattern_OBJC_FILES=Position.m PositionGraphviz.m
+CommunicationPattern_OBJCC_FILES= \
+	CommunicationPattern.mm \
+	CommunicationPattern+ProtoView.mm \
+	CommunicationPattern+ProtoViewBase.mm \
+	CommunicationPatternWindow.mm \
+	CommunicationPatternWindowAuto.mm \
+	Triva3DFrame.mm \
+	wxInputEventListener.mm \
+	wxOgreRenderWindow.mm \
+	CameraManager.mm \
+	AmbientManager.mm Origin.mm YAxis.mm XAxis.mm ZAxis.mm Ground.mm \
+	MovableText.mm \
+	DrawManager+ApplicationGraph.mm \
+	DrawManager+Hierarchy.mm \
+	DrawManager+Materials.mm \
+	DrawManager.mm \
+	DrawManager+Mouse.mm \
+	DrawManager+Paje.mm \
+	DrawManager+TimestampedObjects.mm
+
+
+
+
+CommunicationPattern_INCLUDE_DIRS += @CPPFLAGS@
+CommunicationPattern_LIB_DIRS += @LIBS@
+CommunicationPattern_LDFLAGS += @LDFLAGS@
+
+include $(GNUSTEP_MAKEFILES)/bundle.make
+
+after-distclean::
+after-all::
+after-clean:: 

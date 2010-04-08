@@ -50,6 +50,7 @@ OgreView/GNUmakefile
 MemoryAccess/GNUmakefile
 TimeSliceAggregation/GNUmakefile
 SquarifiedTreemap/GNUmakefile
-SimGrid/GNUmakefile)
+SimGrid/GNUmakefile
+CommunicationPattern/GNUmakefile)
 AC_OUTPUT
 
