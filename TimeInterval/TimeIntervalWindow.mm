@@ -51,7 +51,7 @@ void TimeIntervalWindow::startScroll( wxScrollEvent& event )
 	}
 	timeSelectionStart->SetLabel(
 		NSSTRINGtoWXSTRING([NSString stringWithFormat: @"%f", 
-		(float)timeSelectionStartSlider->GetValue()/TRIVA_TI]));
+			[filter traceTimeForSliderPosition: timeSelectionStartSlider->GetValue()]]));
 }
 void TimeIntervalWindow::endScroll( wxScrollEvent& event )
 {
@@ -62,7 +62,7 @@ void TimeIntervalWindow::endScroll( wxScrollEvent& event )
 	}
 	timeSelectionEnd->SetLabel(
 		NSSTRINGtoWXSTRING([NSString stringWithFormat: @"%f", 
-		(float)timeSelectionEndSlider->GetValue()/TRIVA_TI]));
+			[filter traceTimeForSliderPosition: timeSelectionEndSlider->GetValue()]]));
 }
 void TimeIntervalWindow::apply( wxCommandEvent& event )
 {

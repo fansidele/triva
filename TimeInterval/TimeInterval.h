@@ -13,6 +13,7 @@
 
 	BOOL enable;
 }
+- (double) traceTimeForSliderPosition: (int) position;
 - (void) setTimeIntervalFrom: (int) start to: (int) end;
 - (BOOL) forwardSelectionTime: (double) seconds;
 @end

@@ -71,6 +71,12 @@ TimeIntervalWindow *window;
 	}
 }
 
+- (double) traceTimeForSliderPosition: (int) position
+{
+	double traceEnd = [[[self endTime] description] doubleValue];
+	return ((position + (double)INT_MAX)/(2*(double)INT_MAX))*traceEnd;
+}
+
 - (void) setTimeIntervalFrom: (int) start to: (int) end
 {
 	double traceEnd = [[[self endTime] description] doubleValue];
