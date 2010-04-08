@@ -13,30 +13,13 @@
 
 	NSMutableArray *nodes;		// hosts
 	NSMutableArray *edges;		// links
-	NSMutableDictionary *sizes;	// sizes of hosts,links
 
 	double maxPower, minPower;
 	double maxBandwidth, minBandwidth;
 }
-- (void) createPlatformGraph;
-
-
-/*
-- (NSArray *) getHosts;
-- (NSArray *) getLinks;
-- (NSPoint) getPositionForHost: (id) host;
-- (void) setPositionForHost: (id) host toPoint: (NSPoint) p;
-- (NSRect) getSizeForHost: (id) host;
-- (float) getSizeForLink: (id) link;
-- (NSRect) getBoundingBox;
-
-
-- (NSDictionary *) getPowerUtilizationOfHost: (id) host;
-- (NSDictionary *) getBandwidthUtilizationOfLink: (id) link;
-- (NSDictionary *) getUtilization: (NSString *) field
-		     forContainer: (id) container
-		     withMaxValue: (NSString *) maxField;
-*/
+- (void) defineMaxMin;
+- (void) createSimGridPlatformGraph; /* called when hierarchy changes */
+- (void) redefineNodesEdgesLayout; /* called when time selection changes */
 @end
 
 #endif
