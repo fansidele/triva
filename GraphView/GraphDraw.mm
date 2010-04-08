@@ -101,6 +101,8 @@ void GraphDraw::drawPlatformState (wxDC &dc)
 		NSPoint dst_pos = [filter positionForNode: dst];
 		NSRect bb = [filter sizeForGraph];
 		float bw = [filter sizeForEdge: edge].size.width;
+//		NSLog (@"%@ (%@ -- %@) bw=%f (%fpx)", [edge name], 
+//			[src name], [dst name], bw, TRANSFORM(bw));
 
 		int x1 = src_pos.x / bb.size.width * w;
 		int y1 = src_pos.y / bb.size.height * h;
@@ -152,6 +154,7 @@ void GraphDraw::drawPlatformState (wxDC &dc)
 			NSColor *color = [filter colorForEntityType: [filter entityTypeWithName: type]];
 			double value = [[typesAndValues objectForKey: type] doubleValue];
 			float e = TRANSFORM(bw) * value;
+//			NSLog (@"\t%@ -> %f\% (%fpx)", type, value, e);
 //			NSLog (@"\t%@ %f (value=%f, link_bw=%f) from %f", [type name], e, value, bw, TRANSFORM(bw));
 			if (e){
 	
@@ -178,19 +181,7 @@ void GraphDraw::drawPlatformState (wxDC &dc)
 				oy1 = oy4;
 			}
 		}
-		continue;
-
-		float e = TRANSFORM(bw);
-
-		wxPoint points[4];
-		points[0] = wxPoint (ox1, oy1);
-		points[1] = wxPoint (ox2, oy2);
-		points[2] = wxPoint (ox3, oy3);
-		points[3] = wxPoint (ox4, oy4);
-
-		dc.DrawPolygon(4, points);
 	}
-//	NSLog (@"");
 }
 
 #include <wx/gdicmn.h> 
