@@ -266,17 +266,6 @@
 	}
 }
 
--(void)timeSelectionChanged
-{
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-	//[self debug];
-	//[self activateRecordingOfClass: @"TimeSliceTree"];
-	[self timeSelectionChanged2];
-	//[self listRecordedObjectsOfClass: @"TimeSliceTree"];
-	[pool release];
-}
-
-
 
 - (void) timeSelectionChanged2
 {
@@ -312,6 +301,17 @@
 	/* let notification goes on */
 	[outputComponent timeSelectionChanged];
 }
+
+-(void)timeSelectionChanged
+{
+	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	//[self debug];
+	//[self activateRecordingOfClass: @"TimeSliceTree"];
+	[self timeSelectionChanged2];
+	//[self listRecordedObjectsOfClass: @"TimeSliceTree"];
+	[pool release];
+}
+
 
 - (TimeSliceTree *) timeSliceTree
 {
