@@ -16,6 +16,7 @@ static TypeFilterWindow *window = NULL;
 
 	hiddenEntityTypes = [[NSMutableSet alloc] init];
 	hiddenContainers = [[NSMutableSet alloc] init];
+	enableNotifications = YES;
 	return self;
 }
 
@@ -44,16 +45,16 @@ static TypeFilterWindow *window = NULL;
 
 - (BOOL) isHiddenContainer: (PajeContainer *) container forEntityType: (PajeEntityType*)type
 {
-	return [hiddenContainers containsObject: container];
+	return [hiddenContainers containsObject: [container name]];
 }
 
 - (void) hideEntityType: (PajeEntityType *) type
 {
 	[hiddenEntityTypes addObject: type];
 	if ([self isContainerEntityType: type]){
-		[super containerSelectionChanged];
+		[self containerSelectionChanged];
 	}else{
-		[super entitySelectionChanged];
+		[self entitySelectionChanged];
 	}
 }
 
@@ -61,34 +62,34 @@ static TypeFilterWindow *window = NULL;
 {
 	[hiddenEntityTypes removeObject: type];
 	if ([self isContainerEntityType: type]){
-		[super containerSelectionChanged];
+		[self containerSelectionChanged];
 	}else{
-		[super entitySelectionChanged];
+		[self entitySelectionChanged];
 	}
 }
 
 - (void) hideValue: (NSString *) value forEntityType: (PajeEntityType *) type
 {
 	[hiddenEntityTypes addObject: value];
-	[super entitySelectionChanged];
+	[self entitySelectionChanged];
 }
 
 - (void) showValue: (NSString *) value forEntityType: (PajeEntityType *) type
 {
 	[hiddenEntityTypes removeObject: value];
-	[super entitySelectionChanged];
+	[self entitySelectionChanged];
 }
 
 - (void) hideContainer: (PajeContainer *) container
 {
 	[hiddenContainers addObject: [container name]];
-	[super containerSelectionChanged];
+	[self containerSelectionChanged];
 }
 
 - (void) showContainer: (PajeContainer *) container
 {
 	[hiddenContainers removeObject: [container name]];
-	[super containerSelectionChanged];
+	[self containerSelectionChanged];
 }
 
 /* filtered queries */
@@ -183,5 +184,24 @@ static TypeFilterWindow *window = NULL;
 - (PajeFilter *) inputComponent
 {
 	return inputComponent;
+}
+
+- (void) entitySelectionChanged
+{
+	if (enableNotifications){
+		[super entitySelectionChanged];
+	}
+}
+
+- (void) containerSelectionChanged
+{
+	if (enableNotifications){
+		[super containerSelectionChanged];
+	}
+}
+
+- (void) setNotifications: (BOOL) notifications
+{
+	enableNotifications = notifications;
 }
 @end

@@ -7,7 +7,10 @@
 {
 	NSMutableSet *hiddenEntityTypes;
 	NSMutableSet *hiddenContainers;
+
+	BOOL enableNotifications;
 }
+- (void) setNotifications: (BOOL) notifications;
 - (BOOL) isHiddenEntityType: (PajeEntityType *) type;
 - (BOOL) isHiddenValue: (NSString *) value forEntityType: (PajeEntityType*)type;
 - (BOOL) isHiddenContainer: (PajeContainer *) container forEntityType: (PajeEntityType*)type;

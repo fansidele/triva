@@ -197,53 +197,61 @@ void TypeFilterWindow::checkListBoxClicked( wxCommandEvent& event )
 
 void TypeFilterWindow::updateRegularExpr( wxCommandEvent& event )
 {
-	std::cout << __FUNCTION__ << std::endl;
 	regex_t regex;
 	NSString *expr;
 	unsigned int count, i;
 
+	//deselect all
+	checkListBox->SetSelection(wxNOT_FOUND);
+
 	regExpr->SetBackgroundColour(wxNullColour);
 	expr = WXSTRINGtoNSSTRING(regExpr->GetValue());
 	if ([expr isEqualToString: @""]){
-		//deselect all
-		count = checkListBox->GetCount();
-		for (i = 0; i < count; i++){
-			checkListBox->Deselect (i);
-		}
+		//nothing to select
 		return;
 	}
 
 	//create regular expression
-	std::cout << [expr cString] << std::endl;
 	if (regcomp (&regex, [expr cString], REG_EXTENDED)){
 		//error on regular expression
 		regExpr->SetBackgroundColour(*wxRED);
 		return;
 	}
 
-	//select and deselect based on regular expression
+	//select based on regular expression
+	wxArrayInt arrayInt;
+	checkListBox->GetSelections (arrayInt);
+	checkListBox->Show(false);
 	count = checkListBox->GetCount();
 	for (i = 0; i < count; i++){
 		NSString *item = WXSTRINGtoNSSTRING(checkListBox->GetString(i));
 		if (!regexec (&regex, [item cString], 0, NULL, 0)){
-			checkListBox->Select (i);
-		}else{
-			checkListBox->Deselect (i);
+			checkListBox->SetSelection (i);
 		}
 	}
+	checkListBox->Show(true);
 	return;
 }
 
 void TypeFilterWindow::checkBasedOnRegularExpr( wxCommandEvent& event )
 {
+	BOOL update = NO;
 	unsigned int count, i;
 	count = checkListBox->GetCount();
+	[filter setNotifications: NO];
 	for (i = 0; i < count; i++){
 		if (checkListBox->IsSelected(i)){
 			checkListBox->Check (i, !checkListBox->IsChecked(i));
 			wxCommandEvent x = wxCommandEvent();
 			x.SetInt(i);
 			this->checkListBoxClicked(x);
+			update = YES;
 		}
+	}
+	[filter setNotifications: YES];
+	if ([filter isContainerEntityType: currentSelectedType] && update){
+		[filter containerSelectionChanged];
+	}else if (update){
+		[filter entitySelectionChanged];
 	}
 }
