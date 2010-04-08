@@ -3,6 +3,7 @@
 #include <Foundation/Foundation.h>
 #include <Triva/TrivaFilter.h>
 #include <Triva/TimeSliceTree.h>
+#include <Triva/TimeSliceGraph.h>
 
 /**
  * <code>TimeSlice</code> interacts with other Paje filters (through
@@ -23,6 +24,7 @@
 
 	/* Configuration */
 	BOOL considerExclusiveDuration;
+	BOOL graphAggregationEnabled;
 }
 /**
  * Method to set the start time for the algorithm.

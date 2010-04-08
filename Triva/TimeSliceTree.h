@@ -4,7 +4,9 @@
 #include <Foundation/Foundation.h>
 #include "Tree.h"
 
-@interface TimeSliceTree : Tree <NSCopying>
+@class TimeSliceGraph;
+
+@interface TimeSliceTree : Tree
 {
 	/* to be used by the time-slice algorithm */
 	NSMutableDictionary *timeSliceValues;
@@ -22,6 +24,10 @@
 
 	/* for registering accumulated durations */
 	NSMutableDictionary *timeSliceDurations;
+
+	/* for registering graph destinations */
+	//(TimeSliceTree*) -> (TimeSliceGraph*)
+	NSMutableDictionary *destinations; 
 }
 - (NSDictionary *) maxValues;
 - (NSDictionary *) minValues;
@@ -40,5 +46,13 @@
 - (float) doFinalValueWith: (NSSet *) set;
 
 - (void) addChild: (TimeSliceTree*) child;
+- (NSMutableDictionary *) destinations;
+
+
+- (void) doGraphAggregationWithNodeNames: (id) nodeNames;
+- (void) mergeGraphDestinationsOfChild: (TimeSliceTree *) child
+                        withNodeNames: (NSDictionary *) nodeNames;
 @end
+
+#include "TimeSliceGraph.h"
 #endif

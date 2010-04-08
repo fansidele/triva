@@ -7,11 +7,13 @@ FRAMEWORK_NAME = @PACKAGE_TARNAME@
 	TrivaGraphNode.m \
 	TrivaGraphEdge.m \
 	TimeSliceTree.m \
+	TimeSliceGraph.m \
 	Tree.m
 @PACKAGE_TARNAME@_HEADER_FILES = TrivaFilter.h \
 	TrivaGraphNode.h \
 	TrivaGraphEdge.h \
 	TimeSliceTree.h \
+	TimeSliceGraph.h \
 	Tree.h
 
 include $(GNUSTEP_MAKEFILES)/framework.make

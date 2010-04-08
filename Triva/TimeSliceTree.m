@@ -11,6 +11,7 @@
 	timeSliceColors = [[NSMutableDictionary alloc] init];
 	aggregatedValues = [[NSMutableDictionary alloc] init];
 	timeSliceDurations = [[NSMutableDictionary alloc] init];
+	destinations = [[NSMutableDictionary alloc] init];
 	return self;
 }
 
@@ -22,6 +23,7 @@
 	[timeSliceColors release];
 	[aggregatedValues release];
 	[timeSliceDurations release];
+	[destinations release];
 	[super dealloc];
 }
 
@@ -268,15 +270,58 @@
 	return minValues;
 }
 
-
-- (id)copyWithZone:(NSZone *)z
+- (NSMutableDictionary *) destinations
 {
-	[self retain];
-	return self;
+	return destinations;
 }
 
-- (BOOL) isEqual: (id) another
+- (void) doGraphAggregationWithNodeNames: (id) nodeNames
 {
-	return [name isEqualToString: [another name]];
+	int i;
+	
+	if ([children count] != 0){ //bottom-up
+		for (i = 0; i < [children count]; i++){
+			[[children objectAtIndex: i]
+				doGraphAggregationWithNodeNames: nodeNames];
+		}
+	}else{ //no children, no aggregation to do
+		return;
+	}
+
+	//doing the aggregation 
+	for (i = 0; i < [children count]; i++){
+		TimeSliceTree *child = [children objectAtIndex: i];
+		[self mergeGraphDestinationsOfChild: child
+			withNodeNames: nodeNames];
+	}
+}
+
+- (void) mergeGraphDestinationsOfChild: (TimeSliceTree *) child
+			withNodeNames: (NSDictionary *) nodeNames
+{
+	NSEnumerator *en = [[child destinations] keyEnumerator];
+	id dest;
+	while ((dest = [en nextObject])){
+		TimeSliceTree *destNode = [nodeNames objectForKey: dest];
+		TimeSliceTree *destParent = (TimeSliceTree*)[destNode parent];
+		
+		//check if parent of my child's dest is already a dest of mine
+		TimeSliceGraph *edge, *childEdge;
+		childEdge = [[child destinations] objectForKey: dest];
+		edge = [destinations objectForKey: [destParent name]];
+		if (edge == nil){
+			edge = [[TimeSliceGraph alloc] init];
+			[edge setName: [NSString stringWithFormat: @"%@#%@",
+				[self name], [destParent name]]];
+			[edge merge: childEdge];
+			[destinations setObject: edge forKey:[destParent name]];
+			[edge release];
+		}else{
+			[edge merge: childEdge];
+		}
+	}
+	return;
 }
 @end
+
+
