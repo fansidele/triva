@@ -5,9 +5,8 @@
 Check the INSTALL.simplified for fast instructions.
 
 This file intends to give some guidelines to compile Triva. The 
-prototype needs a Objective-C and Objective-C++ compilation
-environment installed, the latest version of GNUstep, the SVN
-version of Pajé, and other libraries (some are optional).
+prototype needs a Objective-C compilation environment, the latest
+version of GNUstep, the SVN version of Pajé, and other libraries.
 
 We first give an overview about the pre-requisites, and then go
 to the compiling of the tool.
@@ -25,7 +24,7 @@ to the compiling of the tool.
 GNUstep (and ObjC, ObjC++) dependencies:
 
 $ sudo apt-get install libgnustep-gui-dev  libgnustep-base-dev
-$ sudo apt-get install build-essential gobjc++ gobjc
+$ sudo apt-get install build-essential gobjc
 
 |------------------------------|
 | A2. Paje                     |
@@ -52,27 +51,14 @@ open paje to see if it is working, executing "openapp Paje"
 
 These are the libraries/tools that must be present:
 
-$ sudo apt-get install autoconf automake wx-common libgtk2.0-dev libwxgtk2.8-dev
-
-These are the libraries/tools that must be present if the 3D visualization
-components will be used (note that the mesa implementation of GL might not
-be the best option for you, especially if you have a good 3D graphic's card):
-
-$ sudo apt-get install libogre-dev libgl1-mesa-dev
-
-The following libraries are required for all the visualization components,
-except the SquarifiedTreemap:
-
-$ sudo apt-get install libgraphviz-dev 
+$ sudo apt-get install autoconf automake 
+$ sudo apt-get install libgraphviz-dev libmatheval1-dev
 
 |------------------------------|
 |                              |
 | B. Triva2: Compilation       |
 |                              |
 |------------------------------|
-
-The Triva2 sources can be downloaded here:
-$ wget http://dl.getdropbox.com/u/1119921/Triva-2.0.tar.gz
 
 $ source /usr/share/GNUstep/Makefiles/GNUstep.sh
 $ export LANG=C
@@ -87,12 +73,7 @@ as example the configuration for the SquarifiedTreemap view.
 $ ./configure --enable-SquarifiedTreemap
 $ make
 
-Now, you should have a binary ./obj/Triva2.
+Now, you should have a binary ./Triva.app/Triva.
 Execute this file using a Paje trace file as parameter.
-
-The NetworkTopology visualization module requires a
-second additional parameter which must be the name
-of the dot format file that contains a graph of the
-network topology.
 
 That's it.
