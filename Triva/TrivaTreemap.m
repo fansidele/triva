@@ -278,7 +278,7 @@
                 //nothing to calculate
                 return;
         }
-        double area = screenbb.size.width * screenbb.size.height;
+        double area = (bb.size.width) * (bb.size.height);
         double factor = area/[self treemapValue];
         [self calculateTreemapRecursiveWithFactor: factor];
 }
