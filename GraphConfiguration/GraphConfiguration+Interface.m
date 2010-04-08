@@ -88,9 +88,10 @@
 \n\
   node-container = ();\n\
   node-size = ;\n\
+  node-color = ;\n\
   node-gradient = ();\n\
   node-separation = ();\n\
-  node-color = ;\n\
+  node-bar = ();\n\
 \n\
   edge-container = (  );\n\
   edge-src = ;\n\
