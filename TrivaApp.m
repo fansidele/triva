@@ -29,7 +29,7 @@ NS_DURING
   struct arguments arguments;
   arguments.treemap = 0;
   arguments.graph = 0;
-  arguments.dot = 0;
+  arguments.hierarchy = 0;
   arguments.abort = 0;
   parse (argc, (char**)argv, &arguments);
 
@@ -38,7 +38,7 @@ NS_DURING
     [triva activateTreemap];
   }else if (arguments.graph){
     [triva activateGraph];
-  }else if (arguments.dot) {
+  }else if (arguments.hierarchy) {
     [triva activateDot];
   }else{
     NSException *exception = [NSException exceptionWithName: @"TrivaException"

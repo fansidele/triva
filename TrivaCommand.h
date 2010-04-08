@@ -21,8 +21,9 @@
 struct arguments
 {
   char *input[1];
-  int treemap, graph, dot;
+  int treemap, graph; //visualization windows
   int abort; //if parameters are not good
+  int hierarchy; //generate type hierarchy
 };
 
 int parse (int argc, char **argv, struct arguments *arg);
