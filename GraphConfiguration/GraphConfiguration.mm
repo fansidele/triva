@@ -406,10 +406,13 @@
 	Agnode_t *n = agfindnode (graph,
 		(char *)[[obj name] cString]);
 	NSPoint objPos;
-	objPos.x = ND_coord_i(n).x;
-	objPos.y = ND_coord_i(n).y;
-	[obj setPosition: objPos];
-
+	objPos.x = 0;
+	objPos.y = 0;
+	if (n){
+		objPos.x = ND_coord_i(n).x;
+		objPos.y = ND_coord_i(n).y;
+		[obj setPosition: objPos];
+	}
 	NSRect objRect;
 	objRect.origin.x = objPos.x;
 	objRect.origin.y = objPos.y;
