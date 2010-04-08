@@ -143,9 +143,10 @@
 			if (power && val){
 				double res = val/power;
 				if ((int)res > 1){
-					NSLog (@"%s:%d %@ = %f (error?)",
+					NSLog (@"%s:%d value for category %@ is greater than 1 "
+						"(%f). The size for this node is %f",
 						__FUNCTION__, __LINE__,
-						key, res);
+						key, res, power);
 				}
 				[nodeGraphValues setObject:
 					[NSNumber numberWithDouble: val/power]
