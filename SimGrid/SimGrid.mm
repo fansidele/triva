@@ -151,6 +151,7 @@
 			}
 		}
 		[node setValues: nodeGraphValues];
+		[node setSeparation: YES];
 		[node setDrawable: YES];
 	}
 
