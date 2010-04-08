@@ -20,7 +20,6 @@ Resources/SquarifiedTreemap.gorm \
 #
 SquarifiedTreemap_HEADER_FILES = \
 SquarifiedTreemap.h \
-TrivaTreemap.h \
 TreemapView.h
 
 #
@@ -28,7 +27,6 @@ TreemapView.h
 #
 SquarifiedTreemap_OBJC_FILES = \
 SquarifiedTreemap.m \
-TrivaTreemap.m \
 TreemapView.m
 
 #

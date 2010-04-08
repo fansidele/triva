@@ -20,8 +20,8 @@
 
 #include <Foundation/Foundation.h>
 #include <AppKit/AppKit.h>
+#include <Triva/TrivaTreemap.h>
 #include "SquarifiedTreemap.h"
-#include "TrivaTreemap.h"
 
 @interface TreemapView : NSView
 {

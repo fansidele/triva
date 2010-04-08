@@ -2,7 +2,6 @@
     BUNDLE_EXTENSION = .bundle;
     CLASS_FILES = (
 	SquarifiedTreemap.m,
-	TrivaTreemap.m,
 	TreemapView.m
     );
     COMPILEROPTIONS = "";
@@ -14,7 +13,6 @@
     );
     HEADER_FILES = (
 	SquarifiedTreemap.h,
-	TrivaTreemap.h,
 	TreemapView.h
     );
     IMAGES = (
