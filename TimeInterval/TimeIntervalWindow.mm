@@ -34,7 +34,6 @@ void TimeIntervalWindow::setSelectionEndTime (wxString str)
 
 void TimeIntervalWindow::setSlidersRange (int start, int end)
 {
-	std::cout << start << " " << end << std::endl;
 	timeSelectionStartSlider->SetRange (start, end);
 	timeSelectionEndSlider->SetRange (start, end);
 	timeSelectionStartSlider->SetValue(start);
