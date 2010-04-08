@@ -56,7 +56,64 @@ void MarcoDraw::OnPaint(wxPaintEvent& evt)
 
 void MarcoDraw::drawApplication (wxDC &dc)
 {
+	wxCoord w, h;
+	dc.GetSize(&w, &h);
+	NSEnumerator *en = [hosts objectEnumerator];
+	id host;
+	while ((host = [en nextObject]) != nil){
+		char *name = (char *)[[host name] cString];
+		Agnode_t *node = agfindnode (resGraph, name);
+		if (node && [[[filter entityTypeForEntity: host] name]
+			isEqualToString: @"cacheL2"]){
+			int x = (double)ND_coord_i(node).x/
+					GD_bb(resGraph).UR.x*w;
+			int y = h-(double)ND_coord_i(node).y/
+					GD_bb(resGraph).UR.y*h;
+			int nw = (int)(atof(agget (node, (char*)"width"))*72);
+			int nh = (int)(atof(agget (node, (char*)"height"))*72);
 
+			id type = [filter entityTypeWithName: @"address"];
+			NSEnumerator *en2;
+			en2 = [filter enumeratorOfEntitiesTyped: type
+				inContainer: host
+				fromTime: [filter selectionStartTime]
+				toTime: [filter selectionEndTime]
+				minDuration: 0];
+			int points = [[en2 allObjects] count];
+			int i, j, n = 0;
+			while (n < points){
+				for (i = x-nw/2; i < x+nw/2; i++){
+					for (j = y-nh/2; j < y+nh/2; j++){
+						dc.DrawPoint (i, j);
+						n++;
+					}
+				}
+			}
+		}
+	}
+	id container = [filter rootInstance];
+	id type = [filter entityTypeWithName: @"BB"];
+	en = [filter enumeratorOfEntitiesTyped: type
+		inContainer: container 
+		fromTime: [filter selectionStartTime]
+		toTime: [filter selectionEndTime]
+		minDuration: 0];
+	id link;
+	while ((link = [en nextObject])){
+		char *srcname = (char *)[[[link valueOfFieldNamed: @"SourceContainer"]name] cString];
+		char *dstname = (char *)[[[link valueOfFieldNamed: @"DestContainer"]name] cString];
+		Agnode_t *srcnode = agfindnode (resGraph, srcname);
+		Agnode_t *dstnode = agfindnode (resGraph, dstname);
+		int xo = (double)ND_coord_i(srcnode).x/
+				GD_bb(resGraph).UR.x*w;
+		int yo = h-(double)ND_coord_i(srcnode).y/
+				GD_bb(resGraph).UR.y*h;
+		int xd = (double)ND_coord_i(dstnode).x/
+				GD_bb(resGraph).UR.x*w;
+		int yd = h-(double)ND_coord_i(dstnode).y/
+				GD_bb(resGraph).UR.y*h;
+		dc.DrawLine (xo, yo, xd, yd);
+	}
 }
 
 void MarcoDraw::drawPlatform (wxDC &dc)
