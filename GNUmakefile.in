@@ -11,6 +11,12 @@ SUBPROJECTS = @PROJECTS@
 	TrivaPajeComponent.mm \
 	TrivaWindow.mm \
 	TrivaWindowAuto.mm
+
+ifeq ($(FOUNDATION_LIB), apple)
+LDFLAGS += -F../Triva -framework Triva
+else
+LDFLAGS += -L../Triva/Triva.framework -lTriva
+endif
 	
 @PACKAGE_TARNAME@_INCLUDE_DIRS += @CPPFLAGS@
 @PACKAGE_TARNAME@_LIB_DIRS += @LIBS@
