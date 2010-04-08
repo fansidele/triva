@@ -51,6 +51,7 @@ MemoryAccess/GNUmakefile
 TimeSliceAggregation/GNUmakefile
 SquarifiedTreemap/GNUmakefile
 SimGrid/GNUmakefile
-CommunicationPattern/GNUmakefile)
+CommunicationPattern/GNUmakefile
+NetworkTopology/GNUmakefile)
 AC_OUTPUT
 

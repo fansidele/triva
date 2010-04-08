@@ -11,7 +11,8 @@ SUBPROJECTS = \
 	MemoryAccess \
 	OgreView \
 	SimGrid \
-	CommunicationPattern
+	CommunicationPattern \
+	NetworkTopology
 
 @PACKAGE_TARNAME@_OBJCC_FILES = \
 	TrivaApp.mm \

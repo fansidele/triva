@@ -1,0 +1,53 @@
+include $(GNUSTEP_MAKEFILES)/common.make
+
+CC=$(CXX)
+
+PACKAGE_NAME=NetworkTopology
+BUNDLE_NAME=NetworkTopology
+BUNDLE_EXTENSION=.bundle
+BUNDLE_INSTALL_DIR=$(GNUSTEP_BUNDLES)/Triva
+NetworkTopology_PRINCIPAL_CLASS=NetworkTopology
+NetworkTopology_RESOURCE_FILES= ogre.cfg resources.cfg plugins.cfg Media
+NetworkTopology_HAS_RESOURCE_BUNDLE = yes
+
+NetworkTopology_OBJC_FILES=Position.m PositionGraphviz.m
+NetworkTopology_OBJCC_FILES= \
+	NetworkTopology.mm \
+	NetworkTopology+ProtoView.mm \
+	NetworkTopology+ProtoViewBase.mm \
+	NetworkTopologyWindow.mm \
+	NetworkTopologyWindowAuto.mm \
+\
+	Triva3DFrame.mm \
+	wxInputEventListener.mm \
+	wxOgreRenderWindow.mm \
+	CameraManager.mm \
+	AmbientManager.mm Origin.mm YAxis.mm XAxis.mm ZAxis.mm Ground.mm \
+	MovableText.mm \
+	DrawManager+Animation.mm \
+	DrawManager+ApplicationGraph.mm \
+	DrawManager+Hierarchy.mm \
+	DrawManager+Materials.mm \
+	DrawManager.mm \
+	DrawManager+Mouse.mm \
+	DrawManager+Paje.mm \
+	DrawManager+ResourcesGraph.mm \
+	DrawManager+SquarifiedTreemap.mm \
+	DrawManager+TimestampedObjects.mm \
+	TrivaTreemap+Graphviz.mm \
+	TrivaTreemap.mm \
+	TrivaTreemapSquarified.mm \
+	TrivaResourcesGraph.mm
+
+
+
+
+NetworkTopology_INCLUDE_DIRS += @CPPFLAGS@
+NetworkTopology_LIB_DIRS += @LIBS@
+NetworkTopology_LDFLAGS += @LDFLAGS@
+
+include $(GNUSTEP_MAKEFILES)/bundle.make
+
+after-distclean::
+after-all::
+after-clean:: 

@@ -1,0 +1,71 @@
+// http://www.ogre3d.org/wiki/index.php/Materials
+material Triva/Treemap/0
+{
+  technique
+  {
+    pass
+    {
+	texture_unit
+	{
+		colour_op_ex source1 src_manual src_current .5 .5 .5
+	}
+    }
+  }
+}
+
+material Triva/Treemap/1
+{
+  technique
+  {
+    pass
+    {
+	texture_unit
+	{
+		colour_op_ex source1 src_manual src_current .6 .6 .6
+	}
+    }
+  }
+}
+
+material Triva/Treemap/2
+{
+  technique
+  {
+    pass
+    {
+	texture_unit
+	{
+		colour_op_ex source1 src_manual src_current .7 .7 .7
+	}
+    }
+  }
+}
+
+material Triva/Treemap/3
+{
+  technique
+  {
+    pass
+    {
+	texture_unit
+	{
+		colour_op_ex source1 src_manual src_current .8 .8 .8
+	}
+    }
+  }
+}
+
+material Triva/Treemap/4
+{
+  technique
+  {
+    pass
+    {
+	texture_unit
+	{
+		colour_op_ex source1 src_manual src_current .9 .9 .9
+	}
+    }
+  }
+}
+
