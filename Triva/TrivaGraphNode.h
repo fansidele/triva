@@ -85,9 +85,9 @@
 }
 - (void) setType: (NSString *) n;
 - (NSString *) type;
+- (void) setBoundingBox: (NSRect) b;
 - (void) setName: (NSString *) n;
 - (NSString *) name;
-- (void) setBoundingBox: (NSRect) bb;
 - (NSRect) bb;
 - (NSRect) screenbb;
 - (void) setDrawable: (BOOL)v;
