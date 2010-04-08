@@ -1,0 +1,17 @@
+include $(GNUSTEP_MAKEFILES)/common.make
+
+FRAMEWORK_NAME = @PACKAGE_TARNAME@
+
+@PACKAGE_TARNAME@_OBJC_FILES = \
+	TrivaFilter.m \
+	TrivaGraphNode.m \
+	TrivaGraphEdge.m \
+	TimeSliceTree.m \
+	Tree.m
+@PACKAGE_TARNAME@_HEADER_FILES = TrivaFilter.h \
+	TrivaGraphNode.h \
+	TrivaGraphEdge.h \
+	TimeSliceTree.h \
+	Tree.h
+
+include $(GNUSTEP_MAKEFILES)/framework.make

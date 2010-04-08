@@ -15,12 +15,17 @@
 
 	/* for Aggregation category */
 	NSMutableDictionary *aggregatedValues;
+
+	/* for registering accumulated durations */
+	NSMutableDictionary *timeSliceDurations;
 }
 - (void) setTimeSliceColors: (NSMutableDictionary *) colors;
 - (NSMutableDictionary *) timeSliceColors;
 - (void) setTimeSliceValues: (NSMutableDictionary *) values;
 - (NSMutableDictionary *) timeSliceValues;
 - (void) setAggregatedValues: (NSMutableDictionary *) aggValues;
+-  (NSMutableDictionary *) timeSliceDurations;
+- (void) setTimeSliceDurations: (NSMutableDictionary *) d;
 - (NSMutableDictionary *) aggregatedValues;
 - (NSComparisonResult) compareValue: (TimeSliceTree *) other;
 - (float) finalValue;

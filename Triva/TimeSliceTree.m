@@ -4,9 +4,10 @@
 - (id) init
 {
 	self = [super init];
-	timeSliceValues = nil;
-	timeSliceColors = nil;
-	aggregatedValues = nil;
+	timeSliceValues = [[NSMutableDictionary alloc] init];
+	timeSliceColors = [[NSMutableDictionary alloc] init];
+	aggregatedValues = [[NSMutableDictionary alloc] init];
+	timeSliceDurations = [[NSMutableDictionary alloc] init];
 	return self;
 }
 
@@ -15,6 +16,7 @@
 	[timeSliceValues release];
 	[timeSliceColors release];
 	[aggregatedValues release];
+	[timeSliceDurations release];
 	[super dealloc];
 }
 
@@ -59,6 +61,19 @@
 	return aggregatedValues;
 }
 
+- (void) setTimeSliceDurations: (NSMutableDictionary *) d
+{
+	[timeSliceDurations release];
+	timeSliceDurations = d;
+	[timeSliceDurations retain];
+}
+
+-  (NSMutableDictionary *) timeSliceDurations
+{
+	return timeSliceDurations;
+}
+
+
 - (float) finalValue
 {
 	return finalValue;
@@ -82,7 +97,8 @@
 
 - (NSString *) description
 {
-	return [NSString stringWithFormat: @"%@-%@", name, aggregatedValues];
+	return name;
+//	return [NSString stringWithFormat: @"%@-%@", name, aggregatedValues];
 }
 
 - (void) testTree

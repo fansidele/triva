@@ -27,10 +27,20 @@
 - (Tree *) searchChildByName: (NSString *) n
 {
 	int i;
+	if ([name isEqualToString: n]){ //that's me
+		return self;
+	}
+
+	if ([children count] == 0){
+		return nil;
+	}
+
 	//look up among children
 	for (i = 0; i < [children count]; i++){
-		if ([n isEqualToString: [[children objectAtIndex: i] name]]){
-			return [children objectAtIndex: i];
+		Tree *child = [children objectAtIndex: i];
+		Tree *found = [child searchChildByName: n];
+		if (found){
+			return found;
 		}
 	}
 	return nil;
