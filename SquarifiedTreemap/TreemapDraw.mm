@@ -63,6 +63,7 @@ void TreemapDraw::OnMouseEvent(wxMouseEvent& evt)
 
 	//Selection of a state
 	if (evt.LeftDown()){
+		return; //ignore selection of values
 		long x = evt.GetX();
 		long y = evt.GetY();
 		Treemap *node = [current searchWithX: x
