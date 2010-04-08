@@ -47,11 +47,14 @@
 
 - (void) setParent: (Tree *) p
 {
+	parent = p; return;
+	/*
 	if (parent != nil){
 		[parent release];
 	}
 	parent = p;
 	[parent retain];
+	*/
 }
 
 - (void) addChild: (Tree *) c
@@ -62,7 +65,7 @@
 - (void) dealloc
 {
 	[name release];
-	[parent release];
+//	[parent release];
 	[children release];
 	[super dealloc];
 }
