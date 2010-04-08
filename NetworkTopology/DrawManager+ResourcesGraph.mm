@@ -134,9 +134,8 @@ void DrawManager::drawContainersIntoResourcesGraphBase (id entity)
 						loc = [viewController nextLocationRGForNodeName: name];
 						this->drawOneContainerIntoResourcesGraphBase ((id) sub, node, loc);
 					}
-				}else{
-					this->drawContainersIntoResourcesGraphBase((id)sub);
-				}
+			        }
+			      this->drawContainersIntoResourcesGraphBase((id)sub);
 
 			}
 		}
