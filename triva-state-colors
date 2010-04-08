@@ -64,6 +64,21 @@ defaults write Triva 'task-compute-MSGstate Colors' '{
     execute = "0 1 0";
 }'
 
+# simgrid defaults
+defaults write Triva 'surf-state Colors' '{
+    cpu = "0 1 0";
+    net = "0 0 1";
+}'
+defaults write Triva 'smx-state Colors' '{
+    communicate = "0 .3 1";
+    execute = "0 1 .3";
+}'
+defaults write Triva 'msg-state Colors' '{
+    put = "1 1 0";
+    get = "1 0 0";
+    execute = "0 1 0";
+}'
+
 defaults write Triva 'platform Color'		'1 1 0'
 defaults write Triva 'link Color'		'0 1 1'
 defaults write Triva 'host Color'		'1 0 1'
