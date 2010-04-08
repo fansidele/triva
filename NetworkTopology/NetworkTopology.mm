@@ -37,7 +37,7 @@
 		[c getParameterNumber: 1]
 	        andSize: @"100"
 	        andSeparationRate: @"1"
-	        andGraphvizAlgorithm: @"fdp"];
+	        andGraphvizAlgorithm: @"twopi"];
 
 	/* configure myself */
 	drawManager = new DrawManager (self);
