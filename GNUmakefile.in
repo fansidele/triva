@@ -31,6 +31,6 @@ deb:
 		--pkglicense "LGPL" \
 		--pkgversion "@PACKAGE_VERSION@" \
 		--requires "libgnustep-gui0.16,libgnustep-base1.19,\
-			libmatheval1,libgraphviz4,paje" \
+			gnustep-back0.16,libmatheval1,libgraphviz4,paje" \
 		./checkinstall-make
 

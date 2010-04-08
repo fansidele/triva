@@ -2,7 +2,7 @@
 | Triva INSTALL file for Debian (Lenny, Testing) and Ubuntu (Jaunty, Karmic)   |
 ================================================================================
 
-$ sudo apt-get install libgnustep-gui-dev  libgnustep-base-dev
+$ sudo apt-get install libgnustep-gui-dev  libgnustep-base-dev gnustep-back0.16
 $ sudo apt-get install build-essential gobjc
 $ source /usr/share/GNUstep/Makefiles/GNUstep.sh
 $ svn checkout svn://svn.forge.objectweb.org/svnroot/paje/trunk/Paje/
@@ -19,8 +19,7 @@ $ cd Triva-2.0
 $ ./bootstrap
 $ ./configure --enable-SquarifiedTreemap
 $ make
-$ export LD_LIBRARY_PATH = \
-        $LD_LIBRARY_PATH:./Triva/Triva.framework/Versions/Current/
+$ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:./Triva/Triva.framework/Versions/Current/
 # execute ./Triva.app/Triva with a paje trace file as parameter.
 
 That's it.

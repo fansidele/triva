@@ -23,7 +23,7 @@ to the compiling of the tool.
 
 GNUstep (and ObjC, ObjC++) dependencies:
 
-$ sudo apt-get install libgnustep-gui-dev  libgnustep-base-dev
+$ sudo apt-get install libgnustep-gui-dev  libgnustep-base-dev gnustep-back0.16
 $ sudo apt-get install build-essential gobjc
 
 |------------------------------|
@@ -82,8 +82,7 @@ $ make
 To execute locally, you have to set the LD_LIBRARY_PATH to point to
 the Triva library, like this:
 
-$ export LD_LIBRARY_PATH = \
- 	$LD_LIBRARY_PATH:./Triva/Triva.framework/Versions/Current/
+$ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:./Triva/Triva.framework/Versions/Current/
 
 Execute the file ./Triva.app/Triva using a Paje trace file as parameter.
 
