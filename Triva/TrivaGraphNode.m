@@ -255,6 +255,13 @@
 	return self;
 }
 
+- (void) dealloc
+{
+	[min release];
+	[max release];
+	[super dealloc];
+}
+
 - (void) setGradientType: (NSString *) type withValue: (double) val
                 withMax: (double) ma withMin: (double) mi
 {
