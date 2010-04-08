@@ -4,7 +4,6 @@ if test -z "$GNUSTEP_SYSTEM_ROOT"; then
         AC_MSG_ERROR([You must run the GNUstep.sh script before configuring])
 fi
 
-
 AC_LANG_CPLUSPLUS
 AC_PROG_CXX
 AC_HEADER_STDBOOL
@@ -33,66 +32,12 @@ function check_for_matheval ()
 dnl ---------------------------------------------------------------------------
 dnl
 dnl check for libgraphviz presence
-function check_for_cairo ()
-{
-	PKG_CHECK_MODULES(cairo, [cairo >= 1.8.8])
-}
-
-dnl ---------------------------------------------------------------------------
-dnl
-dnl check for libgraphviz presence
 function check_for_graphviz ()
 {
 	AC_CHECK_HEADER([graphviz/gvc.h],
 		[AC_CHECK_FUNC([gvLayout],[have_gvLayout="yes"],[have_gvLayout="no"])],  
 		[have_gvLayout="no"])
 	AC_CHECK_LIB([gvc],[gvLayout])
-}
-
-dnl ---------------------------------------------------------------------------
-dnl
-dnl check for libogre presence
-function check_for_ogre ()
-{
-	PKG_CHECK_MODULES(OGRE, [OGRE >= 1.4])
-	CPPFLAGS="$CPPFLAGS $OGRE_CFLAGS"
-	LIBS="$LIBS $OGRE_LIBS"
-}
-
-dnl ---------------------------------------------------------------------------
-dnl
-dnl check for GTK
-function check_for_gtk ()
-{
-	PKG_CHECK_MODULES(GTK, gtk+-2.0)
-	CPPFLAGS="$CPPFLAGS $GTK_CFLAGS"
-	LIBS="$LIBS $GTK_LIBS"
-}
-
-dnl ---------------------------------------------------------------------------
-dnl
-dnl check for WX
-function check_for_wx ()
-{
-	AM_OPTIONS_WXCONFIG
-	reqwx=2.8.0
-	AM_PATH_WXCONFIG($reqwx, wxWin=1)
-	if test "$wxWin" != 1; then
-	        AC_MSG_ERROR([
-	                wxWidgets must be installed on your system.
-	
-	                Please check that wx-config is in path, the directory
-	                where wxWidgets libraries are installed (returned by
-	                'wx-config --libs' or 'wx-config --static --libs' command)
-	                is in LD_LIBRARY_PATH or equivalent variable and
-	                wxWidgets version is $reqwx or above.
-	                ])
-	fi
-	CPPFLAGS="$CPPFLAGS -DWXINTL_NO_GETTEXT_MACRO"
-	CPPFLAGS="$CPPFLAGS $WX_CPPFLAGS"
-	CXXFLAGS="$CXXFLAGS $WX_CXXFLAGS_ONLY"
-	CFLAGS="$CFLAGS $WX_CFLAGS_ONLY"
-	LIBS="$LIBS $WX_LIBS"
 }
 
 dnl ---------------------------------------------------------------------------
@@ -113,38 +58,6 @@ PROJECTS="Triva TimeInterval"
 #flag to control if at least one (and only one) of components is activated
 FLAG=no
 
-#######################
-### NetworkTopology ###
-#######################
-AC_ARG_ENABLE(NetworkTopology,
-  [  --enable-NetworkTopology],
-  [enableNetworkTopology=yes])
-if test x$enableNetworkTopology = xyes ; then
-	check_for_ogre
-	check_for_graphviz
-	CONFIG_FILES="$CONFIG_FILES NetworkTopology/GNUmakefile"
-	PROJECTS="$PROJECTS NetworkTopology"
-	AC_DEFINE([HAVE_NETWORKTOPOLOGY], [1], [Define if NetworkTopology visualization components is activated])
-	FLAG=yes
-fi
-
-############################
-### CommunicationPattern ###
-############################
-AC_ARG_ENABLE(CommunicationPattern,
-  [  --enable-CommunicationPattern],
-  [enableCommunicationPattern=yes])
-if test x$enableCommunicationPattern = xyes ; then
-	check_for_ogre
-	check_for_graphviz
-	CPPFLAGS="$CPPFLAGS $OGRE_CFLAGS"
-	LIBS="$LIBS $OGRE_LIBS"
-	CONFIG_FILES="$CONFIG_FILES CommunicationPattern/GNUmakefile"
-	PROJECTS="$PROJECTS CommunicationPattern"
-	AC_DEFINE([HAVE_COMMUNICATIONPATTERN], [1], [Define if CommunicationPattern visualization components is activated])
-	FLAG=yes
-fi
-
 ###############
 ### SimGrid ###
 ###############
@@ -153,7 +66,6 @@ AC_ARG_ENABLE(SimGrid,
   [enableSimGrid=yes])
 if test x$enableSimGrid = xyes ; then
 	check_for_graphviz
-	check_for_cairo
 	CONFIG_FILES="$CONFIG_FILES TimeSliceAggregation/GNUmakefile SimGrid/GNUmakefile GraphView/GNUmakefile"
 	PROJECTS="$PROJECTS TimeSliceAggregation SimGrid GraphView"
 	AC_DEFINE([HAVE_SIMGRID], [1], [Define if SimGrid visualization components is activated])
@@ -169,7 +81,6 @@ AC_ARG_ENABLE(GraphConfiguration,
 if test x$enableGraphConfiguration = xyes ; then
 	check_for_matheval
 	check_for_graphviz
-	check_for_cairo
 	CONFIG_FILES="$CONFIG_FILES TimeSliceAggregation/GNUmakefile GraphConfiguration/GNUmakefile GraphView/GNUmakefile"
 	PROJECTS="$PROJECTS TimeSliceAggregation GraphConfiguration GraphView"
 	AC_DEFINE([HAVE_GRAPHCONFIGURATION], [1], [Enable GraphConfiguration])
@@ -186,20 +97,6 @@ if test x$enableSquarifiedTreemap = xyes ; then
 	CONFIG_FILES="$CONFIG_FILES SquarifiedTreemap/GNUmakefile TimeSliceAggregation/GNUmakefile"
 	PROJECTS="$PROJECTS SquarifiedTreemap TimeSliceAggregation"
 	AC_DEFINE([HAVE_SQUARIFIEDTREEMAP], [1], [Define if SquarifiedTreemap visualization components is activated])
-	FLAG=yes
-fi
-
-################
-### NUCAView ###
-################
-AC_ARG_ENABLE(NUCAView,
-  [  --enable-NUCAView],
-  [enableNUCAView=yes])
-if test x$enableNUCAView = xyes ; then
-	check_for_graphviz
-	CONFIG_FILES="$CONFIG_FILES TimeSliceAggregation/GNUmakefile NUCAView/GNUmakefile GraphView/GNUmakefile"
-	PROJECTS="$PROJECTS TimeSliceAggregation NUCAView GraphView"
-	AC_DEFINE([HAVE_NUCAVIEW], [1], [Define if NUCAView visualization components is activated])
 	FLAG=yes
 fi
 
@@ -229,9 +126,6 @@ if test x$enableDot = xyes ; then
 	AC_DEFINE([HAVE_DOT], [1], [Define if Dot output is activated])
 	FLAG=yes
 fi
-
-check_for_gtk
-check_for_wx
 
 CPPFLAGS="-I../../ -I../ -I./ $CPPFLAGS"
 AC_SUBST(CPPFLAGS)
