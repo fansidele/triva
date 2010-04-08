@@ -139,17 +139,6 @@
 		   SquarifiedTreemap \
 		) )" propertyList];
 #endif
-#ifdef HAVE_SQUARIFIEDTREEMAP_GNUSTEP
-	graph = [@"(  \
-		( FileReader, \
-		   PajeEventDecoder, \
-                   PajeSimulator, \
-                   StorageController, \
-		   TimeInterval-GNUstep, \
-		   TimeSliceAggregation, \
-		   SquarifiedTreemap-GNUstep \
-		) )" propertyList];
-#endif
 #ifdef HAVE_GRAPHCONFIGURATION
 	graph = [@"(  \
 		( FileReader, \
