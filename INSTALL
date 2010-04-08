@@ -73,7 +73,23 @@ as example the configuration for the SquarifiedTreemap view.
 $ ./configure --enable-SquarifiedTreemap
 $ make
 
-Now, you should have a binary ./Triva.app/Triva.
-Execute this file using a Paje trace file as parameter.
+|------------------------------|
+|                              |
+| B. Triva2: Execution         |
+|                              |
+|------------------------------|
+
+To execute locally, you have to set the LD_LIBRARY_PATH to point to
+the Triva library, like this:
+
+$ export LD_LIBRARY_PATH = \
+ 	$LD_LIBRARY_PATH:./Triva/Triva.framework/Versions/Current/
+
+Execute the file ./Triva.app/Triva using a Paje trace file as parameter.
+
+To make the program available (through the Triva binary) in any directory,
+you can install in your HOME with this command:
+
+$ make install GNUSTEP_INSTALLATION_DOMAIN=USER
 
 That's it.

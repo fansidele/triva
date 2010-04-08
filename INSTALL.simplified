@@ -19,6 +19,8 @@ $ cd Triva-2.0
 $ ./bootstrap
 $ ./configure --enable-SquarifiedTreemap
 $ make
+$ export LD_LIBRARY_PATH = \
+        $LD_LIBRARY_PATH:./Triva/Triva.framework/Versions/Current/
 # execute ./Triva.app/Triva with a paje trace file as parameter.
 
 That's it.
