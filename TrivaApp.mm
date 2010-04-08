@@ -37,8 +37,31 @@ bool TrivaApp::OnInit()
 //	SetExitOnFrameDelete (true);
 
 #ifdef HAVE_HCMREADER
+	printf("argc %d\n", argc);
+	NSLog (@"argv %@",WXSTRINGtoNSSTRING(argv[1]));
+	if (argc < 2){
+		NSLog(@"\n\nYou need to provide a configuration file.\nUsage: %@ <config file>\n\n", 
+		  WXSTRINGtoNSSTRING(argv[0]));
+                exit(2);
+	}
+	
+	/*Now the configuration file for the HCReader is read.*/
+	NSString *confFileName = WXSTRINGtoNSSTRING(argv[1]);
+	[confFileName retain];
+	NSDictionary *conf = [NSDictionary dictionaryWithContentsOfFile:
+	  confFileName];
+	[conf retain];
+	[confFileName release];
+	
 	TrivaPajeComponent *trivaPaje = [[TrivaPajeComponent alloc] init];
+	[trivaPaje createComponentGraph];
 	id reader = [trivaPaje componentWithName: @"HCMReader"];
+	id squarified = [trivaPaje componentWithName: @"SquarifiedTreemap"];
+	[squarified setFastUpdate: NO];
+	
+	/*Now we apply the configuration of the HCMReader.*/
+	[reader applyConfiguration: conf];
+	[conf release];
         /* 3 - thread to wait data from hcm and then send to paje */
         [NSThread
                 detachNewThreadSelector: @selector (waitForDataFromHCM:)
@@ -50,6 +73,11 @@ bool TrivaApp::OnInit()
                 detachNewThreadSelector: @selector (producer:)
                 toTarget:reader
                 withObject: nil];
+
+	id typefilter = [trivaPaje componentWithName: @"TypeFilter"];
+	SEL selector = @selector(hierarchyChanged);
+	[NSTimer scheduledTimerWithTimeInterval: 5 target: typefilter
+		selector: selector userInfo: nil repeats: YES];
 #endif
 
 	gnustepLoopTimer.SetOwner (this);

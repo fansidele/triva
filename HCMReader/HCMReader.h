@@ -10,7 +10,10 @@
 	IntegratorLib *integrator;
 	PajeHeaderCenter *headerCenter;
 	NSFileHandle *outFile;
+	NSArray *aggregatorNames;/* of (NSString *)  */
+	NSString *clientId;
 }
 - (BOOL) sendToPaje: (NSData *) data;
 - (void) waitForDataFromHCM: (id) object;
+- (BOOL)applyConfiguration: (NSDictionary *) conf;
 @end

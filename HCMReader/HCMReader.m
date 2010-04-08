@@ -10,7 +10,7 @@
 
 - (id) initWithController: (id) cont
 {
-	NSDictionary *gangliaHCMConf;
+//	NSDictionary *gangliaHCMConf;
 	NSFileManager *fManager;
 	NSString *callDir;
 	
@@ -19,12 +19,14 @@
 	bufferLock =  [[NSConditionLock alloc] initWithCondition: 0];
 	headerCenter = [[PajeHeaderCenter alloc] initWithDefaultHeader];
 	integrator = [[IntegratorLib alloc] init];
-	
+	clientId = nil;
+	aggregatorNames = nil;
 	/*There's a bug in the bundlecenter wich cahnges the work directory.
 	 * So, we must save the curren directory in order to go back there
 	 * after configuring the bundle.*/
 	fManager = [[NSFileManager defaultManager] retain];
 	callDir = [[fManager currentDirectoryPath] retain];
+/*
 	[integrator loadDIMVisualBundle: @"dimvisual-ganglia-hcm.bundle"];
 	gangliaHCMConf = [integrator 
 	  getConfigurationOptionsFromDIMVisualBundle:
@@ -32,24 +34,64 @@
 	[integrator setConfiguration: gangliaHCMConf forDIMVisualBundle:
 	 @"dimvisual-ganglia-hcm.bundle"];
 	[gangliaHCMConf autorelease];
+*/
 	[fManager changeCurrentDirectoryPath: callDir];
-	if([fManager createFileAtPath: @"out.paje" contents: nil 
+	NSString *fName = [[[NSHost currentHost] name] stringByAppendingString: @"-paje.output"];
+	[fName retain];
+	if([fManager createFileAtPath: fName contents: nil 
 	  attributes: nil] == NO){
 		NSLog(@"ERROR: couldn't create the output file.");
 		return nil;
 	}
-	outFile = [NSFileHandle fileHandleForWritingAtPath:
-	  @"out.paje"];
-	
-	[fManager release];
 	[callDir release];
+	[fManager release];
+	outFile = [NSFileHandle fileHandleForWritingAtPath: fName];
+	[fName release];
 	
 	return self;
 }
 
+- (BOOL)applyConfiguration: (NSDictionary *)conf
+{
+	NSArray *bundleNames;
+	NSDictionary *bundleConfig;
+	int i;
+	
+	[conf retain];
+	
+	clientId = [[conf objectForKey: @"id"] retain];
+	aggregatorNames = [[conf objectForKey: @"aggregators"] retain];
+	bundleNames = [conf objectForKey: @"bundles"];
+	if(!(clientId && aggregatorNames && bundleNames)){
+		NSLog(@"ERROR: The configuration file is incomplete.");
+		return NO;
+	}
+
+	for (i = 0; i < [bundleNames count]; i++){
+		[integrator loadDIMVisualBundle: @"dimvisual-ganglia-hcm.bundle"];
+		bundleConfig = [conf objectForKey: [[bundleNames
+		 objectAtIndex: i] stringByAppendingString: @"_config"]];
+		if(bundleConfig == nil){
+			bundleConfig = [integrator 
+			  getConfigurationOptionsFromDIMVisualBundle:
+			  @"dimvisual-ganglia-hcm.bundle"];
+			
+		}
+		[integrator setConfiguration: bundleConfig forDIMVisualBundle:
+		  @"dimvisual-ganglia-hcm.bundle"];
+	}
+	[conf release];
+	return YES;
+}
 
 - (void) dealloc
 {
+	if(aggregatorNames){
+		[aggregatorNames release];
+	}
+	if(clientId){
+		[clientId release];
+	}
 	[headerCenter release];
 	[integrator release];
 	[buffer release];
@@ -79,15 +121,18 @@
 // 			printf("%s:\n%s\n",
 //			  (canEndChunkBeforeData?"newChunk":"sameChunk"), 
 //			  (char *)[data bytes]);
-			[outFile writeData: data];
-			[outFile synchronizeFile];
+//			[outFile writeData: data];
+//			[outFile synchronizeFile];
 			if(canEndChunkBeforeData == YES){
 				canEndChunkBeforeData = NO;
 				[super startChunk: chunkNumber++];
 				[self outputEntity: data];
 			}else if((canEndChunkBeforeData = 
-				[self canEndChunkBefore: data])){
-					[super endOfChunkLast: 0];
+			  [self canEndChunkBefore: data])){
+				[super endOfChunkLast: 0];
+				[controller 
+				  setSelectionStartTime: [controller startTime]
+				  endTime: [controller endTime]];
 			}
 		}
 		[buffer removeAllObjects];
@@ -146,8 +191,8 @@
 	NSLog(@"Will launch the DIMVClient now.");
 	if(args == nil){
 		clientArgs = [NSDictionary dictionaryWithObjectsAndKeys:
-		  @"client1", @"CLIENTID",
-		  [NSArray arrayWithObjects: @"aggreg1", nil], @"AGGREGATORS",
+		  clientId, @"CLIENTID",
+		  aggregatorNames, @"AGGREGATORS",
 		  nil];
 	}else{
 		clientArgs = args;
@@ -163,7 +208,7 @@
 	  NSASCIIStringEncoding]];
 	NSLog(@"Beginning the main producer loop of the HCMReader.");
 	while ((data = [[self eventsAsData] retain]) != nil){
-		[NSThread sleepForTimeInterval: 1.1]; //sleep for 1.1 secs
+//		[NSThread sleepForTimeInterval: 1.1]; //sleep for 1.1 secs
 //		NSLog (@"%s", __FUNCTION__);
 		[self sendToPaje: data];
 		[data autorelease];

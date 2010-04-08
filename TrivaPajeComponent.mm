@@ -213,6 +213,7 @@
 		   PajeEventDecoder, \
                    PajeSimulator, \
                    StorageController, \
+		   TypeFilter, \
 		   TimeSliceAggregation, \
 		   SquarifiedTreemap \
 		) )" propertyList];
