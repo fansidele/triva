@@ -21,26 +21,9 @@
 #include <Triva/Tree.h>
 #include <Triva/TimeSliceTree.h>
 
-@interface TreemapRect : NSObject
-{
-        float width;
-        float height;
-        float x;
-        float y;
-}
-- (float) width;
-- (float) height;
-- (float) x;
-- (float) y;
-- (void) setWidth: (float) w;
-- (void) setHeight: (float) h;
-- (void) setX: (float) xis;
-- (void) setY: (float) ipslon;
-@end
-
 @interface Treemap : Tree
 {
-	TreemapRect *rect;
+	NSRect rect;
 	float value;
 	NSColor *color; //the color for this node
 	NSMutableArray *aggregatedChildren;
@@ -48,8 +31,8 @@
 }
 - (void) setValue: (float) v;
 - (float) val;
-- (TreemapRect *) treemapRect;
-- (void) setTreemapRect: (TreemapRect *)r;
+- (NSRect) treemapRect;
+- (void) setTreemapRect: (NSRect)r;
 - (void) setColor: (NSColor *) c;
 - (NSColor *) color;
 - (NSArray *) aggregatedChildren;
@@ -58,9 +41,9 @@
 - (double) worstf: (NSArray *) list
                 withSmallerSize: (double) w
                 withFactor: (double) factor;
-- (TreemapRect *)layoutRow: (NSArray *) row
+- (NSRect)layoutRow: (NSArray *) row
                 withSmallerSize: (double) w
-                withinRectangle: (TreemapRect *) r
+                withinRectangle: (NSRect) r
                 withFactor: (double) factor;
 - (void) squarifyWithOrderedChildren: (NSMutableArray *) list
                 andSmallerSize: (double) w

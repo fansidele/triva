@@ -19,27 +19,11 @@
 
 #define BIGFLOAT FLT_MAX
 
-@implementation TreemapRect
-- (float) width { return width; }
-- (float) height { return height; }
-- (float) x { return x; }
-- (float) y { return y; }
-- (void) setWidth: (float) w { width = w; }
-- (void) setHeight: (float) h { height = h; }
-- (void) setX: (float) xis { x = xis;}
-- (void) setY: (float) ipslon { y = ipslon;}
-- (NSString *) description 
-{
-	return [NSString stringWithFormat: @"%f,%f - size %f,%f",
-			x, y, width, height];
-}
-@end
-
 @implementation Treemap
 - (id) init
 {
 	self = [super init];
-	rect = [[TreemapRect alloc] init];
+	rect = NSZeroRect;
 	value = 0;
 	highlighted = NO;
 	return self;
@@ -57,23 +41,18 @@
 
 - (void) dealloc
 {
-	[rect release];
 	[aggregatedChildren release];
 	[super dealloc];
 }
 
-- (TreemapRect *) treemapRect
+- (NSRect) treemapRect
 {
 	return rect;
 }
 
-- (void) setTreemapRect: (TreemapRect *)r
+- (void) setTreemapRect: (NSRect)r
 {
-	if (rect != nil){
-		[rect release];
-	}
 	rect = r;
-	[rect retain];
 }
 
 - (void) setColor: (NSColor *) c
@@ -110,9 +89,9 @@
 }
 
 
-- (TreemapRect *)layoutRow: (NSArray *) row
+- (NSRect)layoutRow: (NSArray *) row
 		withSmallerSize: (double) w
-		withinRectangle: (TreemapRect *) r
+		withinRectangle: (NSRect) r
 		withFactor: (double) factor
 {
 	double s = 0; // sum
@@ -120,40 +99,36 @@
 	for (i = 0; i < [row count]; i++){
 		s += [(Treemap *)[row objectAtIndex: i] val]*factor;
 	}
-	double x = [r x], y = [r y], d = 0;
+	double x = r.origin.x, y = r.origin.y, d = 0;
 	double h = w==0 ? 0 : s/w;
-	BOOL horiz = (w == [r width]);
+	BOOL horiz = (w == r.size.width);
 
 	for (i = 0; i < [row count]; i++){
 		Treemap *child = (Treemap *)[row objectAtIndex: i];
+		NSRect childRect;
 		if (horiz){
-			[[child treemapRect] setX: x+d];
-			[[child treemapRect] setY: y];
+			childRect.origin.x = x+d;
+			childRect.origin.y = y;
 		}else{
-			[[child treemapRect] setX: x];
-			[[child treemapRect] setY: y+d];
+			childRect.origin.x = x;
+			childRect.origin.y = y+d;
 		}
 		double nw = [child val]*factor/h;
 		if (horiz){
-			[[child treemapRect] setWidth: nw];
-			[[child treemapRect] setHeight: h];
+			childRect.size.width = nw;
+			childRect.size.height = h;
 			d += nw;
 		}else{
-			[[child treemapRect] setWidth: h];
-			[[child treemapRect] setHeight: nw];
+			childRect.size.width = h;
+			childRect.size.height = nw;
 			d += nw;
 		}
+		[child setTreemapRect: childRect];
 	}
 	if (horiz){
-		[r setX: x];
-		[r setY: y+h];
-		[r setWidth: [r width]];
-		[r setHeight: [r height]-h];
+		r = NSMakeRect (x, y+h, r.size.width, r.size.height-h);
 	}else{
-		[r setX: x+h];
-		[r setY: y];
-		[r setWidth: [r width]-h];
-		[r setHeight: [r height]];
+		r = NSMakeRect (x+h, y, r.size.width-h, r.size.height);
 	}
 	return r;
 }
@@ -165,11 +140,8 @@
 	NSMutableArray *row = [NSMutableArray array];
 	double worst = FLT_MAX, nworst;
 	/* make a copy of my rect, so the algorithm can modify it */
-	TreemapRect *r = [[TreemapRect alloc] init];
-	[r setWidth: [rect width]];
-	[r setHeight: [rect height]];
-	[r setX: [rect x]];
-	[r setY: [rect y]];
+	NSRect r = NSMakeRect (rect.origin.x, rect.origin.y,
+				rect.size.width, rect.size.height);
 
 	while ([list count] > 0){
 		/* check if w is still valid */
@@ -192,9 +164,10 @@
 			worst = nworst;
 		}else{
 			[row removeLastObject];
-			[self layoutRow: row withSmallerSize: w
+			r = [self layoutRow: row withSmallerSize: w
 				withinRectangle: r withFactor: factor];//layout current row
-			w = [r width] < [r height] ? [r width] : [r height];
+			w = r.size.width < r.size.height ?
+				r.size.width : r.size.height;
 			[row removeAllObjects];
 			worst = FLT_MAX;
 		}
@@ -204,7 +177,6 @@
 			withinRectangle: r withFactor: factor];
 		[row removeAllObjects];
 	}
-	[r release];
 }
 
 - (void) calculateTreemapRecursiveWithFactor: (double) factor
@@ -242,7 +214,8 @@
 	[sortedCopyAggregated removeObjectsInRange: range];
 
 	/* calculate the smaller size */
-	double w = [rect width] < [rect height] ? [rect width] : [rect height];
+	double w = rect.size.width < rect.size.height ?
+			rect.size.width : rect.size.height;
 
 	/* call my squarified method with:
 		- the list of children with values dif from zero
@@ -277,10 +250,7 @@
         double area = w * h;
         double factor = area/value;
 
-        [rect setWidth: w];
-        [rect setHeight: h];
-        [rect setX: 0];
-        [rect setY: 0];
+	rect = NSMakeRect (0,0,w,h);
         [self calculateTreemapRecursiveWithFactor: factor];
 }
 
@@ -294,29 +264,29 @@
 	double x = point.x;
 	double y = point.y;
 	Treemap *ret = nil;
-	if (x >= [rect x] &&
-	    x <= [rect x]+[rect width] &&
-	    y >= [rect y] &&
-	    y <= [rect y]+[rect height]){
+	if (x >= rect.origin.x &&
+	    x <= rect.origin.x+rect.size.width &&
+	    y >= rect.origin.y &&
+	    y <= rect.origin.y+rect.size.height){
 		if ([self depth] == d){
-			/* recurse to aggregated children */
+			// recurse to aggregated children 
 			unsigned int i;
 			for (i = 0; i < [aggregatedChildren count]; i++){
 				Treemap *child = [aggregatedChildren
 							objectAtIndex: i];
 				if ([child val] &&
-					x >= [[child treemapRect] x] &&
-				        x <= [[child treemapRect] x]+
-						[[child treemapRect] width] &&
- 					y >= [[child treemapRect] y] &&
-				        y <= [[child treemapRect] y]+
-						[[child treemapRect] height]){
+					x >= [child treemapRect].origin.x &&
+				        x <= [child treemapRect].origin.x+
+						[child treemapRect].size.width&&
+ 					y >= [child treemapRect].origin.y &&
+				        y <= [child treemapRect].origin.y+
+					    [child treemapRect].size.height){
 						ret = child;
 						break;
 				}
 			}
 		}else{
-			/* recurse to ordinary children */
+			// recurse to ordinary children 
 			unsigned int i;
 			for (i = 0; i < [children count]; i++){
 				Treemap *child;

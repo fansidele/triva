@@ -33,12 +33,11 @@
          withBorderColor: (NSColor *)bor
 {
 	double x, y, width, height;
-	NSRect space;
-	x = space.origin.x = [[node treemapRect] x];
-	y = space.origin.y = [[node treemapRect] y];
-	width = space.size.width = [[node treemapRect] width];
-	height = space.size.height = [[node treemapRect] height];
-
+	NSRect space = [node treemapRect];
+	x = space.origin.x;
+	y = space.origin.y;
+	width = space.size.width;
+	height = space.size.height;
 
 	[col set];
 	NSRectFill(space);
