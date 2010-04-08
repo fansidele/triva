@@ -161,7 +161,6 @@
                    TypeFilter, \
 		   TimeInterval, \
                    TimeSliceAggregation, \
-		   GraphConfiguration, \
 		   SimGrid, \
 		   GraphView \
 		) )" propertyList];
