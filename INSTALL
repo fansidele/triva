@@ -101,10 +101,15 @@ The Triva2 sources can be downloaded here:
 $ wget http://dl.getdropbox.com/u/1119921/Triva-2.0.tar.gz
 
 $ source /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
-$ tar xfz Triva2.tgz
-$ cd Triva2
+$ tar xfz Triva-2.0.tar.gz
+$ cd Triva-2.0
 $ ./bootstrap
-$ ./configure
+
+You can configure Triva to one of the 5 visualization modules.
+There is no default, so here you have to choose one of them. We take here
+as example the configuration for the SquarifiedTreemap view.
+
+$ ./configure --enable-SquarifiedTreemap
 $ make
 $ cd ..
 
