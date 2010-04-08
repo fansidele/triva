@@ -24,6 +24,7 @@ std::string WXSTRINGtoSTDSTRING (wxString wsa)
 }
 
 
+static wxTimer timer;
 TimeIntervalWindow *window;
 
 @implementation TimeInterval

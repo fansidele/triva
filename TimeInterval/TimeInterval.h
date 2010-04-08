@@ -7,8 +7,6 @@
 
 #define TRIVA_TI 1000
 
-static wxTimer timer;
-
 @interface TimeInterval  : PajeFilter
 {
 	NSDate *selectionStartTime;
