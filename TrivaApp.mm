@@ -41,9 +41,13 @@ bool TrivaApp::OnInit()
 		wxTimerEventHandler(TrivaApp::runGNUstepLoop));
 	gnustepLoopTimer.Start(5,wxTIMER_CONTINUOUS);
 
-	if (argc == 2){
+	if (argc > 1){
 //		NSAutoreleasePool *poolread = [[NSAutoreleasePool alloc] init];
 		TrivaPajeComponent *trivaPaje = [[TrivaPajeComponent alloc] init];
+		int i;
+		for (i = 0; i < argc; i++){	
+			[trivaPaje addParameter: WXSTRINGtoNSSTRING(argv[i])];
+		}
 		id reader = [trivaPaje componentWithName: @"FileReader"];
 		[reader setInputFilename: WXSTRINGtoNSSTRING(argv[1])];
 		[trivaPaje setReaderWithName: @"FileReader"];

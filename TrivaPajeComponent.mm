@@ -357,4 +357,22 @@
     [encapsulator setSelectionStartTime:from
                                   endTime:to];
 }
+
+- (void) addParameter: (NSString *) par
+{
+	if (parameters == nil){
+		parameters = [[NSMutableArray alloc] init];
+	}else{
+		[parameters addObject: par];
+	}
+}
+
+- (NSString *) getParameterNumber: (int) index
+{
+	if (index < [parameters count]){
+		return [parameters objectAtIndex: index];
+	}else{
+		return nil;
+	}
+}
 @end

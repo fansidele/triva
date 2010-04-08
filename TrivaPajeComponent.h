@@ -13,6 +13,8 @@
 
 	PSortedArray *chunkDates;
 	BOOL timeLimitsChanged;
+
+	NSMutableArray *parameters;
 }
 
 - (NSBundle *)bundleWithName:(NSString *)name;
@@ -39,4 +41,6 @@
 
 - (void)setSelectionStartTime:(NSDate *)from
                       endTime:(NSDate *)to;
+- (void) addParameter: (NSString *) par;
+- (NSString *) getParameterNumber: (int) index;
 @end
