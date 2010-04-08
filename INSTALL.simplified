@@ -9,7 +9,7 @@
 |------------------------------|
 
 $ sudo apt-get install libgnustep-gui-dev  libgnustep-base-dev
-$ sudo apt-get install build-essential gobjc++
+$ sudo apt-get install build-essential gobjc++ gobjc
 $ source /usr/share/GNUstep/Makefiles/GNUstep.sh
 $ svn checkout svn://svn.forge.objectweb.org/svnroot/paje/trunk/Paje/
 $ cd Paje

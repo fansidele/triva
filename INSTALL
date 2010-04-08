@@ -25,7 +25,7 @@ to the compiling of the tool.
 GNUstep (and ObjC, ObjC++) dependencies:
 
 $ sudo apt-get install libgnustep-gui-dev  libgnustep-base-dev
-$ sudo apt-get install build-essential gobjc++
+$ sudo apt-get install build-essential gobjc++ gobjc
 
 |------------------------------|
 | A2. Paje                     |
