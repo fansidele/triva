@@ -285,6 +285,7 @@
 		return ret;
 	}else{
 		if (!number){
+			evaluator_destroy (f);
 			return -1; /* to indicate that is a numeric value */
 		}
 		double ret = evaluator_evaluate (f, 0, NULL, NULL);
