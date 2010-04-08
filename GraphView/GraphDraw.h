@@ -46,7 +46,7 @@ protected:
 	/* highlight related methods */
 	void drawPlatform (wxDC &dc);
 	void drawPlatformState (wxDC &dc);
-	void highlightHost (id host);
+	void highlightHost (TrivaGraphNode *host);
 	id findHostAt (int mx, int my);
 };
 

@@ -319,42 +319,43 @@ id GraphDraw::findHostAt (int mx, int my)
 	while ((node = [en nextObject])){
 		NSPoint pos = [filter positionForNode: node];
 		NSRect size = [filter sizeForNode: node];
-//		NSRect bb = [filter sizeForGraph];
+		NSRect bb = [filter sizeForGraph];
 
-		int nw = WIDTH(size,DPI);
-		int nh = HEIGHT(size,DPI);
-		//int x = pos.x / bb.size.width * w;
-		//int y = pos.y / bb.size.height * h;
+		int nw = size.size.width;
+		int nh = size.size.height;
+		int x = X(pos,bb,w);
+		int y = Y(pos,bb,h);
 	
-		//if (mx > (x - nw/2) && mx < (x + nw/2) &&
-		//	my > (y - nh/2) && my < (y + nh/2)){
-		//	return node;
-		//}
+		if (mx > (x - nw/2) && mx < (x + nw/2) &&
+			my > (y - nh/2) && my < (y + nh/2)){
+			return node;
+		}
 	}
 	return nil;
 }
 
-void GraphDraw::highlightHost (id host)
+void GraphDraw::highlightHost (TrivaGraphNode *node)
 {
-	NSString *msg = [NSString stringWithFormat: @"%@ %@",
-		[host name], [host valueOfFieldNamed: @"Power"]];
+	NSString *msg = [NSString stringWithFormat: @"%@",
+		[node name]];//, [host valueOfFieldNamed: @"Power"]];
 	window->setStatusMessage (NSSTRINGtoWXSTRING(msg));
 }
 
 void GraphDraw::OnMouseEvent(wxMouseEvent& evt)
 {
+ 	TrivaGraphNode *node = this->findHostAt (evt.GetX(), evt.GetY());
+	if (node){
+		this->highlightHost (node);
+	}
 	return;
 /*
 	static double lx = 0;
 	static double ly = 0;
- 	id host = this->findHostAt (evt.GetX(), evt.GetY());
 	wxPaintDC dc(this);
 	wxCoord w, h;
 	dc.GetSize(&w, &h);
-*/
 
-/*	
-	NSRect bb = [filter getBoundingBox];
+	NSRect bb = [filter sizeForGraph];
 
 	this->SetFocus();
 	if (evt.LeftDown() || evt.RightDown()){
@@ -379,10 +380,10 @@ void GraphDraw::OnMouseEvent(wxMouseEvent& evt)
 		Refresh();
 		lx = x;
 		ly = y;
-	}else if (host){
-		this->highlightHost (host);
+	}else{
+		this->highlightHost (node);
 	}
-	*/
+*/
 /*	//Selection of states for one-state representation disabled
 	if (evt.LeftDown()){
 		long x = evt.GetX();
