@@ -9,6 +9,7 @@
 @interface GraphView : TrivaFilter
 {
   IBOutlet DrawView *view;
+  id window;
 }
 @end
 

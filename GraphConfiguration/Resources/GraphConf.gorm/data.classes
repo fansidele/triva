@@ -24,7 +24,8 @@
 	    conf,
 	    popup,
 	    title,
-	    ok
+	    ok,
+	    window
 	);
 	Super = NSObject;
     };

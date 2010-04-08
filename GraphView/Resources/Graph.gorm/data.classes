@@ -11,7 +11,8 @@
 	Actions = (
 	);
 	Outlets = (
-	    view
+	    view,
+	    window
 	);
 	Super = NSObject;
     };

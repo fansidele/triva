@@ -15,6 +15,21 @@
 	[frequencySlider setMaxValue: 4];
 
 	timer = nil;
+
+	[window setDelegate: self];
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	//window position
+        NSPoint point;
+        NSString *tx = [NSString stringWithFormat: @"%@OriginX", [window title]];
+        NSString *ty = [NSString stringWithFormat: @"%@OriginY", [window title]];
+        //check if it exists
+        if ([defaults objectForKey: tx] && [defaults objectForKey: ty]){
+                point.x = [[defaults objectForKey: tx] doubleValue];
+                point.y = [[defaults objectForKey: ty] doubleValue];
+                [window setFrameOrigin: point];
+        }else{
+                [window center];
+        }
 	return self;
 }
 
@@ -173,5 +188,16 @@
 	if (![updateOnChange state]){
 		[self apply];
 	}
+}
+
+- (void)windowDidMove:(NSNotification *)win
+{
+        NSPoint point = [window frame].origin;
+        NSString *tx = [NSString stringWithFormat: @"%@OriginX", [window title]];
+        NSString *ty = [NSString stringWithFormat: @"%@OriginY", [window title]];
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        [defaults setObject: [NSString stringWithFormat: @"%f", point.x] forKey: tx];
+        [defaults setObject: [NSString stringWithFormat: @"%f", point.y] forKey: ty];
+        [defaults synchronize];
 }
 @end

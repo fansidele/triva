@@ -20,6 +20,7 @@
   IBOutlet id timeSelectionSize;
   IBOutlet id timeSelectionStart;
   IBOutlet id updateOnChange;
+  id window;
 
   double selStart;
   double selEnd;

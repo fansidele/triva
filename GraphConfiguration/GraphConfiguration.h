@@ -25,6 +25,7 @@
   id title;
   id popup;
   id ok;
+  id window;
 }
 - (void) setConfiguration: (NSDictionary *) conf;
 - (void) createGraph;
