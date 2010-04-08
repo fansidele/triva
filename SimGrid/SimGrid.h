@@ -10,11 +10,13 @@
 {
 	GVC_t *gvc;
 	graph_t *platformGraph;
-	BOOL platformCreated;
 
-	NSMutableArray *nodes;
-	NSMutableArray *edges;
-	NSMutableDictionary *sizes;
+	NSMutableArray *nodes;		// hosts
+	NSMutableArray *edges;		// links
+	NSMutableDictionary *sizes;	// sizes of hosts,links
+
+	double maxPower, minPower;
+	double maxBandwidth, minBandwidth;
 }
 - (void) createPlatformGraph;
 

@@ -1,8 +1,39 @@
 #include "SimGrid.h"
 
-#define ROUTER_SIZE 0.1
-#define MIN_HOST_SIZE 0.3
-#define MIN_LINK_SIZE 0.01
+//conversion functions so we can deal with graphviz
+//properly (it expects inches for sizes, generally)
+#define PTOI(pixel) ((double)(pixel/96))
+#define ITOP(inch)  ((double)(inch*96))
+
+//following values should be in pixels
+#define DEFAULT_SIZE	2
+#define ROUTER_SIZE	10
+#define MIN_HOST_SIZE	20
+#define MAX_HOST_SIZE	50
+#define MIN_LINK_SIZE	10
+#define MAX_LINK_SIZE	50
+
+//
+#define AGSETLINKSIZE(n,val) \
+{ \
+char str_what_val[100]; \
+snprintf (str_what_val,100,"setlinewidth(%d)",(int)val); \
+agsafeset(n,(char*)"style", str_what_val, str_what_val); \
+}
+
+#define AGSET(n,width,height) \
+{ \
+char str_width[100]; \
+char str_height[100]; \
+char default_size[100]; \
+snprintf (str_width, 100, "%f", PTOI(width)); \
+snprintf (str_height, 100, "%f", PTOI(height)); \
+snprintf (default_size, 100, "%f", PTOI(DEFAULT_SIZE)); \
+agsafeset (n, (char*)"width", str_width, default_size); \
+agsafeset (n, (char*)"height", str_height, default_size); \
+}
+
+#define AGGET(n,par) (atof(agget(n,(char*)par)))
 
 @implementation SimGrid
 - (id)initWithController:(PajeTraceController *)c
@@ -10,60 +41,63 @@
 	self = [super initWithController: c];
 	if (self != nil){
 	}
-	platformCreated = NO;
-	nodes = [[NSMutableArray alloc] init];
-	edges = [[NSMutableArray alloc] init];
-	sizes = [[NSMutableDictionary alloc] init];
+	gvc = gvContext();
+	platformGraph = NULL;
+	nodes = nil;
+	edges = nil;
+	sizes = nil;
 	return self;
 }
 
-- (void) graphvizAttributes
+- (void) dealloc
+{
+	gvFreeContext (gvc);
+	agclose (platformGraph);
+	[nodes release];
+	[edges release];
+	[sizes release];
+	[super dealloc];
+}
+
+- (void) settingGraphvizLayoutAttributes
 {
 	agnodeattr (platformGraph, (char*)"label", (char*)"");
+	agraphattr (platformGraph, (char*)"overlap", (char*)"false");
+	agraphattr (platformGraph, (char*)"splines", (char*)"true");
 
 	TrivaGraphEdge *edge;
 	TrivaGraphNode *node;
 	NSEnumerator *en;
 
-	// find min and max power
-	double maxPower = 0, minPower = FLT_MAX;
+	//for all nodes, set graphviz attributes such as shape/width/height
+	// shape is rectangle
+	// width/height = area is related to the power attribute
 	en = [nodes objectEnumerator];
 	while ((node = [en nextObject])){
-		double power = [[sizes objectForKey: node] doubleValue];
-		if (power == 0) continue; //ignore router power
-		if (power > maxPower) maxPower = power;
-		if (power < minPower) minPower = power;
-	}
-
-	// find min and max bw
-	double maxBw = 0, minBw = FLT_MAX;
-	en = [edges objectEnumerator];
-	while ((edge = [en nextObject])){
-		if ([[edge name] isEqualToString: @"loopback"]) continue;
-		double bw = [[sizes objectForKey: edge] doubleValue];
-		if (bw < minBw) minBw = bw;
-		if (bw > maxBw) maxBw = bw;
-	}
-
-	en = [nodes objectEnumerator];
-	while ((node = [en nextObject])){
-		//graphviz-related
+		//find the existing graphviz node
 		Agnode_t *n = agfindnode (platformGraph,
 				(char *)[[node name] cString]);
+
+		//set its shape: if rectangle == overlap
 		agsafeset (n, (char*)"shape", (char*)"rectangle",
 			(char*)"rectangle");
+
+		//find the power to this node
 		double power = [[sizes objectForKey: node] doubleValue];
 
-		char sizestr[100];
-		if (power == 0){ //define router size
-			double size = ROUTER_SIZE;
-			snprintf (sizestr, 100, "%g", size);
+		//calculate width/height values based on power
+		if (power == 0) { //is a router
+			AGSET(n, ROUTER_SIZE, ROUTER_SIZE);
 		}else{
-			double size = MIN_HOST_SIZE + (power - minPower)/(maxPower - minPower);
-			snprintf (sizestr, 100, "%g", size);
+			double s = 0;
+			s += MIN_HOST_SIZE;
+			s += MAX_HOST_SIZE*
+				(power - minPower)/(maxPower - minPower);
+//			NSLog (@"%s %f", n->name, s);
+//			NSLog (@"\tp=%f min=%f max=%f dif=%f",
+//				power, minPower, maxPower, maxPower-minPower);
+			AGSET(n, s, s);
 		}
-		agsafeset (n, (char*)"width", sizestr, (char*)"1");
-		agsafeset (n, (char*)"height", sizestr, (char*)"1");
 	}
 
 	en = [edges objectEnumerator];
@@ -76,20 +110,20 @@
 
                 Agedge_t *e = agfindedge (platformGraph, s, d);
 		double bw = [[sizes objectForKey: edge] doubleValue];
-		double size = MIN_LINK_SIZE + (bw - minBw)/(maxBw - minBw);
-		char ns[100], nss[100];
-		snprintf (ns, 100, "setlinewidth(%d)", (int)(5+10*size)); //just for calculating node separation
-		snprintf (nss, 100, "%f", size);
-		agsafeset (e, (char*)"style", (char*)ns, (char*)"setlinewidth(10)");
-		agsafeset (e, (char*)"bandwidth", (char*)nss, (char*)nss);
+		double size = 0;
+		size += MIN_LINK_SIZE;
+		size += MAX_LINK_SIZE *
+			(bw - minBandwidth) / (maxBandwidth - minBandwidth);
+		AGSET(e, size, size);
+//		AGSETLINKSIZE(e,size);
 	}
 }
 
-- (void) graphvizLayout
+- (void) doGraphvizLayout
 {
 	gvFreeLayout (gvc, platformGraph);
 	gvLayout (gvc, platformGraph, (char*)"neato");
-//	gvRenderFilename (gvc, platformGraph, (char*)"png", (char*)"out.png");
+//	gvRenderFilename (gvc, platformGraph, (char*)"dot", (char*)"out.dot");
 }
 
 - (void) redefinePlatformGraphLayout
@@ -99,9 +133,25 @@
 			__FUNCTION__, __LINE__);
 		return;
 	}
-	[self graphvizAttributes];
-	[self graphvizLayout];
+	//setting requirements:
+	//	node size is related to what*
+	//	link size is related to what*
+	//*for now, it is related to fixed attributes (power, bandwidth)
+	//but it should be decided by the user
+	[self settingGraphvizLayoutAttributes];
 
+	//run graphviz layout function
+	[self doGraphvizLayout];
+
+	//take graphviz information (node position mainly)
+	//and prepare each TrivaGraphNode node/edge to be draw by next component
+	//this preparation means size/position are defined with NSRect/NSPoint	
+	// NSRect/NSPoint values should always be in pixels
+	//
+	//    AND
+	//
+	//use timeSlice aggregated values to split the space of each node
+	//this should also be a parameter of the user
 	NSEnumerator *en = [nodes objectEnumerator];
 	TrivaGraphNode *node;
 	while ((node = [en nextObject])){
@@ -115,11 +165,16 @@
 		NSRect nodeRect;
 		nodeRect.origin.x = nodePos.x;
 		nodeRect.origin.y = nodePos.y;
-		nodeRect.size.width = atof(agget (n, (char*)"width")); //inch
-		nodeRect.size.height = atof(agget (n, (char*)"height")); //inch
+		nodeRect.size.width = ITOP(AGGET(n,"width"));
+		nodeRect.size.height = ITOP(AGGET(n,"height"));
 		[node setSize: nodeRect];
 
+		//since we have point and size for this node, we can say
+		//it is already drawable
+		[node setDrawable: YES];
+
 		//aggregated values TODO: is this generic?
+		//this should be defined by the user
 		TimeSliceTree *tree;
 		NSMutableDictionary *nodeGraphValues;
 		nodeGraphValues = [NSMutableDictionary dictionary];
@@ -164,13 +219,19 @@
 
                 Agedge_t *e = agfindedge (platformGraph, s, d);
 		NSRect edgeRect;
-		edgeRect.size.width = atof(agget (e, (char*)"bandwidth"));
+		edgeRect.size.width = AGGET(e,"width");
+		edgeRect.size.height = AGGET(e, "height"); //what for?
 		[edge setSize: edgeRect];
 
+		//since we have the width of the link, we can say
+		//it is already drawable
+		[edge setDrawable: YES];
+
 		//COPIED FROM ABOVE aggregated values TODO: is this generic?
+		//this should be defined by the user
 		TimeSliceTree *tree;
-		NSMutableDictionary *nodeGraphValues;
-		nodeGraphValues = [NSMutableDictionary dictionary];
+		NSMutableDictionary *edgeSeparationValues;
+		edgeSeparationValues = [NSMutableDictionary dictionary];
 		NSDictionary *values, *durations;
 		tree = [[self timeSliceTree] searchChildByName: [edge name]];
 		values = [tree aggregatedValues];
@@ -185,30 +246,32 @@
 		}
 
 		en2 = [values keyEnumerator];
+//		NSLog (@"%@", [edge name]);
 		while ((key = [en2 nextObject])){
-			double duration, val, size;
+			double duration, val, linkBandwidth;
 			duration = [[durations objectForKey: key] doubleValue];
 			val = [[values objectForKey: key] doubleValue];
-			size = [[sizes objectForKey: edge] doubleValue];
-	
-			if (duration) {
-				[nodeGraphValues setObject:
-					[NSNumber numberWithDouble:
-					     val/(existing*size*duration)]
+			linkBandwidth = [[sizes objectForKey:edge] doubleValue];
+
+//			NSLog (@"\t%@ DurationInTimeSlice=%f TimeSliceValue=%f LinkBandwidth=%f", key, duration, val, linkBandwidth);
+			if (val < 0){
+				//ou la la
+				NSLog (@"ERROR");
+			}
+			double divisor = duration*linkBandwidth*existing;
+			if (divisor){ 
+//				NSLog (@"\t\t%% of this link's bandwidth is %f", val/divisor);
+				[edgeSeparationValues setObject:
+					[NSNumber numberWithDouble: val/divisor]
 						    forKey: key];
 			}
 		}
-		[edge setValues: nodeGraphValues];
+		[edge setValues: edgeSeparationValues];
 	}
 }
 
 - (void) createPlatformGraph
 {
-	static int flag = 1;
-	if (flag){
-		gvc = gvContext();
-		flag = 0;
-	}
 	//close before starting a new one
 	if (platformGraph) {
 		[nodes release];
@@ -245,17 +308,29 @@
 		return;
 	}
 
-	// create graphviz nodes based on hosts, define size
+	// create graphviz nodes based on hosts, define size, max, min power
+	maxPower = 0;
+	minPower = FLT_MAX;
 	en = [self enumeratorOfContainersTyped: hostType
 				   inContainer: platformContainer];
 	while ((host = [en nextObject])){
+		//create graphviz node
 		agnode (platformGraph, (char *)[[host name] cString]);
+
+		//find its power
 		double power = [[host valueOfFieldNamed: @"Power"] doubleValue];
 
+		//define max min power
+		if (power == 0) continue; //ignore router power
+		if (power > maxPower) maxPower = power;
+		if (power < minPower) minPower = power;
+
+		//create TrivaGraphNode, with name, and keep it in nodes array
 		TrivaGraphNode *node = [[TrivaGraphNode alloc] init];
 		[node setName: [host name]];
 		[nodes addObject: node];
 
+		//define the size of the host in sizes dict
 		[sizes setObject: [NSNumber numberWithDouble: power]
 			  forKey: node];
 		[node release];
@@ -265,19 +340,35 @@
 		return;
 	}
 
-	// create graphviz edges based on links, define size
+	// create graphviz edges based on links, define size, max, min bw
+	maxBandwidth = 0;
+	minBandwidth = FLT_MAX;
 	en = [self enumeratorOfContainersTyped: linkType
 				   inContainer: platformContainer];
 	while ((link = [en nextObject])){
 		if ([[link name] isEqualToString: @"loopback"])continue;//ignore
+
+		//find src and destination from paje event
 		const char *src = [[link valueOfFieldNamed: @"SrcHost"]cString];
 		const char *dst = [[link valueOfFieldNamed: @"DstHost"]cString];
+
+		//find graphviz nodes corresponding to this link
 		Agnode_t *s = agfindnode (platformGraph, (char*)src);
 		Agnode_t *d = agfindnode (platformGraph, (char*)dst);
+
 		if (!s || !d) continue; //ignore if there is no src or dst
+
+		//create the graphviz edge
 		agedge (platformGraph, s, d);
+
+		//find the bandwidth for this link
 		double bw = [[link valueOfFieldNamed: @"Bandwidth"]doubleValue];
 
+		//define max, min bandwidth
+		if (bw < minBandwidth) minBandwidth = bw;
+		if (bw > maxBandwidth) maxBandwidth = bw;
+
+		//create the TrivaGraphEdge, with name, put it in edges array
 		TrivaGraphEdge *edge = [[TrivaGraphEdge alloc] init];
 		[edge setName: [link name]];
 		[edge setSource:
@@ -288,11 +379,18 @@
 				[link valueOfFieldNamed: @"DstHost"]]];
 		[edges addObject: edge];
 
+		//define the size of this link in sizes dict
 		[sizes setObject: [NSNumber numberWithDouble: bw]
 			  forKey: edge];
 		[edge release];
 	}
-	platformCreated = YES;
+
+	//report max, min for hosts/links
+	//NSLog (@"\nReport of max/min values for hosts/links:\n"
+	//	"\t Power [%f,%f] dif=%f\n"
+	//	"\t Bandwidth [%f,%f] dif=%f",
+	//		minPower, maxPower, maxPower-minPower,
+	//		minBandwidth, maxBandwidth, maxBandwidth-minBandwidth);
 }
 
 
