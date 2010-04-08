@@ -236,6 +236,12 @@
 			        [NSNumber numberWithDouble: 1]
 				forKey: @"is_switch"];
 		}
+		id numberOfAddresses = [values objectForKey: @"numberOfAddresses"];
+		if (numberOfAddresses){
+			[nodeGraphValues setObject:
+			        [NSNumber numberWithDouble: 1]
+				forKey: @"numberOfAddresses"];
+		}
                 [node setValues: nodeGraphValues];
 		[node setDrawable: YES];
 	}
