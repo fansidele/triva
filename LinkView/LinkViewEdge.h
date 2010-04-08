@@ -24,9 +24,12 @@
 {
 	double width;
 	double max;
+
+	id provider;
 }
 - (void) setWidth: (double) w;
 - (void) setMaxWidth: (double)m;
+- (void) setProvider: (id) prov;
 @end
 
 #endif

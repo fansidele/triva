@@ -75,8 +75,9 @@
 		double w = [[[[graph timeSliceValues] allValues] objectAtIndex: 0] doubleValue];
 		LinkViewEdge *edge = [[LinkViewEdge alloc] init];
 		[edge setWidth: w];
-		[edge setSource: self];
-		[edge setDestination: [[prov nodes] objectForKey: dest]];
+		[edge setProvider: prov];
+		[edge setSource: [self name]];
+		[edge setDestination: dest];//[[prov nodes] objectForKey: dest]];
 		[edges addObject: edge];
 		[edge release];
 	}
