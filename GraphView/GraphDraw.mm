@@ -3,7 +3,7 @@
 #include <wx/paper.h>
 #include <float.h>
 
-#define TRANSFORM(bw) (10+bw*20)
+#define TRANSFORM(bw) (bw) //(10+bw*20)
 
 #define X(pos,bb,w) (pos.x/bb.size.width*w)
 #define Y(pos,bb,h) (pos.y/bb.size.height*h)
