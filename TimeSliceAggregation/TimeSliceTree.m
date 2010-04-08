@@ -11,6 +11,7 @@
 
 - (void) dealloc
 {
+	[pajeEntities release];
 	[timeSliceValues release];
 	[aggregatedValues release];
 	[super dealloc];

@@ -41,6 +41,7 @@
 - (void) dealloc
 {
 	[rect release];
+	[aggregatedChildren release];
 	[super dealloc];
 }
 
