@@ -27,11 +27,14 @@
 	float treemapValue;
 	NSMutableArray *aggregatedChildren;
 	BOOL highlighted;
+	double offset;
 	id provider;
 }
 - (id) initWithTimeSliceTree: (TimeSliceTree*) tree andProvider: (id) prov;
 - (void) setTreemapValue: (float) v;
 - (float) treemapValue;
+- (void) setOffset: (double) o; //recursive call
+- (double) offset;
 - (NSArray *) aggregatedChildren;
 
 /* squarified treemap algorithm */

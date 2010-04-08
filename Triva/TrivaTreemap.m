@@ -27,6 +27,7 @@
 	highlighted = NO;
 	provider = nil;
 	aggregatedChildren = nil;
+	offset = 0;
 	return self;
 }
 
@@ -166,8 +167,8 @@
 	NSMutableArray *row = [NSMutableArray array];
 	double worst = FLT_MAX, nworst;
 	/* make a copy of my bb, so the algorithm can modify it */
-	NSRect r = NSMakeRect (bb.origin.x, bb.origin.y,
-				bb.size.width, bb.size.height);
+	NSRect r = NSMakeRect (bb.origin.x+offset, bb.origin.y+offset,
+                               bb.size.width-2*offset, bb.size.height-2*offset);
 
 	while ([list count] > 0){
 		/* check if w is still valid */
@@ -240,8 +241,13 @@
 	[sortedCopyAggregated removeObjectsInRange: range];
 
 	/* calculate the smaller size */
-	double w = bb.size.width < bb.size.height ?
-			bb.size.width : bb.size.height;
+	double w = bb.size.width-2*offset < bb.size.height-2*offset ?
+			bb.size.width-2*offset : bb.size.height-2*offset;
+
+	/* recalculate factor based on new space available */
+	//note: if offset is 0, the factor remains the same
+        double area = (bb.size.width-2*offset) * (bb.size.height-2*offset);
+        factor = area/[self treemapValue];
 
 	/* call my squarified method with:
 		- the list of children with values dif from zero
@@ -388,5 +394,20 @@
 - (void) setProvider: (id) prov
 {
 	provider = prov;
+}
+
+- (void) setOffset: (double) o //recursive call
+{
+	offset = o;
+	NSEnumerator *en = [children objectEnumerator];
+	TrivaTreemap *child;
+	while ((child = [en nextObject])){
+		[child setOffset: offset];
+	}
+}
+
+- (double) offset
+{
+	return offset;
 }
 @end
