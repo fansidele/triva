@@ -39,6 +39,8 @@ private:
 	void drawEdge (cairo_t *cr, TrivaGraphEdge *edge);
 	void getRGBColorFrom (NSString *typeName, float *red,
 	        float *green, float *blue);
+	NSColor *getColorFrom (NSString *typeName);
+	NSColor *getSaturatedColorFrom (NSColor *color, float saturation);
 
 protected:
 	/* wxWidgets callbacks */

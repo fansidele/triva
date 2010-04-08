@@ -48,6 +48,39 @@ wxColour NSCOLORtoWXCOLOUR (NSColor *color)
 	return wxColour (0,0,1,0);
 }
 
+NSColor *GraphDraw::getSaturatedColorFrom (NSColor *color, float saturation)
+{
+	if (![[color colorSpaceName] isEqualToString:
+		@"NSCalibratedRGBColorSpace"]){
+		NSLog (@"%s:%d Color provided is not part of the "
+			"RGB color space.", __FUNCTION__, __LINE__);
+		return nil;
+	}
+	float h, s, b, a;
+	[color getHue: &h saturation: &s brightness: &b alpha: &a];
+
+	NSColor *ret = [NSColor colorWithCalibratedHue: h
+		saturation: saturation
+		brightness: b
+		alpha: a];
+	return ret;
+
+}
+
+NSColor *GraphDraw::getColorFrom (NSString *typeName)
+{
+	NSColor *ret = [NSColor blackColor];
+	if (typeName && [filter entityTypeWithName: typeName]){
+		ret = [filter colorForEntityType:
+			[filter entityTypeWithName: typeName]];
+		if (![[ret colorSpaceName] isEqualToString:
+			@"NSCalibratedRGBColorSpace"]){
+			ret = [NSColor blackColor];
+		}
+	}
+	return ret;
+}
+
 void GraphDraw::getRGBColorFrom (NSString *typeName, float *red,
 	float *green, float *blue)
 {
@@ -129,7 +162,20 @@ void GraphDraw::drawNode (cairo_t *cr, TrivaGraphNode *node)
 			}
 		}
 	}else if ([node gradient]){
-		//TODO
+		NSColor *color = this->getColorFrom([node gradientType]);
+		double saturation = [node gradientValue] / 
+				([node gradientMax] - [node gradientMin]);
+		color = this->getSaturatedColorFrom (color, saturation);
+		float red, green, blue, alpha;
+		[color getRed: &red green: &green blue: &blue alpha: &alpha];
+		cairo_set_source_rgb (cr, red, green, blue);
+
+		double a = x - nw/2;
+		double b = y - nh/2;
+		double c = nw;
+		double d = nh;
+		cairo_rectangle (cr, a, b, c, d);
+		cairo_fill (cr);
 	}
 }
 
@@ -250,10 +296,20 @@ void GraphDraw::drawEdge (cairo_t *cr, TrivaGraphEdge *edge)
 			}
 		}
 	}else if ([edge gradient]){
-		//TODO
-		//NSLog (@"%@ %f %f %f", [edge gradientType],
-		//	[edge gradientValue], [edge gradientMax],
-		//	[edge gradientMin]);
+		NSColor *color = this->getColorFrom([edge gradientType]);
+		double saturation = [edge gradientValue] / 
+				([edge gradientMax] - [edge gradientMin]);
+		color = this->getSaturatedColorFrom (color, saturation);
+		float red, green, blue, alpha;
+		[color getRed: &red green: &green blue: &blue alpha: &alpha];
+		cairo_set_source_rgb (cr, red, green, blue);
+
+		cairo_move_to (cr, ox1, oy1);
+		cairo_line_to (cr, ox2, oy2);
+		cairo_line_to (cr, ox3, oy3);
+		cairo_line_to (cr, ox4, oy4);
+		cairo_line_to (cr, ox1, oy1);
+		cairo_fill (cr);
 	}
 }
 
