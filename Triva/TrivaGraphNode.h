@@ -55,9 +55,6 @@
 @end
 
 @interface TrivaColor : TrivaSeparation
-{
-	NSString *var;
-}
 @end
 
 @interface TrivaGraphNode : NSObject

@@ -8,9 +8,25 @@
                          withValues: (NSDictionary*) timeSliceValues
                         andProvider: (TrivaFilter*) prov
 {
-	if (![conf count]) return nil;
+	if (![conf isKindOfClass: [NSDictionary class]]) {
+		NSLog (@"%s:%d: configuration %@ is not a dictionary",
+                        __FUNCTION__, __LINE__, conf);
+		return nil;
+	}
+
+	if (![conf count]) {
+		NSLog (@"%s:%d: configuration %@ is empty",
+                        __FUNCTION__, __LINE__, conf);
+		return nil;
+	}
+
 	NSString *type = [conf objectForKey: @"type"];
-	if (!type) return nil;
+	if (!type){
+		NSLog (@"%s:%d: configuration %@ has no type",
+                        __FUNCTION__, __LINE__, conf);
+		return nil;
+	}
+
 	if ([type isEqualToString: @"separation"]){
 		return [[TrivaSeparation alloc] initWithConfiguration: conf
                                                             forObject: obj
@@ -32,6 +48,8 @@
                                                          withValues: timeSliceValues
                                                         andProvider: prov];
 	}else{
+		NSLog (@"%s:%d: type '%@' of configuration %@ is unknown",
+                        __FUNCTION__, __LINE__, type, conf);
 		return nil;
 	}
 }
