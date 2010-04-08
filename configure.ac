@@ -88,6 +88,15 @@ function check_for_wx ()
 	LIBS="$LIBS $WX_LIBS"
 }
 
+dnl ---------------------------------------------------------------------------
+dnl
+dnl defining name of the binary (Triva is default)
+if test -z $PROJECT_NAME; then
+	PROJECT_NAME=Triva
+fi
+AC_SUBST(PROJECT_NAME)
+
+
 #components that are always compiled
 CONFIG_FILES="GNUmakefile Triva/GNUmakefile TimeInterval/GNUmakefile TypeFilter/GNUmakefile"
 PROJECTS="Triva TimeInterval TypeFilter"
