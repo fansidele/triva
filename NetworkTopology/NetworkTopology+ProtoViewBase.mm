@@ -36,9 +36,9 @@
 					NSLog (@"%@ - %@", n, nf);
 					if (nf == nil){
 						NSLog (@"Resource Graph Configuration\
-						file is complete: it should have a \
+						file is incomplete: it should have a \
 						node named %@, according to the \
-						provided application data.", nf);
+						provided application data.", n);
 					}else{
 						[resourcesGraph incrementNumberOfContainersOf: nf];
 					}
