@@ -22,7 +22,18 @@ endif
 @PROJECT_NAME@_LIB_DIRS += @LIBS@
 @PROJECT_NAME@_LDFLAGS += -lGeneral
 
-
 include $(GNUSTEP_MAKEFILES)/aggregate.make
 include $(GNUSTEP_MAKEFILES)/tool.make
+
+deb:
+	sudo checkinstall --pkgname @PROJECT_NAME@ -d 2 -si \
+		-t debian \
+		--arch @ARCHITECTURE@ \
+		--maintainer "Lucas.Schnorr@imag.fr" \
+		--pkglicense "LGPL" \
+		--pkgversion "@PACKAGE_VERSION@" \
+		--requires "libgnustep-gui0.16,libgnustep-base1.19,\
+			libmatheval1,libwxbase2.8-0,libwxgtk2.8-0,\
+			libgraphviz4,libogremain-1.6.1,paje" \
+		./checkinstall-make
 

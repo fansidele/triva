@@ -4,6 +4,7 @@ if test -z "$GNUSTEP_SYSTEM_ROOT"; then
         AC_MSG_ERROR([You must run the GNUstep.sh script before configuring])
 fi
 
+
 AC_LANG_CPLUSPLUS
 AC_PROG_CXX
 AC_HEADER_STDBOOL
@@ -12,6 +13,12 @@ AC_PROG_CC
 AC_CHECK_FUNCS([bzero])
 AC_CHECK_HEADERS([float.h limits.h sys/time.h])
 AC_PATH_PROG(PKG_CONFIG, pkg-config)
+
+AC_CANONICAL_SYSTEM
+ARCHITECTURE=$host_cpu
+AC_SUBST(ARCHITECTURE)
+
+AM_INIT_AUTOMAKE([gnu -Wno-portability])
 
 dnl ---------------------------------------------------------------------------
 dnl
