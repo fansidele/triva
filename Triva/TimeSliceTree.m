@@ -150,28 +150,44 @@
 	[self setAggregatedValues: agg];
 
 	/* for max and min values */
-	for (i = 0; i < [children count]; i++){
+	[maxValues addEntriesFromDictionary:
+		[[children objectAtIndex: 0] maxValues]];
+	[minValues addEntriesFromDictionary:
+		[[children objectAtIndex: 0] minValues]];
+	for (i = 1; i < [children count]; i++){
 		TimeSliceTree *child = [children objectAtIndex: i];
-		NSDictionary *childagg = [child aggregatedValues];
-		NSEnumerator *keys = [childagg keyEnumerator];
+		NSDictionary *maxChild = [child maxValues];
+		NSDictionary *minChild = [child minValues];
+		NSEnumerator *keys = [maxValues keyEnumerator];
 		id key;
 		while ((key = [keys nextObject])){
-			float value = [[childagg objectForKey: key] floatValue];
-			//defining max, min
 			double max = 0, min = FLT_MAX;
+			double cmax = 0, cmin = FLT_MAX;
+
+			//checking child max,min
+			if ([maxChild objectForKey: key]){
+				max = [[maxValues objectForKey:key]doubleValue];
+			}
+			if ([minChild objectForKey: key]){
+				min = [[minValues objectForKey:key]doubleValue];
+			}
+
+			//checking mine max,min
 			if ([maxValues objectForKey: key]){
-				max=[[maxValues objectForKey: key] doubleValue];
+				cmax =[[maxValues objectForKey:key]doubleValue];
 			}
 			if ([minValues objectForKey: key]){
-				min=[[minValues objectForKey: key] doubleValue];
+				cmin =[[minValues objectForKey:key]doubleValue];
 			}
-			if (value > max){
-				[maxValues setObject:[childagg objectForKey:key]
+
+			if (max > cmax){
+				[maxValues setObject:[maxChild objectForKey:key]
 					forKey: key];
 			}
-			if (value < min){
-				[minValues setObject:[childagg objectForKey:key]
+			if (min < cmin){
+				[minValues setObject:[minChild objectForKey:key]
 					forKey: key];
+
 			}
 		}
 	}
