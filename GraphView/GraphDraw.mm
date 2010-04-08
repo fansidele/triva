@@ -247,10 +247,8 @@ void GraphDraw::drawPlatform (wxDC &dc)
 	dc.GetSize(&w, &h);
 	wxSize ppi = dc.GetPPI();
 
-#ifdef CAIRO
 	wxClientDC dc_to_cairo(this);
 	cairo_t* cr = gdk_cairo_create(dc_to_cairo.m_window);
-#endif
 
 	NSEnumerator *en;
 	TrivaGraphNode *node;
@@ -265,6 +263,7 @@ void GraphDraw::drawPlatform (wxDC &dc)
 	while ((edge = [en nextObject])){
 		this->drawEdge (cr, edge);
 	}
+	cairo_destroy(cr);
 	return;
 }
 
