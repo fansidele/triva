@@ -19,11 +19,6 @@ void DrawManager::drawOneState (Ogre::SceneNode *visualContainer,
 	id container = [state container];
 	id et = [state entityType];
 
-	if ([[state value] isEqualToString: @"IDLE"]){
-		return;
-	}
-
-
 	NSString *ide = [NSString stringWithFormat: @"%@-%@-%@-%@", 
 		[state startTime], [state value], [et name], [container name]];
 	NSString *idesn = [NSString stringWithFormat: @"%@-sn", ide];
