@@ -1,5 +1,5 @@
 ================================================================================
-| Triva INSTALL file (last update 2009-12-17)                                  |
+| Triva INSTALL file (last update 2009-12-17)          Ubuntu 9.10 Karmic      |
 ================================================================================
 
 This file intends to give some guidelines to compile Triva. The 
@@ -20,7 +20,7 @@ to the compiling of the tool.
 | A1. GNUstep                  |
 |------------------------------|
 
-GNUstep (and ObjC, ObjC++) dependencies on Ubuntu 9.10:
+GNUstep (and ObjC, ObjC++) dependencies:
 
 $ sudo apt-get install build-essential gobjc++ libjpeg-dev libtiff-dev
 $ sudo apt-get install libpng-dev libxt-dev xorg-dev libssl-dev libxml2-dev
