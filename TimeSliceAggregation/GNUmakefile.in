@@ -11,8 +11,6 @@ TimeSliceAggregation_PRINCIPAL_CLASS=TimeSliceAggregation
 TimeSliceAggregation_OBJC_FILES = \
 	Tree.m \
 	TimeSliceTree.m \
-	TimeSliceTree+Paje.m \
-	TimeSliceTree+Aggregation.m \
 	TimeSliceAggregation.m
 TimeSliceAggregation_OBJCC_FILES=
 

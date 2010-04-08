@@ -28,25 +28,4 @@
 - (void) doAggregation;
 - (float) doFinalValueWith: (NSSet *) set;
 @end
-
-
-@interface TimeSliceTree (Aggregation)
-
-/*
-- (void) recursiveResetValues;
-- (void) recalculateRecursiveBottomUpWithValues: (NSSet *) values;
-- (void) recalculateWithValues: (NSSet *) values;
-
-- (void) addAggregatedChild: (TimeSliceTree *) child;
-- (void) removeAllAggregatedChildren;
-- (void) recursiveRemoveAllAggregatedChildren;
-- (NSArray *) aggregatedChildren;
-*/
-@end
-
-@interface TimeSliceTree (Paje)
-//- (void) setPajeEntity: (id) entity;
-//- (id) pajeEntity;
-@end
-
 #endif
