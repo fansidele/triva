@@ -1,23 +1,23 @@
-#ifndef __MarcoDraw__
-#define __MarcoDraw__
+#ifndef __NUCADraw__
+#define __NUCADraw__
 
 #include <Foundation/Foundation.h>
-#include <gvc.h>
+#include <graphviz/gvc.h>
 #include "wx/wx.h"
-#include "Marco.h"
+#include "NUCA.h"
 #include <General/PajeFilter.h>
 #include <limits.h>
 #include <float.h>
 
-#include "MarcoWindow.h"
+#include "NUCAWindow.h"
 
-class MarcoWindow;
+class NUCAWindow;
 
-class MarcoDraw : public wxControl
+class NUCADraw : public wxControl
 {
-	DECLARE_CLASS (MarcoDraw)
+	DECLARE_CLASS (NUCADraw)
 	DECLARE_EVENT_TABLE ()
-	DECLARE_NO_COPY_CLASS (MarcoDraw)
+	DECLARE_NO_COPY_CLASS (NUCADraw)
 
 private: /* draw platform related */
 	NSArray *hosts;
@@ -29,17 +29,17 @@ private: /* draw platform related */
 	float minPower, maxPower;
 
 private:
-	MarcoWindow *window;
+	NUCAWindow *window;
 	id filter;
 
 public:
-	MarcoDraw (wxWindow *parent, wxWindowID id,
+	NUCADraw (wxWindow *parent, wxWindowID id,
 		const wxPoint &pos = wxDefaultPosition,
 		const wxSize &size = wxDefaultSize,
 		long style = wxSUNKEN_BORDER,
 		const wxValidator &validator = wxDefaultValidator);
 	void setController (id contr) { filter = contr; };
-	void setWindow (MarcoWindow *w) { window = w; };
+	void setWindow (NUCAWindow *w) { window = w; };
 	void recreateResourcesGraph ();
 	void drawPlatform (wxDC &dc);
 	void drawApplication (wxDC &dc);
@@ -57,18 +57,18 @@ protected:
 
 	/* highlight related methods */
 /*
-	void highlightMarcoNode (long x, long y);
-	void unhighlightMarcoNode (wxDC &dc);
+	void highlightNUCANode (long x, long y);
+	void unhighlightNUCANode (wxDC &dc);
 
-	void drawHighlightMarcoNode (id node, wxDC &dc);
-	void drawMarcoNode (id node, int offset,
+	void drawHighlightNUCANode (id node, wxDC &dc);
+	void drawNUCANode (id node, int offset,
                         wxBrush &brush, wxColour &color,
                         wxDC &dc);
-	void drawMarcoNode2 (id node, int offset,
+	void drawNUCANode2 (id node, int offset,
                         wxBrush &brush, wxColour &color,
                         wxDC &dc);
 	wxColour findColorForNode (id treemap);
-	void drawMarco (id treemap, wxDC &dc);
+	void drawNUCA (id treemap, wxDC &dc);
 */
 };
 

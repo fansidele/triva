@@ -5,20 +5,20 @@
 // PLEASE DO "NOT" EDIT THIS FILE!
 ///////////////////////////////////////////////////////////////////////////
 
-#include "MarcoDraw.h"
+#include "NUCADraw.h"
 
-#include "MarcoWindowAuto.h"
+#include "NUCAWindowAuto.h"
 
 ///////////////////////////////////////////////////////////////////////////
 
-MarcoWindowAuto::MarcoWindowAuto( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxFrame( parent, id, title, pos, size, style )
+NUCAWindowAuto::NUCAWindowAuto( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxFrame( parent, id, title, pos, size, style )
 {
 	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
 	
 	wxBoxSizer* bSizer1;
 	bSizer1 = new wxBoxSizer( wxVERTICAL );
 	
-	draw = new MarcoDraw( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	draw = new NUCADraw( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	bSizer1->Add( draw, 1, wxEXPAND, 5 );
 	
 	this->SetSizer( bSizer1 );
@@ -26,6 +26,6 @@ MarcoWindowAuto::MarcoWindowAuto( wxWindow* parent, wxWindowID id, const wxStrin
 	statusBar = this->CreateStatusBar( 1, wxST_SIZEGRIP, wxID_ANY );
 }
 
-MarcoWindowAuto::~MarcoWindowAuto()
+NUCAWindowAuto::~NUCAWindowAuto()
 {
 }

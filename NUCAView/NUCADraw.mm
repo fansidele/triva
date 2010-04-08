@@ -1,26 +1,25 @@
-#include "MarcoDraw.h"
+#include "NUCADraw.h"
 #include <wx/dcps.h>
 #include <wx/paper.h>
 #include <float.h>
-#include <gvc.h>
 
 extern wxString NSSTRINGtoWXSTRING (NSString *ns);
 extern NSString *WXSTRINGtoNSSTRING (wxString wsa);
 extern std::string WXSTRINGtoSTDSTRING (wxString wsa);
 
-IMPLEMENT_CLASS( MarcoDraw, wxControl )
-BEGIN_EVENT_TABLE( MarcoDraw, wxControl )
-        EVT_MOUSE_EVENTS( MarcoDraw::OnMouseEvent )
-        EVT_KEY_DOWN( MarcoDraw::OnKeyDownEvent )
-        EVT_PAINT( MarcoDraw::OnPaint )
-        EVT_SIZE( MarcoDraw::OnSize )
-//        EVT_CHAR( MarcoDraw::OnCharEvent )
-//        EVT_KEY_UP( MarcoDraw::OnKeyUpEvent )
-//        EVT_MOUSE_CAPTURE_LOST( MarcoDraw::OnMouseCapureLost )
+IMPLEMENT_CLASS( NUCADraw, wxControl )
+BEGIN_EVENT_TABLE( NUCADraw, wxControl )
+        EVT_MOUSE_EVENTS( NUCADraw::OnMouseEvent )
+        EVT_KEY_DOWN( NUCADraw::OnKeyDownEvent )
+        EVT_PAINT( NUCADraw::OnPaint )
+        EVT_SIZE( NUCADraw::OnSize )
+//        EVT_CHAR( NUCADraw::OnCharEvent )
+//        EVT_KEY_UP( NUCADraw::OnKeyUpEvent )
+//        EVT_MOUSE_CAPTURE_LOST( NUCADraw::OnMouseCapureLost )
 END_EVENT_TABLE ()
 
 
-MarcoDraw::MarcoDraw (wxWindow *parent, wxWindowID id,
+NUCADraw::NUCADraw (wxWindow *parent, wxWindowID id,
 	const wxPoint &pos, const wxSize &size, long style,
 	const wxValidator &validator)
 {
@@ -28,11 +27,11 @@ MarcoDraw::MarcoDraw (wxWindow *parent, wxWindowID id,
 	Create (parent, id, pos, size, style, validator);
 
 	gvc = gvContext();
-	resGraph = agopen ((char *)"MarcoGraph", AGRAPHSTRICT);
+	resGraph = agopen ((char *)"NUCAGraph", AGRAPHSTRICT);
 
 }
 
-void MarcoDraw::OnPaint(wxPaintEvent& evt)
+void NUCADraw::OnPaint(wxPaintEvent& evt)
 {
 	wxPaintDC dc(this);
 	dc.Clear();
@@ -54,7 +53,7 @@ void MarcoDraw::OnPaint(wxPaintEvent& evt)
 	this->drawApplication (dc);
 }
 
-void MarcoDraw::drawApplication (wxDC &dc)
+void NUCADraw::drawApplication (wxDC &dc)
 {
 	wxCoord w, h;
 	dc.GetSize(&w, &h);
@@ -116,7 +115,7 @@ void MarcoDraw::drawApplication (wxDC &dc)
 	}
 }
 
-void MarcoDraw::drawPlatform (wxDC &dc)
+void NUCADraw::drawPlatform (wxDC &dc)
 {
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	dc.SetPen(wxPen(wxT("Black"), 1, wxSOLID));
@@ -346,12 +345,12 @@ void MarcoDraw::drawPlatform (wxDC &dc)
 	[pool release];
 }
 
-void MarcoDraw::OnSize (wxSizeEvent& evt)
+void NUCADraw::OnSize (wxSizeEvent& evt)
 {
 	Refresh();
 }
 
-void MarcoDraw::OnMouseEvent(wxMouseEvent& evt)
+void NUCADraw::OnMouseEvent(wxMouseEvent& evt)
 {
 	this->SetFocus();
 
@@ -359,7 +358,7 @@ void MarcoDraw::OnMouseEvent(wxMouseEvent& evt)
 	if (evt.LeftDown()){
 		long x = evt.GetX();
 		long y = evt.GetY();
-		Marco *node = [current searchWithX: x
+		NUCA *node = [current searchWithX: x
 		                andY: y
 		                limitToDepth: maxDepthToDraw];
 		[selectedValues addObject: [[node pajeEntity] value]];
@@ -384,7 +383,7 @@ void MarcoDraw::OnMouseEvent(wxMouseEvent& evt)
 */
 }
 
-void MarcoDraw::OnKeyDownEvent(wxKeyEvent& evt)
+void NUCADraw::OnKeyDownEvent(wxKeyEvent& evt)
 {
 	if (evt.AltDown() && evt.GetKeyCode() == 80) { /* ALT + P */
 		wxClientDC screen(this);
@@ -404,7 +403,7 @@ void MarcoDraw::OnKeyDownEvent(wxKeyEvent& evt)
 	                return;
 	        }else{
 			dc.StartDoc(NSSTRINGtoWXSTRING(filename));
-//			this->drawMarco ((id)current, dc);
+//			this->drawNUCA ((id)current, dc);
 			dc.EndDoc();
 			NSString *msg = [NSString stringWithFormat:
 			        @"Printed to %@", filename];
@@ -422,7 +421,7 @@ void MarcoDraw::OnKeyDownEvent(wxKeyEvent& evt)
 
 /* Highlight related methods */
 /*
-void MarcoDraw::highlightMarcoNode (long x, long y)
+void NUCADraw::highlightNUCANode (long x, long y)
 {
         if (current){
                 id node = [current searchWithX: x
@@ -430,14 +429,14 @@ void MarcoDraw::highlightMarcoNode (long x, long y)
                                 limitToDepth: maxDepthToDraw];
                 if (node != highlighted){
                         wxPaintDC dc(this);
-                        this->unhighlightMarcoNode(dc);
-                        this->drawHighlightMarcoNode (node, dc);
+                        this->unhighlightNUCANode(dc);
+                        this->drawHighlightNUCANode (node, dc);
                         highlighted = node;
                 }
         }
 }
 
-void MarcoDraw::unhighlightMarcoNode (wxDC &dc)
+void NUCADraw::unhighlightNUCANode (wxDC &dc)
 {
         wxColour grayColor = wxColour (wxT("#c0c0c0"));
         wxColour color;
@@ -447,7 +446,7 @@ void MarcoDraw::unhighlightMarcoNode (wxDC &dc)
         while (parent){
                 color = this->findColorForNode (parent);
 		brush = wxBrush (color, wxTRANSPARENT);
-                this->drawMarcoNode (parent, 0, brush, grayColor, dc);
+                this->drawNUCANode (parent, 0, brush, grayColor, dc);
                 if ([parent parent] == nil){
                         break;
                 }else{
@@ -460,16 +459,16 @@ void MarcoDraw::unhighlightMarcoNode (wxDC &dc)
 		id agg = [[[highlighted parent] aggregatedChildren] objectAtIndex: i];
 	        color = this->findColorForNode (agg);
         	brush = wxBrush (color, wxSOLID);
-        	this->drawMarcoNode (agg, 0, brush, grayColor, dc);
+        	this->drawNUCANode (agg, 0, brush, grayColor, dc);
 	}
 }
 
-void MarcoDraw::drawHighlightMarcoNode (id node, wxDC &dc)
+void NUCADraw::drawHighlightNUCANode (id node, wxDC &dc)
 {
         wxColour blackColor = wxColour (wxT("#000000"));
         wxColour color = this->findColorForNode (node);
         wxBrush brush (color, wxTRANSPARENT);
-        this->drawMarcoNode (node, 1, brush, blackColor, dc);
+        this->drawNUCANode (node, 1, brush, blackColor, dc);
 
         NSMutableString *message;
         message = [NSMutableString stringWithFormat: @"%.3f - %@",
@@ -477,7 +476,7 @@ void MarcoDraw::drawHighlightMarcoNode (id node, wxDC &dc)
         id parent = [node parent];
         while (parent){
                 color = this->findColorForNode (parent);
-                this->drawMarcoNode (parent, 0, brush, blackColor, dc);
+                this->drawNUCANode (parent, 0, brush, blackColor, dc);
                 [message appendString: [NSString stringWithFormat: @" - %@",
                         [parent name]]];
                 if ([[parent parent] depth] == 0){
@@ -489,7 +488,7 @@ void MarcoDraw::drawHighlightMarcoNode (id node, wxDC &dc)
         window->setStatusMessage (NSSTRINGtoWXSTRING(message));
 }
 
-void MarcoDraw::drawMarcoNode (id node, int offset,
+void NUCADraw::drawNUCANode (id node, int offset,
                         wxBrush &brush, wxColour &color,
                         wxDC &dc)
 {
@@ -520,7 +519,7 @@ void MarcoDraw::drawMarcoNode (id node, int offset,
         dc.DrawPolygon (5, points);
 }
 
-wxColour MarcoDraw::findColorForNode (id treemap)
+wxColour NUCADraw::findColorForNode (id treemap)
 {
         wxColour color;
         if (filter && ![filter isContainerEntityType:
@@ -551,7 +550,7 @@ wxColour MarcoDraw::findColorForNode (id treemap)
         return color;
 }
 
-void MarcoDraw::drawMarco (id treemap, wxDC &dc)
+void NUCADraw::drawNUCA (id treemap, wxDC &dc)
 {
 	if ([treemap val] == 0){
 		return;
@@ -567,29 +566,29 @@ void MarcoDraw::drawMarco (id treemap, wxDC &dc)
 			dc.SetBrush (color);
 			wxBrush brush (color, wxSOLID);
 			wxColour grayColor = wxColour (wxT("#c0c0c0"));
-			this->drawMarcoNode (child, 0, brush, grayColor, dc);
+			this->drawNUCANode (child, 0, brush, grayColor, dc);
 		}
 		
 	}else{
 		//recurse
 		unsigned int i;
 		for (i = 0; i < [[treemap children] count]; i++){
-			this->drawMarco ([[treemap children]
+			this->drawNUCA ([[treemap children]
 				objectAtIndex: i], dc);
 		}
 	}
 }
 */
 
-void MarcoDraw::recreateResourcesGraph()
+void NUCADraw::recreateResourcesGraph()
 {
-	if (![filter checkForMarcoHierarchy]){
-	        NSLog (@"It is not a Marco trace file");
+	if (![filter checkForNUCAHierarchy]){
+	        NSLog (@"It is not a NUCA trace file");
 		return;
 	}
 
 	agclose (resGraph);
-	resGraph = agopen ((char *)"MarcoGraph", AGRAPHSTRICT);
+	resGraph = agopen ((char *)"NUCAGraph", AGRAPHSTRICT);
 	agnodeattr (resGraph, (char*)"label", (char*)"");
 //	agraphattr (resGraph, (char*)"pad", (char*)"0.2");
 //	agnodeattr (resGraph, (char*)"width", (char*)"1");

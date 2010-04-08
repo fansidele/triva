@@ -1,0 +1,26 @@
+include $(GNUSTEP_MAKEFILES)/common.make
+
+CC=$(CXX)
+
+PACKAGE_NAME=NUCAView
+BUNDLE_NAME=NUCAView
+BUNDLE_EXTENSION=.bundle
+BUNDLE_INSTALL_DIR=$(GNUSTEP_BUNDLES)/Triva
+NUCAView_PRINCIPAL_CLASS=NUCA
+
+NUCAView_OBJC_FILES=
+NUCAView_OBJCC_FILES = \
+	NUCA.mm \
+	NUCAWindow.mm \
+	NUCAWindowAuto.mm \
+	NUCADraw.mm
+
+NUCAView_INCLUDE_DIRS += @CPPFLAGS@
+NUCAView_LIB_DIRS += @LIBS@
+NUCAView_LDFLAGS += @LDFLAGS@
+
+include $(GNUSTEP_MAKEFILES)/bundle.make
+
+after-distclean::
+after-all::
+after-clean:: 

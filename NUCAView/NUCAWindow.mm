@@ -1,4 +1,4 @@
-#include "MarcoWindow.h"
+#include "NUCAWindow.h"
 #include <iostream>
 
 wxString NSSTRINGtoWXSTRING (NSString *ns)
@@ -23,19 +23,19 @@ std::string WXSTRINGtoSTDSTRING (wxString wsa)
         return std::string(sa);
 }
 
-MarcoWindow::MarcoWindow( wxWindow* parent )
+NUCAWindow::NUCAWindow( wxWindow* parent )
 :
-MarcoWindowAuto( parent )
+NUCAWindowAuto( parent )
 {
 	draw->setWindow (this);
 }
 
-MarcoDraw *MarcoWindow::getDraw()
+NUCADraw *NUCAWindow::getDraw()
 {
 	return draw;
 }
 
-void MarcoWindow::setStatusMessage (wxString message)
+void NUCAWindow::setStatusMessage (wxString message)
 {
 	statusBar->SetStatusText (message);
 }

@@ -1,15 +1,15 @@
-#include "Marco.h"
-#include "MarcoDraw.h"
+#include "NUCA.h"
+#include "NUCADraw.h"
 
-MarcoDraw *draw = NULL;
+NUCADraw *draw = NULL;
 
-@implementation Marco
+@implementation NUCA
 - (id)initWithController:(PajeTraceController *)c
 {
 	self = [super initWithController: c];
 	if (self != nil){
 	}
-	MarcoWindow *window = new MarcoWindow ((wxWindow*)NULL);
+	NUCAWindow *window = new NUCAWindow ((wxWindow*)NULL);
 	window->Show();
 	draw = window->getDraw();
 	draw->setController ((id)self);
@@ -108,7 +108,7 @@ MarcoDraw *draw = NULL;
    return ret;
 }
 
-- (BOOL) checkForMarcoHierarchy
+- (BOOL) checkForNUCAHierarchy
 {
 	id type;
 	NSEnumerator *en;

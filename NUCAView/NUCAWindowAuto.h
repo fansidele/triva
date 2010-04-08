@@ -5,10 +5,10 @@
 // PLEASE DO "NOT" EDIT THIS FILE!
 ///////////////////////////////////////////////////////////////////////////
 
-#ifndef __MarcoWindowAuto__
-#define __MarcoWindowAuto__
+#ifndef __NUCAWindowAuto__
+#define __NUCAWindowAuto__
 
-class MarcoDraw;
+class NUCADraw;
 
 #include <wx/panel.h>
 #include <wx/gdicmn.h>
@@ -24,20 +24,20 @@ class MarcoDraw;
 
 
 ///////////////////////////////////////////////////////////////////////////////
-/// Class MarcoWindowAuto
+/// Class NUCAWindowAuto
 ///////////////////////////////////////////////////////////////////////////////
-class MarcoWindowAuto : public wxFrame 
+class NUCAWindowAuto : public wxFrame 
 {
 	private:
 	
 	protected:
-		MarcoDraw* draw;
+		NUCADraw* draw;
 		wxStatusBar* statusBar;
 	
 	public:
-		MarcoWindowAuto( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Triva - Marco"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 500,300 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
-		~MarcoWindowAuto();
+		NUCAWindowAuto( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Triva - NUCA"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 500,300 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
+		~NUCAWindowAuto();
 	
 };
 
-#endif //__MarcoWindowAuto__
+#endif //__NUCAWindowAuto__
