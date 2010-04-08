@@ -58,20 +58,6 @@ PROJECTS="Triva TimeInterval"
 #flag to control if at least one (and only one) of components is activated
 FLAG=no
 
-###############
-### SimGrid ###
-###############
-AC_ARG_ENABLE(SimGrid,
-  [  --enable-SimGrid],
-  [enableSimGrid=yes])
-if test x$enableSimGrid = xyes ; then
-	check_for_graphviz
-	CONFIG_FILES="$CONFIG_FILES TimeSliceAggregation/GNUmakefile SimGrid/GNUmakefile GraphView/GNUmakefile"
-	PROJECTS="$PROJECTS TimeSliceAggregation SimGrid GraphView"
-	AC_DEFINE([HAVE_SIMGRID], [1], [Define if SimGrid visualization components is activated])
-	FLAG=yes
-fi
-
 ##########################
 ### GraphConfiguration ###
 ##########################
