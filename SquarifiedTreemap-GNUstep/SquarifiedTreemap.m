@@ -33,6 +33,7 @@
 	}
 	[view setFilter: self];
 	currentTreemap = nil;
+	mustBeUpdated = YES;
 	return self;
 }
 
@@ -47,6 +48,7 @@
 	if ([view maxDepthToDraw] > [timeSliceTree maxDepth]){
 		[view setMaxDepthToDraw: [timeSliceTree maxDepth]];
 	}
+	mustBeUpdated = YES;
 	[view setNeedsDisplay: YES];
 }
 
@@ -75,7 +77,10 @@
 				|| values == nil){
 		return nil;
 	}
-	if (prev_w == width && prev_h == height && currentTreemap){
+	if (prev_w == width &&
+            prev_h == height &&
+            currentTreemap &&
+            !mustBeUpdated){
 		return currentTreemap;
 	}
 	[timeSliceTree doFinalValueWith: values];
@@ -89,6 +94,7 @@
 				andHeight: (float)height];
 	prev_w = width;
 	prev_h = height;
+	mustBeUpdated = NO;
 	return currentTreemap;
 }
 @end
