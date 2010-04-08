@@ -24,9 +24,9 @@ dnl
 dnl check for matheval
 function check_for_matheval ()
 {
-	PKG_CHECK_MODULES(libmatheval, libmatheval >= 1.1.7)
-	CPPFLAGS="$CPPFLAGS $libmatheval_CFLAGS"
-	LIBS="$LIBS $libmatheval_LIBS"
+	AC_CHECK_HEADER([matheval.h],
+		AC_CHECK_FUNC([evaluator_create],[have_matheval="yes"],[have_matheval="no"]),[have_matheval="no"])
+	AC_CHECK_LIB([matheval],[evaluator_create])
 }
 
 dnl ---------------------------------------------------------------------------
