@@ -18,6 +18,7 @@
 #define __TrivaGraphNode_h
 #include <Foundation/Foundation.h>
 #include <General/PajeFilter.h>
+#include <Triva/Tree.h>
 
 @class TrivaFilter;
 @class TrivaNodeGraph;
@@ -73,10 +74,10 @@
 @interface TrivaColor : TrivaSeparation
 @end
 
-@interface TrivaGraphNode : NSObject
+@interface TrivaGraphNode : Tree
 {
 	NSString *type; //node type (entitytype from paje)
-	NSString *name; //node name (unique indentification)
+	//NSString *name (declared in super class); node name (unique id)
 	NSRect bb; //the bounding box of the node (indicates size and position)
 	NSRect screenbb; //the bounding box of the screen
 	NSMutableArray *compositions; //array of TrivaComposition objects
@@ -86,8 +87,6 @@
 - (void) setType: (NSString *) n;
 - (NSString *) type;
 - (void) setBoundingBox: (NSRect) b;
-- (void) setName: (NSString *) n;
-- (NSString *) name;
 - (NSRect) bb;
 - (NSRect) screenbb;
 - (void) setDrawable: (BOOL)v;

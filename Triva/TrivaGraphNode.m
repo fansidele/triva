@@ -405,7 +405,6 @@
 - (id) init
 {
 	self = [super init];
-	name = nil;
 	bb = NSZeroRect;
 	compositions = [[NSMutableArray alloc] init];
 	return self;
@@ -413,7 +412,9 @@
 
 - (void) setType: (NSString *) n
 {
-	[type release];
+	if (type){
+		[type release];
+	}
 	type = n;
 	[type retain];
 }
@@ -421,18 +422,6 @@
 - (NSString *) type
 {
 	return type;
-}
-
-- (void) setName: (NSString *) n
-{
-	[name release];
-	name = n;
-	[name retain];
-}
-
-- (NSString *) name
-{
-	return name;
 }
 
 - (void) setBoundingBox: (NSRect) b
@@ -462,7 +451,6 @@
 
 - (void) dealloc
 {
-	[name release];
 	[compositions release];
 	[super dealloc];
 }
