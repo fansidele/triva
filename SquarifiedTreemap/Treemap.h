@@ -2,8 +2,8 @@
 #define __TREEMAP_H_
 #include <Foundation/Foundation.h>
 #include <AppKit/AppKit.h>
-#include "Tree.h"
-#include "TimeSliceAggregation/TimeSliceTree.h"
+#include <Triva/Tree.h>
+#include <Triva/TimeSliceTree.h>
 
 @interface TreemapRect : NSObject
 {

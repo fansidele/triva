@@ -1,11 +1,11 @@
 #ifndef __SQUATREEMAP_H
 #define __SQUATREEMAP_H
 #include <Foundation/Foundation.h>
-#include <General/PajeFilter.h>
+#include <Triva/TrivaFilter.h>
+#include <Triva/TimeSliceTree.h>
 #include "SquarifiedTreemap/Treemap.h"
-#include "TimeSliceAggregation/TimeSliceTree.h"
 
-@interface SquarifiedTreemap  : PajeFilter
+@interface SquarifiedTreemap  : TrivaFilter
 {
 	TimeSliceTree *timeSliceTree;
 	Treemap *currentTreemap;

@@ -1,6 +1,6 @@
 #include "SquarifiedTreemap.h"
 #include "TreemapWindow.h"
-#include "TimeSliceAggregation/TimeSliceAggregation.h"
+#include <Triva/TrivaFilter.h>
 
 TreemapDraw *draw = NULL;
 
@@ -21,11 +21,10 @@ TreemapDraw *draw = NULL;
 
 - (void) timeSelectionChanged
 {
-	TimeSliceAggregation *filter = (TimeSliceAggregation *) inputComponent;
 	if (timeSliceTree != nil){
 		[timeSliceTree release];
 	}
-	timeSliceTree = [filter timeSliceTree];
+	timeSliceTree = [self timeSliceTree];
 	[timeSliceTree retain];
 
 	if (draw->getMaxDepthToDraw() > [timeSliceTree maxDepth]){
