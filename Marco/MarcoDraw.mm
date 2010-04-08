@@ -37,6 +37,12 @@ void MarcoDraw::OnPaint(wxPaintEvent& evt)
 	NSLog (@"%s IN", __FUNCTION__);
 	wxPaintDC dc(this);
 	dc.Clear();
+	{
+		NSString *slice = [NSString stringWithFormat: @"%@ - %@",
+			[filter selectionStartTime],
+			[filter selectionEndTime]];
+		dc.DrawText (NSSTRINGtoWXSTRING(slice), 0, 0);
+	}
 	static int flag = 1;
 	if (flag){
 	 gvFreeLayout (gvc, resGraph);
