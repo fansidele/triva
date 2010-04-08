@@ -392,9 +392,26 @@ void GraphDraw::highlightHost (TrivaGraphNode *node)
 
 void GraphDraw::OnMouseEvent(wxMouseEvent& evt)
 {
+	static double lx = 0;
+	static double ly = 0;
+	wxPaintDC dc(this);
+	wxCoord w, h;
+	dc.GetSize(&w, &h);
+
  	TrivaGraphNode *node = this->findHostAt (evt.GetX(), evt.GetY());
 	if (node){
 		this->highlightHost (node);
+	}
+	NSRect bb = [filter sizeForGraph];
+	if (evt.Dragging() && node){
+		NSPoint pos = [filter positionForNode: node];
+		double x = evt.GetX();
+		double y = evt.GetY();
+		NSPoint np;
+		np.x = x/w*bb.size.width;
+		np.y = y/h*bb.size.height;
+		[node setPosition: np];
+		Refresh();
 	}
 	return;
 /*
