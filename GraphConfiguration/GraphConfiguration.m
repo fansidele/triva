@@ -438,7 +438,6 @@
 					andSize: size];
 		[obj setValues: separationValues];
 		[obj setSeparation: YES];
-		[obj setDrawable: YES];
 	}
 	if(colConfiguration && [obj separation] == NO){
 		// there is a color configuration and sepValues were not defined
@@ -448,7 +447,6 @@
 		if (separationValues){
 			[obj setValues: separationValues];
 			[obj setColor: YES];
-			[obj setDrawable: YES];
 		}
 	}
 	if(graConfiguration && [obj separation] == NO && [obj color] == NO ){
@@ -472,12 +470,12 @@
 						withMax: max
 						withMin: min];
 					[obj setGradient: YES];
-					[obj setDrawable: YES];
 					break;
 				}
 			}
 		}
 	}
+	[obj setDrawable: YES];
 }
 
 
