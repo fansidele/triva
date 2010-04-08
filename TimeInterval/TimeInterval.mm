@@ -88,25 +88,6 @@ TimeIntervalWindow *window;
 	[super timeSelectionChanged];
 }
 
-- (NSDate *) startTime
-{
-	if (selectionStartTime){
-		return selectionStartTime;
-	}else{
-		return [super startTime];
-	}
-}
-
-- (NSDate *) endTime
-{
-	if (selectionEndTime){
-		return selectionEndTime;
-	}else{
-		return [super endTime];
-	}
-
-}
-
 - (NSDate *) selectionStartTime
 {
 	if (selectionStartTime){
