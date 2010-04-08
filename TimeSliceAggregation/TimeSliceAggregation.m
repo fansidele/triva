@@ -38,7 +38,8 @@
 	}
 
 	//limitating for now the algorithm to state types
-	if (![type isKindOf: [PajeStateType class]]){
+	if (!([type isKindOf: [PajeVariableType class]] ||
+		[type isKindOf: [PajeStateType class]])){
 		return;
 	}
 
@@ -51,6 +52,10 @@
 		NSString *name = [ent name];
 		NSDate *entSTime = [ent startTime];
 		NSDate *entETime = [ent endTime];
+
+		if ([name isEqualToString: @""]){
+			name = [ent entityType];
+		}
 
 		entSTime = [entSTime laterDate: sliceStartTime];
 		entETime = [entETime earlierDate: sliceEndTime];
