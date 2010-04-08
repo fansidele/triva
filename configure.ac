@@ -105,8 +105,8 @@ AC_SUBST(PROJECT_NAME)
 
 
 #components that are always compiled
-CONFIG_FILES="GNUmakefile Triva/GNUmakefile TimeInterval/GNUmakefile TypeFilter/GNUmakefile"
-PROJECTS="Triva TimeInterval TypeFilter"
+CONFIG_FILES="GNUmakefile Triva/GNUmakefile"
+PROJECTS="Triva"
 
 #flag to control if at least one (and only one) of components is activated
 FLAG=no
