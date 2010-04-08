@@ -1,6 +1,8 @@
 ================================================================================
-| Triva INSTALL file (last update 2009-12-17)          Ubuntu 9.10 Karmic      |
+| Triva INSTALL file for Debian (Lenny, Testing) and Ubuntu (Jaunty, Karmic)   |
 ================================================================================
+
+Check the INSTALL.simplified for fast instructions.
 
 This file intends to give some guidelines to compile Triva. The 
 prototype needs a Objective-C and Objective-C++ compilation
@@ -22,28 +24,8 @@ to the compiling of the tool.
 
 GNUstep (and ObjC, ObjC++) dependencies:
 
-$ sudo apt-get install build-essential gobjc++ libjpeg-dev libtiff-dev
-$ sudo apt-get install libpng-dev libxt-dev xorg-dev libssl-dev libxml2-dev
-$ sudo apt-get install libxslt1-dev libffcall1-dev
-
-The best way to perform the GNUstep installation is through the
-GNUstep-startup package, which can be found here:
-
-$ wget http://ftpmain.gnustep.org/pub/gnustep/core/gnustep-startup-0.23.0.tar.gz
-$ tar xfz gnustep-startup-0.23.0.tar.gz
-$ cd gnustep-startup-0.23.0
-$ sudo ./InstallGNUstep
-
-The script will perform a series of tests to evaluate if your system has all
-the necessary libraries to install the GNUstep environment. If you installed
-the prerequisites for the GNUstep, it should work without problems.
-
-The default installation directory for GNUstep is on /usr/GNUstep. You need
-to source the GNUstep.sh script to activate the GNUstep environment. This
-has to be done every time a new shell is open (or put it on your initialization
-scripts):
-
-$ source /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
+$ sudo apt-get install libgnustep-gui-dev  libgnustep-base-dev
+$ sudo apt-get install build-essential gobjc++
 
 |------------------------------|
 | A2. Paje                     |
@@ -51,7 +33,7 @@ $ source /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
 
 First, source the GNUstep script, as follows:
 
-$ source /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
+$ source /usr/share/GNUstep/Makefiles/GNUstep.sh
 
 Triva2 needs Paje. To install it, please checkout the most up-to-date sources
 from the SVN repository by executing the following commands:
@@ -92,7 +74,7 @@ $ sudo apt-get install libgraphviz-dev
 The Triva2 sources can be downloaded here:
 $ wget http://dl.getdropbox.com/u/1119921/Triva-2.0.tar.gz
 
-$ source /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
+$ source /usr/share/GNUstep/Makefiles/GNUstep.sh
 $ tar xfz Triva-2.0.tar.gz
 $ cd Triva-2.0
 $ ./bootstrap
