@@ -49,12 +49,12 @@
 	[self timeSelectionChanged];
 }
 
-- (void) setConfiguration: (NSDictionary *) conf
+- (void) setConfiguration: (NSDictionary *) c
 {
 	if (configuration){
 		[configuration release];
 	}
-	configuration = conf;
+	configuration = [NSDictionary dictionaryWithDictionary: c];
 	[configuration retain];
 
 	[self hierarchyChanged];
