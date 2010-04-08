@@ -14,6 +14,7 @@
 	BOOL enable;
 }
 - (void) setTimeIntervalFrom: (int) start to: (int) end;
+- (BOOL) forwardSelectionTime: (double) seconds;
 @end
 
 #endif

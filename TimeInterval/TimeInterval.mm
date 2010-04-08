@@ -105,4 +105,36 @@ TimeIntervalWindow *window;
 		return [super selectionEndTime];
 	}
 }
+
+- (BOOL) forwardSelectionTime: (double) seconds
+{	
+	BOOL startstop = YES, endstop = YES;
+	if ([[self endTime] compare: selectionStartTime] ==
+		     NSOrderedDescending){
+	        id old = selectionStartTime;
+		selectionStartTime=[selectionStartTime addTimeInterval:seconds];
+	        [old release];
+		if ([[self endTime] compare: selectionStartTime] ==
+				 NSOrderedAscending){
+			[selectionStartTime release];
+			selectionStartTime = [self endTime];
+		}else{
+			startstop = NO;
+		}
+	}
+	if ([[self endTime] compare: selectionEndTime] == NSOrderedDescending){
+	        id old = selectionEndTime;
+		selectionEndTime = [selectionEndTime addTimeInterval: seconds];
+		[old release];
+		if ([[self endTime] compare: selectionEndTime] ==
+			   NSOrderedAscending){
+			[selectionEndTime release];
+			selectionEndTime = [self endTime];
+		}else{
+			endstop = NO;
+		}
+	}
+	[super timeSelectionChanged];
+	return startstop && endstop;
+}
 @end

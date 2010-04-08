@@ -2,6 +2,8 @@
 #include <iostream>
 
 extern wxString NSSTRINGtoWXSTRING (NSString *ns);
+extern std::string WXSTRINGtoSTDSTRING (wxString wsa);
+extern NSString *WXSTRINGtoNSSTRING (wxString wsa);
 
 TimeIntervalWindow::TimeIntervalWindow( wxWindow* parent )
 :
@@ -71,3 +73,31 @@ void TimeIntervalWindow::apply( wxCommandEvent& event )
 			timeSelectionEndSlider->GetValue()];
 }
 
+void TimeIntervalWindow::play( wxCommandEvent& event )
+{
+	wxString forwardInSec =  m_textCtrl1->GetValue();
+	double freq;
+	freq = [WXSTRINGtoNSSTRING(m_textCtrl1->GetValue()) doubleValue]*1000;
+	timeStep = [WXSTRINGtoNSSTRING (forwardInSec) doubleValue];
+	static bool clicked = false;
+	if (!clicked){
+		playTimer.SetOwner (this);
+		playTimer.Start (timeStep, wxTIMER_CONTINUOUS);
+		this->Connect (wxID_ANY,
+			wxEVT_TIMER,
+			wxTimerEventHandler(TimeIntervalWindow::forwardTime));
+		clicked = true;
+	}else{
+		playTimer.Stop();
+		clicked = false;
+	}
+}
+
+void TimeIntervalWindow::forwardTime( wxTimerEvent& event)
+{
+	if ([filter forwardSelectionTime: timeStep]){
+		playButton->SetValue(false);
+		wxCommandEvent ev;
+		this->play (ev);
+	}
+}

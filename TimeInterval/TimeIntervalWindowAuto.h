@@ -17,6 +17,8 @@
 #include <wx/sizer.h>
 #include <wx/statline.h>
 #include <wx/slider.h>
+#include <wx/tglbtn.h>
+#include <wx/textctrl.h>
 #include <wx/button.h>
 #include <wx/frame.h>
 
@@ -44,17 +46,25 @@ class TimeIntervalWindowAuto : public wxFrame
 		wxStaticText* m_staticText5;
 		wxStaticText* timeSelectionEnd;
 		wxSlider* timeSelectionEndSlider;
+		
+		wxStaticText* m_staticText9;
+		wxStaticText* m_staticText10;
+		wxToggleButton* playButton;
+		wxTextCtrl* m_textCtrl1;
+		wxTextCtrl* m_textCtrl2;
 		wxStaticLine* m_staticline11;
 		wxButton* m_button1;
 		
 		// Virtual event handlers, overide them in your derived class
 		virtual void startScroll( wxScrollEvent& event ){ event.Skip(); }
 		virtual void endScroll( wxScrollEvent& event ){ event.Skip(); }
+		virtual void play( wxCommandEvent& event ){ event.Skip(); }
+		virtual void timeStep( wxCommandEvent& event ){ event.Skip(); }
 		virtual void apply( wxCommandEvent& event ){ event.Skip(); }
 		
 	
 	public:
-		TimeIntervalWindowAuto( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Triva - Time Interval"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 300,300 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
+		TimeIntervalWindowAuto( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Triva - Time Interval"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 300,400 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
 		~TimeIntervalWindowAuto();
 	
 };
