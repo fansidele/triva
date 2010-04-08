@@ -169,6 +169,11 @@ void TreemapDraw::unhighlightTreemapNode (wxDC &dc)
 /* Drawing related methods */
 void TreemapDraw::drawHighlightTreemapNode (id node, wxDC &dc)
 {
+	if (node == nil){
+		window->setStatusMessage (NSSTRINGtoWXSTRING(@""));
+		return;
+	}
+
         wxColour blackColor = wxColour (wxT("#000000"));
         wxColour color = this->findColorForNode (node);
         wxBrush brush (color, wxTRANSPARENT);
