@@ -17,12 +17,12 @@
 	/* for Aggregation category */
 	NSMutableDictionary *aggregatedValues;
 }
-- (void) setPajeEntities: (NSDictionary *) values;
-- (NSDictionary *) pajeEntities;
-- (void) setTimeSliceValues: (NSDictionary *) values;
-- (NSDictionary *) timeSliceValues;
-- (void) setAggregatedValues: (NSDictionary *) aggValues;
-- (NSDictionary *) aggregatedValues;
+- (void) setPajeEntities: (NSMutableDictionary *) entities;
+- (NSMutableDictionary *) pajeEntities;
+- (void) setTimeSliceValues: (NSMutableDictionary *) values;
+- (NSMutableDictionary *) timeSliceValues;
+- (void) setAggregatedValues: (NSMutableDictionary *) aggValues;
+- (NSMutableDictionary *) aggregatedValues;
 - (NSComparisonResult) compareValue: (TimeSliceTree *) other;
 - (float) finalValue;
 - (void) setFinalValue: (float) f;

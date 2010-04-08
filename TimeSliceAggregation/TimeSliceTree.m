@@ -6,6 +6,7 @@
 	self = [super init];
 	timeSliceValues = nil;
 	aggregatedValues = nil;
+	pajeEntities = nil;
 	return self;
 }
 
@@ -17,44 +18,43 @@
 	[super dealloc];
 }
 
-- (void) setPajeEntities: (NSDictionary *) values
+- (void) setPajeEntities: (NSMutableDictionary *) entities
 {
 	if (pajeEntities){
 		[pajeEntities release];
 	}
-	pajeEntities= [NSMutableDictionary dictionaryWithDictionary: values];
+	pajeEntities = entities;
 	[pajeEntities retain];
 }
 
-- (NSDictionary *) pajeEntities
+- (NSMutableDictionary *) pajeEntities
 {
 	return pajeEntities;
 }
 
-- (void) setTimeSliceValues: (NSDictionary *) values
+- (void) setTimeSliceValues: (NSMutableDictionary *) values
 {
 	if (timeSliceValues){
 		[timeSliceValues release];
 	}
-	timeSliceValues= [NSMutableDictionary dictionaryWithDictionary: values];
+	timeSliceValues = values;
 	[timeSliceValues retain];
 }
-- (NSDictionary *) timeSliceValues
+- (NSMutableDictionary *) timeSliceValues
 {
 	return timeSliceValues;
 }
 
-- (void) setAggregatedValues: (NSDictionary *) aggValues
+- (void) setAggregatedValues: (NSMutableDictionary *) aggValues
 {
 	if (aggregatedValues){
 		[aggregatedValues release];
 	}
-	aggregatedValues = [NSMutableDictionary 
-				dictionaryWithDictionary: aggValues];
+	aggregatedValues = aggValues;
 	[aggregatedValues retain];
 }
 
-- (NSDictionary *) aggregatedValues
+- (NSMutableDictionary *) aggregatedValues
 {
 	return aggregatedValues;
 }
