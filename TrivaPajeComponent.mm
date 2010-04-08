@@ -134,6 +134,7 @@
 		   PajeEventDecoder, \
                    PajeSimulator, \
                    StorageController, \
+		   TypeFilter, \
 		   TimeInterval, \
 		   TimeSliceAggregation, \
 		   SquarifiedTreemap \
