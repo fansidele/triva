@@ -9,7 +9,8 @@ SUBPROJECTS = \
 	TimeSliceAggregation \
 	SquarifiedTreemap \
 	MemoryAccess \
-	OgreView
+	OgreView \
+	SimGrid
 
 @PACKAGE_TARNAME@_OBJCC_FILES = \
 	TrivaApp.mm \

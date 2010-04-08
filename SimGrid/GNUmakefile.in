@@ -1,0 +1,26 @@
+include $(GNUSTEP_MAKEFILES)/common.make
+
+CC=$(CXX)
+
+PACKAGE_NAME=SimGrid
+BUNDLE_NAME=SimGrid
+BUNDLE_EXTENSION=.bundle
+BUNDLE_INSTALL_DIR=$(GNUSTEP_BUNDLES)/Triva
+SimGrid_PRINCIPAL_CLASS=SimGrid
+
+SimGrid_OBJC_FILES=
+SimGrid_OBJCC_FILES = \
+	SimGrid.mm \
+	SimGridWindow.mm \
+	SimGridWindowAuto.mm \
+	SimGridDraw.mm
+
+SimGrid_INCLUDE_DIRS += @CPPFLAGS@
+SimGrid_LIB_DIRS += @LIBS@
+SimGrid_LDFLAGS += @LDFLAGS@
+
+include $(GNUSTEP_MAKEFILES)/bundle.make
+
+after-distclean::
+after-all::
+after-clean:: 
