@@ -4,9 +4,7 @@
 //this should not be declared here
 #define DEFAULT_SIZE	2
 #define ROUTER_SIZE	5
-#define MIN_HOST_SIZE	20
 #define MAX_HOST_SIZE	50
-#define MIN_LINK_SIZE	5
 #define MAX_LINK_SIZE	25
 
 @implementation SimGrid
@@ -120,10 +118,9 @@
 			nodeRect.size.height = ROUTER_SIZE;
 		}else{
 			double s = 0;
-			s += MIN_HOST_SIZE;
-			if ((maxPower-minPower)!=0){
-				s += MAX_HOST_SIZE*
-				     (power - minPower)/(maxPower - minPower);
+			if ((maxPower)!=0){
+				s = MAX_HOST_SIZE*
+				     (power)/(maxPower);
 			}
 			nodeRect.size.width = s;
 			nodeRect.size.height = s;
@@ -175,10 +172,9 @@
 			edgeRect.size.height = 0;
 		}else{	
 			double s = 0;
-			s += MIN_LINK_SIZE;
-			if ((maxBandwidth - minBandwidth) != 0){
-				s += MAX_LINK_SIZE *
-					(bandwidth - minBandwidth) / (maxBandwidth - minBandwidth);
+			if ((maxBandwidth) != 0){
+				s = MAX_LINK_SIZE *
+					(bandwidth) / (maxBandwidth);
 			}
 			edgeRect.size.width = s;
 			edgeRect.size.height = s;
