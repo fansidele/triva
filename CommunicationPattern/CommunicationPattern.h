@@ -28,8 +28,6 @@
 - (void) setPointsPerSecond: (double) nv;
 - (double) pointsPerSecond;
 - (Position *) getApplicationGraphPosition;
-- (NSDate *) globalStartTime;
-- (NSDate *) globalEndTime;
 @end
 
 @interface CommunicationPattern (ProtoViewBase)

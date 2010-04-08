@@ -82,8 +82,8 @@ void DrawManager::drawStates (PajeEntityType *et, id container)
 	NSEnumerator *en3;
 	en3 = [viewController enumeratorOfEntitiesTyped: et
 			inContainer: container
-			fromTime:[viewController startTime]
-			toTime:[viewController endTime]
+			fromTime:[viewController selectionStartTime]
+			toTime:[viewController selectionEndTime]
 			minDuration: 1/[viewController pointsPerSecond]];
 	id ent;
 	while ((ent = [en3 nextObject]) != nil) {
@@ -94,8 +94,8 @@ void DrawManager::drawStates (PajeEntityType *et, id container)
 	/* removing from the scene the objects outside the selected timeslice */
 	en3 = [viewController enumeratorOfEntitiesTyped: et
 			inContainer: container
-			fromTime: [viewController endTime]
-			toTime: [viewController globalEndTime]
+			fromTime: [viewController selectionEndTime]
+			toTime: [viewController endTime]
 			minDuration: 1/[viewController pointsPerSecond]];
 	while ((ent = [en3 nextObject]) != nil) {
 		NSString *ide = [NSString stringWithFormat: @"%@-%@-%@-%@", 
@@ -107,8 +107,8 @@ void DrawManager::drawStates (PajeEntityType *et, id container)
 	}
 	en3 = [viewController enumeratorOfEntitiesTyped: et
 			inContainer: container
-			fromTime: [viewController globalStartTime]
-			toTime: [viewController startTime]
+			fromTime: [viewController startTime]
+			toTime: [viewController selectionStartTime]
 			minDuration: 1/[viewController pointsPerSecond]];
 	while ((ent = [en3 nextObject]) != nil) {
 		NSString *ide = [NSString stringWithFormat: @"%@-%@-%@-%@", 
@@ -195,8 +195,8 @@ void DrawManager::drawLinks (PajeEntityType *et, id container)
 	NSEnumerator *en4;
 	en4 = [viewController enumeratorOfCompleteEntitiesTyped: et
 			inContainer: container
-			fromTime:[viewController startTime]
-			toTime:[viewController endTime]
+			fromTime:[viewController selectionStartTime]
+			toTime:[viewController selectionEndTime]
 			minDuration: 1/[viewController pointsPerSecond]];
 	id ent;
 	while ((ent = [en4 nextObject]) != nil) {
@@ -205,8 +205,8 @@ void DrawManager::drawLinks (PajeEntityType *et, id container)
 	/* removing from the scene the objects outside the selected timeslice */
 	en4 = [viewController enumeratorOfEntitiesTyped: et
 			inContainer: container
-			fromTime: [viewController endTime]
-			toTime: [viewController globalEndTime]
+			fromTime: [viewController selectionEndTime]
+			toTime: [viewController endTime]
 			minDuration: 1/[viewController pointsPerSecond]];
 	while ((ent = [en4 nextObject]) != nil) {
 		NSString *idescenenode;
@@ -218,8 +218,8 @@ void DrawManager::drawLinks (PajeEntityType *et, id container)
 	}
 	en4 = [viewController enumeratorOfEntitiesTyped: et
 			inContainer: container
-			fromTime: [viewController globalStartTime]
-			toTime: [viewController startTime]
+			fromTime: [viewController startTime]
+			toTime: [viewController selectionStartTime]
 			minDuration: 1/[viewController pointsPerSecond]];
 	while ((ent = [en4 nextObject]) != nil) {
 		NSString *idescenenode;
