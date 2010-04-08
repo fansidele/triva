@@ -88,6 +88,10 @@
 
 - (NSRect) sizeForGraph
 {
+	if (userPositions){
+		return graphSize;
+	}
+
 	NSRect ret;
 	ret.origin.x = ret.origin.y = 0;
 	if (graph){
@@ -119,19 +123,34 @@
 		return;
 	}
 
-	if (graph){
-		agclose (graph);
-		[nodes release];
-		[edges release];
-		graph = NULL;
+	//checking if user provided positions for nodes
+	id area = [configuration objectForKey: @"Area"];
+	if (!area){
+		area = [configuration objectForKey: @"area"];
 	}
-	graph = agopen ((char *)"graph", AGRAPHSTRICT);
+	if (area){
+		graphSize.origin.x = [[area objectForKey: @"x"] doubleValue];
+		graphSize.origin.y = [[area objectForKey: @"y"] doubleValue];
+		graphSize.size.width = [[area objectForKey: @"width"] doubleValue];
+		graphSize.size.height = [[area objectForKey: @"height"] doubleValue];
+		userPositions = YES;
+	}
+
+	[nodes release];
+	[edges release];
+	if (userPositions == NO){
+		if (graph){
+			agclose (graph);
+			graph = NULL;
+		}
+		graph = agopen ((char *)"graph", AGRAPHSTRICT);
+        
+		agnodeattr (graph, (char*)"label", (char*)"");
+		agraphattr (graph, (char*)"overlap", (char*)"false");
+		agraphattr (graph, (char*)"splines", (char*)"true");
+	}
 	nodes = [[NSMutableArray alloc] init];
 	edges = [[NSMutableArray alloc] init];
-
-	agnodeattr (graph, (char*)"label", (char*)"");
-	agraphattr (graph, (char*)"overlap", (char*)"false");
-	agraphattr (graph, (char*)"splines", (char*)"true");
 
 	NSMutableArray *nodeTypes = [NSMutableArray array];
 	NSMutableArray *edgeTypes = [NSMutableArray array];
@@ -163,7 +182,9 @@
 		en2 = [self enumeratorOfContainersTyped: type
 			inContainer: root];
 		while ((n = [en2 nextObject])){
-			agnode (graph, (char*)[[n name] cString]);
+			if (userPositions == NO){
+				agnode (graph, (char*)[[n name] cString]);
+			}
 			TrivaGraphNode *node = [[TrivaGraphNode alloc] init];
 			[node setName: [n name]];
 			[node setType: [type name]];
@@ -206,12 +227,15 @@
 				dst = [[n valueOfFieldNamed: fdst] cString];
 			}
 
-			Agnode_t *s = agfindnode (graph, (char*)src);
-			Agnode_t *d = agfindnode (graph, (char*)dst);
+			if (userPositions == NO){
+				Agnode_t *s = agfindnode (graph, (char*)src);
+				Agnode_t *d = agfindnode (graph, (char*)dst);
 	
-			if (!s || !d) continue; //ignore if there is no src/dst
+				if (!s || !d) continue;
+					//ignore if there is no src/dst
 			
-			agedge (graph, s, d);
+				agedge (graph, s, d);
+			}
 
 			TrivaGraphEdge *edge = [[TrivaGraphEdge alloc] init];
 			[edge setName: [n name]];
@@ -227,16 +251,19 @@
 		}
 	}
 
-	NSLog (@"%s:%d Executing GraphViz Layout... (this might take a while)",
-			__FUNCTION__, __LINE__);
-	NSString *algo = [configuration objectForKey: @"graphviz-algorithm"];
-	gvFreeLayout (gvc, graph);
-	if (algo){
-		gvLayout (gvc, graph, (char*)[algo cString]);
-	}else{
-		gvLayout (gvc, graph, (char*)"neato");
+	if (userPositions == NO){
+		NSLog (@"%s:%d Executing GraphViz Layout... (this might "
+			"take a while)", __FUNCTION__, __LINE__);
+		NSString *algo;
+		algo = [configuration objectForKey: @"graphviz-algorithm"];
+		gvFreeLayout (gvc, graph);
+		if (algo){
+			gvLayout (gvc, graph, (char*)[algo cString]);
+		}else{
+			gvLayout (gvc, graph, (char*)"neato");
+		}
+		NSLog (@"%s:%d GraphViz Layout done", __FUNCTION__, __LINE__);
 	}
-	NSLog (@"%s:%d GraphViz Layout done", __FUNCTION__, __LINE__);
 }
 
 
@@ -434,14 +461,25 @@
 
 	//setting the bounding box (origin and size)
 	NSRect bb;
-	Agnode_t *n = agfindnode (graph,
-		(char *)[[obj name] cString]);
-	if (n) {
-		bb.origin.x = ND_coord_i(n).x;
-		bb.origin.y = ND_coord_i(n).y;
+	if (userPositions == NO) {
+		Agnode_t *n = agfindnode (graph,
+			(char *)[[obj name] cString]);
+		if (n) {
+			bb.origin.x = ND_coord_i(n).x;
+			bb.origin.y = ND_coord_i(n).y;
+		}else{
+			bb.origin.x = 0;
+			bb.origin.y = 0;
+		}
 	}else{
-		bb.origin.x = 0;
-		bb.origin.y = 0;
+		id pos = [configuration objectForKey: [obj name]];
+		if (pos){
+			bb.origin.x = [[pos objectForKey: @"x"] doubleValue];
+			bb.origin.y = [[pos objectForKey: @"y"] doubleValue];
+		}else{
+			bb.origin.x = 0;
+			bb.origin.y = 0;
+		}
 	}
 	//size is mandatory
 	double screenSize;
@@ -490,7 +528,7 @@
 
 - (void) redefineNodesEdgesLayout
 {
-	if (!graph){
+	if (!graph && userPositions == NO){
 		NSLog (@"%s:%d: platform graph not created",
 			__FUNCTION__, __LINE__);
 		return;

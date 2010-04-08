@@ -42,6 +42,9 @@
   id popup;
   id ok;
   id window;
+
+  BOOL userPositions;
+  NSRect graphSize;
 }
 - (void) setConfiguration: (NSDictionary *) conf;
 - (void) createGraph;
