@@ -39,6 +39,14 @@ void TreemapDraw::OnPaint(wxPaintEvent& evt)
 			andDepth: 0 andValues: selectedValues];
 	dc.Clear();
 	this->drawTreemap ((id)current, dc);
+	this->drawTimeSliceText (dc);
+}
+
+void TreemapDraw::drawTimeSliceText (wxDC &dc)
+{
+	NSString *msg = [NSString stringWithFormat: @"%@-%@",
+		[filter selectionStartTime], [filter selectionEndTime]];
+	dc.DrawText (NSSTRINGtoWXSTRING(msg), 0, 0);
 }
 
 void TreemapDraw::OnSize (wxSizeEvent& evt)
@@ -134,6 +142,7 @@ void TreemapDraw::highlightTreemapNode (long x, long y)
                         wxPaintDC dc(this);
                         this->unhighlightTreemapNode(dc);
                         this->drawHighlightTreemapNode (node, dc);
+                        this->drawTimeSliceText (dc);
                         highlighted = node;
                 }
         }

@@ -21,6 +21,7 @@ private:
 	id current, highlighted;
 	NSMutableSet *selectedValues;
 	id filter;
+	void drawTimeSliceText (wxDC &dc);
 
 public:
 	TreemapDraw (wxWindow *parent, wxWindowID id,
