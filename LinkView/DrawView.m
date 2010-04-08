@@ -87,7 +87,6 @@
                                                           andProvider: filter];
 		[current setOffset: offset];
 		[current setBoundingBox: tela];
-//		[current convertFrom: tela to: tela];
 		[current refresh];
 	}
 	[self drawRecursive: current];
