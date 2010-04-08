@@ -117,8 +117,8 @@ AC_ARG_ENABLE(SimGrid,
   [enableSimGrid=yes])
 if test x$enableSimGrid = xyes ; then
 	check_for_graphviz
-	CONFIG_FILES="$CONFIG_FILES SimGrid/GNUmakefile"
-	PROJECTS="$PROJECTS SimGrid"
+	CONFIG_FILES="$CONFIG_FILES TimeSliceAggregation/GNUmakefile SimGrid/GNUmakefile GraphView/GNUmakefile"
+	PROJECTS="$PROJECTS TimeSliceAggregation SimGrid GraphView"
 	AC_DEFINE([HAVE_SIMGRID], [1], [Define if SimGrid visualization components is activated])
 	FLAG=yes
 fi
