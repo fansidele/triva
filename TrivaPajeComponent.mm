@@ -154,6 +154,13 @@
 		   TimeInterval, \
                    OgreView \
 		) )" propertyList];
+	graph = [@"(  \
+		( FileReader, \
+		   PajeEventDecoder, \
+                   PajeSimulator, \
+                   StorageController, \
+                   SimGrid \
+		) )" propertyList];
 
 
     return graph;
