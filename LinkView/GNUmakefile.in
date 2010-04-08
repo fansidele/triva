@@ -1,0 +1,45 @@
+include $(GNUSTEP_MAKEFILES)/common.make
+
+#
+# Bundle
+#
+VERSION = 0.1
+PACKAGE_NAME = LinkView
+BUNDLE_NAME = LinkView
+LinkView_PRINCIPAL_CLASS = LinkView
+BUNDLE_EXTENSION = .bundle
+BUNDLE_INSTALL_DIR = $(GNUSTEP_BUNDLES)/@PROJECT_NAME@
+
+
+#
+# Resource files
+#
+LinkView_RESOURCE_FILES = \
+Resources/Graph.gorm \
+
+
+#
+# Header files
+#
+LinkView_HEADER_FILES = \
+DrawView.h \
+LinkView.h \
+LinkViewNode.h \
+LinkViewEdge.h
+
+#
+# Class files
+#
+LinkView_OBJC_FILES = \
+DrawView.m \
+LinkView.m \
+LinkViewNode.m \
+LinkViewEdge.m
+
+#
+# Makefiles
+#
+-include GNUmakefile.preamble
+include $(GNUSTEP_MAKEFILES)/aggregate.make
+include $(GNUSTEP_MAKEFILES)/bundle.make
+-include GNUmakefile.postamble

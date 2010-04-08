@@ -59,6 +59,20 @@ PROJECTS="Triva TimeInterval"
 FLAG=no
 
 ##########################
+### LinkView           ###
+##########################
+AC_ARG_ENABLE(LinkView,
+  [  --enable-LinkView],
+  [enableLinkView=yes])
+if test x$enableLinkView = xyes ; then
+	check_for_graphviz
+	CONFIG_FILES="$CONFIG_FILES TimeSliceAggregation/GNUmakefile LinkView/GNUmakefile"
+	PROJECTS="$PROJECTS TimeSliceAggregation LinkView"
+	AC_DEFINE([HAVE_LINKVIEW], [1], [Enable LinkView])
+	FLAG=yes
+fi
+
+##########################
 ### GraphConfiguration ###
 ##########################
 AC_ARG_ENABLE(GraphConfiguration,

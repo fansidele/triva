@@ -167,17 +167,15 @@
 		   GraphView \
 		) )" propertyList];
 #endif
-#ifdef HAVE_SIMGRID
+#ifdef HAVE_LINKVIEW
 	graph = [@"(  \
 		( FileReader, \
 		   PajeEventDecoder, \
                    PajeSimulator, \
                    StorageController, \
-                   TypeFilter, \
 		   TimeInterval, \
                    TimeSliceAggregation, \
-		   SimGrid, \
-		   GraphView \
+		   LinkView \
 		) )" propertyList];
 #endif
 #ifdef HAVE_NUCAVIEW
