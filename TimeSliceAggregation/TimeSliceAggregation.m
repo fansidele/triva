@@ -23,21 +23,15 @@
 {
 	NSMutableDictionary *timeSliceValues = nil;
 	NSMutableDictionary *timeSliceColors = nil;
+	NSMutableDictionary *timeSliceDurations = nil;
 	NSString *name = [type name]; //the name is the variable type name
 	double integrated = 0;
 	id ent = nil;
 
 	//getting the existing timeSliceValues for this node
 	timeSliceValues = [node timeSliceValues];	
-	if (!timeSliceValues){
-		timeSliceValues = [NSMutableDictionary dictionary];
-		[node setTimeSliceValues: timeSliceValues];
-	}
 	timeSliceColors = [node timeSliceColors];
-	if (!timeSliceColors){
-		timeSliceColors = [NSMutableDictionary dictionary];
-		[node setTimeSliceColors: timeSliceColors];
-	}
+	timeSliceDurations = [node timeSliceDurations];
 
 	NSEnumerator *en;
 	en = [self enumeratorOfEntitiesTyped:type
@@ -72,20 +66,14 @@
 {
 	NSMutableDictionary *timeSliceValues = nil;
 	NSMutableDictionary *timeSliceColors = nil;
+	NSMutableDictionary *timeSliceDurations = nil;
 	NSEnumerator *en = nil;
 	id ent = nil;
 
 	//getting the existing timeSliceValues for this node
 	timeSliceValues = [node timeSliceValues];	
-	if (!timeSliceValues){
-		timeSliceValues = [NSMutableDictionary dictionary];
-		[node setTimeSliceValues: timeSliceValues];
-	}
 	timeSliceColors = [node timeSliceColors];
-	if (!timeSliceColors){
-		timeSliceColors = [NSMutableDictionary dictionary];
-		[node setTimeSliceColors: timeSliceColors];
-	}
+	timeSliceDurations = [node timeSliceDurations];
 
 	//intializing state values to zero (in timeSliveValues dict) if they do not exist yet
 	NSArray *allValuesOfStateType = [self allValuesForEntityType: type];
