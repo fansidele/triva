@@ -163,6 +163,20 @@ if test x$enableHCMReader = xyes ; then
 	FLAG=yes
 fi
 
+################
+###   Dot    ###
+################
+AC_ARG_ENABLE(Dot,
+  [  --enable-Dot],
+  [enableDot=yes])
+if test x$enableDot = xyes ; then
+	check_for_graphviz
+	CONFIG_FILES="$CONFIG_FILES Dot/GNUmakefile"
+	PROJECTS="$PROJECTS Dot"
+	AC_DEFINE([HAVE_DOT], [1], [Define if Dot output is activated])
+	FLAG=yes
+fi
+
 check_for_gtk
 check_for_wx
 

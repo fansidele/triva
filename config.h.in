@@ -6,6 +6,9 @@
 /* Define if CommunicationPattern visualization components is activated */
 #undef HAVE_COMMUNICATIONPATTERN
 
+/* Define if Dot output is activated */
+#undef HAVE_DOT
+
 /* Define to 1 if you have the <float.h> header file. */
 #undef HAVE_FLOAT_H
 
@@ -77,9 +80,6 @@
 
 /* Define to the one symbol short name of this package. */
 #undef PACKAGE_TARNAME
-
-/* Define to the home page for this package. */
-#undef PACKAGE_URL
 
 /* Define to the version of this package. */
 #undef PACKAGE_VERSION

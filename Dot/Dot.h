@@ -2,8 +2,7 @@
 #define __MARCO_H
 #include <Foundation/Foundation.h>
 #include <General/PajeFilter.h>
-#include <gvc.h>
-#include "DotWindow.h"
+#include <graphviz/gvc.h>
 
 @interface Dot  : PajeFilter
 {

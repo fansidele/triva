@@ -1,7 +1,4 @@
 #include "Dot.h"
-#include "DotDraw.h"
-
-DotDraw *draw = NULL;
 
 @implementation Dot
 - (id)initWithController:(PajeTraceController *)c
@@ -9,10 +6,6 @@ DotDraw *draw = NULL;
 	self = [super initWithController: c];
 	if (self != nil){
 	}
-//	DotWindow *window = new DotWindow ((wxWindow*)NULL);
-//	window->Show();
-//	draw = window->getDraw();
-//	draw->setController ((id)self);
 	return self;
 }
 
