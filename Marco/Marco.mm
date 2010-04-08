@@ -239,6 +239,7 @@ MarcoDraw *draw = NULL;
    }
 //   [self printInstance: [self rootInstance] level: 0];
    draw->Refresh();
+   draw->Update();
 //   NSLog (@"########### pool count = %d", [pool retainCount]);
 //[self listRecordedObjectsOfClass: @"GSMutableArray"];
 //[self listRecordedObjectsOfClass: @"GSCInlineString"];
