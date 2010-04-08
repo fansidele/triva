@@ -1,0 +1,18 @@
+{
+    "## Comment" = "Do NOT change this file, Gorm maintains it";
+    DrawView = {
+	Actions = (
+	);
+	Outlets = (
+	);
+	Super = NSView;
+    };
+    GraphView = {
+	Actions = (
+	);
+	Outlets = (
+	    view
+	);
+	Super = NSObject;
+    };
+}

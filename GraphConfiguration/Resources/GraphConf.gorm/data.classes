@@ -1,0 +1,18 @@
+{
+    "## Comment" = "Do NOT change this file, Gorm maintains it";
+    FirstResponder = {
+	Actions = (
+	    "apply:"
+	);
+	Super = NSObject;
+    };
+    GraphConfiguration = {
+	Actions = (
+	    "apply:"
+	);
+	Outlets = (
+	    conf
+	);
+	Super = NSObject;
+    };
+}
