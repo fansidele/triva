@@ -1,0 +1,48 @@
+defaults write Triva 'steal Colors' '{
+    steal = "1 1 1"; 
+}'
+
+
+defaults write Triva 'State7 Colors' '{
+    RSTEAL = "0.8 0.8 .8";
+    RUN = "0.9 0.9 0.9";
+    IDLE = "0 1 0";
+}'
+
+defaults write Triva 'State Colors' '{
+    ALL_REDUCE = ".55 .55 .55";
+    ALL_TO_ALL = "0.214192 0.911478 1.000000";
+    ALL_TO_ALLV = "0.112142 0.087034 1.000000";
+    AggregateState = "1.000000 0.925084 0.000000";
+    BARRIER = ".95 .95 .95";
+    BCAST_OTHERS = "1 1 0";
+    BCAST_RECV = "1.000000 0.000000 0.094325";
+    BCAST_ROOT = "0 0 1";
+    CREATED = "1.000000 0.647059 0.000000";
+    END = "1.000000 0.961610 0.201538";
+    EXECUTANDO = ".75 .75 .75";
+    FINALIZING = "1.000000 0.000000 0.981206";
+    INIT = ".85 .85 .85";
+    IRECV = "1.000000 0.000000 0.138286";
+    ISEND = "0.000000 0.692751 1.000000";
+    RECV = "1.000000 0.201877 0.000000";
+    REDUCE_OTHERS = "0.112142 0.087034 1.000000";
+    REDUCE_ROOT = "0.964954 1.000000 0.000000";
+    RUNNING = "0.000000 1.000000 0.000000";
+    SEND = "0.000000 0.434643 1.000000";
+    STEAL = "0.000000 0.692751 1.000000";
+    SUSPENDED = "1.000000 0.000000 0.000000";
+    VS0 = ".9 .9 .9";
+    VS1 = ".7 .7 .7";
+    WAIT = "1.000000 0.000000 0.025314";
+    WAITALL = "1.000000 0.947851 0.052499";
+
+    RSTEAL = "1 0 0";
+    RUN = "0 1 0";
+    IDLE = "0 0 1";
+}'
+
+defaults write Triva 'ACCESS Colors' '{
+    READ = "0 1 0";
+    WRITE = "1 0 0";
+}'

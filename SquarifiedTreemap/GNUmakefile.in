@@ -1,0 +1,23 @@
+include $(GNUSTEP_MAKEFILES)/common.make
+
+CC=$(CXX)
+
+PACKAGE_NAME=SquarifiedTreemap
+BUNDLE_NAME=SquarifiedTreemap
+BUNDLE_EXTENSION=.bundle
+BUNDLE_INSTALL_DIR=$(GNUSTEP_BUNDLES)/Triva
+SquarifiedTreemap_PRINCIPAL_CLASS=SquarifiedTreemap
+
+SquarifiedTreemap_OBJC_FILES=Treemap.m Tree.m
+SquarifiedTreemap_OBJCC_FILES=SquarifiedTreemap.mm TreemapDraw.mm TreemapWindowAuto.mm TreemapWindow.mm
+
+
+SquarifiedTreemap_INCLUDE_DIRS += @CPPFLAGS@
+SquarifiedTreemap_LIB_DIRS += @LIBS@
+SquarifiedTreemap_LDFLAGS += @LDFLAGS@
+
+include $(GNUSTEP_MAKEFILES)/bundle.make
+
+after-distclean::
+after-all::
+after-clean:: 

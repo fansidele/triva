@@ -1,0 +1,29 @@
+include $(GNUSTEP_MAKEFILES)/common.make
+
+CC=$(CXX)
+
+PACKAGE_NAME=TimeSliceAggregation
+BUNDLE_NAME=TimeSliceAggregation
+BUNDLE_EXTENSION=.bundle
+BUNDLE_INSTALL_DIR=$(GNUSTEP_BUNDLES)/Triva
+TimeSliceAggregation_PRINCIPAL_CLASS=TimeSliceAggregation
+
+TimeSliceAggregation_OBJC_FILES = \
+	Tree.m \
+	TimeSliceTree.m \
+	TimeSliceTree+Paje.m \
+	TimeSliceTree+Aggregation.m \
+	TimeSliceAggregation.m
+TimeSliceAggregation_OBJCC_FILES=
+
+TimeSliceAggregation_INCLUDE_DIRS += @CPPFLAGS@
+TimeSliceAggregation_LIB_DIRS += @LIBS@
+TimeSliceAggregation_LDFLAGS += @LDFLAGS@
+TimeSliceAggregation_BUNDLE_LIBS += -lGeneral
+
+
+include $(GNUSTEP_MAKEFILES)/bundle.make
+
+after-distclean::
+after-all::
+after-clean:: 

@@ -1,0 +1,22 @@
+include $(GNUSTEP_MAKEFILES)/common.make
+
+CC=$(CXX)
+
+PACKAGE_NAME=MemoryAccess
+BUNDLE_NAME=MemoryAccess
+BUNDLE_EXTENSION=.bundle
+BUNDLE_INSTALL_DIR=$(GNUSTEP_BUNDLES)/Triva
+MemoryAccess_PRINCIPAL_CLASS=SquarifiedTreemap
+
+MemoryAccess_OBJC_FILES=MALayout.m
+MemoryAccess_OBJCC_FILES=MemoryAccess.mm MAWindowAuto.mm MAWindow.mm MADraw.mm
+
+MemoryAccess_INCLUDE_DIRS += @CPPFLAGS@
+MemoryAccess_LIB_DIRS += @LIBS@
+MemoryAccess_LDFLAGS += @LDFLAGS@
+
+include $(GNUSTEP_MAKEFILES)/bundle.make
+
+after-distclean::
+after-all::
+after-clean:: 

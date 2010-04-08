@@ -1,0 +1,40 @@
+AC_INIT(Triva,1.0,schnorr@gmail.com,Triva)
+
+if test -z "$GNUSTEP_SYSTEM_ROOT"; then
+        AC_MSG_ERROR([You must run the GNUstep.sh script before configuring])
+fi
+
+AC_LANG_CPLUSPLUS
+AC_PROG_CXX
+
+AM_OPTIONS_WXCONFIG
+reqwx=2.8.0
+AM_PATH_WXCONFIG($reqwx, wxWin=1)
+if test "$wxWin" != 1; then
+        AC_MSG_ERROR([
+                wxWidgets must be installed on your system.
+
+                Please check that wx-config is in path, the directory
+                where wxWidgets libraries are installed (returned by
+                'wx-config --libs' or 'wx-config --static --libs' command)
+                is in LD_LIBRARY_PATH or equivalent variable and
+                wxWidgets version is $reqwx or above.
+                ])
+fi
+CPPFLAGS="$CPPFLAGS -DWXINTL_NO_GETTEXT_MACRO"
+CPPFLAGS="$CPPFLAGS $WX_CPPFLAGS"
+CXXFLAGS="$CXXFLAGS $WX_CXXFLAGS_ONLY"
+CFLAGS="$CFLAGS $WX_CFLAGS_ONLY"
+LIBS="$LIBS $WX_LIBS"
+
+CPPFLAGS="-I../../ -I../ -I./ $CPPFLAGS"
+AC_SUBST(CPPFLAGS)
+AC_SUBST(LIBS)
+
+AC_CONFIG_FILES(GNUmakefile
+TimeInterval/GNUmakefile
+MemoryAccess/GNUmakefile
+TimeSliceAggregation/GNUmakefile
+SquarifiedTreemap/GNUmakefile)
+AC_OUTPUT
+

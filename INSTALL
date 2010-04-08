@@ -1,0 +1,71 @@
+Copyright 2009, Free Software Foundation, Inc.
+
+This file is free documentation; the Free Software Foundation gives
+unlimited permission to copy, distribute and modify it.
+
+This file intends to give the user some help to install Triva2.
+We first give an overview about the pre-requisites, and then go
+to the basic compiling and installation of the tool.
+
+A. Pre-requisites for Triva2
+============================
+
+These are the current pre-requisites for Triva2: GNUstep, Paje and wxWidgets.
+
+A1. Gnustep
+-----------
+
+The best way to perform the GNUstep installation is through the
+GNUstep-startup package, which can be found here:
+http://ftpmain.gnustep.org/pub/gnustep/core/gnustep-startup-0.22.0.tar.gz
+Just extract the package and run the script InstallGNUstep as root, as follows:
+$ tar xfz gnustep-startup-0.22.0.tar.gz
+$ cd gnustep-startup-0.22.0
+$ sudo InstallGNUstep
+
+The script will perform a series of tests to evaluate if your system has all
+the necessary libraries to install the GNUstep environment. This blog has some
+packages that must be installed prior to GNUstep installation:
+http://gnustep.blogspot.com/2005/12/gnustep-on-ubuntuppc.html
+
+If you use the default directory to install, the GNUstep should be installed
+in the /usr/GNUstep directory. If so, you need to source the GNUstep.sh script
+to activate the GNUstep environment and proceed to the next pre-requisite. To
+do so, please run:
+$ source /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
+
+A2. Paje
+--------
+
+Triva2 needs Paje. To install it, please download the following package:
+http://download.forge.objectweb.org/paje/Paje_1.97.tar.gz
+Execute the following commands:
+$ source /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
+$ tar xfz Paje_1.97.tar.gz
+$ cd Paje_1.97
+$ make
+$ sudo make install
+Paje will be installed in the /usr/GNUstep directory. At this point, you can
+open paje to see if it is working, with the following command:
+$ openapp Paje
+
+A3. wxWidgets
+-------------
+
+Triva2 needs wxWidgets version 2.8. The ubuntu linux (and probably
+Debian also), has a package named wx2.8-headers that if installed with
+apt-get will start all the required dependecies:
+$ apt-get install wx2.8-headers
+
+B. Triva2: Compilation
+======================
+
+$ source /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
+$ tar xfz Triva2.tgz
+$ cd Triva2
+$ autoconf
+$ ./configure
+$ make
+
+Now, you should have a binary ./obj/Triva2.
+Execute this file using a Paje trace file as parameter.
