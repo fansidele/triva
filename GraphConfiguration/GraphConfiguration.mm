@@ -190,8 +190,16 @@
 	}
 	en = [edgeTypes objectEnumerator];
 	while ((type = [en nextObject])){
-		en2 = [self enumeratorOfContainersTyped: type
-			inContainer: root];
+		if ([type isKindOfClass: [PajeLinkType class]]){
+			en2 = [self enumeratorOfEntitiesTyped: type
+				inContainer: root
+				fromTime: [self startTime]
+				toTime: [self endTime]
+				minDuration: 0];
+		}else if ([type isKindOfClass: [PajeContainerType class]]){
+			en2 = [self enumeratorOfContainersTyped: type
+				inContainer: root];
+		}
 		while ((n = [en2 nextObject])){
 			const char *src, *dst;
 			if ([type isKindOfClass: [PajeLinkType class]]){
@@ -210,7 +218,7 @@
 
 			Agnode_t *s = agfindnode (graph, (char*)src);
 			Agnode_t *d = agfindnode (graph, (char*)dst);
-			
+	
 			if (!s || !d) continue; //ignore if there is no src/dst
 			
 			agedge (graph, s, d);
@@ -244,16 +252,18 @@
 		withExpr: (NSString *) expr
 {
 	NSMutableString *size_def = [NSMutableString stringWithString: expr];
-	NSEnumerator *en2 = [values keyEnumerator];
-	NSString *val;
 	int number = 0;
-	while ((val = [en2 nextObject])){
-		NSString *repl = [NSString stringWithFormat: @"%@",
-			[values objectForKey: val]];
-		number += [size_def replaceOccurrencesOfString: val
-			withString: repl
-			options: NSLiteralSearch
-			range: NSMakeRange(0, [size_def length])];
+	if (values){
+		NSEnumerator *en2 = [values keyEnumerator];
+		NSString *val;
+		while ((val = [en2 nextObject])){
+			NSString *repl = [NSString stringWithFormat: @"%@",
+				[values objectForKey: val]];
+			number += [size_def replaceOccurrencesOfString: val
+				withString: repl
+				options: NSLiteralSearch
+				range: NSMakeRange(0, [size_def length])];
+		}
 	}
 
 	//math eval to define size
@@ -262,10 +272,18 @@
 	void *f = evaluator_create ((char*)[size_def cString]);
 	evaluator_get_variables (f, &names, &count);
 	if (count != 0){
-		NSLog (@"%s:%d Expression (%@) has variables that are "
-			" not present in the aggregated tree",
-			__FUNCTION__, __LINE__, size_def);
-		return 0;
+//		NSLog (@"%s:%d Expression (%@) has variables that are "
+//			"not present in the aggregated tree. Considering "
+//			"that their values is zero.",
+//			__FUNCTION__, __LINE__, size_def);
+		int i;
+		double *zeros = (double*)malloc(count*sizeof(double));
+		for (i = 0; i < count; i++){
+			zeros[i] = 0;
+		}
+		double ret = evaluator_evaluate (f, count, names, zeros);
+		evaluator_destroy (f);
+		return ret;
 	}else{
 		if (!number){
 			return -1; /* to indicate that is a numeric value */
@@ -274,6 +292,19 @@
 		evaluator_destroy (f);
 		return ret;
 	}
+}
+
+- (double) calculateScreenSizeBasedOnValue: (double) size
+	andMax: (double)max andMin: (double)min
+{
+	double s = 0;
+	if ((max - min) != 0) {
+		s = MAX_NODE_SIZE * (size) /
+			(max - min);
+	}else{
+		s = MAX_NODE_SIZE * (size) /(max);
+	}
+	return s;
 }
 
 - (void) defineMax: (double*) max
@@ -288,18 +319,137 @@
 	while ((obj = [en nextObject])){
 		tree = [[self timeSliceTree] searchChildByName: [obj name]];
 		if (tree == nil){
-			NSLog (@"%s:%d time slice tree for obj %@ not found",
-				__FUNCTION__, __LINE__, [obj name]);
+//			NSLog (@"%s:%d time slice tree for obj %@ not found",
+//				__FUNCTION__, __LINE__, [obj name]);
 			continue;
 		}
+		NSString *expr = [configuration objectForKey: confKey];
 		double size = [self evaluateWithValues: [tree aggregatedValues]
-			withExpr:[configuration objectForKey: confKey]]; 
-		if (size != 0){
+					withExpr: expr];
+		if (size > 0){
 			if (size > *max) *max = size;
 			if (size < *min) *min = size;
 		}
 	}
 }
+
+- (NSDictionary*) redefineColorFrom: (NSDictionary*) values
+		withConfiguration: (NSArray*) colConfiguration
+{
+	NSMutableDictionary *ret = [NSMutableDictionary dictionary];
+	NSEnumerator *en = [colConfiguration objectEnumerator];
+	NSString *expr;
+	while ((expr = [en nextObject])){
+		double val = [self evaluateWithValues: values
+				withExpr: expr];
+		if (val > 0){
+			[ret setObject: [NSNumber numberWithDouble: 1]
+					forKey: expr];
+			//only the first expression found
+			return ret;
+		}
+	}
+	return nil;
+}
+
+- (NSDictionary*) redefineSeparationValuesWith: (NSDictionary*) values
+		andConfiguration: (NSArray*) sepConfiguration
+		andSize: (double) size
+{
+	NSMutableDictionary *ret = [NSMutableDictionary dictionary];
+	NSEnumerator *en = [sepConfiguration objectEnumerator];
+	NSString *expr;
+	while ((expr = [en nextObject])){
+		double val = [self evaluateWithValues: values
+				withExpr: expr];
+		if (val > 0){
+			[ret setObject: [NSNumber numberWithDouble: val/size]
+					forKey: expr];
+		}
+	}
+	return ret;
+}
+
+- (void) redefineLayoutOf: (TrivaGraphNode*) obj withStr: str
+		withMax: (double)max withMin: (double)min
+{
+	TimeSliceTree *tree;
+	NSMutableDictionary *values;
+
+	NSString *objsize = [NSString stringWithFormat: @"%@-size", str];
+	NSString *objsep = [NSString stringWithFormat: @"%@-separation", str];
+	NSString *objgra = [NSString stringWithFormat: @"%@-gradient", str];
+	NSString *objcol = [NSString stringWithFormat: @"%@-color", str];
+
+	tree = [[self timeSliceTree] searchChildByName: [obj name]];
+	if (tree == nil){
+		/* NOTE: only falls here if edge is of link type.
+			the width attribute is necessary to drawing. */
+		NSString *expr = [configuration objectForKey: objsize];
+		double screenSize;
+		double size = [self evaluateWithValues: nil withExpr: expr];
+		if (size < 0){
+			screenSize = [expr doubleValue];
+		}else{
+			screenSize = [self calculateScreenSizeBasedOnValue: size
+				andMax: max andMin: min];
+		}
+		NSRect rect;
+		rect.size.width = screenSize;
+		rect.size.height = screenSize;
+		[obj setSize: rect];
+		[obj setDrawable: YES];
+		return;
+	}
+	values = [NSMutableDictionary dictionaryWithDictionary:
+		[tree aggregatedValues]];
+	Agnode_t *n = agfindnode (graph,
+		(char *)[[obj name] cString]);
+	NSPoint objPos;
+	objPos.x = ND_coord_i(n).x;
+	objPos.y = ND_coord_i(n).y;
+	[obj setPosition: objPos];
+
+	NSRect objRect;
+	objRect.origin.x = objPos.x;
+	objRect.origin.y = objPos.y;
+	NSString *expr = [configuration objectForKey: objsize];
+	double screenSize;
+	double size = [self evaluateWithValues: values withExpr: expr];
+	if (size < 0){
+		screenSize = [expr doubleValue];
+	}else{
+		screenSize = [self calculateScreenSizeBasedOnValue: size
+			andMax: max andMin: min];
+	}
+	objRect.size.width = screenSize;
+	objRect.size.height = screenSize;
+	[obj setSize: objRect];
+
+	id sepConfiguration = [configuration objectForKey: objsep];
+	id graConfiguration = [configuration objectForKey: objgra];
+	id colConfiguration = [configuration objectForKey: objcol];
+	if (sepConfiguration){
+		NSDictionary *separationValues;
+		separationValues = [self redefineSeparationValuesWith: values
+					andConfiguration: sepConfiguration
+					andSize: size];
+		[obj setValues: separationValues];
+		[obj setDrawable: YES];
+	}else if(colConfiguration){
+		NSDictionary *separationValues;
+		separationValues = [self redefineColorFrom: values
+					withConfiguration: colConfiguration];
+		if (separationValues){
+			[obj setValues: separationValues];
+			[obj setDrawable: YES];
+		}
+	}
+	if(graConfiguration){
+		// TODO
+	}
+}
+
 
 - (void) redefineNodesEdgesLayout
 {
@@ -312,115 +462,21 @@
 	[self defineMax: &maxNode andMin: &minNode
 		withConfigurationKey: @"node-size"
 		fromEnumerator: [self enumeratorOfNodes]];
-
-	TimeSliceTree *tree;
-	NSMutableDictionary *values;
+	
 	NSEnumerator *en = [self enumeratorOfNodes];
 	TrivaGraphNode *node;
 	while ((node = [en nextObject])){
-		tree = [[self timeSliceTree] searchChildByName: [node name]];
-		if (tree == nil){
-			NSLog (@"%s:%d time slice tree for node %@ not found",					__FUNCTION__, __LINE__, [node name]);
-			continue;
-		}
-		values = [NSMutableDictionary dictionaryWithDictionary:
-			[tree aggregatedValues]];
-		Agnode_t *n = agfindnode (graph,
-			(char *)[[node name] cString]);
-		NSPoint nodePos;
-		nodePos.x = ND_coord_i(n).x;
-		nodePos.y = ND_coord_i(n).y;
-		[node setPosition: nodePos];
-
-		NSRect nodeRect;
-		nodeRect.origin.x = nodePos.x;
-		nodeRect.origin.y = nodePos.y;
-
-		double size = [self evaluateWithValues: values
-			withExpr: [configuration objectForKey: @"node-size"]];
-		if (size == 0){
-			nodeRect.size.width = 1;
-			nodeRect.size.height = 1;
-		}else{
-			double s = 0;
-			if ((maxNode - minNode) != 0) {
-				s = MAX_NODE_SIZE * size / (maxNode - minNode);
-			}else{
-				s = 1;
-			}
-			nodeRect.size.width = s;
-			nodeRect.size.height = s;
-		}
-		[node setSize: nodeRect];
-
-		NSMutableDictionary *nodeGraphValues;
-		nodeGraphValues = [NSMutableDictionary dictionary];
-		NSEnumerator *en2;
-		en2 = [[configuration objectForKey: @"node-separation"]
-			objectEnumerator];
-		id expr;
-		while ((expr = [en2 nextObject])){
-			double val = [self evaluateWithValues: values
-					withExpr: expr];
-			if (val > 0){
-				[nodeGraphValues setObject:
-					[NSNumber numberWithDouble: val/size]
-						forKey: expr];
-			}
-		}
-		[node setValues: nodeGraphValues];
-		[node setDrawable: YES];
+		[self redefineLayoutOf: node withStr: @"node"
+			withMax: maxNode withMin: minNode];
 	}
-
 	[self defineMax: &maxEdge andMin: &minEdge
 		withConfigurationKey: @"edge-size"
 		fromEnumerator: [self enumeratorOfEdges]];
 	en = [self enumeratorOfEdges];
 	TrivaGraphEdge *edge;
 	while ((edge = [en nextObject])){
-		tree = [[self timeSliceTree] searchChildByName: [edge name]];
-		if (tree == nil){
-			NSLog (@"%s:%d time slice tree for edge %@ not found",
-				__FUNCTION__, __LINE__, [edge name]);
-			continue;
-		}
-		values = [NSMutableDictionary dictionaryWithDictionary:
-			[tree aggregatedValues]];
-		double size = [self evaluateWithValues: values
-			withExpr: [configuration objectForKey: @"edge-size"]];
-		NSRect edgeRect;
-		if (size == 0){
-			edgeRect.size.width = 1;
-			edgeRect.size.height = 1;
-		}else{
-			double s = 0;
-			if ((maxEdge - minEdge) != 0) {
-				s = MAX_EDGE_SIZE * size / (maxEdge - minEdge);
-			}else{
-				s = 1;
-			}
-			edgeRect.size.width = s;
-			edgeRect.size.height = s;
-		}
-		[edge setSize: edgeRect];
-
-		NSMutableDictionary *edgeGraphValues;
-		edgeGraphValues = [NSMutableDictionary dictionary];
-		NSEnumerator *en2;
-		en2 = [[configuration objectForKey: @"edge-separation"]
-			objectEnumerator];
-		id expr;
-		while ((expr = [en2 nextObject])){
-			double val = [self evaluateWithValues: values
-					withExpr: expr];
-			if (val > 0){
-				[edgeGraphValues setObject:
-					[NSNumber numberWithDouble: val/size]
-						forKey: expr];
-			}
-		}
-		[edge setValues: edgeGraphValues];
-		[edge setDrawable: YES];
+		[self redefineLayoutOf: edge withStr: @"edge"
+			withMax: maxEdge withMin: minEdge];
 	}
 }
 @end
