@@ -66,7 +66,7 @@ $ tar xfz Triva-2.0.tar.gz
 $ cd Triva-2.0
 $ ./bootstrap
 
-You can configure Triva to one of the 5 visualization modules.
+You can configure Triva to one of the visualization modules.
 There is no default, so here you have to choose one of them. We take here
 as example the configuration for the SquarifiedTreemap view.
 
