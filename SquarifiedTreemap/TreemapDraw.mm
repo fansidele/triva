@@ -153,6 +153,11 @@ void TreemapDraw::unhighlightTreemapNode (wxDC &dc)
         wxColour grayColor = wxColour (wxT("#c0c0c0"));
         wxColour color;
         wxBrush brush;
+	static int init = 3;
+	if (init > 0){
+		highlighted = nil;
+		init--;
+	}
 
         id parent = [[highlighted parent] parent];
         while (parent){
