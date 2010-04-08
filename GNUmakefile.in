@@ -4,17 +4,7 @@ AGGREGATE_NAME = @PACKAGE_TARNAME@
 TOOL_NAME = @PACKAGE_TARNAME@
 PACKAGE_NAME = @PACKAGE_TARNAME@
 VERSION = @PACKAGE_VERSION@
-SUBPROJECTS = \
-	TimeInterval \
-	TimeSliceAggregation \
-	SquarifiedTreemap \
-	MemoryAccess \
-	OgreView \
-	SimGrid \
-	CommunicationPattern \
-	NetworkTopology \
-	Marco \
-	Dot
+SUBPROJECTS = @PROJECTS@
 
 @PACKAGE_TARNAME@_OBJCC_FILES = \
 	TrivaApp.mm \

@@ -2,7 +2,7 @@
 #define __SimGridDraw__
 
 #include <Foundation/Foundation.h>
-#include <gvc.h>
+#include <graphviz/gvc.h>
 #include "wx/wx.h"
 #include "SimGrid.h"
 #include <General/PajeFilter.h>

@@ -2,7 +2,7 @@
 #define __SIMGRID_H
 #include <Foundation/Foundation.h>
 #include <General/PajeFilter.h>
-#include <gvc.h>
+#include <graphviz/gvc.h>
 #include "SimGridWindow.h"
 
 @interface SimGrid  : PajeFilter

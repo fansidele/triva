@@ -1,7 +1,7 @@
 #ifndef __TRIVA_RESOURCE_GRAPH_H
 #define __TRIVA_RESOURCE_GRAPH_H
 #include <Foundation/Foundation.h>
-#include <gvc.h>
+#include <graphviz/gvc.h>
 
 @interface TrivaResourcesGraph : NSObject
 {

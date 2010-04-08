@@ -2,7 +2,6 @@
 #include <wx/dcps.h>
 #include <wx/paper.h>
 #include <float.h>
-#include <gvc.h>
 
 #define TRANSFORM(bw) (10+bw*20)
 

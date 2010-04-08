@@ -1,7 +1,7 @@
 #ifndef __TRIVA_TREEMAP_H
 #define __TRIVA_TREEMAP_H
 #include <Foundation/Foundation.h>
-#include <gvc.h>
+#include <graphviz/gvc.h>
 
 @interface TrivaTreemap : NSObject
 {

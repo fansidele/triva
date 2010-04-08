@@ -1,4 +1,5 @@
 #include "TrivaPajeComponent.h"
+#include "config.h"
 
 @implementation TrivaPajeComponent
 - (id) init
@@ -125,44 +126,67 @@
 + (NSArray *)defaultComponentGraph
 {
     NSArray *graph;
-
-	graph = [@"(  \
-		( FileReader, \
-		   PajeEventDecoder, \
-                   PajeSimulator, \
-                   StorageController, \
-                   TimeInterval, \
-		   TimeSliceAggregation, \
-		   SquarifiedTreemap \
-		), \
-		(  TimeInterval, \
-		   MemoryAccess \
-		) )" propertyList];
-	graph = [@"(  \
-		( FileReader, \
-		   PajeEventDecoder, \
-                   PajeSimulator, \
-                   StorageController, \
-                   TimeInterval, \
-		   MemoryAccess \
-		) )" propertyList];
+#ifdef HAVE_SQUARIFIEDTREEMAP
 	graph = [@"(  \
 		( FileReader, \
 		   PajeEventDecoder, \
                    PajeSimulator, \
                    StorageController, \
 		   TimeInterval, \
-                   OgreView \
+		   TimeSliceAggregation, \
+		   SquarifiedTreemap \
 		) )" propertyList];
+#endif
+#ifdef HAVE_SIMGRID
 	graph = [@"(  \
 		( FileReader, \
 		   PajeEventDecoder, \
                    PajeSimulator, \
                    StorageController, \
-                   SimGrid \
+		   TimeInterval, \
+		   SimGrid \
 		) )" propertyList];
-
-
+#endif
+#ifdef HAVE_NUCAVIEW
+	graph = [@"(  \
+		( FileReader, \
+		   PajeEventDecoder, \
+                   PajeSimulator, \
+                   StorageController, \
+                   TimeInterval, \
+		   NUCAView \
+		) )" propertyList];
+#endif
+#ifdef HAVE_NETWORKTOPOLOGY
+	graph = [@"(  \
+		( FileReader, \
+		   PajeEventDecoder, \
+                   PajeSimulator, \
+                   StorageController, \
+		   TimeInterval, \
+                   NetworkTopology \
+		) )" propertyList];
+#endif
+#ifdef HAVE_COMMUNICATIONPATTERN
+	graph = [@"(  \
+		( FileReader, \
+		   PajeEventDecoder, \
+                   PajeSimulator, \
+                   StorageController, \
+		   TimeInterval, \
+                   CommunicationPattern \ 
+		) )" propertyList];
+#endif
+#ifdef HAVE_DOT
+	graph = [@"(  \
+		( FileReader, \
+		   PajeEventDecoder, \
+                   PajeSimulator, \
+                   StorageController, \
+		   TimeInterval, \
+                   Dot \
+		) )" propertyList];
+#endif
     return graph;
 }
 

@@ -1,7 +1,7 @@
 #ifndef __POSITIONGRAPHVIZ_H
 #define __POSITIONGRAPHVIZ_H
 #include <Foundation/Foundation.h>
-#include <gvc.h>
+#include <graphviz/gvc.h>
 #include "Position.h"
 
 @interface PositionGraphviz : Position
