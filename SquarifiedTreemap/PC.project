@@ -2,7 +2,6 @@
     BUNDLE_EXTENSION = .bundle;
     CLASS_FILES = (
 	SquarifiedTreemap.m,
-	Tree.m,
 	Treemap.m,
 	TreemapView.m
     );
@@ -15,7 +14,6 @@
     );
     HEADER_FILES = (
 	SquarifiedTreemap.h,
-	Tree.h,
 	Treemap.h,
 	TreemapView.h
     );
