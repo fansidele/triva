@@ -321,9 +321,10 @@ agsafeset (n, (char*)"height", str_height, default_size); \
 		double power = [[host valueOfFieldNamed: @"Power"] doubleValue];
 
 		//define max min power
-		if (power == 0) continue; //ignore router power
-		if (power > maxPower) maxPower = power;
-		if (power < minPower) minPower = power;
+		if (power != 0){
+			if (power > maxPower) maxPower = power;
+			if (power < minPower) minPower = power;
+		}
 
 		//create TrivaGraphNode, with name, and keep it in nodes array
 		TrivaGraphNode *node = [[TrivaGraphNode alloc] init];
