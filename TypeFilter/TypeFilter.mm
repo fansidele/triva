@@ -16,6 +16,7 @@ static TypeFilterWindow *window = NULL;
 
 	hiddenEntityTypes = [[NSMutableSet alloc] init];
 	hiddenContainers = [[NSMutableSet alloc] init];
+	hiddenEntityValues = [[NSMutableDictionary alloc] init];
 	enableNotifications = YES;
 	return self;
 }
@@ -30,6 +31,7 @@ static TypeFilterWindow *window = NULL;
 {
 	[hiddenEntityTypes release];
 	[hiddenContainers release];
+	[hiddenEntityValues release];
 	[super dealloc];
 }
 
@@ -40,7 +42,13 @@ static TypeFilterWindow *window = NULL;
 
 - (BOOL) isHiddenValue: (NSString *) value forEntityType: (PajeEntityType*)type
 {
-	return [hiddenEntityTypes containsObject: value];
+	NSSet *set = [hiddenEntityValues objectForKey: type];
+	if (set){
+		return [set containsObject: value];
+
+	}else{
+		return NO;
+	}
 }
 
 - (BOOL) isHiddenContainer: (PajeContainer *) container forEntityType: (PajeEntityType*)type
@@ -48,47 +56,44 @@ static TypeFilterWindow *window = NULL;
 	return [hiddenContainers containsObject: [container name]];
 }
 
-- (void) hideEntityType: (PajeEntityType *) type
+- (void) filterEntityType: (PajeEntityType *) type show: (BOOL) show
 {
-	[hiddenEntityTypes addObject: type];
-	if ([self isContainerEntityType: type]){
-		[self containerSelectionChanged];
+	if (show){
+		[hiddenEntityTypes removeObject: type];
 	}else{
-		[self entitySelectionChanged];
+		[hiddenEntityTypes addObject: type];
 	}
+//	[self entitySelectionChanged];
+	[self hierarchyChanged];
+	[self dataChangedForEntityType: type];
 }
 
-- (void) showEntityType: (PajeEntityType *) type
+- (void) filterValue: (NSString *) value
+	forEntityType: (PajeEntityType *) type
+		show: (BOOL) show
 {
-	[hiddenEntityTypes removeObject: type];
-	if ([self isContainerEntityType: type]){
-		[self containerSelectionChanged];
+	NSMutableSet *set = [hiddenEntityValues objectForKey: type];
+	if (!set){
+		set = [NSMutableSet set];
+		[hiddenEntityValues setObject: set forKey: type];
+	}
+	if (!show){
+		[set addObject: value];
 	}else{
-		[self entitySelectionChanged];
+		[set removeObject: value];
 	}
+//	[self entitySelectionChanged];
+	[self hierarchyChanged];
+	[self dataChangedForEntityType: type];
 }
 
-- (void) hideValue: (NSString *) value forEntityType: (PajeEntityType *) type
+- (void) filterContainer: (PajeContainer *) container show: (BOOL) show
 {
-	[hiddenEntityTypes addObject: value];
-	[self entitySelectionChanged];
-}
-
-- (void) showValue: (NSString *) value forEntityType: (PajeEntityType *) type
-{
-	[hiddenEntityTypes removeObject: value];
-	[self entitySelectionChanged];
-}
-
-- (void) hideContainer: (PajeContainer *) container
-{
-	[hiddenContainers addObject: [container name]];
-	[self containerSelectionChanged];
-}
-
-- (void) showContainer: (PajeContainer *) container
-{
-	[hiddenContainers removeObject: [container name]];
+	if (show){
+		[hiddenContainers removeObject: [container name]];
+	}else{
+		[hiddenContainers addObject: [container name]];
+	}
 	[self containerSelectionChanged];
 }
 
@@ -126,7 +131,8 @@ static TypeFilterWindow *window = NULL;
 			initWithEnumerator:origEnum
 			filter: self
 			selector:@selector(filterHiddenEntity:filter:)
-			context:hiddenEntityTypes] autorelease];
+			context: [hiddenEntityValues objectForKey: entityType]]
+				autorelease];
 }
 
 - (NSEnumerator *)enumeratorOfCompleteEntitiesTyped:(PajeEntityType *)entityType
@@ -145,7 +151,8 @@ static TypeFilterWindow *window = NULL;
 			initWithEnumerator:origEnum
 			filter: self
 			selector:@selector(filterHiddenEntity:filter:)
-			context:hiddenEntityTypes] autorelease];
+			context: [hiddenEntityValues objectForKey: entityType]]
+				autorelease];
 }
 
 - (NSEnumerator *)enumeratorOfContainersTyped:(PajeEntityType *)entityType
@@ -160,6 +167,17 @@ static TypeFilterWindow *window = NULL;
 			selector:@selector(filterHiddenContainer:filter:)
 			context:hiddenContainers] autorelease];
 }
+
+/*
+- (NSArray *)allValuesForEntityType:(PajeEntityType *)entityType
+{
+	NSMutableSet *set = [NSMutableSet setWithArray:
+		[super allValuesForEntityType: entityType]];
+	[set minusSet: hiddenEntityTypes];
+	return [set allObjects];
+}
+*/
+
 
 - (id)filterHiddenEntity:(PajeEntity *)entity
 	filter:(NSSet *)filter
@@ -203,5 +221,10 @@ static TypeFilterWindow *window = NULL;
 - (void) setNotifications: (BOOL) notifications
 {
 	enableNotifications = notifications;
+}
+
+- (NSArray *)unfilteredObjectsForEntityType:(PajeEntityType *)entityType
+{
+	return [super allValuesForEntityType:entityType];
 }
 @end

@@ -123,7 +123,7 @@ void TypeFilterWindow::selectionChanged( wxTreeEvent& event )
 	}else{
 		//if not container, add the possible values for each type
 		NSEnumerator *en;
-		en = [[filter allValuesForEntityType: type] objectEnumerator];
+		en = [[filter unfilteredObjectsForEntityType: type] objectEnumerator];
 		NSString *val;
 		while ((val = [en nextObject]) != nil){
 			//add know value
@@ -154,10 +154,10 @@ void TypeFilterWindow::mainCheckBoxClicked( wxCommandEvent& event )
 {
 	if (mainCheckBox->IsChecked()){
 		checkListBox->Enable();
-		[filter showEntityType: currentSelectedType];
+		[filter filterEntityType: currentSelectedType show: YES];
 	}else{
 		checkListBox->Disable();
-		[filter hideEntityType: currentSelectedType];
+		[filter filterEntityType: currentSelectedType show: NO];
 	}
 }
 
@@ -174,20 +174,22 @@ void TypeFilterWindow::checkListBoxClicked( wxCommandEvent& event )
 				containerWithName: containerName
 					type: currentSelectedType];
 		if (checkListBox->IsChecked (event.GetInt())){
-			[filter showContainer: container];
+			[filter filterContainer: container show: YES];
 		}else{
-			[filter hideContainer: container];
+			[filter filterContainer: container show: NO];
 		}
 	}else{
 		//treat as values for entity types
 		NSString *value = WXSTRINGtoNSSTRING(checkListBox->GetString
 			(event.GetInt()));
 		if (checkListBox->IsChecked (event.GetInt())){
-			[filter showValue: value
-			    forEntityType: currentSelectedType];
+			[filter filterValue: value
+			    forEntityType: currentSelectedType
+				show: YES];
 		}else{
-			[filter hideValue: value
-			    forEntityType: currentSelectedType];
+			[filter filterValue: value
+			    forEntityType: currentSelectedType
+				show: NO];
 		}
 	}
 }
