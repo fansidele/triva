@@ -130,6 +130,7 @@
 	[dict release];
 
 	[self refreshPopup];
+	[self updateDefaults];
 }
 
 - (void) del: (id) sender
