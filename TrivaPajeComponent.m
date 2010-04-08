@@ -145,6 +145,7 @@
 		   PajeEventDecoder, \
                    PajeSimulator, \
                    StorageController, \
+		   TimeInterval-GNUstep, \
 		   TimeSliceAggregation, \
 		   SquarifiedTreemap-GNUstep \
 		) )" propertyList];

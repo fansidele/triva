@@ -182,7 +182,7 @@ AC_ARG_ENABLE(SquarifiedTreemap-GNUstep,
   [enableSquarifiedTreemapGNUstep=yes])
 if test x$enableSquarifiedTreemapGNUstep = xyes ; then
 	CONFIG_FILES="$CONFIG_FILES TimeSliceAggregation/GNUmakefile"
-	PROJECTS="$PROJECTS SquarifiedTreemap-GNUstep TimeSliceAggregation"
+	PROJECTS="$PROJECTS TimeInterval-GNUstep SquarifiedTreemap-GNUstep TimeSliceAggregation"
 	AC_DEFINE([HAVE_SQUARIFIEDTREEMAP_GNUSTEP], [1], [Define if SquarifiedTreemap-GNUstep visualization components is activated])
 	FLAG=yes
 fi
