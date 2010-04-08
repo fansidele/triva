@@ -9,6 +9,7 @@ class TrivaApp : public wxApp
 {
 private:
     wxTimer gnustepLoopTimer; 
+    NSAutoreleasePool *pool;
 
 public:
     bool OnInit();

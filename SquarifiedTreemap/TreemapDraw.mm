@@ -198,7 +198,7 @@ void TreemapDraw::drawHighlightTreemapNode (id node, wxDC &dc)
                 this->drawTreemapNode (parent, 0, brush, blackColor, dc);
                 [message appendString: [NSString stringWithFormat: @" - %@",
                         [parent name]]];
-                if ([[parent parent] depth] == 0){
+                if ([(Tree*)[parent parent] depth] == 0){
                         break;
                 }else{
                         parent = [parent parent];

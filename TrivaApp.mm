@@ -28,7 +28,7 @@ IMPLEMENT_APP(TrivaApp)
 
 bool TrivaApp::OnInit()
 {
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	pool = [[NSAutoreleasePool alloc] init];
 
 //	TrivaWindow *window = new TrivaWindow ((wxWindow*)NULL);
 //	window->setTrivaApp (this);

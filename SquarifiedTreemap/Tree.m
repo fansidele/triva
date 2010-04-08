@@ -100,6 +100,7 @@
 - (int) setMaxDepth: (int) d
 {
 	maxDepth = d;
+	return maxDepth;
 }
 
 - (int) depth
