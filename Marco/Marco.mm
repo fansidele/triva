@@ -221,7 +221,6 @@ MarcoDraw *draw = NULL;
 
 - (void) timeSelectionChanged
 {
-   NSLog (@"%@", [self findCacheStates]);
    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 //[self debug];
 //[self activateRecordingOfClass: @"GSMutableArray"];
@@ -230,8 +229,6 @@ MarcoDraw *draw = NULL;
 //[self activateRecordingOfClass: @"GSCInlineString"];
 //[self activateRecordingOfClass: @"GSCSubString"];
 //[self printInstance:[self rootInstance] level:0];
-   NSLog (@"%@(%@) - %@(%@)", [self selectionStartTime], [self startTime],
-   [self selectionEndTime], [self endTime]);
    static int flag = 1;
    if (flag){
      draw->recreateResourcesGraph();

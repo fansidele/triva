@@ -34,7 +34,6 @@ MarcoDraw::MarcoDraw (wxWindow *parent, wxWindowID id,
 
 void MarcoDraw::OnPaint(wxPaintEvent& evt)
 {
-	NSLog (@"%s IN", __FUNCTION__);
 	wxPaintDC dc(this);
 	dc.Clear();
 	{
@@ -53,7 +52,6 @@ void MarcoDraw::OnPaint(wxPaintEvent& evt)
 	}
 	this->drawPlatform (dc);
 	this->drawApplication (dc);
-	NSLog (@"%s OUT", __FUNCTION__);
 }
 
 void MarcoDraw::drawApplication (wxDC &dc)
