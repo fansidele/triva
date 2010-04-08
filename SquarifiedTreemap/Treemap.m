@@ -23,7 +23,7 @@
 - (id) init
 {
 	self = [super init];
-	rect = NSZeroRect;
+	bb = NSZeroRect;
 	value = 0;
 	highlighted = NO;
 	return self;
@@ -88,14 +88,14 @@
 	[super dealloc];
 }
 
-- (NSRect) treemapRect
+- (NSRect) bb
 {
-	return rect;
+	return bb;
 }
 
-- (void) setTreemapRect: (NSRect)r
+- (void) setBoundingBox: (NSRect)r
 {
-	rect = r;
+	bb = r;
 }
 
 - (void) setColor: (NSColor *) c
@@ -166,7 +166,7 @@
 			childRect.size.height = nw;
 			d += nw;
 		}
-		[child setTreemapRect: childRect];
+		[child setBoundingBox: childRect];
 	}
 	if (horiz){
 		r = NSMakeRect (x, y+h, r.size.width, r.size.height-h);
@@ -182,9 +182,9 @@
 {
 	NSMutableArray *row = [NSMutableArray array];
 	double worst = FLT_MAX, nworst;
-	/* make a copy of my rect, so the algorithm can modify it */
-	NSRect r = NSMakeRect (rect.origin.x, rect.origin.y,
-				rect.size.width, rect.size.height);
+	/* make a copy of my bb, so the algorithm can modify it */
+	NSRect r = NSMakeRect (bb.origin.x, bb.origin.y,
+				bb.size.width, bb.size.height);
 
 	while ([list count] > 0){
 		/* check if w is still valid */
@@ -257,18 +257,18 @@
 	[sortedCopyAggregated removeObjectsInRange: range];
 
 	/* calculate the smaller size */
-	double w = rect.size.width < rect.size.height ?
-			rect.size.width : rect.size.height;
+	double w = bb.size.width < bb.size.height ?
+			bb.size.width : bb.size.height;
 
 	/* call my squarified method with:
 		- the list of children with values dif from zero
 		- the smaller size
-		- the copy of my rect
+		- the copy of my bb
 		- and factor */
 	[self squarifyWithOrderedChildren: sortedCopy
 			andSmallerSize: w
 			andFactor: factor];
-	/* call also to set the rectangles of aggregated children */
+	/* call also to set the bbangles of aggregated children */
 	[self squarifyWithOrderedChildren: sortedCopyAggregated
 			andSmallerSize: w
 			andFactor: factor];
@@ -293,7 +293,7 @@
         double area = w * h;
         double factor = area/value;
 
-	rect = NSMakeRect (0,0,w,h);
+	bb = NSMakeRect (0,0,w,h);
         [self calculateTreemapRecursiveWithFactor: factor];
 }
 
@@ -306,10 +306,10 @@
 	double x = point.x;
 	double y = point.y;
 	Treemap *ret = nil;
-	if (x >= rect.origin.x &&
-	    x <= rect.origin.x+rect.size.width &&
-	    y >= rect.origin.y &&
-	    y <= rect.origin.y+rect.size.height){
+	if (x >= bb.origin.x &&
+	    x <= bb.origin.x+bb.size.width &&
+	    y >= bb.origin.y &&
+	    y <= bb.origin.y+bb.size.height){
 		if ([self depth] == d){
 			// recurse to aggregated children 
 			unsigned int i;
@@ -317,12 +317,12 @@
 				Treemap *child = [aggregatedChildren
 							objectAtIndex: i];
 				if ([child val] &&
-					x >= [child treemapRect].origin.x &&
-				        x <= [child treemapRect].origin.x+
-						[child treemapRect].size.width&&
- 					y >= [child treemapRect].origin.y &&
-				        y <= [child treemapRect].origin.y+
-					    [child treemapRect].size.height){
+					x >= [child bb].origin.x &&
+				        x <= [child bb].origin.x+
+						[child bb].size.width&&
+ 					y >= [child bb].origin.y &&
+				        y <= [child bb].origin.y+
+					    [child bb].size.height){
 						ret = child;
 						break;
 				}
@@ -370,7 +370,7 @@
                         [[children objectAtIndex: i] testTree];
                 }
         }
-        NSLog (@"%@ - %@ %.2f", name, rect, [self val]);
+        NSLog (@"%@ - %@ %.2f", name, bb, [self val]);
 }
 
 - (BOOL) highlighted

@@ -23,7 +23,7 @@
 
 @interface Treemap : Tree
 {
-	NSRect rect;
+	NSRect bb;
 	float value;
 	NSColor *color; //the color for this node
 	NSMutableArray *aggregatedChildren;
@@ -32,8 +32,8 @@
 - (id) initWithTimeSliceTree: (TimeSliceTree*) tree;
 - (void) setValue: (float) v;
 - (float) val;
-- (NSRect) treemapRect;
-- (void) setTreemapRect: (NSRect)r;
+- (NSRect) bb;
+- (void) setBoundingBox: (NSRect)r;
 - (void) setColor: (NSColor *) c;
 - (NSColor *) color;
 - (NSArray *) aggregatedChildren;
