@@ -344,6 +344,7 @@
 }
 
 - (Treemap *) createTreeWithTimeSliceTree: (TimeSliceTree *) orig
+	withValues: (NSSet *) values
 {
 	[self setName: [orig name]];
         [self setValue: [orig finalValue]];
@@ -361,15 +362,29 @@
 	NSEnumerator *keys = [aggValues keyEnumerator];
 	id key;
 	while ((key = [keys nextObject])){
-		Treemap *aggNode = [[Treemap alloc] init];
-		[aggNode setName: key];
-		[aggNode setValue: [[aggValues objectForKey: key] floatValue]];
-		[aggNode setDepth: [orig depth] + 1];
-		[aggNode setMaxDepth: [orig maxDepth]];
-		[aggNode setPajeEntity: [aggEntities objectForKey: key]];
-		[aggNode setParent: self];
-		[aggregatedChildren addObject: aggNode];
-		[aggNode release];
+		if ([values count] != 0){
+			if ([values containsObject: key]){
+				Treemap *aggNode = [[Treemap alloc] init];
+				[aggNode setName: key];
+				[aggNode setValue: [[aggValues objectForKey: key] floatValue]];
+				[aggNode setDepth: [orig depth] + 1];
+				[aggNode setMaxDepth: [orig maxDepth]];
+				[aggNode setPajeEntity: [aggEntities objectForKey: key]];
+				[aggNode setParent: self];
+				[aggregatedChildren addObject: aggNode];
+				[aggNode release];
+			}
+		}else{
+			Treemap *aggNode = [[Treemap alloc] init];
+			[aggNode setName: key];
+			[aggNode setValue: [[aggValues objectForKey: key] floatValue]];
+			[aggNode setDepth: [orig depth] + 1];
+			[aggNode setMaxDepth: [orig maxDepth]];
+			[aggNode setPajeEntity: [aggEntities objectForKey: key]];
+			[aggNode setParent: self];
+			[aggregatedChildren addObject: aggNode];
+			[aggNode release];
+		}
 	}
 
 	/* recurse normally */
@@ -377,7 +392,8 @@
 	for (i = 0; i < [[orig children] count]; i++){
 		Treemap *node = [[Treemap alloc] init];
 		node = [node createTreeWithTimeSliceTree:
-				[[orig children] objectAtIndex: i]];
+				[[orig children] objectAtIndex: i]
+				withValues: values];
 		[node setParent: self];
 		[children addObject: node];
 		[node release];

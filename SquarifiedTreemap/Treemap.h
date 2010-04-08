@@ -59,7 +59,8 @@
 - (NSComparisonResult) compareValue: (Treemap *) other;
 
 /* creating the tree */
-- (Treemap *) createTreeWithTimeSliceTree: (TimeSliceTree *) orig;
+- (Treemap *) createTreeWithTimeSliceTree: (TimeSliceTree *) orig
+		withValues: (NSSet *) values;
 @end
 
 #endif
