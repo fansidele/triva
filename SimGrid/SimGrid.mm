@@ -142,6 +142,9 @@ agsafeset (n, (char*)"height", str_height, default_size); \
 			__FUNCTION__, __LINE__);
 		return;
 	}
+	double time_interval;
+	time_interval = [[self selectionEndTime]
+		timeIntervalSinceDate: [self selectionStartTime]];
 
 	//take graphviz information (node position mainly)
 	//and prepare each TrivaGraphNode node/edge to be draw by next component
@@ -178,30 +181,21 @@ agsafeset (n, (char*)"height", str_height, default_size); \
 		TimeSliceTree *tree;
 		NSMutableDictionary *nodeGraphValues;
 		nodeGraphValues = [NSMutableDictionary dictionary];
-		NSDictionary *values, *durations;
+		NSDictionary *values;
 		tree = [[self timeSliceTree] searchChildByName: [node name]];
 		values = [tree aggregatedValues];
-		durations = [tree timeSliceDurations];
 
-		NSEnumerator *en2;
 		id key;
-		en2 = [values keyEnumerator];
-		int existing = 0;
+		NSEnumerator *en2 = [values keyEnumerator];
 		while ((key = [en2 nextObject])){
-			if([[values objectForKey: key] doubleValue]) existing++;
-		}
-
-		en2 = [values keyEnumerator];
-		while ((key = [en2 nextObject])){
-			double duration, val, size;
-			duration = [[durations objectForKey: key] doubleValue];
+			double val, power;
 			val = [[values objectForKey: key] doubleValue];
-			size = [[sizes objectForKey: node] doubleValue];
-	
-			if (duration) {
+			power = [[sizes objectForKey: node] doubleValue];
+
+			if (power != 0 && val != 0){	
 				[nodeGraphValues setObject:
 					[NSNumber numberWithDouble:
-					     val/(existing*size*duration)]
+					     val/(power*time_interval)]
 						    forKey: key];
 			}
 		}
@@ -232,37 +226,25 @@ agsafeset (n, (char*)"height", str_height, default_size); \
 		TimeSliceTree *tree;
 		NSMutableDictionary *edgeSeparationValues;
 		edgeSeparationValues = [NSMutableDictionary dictionary];
-		NSDictionary *values, *durations;
+		NSDictionary *values;
 		tree = [[self timeSliceTree] searchChildByName: [edge name]];
 		values = [tree aggregatedValues];
-		durations = [tree timeSliceDurations];
 
-		NSEnumerator *en2;
+		NSEnumerator *en2 = [values keyEnumerator];
 		id key;
-		en2 = [values keyEnumerator];
-		int existing = 0;
+//		NSLog (@"%@ - %@", [edge name], values);
 		while ((key = [en2 nextObject])){
-			if([[values objectForKey: key] doubleValue]) existing++;
-		}
-
-		en2 = [values keyEnumerator];
-//		NSLog (@"%@", [edge name]);
-		while ((key = [en2 nextObject])){
-			double duration, val, linkBandwidth;
-			duration = [[durations objectForKey: key] doubleValue];
+			double val, linkBandwidth;
 			val = [[values objectForKey: key] doubleValue];
 			linkBandwidth = [[sizes objectForKey:edge] doubleValue];
 
-//			NSLog (@"\t%@ DurationInTimeSlice=%f TimeSliceValue=%f LinkBandwidth=%f", key, duration, val, linkBandwidth);
-			if (val < 0){
-				//ou la la
-				NSLog (@"ERROR");
-			}
-			double divisor = duration*linkBandwidth*existing;
-			if (divisor){ 
-//				NSLog (@"\t\t%% of this link's bandwidth is %f", val/divisor);
+//			NSLog (@"\t%@ val = %.3f link = %.3f interval = %.3f calc = %.3f",
+//				key, val, linkBandwidth, time_interval,
+//					val/(linkBandwidth*time_interval));
+			if (linkBandwidth != 0 && val != 0){	
 				[edgeSeparationValues setObject:
-					[NSNumber numberWithDouble: val/divisor]
+					[NSNumber numberWithDouble:
+					     val/(linkBandwidth*time_interval)]
 						    forKey: key];
 			}
 		}
