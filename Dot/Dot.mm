@@ -119,11 +119,67 @@
 	return ret;
 }
 
+/*
+ * for type hierarchy in dot format
+ */
+- (NSString *) dotTypeHierarchy: (id) type
+{
+	NSMutableString *ret = [NSMutableString string];
+	NSEnumerator *en = [[self containedTypesForContainerType: type] objectEnumerator];
+	id et;
+	[ret appendString:
+		[NSString stringWithFormat:@"\"%@\"[label=\"%@\",shape=\"rectangle\"];\n",
+			[type name], [type name]]];
+	while ((et = [en nextObject]) != nil) {
+        	if ([self isContainerEntityType: et]) {
+			[ret appendString: [self dotTypeHierarchy: et]];
+		}else{
+			NSString *shape = @"circle"; //default shape
+			NSString *fillcolor = @"white"; //default color
+			if ([et isKindOfClass: [PajeStateType class]]){
+				shape = @"diamond";
+				fillcolor = @"lightblue";
+			}else if ([et isKindOfClass: [PajeLinkType class]]){
+				shape = @"egg";
+				fillcolor = @"green";
+			}else if ([et isKindOfClass: [PajeVariableType class]]){
+				shape = @"trapezium";
+				fillcolor = @"yellow";
+			}else if ([et isKindOfClass: [PajeEventType class]]){
+				shape = @"triangle";
+				fillcolor = @"red";
+			}
+			[ret appendString:
+				[NSString stringWithFormat:@"\"%@\"[shape=\"%@\" style=filled, fillcolor=\"%@\"];\n",
+					[et name], @"rectangle", fillcolor]];
+		}
+		[ret appendString:
+			[NSString stringWithFormat: @"\"%@\"->\"%@\";\n",
+				[type name], [et name]]];
+	}
+	return ret;
+
+}
+
+- (NSString *) dotTypeHierarchy
+{
+	NSMutableString *ret = [NSMutableString string];
+	[ret appendString: @"strict digraph DotTypeHierarchy {\n"];
+	[ret appendString: [self dotTypeHierarchy: [[self rootInstance] entityType]]];
+	[ret appendString: @"}\n"];
+	return ret;
+}
+
+/*
+ * arrival of a new time window 
+ */
 - (void) timeSelectionChanged
 {
 	//[self dumpTraceInTextualFormat];
-	NSString *filename = [NSString stringWithFormat: @"%@-%@.dot", [self selectionStartTime], [self selectionEndTime]];
-	NSString *dot = [self dumpDotTraceFormat];
-	[dot writeToFile: filename atomically: NO];
+	NSString *filename = [NSString stringWithFormat: @"type-%@.dot",
+	   [[[self traceDescription] componentsSeparatedByString: @"/"] lastObject]];
+	[[self dotTypeHierarchy] writeToFile: filename atomically: NO];
+	NSLog (@"Type hierarchy written in filename %@", filename);
+	exit(1);
 }
 @end

@@ -7,6 +7,8 @@
 @interface Dot  : PajeFilter
 {
 }
+- (NSString *) dotTypeHierarchy;
+- (NSString *) dotTypeHierarchy: (id) type;
 - (void) dumpTraceInTextualFormat;
 @end
 
