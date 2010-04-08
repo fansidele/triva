@@ -210,7 +210,15 @@
 		flag = 0;
 	}
 	//close before starting a new one
-	if (platformGraph) { agclose (platformGraph); }
+	if (platformGraph) {
+		[nodes release];
+		[edges release];
+		[sizes release];
+		nodes = [[NSMutableArray alloc] init];
+		edges = [[NSMutableArray alloc] init];
+		sizes = [[NSMutableDictionary alloc] init];
+		agclose (platformGraph); 
+	}
 	platformGraph = agopen ((char *)"platformGraph", AGRAPHSTRICT);
 
 	//creating graph based on simgrid types
@@ -222,14 +230,18 @@
 	id platformContainer = [self containerWithName: @"simgrid-platform"
 						  type: platformType];
 
-	if (!platformType || !hostType || !linkType){
-		NSLog (@"%s:%d: simgrid types not defined",
-			__FUNCTION__, __LINE__);
+	if (!platformType || !hostType){
+		NSLog (@"%s:%d: types (platform=%@, host=%@) not defined",
+			__FUNCTION__, __LINE__, platformType, hostType);
 		return;
 	}
 	if (!platformContainer){
 		NSLog (@"%s:%d: simgrid-platform container not created",
 			__FUNCTION__, __LINE__);
+		return;
+	}
+
+	if (!hostType){
 		return;
 	}
 
@@ -249,6 +261,10 @@
 		[node release];
 	}
 
+	if (!linkType){
+		return;
+	}
+
 	// create graphviz edges based on links, define size
 	en = [self enumeratorOfContainersTyped: linkType
 				   inContainer: platformContainer];
@@ -258,6 +274,7 @@
 		const char *dst = [[link valueOfFieldNamed: @"DstHost"]cString];
 		Agnode_t *s = agfindnode (platformGraph, (char*)src);
 		Agnode_t *d = agfindnode (platformGraph, (char*)dst);
+		if (!s || !d) continue; //ignore if there is no src or dst
 		agedge (platformGraph, s, d);
 		double bw = [[link valueOfFieldNamed: @"Bandwidth"]doubleValue];
 
