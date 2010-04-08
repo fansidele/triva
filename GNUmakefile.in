@@ -13,7 +13,8 @@ SUBPROJECTS = \
 	SimGrid \
 	CommunicationPattern \
 	NetworkTopology \
-	Marco
+	Marco \
+	Dot
 
 @PACKAGE_TARNAME@_OBJCC_FILES = \
 	TrivaApp.mm \

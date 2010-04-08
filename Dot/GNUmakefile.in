@@ -1,0 +1,26 @@
+include $(GNUSTEP_MAKEFILES)/common.make
+
+CC=$(CXX)
+
+PACKAGE_NAME=Dot
+BUNDLE_NAME=Dot
+BUNDLE_EXTENSION=.bundle
+BUNDLE_INSTALL_DIR=$(GNUSTEP_BUNDLES)/Triva
+Dot_PRINCIPAL_CLASS=Dot
+
+Dot_OBJC_FILES=
+Dot_OBJCC_FILES = \
+	Dot.mm \
+	DotWindow.mm \
+	DotWindowAuto.mm \
+	DotDraw.mm
+
+Dot_INCLUDE_DIRS += @CPPFLAGS@
+Dot_LIB_DIRS += @LIBS@
+Dot_LDFLAGS += @LDFLAGS@
+
+include $(GNUSTEP_MAKEFILES)/bundle.make
+
+after-distclean::
+after-all::
+after-clean:: 

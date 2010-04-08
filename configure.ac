@@ -53,6 +53,7 @@ SquarifiedTreemap/GNUmakefile
 SimGrid/GNUmakefile
 CommunicationPattern/GNUmakefile
 NetworkTopology/GNUmakefile
-Marco/GNUmakefile)
+Marco/GNUmakefile
+Dot/GNUmakefile)
 AC_OUTPUT
 
