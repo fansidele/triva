@@ -139,11 +139,17 @@
 			value += [[children objectAtIndex: i] doFinalValueWith: set];
 		}
 	}else{
-		// stop recursion, use the set value (TODO)
+		// stop recursion
 		id key;
 		NSEnumerator *keys = [aggregatedValues keyEnumerator];
 		while ((key = [keys nextObject])){
-			value += [[aggregatedValues objectForKey: key] floatValue];
+			if ([set count] != 0){
+				if ([set containsObject: key]){
+					value += [[aggregatedValues objectForKey: key] floatValue];
+				}
+			}else{
+				value += [[aggregatedValues objectForKey: key] floatValue];
+			}
 		}
 	}
 	[self setFinalValue: value];
