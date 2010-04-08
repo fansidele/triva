@@ -8,12 +8,18 @@ BUNDLE_EXTENSION=.bundle
 BUNDLE_INSTALL_DIR=$(GNUSTEP_BUNDLES)/Triva
 SimGrid_PRINCIPAL_CLASS=SimGrid
 
+#ADDITIONAL_INCLUDE_DIRS = -I../Triva/
+
+ifeq ($(FOUNDATION_LIB), apple)
+	LDFLAGS += -F../Triva -framework Triva
+else
+	LDFLAGS += -L../Triva/Triva.framework -lTriva
+	ADDITIONAL_LIB_DIRS += -L../Triva/Triva.framework/Versions/Current
+endif
+
 SimGrid_OBJC_FILES=
 SimGrid_OBJCC_FILES = \
-	SimGrid.mm \
-	SimGridWindow.mm \
-	SimGridWindowAuto.mm \
-	SimGridDraw.mm
+	SimGrid.mm
 
 SimGrid_INCLUDE_DIRS += @CPPFLAGS@
 SimGrid_LIB_DIRS += @LIBS@

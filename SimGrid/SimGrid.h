@@ -1,16 +1,25 @@
 #ifndef __SIMGRID_H
 #define __SIMGRID_H
 #include <Foundation/Foundation.h>
-#include <General/PajeFilter.h>
+#include <Triva/TrivaFilter.h>
 #include <graphviz/gvc.h>
-#include "SimGridWindow.h"
+#include <limits.h>
+#include <float.h>
 
-@interface SimGrid  : PajeFilter
+@interface SimGrid  : TrivaFilter
 {
 	GVC_t *gvc;
 	graph_t *platformGraph;
 	BOOL platformCreated;
+
+	NSMutableArray *nodes;
+	NSMutableArray *edges;
+	NSMutableDictionary *sizes;
 }
+- (void) createPlatformGraph;
+
+
+/*
 - (NSArray *) getHosts;
 - (NSArray *) getLinks;
 - (NSPoint) getPositionForHost: (id) host;
@@ -25,6 +34,7 @@
 - (NSDictionary *) getUtilization: (NSString *) field
 		     forContainer: (id) container
 		     withMaxValue: (NSString *) maxField;
+*/
 @end
 
 #endif
