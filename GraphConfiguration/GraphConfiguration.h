@@ -39,6 +39,7 @@
         fromEnumerator: (NSEnumerator*) en;
 - (double) evaluateWithValues: (NSDictionary *) values
                 withExpr: (NSString *) expr;
+- (NSColor *) getColor: (NSColor *)c withSaturation: (double) saturation;
 @end
 
 @interface GraphConfiguration (Interface)

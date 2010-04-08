@@ -508,4 +508,21 @@
 			withMax: maxEdge withMin: minEdge];
 	}
 }
+
+- (NSColor *) getColor: (NSColor *)c withSaturation: (double) saturation
+{
+	if (![[c colorSpaceName] isEqualToString:
+			@"NSCalibratedRGBColorSpace"]){
+		NSLog (@"%s:%d Color provided is not part of the "
+				"RGB color space.", __FUNCTION__, __LINE__);
+		return nil;
+	}
+	float h, s, b, a;
+	[c getHue: &h saturation: &s brightness: &b alpha: &a];
+	NSColor *ret = [NSColor colorWithCalibratedHue: h
+		saturation: saturation
+		brightness: b
+		alpha: a];
+	return ret;
+}
 @end
