@@ -7,9 +7,8 @@
 
 #define X(pos,bb,w) (pos.x/bb.size.width*w)
 #define Y(pos,bb,h) (pos.y/bb.size.height*h)
-#define WIDTH(size,dpi) (size.size.width*dpi)
-#define HEIGHT(size,dpi) (size.size.height*dpi)
-#define DPI (96)
+#define WIDTH(size,bb,w) (size.size.width/bb.size.width*w)
+#define HEIGHT(size,bb,h) (size.size.height/bb.size.height*h)
 
 extern wxString NSSTRINGtoWXSTRING (NSString *ns);
 extern NSString *WXSTRINGtoNSSTRING (wxString wsa);
@@ -60,6 +59,7 @@ void GraphDraw::drawPlatformState (wxDC &dc)
 
 	en = [filter enumeratorOfNodes];
 	while ((node = [en nextObject])){
+		if (![node drawable]) continue;
 		NSPoint pos = [filter positionForNode: node];
 		NSRect size = [filter sizeForNode: node];
 		NSRect bb = [filter sizeForGraph];
@@ -68,8 +68,8 @@ void GraphDraw::drawPlatformState (wxDC &dc)
 		en2 = [typesAndValues keyEnumerator];
 		int x = X(pos,bb,w);
 		int y = Y(pos,bb,h);
-		int nw = WIDTH(size,DPI);
-		int nh = HEIGHT(size,DPI);
+		int nw = size.size.width;
+		int nh = size.size.height;
 
 		double accum_y = 0;
 		while ((type = [en2 nextObject])){
@@ -93,6 +93,7 @@ void GraphDraw::drawPlatformState (wxDC &dc)
 
 	en = [filter enumeratorOfEdges];
 	while ((edge = [en nextObject])){
+		if (![edge drawable]) continue;
 		TrivaGraphNode *src = [edge source];
 		TrivaGraphNode *dst = [edge destination];
 		//if ([src isEqualToString: dst]) continue;
@@ -206,24 +207,24 @@ void GraphDraw::drawPlatform (wxDC &dc)
 
 	en = [filter enumeratorOfNodes];
 	while ((node = [en nextObject])){
+		if (![node drawable]) continue;
 		NSPoint pos = [filter positionForNode: node];
 		NSRect size = [filter sizeForNode: node];
 		NSRect bb = [filter sizeForGraph];
 
 		int x = X(pos,bb,w);
 		int y = Y(pos,bb,h);
-		int nw = WIDTH(size,DPI);
-		int nh = HEIGHT(size,DPI);
+		int nw = size.size.width;
+		int nh = size.size.height;
 
 		dc.SetPen(wxPen(wxT("Black"), 1, wxSOLID));
 		dc.SetBrush(wxBrush(wxT("White"), wxSOLID));
 		dc.DrawRectangle (x-nw/2, y-nh/2, nw, nh);
-
-
 	}
 
 	en = [filter enumeratorOfEdges];
 	while ((edge = [en nextObject])){
+		if (![edge drawable]) continue;
 		TrivaGraphNode *src = [edge source];
 		TrivaGraphNode *dst = [edge destination];
 		//if ([src isEqualToString: dst]) continue;
