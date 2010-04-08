@@ -16,7 +16,7 @@ GraphDraw *draw = NULL;
 	return self;
 }
 
-- (void) hierarchyChanged
+- (void) timeSelectionChanged
 {
 	draw->Refresh();
 	draw->Update();
