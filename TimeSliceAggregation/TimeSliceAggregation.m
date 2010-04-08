@@ -11,6 +11,7 @@
 
 	/* starting configuration */
 	considerExclusiveDuration = YES;
+	tree = nil;
 	
 	return self;
 }
