@@ -258,7 +258,7 @@
 
 - (NSDictionary*) enumeratorOfValuesForNode: (TrivaGraphNode*) node
 {
-        return nil;//[node values];
+        return [node values];
 }
 
 - (NSPoint) positionForNode: (TrivaGraphNode*) node
@@ -273,7 +273,7 @@
 
 - (NSDictionary*) enumeratorOfValuesForEdge: (TrivaGraphEdge*) edge
 {
-        return nil;//[edge values];
+        return [edge values];
 }
 
 - (NSRect) sizeForEdge: (TrivaGraphEdge*) edge
