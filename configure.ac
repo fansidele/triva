@@ -107,8 +107,8 @@ AC_DEFINE_UNQUOTED([PROJECT_NAME], "${PROJECT_NAME}",
 
 
 #components that are always compiled
-CONFIG_FILES="GNUmakefile Triva/GNUmakefile"
-PROJECTS="Triva"
+CONFIG_FILES="GNUmakefile TimeInterval/GNUmakefile Triva/GNUmakefile"
+PROJECTS="Triva TimeInterval"
 
 #flag to control if at least one (and only one) of components is activated
 FLAG=no
@@ -183,8 +183,8 @@ AC_ARG_ENABLE(SquarifiedTreemap,
   [  --enable-SquarifiedTreemap],
   [enableSquarifiedTreemap=yes])
 if test x$enableSquarifiedTreemap = xyes ; then
-	CONFIG_FILES="$CONFIG_FILES TimeInterval/GNUmakefile SquarifiedTreemap/GNUmakefile TimeSliceAggregation/GNUmakefile"
-	PROJECTS="$PROJECTS TimeInterval SquarifiedTreemap TimeSliceAggregation"
+	CONFIG_FILES="$CONFIG_FILES SquarifiedTreemap/GNUmakefile TimeSliceAggregation/GNUmakefile"
+	PROJECTS="$PROJECTS SquarifiedTreemap TimeSliceAggregation"
 	AC_DEFINE([HAVE_SQUARIFIEDTREEMAP], [1], [Define if SquarifiedTreemap visualization components is activated])
 	FLAG=yes
 fi
