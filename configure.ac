@@ -43,6 +43,7 @@ CONFIG_FILES="
   Triva/GNUmakefile \
   GraphConfiguration/GNUmakefile \
   GraphView/GNUmakefile \
+  Dot/GNUmakefile \
   LinkView/GNUmakefile \
   SquarifiedTreemap/GNUmakefile \
   TimeInterval/GNUmakefile \
