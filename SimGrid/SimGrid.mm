@@ -291,94 +291,32 @@ SimGridDraw *draw = NULL;
 	return ret;
 }
 
-/* power utilization */
-- (NSDictionary *) getPowerUtilizationOfHost: (id) host
+/* power & bandwidth utilization */
+- (NSDictionary *) getUtilization: (NSString *) field
+		     forContainer: (id) container
+			withMaxValue: (NSString *) maxField
 {
 	NSMutableDictionary *ret = [NSMutableDictionary dictionary];
 	NSEnumerator *en, *en2;
 	id type;
- 	en = [[self containedTypesForContainerType: [host entityType]] objectEnumerator];
-	double hostPower = [[host valueOfFieldNamed: @"Power"] floatValue];
-	double accum = 0;	
+ 	en = [[self containedTypesForContainerType: [container entityType]] objectEnumerator];
+	double containerFieldValue = [[container valueOfFieldNamed: maxField] doubleValue];
 	double accum_time = 0;
 	NSMutableSet *intervals = [NSMutableSet set];
 	while ((type = [en nextObject])){
-		id power;
+		id what;
 		en2 = [self enumeratorOfEntitiesTyped: type
-                                                inContainer: host
+                                                inContainer: container
                                                 fromTime: [self selectionStartTime]
                                                 toTime: [self selectionEndTime]
                                                 minDuration: 0];
 		double type_val = 0;
-		while ((power = [en2 nextObject])){
-			double start = [[[power startTime] description] doubleValue];
-			double end = [[[power endTime] description] doubleValue];
-			double p = [[power valueOfFieldNamed: @"PowerUsed"] floatValue];
+		while ((what = [en2 nextObject])){
+			double start = [[[what startTime] description] doubleValue];
+			double end = [[[what endTime] description] doubleValue];
+			double value = [[what valueOfFieldNamed: field] doubleValue];
 			if ((end-start)!=0){
-				type_val += (p * (end-start));
-			}
-                        NSString *interval = [NSString stringWithFormat: @"%f-%f", start, end];
-                        if (![intervals containsObject: interval]){
-                                accum_time += end-start;
-                                [intervals addObject: interval];
-                        }
-		}
-		if (type_val){
-			[ret setObject: [NSString stringWithFormat: @"%f", type_val]
-				forKey: type];
-		}
-	}
-	en = [[self containedTypesForContainerType: [host entityType]] objectEnumerator];
-	while ((type = [en nextObject])){
-		if ([ret objectForKey: type]){
-//			double start = [[[self selectionStartTime] description] doubleValue];
-//			double end = [[[self selectionEndTime] description] doubleValue];
-
-			double val = [[ret objectForKey: type] doubleValue];
-			val = val/(hostPower*accum_time);
-			[ret setObject: [NSString stringWithFormat: @"%f", val]
-				forKey: type];
-			
-		}
-	}
-	return ret;
-	if (0&&accum){
-		en = [[self containedTypesForContainerType: [host entityType]] objectEnumerator];
-		while ((type = [en nextObject])){
-			double val = [[ret objectForKey: type] doubleValue];
-			val = val/accum;
-			[ret setObject: [NSString stringWithFormat: @"%f", val]
-				forKey: type];
-		}
-	}
-	return ret;
-}
-
-/* bandwidth utilization */
-- (NSDictionary *) getBandwidthUtilizationOfLink: (id) link
-{
-	NSMutableDictionary *ret = [NSMutableDictionary dictionary];
-	NSEnumerator *en, *en2;
-	id type;
- 	en = [[self containedTypesForContainerType: [link entityType]] objectEnumerator];
-	double linkBandwidth = [[link valueOfFieldNamed: @"Bandwidth"] doubleValue];
-	double accum_time = 0;
-	NSMutableSet *intervals = [NSMutableSet set];
-	while ((type = [en nextObject])){
-		id bandwidth;
-		en2 = [self enumeratorOfEntitiesTyped: type
-                                                inContainer: link
-                                                fromTime: [self selectionStartTime]
-                                                toTime: [self selectionEndTime]
-                                                minDuration: 0];
-		double type_val = 0;
-		while ((bandwidth = [en2 nextObject])){
-			double start = [[[bandwidth startTime] description] doubleValue];
-			double end = [[[bandwidth endTime] description] doubleValue];
-//			NSLog (@"\t\t%@ %f -- %f", [type name], start, end);
-			double b = [[bandwidth valueOfFieldNamed: @"BandwidthUsed"] doubleValue];
-			if ((end-start)!=0){
-				type_val += (b * (end-start));
+				type_val += (value * (end-start));
 			}
 			NSString *interval = [NSString stringWithFormat: @"%f-%f", start, end];
 			if (![intervals containsObject: interval]){
@@ -391,19 +329,35 @@ SimGridDraw *draw = NULL;
 				forKey: type];
 		}
 	}
-	en = [[self containedTypesForContainerType: [link entityType]] objectEnumerator];
+	en = [[self containedTypesForContainerType: [container entityType]] objectEnumerator];
 	while ((type = [en nextObject])){
 		if ([ret objectForKey: type]){
-//			double start = [[[self selectionStartTime] description] doubleValue];
-//			double end = [[[self selectionEndTime] description] doubleValue];
-
 			double val = [[ret objectForKey: type] doubleValue];
-			val = val/(linkBandwidth*accum_time);
+			val = val/(containerFieldValue*accum_time);
 			[ret setObject: [NSString stringWithFormat: @"%f", val]
 				forKey: type];
-			
 		}
 	}
+	return ret;
+}
+
+/* power utilization */
+- (NSDictionary *) getPowerUtilizationOfHost: (id) host
+{
+	NSDictionary *ret;
+	ret = [self getUtilization: @"PowerUsed"
+		      forContainer: host
+		      withMaxValue: @"Power"];
+	return ret;
+}
+
+/* bandwidth utilization */
+- (NSDictionary *) getBandwidthUtilizationOfLink: (id) link
+{
+	NSDictionary *ret;
+	ret = [self getUtilization: @"BandwidthUsed"
+		      forContainer: link
+		      withMaxValue: @"Bandwidth"];
 	return ret;
 }
 

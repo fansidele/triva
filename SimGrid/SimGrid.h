@@ -24,6 +24,9 @@
 
 - (NSDictionary *) getPowerUtilizationOfHost: (id) host;
 - (NSDictionary *) getBandwidthUtilizationOfLink: (id) link;
+- (NSDictionary *) getUtilization: (NSString *) field
+		     forContainer: (id) container
+		     withMaxValue: (NSString *) maxField;
 @end
 
 #endif
