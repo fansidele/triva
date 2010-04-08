@@ -58,16 +58,6 @@
 - (TimeSliceTree *) createInstanceHierarchy: (id) instance parent:(TimeSliceTree *) parent;
 
 /**
- * Internal method to limit the treemap to a certain depth. Its
- * implementation results in an aggregated tree with intermediary
- * nodes annotated with a summary of leaf nodes. Leaf nodes are removed from
- * the structure.
- */
-- (void) limitTree: (TimeSliceTree *) tree
-		toDepth: (int) depth
-		toValues: (NSSet *) values;
-
-/**
  * Method so other Triva components can take an aggregated hierarchical
  * structure
  */
