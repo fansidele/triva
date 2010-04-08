@@ -37,8 +37,17 @@
 
 - (void) apply: (id)sender
 {
-  /* insert your code here */
-	NSLog (@"%s %@", __FUNCTION__, sender);
+	NSString *current = [popup titleOfSelectedItem];
+	NSDictionary *dict = [[configurations objectForKey: current]
+					propertyList];
+
+	if ([ok state] == NSOnState){
+		NS_DURING
+		[self setConfiguration: dict];
+		NS_HANDLER
+			NSLog (@"%@", localException);
+		NS_ENDHANDLER
+	}
 }
 
 - (void) newWithTitle: (NSString*)t andConf: (NSString*) c
