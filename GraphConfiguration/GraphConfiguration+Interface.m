@@ -88,6 +88,7 @@
 
 	if ([ok state] == NSOnState){
 		NS_DURING
+		userPositions = NO;
 		[self setConfiguration: dict];
 		NS_HANDLER
 			NSLog (@"%@", localException);
