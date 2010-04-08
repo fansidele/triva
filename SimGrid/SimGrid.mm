@@ -199,6 +199,7 @@
 			}
 		}
 		[edge setValues: edgeGraphValues];
+		[edge setSeparation: YES];
 		[edge setDrawable: YES];
 	}
 }
