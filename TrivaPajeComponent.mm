@@ -6,7 +6,7 @@
 	self = [super init];
 	components = [NSMutableDictionary dictionary];
 	bundles = [NSMutableDictionary dictionary];
-	[self createComponentGraph];
+//	[self createComponentGraph]; MUST be called after init
 
 	chunkDates = [[NSClassFromString(@"PSortedArray") alloc]
                                 initWithSelector:@selector(self)];

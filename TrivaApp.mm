@@ -48,6 +48,7 @@ bool TrivaApp::OnInit()
 		for (i = 0; i < argc; i++){	
 			[trivaPaje addParameter: WXSTRINGtoNSSTRING(argv[i])];
 		}
+		[trivaPaje createComponentGraph]; /*must be called after param*/
 		id reader = [trivaPaje componentWithName: @"FileReader"];
 		[reader setInputFilename: WXSTRINGtoNSSTRING(argv[1])];
 		[trivaPaje setReaderWithName: @"FileReader"];
