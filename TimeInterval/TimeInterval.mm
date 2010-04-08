@@ -138,6 +138,12 @@ TimeIntervalWindow *window;
 			endstop = NO;
 		}
 	}
+	double traceEnd = [[[self endTime] description] doubleValue];
+	double start = [[selectionStartTime description] doubleValue];
+	double end = [[selectionEndTime description] doubleValue];
+	
+	window->setSlidersValue ((2*(double)INT_MAX*(start/traceEnd) - (double)INT_MAX),
+				  2*(double)INT_MAX*(end/traceEnd) - (double)INT_MAX);
 	[super timeSelectionChanged];
 	return startstop && endstop;
 }

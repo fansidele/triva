@@ -32,14 +32,31 @@ void TimeIntervalWindow::setSelectionEndTime (wxString str)
 	timeSelectionEnd->SetLabel (str);
 }
 
+void TimeIntervalWindow::updateText ()
+{
+	this->setSelectionStartTime(
+		NSSTRINGtoWXSTRING([NSString stringWithFormat: @"%f", 
+			[filter traceTimeForSliderPosition: timeSelectionStartSlider->GetValue()]]));
+	this->setSelectionEndTime(
+		NSSTRINGtoWXSTRING([NSString stringWithFormat: @"%f", 
+			[filter traceTimeForSliderPosition: timeSelectionEndSlider->GetValue()]]));
+}
+
 void TimeIntervalWindow::setSlidersRange (int start, int end)
 {
 	timeSelectionStartSlider->SetRange (start, end);
 	timeSelectionEndSlider->SetRange (start, end);
 	timeSelectionStartSlider->SetValue(start);
 	timeSelectionEndSlider->SetValue(end);
+	this->updateText ();
 }
 
+void TimeIntervalWindow::setSlidersValue (int start, int end)
+{
+	timeSelectionStartSlider->SetValue (start);
+	timeSelectionEndSlider->SetValue (end);
+	this->updateText();
+}
 
 /* callbacks */
 void TimeIntervalWindow::startScroll( wxScrollEvent& event )
@@ -49,9 +66,7 @@ void TimeIntervalWindow::startScroll( wxScrollEvent& event )
 		timeSelectionStartSlider->SetValue
 			(timeSelectionEndSlider->GetValue());
 	}
-	timeSelectionStart->SetLabel(
-		NSSTRINGtoWXSTRING([NSString stringWithFormat: @"%f", 
-			[filter traceTimeForSliderPosition: timeSelectionStartSlider->GetValue()]]));
+	this->updateText();
 }
 void TimeIntervalWindow::endScroll( wxScrollEvent& event )
 {
@@ -60,9 +75,7 @@ void TimeIntervalWindow::endScroll( wxScrollEvent& event )
 		timeSelectionEndSlider->SetValue
 			(timeSelectionStartSlider->GetValue());
 	}
-	timeSelectionEnd->SetLabel(
-		NSSTRINGtoWXSTRING([NSString stringWithFormat: @"%f", 
-			[filter traceTimeForSliderPosition: timeSelectionEndSlider->GetValue()]]));
+	this->updateText();
 }
 void TimeIntervalWindow::apply( wxCommandEvent& event )
 {

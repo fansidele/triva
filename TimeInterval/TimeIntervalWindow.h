@@ -21,6 +21,7 @@ private:
 	id filter;
 	wxTimer playTimer;
 	double timeStep;
+	void updateText ();
 public:
 	/** Constructor */
 	TimeIntervalWindow( wxWindow* parent );
@@ -30,6 +31,7 @@ public:
 	void setSelectionStartTime (wxString str);
 	void setSelectionEndTime (wxString str);
 	void setSlidersRange (int start, int end);
+	void setSlidersValue (int start, int end);
 
 	void forwardTime (wxTimerEvent& event);
 protected:
