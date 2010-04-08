@@ -5,3 +5,5 @@ GNUmakefile
 config.status
 configure
 *.cache
+SimGrid-casa
+*.png
