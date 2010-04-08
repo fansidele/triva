@@ -52,12 +52,14 @@
         return bundle;
     }
 
-    bundlePaths = [[NSUserDefaults standardUserDefaults]
-                                       arrayForKey:@"BundlePaths"];
+    bundlePaths = [NSMutableArray arrayWithArray:
+		[[NSUserDefaults standardUserDefaults]
+                                       arrayForKey:@"BundlePaths"]];
     if (!bundlePaths) {
-        bundlePaths = NSSearchPathForDirectoriesInDomains(
+        bundlePaths = [NSMutableArray arrayWithArray:
+			NSSearchPathForDirectoriesInDomains(
                                             NSAllLibrariesDirectory,
-                                            NSAllDomainsMask, YES);
+                                            NSAllDomainsMask, YES)];
     }
 
     pathEnumerator = [bundlePaths objectEnumerator];
@@ -174,7 +176,7 @@
                    PajeSimulator, \
                    StorageController, \
 		   TimeInterval, \
-                   CommunicationPattern \ 
+                   CommunicationPattern \
 		) )" propertyList];
 #endif
 #ifdef HAVE_DOT
@@ -393,7 +395,7 @@
 
 - (NSString *) getParameterNumber: (int) index
 {
-	if (index < [parameters count]){
+	if ((unsigned int)index < [parameters count]){
 		return [parameters objectAtIndex: index];
 	}else{
 		return nil;
