@@ -3,8 +3,6 @@
 #include <wx/paper.h>
 #include <float.h>
 
-#define TRANSFORM(bw) (bw) //(10+bw*20)
-
 #define X(pos,bb,w) (pos.x/bb.size.width*w)
 #define Y(pos,bb,h) (pos.y/bb.size.height*h)
 #define WIDTH(size,bb,w) (size.size.width/bb.size.width*w)
@@ -130,7 +128,7 @@ void GraphDraw::drawPlatformState (wxDC &dc)
 		float topy = x2 - x1;
 		float norma_de_top = sqrt ( (topx*topx) + (topy*topy) );
 
-		float bwe = TRANSFORM(bw)/2; //split the value in 2 to calculate points
+		float bwe = bw/2; //split the value in 2 to calculate points
 
 		ox1 = topx/norma_de_top*bwe + x2;
 		oy1 = topy/norma_de_top*bwe + y2;
@@ -153,7 +151,7 @@ void GraphDraw::drawPlatformState (wxDC &dc)
 		while ((type = [en2 nextObject])){
 			NSColor *color = [filter colorForEntityType: [filter entityTypeWithName: type]];
 			double value = [[typesAndValues objectForKey: type] doubleValue];
-			float e = TRANSFORM(bw) * value;
+			float e = bw * value;
 //			NSLog (@"\t%@ -> %f\% (%fpx)", type, value, e);
 //			NSLog (@"\t%@ %f (value=%f, link_bw=%f) from %f", [type name], e, value, bw, TRANSFORM(bw));
 			if (e){
@@ -230,7 +228,7 @@ void GraphDraw::drawPlatform (wxDC &dc)
 		int x2 = dst_pos.x / bb.size.width * w;
 		int y2 = dst_pos.y / bb.size.height * h;
 
-		float e = TRANSFORM(bw);
+		float e = bw;
 	
 		int ox1,oy1;
 		int ox2,oy2;
