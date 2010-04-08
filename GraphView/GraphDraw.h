@@ -8,6 +8,7 @@
 #include <General/PajeFilter.h>
 #include <limits.h>
 #include <float.h>
+#include <cairo.h>
 
 #include "GraphWindow.h"
 
@@ -32,6 +33,11 @@ public:
 	void setController (TrivaFilter *contr) { filter = contr; };
 	void setWindow (GraphWindow *w) { window = w; };
 
+private:
+	/* drawing functions */
+	void drawNode (cairo_t *cr, TrivaGraphNode *node);
+	void drawEdge (cairo_t *cr, TrivaGraphEdge *edge);
+
 protected:
 	/* wxWidgets callbacks */
 	virtual void OnPaint(wxPaintEvent& evt);
@@ -45,7 +51,6 @@ protected:
 
 	/* highlight related methods */
 	void drawPlatform (wxDC &dc);
-	void drawPlatformState (wxDC &dc);
 	void highlightHost (TrivaGraphNode *host);
 	id findHostAt (int mx, int my);
 };

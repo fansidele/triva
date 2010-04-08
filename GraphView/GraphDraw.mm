@@ -56,173 +56,190 @@ GraphDraw::GraphDraw (wxWindow *parent, wxWindowID id,
 	Create (parent, id, pos, size, style, validator);
 }
 
-void GraphDraw::drawPlatformState (wxDC &dc)
+void GraphDraw::drawNode (cairo_t *cr, TrivaGraphNode *node)
 {
-#ifdef CAIRO
-	wxClientDC dc_to_cairo(this);
-	cairo_t* cr = gdk_cairo_create(dc_to_cairo.m_window);
-#endif
+	NSColor *color;
+	NSString *type;
+	NSEnumerator *en;
+	NSDictionary *types;
+
+	/* begin old code */
+	wxClientDC dc(this);
 	wxCoord w, h;
 	dc.GetSize(&w, &h);
-	//draw platform state
-	NSEnumerator *en, *en2;
-	id node, edge, type;
+	/* end old code */
 
-	en = [filter enumeratorOfNodes];
-	while ((node = [en nextObject])){
-		if (![node drawable]) continue;
-		NSPoint pos = [filter positionForNode: node];
-		NSRect size = [filter sizeForNode: node];
-		NSRect bb = [filter sizeForGraph];
+	if (![node drawable]) return;
+	NSPoint pos = [filter positionForNode: node];
+	NSRect size = [filter sizeForNode: node];
+	NSRect bb = [filter sizeForGraph];
 
-		id typesAndValues = [filter enumeratorOfValuesForNode: node];
-		en2 = [typesAndValues keyEnumerator];
-		double x = X(pos,bb,w);
-		double y = Y(pos,bb,h);
-		double nw = size.size.width;
-		double nh = size.size.height;
+	types = [filter enumeratorOfValuesForNode: node];
+	en = [types keyEnumerator];
+	double x = X(pos,bb,w);
+	double y = Y(pos,bb,h);
+	double nw = size.size.width;
+	double nh = size.size.height;
 
-		double accum_y = 0;
-		while ((type = [en2 nextObject])){
-			NSColor *color;
-			color = [filter colorForEntityType: [filter entityTypeWithName: type]];
-			double value = [[typesAndValues objectForKey: type] doubleValue];
-			if (value){
-				double type_nw = nw;
-				double type_nh = nh*value;
+	cairo_set_source_rgb (cr, 0, 0, 0);
+	cairo_set_line_width (cr, 0.5);
+	cairo_move_to (cr, x-nw/2, y-nh/2);
+	cairo_rel_line_to (cr, nw, 0);
+	cairo_rel_line_to (cr, 0, nh);
+	cairo_rel_line_to (cr, -nw, 0);
+	cairo_rel_line_to (cr, 0, -nh);
+	cairo_stroke(cr);
 
-				double a = x - nw/2;
-				double b = y - nh/2 + accum_y;
-				double c = type_nw;
-				double d = type_nh;
-#ifdef CAIRO
-				if ([[color colorSpaceName] isEqualToString: @"NSCalibratedRGBColorSpace"]){
-					float red, green, blue, alpha;
-					[color getRed: &red green: &green blue: &blue alpha: &alpha];
-					cairo_set_source_rgb (cr, red, green, blue);
-				}else{
-					cairo_set_source_rgb (cr, 1, 1, 1);
-				}
-				cairo_rectangle (cr, a, b, c, d);
-				cairo_fill (cr);
-#else
-				dc.SetBrush(wxBrush(NSCOLORtoWXCOLOUR (color), wxSOLID));
-				dc.DrawRectangle (a, b, c, d);
-#endif
-				accum_y += type_nh;
+	double accum_y = 0;
+	while ((type = [en nextObject])){
+		color = [filter colorForEntityType:
+				[filter entityTypeWithName: type]];
+		double value = [[types objectForKey: type] doubleValue];
+		if (value){
+			double type_nw = nw;
+			double type_nh = nh*value;
+
+			double a = x - nw/2;
+			double b = y - nh/2 + accum_y;
+			double c = type_nw;
+			double d = type_nh;
+			if ([[color colorSpaceName] isEqualToString:
+						@"NSCalibratedRGBColorSpace"]){
+				float red, green, blue, alpha;
+				[color getRed: &red green: &green
+					blue: &blue alpha: &alpha];
+				cairo_set_source_rgb (cr, red, green, blue);
+			}else{
+				cairo_set_source_rgb (cr, 0, 0, 0);
 			}
+			cairo_rectangle (cr, a, b, c, d);
+			cairo_fill (cr);
+			accum_y += type_nh;
 		}
 	}
-
-	en = [filter enumeratorOfEdges];
-	while ((edge = [en nextObject])){
-		if (![edge drawable]) continue;
-		TrivaGraphNode *src = [edge source];
-		TrivaGraphNode *dst = [edge destination];
-		//if ([src isEqualToString: dst]) continue;
-		NSPoint src_pos = [filter positionForNode: src];
-		NSPoint dst_pos = [filter positionForNode: dst];
-		NSRect bb = [filter sizeForGraph];
-		double bw = [filter sizeForEdge: edge].size.width;
-
-		double x1 = src_pos.x / bb.size.width * w;
-		double y1 = src_pos.y / bb.size.height * h;
-		double x2 = dst_pos.x / bb.size.width * w;
-		double y2 = dst_pos.y / bb.size.height * h;
-
-		double distance = sqrt (	(x2*x2 - 2*x2*x1 + x1*x1) + (y2*y2 - 2*y2*y1 + y1*y1) );
-		double k = 10/distance; // remove 10% of the distance (5% on each endpoint)
-		double x = x1 + k*x2 - k*x1;
-		double y = y1 + k*y2 - k*y1;
-		x1 = x;
-		y1 = y;
-		k = 1 - k;
-		x = x1 + k*x2 - k*x1;
-		y = y1 + k*y2 - k*y1;
-		x2 = x;
-		y2 = y;
-
-		double ox1,oy1;
-		double ox2,oy2;
-		double ox3,oy3;
-		double ox4,oy4;
-
-		double topx = -y2 + y1;
-		double topy = x2 - x1;
-		double norma_de_top = sqrt ( (topx*topx) + (topy*topy) );
-
-		double bwe = bw/2; //split the value in 2 to calculate points
-
-		ox1 = topx/norma_de_top*bwe + x2;
-		oy1 = topy/norma_de_top*bwe + y2;
-		
-		ox2 = topx/norma_de_top*bwe + x1;
-		oy2 = topy/norma_de_top*bwe + y1;
-
-		ox3 = -topx/norma_de_top*bwe + x1;
-		oy3 = -topy/norma_de_top*bwe + y1;
-
-		ox4 = -topx/norma_de_top*bwe + x2;
-		oy4 = -topy/norma_de_top*bwe + y2;
-
-		double lucx = ox3 - ox2;
-		double lucy = oy3 - oy2;
-		double norma_de_luc = sqrt ( (lucx*lucx) + (lucy*lucy) );
-
-		id typesAndValues = [filter enumeratorOfValuesForEdge: edge];
-		en2 = [typesAndValues keyEnumerator];
-		while ((type = [en2 nextObject])){
-			NSColor *color = [filter colorForEntityType: [filter entityTypeWithName: type]];
-			double value = [[typesAndValues objectForKey: type] doubleValue];
-			double e = bw * value;
-			if (e){
-	
-				ox3 = lucx/norma_de_luc*e + ox1;
-				oy3 = lucy/norma_de_luc*e + oy1;
-        
-				ox4 = lucx/norma_de_luc*e + ox2;
-				oy4 = lucy/norma_de_luc*e + oy2;
-        
-				wxPoint points[4];
-				points[0] = wxPoint (ox1, oy1);
-				points[1] = wxPoint (ox2, oy2);
-				points[3] = wxPoint (ox3, oy3);
-				points[2] = wxPoint (ox4, oy4);
-
-#ifdef CAIRO
-				if ([[color colorSpaceName] isEqualToString: @"NSCalibratedRGBColorSpace"]){
-					float red, green, blue, alpha;
-					[color getRed: &red green: &green blue: &blue alpha: &alpha];
-					cairo_set_source_rgb (cr, red, green, blue);
-				}else{
-					cairo_set_source_rgb (cr, 1, 1, 1);
-				}
-				cairo_move_to (cr, ox1, oy1);
-				cairo_line_to (cr, ox2, oy2);
-				cairo_line_to (cr, ox4, oy4);
-				cairo_line_to (cr, ox3, oy3);
-				cairo_close_path (cr);
-				cairo_fill (cr);
-#else        
-				dc.SetBrush(wxBrush(NSCOLORtoWXCOLOUR (color), wxSOLID));
-				dc.DrawPolygon(4, points);
-#endif
-
-				//continuing
-				ox2 = ox3;
-				oy2 = oy3;
-
-				ox1 = ox4;
-				oy1 = oy4;
-			}
-		}
-	}
-#ifdef CAIRO
-	cairo_destroy(cr);
-#endif
 }
 
-#include <wx/gdicmn.h> 
+void GraphDraw::drawEdge (cairo_t *cr, TrivaGraphEdge *edge)
+{
+	NSColor *color;
+	NSString *type;
+	NSEnumerator *en;
+	NSDictionary *types;
+
+	/* begin old code */
+	wxClientDC dc(this);
+	wxCoord w, h;
+	dc.GetSize(&w, &h);
+	/* end old code */
+
+	if (![edge drawable]) return;
+	TrivaGraphNode *src = [edge source];
+	TrivaGraphNode *dst = [edge destination];
+	//if ([src isEqualToString: dst]) continue;
+	NSPoint src_pos = [filter positionForNode: src];
+	NSPoint dst_pos = [filter positionForNode: dst];
+	NSRect bb = [filter sizeForGraph];
+	double bw = [filter sizeForEdge: edge].size.width;
+
+	double x1 = src_pos.x / bb.size.width * w;
+	double y1 = src_pos.y / bb.size.height * h;
+	double x2 = dst_pos.x / bb.size.width * w;
+	double y2 = dst_pos.y / bb.size.height * h;
+
+	double distance = sqrt ((x2*x2 - 2*x2*x1 + x1*x1) + (y2*y2 - 2*y2*y1 + y1*y1) );
+	double k = 10/distance; // remove 10% of the distance (5% on each endpoint)
+	double x = x1 + k*x2 - k*x1;
+	double y = y1 + k*y2 - k*y1;
+	x1 = x;
+	y1 = y;
+	k = 1 - k;
+	x = x1 + k*x2 - k*x1;
+	y = y1 + k*y2 - k*y1;
+	x2 = x;
+	y2 = y;
+
+	double ox1,oy1;
+	double ox2,oy2;
+	double ox3,oy3;
+	double ox4,oy4;
+
+	double topx = -y2 + y1;
+	double topy = x2 - x1;
+	double norma_de_top = sqrt ( (topx*topx) + (topy*topy) );
+
+	double bwe = bw/2; //split the value in 2 to calculate points
+
+	ox1 = topx/norma_de_top*bwe + x2;
+	oy1 = topy/norma_de_top*bwe + y2;
+	
+	ox2 = topx/norma_de_top*bwe + x1;
+	oy2 = topy/norma_de_top*bwe + y1;
+
+	ox3 = -topx/norma_de_top*bwe + x1;
+	oy3 = -topy/norma_de_top*bwe + y1;
+
+	ox4 = -topx/norma_de_top*bwe + x2;
+	oy4 = -topy/norma_de_top*bwe + y2;
+
+	cairo_set_source_rgb (cr, 0, 0, 0);
+	cairo_set_line_width (cr, 0.5);
+	cairo_move_to (cr, ox1, oy1);
+	cairo_line_to (cr, ox2, oy2);
+	cairo_line_to (cr, ox3, oy3);
+	cairo_line_to (cr, ox4, oy4);
+	cairo_line_to (cr, ox1, oy1);
+	cairo_stroke(cr);
+
+	double lucx = ox3 - ox2;
+	double lucy = oy3 - oy2;
+	double norma_de_luc = sqrt ( (lucx*lucx) + (lucy*lucy) );
+
+	types = [filter enumeratorOfValuesForEdge: edge];
+	en = [types keyEnumerator];
+	while ((type = [en nextObject])){
+		color = [filter colorForEntityType:
+				[filter entityTypeWithName: type]];
+		double value = [[types objectForKey: type] doubleValue];
+		double e = bw * value;
+		if (e){
+	
+			ox3 = lucx/norma_de_luc*e + ox1;
+			oy3 = lucy/norma_de_luc*e + oy1;
+        
+			ox4 = lucx/norma_de_luc*e + ox2;
+			oy4 = lucy/norma_de_luc*e + oy2;
+        
+			wxPoint points[4];
+			points[0] = wxPoint (ox1, oy1);
+			points[1] = wxPoint (ox2, oy2);
+			points[3] = wxPoint (ox3, oy3);
+			points[2] = wxPoint (ox4, oy4);
+
+			if ([[color colorSpaceName] isEqualToString:
+					@"NSCalibratedRGBColorSpace"]){
+				float red, green, blue, alpha;
+				[color getRed: &red green: &green
+					blue: &blue alpha: &alpha];
+				cairo_set_source_rgb (cr, red, green, blue);
+			}else{
+				cairo_set_source_rgb (cr, 0, 0, 0);
+			}
+			cairo_move_to (cr, ox1, oy1);
+			cairo_line_to (cr, ox2, oy2);
+			cairo_line_to (cr, ox4, oy4);
+			cairo_line_to (cr, ox3, oy3);
+			cairo_close_path (cr);
+			cairo_fill (cr);
+
+			//continuing
+			ox2 = ox3;
+			oy2 = oy3;
+
+			ox1 = ox4;
+			oy1 = oy4;
+		}
+	}
+}
 
 void GraphDraw::drawPlatform (wxDC &dc)
 {
@@ -241,128 +258,15 @@ void GraphDraw::drawPlatform (wxDC &dc)
 
 	en = [filter enumeratorOfNodes];
 	while ((node = [en nextObject])){
-		if (![node drawable]) continue;
-		NSPoint pos = [filter positionForNode: node];
-		NSRect size = [filter sizeForNode: node];
-		NSRect bb = [filter sizeForGraph];
-
-		double x = X(pos,bb,w);
-		double y = Y(pos,bb,h);
-		double nw = size.size.width;
-		double nh = size.size.height;
-
-#ifdef CAIRO
-		//cairo_set_source_rgb (cr, .3, .3, .3);
-		cairo_move_to (cr, x-nw/2, y-nh/2);
-		cairo_rel_line_to (cr, nw, 0);
-		cairo_rel_line_to (cr, 0, nh);
-		cairo_rel_line_to (cr, -nw, 0);
-		cairo_rel_line_to (cr, 0, -nh);
-		cairo_stroke(cr);
-#else
-		dc.SetPen(wxPen(wxT("Black"), 1, wxSOLID));
-		dc.SetBrush(wxBrush(wxT("White"), wxSOLID));
-		dc.DrawRectangle (x-nw/2, y-nh/2, nw, nh);
-#endif
+		this->drawNode (cr, node);
 	}
 
 	en = [filter enumeratorOfEdges];
 	while ((edge = [en nextObject])){
-		if (![edge drawable]) continue;
-		TrivaGraphNode *src = [edge source];
-		TrivaGraphNode *dst = [edge destination];
-		//if ([src isEqualToString: dst]) continue;
-		NSPoint src_pos = [filter positionForNode: src];
-		NSPoint dst_pos = [filter positionForNode: dst];
-
-		NSRect bb = [filter sizeForGraph];
-		double bw = [filter sizeForEdge: edge].size.width;
-
-		double x1 = src_pos.x / bb.size.width * w;
-		double y1 = src_pos.y / bb.size.height * h;
-		double x2 = dst_pos.x / bb.size.width * w;
-		double y2 = dst_pos.y / bb.size.height * h;
-
-		double e = bw;
-	
-		double ox1,oy1;
-		double ox2,oy2;
-		double ox3,oy3;
-		double ox4,oy4;
-
-		double distance = sqrt (	(x2*x2 - 2*x2*x1 + x1*x1) + (y2*y2 - 2*y2*y1 + y1*y1) );
-		double k = 10/distance; // remove 10% of the distance (5% on each endpodouble)
-		double x = x1 + k*x2 - k*x1;
-		double y = y1 + k*y2 - k*y1;
-		x1 = x;
-		y1 = y;
-		k = 1 - k;
-		x = x1 + k*x2 - k*x1;
-		y = y1 + k*y2 - k*y1;
-		x2 = x;
-		y2 = y;
-
-		//recalculate distance because x1,y1 and x2,y2 changed
-		double ndistance = sqrt ( (y2*y2 - 2*y2*y1 + y1*y1) + (x2*x2 - 2*x2*x1 + x1*x1) );
-		double top1 = y2 - y1;
-		double top2 = - x2 + x1;
-
-		e /= 2; //split the value in 2 to calculate points
-
-		ox1 = -top1/ndistance*e + x2;
-		oy1 = -top2/ndistance*e + y2;
-		
-		ox2 = top1/ndistance*e + x2;
-		oy2 = top2/ndistance*e + y2;
-		
-		ox3 = top1/ndistance*e + x1;
-		oy3 = top2/ndistance*e + y1;
-
-		ox4 = -top1/ndistance*e + x1;
-		oy4 = -top2/ndistance*e + y1;
-
-//		NSLog (@"%@ o1(%d,%d)  o2(%d,%d) o3(%d,%d) o4(%d,%d)",
-//			[link name], ox1, oy1, ox2, oy2, ox3, oy3, ox4, oy4);
-	
-		wxPoint points[4];
-		points[0] = wxPoint (ox1, oy1);
-		points[1] = wxPoint (ox2, oy2);
-		points[2] = wxPoint (ox3, oy3);
-		points[3] = wxPoint (ox4, oy4);
-
-#ifdef CAIRO
-//		cairo_set_source_rgb (cr, .3, .3, .3);
-		cairo_move_to (cr, ox1, oy1);
-		cairo_line_to (cr, ox2, oy2);
-		cairo_line_to (cr, ox3, oy3);
-		cairo_line_to (cr, ox4, oy4);
-		cairo_line_to (cr, ox1, oy1);
-		cairo_stroke(cr);
-#else
-		dc.DrawPolygon(4, points);
-#endif
+		this->drawEdge (cr, edge);
 	}
-#ifdef CAIRO
-	cairo_destroy(cr);
-#endif
+	return;
 }
-/*
-	wxPaintDC dc(this);
-	wxRect rect = GetClientRect();
-	if(rect.width == 0 || rect.height == 0){
-		return;
-	}
-	// If it's GTK then use the gdk_cairo_create() method. The GdkDrawable object
-	// is stored in m_window of the wxPaintDC.
-	cairo_t* cairo_image = gdk_cairo_create(dc.m_window);
-	cairo_move_to (cairo_image, 50, 50);
-	cairo_line_to (cairo_image, 75, 75);
-	cairo_rel_line_to (cairo_image, 25, 25);
-	cairo_stroke(cairo_image);
-
-//	Render(cairo_image, rect.width, rect.height);
-	cairo_destroy(cairo_image);
-*/
 
 void GraphDraw::OnPaint(wxPaintEvent& evt)
 {
@@ -374,7 +278,6 @@ void GraphDraw::OnPaint(wxPaintEvent& evt)
 		[filter selectionStartTime], [filter selectionEndTime]];
 	dc.DrawText (NSSTRINGtoWXSTRING(msg), 0, 0);
 	this->drawPlatform (dc);
-	this->drawPlatformState (dc);
 }
 
 void GraphDraw::OnSize (wxSizeEvent& evt)
