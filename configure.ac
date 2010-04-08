@@ -46,7 +46,8 @@ CONFIG_FILES="
   LinkView/GNUmakefile \
   SquarifiedTreemap/GNUmakefile \
   TimeInterval/GNUmakefile \
-  TimeSliceAggregation/GNUmakefile"
+  TimeSliceAggregation/GNUmakefile \
+  GNUmakefile"
 
 CPPFLAGS="-I../../ -I../ -I../Triva -I./ $CPPFLAGS"
 AC_SUBST(CPPFLAGS)
