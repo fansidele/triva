@@ -10,7 +10,6 @@
 	GraphView *filter;
 }
 - (void) setFilter: (GraphView *)f;
-- (NSRect) convertRect: (NSRect)input from: (NSRect)bb to:(NSRect) screen;
 - (NSColor *) getColor: (NSColor *)c withSaturation: (double) saturation;
 @end
 

@@ -12,18 +12,14 @@
 
 @interface GraphConfiguration : TrivaFilter
 {
-	GVC_t *gvc;
-	graph_t *graph;
+  GVC_t *gvc;
+  graph_t *graph;
 
-	NSMutableArray *nodes;
-	NSMutableArray *edges;
+  NSMutableArray *nodes;
+  NSMutableArray *edges;
 
-	double maxNode, minNode;
-	double maxEdge, minEdge;
-
-	NSMutableDictionary *configurations; /* nsstring -> nsstring */
-	NSDictionary *configuration; //TODO to be removed
-
+  NSMutableDictionary *configurations; /* nsstring -> nsstring */
+  NSDictionary *configuration; //current configuration
 
   id conf;
   id title;
@@ -33,10 +29,9 @@
 - (void) setConfiguration: (NSDictionary *) conf;
 - (void) createGraph;
 - (void) redefineNodesEdgesLayout;
-- (void) defineMax: (double*) max
-        andMin: (double*) min
-        withConfigurationKey: (NSString *) confKey
-        fromEnumerator: (NSEnumerator*) en;
+- (void) defineMax: (double*)max andMin: (double*)min withScale: (TrivaScale) scale
+                fromVariable: (NSString*)var
+                ofObject: (NSString*) objName withType: (NSString*) objType;
 - (double) evaluateWithValues: (NSDictionary *) values
                 withExpr: (NSString *) expr;
 - (NSColor *) getColor: (NSColor *)c withSaturation: (double) saturation;

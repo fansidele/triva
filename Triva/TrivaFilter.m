@@ -27,36 +27,6 @@
 	return [(TrivaFilter*)inputComponent sizeForGraph];
 }
 
-- (NSRect) rectForNode: (TrivaGraphNode*) node
-{
-	return [(TrivaFilter*)inputComponent sizeForNode: node];
-}
-
-- (NSDictionary*) enumeratorOfValuesForNode: (TrivaGraphNode*) node
-{
-	return [(TrivaFilter*)inputComponent enumeratorOfValuesForNode: node];
-}
-
-- (NSPoint) positionForNode: (TrivaGraphNode*) node
-{
-	return [(TrivaFilter*)inputComponent positionForNode: node];
-}
-
-- (NSRect) sizeForNode: (TrivaGraphNode*) node
-{
-	return [(TrivaFilter*)inputComponent sizeForNode: node];
-}
-
-- (NSDictionary*) enumeratorOfValuesForEdge: (TrivaGraphEdge*) edge
-{
-	return [(TrivaFilter*)inputComponent enumeratorOfValuesForEdge: edge];
-}
-
-- (NSRect) sizeForEdge: (TrivaGraphEdge*) edge
-{
-	return [(TrivaFilter*)inputComponent sizeForEdge: edge];
-}
-
 - (TimeSliceTree *) timeSliceTree
 {
 	return [(TrivaFilter*)inputComponent timeSliceTree];
@@ -65,5 +35,24 @@
 - (void) debugOf: (PajeEntityType*) type At: (PajeContainer*) container
 {
 	return [(TrivaFilter*)inputComponent debugOf: type At: container];
+}
+
+- (double) evaluateWithValues: (NSDictionary *) values
+                withExpr: (NSString *) expr
+{
+	return [(TrivaFilter*)inputComponent evaluateWithValues: values
+			withExpr: expr];
+}
+
+- (void) defineMax: (double*)max andMin: (double*)min withScale: (TrivaScale) scale
+                fromVariable: (NSString*)var
+                ofObject: (NSString*) objName withType: (NSString*) objType
+{
+	return; // TODO: remove
+}
+
+- (NSColor *) getColor: (NSColor *)c withSaturation: (double) saturation
+{
+	return nil; // TODO: remove
 }
 @end

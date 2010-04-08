@@ -3,8 +3,7 @@
 #include <AppKit/AppKit.h>
 #include "GraphConfiguration.h"
 
-#define MAX_NODE_SIZE   50
-#define MAX_EDGE_SIZE   25
+#define MAX_SIZE   20
 
 @implementation GraphConfiguration
 - (id)initWithController:(PajeTraceController *)c
@@ -85,31 +84,6 @@
 	return ret;
 }
 
-- (NSDictionary*) enumeratorOfValuesForNode: (TrivaGraphNode*) node
-{
-	return [node values];
-}
-
-- (NSPoint) positionForNode: (TrivaGraphNode*) node
-{
-	return [node position];
-}
-
-- (NSRect) sizeForNode: (TrivaGraphNode*) node
-{
-	return [node size];
-}
-
-- (NSDictionary*) enumeratorOfValuesForEdge: (TrivaGraphEdge*) edge
-{
-	return [edge values];
-}
-
-- (NSRect) sizeForEdge: (TrivaGraphEdge*) edge
-{
-	return [edge size];
-}
-
 - (TrivaGraphNode*) findNodeByName: (NSString *)name
 {
 	TrivaGraphNode *ret;
@@ -163,7 +137,7 @@
 	}
 
 	//node related
-	en = [[configuration objectForKey: @"node-container"] objectEnumerator];
+	en = [[configuration objectForKey: @"node"] objectEnumerator];
 	while ((typeName = [en nextObject])){
 		[nodeTypes addObject:
 			[self entityTypeWithName: typeName]];
@@ -176,13 +150,14 @@
 			agnode (graph, (char*)[[n name] cString]);
 			TrivaGraphNode *node = [[TrivaGraphNode alloc] init];
 			[node setName: [n name]];
+			[node setType: [type name]];
 			[nodes addObject: node];
 			[node release];
 		}
 	}
 
 	//edge related
-	en = [[configuration objectForKey: @"edge-container"] objectEnumerator];
+	en = [[configuration objectForKey: @"edge"] objectEnumerator];
 	while ((typeName = [en nextObject])){
 		[edgeTypes addObject:
 			[self entityTypeWithName: typeName]];
@@ -207,10 +182,10 @@
 			}else if ([type isKindOfClass:
 					[PajeContainerType class]]){
 				NSString *fsrc, *fdst;
-				fsrc = [configuration objectForKey:
-						@"edge-src"];
-				fdst = [configuration objectForKey:
-						@"edge-dst"];
+				fsrc = [[configuration objectForKey:[type name]]
+						objectForKey: @"src"];
+				fdst = [[configuration objectForKey:[type name]]
+						objectForKey: @"dst"];
 				src = [[n valueOfFieldNamed: fsrc] cString];
 				dst = [[n valueOfFieldNamed: fdst] cString];
 			}
@@ -224,6 +199,7 @@
 
 			TrivaGraphEdge *edge = [[TrivaGraphEdge alloc] init];
 			[edge setName: [n name]];
+			[edge setType: [type name]];
 			[edge setSource:
 				[self findNodeByName:
 					[NSString stringWithFormat:@"%s",src]]];
@@ -247,9 +223,38 @@
 	NSLog (@"%s:%d GraphViz Layout done", __FUNCTION__, __LINE__);
 }
 
+
+- (void) defineMax: (double*)max andMin: (double*)min withScale: (TrivaScale) scale
+		fromVariable: (NSString*)var
+		ofObject: (NSString*) objName withType: (NSString*) objType
+{
+	PajeEntityType *valtype = [self entityTypeWithName: var];
+	if (scale == Global){
+		*min = [self minValueForEntityType: valtype];
+		*max = [self maxValueForEntityType: valtype];
+	}else{
+		//if local scale, *min and *max from this container
+		//	container is found based on the name of the obj
+		PajeEntityType *type = [self entityTypeWithName: objType]; 
+		PajeContainer *cont = [self containerWithName: objName type: type];
+		*min = [self minValueForEntityType: valtype inContainer: cont];
+		*max = [self maxValueForEntityType: valtype inContainer: cont];
+	}
+	{
+		//TODO: begin "this should not be here"
+		double t;
+		t = [[self selectionEndTime]timeIntervalSinceDate:[self selectionStartTime]];
+		*min *= t;
+		*max *= t;
+		//TODO: end "this should not be here"
+	}
+}
+
 - (double) evaluateWithValues: (NSDictionary *) values
 		withExpr: (NSString *) expr
 {
+	if (!expr) return -2;
+
 	NSMutableString *size_def = [NSMutableString stringWithString: expr];
 	int number = 0;
 	if (values){
@@ -282,6 +287,7 @@
 		}
 		double ret = evaluator_evaluate (f, count, names, zeros);
 		evaluator_destroy (f);
+		free (zeros);
 		return ret;
 	}else{
 		if (!number){
@@ -299,38 +305,12 @@
 {
 	double s = 0;
 	if ((max - min) != 0) {
-		s = MAX_NODE_SIZE * (size) /
+		s = MAX_SIZE * (size) /
 			(max - min);
 	}else{
-		s = MAX_NODE_SIZE * (size) /(max);
+		s = MAX_SIZE * (size) /(max);
 	}
 	return s;
-}
-
-- (void) defineMax: (double*) max
-	andMin: (double*) min
-	withConfigurationKey: (NSString *) confKey
-	fromEnumerator: (NSEnumerator*) en
-{
-	*max = 0;
-	*min = FLT_MAX;
-	TimeSliceTree *tree;
-	id obj;
-	while ((obj = [en nextObject])){
-		tree = [[self timeSliceTree] searchChildByName: [obj name]];
-		if (tree == nil){
-//			NSLog (@"%s:%d time slice tree for obj %@ not found",
-//				__FUNCTION__, __LINE__, [obj name]);
-			continue;
-		}
-		NSString *expr = [configuration objectForKey: confKey];
-		double size = [self evaluateWithValues: [tree aggregatedValues]
-					withExpr: expr];
-		if (size > 0){
-			if (size > *max) *max = size;
-			if (size < *min) *min = size;
-		}
-	}
 }
 
 - (NSDictionary*) redefineColorFrom: (NSDictionary*) values
@@ -352,39 +332,16 @@
 	return nil;
 }
 
-- (NSDictionary*) redefineSeparationValuesWith: (NSDictionary*) values
-		andConfiguration: (NSArray*) sepConfiguration
-		andSize: (double) size
+- (void) redefineLayoutOf: (TrivaGraphNode*) obj
 {
-	NSMutableDictionary *ret = [NSMutableDictionary dictionary];
-	NSEnumerator *en = [sepConfiguration objectEnumerator];
-	NSString *expr;
-	while ((expr = [en nextObject])){
-		double val = [self evaluateWithValues: values
-				withExpr: expr];
-		if (val > 0){
-			[ret setObject: [NSNumber numberWithDouble: val/size]
-					forKey: expr];
-		}
-	}
-	return ret;
-}
 
-- (void) redefineLayoutOf: (TrivaGraphNode*) obj withStr: str
-		withMax: (double)max withMin: (double)min
-{
-	TimeSliceTree *tree;
-	NSMutableDictionary *values;
-
-	NSString *objsize = [NSString stringWithFormat: @"%@-size", str];
-	NSString *objsep = [NSString stringWithFormat: @"%@-separation", str];
-	NSString *objgra = [NSString stringWithFormat: @"%@-gradient", str];
-	NSString *objcol = [NSString stringWithFormat: @"%@-color", str];
-
-	tree = [[self timeSliceTree] searchChildByName: [obj name]];
+/*
+	//TODO REVIEW THIS
 	if (tree == nil){
-		/* NOTE: only falls here if edge is of link type.
-			the width attribute is necessary to drawing. */
+		//TODO: review this
+		return;
+		// NOTE: only falls here if edge is of link type.
+		//	the size attribute is necessary to drawing. 
 		NSString *expr = [configuration objectForKey: objsize];
 		double screenSize;
 		double size = [self evaluateWithValues: nil withExpr: expr];
@@ -397,86 +354,121 @@
 		NSRect rect;
 		rect.size.width = screenSize;
 		rect.size.height = screenSize;
-		[obj setSize: rect];
+		[obj setBoundingBox: rect];
 		[obj setDrawable: YES];
 		return;
 	}
-	values = [NSMutableDictionary dictionaryWithDictionary:
-		[tree aggregatedValues]];
+*/
+
+
+	//getting configuration for this type of node
+	NSDictionary *objconf = [configuration objectForKey: [obj type]];
+	if (!objconf){
+		NSLog (@"%s:%d: no configuration for type %@",
+			__FUNCTION__, __LINE__, [obj type]);
+		return;
+	}
+
+	//getting scale configuration for node
+	TrivaScale scale;
+	NSString *scaleconf = [objconf objectForKey: @"scale"];
+	if (!scaleconf){
+		static int flag = 1;
+		if (flag){
+			NSLog (@"%s:%d: no 'scale' configuration for type %@."
+				" Assuming its value as 'global'",
+				__FUNCTION__, __LINE__, [obj type]);
+			flag = 0;
+		}
+		scale = Global;
+	}else{
+		if ([scaleconf isEqualToString: @"global"]) {
+			scale = Global;
+		}else if ([scaleconf isEqualToString: @"local"]){
+			scale = Local;
+		}else{
+			NSLog (@"%s:%d: unknow 'scale' configuration value "
+				"(%@) for type %@",
+				__FUNCTION__, __LINE__, scaleconf, [obj type]);
+			return;
+		}
+	}
+
+	//getting size configuration for node
+	NSString *sizeconf = [objconf objectForKey: @"size"];
+	if (!sizeconf) {
+		NSLog (@"%s:%d: no 'size' configuration for type %@",
+			__FUNCTION__, __LINE__, [obj type]);
+		return;
+		
+	}
+
+	//getting values integrated within the time-slice
+	TimeSliceTree *t = [[self timeSliceTree] searchChildByName: [obj name]];
+	NSMutableDictionary *values = [t aggregatedValues];
+
+	//getting max and min for size of node (integrate them in time slice)
+	double min, max;
+	[self defineMax: &max
+                 andMin: &min
+              withScale: scale
+           fromVariable: sizeconf
+               ofObject: [obj name]
+               withType: [obj type]];
+
+	//setting the bounding box (origin and size)
+	NSRect bb;
 	Agnode_t *n = agfindnode (graph,
 		(char *)[[obj name] cString]);
-	NSPoint objPos;
-	objPos.x = 0;
-	objPos.y = 0;
-	if (n){
-		objPos.x = ND_coord_i(n).x;
-		objPos.y = ND_coord_i(n).y;
-		[obj setPosition: objPos];
+	if (n) {
+		bb.origin.x = ND_coord_i(n).x;
+		bb.origin.y = ND_coord_i(n).y;
+	}else{
+		bb.origin.x = 0;
+		bb.origin.y = 0;
 	}
-	NSRect objRect;
-	objRect.origin.x = objPos.x;
-	objRect.origin.y = objPos.y;
-	NSString *expr = [configuration objectForKey: objsize];
+	//size is mandatory
 	double screenSize;
-	double size = [self evaluateWithValues: values withExpr: expr];
-	if (size < 0){
-		screenSize = [expr doubleValue];
+	double size = [self evaluateWithValues: values withExpr: sizeconf];
+	if (size < 0){ //negative value if evaluation is unsucessfull
+		screenSize = [sizeconf doubleValue];
 	}else{
 		screenSize = [self calculateScreenSizeBasedOnValue: size
 			andMax: max andMin: min];
 	}
-	objRect.size.width = screenSize;
-	objRect.size.height = screenSize;
-	[obj setSize: objRect];
-
-	id sepConfiguration = [configuration objectForKey: objsep];
-	id graConfiguration = [configuration objectForKey: objgra];
-	id colConfiguration = [configuration objectForKey: objcol];
-	if (sepConfiguration){
-		NSDictionary *separationValues;
-		separationValues = [self redefineSeparationValuesWith: values
-					andConfiguration: sepConfiguration
-					andSize: size];
-		[obj setValues: separationValues];
-		[obj setSeparation: YES];
-	}
-	if(colConfiguration && [obj separation] == NO){
-		// there is a color configuration and sepValues were not defined
-		NSDictionary *separationValues;
-		separationValues = [self redefineColorFrom: values
-					withConfiguration: colConfiguration];
-		if (separationValues){
-			[obj setValues: separationValues];
-			[obj setColor: YES];
-		}
-	}
-	if(graConfiguration && [obj separation] == NO && [obj color] == NO ){
-		if ([graConfiguration count] >= 1){
-			double val, max, min;
-			NSEnumerator *en = [graConfiguration objectEnumerator];
-			NSString *expr;
-			while ((expr = [en nextObject])){
-				val = [self evaluateWithValues: values
-					withExpr: expr];
-				//get first value != 0
-				if (val != 0){
-					max = [self evaluateWithValues: 
-						[[self timeSliceTree] maxValues]
-						withExpr: expr];
-					min = [self evaluateWithValues: 
-						[[self timeSliceTree] minValues]
-						withExpr: expr];
-					[obj setGradientType: expr
-						withValue: val
-						withMax: max
-						withMin: min];
-					[obj setGradient: YES];
-					break;
-				}
-			}
-		}
-	}
+	bb.size.width = screenSize;
+	bb.size.height = screenSize;
+	//converting from graphviz center point to top-left origin
+	bb.origin.x = bb.origin.x - bb.size.width/2;
+	bb.origin.y = bb.origin.y - bb.size.height/2;
+	[obj setBoundingBox: bb];
 	[obj setDrawable: YES];
+
+	//remove existing compositions
+	[obj removeCompositions];
+
+	//iterating through compositions
+	NSMutableArray *ar = [NSMutableArray arrayWithArray: [objconf allKeys]];
+	NSEnumerator *en = [ar objectEnumerator];
+	id compositionName;
+	while ((compositionName = [en nextObject])){
+		NSDictionary *compconf = [objconf objectForKey: compositionName];
+		if (![compconf isKindOfClass: [NSDictionary class]])
+			continue; //ignore if not dict
+		if (![compconf count])
+			continue; //ignore if dictionary is empty
+
+		TrivaComposition *composition;
+		composition = [TrivaComposition
+                                       compositionWithConfiguration: compconf
+                                                          forObject: obj
+                                                         withValues: values
+                                                        andProvider: self];
+		if (composition){
+			[obj addComposition: composition];
+			[composition release];
+		}
+	}
 }
 
 
@@ -488,24 +480,15 @@
 		return;
 	}
 	
-	[self defineMax: &maxNode andMin: &minNode
-		withConfigurationKey: @"node-size"
-		fromEnumerator: [self enumeratorOfNodes]];
-	
 	NSEnumerator *en = [self enumeratorOfNodes];
 	TrivaGraphNode *node;
 	while ((node = [en nextObject])){
-		[self redefineLayoutOf: node withStr: @"node"
-			withMax: maxNode withMin: minNode];
+		[self redefineLayoutOf: node];
 	}
-	[self defineMax: &maxEdge andMin: &minEdge
-		withConfigurationKey: @"edge-size"
-		fromEnumerator: [self enumeratorOfEdges]];
 	en = [self enumeratorOfEdges];
 	TrivaGraphEdge *edge;
 	while ((edge = [en nextObject])){
-		[self redefineLayoutOf: edge withStr: @"edge"
-			withMax: maxEdge withMin: minEdge];
+		[self redefineLayoutOf: edge];
 	}
 }
 

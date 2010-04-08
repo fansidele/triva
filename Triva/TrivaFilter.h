@@ -6,27 +6,28 @@
 #include "TrivaGraphEdge.h"
 #include "TimeSliceTree.h"
 
+typedef enum {Local,Global} TrivaScale;
+
+@class TrivaGraphNode;
+@class TrivaGraphEdge;
+
 @interface TrivaFilter  : PajeFilter
 - (TrivaGraphNode*) findNodeByName: (NSString *)name;
 - (NSEnumerator*) enumeratorOfNodes;
 - (NSEnumerator*) enumeratorOfEdges;
 - (NSRect) sizeForGraph;
 
-/* nodes */
-- (NSDictionary*) enumeratorOfValuesForNode: (TrivaGraphNode*) node;
-- (NSPoint) positionForNode: (TrivaGraphNode*) node;
-- (NSRect) sizeForNode: (TrivaGraphNode*) node;
-- (NSRect) rectForNode: (TrivaGraphNode*) node;
-
-/* edges */
-- (NSDictionary*) enumeratorOfValuesForEdge: (TrivaGraphEdge*) edge;
-- (NSRect) sizeForEdge: (TrivaGraphEdge*) edge;
-
 /* aggregated stuff (methods trapped by TimeSliceAggregation component */
 - (TimeSliceTree *) timeSliceTree;
 
-
+/* auxiliary methods */
 - (void) debugOf: (PajeEntityType*) type At: (PajeContainer*) container;
+- (double) evaluateWithValues: (NSDictionary *) values
+                withExpr: (NSString *) expr;
+- (void) defineMax: (double*)max andMin: (double*)min withScale: (TrivaScale) scale //TODO : remove
+                fromVariable: (NSString*)var
+                ofObject: (NSString*) objName withType: (NSString*) objType;
+- (NSColor *) getColor: (NSColor *)c withSaturation: (double) saturation; //TODO :remove
 @end
 
 #endif
