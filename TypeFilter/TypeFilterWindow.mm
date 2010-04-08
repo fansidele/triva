@@ -90,8 +90,10 @@ void TypeFilterWindow::selectionChanged( wxTreeEvent& event )
 
 	item = event.GetItem();
 	typeName = WXSTRINGtoNSSTRING (typeHierarchyCrtl->GetItemText (item));
-	typeName = [[typeName componentsSeparatedByString: @" "]
-		objectAtIndex: 0];
+	NSMutableArray *ar = [NSMutableArray array];
+	[ar addObjectsFromArray: [typeName componentsSeparatedByString: @" "]];
+	[ar removeLastObject];
+	typeName = [ar componentsJoinedByString: @" "];
 	type = [[filter inputComponent] entityTypeWithName: typeName];
 
 	//set current selected type
