@@ -28,6 +28,7 @@ TreemapDraw *draw = NULL;
 	timeSliceTree = [filter timeSliceTree];
 	[timeSliceTree retain];
 	draw->Refresh();
+	draw->Update();
 }
 
 - (Treemap *) treemapWithWidth: (int) width
