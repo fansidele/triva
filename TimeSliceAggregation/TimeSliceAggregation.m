@@ -491,10 +491,22 @@
 -(void)timeSelectionChanged
 {
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-	//[self debug];
-	//[self activateRecordingOfClass: @"TimeSliceTree"];
+/*
+	GSDebugAllocationActive(YES);
+	if (1){
+		Class *array = GSDebugAllocationClassList();
+		int i;
+		for (i=0;array[i];i++){
+			NSLog (@"%d %@\n", GSDebugAllocationPeak (array[i]),
+				array[i]);
+		}
+		NSLog (@"");
+	}else{
+		[self activateRecordingOfClass: @"GSCInlineString"];
+		[self listRecordedObjectsOfClass: @"GSCInlineString"];
+	}
+*/
 	[self timeSelectionChanged2];
-	//[self listRecordedObjectsOfClass: @"TimeSliceTree"];
 	[pool release];
 }
 
