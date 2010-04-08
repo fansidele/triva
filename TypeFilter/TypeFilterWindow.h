@@ -27,6 +27,9 @@ protected:
 	void selectionChanged (wxTreeEvent& event );
 	void mainCheckBoxClicked( wxCommandEvent& event );
 	void checkListBoxClicked( wxCommandEvent& event );
+	void regular( wxCommandEvent& event );
+	void updateRegularExpr( wxCommandEvent& event );
+	void checkBasedOnRegularExpr( wxCommandEvent& event );
 };
 
 #endif // __TypeFilterWindow__

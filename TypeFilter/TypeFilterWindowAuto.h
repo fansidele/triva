@@ -17,9 +17,7 @@
 #include <wx/checkbox.h>
 #include <wx/checklst.h>
 #include <wx/textctrl.h>
-#include <wx/button.h>
 #include <wx/sizer.h>
-#include <wx/gbsizer.h>
 #include <wx/frame.h>
 
 ///////////////////////////////////////////////////////////////////////////
@@ -36,17 +34,18 @@ class TypeFilterWindowAuto : public wxFrame
 		wxTreeCtrl* typeHierarchyCrtl;
 		wxCheckBox* mainCheckBox;
 		wxCheckListBox* checkListBox;
-		wxTextCtrl* m_textCtrl1;
-		wxButton* m_button2;
+		wxTextCtrl* regExpr;
 		
 		// Virtual event handlers, overide them in your derived class
 		virtual void selectionChanged( wxTreeEvent& event ){ event.Skip(); }
 		virtual void mainCheckBoxClicked( wxCommandEvent& event ){ event.Skip(); }
 		virtual void checkListBoxClicked( wxCommandEvent& event ){ event.Skip(); }
+		virtual void updateRegularExpr( wxCommandEvent& event ){ event.Skip(); }
+		virtual void checkBasedOnRegularExpr( wxCommandEvent& event ){ event.Skip(); }
 		
 	
 	public:
-		TypeFilterWindowAuto( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Triva - TypeFilter"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 488,473 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
+		TypeFilterWindowAuto( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Triva - TypeFilter"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 490,508 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
 		~TypeFilterWindowAuto();
 	
 };
