@@ -145,7 +145,7 @@
 	[configurations setObject: dict forKey: [title stringValue]];
 	[dict release];
 
-	[self refreshPopupAndSelect: nil];
+	[self refreshPopupAndSelect: [title stringValue]];
 	[self updateDefaults];
 }
 
