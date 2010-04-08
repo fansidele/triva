@@ -292,7 +292,7 @@ material Triva/steal
       
       texture_unit
       {
-        colour_op_ex source1 src_manual src_current .2 .2 .2
+        colour_op_ex source1 src_manual src_current .2 .2 .9
         alpha_op_ex source1 src_manual src_current 0.1
       }
     }
