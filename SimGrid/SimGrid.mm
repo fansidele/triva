@@ -127,8 +127,11 @@ agsafeset (n, (char*)"height", str_height, default_size); \
 
 - (void) doGraphvizLayout
 {
+	NSLog (@"%s:%d Executing GraphViz Layout... (this might take a while)",
+			__FUNCTION__, __LINE__);
 	gvFreeLayout (gvc, platformGraph);
 	gvLayout (gvc, platformGraph, (char*)"neato");
+	NSLog (@"%s:%d GraphViz Layout done", __FUNCTION__, __LINE__);
 //	gvRenderFilename (gvc, platformGraph, (char*)"dot", (char*)"out.dot");
 }
 
