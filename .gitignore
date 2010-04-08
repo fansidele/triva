@@ -1,0 +1,7 @@
+GNUmakefile
+*.bundle
+*obj*
+*.log
+config.status
+configure
+*.cache
