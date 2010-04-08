@@ -21,7 +21,7 @@ class SimGridDraw : public wxControl
 
 private: /* draw related */
 	NSArray *hosts;
-	NSArray *routes;
+	NSArray *links;
 	graph_t *resGraph;
 	GVC_t *gvc;
 
@@ -40,7 +40,7 @@ public:
 		const wxValidator &validator = wxDefaultValidator);
 	void setController (id contr) { filter = contr; };
 	void setWindow (SimGridWindow *w) { window = w; };
-	void recreateResourcesGraph ();
+	void definePlatform ();
 
 protected:
 	/* wxWidgets callbacks */
@@ -68,6 +68,10 @@ protected:
 	wxColour findColorForNode (id treemap);
 	void drawSimGrid (id treemap, wxDC &dc);
 */
+	void drawPlatform (wxDC &dc);
+	void drawPlatformState (wxDC &dc); //host and link utilization
+	void highlightHost (id host);
+	id findHostAt (int mx, int my);
 };
 
 #endif

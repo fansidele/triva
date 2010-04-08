@@ -1,6 +1,10 @@
 #include "SimGrid.h"
 #include "SimGridDraw.h"
 
+#define ROUTER_SIZE 0.1
+#define MIN_HOST_SIZE 0.3
+#define MIN_LINK_SIZE 0.01
+
 SimGridDraw *draw = NULL;
 
 @implementation SimGrid
@@ -13,11 +17,14 @@ SimGridDraw *draw = NULL;
 	window->Show();
 	draw = window->getDraw();
 	draw->setController ((id)self);
+
+	platformCreated = NO;
 	return self;
 }
 
 - (BOOL) checkForSimGridHierarchy: (id) type level: (int) level
 {
+	return YES;
 	id et;
 	NSEnumerator *en;
 	BOOL simulation, route, host;
@@ -82,60 +89,334 @@ SimGridDraw *draw = NULL;
     [self printInstance:[self rootInstance] level:0];
 }
 
-- (NSArray *) findRoutesAt: (id) instance
+- (void) createPlatformGraph
 {
+	static int flag = 1;
+	if (flag){
+		gvc = gvContext();
+		flag = 0;
+	}
+	//close before starting a new one
+	if (platformGraph) agclose (platformGraph);
+
+	platformGraph = agopen ((char *)"platformGraph", AGRAPHSTRICT);
+	agnodeattr (platformGraph, (char*)"label", (char*)"");
+
 	NSEnumerator *en;
-	en = [[self containedTypesForContainerType:
-		[self entityTypeForEntity: instance]] objectEnumerator];
-	id et, ret = nil;
-	while ((et = [en nextObject]) != nil && ret == nil){
-		if (![self isContainerEntityType: et] &&
-			[[et name] isEqualToString: @"Route"]){
-			ret = [[self enumeratorOfEntitiesTyped: et
-				inContainer: instance fromTime: [self startTime]
-				toTime: [self endTime] minDuration: 0]
-					allObjects];
-		}else if ([self isContainerEntityType: et]){
-			NSEnumerator *en2 = [self enumeratorOfContainersTyped: et
-				inContainer:instance];
-			PajeContainer *si;
-			while ((si = [en2 nextObject]) != nil){
-				ret = [self findRoutesAt: si];
-				if (ret != nil) break;
-			}
+	id host, link;
+	id platformType = [self entityTypeWithName: @"platform"];
+	id hostType = [self entityTypeWithName: @"host"];
+	id linkType = [self entityTypeWithName: @"link"];
+	id platformContainer = [self containerWithName: @"simgrid-platform" type: platformType];
+
+	/* find min and max power */
+	double maxPower = 0, minPower = FLT_MAX;
+	en = [self enumeratorOfContainersTyped: hostType inContainer: platformContainer];
+	while ((host = [en nextObject])){
+		double power = [[host valueOfFieldNamed: @"Power"] doubleValue];
+		if (power == 0) continue; //ignore router power
+		if (power > maxPower) maxPower = power;
+		if (power < minPower) minPower = power;
+	}
+
+	/* create graphviz nodes based on hosts, define size */
+	en = [self enumeratorOfContainersTyped: hostType inContainer: platformContainer];
+	while ((host = [en nextObject])){
+		Agnode_t *n = agnode (platformGraph, (char *)[[host name] cString]);
+		agsafeset (n, (char*)"shape", (char*)"rectangle",(char*)"rectangle");
+		double power = [[host valueOfFieldNamed: @"Power"] doubleValue];
+		//how to calculate its size based on power variable
+		char sizestr[100];
+		if (power == 0){ //define router size
+			double size = ROUTER_SIZE;
+			snprintf (sizestr, 100, "%g", size);
+		}else{
+			double size = MIN_HOST_SIZE + (power - minPower)/(maxPower - minPower);
+			snprintf (sizestr, 100, "%g", size);
+		}
+		agsafeset (n, (char*)"width", sizestr, (char*)"1");
+		agsafeset (n, (char*)"height", sizestr, (char*)"1");
+	}
+
+	/* find min and max bw */
+	double maxBw = 0, minBw = FLT_MAX;
+	en = [self enumeratorOfContainersTyped: linkType inContainer: platformContainer];
+	while ((link = [en nextObject])){
+		if ([[link name] isEqualToString: @"loopback"]) continue; //ignore loopback
+		double bw = [[link valueOfFieldNamed: @"Bandwidth"] doubleValue];
+		if (bw < minBw) minBw = bw;
+		if (bw > maxBw) maxBw = bw;
+	}
+
+	/* create graphviz edges based on links, define size */
+	en = [self enumeratorOfContainersTyped: linkType inContainer: platformContainer];
+	while ((link = [en nextObject])){
+		if ([[link name] isEqualToString: @"loopback"]) continue; //ignore loopback
+		const char *src = [[link valueOfFieldNamed: @"SrcHost"] cString];
+		const char *dst = [[link valueOfFieldNamed: @"DstHost"] cString];
+		Agnode_t *s = agfindnode (platformGraph, (char*)src);
+		Agnode_t *d = agfindnode (platformGraph, (char*)dst);
+                Agedge_t *e = agedge (platformGraph, s, d);
+		double bw = [[link valueOfFieldNamed: @"Bandwidth"] doubleValue];
+		double size = MIN_LINK_SIZE + (bw - minBw)/(maxBw - minBw);
+		char ns[100], nss[100];
+		snprintf (ns, 100, "setlinewidth(%d)", (int)(5+10*size)); //just for calculating node separation
+		snprintf (nss, 100, "%f", size);
+		agsafeset (e, (char*)"style", (char*)ns, (char*)"setlinewidth(10)");
+		agsafeset (e, (char*)"bandwidth", (char*)nss, (char*)nss);
+	}
+	gvLayout (gvc, platformGraph, (char*)"neato");
+//	gvRenderFilename (gvc, platformGraph, (char*)"png", (char*)"out.png");
+	platformCreated = YES;
+	draw->definePlatform();
+}
+
+- (NSArray *) getHosts
+{
+	id platformType = [self entityTypeWithName: @"platform"];
+	id hostType = [self entityTypeWithName: @"host"];
+	id platformContainer = [self containerWithName: @"simgrid-platform" type: platformType];
+
+	return [[self enumeratorOfContainersTyped: hostType inContainer: platformContainer] allObjects];
+}
+
+- (NSArray *) getLinks
+{
+	id platformType = [self entityTypeWithName: @"platform"];
+	id linkType = [self entityTypeWithName: @"link"];
+	id platformContainer = [self containerWithName: @"simgrid-platform" type: platformType];
+
+	//removing loopback
+	NSMutableArray *ret = [NSMutableArray array];
+	NSEnumerator *en = [self enumeratorOfContainersTyped: linkType inContainer: platformContainer];
+	id cont;
+	while ((cont = [en nextObject])){
+		if (![[cont name] isEqualToString: @"loopback"]){
+			[ret addObject: cont];
 		}
 	}
 	return ret;
 }
 
-- (NSArray *) findHostsAt: (id) instance
+- (NSPoint) getPositionForHost: (id) host
 {
-	NSEnumerator *en;
-	en = [[self containedTypesForContainerType:
-		[self entityTypeForEntity: instance]] objectEnumerator];
-	id et, ret = nil;
-	while ((et = [en nextObject]) != nil && ret == nil){
-		if ([self isContainerEntityType: et]){
-			NSEnumerator *en2 = [self enumeratorOfContainersTyped: et
-				inContainer:instance];
-			PajeContainer *si;
-			if ([[et name] isEqualToString: @"Host"]){
-				ret = [en2 allObjects];
-			}else{
-				while ((si = [en2 nextObject]) != nil){
-					ret = [self findHostsAt: si];
-					if (ret != nil) break;
-				}
+	if (![host isKindOfClass: [NSString class]]){
+		host = [host name];
+	}	
+	Agnode_t *node = agfindnode (platformGraph, (char*)[host cString]);
+	NSPoint ret;
+	ret.x = ND_coord_i(node).x;
+	ret.y = ND_coord_i(node).y;
+	return ret;
+}
+
+/*
+- (NSPoint) getInteractivePositionForHost: (id) host
+{
+	if (![host isKindOfClass: [NSString class]]){
+		host = [host name];
+	}	
+	NSPoint ret;
+	Agnode_t *node = agfindnode (platformGraph, (char*)[host cString]);
+	char *x = agget (node, (char*)"xtriva");
+	char *y = agget (node, (char*)"ytriva");
+	if (x && y){
+		ret.x = atof (x);
+		ret.y = atof (y);
+	}else{
+		ret = [self getPositionForHost: host];
+	}
+	return ret;
+}
+*/
+
+- (void) setPositionForHost: (id) host toPoint: (NSPoint) p
+{
+	if (![host isKindOfClass: [NSString class]]){
+		host = [host name];
+	}	
+	Agnode_t *node = agfindnode (platformGraph, (char*)[host cString]);
+	/* these coordinates are integer */
+	ND_coord_i(node).x = p.x;
+	ND_coord_i(node).y = p.y;
+}
+
+/*
+- (void) setInteractivePositionForHost: (id) host toPoint: (NSPoint) p
+{
+	NSLog (@"setting %@ for %f,%f", host, p.x, p.y);
+	Agnode_t *node = agnode (platformGraph, (char *)[[host name] cString]);
+
+	char xstr[100], ystr[100];
+	snprintf (xstr, 100, "%f", p.x);
+	snprintf (ystr, 100, "%f", p.y);
+	agsafeset (node, (char*)"xtriva", xstr, xstr);
+	agsafeset (node, (char*)"ytriva", ystr, ystr);
+}
+*/
+
+- (NSRect) getSizeForHost: (id) host
+{
+	if (![host isKindOfClass: [NSString class]]){
+		host = [host name];
+	}	
+	Agnode_t *node = agfindnode (platformGraph, (char*)[host cString]);
+	NSRect ret;
+	ret.origin.x = ret.origin.y = 0;
+	ret.size.width = atof(agget (node, (char*)"width")) * 96;  //96 should be somewhere
+	ret.size.height = atof(agget (node, (char*)"height")) * 96;
+	return ret;
+}
+
+- (float) getSizeForLink: (id) link
+{
+	char *ss = (char*)[[link valueOfFieldNamed: @"SrcHost"] cString];
+	char *ds = (char*)[[link valueOfFieldNamed: @"DstHost"] cString];
+	Agnode_t *s = agfindnode (platformGraph, ss);
+	Agnode_t *d = agfindnode (platformGraph, ds);
+	Agedge_t *e = agfindedge (platformGraph, s, d);
+	if (e){
+		return atof (agget (e, (char*)"bandwidth"));
+	}else{
+		return 0;
+	}
+}
+
+- (NSRect) getBoundingBox
+{
+	NSRect ret;
+	ret.origin.x = ret.origin.y = 0;
+	ret.size.width = GD_bb(platformGraph).UR.x;
+	ret.size.height = GD_bb(platformGraph).UR.y;
+	return ret;
+}
+
+/* power utilization */
+- (NSDictionary *) getPowerUtilizationOfHost: (id) host
+{
+	NSMutableDictionary *ret = [NSMutableDictionary dictionary];
+	NSEnumerator *en, *en2;
+	id type;
+ 	en = [[self containedTypesForContainerType: [host entityType]] objectEnumerator];
+	double hostPower = [[host valueOfFieldNamed: @"Power"] floatValue];
+	double accum = 0;	
+	double accum_time = 0;
+	NSMutableSet *intervals = [NSMutableSet set];
+	while ((type = [en nextObject])){
+		id power;
+		en2 = [self enumeratorOfEntitiesTyped: type
+                                                inContainer: host
+                                                fromTime: [self selectionStartTime]
+                                                toTime: [self selectionEndTime]
+                                                minDuration: 0];
+		double type_val = 0;
+		while ((power = [en2 nextObject])){
+			double start = [[[power startTime] description] doubleValue];
+			double end = [[[power endTime] description] doubleValue];
+			double p = [[power valueOfFieldNamed: @"PowerUsed"] floatValue];
+			if ((end-start)!=0){
+				type_val += (p * (end-start));
 			}
+                        NSString *interval = [NSString stringWithFormat: @"%f-%f", start, end];
+                        if (![intervals containsObject: interval]){
+                                accum_time += end-start;
+                                [intervals addObject: interval];
+                        }
+		}
+		if (type_val){
+			[ret setObject: [NSString stringWithFormat: @"%f", type_val]
+				forKey: type];
+		}
+	}
+	en = [[self containedTypesForContainerType: [host entityType]] objectEnumerator];
+	while ((type = [en nextObject])){
+		if ([ret objectForKey: type]){
+//			double start = [[[self selectionStartTime] description] doubleValue];
+//			double end = [[[self selectionEndTime] description] doubleValue];
+
+			double val = [[ret objectForKey: type] doubleValue];
+			val = val/(hostPower*accum_time);
+			[ret setObject: [NSString stringWithFormat: @"%f", val]
+				forKey: type];
+			
+		}
+	}
+	return ret;
+	if (0&&accum){
+		en = [[self containedTypesForContainerType: [host entityType]] objectEnumerator];
+		while ((type = [en nextObject])){
+			double val = [[ret objectForKey: type] doubleValue];
+			val = val/accum;
+			[ret setObject: [NSString stringWithFormat: @"%f", val]
+				forKey: type];
 		}
 	}
 	return ret;
 }
 
+/* bandwidth utilization */
+- (NSDictionary *) getBandwidthUtilizationOfLink: (id) link
+{
+	NSMutableDictionary *ret = [NSMutableDictionary dictionary];
+	NSEnumerator *en, *en2;
+	id type;
+ 	en = [[self containedTypesForContainerType: [link entityType]] objectEnumerator];
+	double linkBandwidth = [[link valueOfFieldNamed: @"Bandwidth"] doubleValue];
+	double accum_time = 0;
+	NSMutableSet *intervals = [NSMutableSet set];
+	while ((type = [en nextObject])){
+		id bandwidth;
+		en2 = [self enumeratorOfEntitiesTyped: type
+                                                inContainer: link
+                                                fromTime: [self selectionStartTime]
+                                                toTime: [self selectionEndTime]
+                                                minDuration: 0];
+		double type_val = 0;
+		while ((bandwidth = [en2 nextObject])){
+			double start = [[[bandwidth startTime] description] doubleValue];
+			double end = [[[bandwidth endTime] description] doubleValue];
+//			NSLog (@"\t\t%@ %f -- %f", [type name], start, end);
+			double b = [[bandwidth valueOfFieldNamed: @"BandwidthUsed"] doubleValue];
+			if ((end-start)!=0){
+				type_val += (b * (end-start));
+			}
+			NSString *interval = [NSString stringWithFormat: @"%f-%f", start, end];
+			if (![intervals containsObject: interval]){
+				accum_time += end-start;
+				[intervals addObject: interval];
+			}
+		}
+		if (type_val){
+			[ret setObject: [NSString stringWithFormat: @"%f", type_val]
+				forKey: type];
+		}
+	}
+	en = [[self containedTypesForContainerType: [link entityType]] objectEnumerator];
+	while ((type = [en nextObject])){
+		if ([ret objectForKey: type]){
+//			double start = [[[self selectionStartTime] description] doubleValue];
+//			double end = [[[self selectionEndTime] description] doubleValue];
 
+			double val = [[ret objectForKey: type] doubleValue];
+			val = val/(linkBandwidth*accum_time);
+			[ret setObject: [NSString stringWithFormat: @"%f", val]
+				forKey: type];
+			
+		}
+	}
+	return ret;
+}
 
 - (void) timeSelectionChanged
 {
-	draw->recreateResourcesGraph();
+	NSLog (@"%@ -> %@", [self selectionStartTime], [self selectionEndTime]);
+	draw->Refresh();
+	draw->Update();
+}
+
+- (void) hierarchyChanged
+{
+	[self createPlatformGraph];
+	draw->Update();
 }
 @end

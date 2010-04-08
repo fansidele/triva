@@ -7,11 +7,23 @@
 
 @interface SimGrid  : PajeFilter
 {
+	GVC_t *gvc;
+	graph_t *platformGraph;
+	BOOL platformCreated;
 }
 - (void) dumpTraceInTextualFormat;
 - (BOOL) checkForSimGridHierarchy: (id) type level: (int) level;
-- (NSArray *) findHostsAt: (id) instance;
-- (NSArray *) findRoutesAt: (id) instance;
+- (NSArray *) getHosts;
+- (NSArray *) getLinks;
+- (NSPoint) getPositionForHost: (id) host;
+- (void) setPositionForHost: (id) host toPoint: (NSPoint) p;
+- (NSRect) getSizeForHost: (id) host;
+- (float) getSizeForLink: (id) link;
+- (NSRect) getBoundingBox;
+
+
+- (NSDictionary *) getPowerUtilizationOfHost: (id) host;
+- (NSDictionary *) getBandwidthUtilizationOfLink: (id) link;
 @end
 
 #endif
