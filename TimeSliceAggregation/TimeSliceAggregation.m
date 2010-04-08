@@ -25,8 +25,17 @@
 	NSMutableDictionary *nodeValues;
 	NSMutableDictionary *nodeEntities;
 
-	nodeValues = [[NSMutableDictionary alloc] init];
-	nodeEntities = [[NSMutableDictionary alloc] init];
+
+	nodeValues = [node timeSliceValues];	
+	if (!nodeValues){
+		nodeValues = [NSMutableDictionary dictionary];
+		[node setTimeSliceValues: nodeValues];
+	}
+	nodeEntities = [node pajeEntities];
+	if (!nodeEntities){
+		nodeEntities = [NSMutableDictionary dictionary];
+		[node setPajeEntities: nodeEntities];
+	}
 
 	//limitating for now the algorithm to state types
 	if (![type isKindOf: [PajeStateType class]]){
@@ -73,10 +82,6 @@
 			[nodeEntities setObject: ent forKey: name];
 		}
 	}
-	[node setPajeEntities: nodeEntities];
-	[node setTimeSliceValues: nodeValues];
-	[nodeValues release];
-	[nodeEntities release];
 }
 
 - (TimeSliceTree *) createInstanceHierarchy: (id) instance
