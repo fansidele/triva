@@ -11,7 +11,12 @@ SUBPROJECTS = \
 	MemoryAccess \
 	OgreView
 
-@PACKAGE_TARNAME@_OBJCC_FILES=TrivaApp.mm TrivaPajeComponent.mm
+@PACKAGE_TARNAME@_OBJCC_FILES = \
+	TrivaApp.mm \
+	TrivaPajeComponent.mm \
+	TrivaWindow.mm \
+	TrivaWindowAuto.mm
+	
 @PACKAGE_TARNAME@_INCLUDE_DIRS += @CPPFLAGS@
 @PACKAGE_TARNAME@_LIB_DIRS += @LIBS@
 @PACKAGE_TARNAME@_LDFLAGS += -lGeneral

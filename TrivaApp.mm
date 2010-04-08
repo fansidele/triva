@@ -1,5 +1,6 @@
 #include "TrivaApp.h"
 #include "TrivaPajeComponent.h"
+#include "TrivaWindow.h"
 
 wxString NSSTRINGtoWXSTRING (NSString *ns)
 {
@@ -30,8 +31,10 @@ bool TrivaApp::OnInit()
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 
 //	TrivaWindow *window = new TrivaWindow ((wxWindow*)NULL);
+//	window->setTrivaApp (this);
 //	window->Show();
 //	SetTopWindow (window);
+//	SetExitOnFrameDelete (true);
 
 	gnustepLoopTimer.SetOwner (this);
 	this->Connect (wxID_ANY, wxEVT_TIMER,
