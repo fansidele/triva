@@ -1,25 +1,39 @@
-================================================================================
-| Triva INSTALL file for Debian (Lenny, Testing) and Ubuntu (Jaunty, Karmic)   |
-================================================================================
+#==============================================================================
+#| Triva INSTALL file for Debian (Lenny, Testing) and Ubuntu (Jaunty, Karmic) |
+#==============================================================================
+
+# installing deb packages
 
 $ sudo apt-get install libgnustep-gui-dev  libgnustep-base-dev gnustep-back0.16
 $ sudo apt-get install build-essential gobjc
+$ sudo apt-get install autoconf automake 
+$ sudo apt-get install libgraphviz-dev libmatheval1-dev
+
+# installing paje from svn sources
+
 $ source /usr/share/GNUstep/Makefiles/GNUstep.sh
 $ svn checkout svn://svn.forge.objectweb.org/svnroot/paje/trunk/Paje/
 $ cd Paje
 $ make
 $ make install GNUSTEP_INSTALLATION_DOMAIN=USER
-$ sudo apt-get install autoconf automake 
-$ sudo apt-get install libgraphviz-dev libmatheval1-dev
-# (obtain the .tar.gz of Triva, or with git)
-$ source /usr/share/GNUstep/Makefiles/GNUstep.sh
-$ export LANG=C
-$ tar xfz Triva-2.0.tar.gz
-$ cd Triva-2.0
-$ ./bootstrap
-$ ./configure --enable-SquarifiedTreemap
-$ make
-$ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:./Triva/Triva.framework/Versions/Current/
-# execute ./Triva.app/Triva with a paje trace file as parameter.
 
-That's it.
+# installing triva from svn sources
+
+$ source /usr/share/GNUstep/Makefiles/GNUstep.sh
+$ svn checkout svn://scm.gforge.inria.fr/svn/triva
+$ export LANG=C
+$ cd triva
+$ ./bootstrap
+$ ./configure
+$ make
+
+# to execute triva from its source directory, do
+
+$ export \
+  LD_LIBRARY_PATH=$LD_LIBRARY_PATH:./Triva/Triva.framework/Versions/Current/
+$ ./Triva.app/Triva --help
+
+# to install it
+
+$ make install GNUSTEP_INSTALLATION_DOMAIN=USER
+$ Triva --help
