@@ -39,6 +39,7 @@
 		fromTime: sliceStartTime
 		toTime: sliceEndTime 
 		minDuration:0];
+	double accumDuration = 0;
 	while ((ent = [en nextObject]) != nil) {
 		NSDate *start = [ent startTime];
 		NSDate *end = [ent endTime];
@@ -53,7 +54,13 @@
 
 		//integrating in time
 		integrated += duration * value;
+
+		if (value){
+			accumDuration += duration;
+		}
 	}
+	[timeSliceDurations setValue: [NSNumber numberWithDouble: accumDuration]
+				forKey: name];
 	[timeSliceValues setValue: [NSNumber numberWithDouble: integrated]
 			   forKey: name];
 	[timeSliceColors setValue: [self colorForEntityType: type] forKey: name];
@@ -122,13 +129,26 @@
 		double integrated = 1 * duration; //value of state is 1
 
 		//getting the current value
-		double value = [[timeSliceValues objectForKey: name] doubleValue];
+		double value = [[timeSliceValues objectForKey: name]
+					doubleValue];
 		value += integrated;
 
 		//saving in the timeSliceValues dict
 		[timeSliceValues setObject: [NSNumber numberWithDouble: value]
 				    forKey: name];
+
+		//getting current accumulated duration for this name
+		if (value){
+			double acc;
+			acc = [[timeSliceDurations objectForKey: name]
+					doubleValue];
+			acc += duration;
+			[timeSliceDurations setObject:
+					[NSNumber numberWithDouble:acc]
+				forKey: name];
+		}
 	}
+
 }
 
 		
