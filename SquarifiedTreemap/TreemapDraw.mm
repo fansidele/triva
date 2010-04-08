@@ -26,7 +26,7 @@ TreemapDraw::TreemapDraw (wxWindow *parent, wxWindowID id,
 	Create (parent, id, pos, size, style, validator);
 	current = nil;
 	highlighted = nil;
-	maxDepthToDraw = 1;
+	maxDepthToDraw = 0;
 	selectedValues = [[NSMutableArray alloc] init];
 }
 
