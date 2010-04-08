@@ -117,18 +117,8 @@
 	NSString *basic = @"{\n\
   root = ;\n\
 \n\
-  node-container = ();\n\
-  node-size = ;\n\
-  node-color = ;\n\
-  node-gradient = ();\n\
-  node-separation = ();\n\
-  node-bar = ();\n\
-\n\
-  edge-container = (  );\n\
-  edge-src = ;\n\
-  edge-dst = ;\n\
-  edge-size = ;\n\
-  edge-gradient = ();\n\
+  node = ();\n\
+  edge = ();\n\
 \n\
   graphviz-algorithm = neato;\n\
 }";
