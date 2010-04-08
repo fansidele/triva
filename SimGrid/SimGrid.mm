@@ -141,6 +141,12 @@
 			double val;
 			val = [[values objectForKey: key] doubleValue];
 			if (power && val){
+				double res = val/power;
+				if ((int)res > 1){
+					NSLog (@"%s:%d %@ = %f (error?)",
+						__FUNCTION__, __LINE__,
+						key, res);
+				}
 				[nodeGraphValues setObject:
 					[NSNumber numberWithDouble: val/power]
 						    forKey: key];
