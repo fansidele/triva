@@ -15,30 +15,49 @@
     along with Triva.  If not, see <http://www.gnu.org/licenses/>.
 */
 #include "TrivaPajeComponent.h"
+#include "TrivaCommand.h"
+
 
 int main (int argc, const char **argv){
+  //appkit init
 	NSApplication *app = [NSApplication sharedApplication];
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-	if (argc > 1){
-		NSString *tfile = [NSString stringWithFormat: @"%s", argv[1]];
-		TrivaPajeComponent *tPaje = [[TrivaPajeComponent alloc] init];
-		[tPaje createComponentGraph]; /*must be called after param*/
-		id reader = [tPaje componentWithName: @"FileReader"];
-		[reader setInputFilename: tfile];
-		[tPaje setReaderWithName: @"FileReader"];
-		NSLog (@"Tracefile (%@). Reading.... please wait\n", tfile);
-		while ([tPaje hasMoreData]){
-			[tPaje readNextChunk: nil];
-		}
-		NSLog (@"End of reading - %@ to %@.",
-			[tPaje startTime], [tPaje endTime]);
-		[tPaje setSelectionStartTime: [tPaje startTime]
-			endTime: [tPaje endTime]];
-		[app run];
-	}else{
-		NSLog (@"Please, provide a .trace file");
-		exit(1);
-	}
+  TrivaPajeComponent *triva = [[TrivaPajeComponent alloc] init];
+
+  //parsing args
+  struct arguments arguments;
+  arguments.treemap = 0;
+  arguments.graph = 0;
+  arguments.dot = 0;
+  arguments.abort = 0;
+  parse (argc, (char**)argv, &arguments);
+
+  //configuring triva
+  if (arguments.treemap) {
+    [triva activateTreemap];
+  }else if (arguments.graph){
+    [triva activateGraph];
+  }else if (arguments.dot) {
+    [triva activateDot];
+  }else{
+    NSException *exception = [NSException exceptionWithName: @"TrivaException"
+                   reason: @"No visualization option activated" userInfo: nil];
+    [exception raise];
+  }
+  NSString *input = [NSString stringWithFormat: @"%s", arguments.input[0]];
+  id reader = [triva componentWithName: @"FileReader"];
+  [reader setInputFilename: input];
+  NSLog (@"Tracefile (%@). Reading.... please wait\n", input);
+  while ([triva hasMoreData]){
+    [triva readNextChunk: nil];
+  }
+  NSLog (@"End of reading - %@ to %@.", [triva startTime], [triva endTime]);
+  [triva setSelectionStartTime: [triva startTime] endTime: [triva endTime]];
+
+  //run the application
+  [app run];
+
+  //that's it
 	[pool release];
 	return 0;
 }

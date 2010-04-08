@@ -4,10 +4,17 @@ AGGREGATE_NAME = @PROJECT_NAME@
 APP_NAME = @PROJECT_NAME@
 PACKAGE_NAME = @PROJECT_NAME@
 VERSION = @PACKAGE_VERSION@
-SUBPROJECTS = @PROJECTS@
+SUBPROJECTS = Triva \
+  GraphConfiguration \
+  GraphView \
+  LinkView \
+  SquarifiedTreemap \
+  TimeInterval \
+  TimeSliceAggregation
 
 @PROJECT_NAME@_OBJC_FILES = \
 	TrivaApp.m \
+	TrivaCommand.m \
 	TrivaPajeComponent.m
 
 ifeq ($(FOUNDATION_LIB), apple)

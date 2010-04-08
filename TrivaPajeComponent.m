@@ -23,7 +23,6 @@
 	self = [super init];
 	components = [NSMutableDictionary dictionary];
 	bundles = [NSMutableDictionary dictionary];
-//	[self createComponentGraph]; MUST be called after init
 
 	chunkDates = [[NSClassFromString(@"PSortedArray") alloc]
                                 initWithSelector:@selector(self)];
@@ -140,10 +139,49 @@
 }
 
 
++ (NSArray *)treemapComponentGraph
+{
+	return [@"(  \
+		( FileReader, \
+		   PajeEventDecoder, \
+                   PajeSimulator, \
+                   StorageController, \
+		   TimeInterval, \
+		   TimeSliceAggregation, \
+		   SquarifiedTreemap \
+		) )" propertyList];
+}
+
++ (NSArray *)graphComponentGraph
+{
+	return [@"(  \
+		( FileReader, \
+		   PajeEventDecoder, \
+                   PajeSimulator, \
+                   StorageController, \
+		   TimeInterval, \
+                   TimeSliceAggregation, \
+		   GraphConfiguration, \
+		   GraphView \
+		) )" propertyList];
+}
+
++ (NSArray *)dotComponentGraph
+{
+	return [@"(  \
+		( FileReader, \
+		   PajeEventDecoder, \
+                   PajeSimulator, \
+                   StorageController, \
+		   TimeInterval, \
+                   Dot \
+		) )" propertyList];
+}
+
 
 + (NSArray *)defaultComponentGraph
 {
-    NSArray *graph;
+    NSArray *graph = nil;
 #ifdef HAVE_SQUARIFIEDTREEMAP
 	graph = [@"(  \
 		( FileReader, \
@@ -383,10 +421,27 @@
 	}
 }
 
-- (void)createComponentGraph
+- (void) activateTreemap
 {
-	[self addComponentSequences:[[self class] defaultComponentGraph]];
-//	reader = [self componentWithName:@"TrivaPajeReader"];
+  [self addComponentSequences:[[self class] treemapComponentGraph]];
+  [self defineMajorComponents];
+}
+
+- (void) activateGraph
+{
+  [self addComponentSequences:[[self class] graphComponentGraph]];
+  [self defineMajorComponents];
+}
+
+- (void) activateDot
+{
+  [self addComponentSequences:[[self class] dotComponentGraph]];
+  [self defineMajorComponents];
+}
+
+- (void) defineMajorComponents
+{
+	reader = [self componentWithName:@"FileReader"];
 	simulator = [self componentWithName:@"PajeSimulator"];
 	encapsulator = [self componentWithName:@"StorageController"];
 }

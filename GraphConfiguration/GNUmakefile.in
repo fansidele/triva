@@ -33,7 +33,7 @@ GraphConfiguration+Interface.m
 
 GraphConfiguration_INCLUDE_DIRS += @CPPFLAGS@
 GraphConfiguration_LIB_DIRS += @LIBS@
-GraphConfiguration_LDFLAGS += @LDFLAGS@
+GraphConfiguration_LDFLAGS += -lgvc -lmatheval
 
 #
 # Makefiles
