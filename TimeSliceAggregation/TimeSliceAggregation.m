@@ -268,7 +268,7 @@
 
 - (void) calculateBehavioralHierarchy
 {
-	NSLog (@"Calculating behavioral hierarchy...");
+//	NSLog (@"Calculating behavioral hierarchy...");
 	/* re-create hierarchy */
 	if (tree){
 		[tree release];
@@ -278,14 +278,14 @@
 	[tree retain];
 	/* aggregate values */
 	[tree doAggregation];
-	NSLog (@"Done");
+//	NSLog (@"Done");
 }
 
 - (void) timeSelectionChanged2
 {
-	NSLog (@"%s - %@,%@", __FUNCTION__,
-		[self selectionStartTime],
-		[self selectionEndTime]);
+//	NSLog (@"%s - %@,%@", __FUNCTION__,
+//		[self selectionStartTime],
+//		[self selectionEndTime]);
 	BOOL timeSliceChanged = NO;
 	if ([sliceStartTime isEqualToDate: [self selectionStartTime]] == NO){
 		[sliceStartTime release];
