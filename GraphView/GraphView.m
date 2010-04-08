@@ -10,11 +10,12 @@
 	if (self != nil){
 		[NSBundle loadNibNamed: @"Graph" owner: self];
 	}
-	NSLog (@"view = %@", view);
+	[view setFilter: self];
 	return self;
 }
 
 - (void) timeSelectionChanged
 {
+	[view setNeedsDisplay: YES];
 }
 @end

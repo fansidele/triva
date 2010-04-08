@@ -4,10 +4,11 @@
 #include <Foundation/Foundation.h>
 #include <Triva/TrivaFilter.h>
 #include <AppKit/AppKit.h>
+#include "DrawView.h"
 
 @interface GraphView : TrivaFilter
 {
-  IBOutlet id view;
+  IBOutlet DrawView *view;
 }
 @end
 
