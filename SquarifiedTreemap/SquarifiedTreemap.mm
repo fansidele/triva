@@ -26,6 +26,7 @@ TreemapDraw *draw = NULL;
 		[currentTreemap release];
 	}
 	currentTreemap = [self defineTreemapWith: [filter timeSliceTree]];
+	draw->Refresh();
 }
 
 - (Treemap *) defineTreemapWith: (TimeSliceTree *) tree
