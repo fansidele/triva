@@ -64,6 +64,15 @@ defaults write Triva 'task-compute-MSGstate Colors' '{
     execute = "0 1 0";
 }'
 
+defaults write Triva 'Thread State Colors' '{
+    E = "0.000000 1.000000 0.000000";
+    B = "1.000000 0.000000 0.000000";
+    L = "1.000000 0.000000 1.000000";
+    M = "0.000000 0.000000 1.000000";
+    B2 = "1.000000 1.000000 0.000000";
+    B3 = "1.000000 0.500000 0.000000";
+}'
+
 # simgrid defaults
 defaults write Triva 'surf-state Colors' '{
     cpu = "0 1 0";
