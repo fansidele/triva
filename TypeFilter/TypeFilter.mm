@@ -63,9 +63,7 @@ static TypeFilterWindow *window = NULL;
 	}else{
 		[hiddenEntityTypes addObject: type];
 	}
-//	[self entitySelectionChanged];
-	[self hierarchyChanged];
-	[self dataChangedForEntityType: type];
+	[self entitySelectionChanged];
 }
 
 - (void) filterValue: (NSString *) value
@@ -82,8 +80,6 @@ static TypeFilterWindow *window = NULL;
 	}else{
 		[set removeObject: value];
 	}
-//	[self entitySelectionChanged];
-	[self hierarchyChanged];
 	[self dataChangedForEntityType: type];
 }
 

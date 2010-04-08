@@ -328,6 +328,12 @@
 	[super containerSelectionChanged];
 }
 
+- (void) dataChangedForEntityType: (PajeEntityType *) type
+{
+	[self calculateBehavioralHierarchy];
+	[super dataChangedForEntityType: type];
+}
+
 - (TimeSliceTree *) timeSliceTree
 {
 	return tree;

@@ -41,6 +41,11 @@ TreemapDraw *draw = NULL;
 	[self timeSelectionChanged];
 }
 
+- (void) dataChangedForEntityType: (PajeEntityType *) type
+{
+	[self timeSelectionChanged];
+}
+
 - (Treemap *) treemapWithWidth: (int) width
                      andHeight: (int) height
                       andDepth: (int) depth
