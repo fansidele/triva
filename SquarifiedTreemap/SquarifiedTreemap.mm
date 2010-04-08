@@ -31,6 +31,16 @@ TreemapDraw *draw = NULL;
 	draw->Update();
 }
 
+- (void) entitySelectionChanged
+{
+	[self timeSelectionChanged];
+}
+
+- (void) containerSelectionChanged
+{
+	[self timeSelectionChanged];
+}
+
 - (Treemap *) treemapWithWidth: (int) width
                      andHeight: (int) height
                       andDepth: (int) depth
