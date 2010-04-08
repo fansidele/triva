@@ -28,7 +28,7 @@
 	return self;
 }
 
-- (void) drawTreemap: (Treemap*) treemap
+- (void) drawTreemap: (TrivaTreemap*) treemap
 {
 	if ([treemap treemapValue] == 0){
 		return;
@@ -38,7 +38,7 @@
 		int nAggChildren, i;
 		nAggChildren = [[treemap aggregatedChildren] count];
 		for (i = 0; i < nAggChildren; i++){
-			Treemap *child = [[treemap aggregatedChildren]
+			TrivaTreemap *child = [[treemap aggregatedChildren]
 					objectAtIndex: i];
 			[child draw];
 		}
@@ -70,7 +70,7 @@
 		if (current){
 			[current release];
 		}
-		current = [[Treemap alloc] initWithTimeSliceTree: tree
+		current = [[TrivaTreemap alloc] initWithTimeSliceTree: tree
 				andProvider: filter];
 		[current setBoundingBox: b];
 		[current convertFrom: b to: b]; //nothing to convert

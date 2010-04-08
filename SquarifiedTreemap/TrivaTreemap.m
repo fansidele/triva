@@ -14,12 +14,12 @@
     You should have received a copy of the GNU General Public License
     along with Triva.  If not, see <http://www.gnu.org/licenses/>.
 */
-#include "Treemap.h"
+#include "TrivaTreemap.h"
 #include <float.h>
 
 #define BIGFLOAT FLT_MAX
 
-@implementation Treemap
+@implementation TrivaTreemap
 - (id) init
 {
 	self = [super init];
@@ -49,7 +49,7 @@
 	NSEnumerator *keys = [aggValues keyEnumerator];
 	id key;
 	while ((key = [keys nextObject])){
-		Treemap *aggNode = [[Treemap alloc] init];
+		TrivaTreemap *aggNode = [[TrivaTreemap alloc] init];
 		[aggNode setProvider: prov];
 		[aggNode setName: key];
 		[aggNode setTreemapValue:
@@ -66,7 +66,7 @@
 	int i;
 	for (i = 0; i < [[tree children] count]; i++){
 		TimeSliceTree *child = [[tree children] objectAtIndex: i];
-		Treemap *node = [[Treemap alloc] initWithTimeSliceTree: child
+		TrivaTreemap *node = [[TrivaTreemap alloc] initWithTimeSliceTree: child
 				                           andProvider: prov];
 		[node setParent: self];
 		[children addObject: node];
@@ -103,7 +103,7 @@
 	double rmax = 0, rmin = FLT_MAX, s = 0;
 	int i;
 	for (i = 0; i < [list count]; i++){
-		Treemap *child = (Treemap *)[list objectAtIndex: i];
+		TrivaTreemap *child = (TrivaTreemap *)[list objectAtIndex: i];
 		double childValue = [child treemapValue]*factor;
 		rmin = rmin < childValue ? rmin : childValue;
 		rmax = rmax > childValue ? rmax : childValue;
@@ -123,14 +123,14 @@
 	double s = 0; // sum
 	int i;
 	for (i = 0; i < [row count]; i++){
-		s += [(Treemap *)[row objectAtIndex: i] treemapValue]*factor;
+		s += [(TrivaTreemap *)[row objectAtIndex: i] treemapValue]*factor;
 	}
 	double x = r.origin.x, y = r.origin.y, d = 0;
 	double h = w==0 ? 0 : s/w;
 	BOOL horiz = (w == r.size.width);
 
 	for (i = 0; i < [row count]; i++){
-		Treemap *child = (Treemap *)[row objectAtIndex: i];
+		TrivaTreemap *child = (TrivaTreemap *)[row objectAtIndex: i];
 		NSRect childRect;
 		if (horiz){
 			childRect.origin.x = x+d;
@@ -302,12 +302,12 @@
 /*
  * Search method
  */
-- (Treemap *) searchWith: (NSPoint) point
+- (TrivaTreemap *) searchWith: (NSPoint) point
 		limitToDepth: (int) d
 {
 	double x = point.x;
 	double y = point.y;
-	Treemap *ret = nil;
+	TrivaTreemap *ret = nil;
 	if (x >= bb.origin.x &&
 	    x <= bb.origin.x+bb.size.width &&
 	    y >= bb.origin.y &&
@@ -316,7 +316,7 @@
 			// recurse to aggregated children 
 			unsigned int i;
 			for (i = 0; i < [aggregatedChildren count]; i++){
-				Treemap *child = [aggregatedChildren
+				TrivaTreemap *child = [aggregatedChildren
 							objectAtIndex: i];
 				if ([child treemapValue] &&
 					x >= [child bb].origin.x &&
@@ -333,7 +333,7 @@
 			// recurse to ordinary children 
 			unsigned int i;
 			for (i = 0; i < [children count]; i++){
-				Treemap *child;
+				TrivaTreemap *child;
 				child = [children objectAtIndex: i];
 				if ([child treemapValue]){
 					ret = [child searchWith: point
@@ -348,7 +348,7 @@
 	return ret;
 }
 
-- (NSComparisonResult) compareValue: (Treemap *) other
+- (NSComparisonResult) compareValue: (TrivaTreemap *) other
 {
         if ([self treemapValue] < [other treemapValue]){
                 return NSOrderedAscending;

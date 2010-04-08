@@ -21,7 +21,6 @@
 #include <Foundation/Foundation.h>
 #include <Triva/TrivaFilter.h>
 #include <Triva/TimeSliceTree.h>
-#include "Treemap.h"
 
 @class TreemapView;
 

@@ -14,15 +14,15 @@
     You should have received a copy of the GNU General Public License
     along with Triva.  If not, see <http://www.gnu.org/licenses/>.
 */
-#ifndef __TREEMAP_H_
-#define __TREEMAP_H_
+#ifndef __TrivaTreemap_H_
+#define __TrivaTreemap_H_
 #include <Foundation/Foundation.h>
 #include <AppKit/AppKit.h>
 #include <Triva/Tree.h>
 #include <Triva/TimeSliceTree.h>
 #include <Triva/TrivaGraphNode.h>
 
-@interface Treemap : TrivaGraphNode
+@interface TrivaTreemap : TrivaGraphNode
 {
 	float treemapValue;
 	NSMutableArray *aggregatedChildren;
@@ -48,10 +48,10 @@
 - (void) calculateTreemapRecursiveWithFactor: (double) factor;
 
 /* search-based methods */
-- (Treemap *) searchWith: (NSPoint) point
+- (TrivaTreemap *) searchWith: (NSPoint) point
 			limitToDepth: (int) d;
 
-- (NSComparisonResult) compareValue: (Treemap *) other;
+- (NSComparisonResult) compareValue: (TrivaTreemap *) other;
 
 /* highlight methods */
 - (BOOL) highlighted;
