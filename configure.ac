@@ -16,6 +16,14 @@ AC_PATH_PROG(PKG_CONFIG, pkg-config)
 dnl ---------------------------------------------------------------------------
 dnl
 dnl check for libgraphviz presence
+function check_for_cairo ()
+{
+	PKG_CHECK_MODULES(cairo, [cairo >= 1.8.8])
+}
+
+dnl ---------------------------------------------------------------------------
+dnl
+dnl check for libgraphviz presence
 function check_for_graphviz ()
 {
 	AC_CHECK_HEADER([graphviz/gvc.h],
@@ -117,6 +125,7 @@ AC_ARG_ENABLE(SimGrid,
   [enableSimGrid=yes])
 if test x$enableSimGrid = xyes ; then
 	check_for_graphviz
+	check_for_cairo
 	CONFIG_FILES="$CONFIG_FILES TimeSliceAggregation/GNUmakefile SimGrid/GNUmakefile GraphView/GNUmakefile"
 	PROJECTS="$PROJECTS TimeSliceAggregation SimGrid GraphView"
 	AC_DEFINE([HAVE_SIMGRID], [1], [Define if SimGrid visualization components is activated])

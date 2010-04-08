@@ -3,6 +3,15 @@
 #include <wx/paper.h>
 #include <float.h>
 
+#define CAIRO 1
+
+#ifdef CAIRO
+#include <gdk/gdk.h>
+#include <gtk/gtk.h>
+#include <cairo.h>
+#endif
+
+
 #define X(pos,bb,w) (pos.x/bb.size.width*w)
 #define Y(pos,bb,h) (pos.y/bb.size.height*h)
 #define WIDTH(size,bb,w) (size.size.width/bb.size.width*w)
@@ -49,6 +58,10 @@ GraphDraw::GraphDraw (wxWindow *parent, wxWindowID id,
 
 void GraphDraw::drawPlatformState (wxDC &dc)
 {
+#ifdef CAIRO
+	wxClientDC dc_to_cairo(this);
+	cairo_t* cr = gdk_cairo_create(dc_to_cairo.m_window);
+#endif
 	wxCoord w, h;
 	dc.GetSize(&w, &h);
 	//draw platform state
@@ -75,7 +88,6 @@ void GraphDraw::drawPlatformState (wxDC &dc)
 			color = [filter colorForEntityType: [filter entityTypeWithName: type]];
 			double value = [[typesAndValues objectForKey: type] doubleValue];
 			if (value){
-				dc.SetBrush(wxBrush(NSCOLORtoWXCOLOUR (color), wxSOLID));
 				double type_nw = nw;
 				double type_nh = nh*value;
 
@@ -83,7 +95,20 @@ void GraphDraw::drawPlatformState (wxDC &dc)
 				double b = y - nh/2 + accum_y;
 				double c = type_nw;
 				double d = type_nh;
+#ifdef CAIRO
+				if ([[color colorSpaceName] isEqualToString: @"NSCalibratedRGBColorSpace"]){
+					float red, green, blue, alpha;
+					[color getRed: &red green: &green blue: &blue alpha: &alpha];
+					cairo_set_source_rgb (cr, red, green, blue);
+				}else{
+					cairo_set_source_rgb (cr, 1, 1, 1);
+				}
+				cairo_rectangle (cr, a, b, c, d);
+				cairo_fill (cr);
+#else
+				dc.SetBrush(wxBrush(NSCOLORtoWXCOLOUR (color), wxSOLID));
 				dc.DrawRectangle (a, b, c, d);
+#endif
 				accum_y += type_nh;
 			}
 		}
@@ -163,9 +188,25 @@ void GraphDraw::drawPlatformState (wxDC &dc)
 				points[1] = wxPoint (ox2, oy2);
 				points[3] = wxPoint (ox3, oy3);
 				points[2] = wxPoint (ox4, oy4);
-        
+
+#ifdef CAIRO
+				if ([[color colorSpaceName] isEqualToString: @"NSCalibratedRGBColorSpace"]){
+					float red, green, blue, alpha;
+					[color getRed: &red green: &green blue: &blue alpha: &alpha];
+					cairo_set_source_rgb (cr, red, green, blue);
+				}else{
+					cairo_set_source_rgb (cr, 1, 1, 1);
+				}
+				cairo_move_to (cr, ox1, oy1);
+				cairo_line_to (cr, ox2, oy2);
+				cairo_line_to (cr, ox4, oy4);
+				cairo_line_to (cr, ox3, oy3);
+				cairo_close_path (cr);
+				cairo_fill (cr);
+#else        
 				dc.SetBrush(wxBrush(NSCOLORtoWXCOLOUR (color), wxSOLID));
 				dc.DrawPolygon(4, points);
+#endif
 
 				//continuing
 				ox2 = ox3;
@@ -176,6 +217,9 @@ void GraphDraw::drawPlatformState (wxDC &dc)
 			}
 		}
 	}
+#ifdef CAIRO
+	cairo_destroy(cr);
+#endif
 }
 
 #include <wx/gdicmn.h> 
@@ -185,6 +229,11 @@ void GraphDraw::drawPlatform (wxDC &dc)
 	wxCoord w, h;
 	dc.GetSize(&w, &h);
 	wxSize ppi = dc.GetPPI();
+
+#ifdef CAIRO
+	wxClientDC dc_to_cairo(this);
+	cairo_t* cr = gdk_cairo_create(dc_to_cairo.m_window);
+#endif
 
 	NSEnumerator *en;
 	TrivaGraphNode *node;
@@ -202,9 +251,19 @@ void GraphDraw::drawPlatform (wxDC &dc)
 		double nw = size.size.width;
 		double nh = size.size.height;
 
+#ifdef CAIRO
+		//cairo_set_source_rgb (cr, .3, .3, .3);
+		cairo_move_to (cr, x-nw/2, y-nh/2);
+		cairo_rel_line_to (cr, nw, 0);
+		cairo_rel_line_to (cr, 0, nh);
+		cairo_rel_line_to (cr, -nw, 0);
+		cairo_rel_line_to (cr, 0, -nh);
+		cairo_stroke(cr);
+#else
 		dc.SetPen(wxPen(wxT("Black"), 1, wxSOLID));
 		dc.SetBrush(wxBrush(wxT("White"), wxSOLID));
 		dc.DrawRectangle (x-nw/2, y-nh/2, nw, nh);
+#endif
 	}
 
 	en = [filter enumeratorOfEdges];
@@ -271,9 +330,39 @@ void GraphDraw::drawPlatform (wxDC &dc)
 		points[2] = wxPoint (ox3, oy3);
 		points[3] = wxPoint (ox4, oy4);
 
+#ifdef CAIRO
+//		cairo_set_source_rgb (cr, .3, .3, .3);
+		cairo_move_to (cr, ox1, oy1);
+		cairo_line_to (cr, ox2, oy2);
+		cairo_line_to (cr, ox3, oy3);
+		cairo_line_to (cr, ox4, oy4);
+		cairo_line_to (cr, ox1, oy1);
+		cairo_stroke(cr);
+#else
 		dc.DrawPolygon(4, points);
+#endif
 	}
+#ifdef CAIRO
+	cairo_destroy(cr);
+#endif
 }
+/*
+	wxPaintDC dc(this);
+	wxRect rect = GetClientRect();
+	if(rect.width == 0 || rect.height == 0){
+		return;
+	}
+	// If it's GTK then use the gdk_cairo_create() method. The GdkDrawable object
+	// is stored in m_window of the wxPaintDC.
+	cairo_t* cairo_image = gdk_cairo_create(dc.m_window);
+	cairo_move_to (cairo_image, 50, 50);
+	cairo_line_to (cairo_image, 75, 75);
+	cairo_rel_line_to (cairo_image, 25, 25);
+	cairo_stroke(cairo_image);
+
+//	Render(cairo_image, rect.width, rect.height);
+	cairo_destroy(cairo_image);
+*/
 
 void GraphDraw::OnPaint(wxPaintEvent& evt)
 {
