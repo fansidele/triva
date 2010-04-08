@@ -6,6 +6,7 @@
 #include "Treemap.h"
 #include <General/PajeFilter.h>
 #include "TreemapWindow.h"
+#include "SquarifiedTreemap.h"
 
 class TreemapWindow;
 

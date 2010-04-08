@@ -167,8 +167,8 @@ void TreemapDraw::unhighlightTreemapNode (wxDC &dc)
         }
 	
 	unsigned int i;
-	for (i = 0; i < [[[highlighted parent] aggregatedChildren] count]; i++){
-		id agg = [[[highlighted parent] aggregatedChildren] objectAtIndex: i];
+	for (i = 0; i < [[(Treemap *)[highlighted parent] aggregatedChildren] count]; i++){
+		id agg = [[(Treemap *)[highlighted parent] aggregatedChildren] objectAtIndex: i];
 	        color = this->findColorForNode (agg);
         	brush = wxBrush (color, wxSOLID);
         	this->drawTreemapNode (agg, 0, brush, grayColor, dc);
