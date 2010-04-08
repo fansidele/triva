@@ -27,6 +27,11 @@
 	return [(TrivaFilter*)inputComponent sizeForGraph];
 }
 
+- (NSRect) rectForNode: (TrivaGraphNode*) node
+{
+	return [(TrivaFilter*)inputComponent sizeForNode: node];
+}
+
 - (NSDictionary*) enumeratorOfValuesForNode: (TrivaGraphNode*) node
 {
 	return [(TrivaFilter*)inputComponent enumeratorOfValuesForNode: node];

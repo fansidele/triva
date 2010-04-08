@@ -16,6 +16,7 @@
 - (NSDictionary*) enumeratorOfValuesForNode: (TrivaGraphNode*) node;
 - (NSPoint) positionForNode: (TrivaGraphNode*) node;
 - (NSRect) sizeForNode: (TrivaGraphNode*) node;
+- (NSRect) rectForNode: (TrivaGraphNode*) node;
 
 /* edges */
 - (NSDictionary*) enumeratorOfValuesForEdge: (TrivaGraphEdge*) edge;
