@@ -168,15 +168,20 @@
 		values = [NSMutableDictionary dictionaryWithDictionary:
 				[tree aggregatedValues]];
 		double bandwidth = [[values objectForKey: @"bandwidth"] doubleValue];
-		double s = 0;
-		s += MIN_LINK_SIZE;
-		if ((maxBandwidth - minBandwidth) != 0){
-			s += MAX_LINK_SIZE *
-				(bandwidth - minBandwidth) / (maxBandwidth - minBandwidth);
-		}
 		NSRect edgeRect;
-		edgeRect.size.width = s;
-		edgeRect.size.height = s;
+		if (bandwidth == 0){
+			edgeRect.size.width = 0;
+			edgeRect.size.height = 0;
+		}else{	
+			double s = 0;
+			s += MIN_LINK_SIZE;
+			if ((maxBandwidth - minBandwidth) != 0){
+				s += MAX_LINK_SIZE *
+					(bandwidth - minBandwidth) / (maxBandwidth - minBandwidth);
+			}
+			edgeRect.size.width = s;
+			edgeRect.size.height = s;
+		}
 		[edge setSize: edgeRect];
 		[values removeObjectForKey: @"bandwidth"];
 
