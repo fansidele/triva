@@ -453,9 +453,23 @@
 		}
 	}
 	if(graConfiguration && [obj separation] == NO && [obj color] == NO ){
-		// TODO
-		[obj setGradient: YES];
-		[obj setDrawable: YES];
+		if ([graConfiguration count] >= 1){
+			double val, max, min;
+			val = [self evaluateWithValues: values
+				 withExpr: [graConfiguration objectAtIndex: 0]];
+			max = [self evaluateWithValues: 
+			 	[[self timeSliceTree] maxValues]
+				 withExpr: [graConfiguration objectAtIndex: 0]];
+			min = [self evaluateWithValues: 
+					[[self timeSliceTree] minValues]
+				withExpr: [graConfiguration objectAtIndex: 0]];
+
+			[obj setGradientType: [graConfiguration objectAtIndex:0]
+				withValue: val withMax: max withMin: min];
+			[obj setGradient: YES];
+			[obj setDrawable: YES];
+		}
+		
 	}
 }
 
