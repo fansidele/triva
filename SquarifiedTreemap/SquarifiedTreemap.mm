@@ -16,6 +16,7 @@ TreemapDraw *draw = NULL;
 	draw->setController ((id)self);
 
 	currentTreemap = nil;
+	fastUpdate = YES;
 	return self;
 }
 
@@ -31,8 +32,10 @@ TreemapDraw *draw = NULL;
 		draw->setMaxDepthToDraw([timeSliceTree maxDepth]);
 	}
 
-	draw->Refresh();
-	draw->Update();
+	if (fastUpdate){
+		draw->Refresh();
+		draw->Update();
+	}
 }
 
 - (void) entitySelectionChanged
@@ -70,5 +73,10 @@ TreemapDraw *draw = NULL;
 	[currentTreemap calculateTreemapWithWidth: (float)width
 				andHeight: (float)height];
 	return currentTreemap;
+}
+
+- (void) setFastUpdate: (BOOL) v
+{
+	fastUpdate = v;
 }
 @end

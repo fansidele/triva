@@ -9,6 +9,7 @@
 {
 	TimeSliceTree *timeSliceTree;
 	Treemap *currentTreemap;
+	BOOL fastUpdate;
 }
 - (Treemap *) treemapWithWidth: (int) width
                      andHeight: (int) height
