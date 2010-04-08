@@ -56,4 +56,9 @@
 {
 	return [(TrivaFilter*)inputComponent timeSliceTree];
 }
+
+- (void) debugOf: (PajeEntityType*) type At: (PajeContainer*) container
+{
+	return [(TrivaFilter*)inputComponent debugOf: type At: container];
+}
 @end

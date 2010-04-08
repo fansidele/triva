@@ -23,6 +23,9 @@
 
 /* aggregated stuff (methods trapped by TimeSliceAggregation component */
 - (TimeSliceTree *) timeSliceTree;
+
+
+- (void) debugOf: (PajeEntityType*) type At: (PajeContainer*) container;
 @end
 
 #endif

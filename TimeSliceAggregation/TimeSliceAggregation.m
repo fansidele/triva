@@ -346,4 +346,40 @@
 {
 	return tree;
 }
+
+- (void) debugOf: (PajeEntityType*) type At: (PajeContainer*) container
+{
+	NSLog (@"DEBUG START");
+	NSLog (@"slice (%@ - %@)", sliceStartTime, sliceEndTime);
+	NSLog (@"type = %@ container = %@", [type name], [container name]);
+	NSEnumerator *en;
+	id ent;
+	en = [self enumeratorOfEntitiesTyped:type
+		inContainer: container
+		fromTime: sliceStartTime
+		toTime: sliceEndTime 
+		minDuration:0];
+	double integrated = 0;
+	while ((ent = [en nextObject]) != nil) {
+		NSDate *start = [ent startTime];
+                NSDate *end = [ent endTime];
+
+                //controlling the time-slice border
+                start = [start laterDate: sliceStartTime];
+                end = [end earlierDate: sliceEndTime];
+
+		double value = [[ent value] doubleValue];
+		double duration = [end timeIntervalSinceDate: start];
+		integrated += duration * value;
+
+//		NSLog (@"\tint(%@ - %@) dur = %f val = %f",
+		if(value){
+		NSLog (@"\tdur = %f val = %f",
+//			start, end, duration, value);
+			duration, value);
+		}
+	}
+	NSLog (@"integrated value = %f", integrated);
+	NSLog (@"DEBUG END");
+}
 @end
