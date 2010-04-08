@@ -146,6 +146,7 @@
 		   PajeEventDecoder, \
                    PajeSimulator, \
                    StorageController, \
+		   TimeInterval, \
                    TimeSliceAggregation, \
 		   GraphConfiguration, \
 		   GraphView \

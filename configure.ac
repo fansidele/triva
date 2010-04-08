@@ -15,6 +15,16 @@ AC_PATH_PROG(PKG_CONFIG, pkg-config)
 
 dnl ---------------------------------------------------------------------------
 dnl
+dnl check for matheval
+function check_for_matheval ()
+{
+	PKG_CHECK_MODULES(libmatheval, libmatheval >= 1.1.7)
+	CPPFLAGS="$CPPFLAGS $libmatheval_CFLAGS"
+	LIBS="$LIBS $libmatheval_LIBS"
+}
+
+dnl ---------------------------------------------------------------------------
+dnl
 dnl check for libgraphviz presence
 function check_for_cairo ()
 {
@@ -139,6 +149,7 @@ AC_ARG_ENABLE(GraphConfiguration,
   [  --enable-GraphConfiguration],
   [enableGraphConfiguration=yes])
 if test x$enableGraphConfiguration = xyes ; then
+	check_for_matheval
 	check_for_graphviz
 	check_for_cairo
 	CONFIG_FILES="$CONFIG_FILES TimeSliceAggregation/GNUmakefile GraphConfiguration/GNUmakefile GraphView/GNUmakefile"
