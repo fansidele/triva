@@ -4,7 +4,7 @@
 #include <Foundation/Foundation.h>
 #include "Tree.h"
 
-@interface TimeSliceTree : Tree
+@interface TimeSliceTree : Tree <NSCopying>
 {
 	/* to be used by the time-slice algorithm */
 	NSMutableDictionary *timeSliceValues;

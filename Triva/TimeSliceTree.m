@@ -267,4 +267,16 @@
 {
 	return minValues;
 }
+
+
+- (id)copyWithZone:(NSZone *)z
+{
+	[self retain];
+	return self;
+}
+
+- (BOOL) isEqual: (id) another
+{
+	return [name isEqualToString: [another name]];
+}
 @end
