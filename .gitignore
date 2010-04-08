@@ -1,0 +1,12 @@
+*/obj/*
+*\.framework*
+*\.bundle*
+aclocal.m4
+config.h
+autom4te.cache/
+*derived_src*
+config\.*
+configure
+*GNUmakefile
+*\.app/
+stamp-h1
