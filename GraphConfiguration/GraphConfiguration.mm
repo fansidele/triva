@@ -81,8 +81,13 @@
 {
 	NSRect ret;
 	ret.origin.x = ret.origin.y = 0;
-	ret.size.width = GD_bb(graph).UR.x;
-	ret.size.height = GD_bb(graph).UR.y;
+	if (graph){
+		ret.size.width = GD_bb(graph).UR.x;
+		ret.size.height = GD_bb(graph).UR.y;
+	}else{
+		ret.size.width = 0;
+		ret.size.height = 0;
+	}
 	return ret;
 }
 
