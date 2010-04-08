@@ -8,6 +8,7 @@ SUBPROJECTS = Triva \
   GraphConfiguration \
   GraphView \
   Dot \
+  CheckTrace \
   LinkView \
   SquarifiedTreemap \
   TimeInterval \
