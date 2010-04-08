@@ -1,0 +1,25 @@
+include $(GNUSTEP_MAKEFILES)/common.make
+
+CC=$(CXX)
+
+PACKAGE_NAME=TypeFilter
+BUNDLE_NAME=TypeFilter
+BUNDLE_EXTENSION=.bundle
+BUNDLE_INSTALL_DIR=$(GNUSTEP_BUNDLES)/Triva
+TypeFilter_PRINCIPAL_CLASS=TypeFilter
+
+TypeFilter_OBJC_FILES=
+TypeFilter_OBJCC_FILES = \
+	TypeFilter.mm \
+	TypeFilterWindow.mm \
+	TypeFilterWindowAuto.mm
+
+TypeFilter_INCLUDE_DIRS += @CPPFLAGS@
+TypeFilter_LIB_DIRS += @LIBS@
+TypeFilter_LDFLAGS += @LDFLAGS@
+
+include $(GNUSTEP_MAKEFILES)/bundle.make
+
+after-distclean::
+after-all::
+after-clean:: 

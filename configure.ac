@@ -71,8 +71,8 @@ function check_for_wx ()
 }
 
 #components that are always compiled
-CONFIG_FILES="GNUmakefile TimeInterval/GNUmakefile"
-PROJECTS="TimeInterval"
+CONFIG_FILES="GNUmakefile TimeInterval/GNUmakefile TypeFilter/GNUmakefile"
+PROJECTS="TimeInterval TypeFilter"
 
 #flag to control if at least one (and only one) of components is activated
 FLAG=no
