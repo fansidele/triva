@@ -29,12 +29,14 @@ static struct argp_option options[] = {
   {0, 0, 0, 0, "Other auxiliary options to check the trace file:"},
   {"hierarchy",'h', 0, OPTION_ARG_OPTIONAL, "Export the trace type hierarchy"},
   {"check",   'c', 0, OPTION_ARG_OPTIONAL, "Check the integrity of trace file"},
+  {"list",    'l', 0, OPTION_ARG_OPTIONAL, "List entity types"},
   { 0 }
 };
 
 static int has_vis_activated (struct arguments *arg)
 {
-  return arg->treemap || arg->graph || arg->hierarchy || arg->check;
+  return arg->treemap || arg->graph ||
+      arg->hierarchy || arg->check || arg->list;
 }
 
 /* Parse a single option. */
@@ -61,6 +63,10 @@ static int parse_options (int key, char *arg, struct argp_state *state)
     case 'c':
       if (has_vis_activated (arguments)) argp_usage(state);
       arguments->check = 1;
+      break;
+    case 'l':
+      if (has_vis_activated (arguments)) argp_usage(state);
+      arguments->list = 1;
       break;
 
     case ARGP_KEY_ARG:

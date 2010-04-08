@@ -31,6 +31,7 @@ NS_DURING
   arguments.graph = 0;
   arguments.hierarchy = 0;
   arguments.check = 0;
+  arguments.list = 0;
   arguments.abort = 0;
   parse (argc, (char**)argv, &arguments);
 
@@ -43,6 +44,8 @@ NS_DURING
     [triva activateDot];
   }else if (arguments.check) {
     [triva activateCheckTrace];
+  }else if (arguments.list) {
+    [triva activateList];
   }else{
     NSException *exception = [NSException exceptionWithName: @"TrivaException"
                    reason: @"No visualization option activated" userInfo: nil];

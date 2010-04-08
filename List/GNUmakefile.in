@@ -1,0 +1,20 @@
+include $(GNUSTEP_MAKEFILES)/common.make
+
+PACKAGE_NAME=List
+BUNDLE_NAME=List
+BUNDLE_EXTENSION=.bundle
+BUNDLE_INSTALL_DIR=$(GNUSTEP_BUNDLES)/@PROJECT_NAME@
+List_PRINCIPAL_CLASS=List
+
+List_OBJC_FILES=List.m
+List_OBJCC_FILES = 
+
+List_INCLUDE_DIRS += @CPPFLAGS@
+List_LIB_DIRS += @LIBS@
+List_LDFLAGS += @LDFLAGS@
+
+include $(GNUSTEP_MAKEFILES)/bundle.make
+
+after-distclean::
+after-all::
+after-clean:: 

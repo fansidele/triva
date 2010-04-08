@@ -189,6 +189,16 @@
 		) )" propertyList];
 }
 
++ (NSArray *)listComponentGraph
+{
+	return [@"(  \
+		( FileReader, \
+		   PajeEventDecoder, \
+                   PajeSimulator, \
+                   StorageController, \
+                   List \
+		) )" propertyList];
+}
 
 + (NSArray *)defaultComponentGraph
 {
@@ -453,6 +463,12 @@
 - (void) activateCheckTrace
 {
   [self addComponentSequences:[[self class] checkTraceComponentGraph]];
+  [self defineMajorComponents];
+}
+
+- (void) activateList
+{
+  [self addComponentSequences:[[self class] listComponentGraph]];
   [self defineMajorComponents];
 }
 
