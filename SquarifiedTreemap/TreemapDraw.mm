@@ -51,18 +51,26 @@ void TreemapDraw::OnMouseEvent(wxMouseEvent& evt)
 	this->highlightTreemapNode (evt.GetX(), evt.GetY());
 	this->SetFocus();
 
-/*	//Selection of states for one-state representation disabled
+	//Selection of a state
 	if (evt.LeftDown()){
 		long x = evt.GetX();
 		long y = evt.GetY();
 		Treemap *node = [current searchWithX: x
 		                andY: y
-		                limitToDepth: maxDepthToDraw];
+		                limitToDepth: maxDepthToDraw
+				andSelectedValues: selectedValues];
 		[selectedValues addObject: [[node pajeEntity] value]];
-		Update(true);
+		highlighted = nil;
+		Refresh();
 		return;
 	}
-*/
+	if (evt.RightDown()){
+		[selectedValues removeAllObjects];
+		highlighted = nil;
+		Refresh();
+		return;
+	}
+
 	if (evt.GetWheelRotation() != 0){
 		if (evt.GetWheelRotation() > 0){
 			if (current != nil){
