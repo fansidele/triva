@@ -7,9 +7,9 @@
 
 @interface SquarifiedTreemap  : PajeFilter
 {
+	TimeSliceTree *timeSliceTree;
 	Treemap *currentTreemap;
 }
-- (Treemap *) defineTreemapWith: (TimeSliceTree *) tree;
 - (Treemap *) treemapWithWidth: (int) width
                      andHeight: (int) height
                       andDepth: (int) depth

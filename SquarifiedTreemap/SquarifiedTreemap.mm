@@ -22,18 +22,12 @@ TreemapDraw *draw = NULL;
 - (void) timeSelectionChanged
 {
 	TimeSliceAggregation *filter = (TimeSliceAggregation *) inputComponent;
-	if (currentTreemap != nil){
-		[currentTreemap release];
+	if (timeSliceTree != nil){
+		[timeSliceTree release];
 	}
-	currentTreemap = [self defineTreemapWith: [filter timeSliceTree]];
+	timeSliceTree = [filter timeSliceTree];
+	[timeSliceTree retain];
 	draw->Refresh();
-}
-
-- (Treemap *) defineTreemapWith: (TimeSliceTree *) tree
-{
-	Treemap *node = [[Treemap alloc] init];
-	[node autorelease];
-	return [node createTreeWithTimeSliceTree: tree];
 }
 
 - (Treemap *) treemapWithWidth: (int) width
@@ -46,6 +40,13 @@ TreemapDraw *draw = NULL;
 				|| values == nil){
 		return nil;
 	}
+	[timeSliceTree doFinalValueWith: values];
+	if (currentTreemap != nil){
+		[currentTreemap release];
+	}
+	currentTreemap = [[Treemap alloc] init];
+	[currentTreemap createTreeWithTimeSliceTree: timeSliceTree
+				withValues: values];
 	[currentTreemap calculateTreemapWithWidth: (float)width
 				andHeight: (float)height];
 	return currentTreemap;
