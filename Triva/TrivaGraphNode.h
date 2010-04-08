@@ -18,7 +18,7 @@
 #define __TrivaGraphNode_h
 #include <Foundation/Foundation.h>
 #include <General/PajeFilter.h>
-#include <Triva/Tree.h>
+#include <Tree.h>
 
 @class TrivaFilter;
 @class TrivaNodeGraph;

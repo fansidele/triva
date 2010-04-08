@@ -1,19 +1,10 @@
 include $(GNUSTEP_MAKEFILES)/common.make
 
-CC=$(CXX)
-
 PACKAGE_NAME=TimeSliceAggregation
 BUNDLE_NAME=TimeSliceAggregation
 BUNDLE_EXTENSION=.bundle
 BUNDLE_INSTALL_DIR=$(GNUSTEP_BUNDLES)/@PROJECT_NAME@
 TimeSliceAggregation_PRINCIPAL_CLASS=TimeSliceAggregation
-
-ifeq ($(FOUNDATION_LIB), apple)
-        LDFLAGS += -F../Triva -framework Triva
-else
-        LDFLAGS += -L../Triva/Triva.framework -lTriva
-        ADDITIONAL_LIB_DIRS += -L../Triva/Triva.framework/Versions/Current
-endif
 
 TimeSliceAggregation_OBJC_FILES = TimeSliceAggregation.m
 TimeSliceAggregation_OBJCC_FILES=
@@ -21,8 +12,6 @@ TimeSliceAggregation_OBJCC_FILES=
 TimeSliceAggregation_INCLUDE_DIRS += @CPPFLAGS@
 TimeSliceAggregation_LIB_DIRS += @LIBS@
 TimeSliceAggregation_LDFLAGS += @LDFLAGS@
-TimeSliceAggregation_BUNDLE_LIBS += -lGeneral
-
 
 include $(GNUSTEP_MAKEFILES)/bundle.make
 

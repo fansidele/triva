@@ -29,6 +29,10 @@ SquarifiedTreemap_OBJC_FILES = \
 SquarifiedTreemap.m \
 TreemapView.m
 
+SquarifiedTreemap_INCLUDE_DIRS += @CPPFLAGS@
+SquarifiedTreemap_LIB_DIRS += @LIBS@
+SquarifiedTreemap_LDFLAGS += @LDFLAGS@
+
 #
 # Makefiles
 #

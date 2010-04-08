@@ -32,6 +32,10 @@ GraphView_OBJC_FILES = \
 DrawView.m \
 GraphView.m
 
+GraphView_INCLUDE_DIRS += @CPPFLAGS@
+GraphView_LIB_DIRS += @LIBS@
+GraphView_LDFLAGS += @LDFLAGS@
+
 #
 # Makefiles
 #

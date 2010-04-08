@@ -127,7 +127,7 @@ if test x$enableDot = xyes ; then
 	FLAG=yes
 fi
 
-CPPFLAGS="-I../../ -I../ -I./ $CPPFLAGS"
+CPPFLAGS="-I../../ -I../ -I../Triva -I./ $CPPFLAGS"
 AC_SUBST(CPPFLAGS)
 AC_SUBST(LIBS)
 AC_SUBST(CONFIG_FILES)

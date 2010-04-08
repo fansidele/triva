@@ -17,9 +17,9 @@
 #ifndef __TIMESLICE_H
 #define __TIMESLICE_H
 #include <Foundation/Foundation.h>
-#include <Triva/TrivaFilter.h>
-#include <Triva/TimeSliceTree.h>
-#include <Triva/TimeSliceGraph.h>
+#include <TrivaFilter.h>
+#include <TimeSliceTree.h>
+#include <TimeSliceGraph.h>
 
 /**
  * <code>TimeSlice</code> interacts with other Paje filters (through

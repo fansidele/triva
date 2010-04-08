@@ -31,6 +31,10 @@ GraphConfiguration_OBJC_FILES = \
 GraphConfiguration.m \
 GraphConfiguration+Interface.m
 
+GraphConfiguration_INCLUDE_DIRS += @CPPFLAGS@
+GraphConfiguration_LIB_DIRS += @LIBS@
+GraphConfiguration_LDFLAGS += @LDFLAGS@
+
 #
 # Makefiles
 #
