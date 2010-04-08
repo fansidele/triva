@@ -71,7 +71,10 @@
 	NSEnumerator *en = [destinations keyEnumerator];
 	id dest;
 	while ((dest = [en nextObject])){
+		TimeSliceGraph *graph = [destinations objectForKey: dest];
+		double w = [[[[graph timeSliceValues] allValues] objectAtIndex: 0] doubleValue];
 		LinkViewEdge *edge = [[LinkViewEdge alloc] init];
+		[edge setWidth: w];
 		[edge setSource: self];
 		[edge setDestination: [[prov nodes] objectForKey: dest]];
 		[edges addObject: edge];
@@ -82,6 +85,8 @@
 
 - (void) draw
 {
+	[[[NSColor blackColor] colorWithAlphaComponent: 0.8] set];
+	[NSBezierPath setDefaultLineWidth: 1];
 	[NSBezierPath strokeRect: bb];
 }
 
@@ -91,6 +96,8 @@
 	NSEnumerator *en = [edges objectEnumerator];
 	LinkViewEdge *edge;
 	while ((edge = [en nextObject])){
+		[edge draw];
+/*
 		NSRect sr = [[edge source] bb];
 //		NSLog (@"%@", [edge destination]);
 		NSRect dr = [[edge destination] bb];
@@ -109,6 +116,7 @@
 //				[[edge destination] name], NSStringFromPoint(dp));
 //		NSLog (@"%@ %@", NSStringFromRect([[edge source] bb]),
 //				NSStringFromRect ([[edge destination] bb]));
+*/
 	}
 //	[name drawAtPoint: NSMakePoint (bb.origin.x, bb.origin.y)
   //         withAttributes: nil];

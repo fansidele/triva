@@ -18,11 +18,15 @@
 #define __LinkViewEdge_h
 
 #include <AppKit/AppKit.h>
-#include <Triva/TrivaTreemap.h>
-#include <Triva/TimeSliceTree.h>
-#include <Triva/TrivaGraphEdge.h>
+#include <Triva/Triva.h>
 
 @interface LinkViewEdge : TrivaGraphEdge
+{
+	double width;
+	double max;
+}
+- (void) setWidth: (double) w;
+- (void) setMaxWidth: (double)m;
 @end
 
 #endif
