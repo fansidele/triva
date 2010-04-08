@@ -64,3 +64,51 @@ defaults write Triva 'task-compute-MSGstate Colors' '{
     execute = "0 1 0";
 }'
 
+defaults write Triva 'platform Color'		'1 1 0'
+defaults write Triva 'link Color'		'0 1 1'
+defaults write Triva 'host Color'		'1 0 1'
+
+
+defaults write Triva 'application Color'	'1 1 1'
+
+defaults write Triva 'finalize Color'		'0 1 1'
+defaults write Triva 'host-finalize Color'	'0 .75 1'
+defaults write Triva 'msg-finalize Color'	'0 .5 1'
+defaults write Triva 'smx-finalize Color'	'0 .25 1'
+defaults write Triva 'surf-finalize Color'	'0 0 1'
+
+defaults write Triva 'compute Color' 		'1 1 0'
+defaults write Triva 'host-compute Color'	'1 .75 0'
+defaults write Triva 'msg-compute Color'	'1 .5 0'
+defaults write Triva 'smx-compute Color'	'1 .25 0'
+defaults write Triva 'surf-compute Color'	'1 0 0'
+
+defaults write Triva 'power-appli_0 Color'	'1 0 0'
+defaults write Triva 'power-appli_1 Color'	'0 1 0'
+defaults write Triva 'power-appli_2 Color'	'1 1 0'
+defaults write Triva 'power-appli_3 Color'	'0 0 1'
+defaults write Triva 'power-appli_4 Color'	'1 0 1'
+defaults write Triva 'power-appli_5 Color'	'0 1 1'
+defaults write Triva 'power-appli_6 Color'	'1 1 1'
+defaults write Triva 'power-appli_7 Color'	'0 0 0'
+
+
+defaults write Triva 'power-compute Color'	'1 0 0'
+defaults write Triva 'power-finalize Color'	'0 1 0'
+
+
+defaults write Triva 'bw-appli_0 Color'	'1 0 0'
+defaults write Triva 'bw-appli_1 Color'	'0 1 0'
+defaults write Triva 'bw-appli_2 Color'	'1 1 0'
+defaults write Triva 'bw-appli_3 Color'	'0 0 1'
+defaults write Triva 'bw-appli_4 Color'	'1 0 1'
+defaults write Triva 'bw-appli_5 Color'	'0 1 1'
+defaults write Triva 'bw-appli_6 Color'	'1 1 1'
+defaults write Triva 'bw-appli_7 Color'	'0 0 0'
+
+defaults write Triva 'bw-compute Color'	'1 0 0'
+defaults write Triva 'bw-finalize Color'	'0 1 0'
+
+
+defaults write Triva 'power-Project2 Color' '1 0 0'
+defaults write Triva 'power-Project3 Color' '0 0 1'
