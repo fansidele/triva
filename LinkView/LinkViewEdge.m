@@ -34,9 +34,9 @@
 	if (!source || !destination){
 		return;
 	}
-
-	NSRect sr = [[self source] bb];
-	NSRect dr = [[self destination] bb];
+	
+	NSRect sr = [[[provider nodes] objectForKey: source] bb];
+	NSRect dr = [[[provider nodes] objectForKey: destination] bb];
 
 	NSPoint s = NSMakePoint (sr.origin.x + sr.size.width/2,
                           sr.origin.y + sr.size.height/2);
@@ -79,5 +79,10 @@
 		NSAddPoints (base, LMSMultiplyPoint(cNormPerp,-w/2))];
 	[flecha lineToPoint: d];
 	[flecha fill];
+}
+
+- (void) setProvider: (id) prov
+{
+	provider = prov;
 }
 @end
