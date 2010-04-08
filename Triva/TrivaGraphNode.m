@@ -8,6 +8,7 @@
 	position = NSZeroPoint;
 	size = NSZeroRect;
 	values = nil;
+	drawable = NO;
 	return self;
 }
 
@@ -53,6 +54,16 @@
 - (NSDictionary*) values
 {
 	return values;
+}
+
+- (void) setDrawable: (BOOL) v
+{
+	drawable = v;
+}
+
+- (BOOL) drawable
+{
+	return drawable;
 }
 
 - (void) dealloc

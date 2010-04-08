@@ -9,6 +9,8 @@
 	NSRect size;
 	NSPoint position;
 	NSDictionary *values;
+
+	BOOL drawable; //is it ready to draw?
 }
 - (void) setName: (NSString *) n;
 - (NSString *) name;
@@ -18,6 +20,8 @@
 - (NSPoint) position;
 - (void) setValues: (NSDictionary*)v;
 - (NSDictionary*) values;
+- (void) setDrawable: (BOOL) v;
+- (BOOL) drawable;
 @end
 
 #endif
