@@ -60,6 +60,9 @@ $ apt-get install wx2.8-headers
 B. Triva2: Compilation
 ======================
 
+The Triva2 sources can be downloaded here:
+http://dl.getdropbox.com/u/1119921/Triva-2.0.tar.gz
+
 $ source /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
 $ tar xfz Triva2.tgz
 $ cd Triva2
