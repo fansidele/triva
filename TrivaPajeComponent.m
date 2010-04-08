@@ -33,7 +33,7 @@
     NSString *bundlePath;
     NSBundle *bundle;
 
-    bundleName = [@"Bundles" stringByAppendingPathComponent:@"Triva"];
+    bundleName = [@"Bundles" stringByAppendingPathComponent:@PROJECT_NAME];
     bundleName = [bundleName stringByAppendingPathComponent:name];
     bundleName = [bundleName stringByAppendingPathExtension:@"bundle"];
 

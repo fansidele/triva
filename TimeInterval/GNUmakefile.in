@@ -1,0 +1,28 @@
+include $(GNUSTEP_MAKEFILES)/common.make
+
+CC=$(CXX)
+
+PACKAGE_NAME=TimeInterval
+BUNDLE_NAME=TimeInterval
+BUNDLE_EXTENSION=.bundle
+BUNDLE_INSTALL_DIR=$(GNUSTEP_BUNDLES)/@PROJECT_NAME@
+TimeInterval_PRINCIPAL_CLASS=TimeInterval
+
+TimeInterval_OBJC_FILES = 
+TimeInterval_OBJCC_FILES= \
+	TimeInterval.mm \
+	TimeIntervalWindow.mm \
+	TimeIntervalWindowAuto.mm \
+	SliceDraw.mm
+
+TimeInterval_INCLUDE_DIRS += @CPPFLAGS@
+TimeInterval_LIB_DIRS += @LIBS@
+TimeInterval_LDFLAGS += @LDFLAGS@
+TimeInterval_BUNDLE_LIBS += -lGeneral
+
+
+include $(GNUSTEP_MAKEFILES)/bundle.make
+
+after-distclean::
+after-all::
+after-clean:: 

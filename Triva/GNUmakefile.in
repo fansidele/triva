@@ -1,15 +1,15 @@
 include $(GNUSTEP_MAKEFILES)/common.make
 
-FRAMEWORK_NAME = @PACKAGE_TARNAME@
+FRAMEWORK_NAME = @PROJECT_NAME@
 
-@PACKAGE_TARNAME@_OBJC_FILES = \
+@PROJECT_NAME@_OBJC_FILES = \
 	TrivaFilter.m \
 	TrivaGraphNode.m \
 	TrivaGraphEdge.m \
 	TimeSliceTree.m \
 	TimeSliceGraph.m \
 	Tree.m
-@PACKAGE_TARNAME@_HEADER_FILES = TrivaFilter.h \
+@PROJECT_NAME@_HEADER_FILES = TrivaFilter.h \
 	TrivaGraphNode.h \
 	TrivaGraphEdge.h \
 	TimeSliceTree.h \

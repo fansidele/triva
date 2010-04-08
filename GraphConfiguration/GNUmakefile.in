@@ -5,7 +5,7 @@ CC=$(CXX)
 PACKAGE_NAME=GraphConfiguration
 BUNDLE_NAME=GraphConfiguration
 BUNDLE_EXTENSION=.bundle
-BUNDLE_INSTALL_DIR=$(GNUSTEP_BUNDLES)/Triva
+BUNDLE_INSTALL_DIR=$(GNUSTEP_BUNDLES)/@PROJECT_NAME@
 GraphConfiguration_PRINCIPAL_CLASS=GraphConfiguration
 
 GraphConfiguration_OBJC_FILES = 
