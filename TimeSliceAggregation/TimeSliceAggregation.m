@@ -136,7 +136,67 @@
 	sliceTimeChanged = YES;
 }
 
-- (void) timeSelectionChanged
+
+- (void) debug
+{
+	GSDebugAllocationActive(YES);
+	Class *x = GSDebugAllocationClassList();
+	int i = 0;
+	while (1&&x[i]){
+		 NSLog (@"%@ - %d\n", x[i],
+		 GSDebugAllocationPeak(x[i]));
+		 i++;
+	}
+}
+
+- (void) activateRecordingOfClass: (NSString *)classname
+{
+	Class *x = GSDebugAllocationClassList();
+	int i = 0;
+	while (1&&x[i]){
+		 if ([[x[i] description] isEqualToString: classname]){
+				 GSDebugAllocationActiveRecordingObjects(x[i]);
+		 }
+		 i++;
+	}
+}
+
+- (void) listRecordedObjectsOfClass: (NSString *) classname
+{
+	Class *x = GSDebugAllocationClassList();
+	int i = 0;
+	while (1&&x[i]){
+		 if ([[x[i] description] isEqualToString: classname]){
+				 NSLog (@"%@ => %d (peak:%d)", x[i],
+				 [[[GSDebugAllocationListRecordedObjects(x[i])
+				 	objectEnumerator]
+				 allObjects] count],
+				 GSDebugAllocationPeak(x[i]));
+				 NSEnumerator *en;
+				 en =[GSDebugAllocationListRecordedObjects(x[i])
+				 	objectEnumerator];
+				 id obj;
+				 while ((obj = [en nextObject])){
+					NSLog (@"\t%@", obj);
+				 }
+		 }
+		 i++;
+	}
+}
+
+-(void)timeSelectionChanged
+{
+	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	//[self debug];
+	//[self activateRecordingOfClass: @"TimeSliceTree"];
+	[self timeSelectionChanged2];
+	//[self listRecordedObjectsOfClass: @"TimeSliceTree"];
+	[pool release];
+}
+
+
+
+- (void) timeSelectionChanged2
 {
 	NSLog (@"%s - %@,%@", __FUNCTION__,
 		[self selectionStartTime],
