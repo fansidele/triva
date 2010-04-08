@@ -52,7 +52,7 @@ open paje to see if it is working, executing "openapp Paje"
 
 These are the libraries/tools that must be present:
 
-$ sudo apt-get install autoconf wx-common libgtk2.0-dev libwxgtk2.8-dev
+$ sudo apt-get install autoconf automake wx-common libgtk2.0-dev libwxgtk2.8-dev
 
 These are the libraries/tools that must be present if the 3D visualization
 components will be used (note that the mesa implementation of GL might not
