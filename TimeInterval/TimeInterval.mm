@@ -106,4 +106,22 @@ TimeIntervalWindow *window;
 	}
 
 }
+
+- (NSDate *) selectionStartTime
+{
+	if (selectionStartTime){
+		return selectionStartTime;
+	}else{
+		return [super selectionStartTime];
+	}
+}
+
+- (NSDate *) selectionEndTime
+{
+	if (selectionEndTime){
+		return selectionEndTime;
+	}else{
+		return [super selectionEndTime];
+	}
+}
 @end
