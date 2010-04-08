@@ -40,9 +40,9 @@
 	id processorType = [self entityTypeWithName: @"processor"];
 	id switchType = [self entityTypeWithName: @"switch"];
 	id cacheType = [self entityTypeWithName: @"cacheL2"];
-	id psType = [self entityTypeWithName: @"PS"];
-	id bsType = [self entityTypeWithName: @"BS"];
-	id ssType = [self entityTypeWithName: @"SS"];
+	id psType = [self entityTypeWithName: @"processor-switch"];
+	id bsType = [self entityTypeWithName: @"cache-switch"];
+	id ssType = [self entityTypeWithName: @"switch-switch"];
 	id root = [self rootInstance];
 	id type = nil;
 	id n = nil;
@@ -142,14 +142,21 @@
                         continue;
                 }
                 values = [tree aggregatedValues];
-		id numberOfAddresses = [values objectForKey: @"numberOfAddresses"];
-		double naddresses = 0;
-		if (numberOfAddresses){
-			naddresses = [numberOfAddresses doubleValue];
+		NSString *val = nil;
+		double nAddresses = 0, sUtilization = 0;
+		val = [values objectForKey: @"numberOfAddresses"];
+		if (val){
+			nAddresses = [val doubleValue];
 		}
-		if (naddresses != 0){
-			if (naddresses > max) max = naddresses;
-			if (naddresses < min) min = naddresses;
+		val = [values objectForKey: @"switchUtilization"];
+		if (val){
+			sUtilization = [val doubleValue];
+		}
+
+		double size = nAddresses + sUtilization;
+		if (size != 0){
+			if (size > max) max = size;
+			if (size < min) min = size;
 		}
         }
 }
@@ -187,14 +194,19 @@
 		nodeRect.origin.x = nodePos.x;
 		nodeRect.origin.y = nodePos.y;
 
-		id numberOfAddresses = [values objectForKey: @"numberOfAddresses"];
-		double naddresses = 0;
-		if (numberOfAddresses){
-			naddresses = [numberOfAddresses doubleValue];
+		NSString *val = nil;
+		double nAddresses = 0, sUtilization = 0;
+		val = [values objectForKey: @"numberOfAddresses"];
+		if (val){
+			nAddresses = [val doubleValue];
 		}
-		NSLog (@"%@ %f", [node name], naddresses);
+		val = [values objectForKey: @"switchUtilization"];
+		if (val){
+			sUtilization = [val doubleValue];
+		}
 
-		if (naddresses == 0){
+		double size = nAddresses + sUtilization;
+		if (size == 0){
 			nodeRect.size.width = 5;
 			nodeRect.size.height = 5;
 		}else{
@@ -202,13 +214,29 @@
 			s += 20;
 			if ((max-min)!=0){
 				s += 50 *
-					(naddresses - min)/(max-min);
+					(size - min)/(max-min);
 			}
 			nodeRect.size.width = s;
 			nodeRect.size.height = s;
 		}
 		[node setSize: nodeRect];
 
+		//separation and coloring
+                NSMutableDictionary *nodeGraphValues;
+                nodeGraphValues = [NSMutableDictionary dictionary];
+		id is_processor = [values objectForKey: @"is_processor"];	
+		if (is_processor){
+			[nodeGraphValues setObject:
+			        [NSNumber numberWithDouble: 1]
+				forKey: @"is_processor"];
+		}
+		id is_switch = [values objectForKey: @"is_switch"];	
+		if (is_switch){
+			[nodeGraphValues setObject:
+			        [NSNumber numberWithDouble: 1]
+				forKey: @"is_switch"];
+		}
+                [node setValues: nodeGraphValues];
 		[node setDrawable: YES];
 	}
 
