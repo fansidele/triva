@@ -14,6 +14,24 @@
 	filter = f;
 }
 
+- (NSRect) convertRect: (NSRect)input from: (NSRect)bb to:(NSRect) screen
+{
+	NSRect ret;
+
+	//convert size
+	ret.size.width = input.size.width/bb.size.width * screen.size.width;
+	ret.size.height = input.size.width/bb.size.width * screen.size.width;
+
+	//graphviz has node origin in center, screen needs in top-left corner
+	double x = input.origin.x - input.size.width/2;
+	double y = input.origin.y - input.size.height/2;
+
+	//convert origin
+	ret.origin.x = x / bb.size.width * screen.size.width;
+	ret.origin.y = y / bb.size.height * screen.size.height;
+	return ret;
+}
+
 - (NSColor *) getColor: (NSColor *)c withSaturation: (double) saturation
 {
 	if (![[c colorSpaceName] isEqualToString:
