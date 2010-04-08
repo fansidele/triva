@@ -1,10 +1,13 @@
 #include "TimeSliceTree.h"
+#include <float.h>
 
 @implementation TimeSliceTree
 - (id) init
 {
 	self = [super init];
 	timeSliceValues = [[NSMutableDictionary alloc] init];
+	maxValues = [[NSMutableDictionary alloc] init];
+	minValues = [[NSMutableDictionary alloc] init];
 	timeSliceColors = [[NSMutableDictionary alloc] init];
 	aggregatedValues = [[NSMutableDictionary alloc] init];
 	timeSliceDurations = [[NSMutableDictionary alloc] init];
@@ -14,6 +17,8 @@
 - (void) dealloc
 {
 	[timeSliceValues release];
+	[maxValues release];
+	[minValues release];
 	[timeSliceColors release];
 	[aggregatedValues release];
 	[timeSliceDurations release];
@@ -142,6 +147,33 @@
 						aggValue] forKey: key];
 		}
 	}
+
+	/* for max and min values */
+	for (i = 0; i < [children count]; i++){
+		TimeSliceTree *child = [children objectAtIndex: i];
+		NSDictionary *childagg = [child aggregatedValues];
+		NSEnumerator *keys = [childagg keyEnumerator];
+		id key;
+		while ((key = [keys nextObject])){
+			float value = [[childagg objectForKey: key] floatValue];
+			//defining max, min
+			double max = 0, min = FLT_MAX;
+			if ([maxValues objectForKey: key]){
+				max=[[maxValues objectForKey: key] doubleValue];
+			}
+			if ([minValues objectForKey: key]){
+				min=[[minValues objectForKey: key] doubleValue];
+			}
+			if (value > max){
+				[maxValues setObject:[childagg objectForKey:key]
+					forKey: key];
+			}
+			if (value < min){
+				[minValues setObject:[childagg objectForKey:key]
+					forKey: key];
+			}
+		}
+	}
 	[self setAggregatedValues: agg];
 
 	//do the magic to define colors for this node
@@ -182,5 +214,41 @@
 	[self setFinalValue: value];
 	return finalValue;
 
+}
+
+- (void) addChild: (TimeSliceTree*) child
+{
+	id values = [child timeSliceValues];
+	NSEnumerator *en = [values keyEnumerator];
+	id key;
+	while ((key = [en nextObject])){
+		double max = 0, min = FLT_MAX, current;
+		current = [[values objectForKey: key] doubleValue];
+		if ([maxValues objectForKey: key]){
+			max = [[maxValues objectForKey: key] doubleValue];
+		}
+		if ([minValues objectForKey: key]){
+			min = [[minValues objectForKey: key] doubleValue];
+		}
+		if (current > max){
+			[maxValues setObject: [values objectForKey: key]
+					forKey: key];
+		}
+		if (current < min){
+			[minValues setObject: [values objectForKey: key]
+					forKey: key];
+		}
+	}
+	[super addChild: child];
+}
+
+- (NSDictionary *) maxValues
+{
+	return maxValues;
+}
+
+- (NSDictionary *) minValues
+{
+	return minValues;
 }
 @end

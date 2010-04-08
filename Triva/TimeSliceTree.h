@@ -10,6 +10,10 @@
 	NSMutableDictionary *timeSliceValues;
 	float finalValue;
 
+	/* max and min values */
+	NSMutableDictionary *maxValues;
+	NSMutableDictionary *minValues;
+
 	/* registering colors */
 	NSMutableDictionary *timeSliceColors;
 
@@ -19,6 +23,8 @@
 	/* for registering accumulated durations */
 	NSMutableDictionary *timeSliceDurations;
 }
+- (NSDictionary *) maxValues;
+- (NSDictionary *) minValues;
 - (void) setTimeSliceColors: (NSMutableDictionary *) colors;
 - (NSMutableDictionary *) timeSliceColors;
 - (void) setTimeSliceValues: (NSMutableDictionary *) values;
@@ -32,5 +38,7 @@
 - (void) setFinalValue: (float) f;
 - (void) doAggregation;
 - (float) doFinalValueWith: (NSSet *) set;
+
+- (void) addChild: (TimeSliceTree*) child;
 @end
 #endif
