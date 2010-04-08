@@ -38,78 +38,46 @@
 	NSRect sr = [[self source] bb];
 	NSRect dr = [[self destination] bb];
 
-	NSPoint sp = NSMakePoint (sr.origin.x + sr.size.width/2,
+	NSPoint s = NSMakePoint (sr.origin.x + sr.size.width/2,
                           sr.origin.y + sr.size.height/2);
-	NSPoint dp = NSMakePoint (dr.origin.x + dr.size.width/2,
+	NSPoint d = NSMakePoint (dr.origin.x + dr.size.width/2,
                           dr.origin.y + dr.size.height/2);
 
+	//setting color
 	[[[NSColor blueColor] colorWithAlphaComponent: 0.2] set];
-	if (sp.x == dp.x && sp.y == dp.y) {
-		return;
-		NSBezierPath *path = [NSBezierPath bezierPath];
-		[path setLineWidth: width/10];
-		[path moveToPoint: sp];
-		[path curveToPoint: dp
-                        controlPoint1: NSMakePoint (sp.x, sp.y+10)
-			controlPoint2: NSMakePoint (sp.x+10, sp.y)];
-		[path stroke];
-	}else{
-		double angle = LMSAngleBetweenPoints (sp, dp);
-		double distance = LMSDistanceBetweenPoints (sp, dp);
-        
-		NSAffineTransform* xform = [NSAffineTransform transform];
-		[xform translateXBy: sp.x yBy: sp.y];
-		[xform rotateByDegrees: angle];
-		[xform concat];
-        
-		//line
-		NSBezierPath *path = [NSBezierPath bezierPath];
-		double w = width/10;
-		if (w < 1){
-			w = 1;
-		}
-		w = 5;
 
-		NSPoint orig = NSMakePoint (0,0);
-		NSPoint dest = NSMakePoint (-distance,0);
-		NSPoint control = NSMakePoint ((-distance/2),10);
+	//origin is s, destination is d
+	NSPoint vNorm = LMSNormalizePoint (NSSubtractPoints(d, s));
+	NSPoint vNormPerp = NSMakePoint (-vNorm.y, vNorm.x);
 
-		[path setLineWidth: w];
-		[path moveToPoint: orig];
-		[path curveToPoint: dest
-                        controlPoint1: control
-			controlPoint2: control];
-		[path stroke];
-	
-		NSPoint arrowBase =
-			NSMakePoint (control.x + 0.9 * (dest.x - control.x),
-					control.y + 0.9 * (dest.y - control.y));
+	//calculating the control point of the bezier curve
+	double dist = LMSDistanceBetweenPoints (d, s);
+	NSPoint middle = NSSubtractPoints (d, LMSMultiplyPoint(vNorm,dist/2));
+	NSPoint control = NSAddPoints (middle, LMSMultiplyPoint(vNormPerp,20));
 
-		NSPoint perpArrow = 
-			NSMakePoint (-arrowBase.y, arrowBase.x);
+	//calculating the base of the arrow
+	NSPoint cNorm = LMSNormalizePoint (NSSubtractPoints (control, d));
+	NSPoint cNormPerp = NSMakePoint (-cNorm.y, cNorm.x);
+	NSPoint base = NSSubtractPoints (d , LMSMultiplyPoint(cNorm, -20));
 
-		[[NSColor blackColor] set];
-		NSRect aRect = NSMakeRect(arrowBase.x, arrowBase.y, 2.0, 2.0);
-		NSRectFill (aRect);
-		[[[NSColor blueColor] colorWithAlphaComponent: 0.2] set];
+	double w = width/30;
+	if (w < 1) w = 1;
 
-/*
-		NSPoint thereArrow =
-			NSMakePoint (arrowBase.x + 0.1 * (perpArrow.x - arrowBase.x), arrowBase.y + 0.1 * (perpArrow.x - arrowBase.x));
+	NSBezierPath *linha = [NSBezierPath bezierPath];
+	[linha setLineWidth: w];
+	[linha moveToPoint: s];
+	[linha curveToPoint: base
+		controlPoint1: control
+		controlPoint2: control];
+	[linha stroke];
 
-		//arrow
-		path = [NSBezierPath bezierPath];
-		[path setLineWidth: 1];
-		[path moveToPoint: arrowBase];
-		[path lineToPoint: NSMakePoint (thereArrow.x, w)];
-		[path lineToPoint: dest];
-		[path lineToPoint: NSMakePoint (thereArrow.x, -w)];
-		[path fill];
-		[path stroke];
-*/
-
-		[xform invert];
-		[xform concat];
-	}
+	NSBezierPath *flecha = [NSBezierPath bezierPath];
+	[flecha moveToPoint: d];
+	[flecha lineToPoint:
+		NSAddPoints (base, LMSMultiplyPoint(cNormPerp,w/2))];
+	[flecha lineToPoint:
+		NSAddPoints (base, LMSMultiplyPoint(cNormPerp,-w/2))];
+	[flecha lineToPoint: d];
+	[flecha fill];
 }
 @end
