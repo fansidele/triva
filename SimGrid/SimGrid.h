@@ -11,8 +11,6 @@
 	graph_t *platformGraph;
 	BOOL platformCreated;
 }
-- (void) dumpTraceInTextualFormat;
-- (BOOL) checkForSimGridHierarchy: (id) type level: (int) level;
 - (NSArray *) getHosts;
 - (NSArray *) getLinks;
 - (NSPoint) getPositionForHost: (id) host;

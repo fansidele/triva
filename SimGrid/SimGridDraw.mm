@@ -428,8 +428,6 @@ void SimGridDraw::OnKeyDownEvent(wxKeyEvent& evt)
 			        @"Printed to %@", filename];
 			window->setStatusMessage (NSSTRINGtoWXSTRING(msg));
 	        }
-	}else if (evt.AltDown() && evt.GetKeyCode() == 68) { /* ALT + D (to dump) */
-		[filter dumpTraceInTextualFormat];
 	}
 }
 
