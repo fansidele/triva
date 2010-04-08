@@ -73,7 +73,12 @@ void DrawManager::drawOneState (Ogre::SceneNode *visualContainer,
 void DrawManager::drawStates (PajeEntityType *et, id container)
 {
 	Ogre::SceneNode *n;
-	n = mSceneMgr->getSceneNode ([[container name] cString]);
+        try{
+	    n = mSceneMgr->getSceneNode ([[container name] cString]);
+	}catch (Ogre::Exception ex){
+	    NSLog (@"%@ -> scene node for it not created", [container name]);
+	    return;
+	}
 	NSEnumerator *en3;
 	en3 = [viewController enumeratorOfEntitiesTyped: et
 			inContainer: container
