@@ -49,3 +49,18 @@ defaults write Triva 'ACCESS Colors' '{
     READ = "0 1 0";
     WRITE = "1 0 0";
 }'
+
+defaults write Triva 'task-finalize-MSGstate Colors' '{
+    created = "1.000000 0.942554 0.000000";
+    get = "1.000000 0.064486 0.000000";
+    put = "0.000000 0.070902 1.000000";
+    execute = "0 1 0";
+}'
+
+defaults write Triva 'task-compute-MSGstate Colors' '{
+    created = "1.000000 0.942554 0.000000";
+    get = "1.000000 0.064486 0.000000";
+    put = "0.000000 0.070902 1.000000";
+    execute = "0 1 0";
+}'
+
