@@ -61,6 +61,12 @@ agsafeset (n, (char*)"height", str_height, default_size); \
 
 - (void) settingGraphvizLayoutAttributes
 {
+	if (!platformGraph){
+		NSLog (@"%s:%d: platform graph not created",
+			__FUNCTION__, __LINE__);
+		return;
+	}
+
 	agnodeattr (platformGraph, (char*)"label", (char*)"");
 	agraphattr (platformGraph, (char*)"overlap", (char*)"false");
 	agraphattr (platformGraph, (char*)"splines", (char*)"true");
