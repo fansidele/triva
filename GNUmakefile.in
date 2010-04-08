@@ -13,9 +13,9 @@ SUBPROJECTS = @PROJECTS@
 	TrivaWindowAuto.mm
 
 ifeq ($(FOUNDATION_LIB), apple)
-LDFLAGS += -F../Triva -framework Triva
+LDFLAGS += -F./Triva -framework Triva
 else
-LDFLAGS += -L../Triva/Triva.framework -lTriva
+LDFLAGS += -L./Triva/Triva.framework -lTriva
 endif
 	
 @PACKAGE_TARNAME@_INCLUDE_DIRS += @CPPFLAGS@
