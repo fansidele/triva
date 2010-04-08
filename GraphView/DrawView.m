@@ -58,24 +58,31 @@
 	NSDictionary *types;
 
 	NSRect tela = [self bounds];
+	NSRect bb = [filter sizeForGraph];
 
 	if (![edge drawable]) return;
 	TrivaGraphNode *src = [edge source];
 	TrivaGraphNode *dst = [edge destination];
-	NSRect src_size = [filter sizeForNode: src];
-	NSRect dst_size = [filter sizeForNode: dst];
+	NSRect src_size = [self convertRect: [filter sizeForNode: src]
+					from: bb to: tela];
+	NSRect dst_size = [self convertRect: [filter sizeForNode: dst]
+					from: bb to: tela];
 
-	NSPoint src_pos = [filter positionForNode: src];
-	NSPoint dst_pos = [filter positionForNode: dst];
-	NSRect bb = [filter sizeForGraph];
+	//get center position for src and dst
+	NSPoint src_pos, dst_pos;
+	src_pos.x = src_size.origin.x + src_size.size.width/2;
+	src_pos.y = src_size.origin.y + src_size.size.height/2;
+	dst_pos.x = dst_size.origin.x + dst_size.size.width/2;
+	dst_pos.y = dst_size.origin.y + dst_size.size.height/2;
+
 	double bw = [filter sizeForEdge: edge].size.width;
 
 	double x1, y1;
 	double x2, y2;
-	x1 = ((src_pos.x+(src_size.size.width)/2) / bb.size.width) * tela.size.width;
-	y1 = ((src_pos.y+(src_size.size.height)/2) / bb.size.height) * tela.size.height;
-	x2 = ((dst_pos.x+(dst_size.size.width)/2) / bb.size.width) * tela.size.width;
-	y2 = ((dst_pos.y+(dst_size.size.height)/2) / bb.size.height) * tela.size.height;
+	x1 = src_pos.x;
+	y1 = src_pos.y;
+	x2 = dst_pos.x;
+	y2 = dst_pos.y;
 
 	double distance = sqrt ((x2*x2 - 2*x2*x1 + x1*x1) + (y2*y2 - 2*y2*y1 + y1*y1) );
 	double k = 10/distance; // remove 10% of the distance (5% on each endpoint)
@@ -179,18 +186,13 @@
 	NSDictionary *types;
 
 	if (![node drawable]) return;
-	NSPoint pos = [filter positionForNode: node];
-	NSRect size = [filter sizeForNode: node];
+	NSRect rect = [filter rectForNode: node];
 	NSRect bb = [filter sizeForGraph];
 
 	types = [filter enumeratorOfValuesForNode: node];
 	en = [types keyEnumerator];
 
-	NSRect nodeRect;
-	nodeRect.origin.x = (pos.x / bb.size.width) * tela.size.width;
-	nodeRect.origin.y = (pos.y / bb.size.height) * tela.size.height;
-	nodeRect.size.width = size.size.width;
-	nodeRect.size.height = size.size.height;
+	NSRect nodeRect = [self convertRect: rect from: bb to: tela];
 
 //	NSLog (@"%@", [node name]);
 //	NSLog (@"\t%d %d %d", [node separation], [node color], [node gradient]);
