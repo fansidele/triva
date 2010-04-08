@@ -266,6 +266,20 @@
 	}
 }
 
+- (void) calculateBehavioralHierarchy
+{
+	NSLog (@"Calculating behavioral hierarchy...");
+	/* re-create hierarchy */
+	if (tree){
+		[tree release];
+	}
+	tree = [self createInstanceHierarchy: [self rootInstance]
+				      parent: nil];	
+	[tree retain];
+	/* aggregate values */
+	[tree doAggregation];
+	NSLog (@"Done");
+}
 
 - (void) timeSelectionChanged2
 {
@@ -286,17 +300,7 @@
 		timeSliceChanged = YES;
 	}
 	if (timeSliceChanged == YES){
-		NSLog (@"Calculating behavioral hierarchy...");
-		/* re-create hierarchy */
-		if (tree){
-			[tree release];
-		}
-		tree = [self createInstanceHierarchy: [self rootInstance]
-					      parent: nil];	
-	        [tree retain];
-		/* aggregate values */
-		[tree doAggregation];
-		NSLog (@"Done");
+		[self calculateBehavioralHierarchy];
 	}
 	/* let notification goes on */
 	[outputComponent timeSelectionChanged];
@@ -312,6 +316,17 @@
 	[pool release];
 }
 
+- (void) entitySelectionChanged
+{
+	[self calculateBehavioralHierarchy];
+	[super entitySelectionChanged];
+}
+
+- (void) containerSelectionChanged
+{
+	[self calculateBehavioralHierarchy];
+	[super containerSelectionChanged];
+}
 
 - (TimeSliceTree *) timeSliceTree
 {
