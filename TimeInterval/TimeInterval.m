@@ -155,12 +155,13 @@
 	start = start + forward;
 	end = end + forward;
 
-	if (end > traceEnd){
-		if (start > traceEnd){
+	if (end >= traceEnd){
+		if (start >= traceEnd){
 			start = end;
 			[timer invalidate];
 			timer = nil;
 			[playButton setState: NSOffState];
+			return;
 		}
 		end = traceEnd;
 	}
