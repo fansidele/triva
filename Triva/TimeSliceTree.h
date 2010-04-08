@@ -42,7 +42,7 @@
 	NSMutableDictionary *timeSliceDurations;
 
 	/* for registering graph destinations */
-	//(TimeSliceTree*) -> (TimeSliceGraph*)
+	//(NSString*) -> (TimeSliceGraph*)
 	NSMutableDictionary *destinations; 
 }
 - (NSDictionary *) maxValues;
