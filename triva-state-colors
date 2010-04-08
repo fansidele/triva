@@ -152,8 +152,9 @@ defaults write Triva 'bShawinigan Color' '0 0 1'
 defaults write Triva 'bC1 Color' '0 0 1'
 defaults write Triva 'bC2 Color' '0 1 0'
 
-defaults write Triva 'is_processor Color' '1 0 0'
-defaults write Triva 'is_switch Color' '0 0 1'
+defaults write Triva 'is_processor Color' '1 1 0'
+defaults write Triva 'is_switch Color' '1 0 0'
+defaults write Triva 'is_cache Color' '0 0 1'
 defaults write Triva 'switchUtilization Color' '0 0 1'
 defaults write Triva 'numberOfAddresses Color' '0 1 0'
 
