@@ -15,8 +15,6 @@ public:
     int OnExit();
 
 protected:
-    void startIntervalChanged( wxCommandEvent& event );
-    void endIntervalChanged( wxCommandEvent& event );
     void runGNUstepLoop (wxTimerEvent& event);
 };
 

@@ -36,9 +36,7 @@ bool TrivaApp::OnInit()
 	gnustepLoopTimer.SetOwner (this);
 	this->Connect (wxID_ANY, wxEVT_TIMER,
 		wxTimerEventHandler(TrivaApp::runGNUstepLoop));
-        std::cout << "GNUstep Loop Timer: " <<
-                gnustepLoopTimer.Start(5,wxTIMER_CONTINUOUS) << std::endl;
-
+	gnustepLoopTimer.Start(5,wxTIMER_CONTINUOUS);
 
 	if (argc == 2){
 //		NSAutoreleasePool *poolread = [[NSAutoreleasePool alloc] init];
@@ -60,16 +58,6 @@ bool TrivaApp::OnInit()
 		exit(1);
 	}
 	return true;
-}
-
-void TrivaApp::startIntervalChanged( wxCommandEvent& event )
-{
-    std::cout << __FUNCTION__ << std::endl;
-}
-
-void TrivaApp::endIntervalChanged( wxCommandEvent& event )
-{
-    std::cout << __FUNCTION__ << std::endl;
 }
 
 int TrivaApp::OnExit()
