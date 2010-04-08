@@ -37,15 +37,13 @@ $ source /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
 A2. Paje
 --------
 
-Triva2 needs Paje. To install it, please download the following package:
-http://download.forge.objectweb.org/paje/Paje_1.97.tar.gz
-Execute the following commands:
-$ source /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
-$ tar xfz Paje_1.97.tar.gz
-$ cd Paje_1.97
+Triva2 needs Paje. To install it, please checkout the most up-to-date sources
+from the SVN repository by executing the following commands:
+$ svn checkout svn://svn.forge.objectweb.org/svnroot/paje/trunk/Paje/
 $ make
-$ sudo make install
-Paje will be installed in the /usr/GNUstep directory. At this point, you can
+$ make install GNUSTEP_INSTALLATION_DOMAIN=USER
+
+Paje will be installed in the $HOME/GNUstep directory. At this point, you can
 open paje to see if it is working, with the following command:
 $ openapp Paje
 
