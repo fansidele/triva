@@ -171,10 +171,8 @@
 	NSRect nodeRect;
 	nodeRect.origin.x = (pos.x / bb.size.width) * tela.size.width;
 	nodeRect.origin.y = (pos.y / bb.size.height) * tela.size.height;
-	nodeRect.size.width = size.size.width;// / bb.size.width ) *
-//							tela.size.width;
-	nodeRect.size.height = size.size.height;// / bb.size.height ) *
-//							tela.size.height;
+	nodeRect.size.width = size.size.width;
+	nodeRect.size.height = size.size.height;
 
 //	NSLog (@"%@", [node name]);
 //	NSLog (@"\t%d %d %d", [node separation], [node color], [node gradient]);
@@ -182,7 +180,8 @@
 	if ([node separation] || [node color]){
 		double accum_y = 0;
 		while ((type = [en nextObject])){
-			double value = [[types objectForKey: type] doubleValue];			if (value){
+			double value = [[types objectForKey: type] doubleValue];
+			if (value){
 
 				//color
 				[[filter colorForEntityType: 
@@ -222,6 +221,7 @@
 		NSRectFill(vr);
 		[NSBezierPath strokeRect: vr];
 	}
+
 	//draw node border
 	[[NSColor lightGrayColor] set];
 	[NSBezierPath strokeRect: nodeRect];
