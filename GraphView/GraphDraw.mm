@@ -107,25 +107,30 @@ void GraphDraw::drawNode (cairo_t *cr, TrivaGraphNode *node)
 	cairo_rel_line_to (cr, 0, -nh);
 	cairo_stroke(cr);
 
-	double accum_y = 0;
-	while ((type = [en nextObject])){
-		double value = [[types objectForKey: type] doubleValue];
-		if (value){
-			double type_nw = nw;
-			double type_nh = nh*value;
-
-			double a = x - nw/2;
-			double b = y - nh/2 + accum_y;
-			double c = type_nw;
-			double d = type_nh;
-
-			float red, green, blue;
-			this->getRGBColorFrom (type, &red, &green, &blue);
-			cairo_set_source_rgb (cr, red, green, blue);
-			cairo_rectangle (cr, a, b, c, d);
-			cairo_fill (cr);
-			accum_y += type_nh;
+	if ([node separation] || [node color]){
+		double accum_y = 0;
+		while ((type = [en nextObject])){
+			double value = [[types objectForKey: type] doubleValue];
+			if (value){
+				double type_nw = nw;
+				double type_nh = nh*value;
+        
+				double a = x - nw/2;
+				double b = y - nh/2 + accum_y;
+				double c = type_nw;
+				double d = type_nh;
+        
+				float red, green, blue;
+				this->getRGBColorFrom(type,&red, &green, &blue);
+				cairo_set_source_rgb (cr, red, green, blue);
+				cairo_rectangle (cr, a, b, c, d);
+				cairo_fill (cr);
+				accum_y += type_nh;
+			}
 		}
+		return;
+	}else if ([node gradient]){
+		//TODO
 	}
 }
 

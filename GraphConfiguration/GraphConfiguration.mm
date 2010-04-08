@@ -438,18 +438,24 @@
 					andConfiguration: sepConfiguration
 					andSize: size];
 		[obj setValues: separationValues];
+		[obj setSeparation: YES];
 		[obj setDrawable: YES];
-	}else if(colConfiguration){
+	}
+	if(colConfiguration && [obj separation] == NO){
+		// there is a color configuration and sepValues were not defined
 		NSDictionary *separationValues;
 		separationValues = [self redefineColorFrom: values
 					withConfiguration: colConfiguration];
 		if (separationValues){
 			[obj setValues: separationValues];
+			[obj setColor: YES];
 			[obj setDrawable: YES];
 		}
 	}
-	if(graConfiguration){
+	if(graConfiguration && [obj separation] == NO && [obj color] == NO ){
 		// TODO
+		[obj setGradient: YES];
+		[obj setDrawable: YES];
 	}
 }
 

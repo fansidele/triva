@@ -8,7 +8,10 @@
 	position = NSZeroPoint;
 	size = NSZeroRect;
 	values = nil;
+	separation = NO;
 	drawable = NO;
+	color = NO;
+	gradient = NO;
 	return self;
 }
 
@@ -56,9 +59,39 @@
 	return values;
 }
 
+- (void) setSeparation: (BOOL) v
+{
+	separation = v;
+}
+
 - (void) setDrawable: (BOOL) v
 {
 	drawable = v;
+}
+
+- (void) setColor: (BOOL) v
+{
+	color = v;
+}
+
+- (void) setGradient: (BOOL) v
+{
+	gradient = v;
+}
+
+- (BOOL) separation
+{
+	return separation;
+}
+
+- (BOOL) color
+{
+	return color;
+}
+
+- (BOOL) gradient
+{
+	return gradient;
 }
 
 - (BOOL) drawable
