@@ -55,7 +55,7 @@
     bundlePaths = [NSMutableArray arrayWithArray:
 		[[NSUserDefaults standardUserDefaults]
                                        arrayForKey:@"BundlePaths"]];
-    if (!bundlePaths) {
+    if (!bundlePaths || [bundlePaths count] == 0) {
         bundlePaths = [NSMutableArray arrayWithArray:
 			NSSearchPathForDirectoriesInDomains(
                                             NSAllLibrariesDirectory,
