@@ -22,7 +22,7 @@ private:
 	id current, highlighted;
 	NSMutableSet *selectedValues;
 	id filter;
-	void drawTimeSliceText (wxDC &dc);
+	void drawTimeSliceText (id current, wxDC &dc);
 
 public:
 	TreemapDraw (wxWindow *parent, wxWindowID id,
@@ -32,6 +32,8 @@ public:
 		const wxValidator &validator = wxDefaultValidator);
 	void setController (id contr) { filter = contr; };
 	void setWindow (TreemapWindow *w) { window = w; };
+	void setMaxDepthToDraw (int depth);
+	int getMaxDepthToDraw () { return maxDepthToDraw; };
 
 protected:
 	/* wxWidgets callbacks */

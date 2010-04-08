@@ -27,6 +27,11 @@ TreemapDraw *draw = NULL;
 	}
 	timeSliceTree = [filter timeSliceTree];
 	[timeSliceTree retain];
+
+	if (draw->getMaxDepthToDraw() > [timeSliceTree maxDepth]){
+		draw->setMaxDepthToDraw([timeSliceTree maxDepth]);
+	}
+
 	draw->Refresh();
 	draw->Update();
 }

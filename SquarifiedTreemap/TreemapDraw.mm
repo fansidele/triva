@@ -39,21 +39,26 @@ void TreemapDraw::OnPaint(wxPaintEvent& evt)
 			andDepth: 0 andValues: selectedValues];
 	dc.Clear();
 	this->drawTreemap ((id)current, dc);
-	this->drawTimeSliceText (dc);
+	this->drawTimeSliceText ((id)current, dc);
 }
 
-void TreemapDraw::drawTimeSliceText (wxDC &dc)
+void TreemapDraw::drawTimeSliceText (id current, wxDC &dc)
 {
-	NSString *msg = [NSString stringWithFormat: @"%.4f - %.4f depth=%d",
+	NSString *msg = [NSString stringWithFormat: @"%.4f - %.4f depth=%d/%d",
 		[[[filter selectionStartTime] description] doubleValue],
 		[[[filter selectionEndTime] description] doubleValue],
-		maxDepthToDraw];
+		maxDepthToDraw, [current maxDepth]];
 	dc.DrawText (NSSTRINGtoWXSTRING(msg), 0, 0);
 }
 
 void TreemapDraw::OnSize (wxSizeEvent& evt)
 {
 	Refresh();
+}
+
+void TreemapDraw::setMaxDepthToDraw (int depth)
+{
+	maxDepthToDraw = depth;
 }
 
 void TreemapDraw::OnMouseEvent(wxMouseEvent& evt)
@@ -145,7 +150,7 @@ void TreemapDraw::highlightTreemapNode (long x, long y)
                         wxPaintDC dc(this);
                         this->unhighlightTreemapNode(dc);
                         this->drawHighlightTreemapNode (node, dc);
-                        this->drawTimeSliceText (dc);
+                        this->drawTimeSliceText (current, dc);
                         highlighted = node;
                 }
         }
