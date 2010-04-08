@@ -208,45 +208,52 @@ void GraphDraw::drawEdge (cairo_t *cr, TrivaGraphEdge *edge)
 	double lucy = oy3 - oy2;
 	double norma_de_luc = sqrt ( (lucx*lucx) + (lucy*lucy) );
 
-	types = [filter enumeratorOfValuesForEdge: edge];
-	en = [types keyEnumerator];
-	while ((type = [en nextObject])){
-		color = [filter colorForEntityType:
-				[filter entityTypeWithName: type]];
-		double value = [[types objectForKey: type] doubleValue];
-		double e = bw * value;
-		if (e){
-	
-			ox3 = lucx/norma_de_luc*e + ox1;
-			oy3 = lucy/norma_de_luc*e + oy1;
+	if ([edge separation] || [edge color]){
+		types = [filter enumeratorOfValuesForEdge: edge];
+		en = [types keyEnumerator];
+		while ((type = [en nextObject])){
+			color = [filter colorForEntityType:
+					[filter entityTypeWithName: type]];
+			double value = [[types objectForKey: type] doubleValue];
+			double e = bw * value;
+			if (e){
+		
+				ox3 = lucx/norma_de_luc*e + ox1;
+				oy3 = lucy/norma_de_luc*e + oy1;
+                
+				ox4 = lucx/norma_de_luc*e + ox2;
+				oy4 = lucy/norma_de_luc*e + oy2;
+                
+				wxPoint points[4];
+				points[0] = wxPoint (ox1, oy1);
+				points[1] = wxPoint (ox2, oy2);
+				points[3] = wxPoint (ox3, oy3);
+				points[2] = wxPoint (ox4, oy4);
         
-			ox4 = lucx/norma_de_luc*e + ox2;
-			oy4 = lucy/norma_de_luc*e + oy2;
+				float red, green, blue;
+				this->getRGBColorFrom (type, &red, &green, &blue);
+				cairo_set_source_rgb (cr, red, green, blue);
         
-			wxPoint points[4];
-			points[0] = wxPoint (ox1, oy1);
-			points[1] = wxPoint (ox2, oy2);
-			points[3] = wxPoint (ox3, oy3);
-			points[2] = wxPoint (ox4, oy4);
-
-			float red, green, blue;
-			this->getRGBColorFrom (type, &red, &green, &blue);
-			cairo_set_source_rgb (cr, red, green, blue);
-
-			cairo_move_to (cr, ox1, oy1);
-			cairo_line_to (cr, ox2, oy2);
-			cairo_line_to (cr, ox4, oy4);
-			cairo_line_to (cr, ox3, oy3);
-			cairo_close_path (cr);
-			cairo_fill (cr);
-
-			//continuing
-			ox2 = ox3;
-			oy2 = oy3;
-
-			ox1 = ox4;
-			oy1 = oy4;
+				cairo_move_to (cr, ox1, oy1);
+				cairo_line_to (cr, ox2, oy2);
+				cairo_line_to (cr, ox4, oy4);
+				cairo_line_to (cr, ox3, oy3);
+				cairo_close_path (cr);
+				cairo_fill (cr);
+        
+				//continuing
+				ox2 = ox3;
+				oy2 = oy3;
+        
+				ox1 = ox4;
+				oy1 = oy4;
+			}
 		}
+	}else if ([edge gradient]){
+		//TODO
+		//NSLog (@"%@ %f %f %f", [edge gradientType],
+		//	[edge gradientValue], [edge gradientMax],
+		//	[edge gradientMin]);
 	}
 }
 
