@@ -3,17 +3,8 @@
 /* Define to 1 if you have the `bzero' function. */
 #undef HAVE_BZERO
 
-/* Define if Dot output is activated */
-#undef HAVE_DOT
-
 /* Define to 1 if you have the <float.h> header file. */
 #undef HAVE_FLOAT_H
-
-/* Enable GraphConfiguration */
-#undef HAVE_GRAPHCONFIGURATION
-
-/* Define if HCMReader visualization components is activated */
-#undef HAVE_HCMREADER
 
 /* Define to 1 if you have the <inttypes.h> header file. */
 #undef HAVE_INTTYPES_H
@@ -21,17 +12,21 @@
 /* Define to 1 if you have the `gvc' library (-lgvc). */
 #undef HAVE_LIBGVC
 
+/* Define to 1 if you have the `matheval' library (-lmatheval). */
+#undef HAVE_LIBMATHEVAL
+
 /* Define to 1 if you have the <limits.h> header file. */
 #undef HAVE_LIMITS_H
 
-/* Enable LinkView */
-#undef HAVE_LINKVIEW
+/* Define to 1 if your system has a GNU libc compatible `malloc' function, and
+   to 0 otherwise. */
+#undef HAVE_MALLOC
 
 /* Define to 1 if you have the <memory.h> header file. */
 #undef HAVE_MEMORY_H
 
-/* Define if SquarifiedTreemap visualization components is activated */
-#undef HAVE_SQUARIFIEDTREEMAP
+/* Define to 1 if you have the `sqrt' function. */
+#undef HAVE_SQRT
 
 /* Define to 1 if stdbool.h conforms to C99. */
 #undef HAVE_STDBOOL_H
@@ -92,3 +87,12 @@
 
 /* Version number of package */
 #undef VERSION
+
+/* Define to `__inline__' or `__inline' if that's what the C compiler
+   calls it, or to nothing if 'inline' is not supported under any name.  */
+#ifndef __cplusplus
+#undef inline
+#endif
+
+/* Define to rpl_malloc if the replacement function should be used. */
+#undef malloc
