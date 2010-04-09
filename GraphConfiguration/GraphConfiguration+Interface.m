@@ -116,8 +116,6 @@
 		nTitle = [NSString stringWithFormat:@"*(unnamed-%d)",counter++];
 	}
 	NSString *basic = @"{\n\
-  root = ;\n\
-\n\
   node = ();\n\
   edge = ();\n\
 \n\
