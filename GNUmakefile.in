@@ -49,3 +49,4 @@ after-distclean::
 	rm -f install-sh missing
 	rm -f GNUmakefile */GNUmakefile 
 	rm -rf autom4te.cache
+	rm -f configure aclocal.m4
