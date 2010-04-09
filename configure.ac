@@ -20,7 +20,6 @@ AC_CHECK_HEADER([matheval.h], , AC_ERROR([matheval.h required]))
 AC_CHECK_LIB([matheval], [evaluator_create])
 AC_CHECK_HEADER([graphviz/gvc.h], , AC_ERROR([graphviz/gvc.h required]))
 AC_CHECK_LIB([gvc],[gvLayout])
-AC_PATH_PROG(PKG_CONFIG, pkg-config)
 
 AC_CANONICAL_SYSTEM
 ARCHITECTURE=$host_cpu
