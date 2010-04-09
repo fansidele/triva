@@ -449,7 +449,8 @@
 	}
 
 	//getting values integrated within the time-slice
-	TimeSliceTree *t = [[self timeSliceTree] searchChildByName: [obj name]];
+	TimeSliceTree *t;
+	t = (TimeSliceTree*)[[self timeSliceTree] searchChildByName: [obj name]];
 	NSMutableDictionary *values = [t aggregatedValues];
 
 	//getting max and min for size of node (integrate them in time slice)
