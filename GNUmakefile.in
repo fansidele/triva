@@ -44,3 +44,7 @@ deb:
 			gnustep-back0.16,libmatheval1,libgraphviz4,paje" \
 		./checkinstall-make
 
+after-distclean::
+	rm -f config.* install-sh missing config.h
+	rm -f GNUmakefile */GNUmakefile 
+	rm -rf autom4te.cache
