@@ -85,7 +85,7 @@
 
 }
 
-- (void) setProvider: (id) prov
+- (void) setProvider: (LinkView*) prov
 {
 	provider = prov;
 }

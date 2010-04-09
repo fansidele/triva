@@ -19,17 +19,18 @@
 
 #include <AppKit/AppKit.h>
 #include <Triva/Triva.h>
+#include "LinkView.h"
 
 @interface LinkViewEdge : TrivaGraphEdge
 {
 	double width;
 	double max;
 
-	id provider;
+	LinkView *provider;
 }
 - (void) setWidth: (double) w;
 - (void) setMaxWidth: (double)m;
-- (void) setProvider: (id) prov;
+- (void) setProvider: (LinkView*) prov;
 @end
 
 #endif
