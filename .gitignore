@@ -5,8 +5,12 @@ aclocal.m4
 config.h
 autom4te.cache/
 *derived_src*
-config\.*
+config.guess
+config.log
+config.sub
+missing
+stamp-h1
+install-sh
 configure
 *GNUmakefile
 *\.app/
-stamp-h1
