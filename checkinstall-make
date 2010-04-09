@@ -1,2 +1,0 @@
-. /usr/share/GNUstep/Makefiles/GNUstep.sh
-make install
