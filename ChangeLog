@@ -1,0 +1,9 @@
+2010-04-09 Lucas M. Schnorr <schnorr@gmail.com>
+  * Releasing version 1.0 of the tool
+  * Added GPLv3 license
+  * Using argp to treat command line parameters (--help and stuff)
+  * Two new modules "List and CheckTrace" to verify trace integrity.
+    They can be enabled by using -l and -c respectively as parameter
+    to the triva binary.
+  * Fixed some compilation warnings and clean-up development directory
+    for release.
