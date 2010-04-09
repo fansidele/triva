@@ -8,6 +8,7 @@ autom4te.cache/
 config.guess
 config.log
 config.sub
+config.status
 missing
 stamp-h1
 install-sh
