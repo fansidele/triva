@@ -48,7 +48,7 @@
 - (NSDictionary*) values;
 - (double) overflow;
 - (void) refreshWithinRect: (NSRect) rect;
-- (void) draw;
+- (BOOL) draw;
 - (NSRect) bb;
 @end
 
@@ -92,7 +92,7 @@
 - (void) setDrawable: (BOOL)v;
 - (BOOL) drawable;
 - (void) refresh;
-- (void) draw;
+- (BOOL) draw;
 - (void) addComposition: (TrivaComposition*)comp;
 - (void) removeCompositions;
 - (void) convertFrom: (NSRect) this to: (NSRect) screen;

@@ -181,7 +181,7 @@
 	bb = rect;
 }
 
-- (void) draw
+- (BOOL) draw
 {
 	NSEnumerator *en = [values keyEnumerator];
 	NSString *type;
@@ -203,6 +203,7 @@
 
 		accum_y += vr.size.height;
 	}
+  return YES;
 }
 
 - (NSRect) bb
@@ -241,7 +242,7 @@
                       withScale: scale
                    fromVariable: var
                        ofObject: [obj name]
-                       withType: [obj type]];
+                       withType: [(TrivaGraphNode*)obj type]];
 		[self setGradientType: var withValue: val withMax: ma withMin: mi];
 	}
 	return self;
@@ -290,7 +291,7 @@
 	bb = rect;
 }
 
-- (void) draw
+- (BOOL) draw
 {
 	int count = [values count];
 	NSEnumerator *en = [values keyEnumerator];
@@ -327,6 +328,7 @@
 
 		accum_y += vr.size.height;
 	}
+  return YES;
 }
 @end
 
@@ -379,7 +381,7 @@
                          andMin: &mi
                    fromVariable: var
                        ofObject: [obj name]
-                       withType: [obj type]];
+                       withType: [(TrivaGraphNode*)obj type]];
 		[self setGradientType: var withValue: val withMax: ma withMin: mi];
 	}
 	return self;
@@ -478,7 +480,7 @@
 	}
 }
 
-- (void) draw
+- (BOOL) draw
 {
 	//draw my components
 	NSEnumerator *en = [compositions objectEnumerator];
@@ -495,6 +497,7 @@
 	[name drawAtPoint: NSMakePoint (screenbb.origin.x + screenbb.size.width/2,
 					screenbb.origin.y + screenbb.size.height/2)
 		 withAttributes: nil];
+  return YES;
 }
 
 - (void) addComposition: (TrivaComposition*)comp
