@@ -21,15 +21,15 @@
 #include <Tree.h>
 
 @class TrivaFilter;
-@class TrivaNodeGraph;
+@class TrivaGraphNode;
 
 @interface TrivaComposition : NSObject
 + (id) compositionWithConfiguration: (NSDictionary*) conf
-                          forObject: (TrivaNodeGraph*)obj
+                          forObject: (TrivaGraphNode*)obj
                          withValues: (NSDictionary*) timeSliceValues
                         andProvider: (TrivaFilter*) prov;
 - (id) initWithConfiguration: (NSDictionary*) conf
-                   forObject: (TrivaNodeGraph*)obj
+                   forObject: (TrivaGraphNode*)obj
                   withValues: (NSDictionary*) timeSliceValues
                  andProvider: (TrivaFilter*) prov;
 @end

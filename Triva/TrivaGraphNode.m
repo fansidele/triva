@@ -20,7 +20,7 @@
 
 @implementation TrivaComposition
 + (id) compositionWithConfiguration: (NSDictionary*) conf
-                          forObject: (TrivaNodeGraph*) obj
+                          forObject: (TrivaGraphNode*) obj
                          withValues: (NSDictionary*) timeSliceValues
                         andProvider: (TrivaFilter*) prov
 {
@@ -71,7 +71,7 @@
 }
 
 - (id) initWithConfiguration: (NSDictionary*) conf
-                   forObject: (TrivaNodeGraph*)obj
+                   forObject: (TrivaGraphNode*)obj
                   withValues: (NSDictionary*) timeSliceValues
                  andProvider: (TrivaFilter*) prov
 {
@@ -81,7 +81,7 @@
 
 @implementation TrivaSeparation
 - (id) initWithConfiguration: (NSDictionary*) conf
-                   forObject: (TrivaNodeGraph*)obj
+                   forObject: (TrivaGraphNode*)obj
                   withValues: (NSDictionary*) timeSliceValues
                  andProvider: (TrivaFilter*) prov
 {
@@ -214,7 +214,7 @@
 
 @implementation TrivaGradient
 - (id) initWithConfiguration: (NSDictionary*) conf
-                   forObject: (TrivaNodeGraph*)obj
+                   forObject: (TrivaGraphNode*)obj
                   withValues: (NSDictionary*) timeSliceValues
                  andProvider: (TrivaFilter*) prov
 {
@@ -365,7 +365,7 @@
 }
 
 - (id) initWithConfiguration: (NSDictionary*) conf
-                   forObject: (TrivaNodeGraph*)obj
+                   forObject: (TrivaGraphNode*)obj
                   withValues: (NSDictionary*) timeSliceValues
                  andProvider: (TrivaFilter*) prov
 {
@@ -390,7 +390,7 @@
 
 @implementation TrivaColor
 - (id) initWithConfiguration: (NSDictionary*) conf
-                   forObject: (TrivaNodeGraph*)obj
+                   forObject: (TrivaGraphNode*)obj
                   withValues: (NSDictionary*) timeSliceValues
                  andProvider: (TrivaFilter*) prov
 {
