@@ -513,8 +513,8 @@
 - (void) convertFrom: (NSRect) this to: (NSRect) screen
 {
 	screenbb = NSMakeRect (
-		bb.origin.x / this.size.width * screen.size.width,
-		bb.origin.y / this.size.height * screen.size.height,
+		(bb.origin.x-this.origin.x) / this.size.width * screen.size.width,
+		(bb.origin.y-this.origin.y) / this.size.height * screen.size.height,
 		bb.size.width / this.size.width * screen.size.width,
 		bb.size.height / this.size.width * screen.size.width);
 }
