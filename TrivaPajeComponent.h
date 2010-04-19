@@ -41,6 +41,7 @@
 + (NSArray *)dotComponentGraph;
 + (NSArray *)checkTraceComponentGraph;
 + (NSArray *)listComponentGraph;
++ (NSArray *)instancesComponentGraph;
 - (id)createComponentWithName:(NSString *)componentName
                  ofClassNamed:(NSString *)className;
 - (void)connectComponent:(id)c1 toComponent:(id)c2;
@@ -55,6 +56,7 @@
 - (void)activateDot;
 - (void)activateCheckTrace;
 - (void)activateList;
+- (void)activateInstances;
 - (void)defineMajorComponents;
 - (void)startChunk:(int)chunkNumber;
 - (void)endOfChunkLast:(BOOL)last;

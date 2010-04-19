@@ -14,21 +14,14 @@
     You should have received a copy of the GNU General Public License
     along with Triva.  If not, see <http://www.gnu.org/licenses/>.
 */
-#ifndef __TRIVA_COMMAND_H
-#define __TRIVA_COMMAND_H
-#include <stdio.h>
+#ifndef __Instances_H
+#define __Instances_H
+#include <Foundation/Foundation.h>
+#include <General/PajeFilter.h>
 
-struct arguments
+@interface Instances  : PajeFilter
 {
-  char *input[1];
-  int treemap, graph; //visualization windows
-  int abort; //if parameters are not good
-  int hierarchy; //generate type hierarchy
-  int check;  //check trace file
-  int list; // list entity types
-  int instances; //list types and instances
-};
-
-int parse (int argc, char **argv, struct arguments *arg);
+}
+@end
 
 #endif

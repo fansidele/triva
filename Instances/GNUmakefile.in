@@ -1,0 +1,20 @@
+include $(GNUSTEP_MAKEFILES)/common.make
+
+PACKAGE_NAME=Instances
+BUNDLE_NAME=Instances
+BUNDLE_EXTENSION=.bundle
+BUNDLE_INSTALL_DIR=$(GNUSTEP_BUNDLES)/@PROJECT_NAME@
+Instances_PRINCIPAL_CLASS=Instances
+
+Instances_OBJC_FILES=Instances.m
+Instances_OBJCC_FILES = 
+
+Instances_INCLUDE_DIRS += @CPPFLAGS@
+Instances_LIB_DIRS += @LIBS@
+Instances_LDFLAGS += @LDFLAGS@
+
+include $(GNUSTEP_MAKEFILES)/bundle.make
+
+after-distclean::
+after-all::
+after-clean:: 

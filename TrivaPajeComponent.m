@@ -200,6 +200,17 @@
 		) )" propertyList];
 }
 
++ (NSArray *)instancesComponentGraph
+{
+	return [@"(  \
+		( FileReader, \
+		   PajeEventDecoder, \
+                   PajeSimulator, \
+                   StorageController, \
+                   Instances \
+		) )" propertyList];
+}
+
 + (NSArray *)defaultComponentGraph
 {
     NSArray *graph = nil;
@@ -469,6 +480,12 @@
 - (void) activateList
 {
   [self addComponentSequences:[[self class] listComponentGraph]];
+  [self defineMajorComponents];
+}
+
+- (void) activateInstances
+{
+  [self addComponentSequences:[[self class] instancesComponentGraph]];
   [self defineMajorComponents];
 }
 

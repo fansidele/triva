@@ -45,6 +45,7 @@ CONFIG_FILES="
   Dot/GNUmakefile \
   CheckTrace/GNUmakefile \
   List/GNUmakefile \
+  Instances/GNUmakefile \
   LinkView/GNUmakefile \
   SquarifiedTreemap/GNUmakefile \
   TimeInterval/GNUmakefile \
