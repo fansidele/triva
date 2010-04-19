@@ -93,17 +93,20 @@
 	if (userPositions){
 		return graphSize;
 	}
-
-	NSRect ret;
-	ret.origin.x = ret.origin.y = 0;
-	if (graph){
-		ret.size.width = GD_bb(graph).UR.x;
-		ret.size.height = GD_bb(graph).UR.y;
-	}else{
-		ret.size.width = 0;
-		ret.size.height = 0;
-	}
-	return ret;
+  if (graphviz){
+		NSRect ret;
+		ret.origin.x = ret.origin.y = 0;
+		if (graph){
+			ret.size.width = GD_bb(graph).UR.x;
+			ret.size.height = GD_bb(graph).UR.y;
+		}else{
+			ret.size.width = 0;
+			ret.size.height = 0;
+		}
+		return ret;
+  }else{
+    return graphSize;
+  }
 }
 
 - (TrivaGraphNode*) findNodeByName: (NSString *)name
@@ -124,6 +127,14 @@
 		NSLog (@"configuration not created");
 		return;
 	}
+
+  //check if I should use GraphViz
+  if ([configuration objectForKey: @"graphviz"]){
+    NSLog (@"Disabling GraphViz");
+    graphviz = NO;
+  }else{
+    graphviz = YES;
+  }
 
 	//checking if user provided positions for nodes
 	id area = [configuration objectForKey: @"Area"];
@@ -253,7 +264,7 @@
 		}
 	}
 
-	if (userPositions == NO){
+	if (userPositions == NO && graphviz){
 		NSLog (@"%s:%d Executing GraphViz Layout... (this might "
 			"take a while)", __FUNCTION__, __LINE__);
 		NSString *algo;
@@ -267,7 +278,6 @@
 		NSLog (@"%s:%d GraphViz Layout done", __FUNCTION__, __LINE__);
 	}
 }
-
 
 - (void) defineMax: (double*)max andMin: (double*)min withScale: (TrivaScale) scale
 		fromVariable: (NSString*)var
@@ -377,6 +387,29 @@
 	return nil;
 }
 
+- (double) getVariableOfTypeName: (NSString *)variable
+            ofContainerName: (NSString *)cont
+{
+  PajeEntityType *type = [self entityTypeWithName: variable];
+  PajeContainerType *containerType = [self containerTypeForType: type];
+  PajeContainer *container = [self containerWithName: cont
+                                        type: containerType];
+  if (!type) return 0;
+  NSEnumerator *en = [self enumeratorOfEntitiesTyped: type
+                          inContainer: container
+                              fromTime: [self startTime]
+                                toTime: [self endTime]
+                                  minDuration: 0];
+  id ent;
+  while ((ent = [en nextObject])){
+    if (ent){
+      return [ent doubleValue];
+    }
+  }
+  return 0;
+}
+
+
 - (void) redefineLayoutOf: (TrivaGraphNode*) obj
 {
 
@@ -404,7 +437,6 @@
 		return;
 	}
 */
-
 
 	//getting configuration for this type of node
 	NSDictionary *objconf = [configuration objectForKey: [obj type]];
@@ -439,19 +471,66 @@
 		}
 	}
 
+	//getting values integrated within the time-slice
+	TimeSliceTree *t;
+	t = (TimeSliceTree*)[[self timeSliceTree] searchChildByName: [obj name]];
+	NSMutableDictionary *values = [t aggregatedValues];
+
+  //setting the bounding box (origin and size)
+	NSRect bb;
+  if (graphviz){
+		if (userPositions == NO) {
+			Agnode_t *n = agfindnode (graph,
+				(char *)[[obj name] cString]);
+			if (n) {
+				bb.origin.x = ND_coord_i(n).x;
+				bb.origin.y = ND_coord_i(n).y;
+			}else{
+				bb.origin.x = 0;
+				bb.origin.y = 0;
+			}
+		}else{
+			id pos = [configuration objectForKey: [obj name]];
+			if (pos){
+				bb.origin.x = [[pos objectForKey: @"x"] doubleValue];
+				bb.origin.y = [[pos objectForKey: @"y"] doubleValue];
+			}else{
+				bb.origin.x = 0;
+				bb.origin.y = 0;
+			}
+		}
+  }else{
+    //ok, user registered in the tracefile the values of x and y
+    //we should not take their values integrated in time, because
+    //they can be negative values.... 
+    NSString *xconf = [objconf objectForKey: @"x"];
+    NSString *yconf = [objconf objectForKey: @"y"];
+
+    bb.origin.x=[self getVariableOfTypeName: xconf ofContainerName: [obj name]];
+    bb.origin.y=[self getVariableOfTypeName: yconf ofContainerName: [obj name]];
+
+    PajeEntityType *xtype = [self entityTypeWithName: xconf];
+    PajeEntityType *ytype = [self entityTypeWithName: yconf];
+
+    double xmax = FLT_MAX, xmin = -FLT_MAX, ymax = FLT_MAX, ymin = -FLT_MAX;
+    xmin = [self minValueForEntityType: xtype];
+    xmax = [self maxValueForEntityType: xtype];
+    ymin = [self minValueForEntityType: ytype];
+    ymax = [self maxValueForEntityType: ytype];
+
+		graphSize.origin.x = xmin - (xmax-xmin)*.1;
+		graphSize.origin.y = ymin - (ymax-ymin)*.1;
+		graphSize.size.width = xmax-xmin + 2*((xmax-xmin)*.1);
+		graphSize.size.height = ymax-ymin + 2*((ymax-ymin)*.1);
+  }
+
 	//getting size configuration for node
 	NSString *sizeconf = [objconf objectForKey: @"size"];
 	if (!sizeconf) {
 		NSLog (@"%s:%d: no 'size' configuration for type %@",
 			__FUNCTION__, __LINE__, [obj type]);
 		return;
-		
 	}
-
-	//getting values integrated within the time-slice
-	TimeSliceTree *t;
-	t = (TimeSliceTree*)[[self timeSliceTree] searchChildByName: [obj name]];
-	NSMutableDictionary *values = [t aggregatedValues];
 
 	//getting max and min for size of node (integrate them in time slice)
 	double min, max;
@@ -462,36 +541,14 @@
                ofObject: [obj name]
                withType: [obj type]];
 
-	//setting the bounding box (origin and size)
-	NSRect bb;
-	if (userPositions == NO) {
-		Agnode_t *n = agfindnode (graph,
-			(char *)[[obj name] cString]);
-		if (n) {
-			bb.origin.x = ND_coord_i(n).x;
-			bb.origin.y = ND_coord_i(n).y;
-		}else{
-			bb.origin.x = 0;
-			bb.origin.y = 0;
-		}
-	}else{
-		id pos = [configuration objectForKey: [obj name]];
-		if (pos){
-			bb.origin.x = [[pos objectForKey: @"x"] doubleValue];
-			bb.origin.y = [[pos objectForKey: @"y"] doubleValue];
-		}else{
-			bb.origin.x = 0;
-			bb.origin.y = 0;
-		}
-	}
 	//size is mandatory
 	double screenSize;
 	double size = [self evaluateWithValues: values withExpr: sizeconf];
 	if (size < 0){ //negative value if evaluation is unsucessfull
 		screenSize = [sizeconf doubleValue];
 	}else{
-		screenSize = [self calculateScreenSizeBasedOnValue: size
-			andMax: max andMin: min];
+  	screenSize = [self calculateScreenSizeBasedOnValue: size
+	  		andMax: max andMin: min];
 	}
 	bb.size.width = screenSize;
 	bb.size.height = screenSize;

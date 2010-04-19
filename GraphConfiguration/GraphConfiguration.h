@@ -44,6 +44,7 @@
   id window;
 
   BOOL userPositions;
+  BOOL graphviz;
   NSRect graphSize;
 }
 - (void) setConfiguration: (NSDictionary *) conf;
