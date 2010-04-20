@@ -74,6 +74,13 @@
 @interface TrivaColor : TrivaSeparation
 @end
 
+@interface TrivaSwarm : TrivaComposition
+{
+  NSRect bb; //the bounding box
+  NSMutableArray *objects; //array of strings with the existing objects
+}
+@end
+
 @interface TrivaGraphNode : Tree
 {
 	NSString *type; //node type (entitytype from paje)
@@ -97,7 +104,6 @@
 - (void) removeCompositions;
 - (void) convertFrom: (NSRect) this to: (NSRect) screen;
 @end
-
 
 #include "TrivaFilter.h"
 #endif

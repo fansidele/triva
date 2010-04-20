@@ -63,6 +63,11 @@
                                                           forObject: obj
                                                          withValues: timeSliceValues
                                                         andProvider: prov];
+  }else if ([type isEqualToString: @"swarm"]){
+    return [[TrivaSwarm alloc] initWithConfiguration: conf
+                                      forObject: obj
+                                    withValues: timeSliceValues
+                                          andProvider: prov];
 	}else{
 		NSLog (@"%s:%d: type '%@' of configuration %@ is unknown",
                         __FUNCTION__, __LINE__, type, conf);
@@ -407,6 +412,71 @@
 		}
 	}
 	return self;
+}
+@end
+
+@implementation TrivaSwarm
+- (id) initWithConfiguration: (NSDictionary*) conf
+              forObject: (TrivaGraphNode*) obj
+              withValues: (NSDictionary*) timeSliceValues
+              andProvider: (TrivaFilter*) prov
+{
+  //allocate array for objects
+  objects = [[NSMutableArray alloc] init];
+
+  //we need the filter
+  NSString *filter = [conf objectForKey: @"filter"];
+  if (!filter) {
+  	//no filter specified
+  	NSLog (@"%s:%d: no 'filter' configuration for composition %@",
+                        __FUNCTION__, __LINE__, conf);
+  	return nil;
+  }
+
+  //getting the timeslice-node for my object
+  TimeSliceTree *t = (TimeSliceTree*)[[prov timeSliceTree] searchChildByName: [obj name]];
+
+  //check among its children if they were present in the swarm (filter variable indicates presence)
+  NSEnumerator *en = [[t children] objectEnumerator];
+  TimeSliceTree *child;
+  while ((child = [en nextObject])){
+    //if value is != 0, child is present in the swarm
+    if ([[[child timeSliceValues] objectForKey: filter] doubleValue]){
+      [objects addObject: [child name]];
+    }
+  }
+  return self;
+}
+
+- (void) refreshWithinRect: (NSRect) rect
+{
+  bb = rect;
+}
+
+- (BOOL) draw
+{
+  int count = [objects count];
+  if (!count) return;
+  int i;
+  double step = 360/count;
+  double s = 0;
+  for (i = 0; i < count; i++){
+    NSBezierPath *path = [NSBezierPath bezierPath];
+    [path appendBezierPathWithArcWithCenter: NSMakePoint(bb.origin.x+bb.size.width/2,
+                                                      bb.origin.y+bb.size.height/2)
+                                  radius: bb.size.width startAngle: s endAngle: s+0.001];
+    NSRect r = NSMakeRect ([path currentPoint].x, [path currentPoint].y, 3, 3);
+    NSRectFill (r);
+    [[objects objectAtIndex: i] drawAtPoint: [path currentPoint] withAttributes: nil];
+    s += step;
+  }
+  return YES;
+}
+
+- (void) dealloc
+{
+	[objects release];
+	[super dealloc];
 }
 @end
 
