@@ -474,7 +474,7 @@
 	//getting values integrated within the time-slice
 	TimeSliceTree *t;
 	t = (TimeSliceTree*)[[self timeSliceTree] searchChildByName: [obj name]];
-	NSMutableDictionary *values = [t aggregatedValues];
+	NSMutableDictionary *values = [t timeSliceValues];
 
   //setting the bounding box (origin and size)
 	NSRect bb;
