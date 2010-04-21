@@ -456,7 +456,7 @@
 - (BOOL) draw
 {
   int count = [objects count];
-  if (!count) return;
+  if (!count) return NO;
   int i;
   double step = 360/count;
   double s = 0;
