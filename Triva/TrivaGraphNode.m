@@ -423,12 +423,21 @@
 {
   //allocate array for objects
   objects = [[NSMutableArray alloc] init];
+  objectsColors = [[NSMutableDictionary alloc] init];
 
   //we need the filter
   NSString *filter = [conf objectForKey: @"filter"];
   if (!filter) {
   	//no filter specified
   	NSLog (@"%s:%d: no 'filter' configuration for composition %@",
+                        __FUNCTION__, __LINE__, conf);
+  	return nil;
+  }
+  //we need the color
+  NSSet *colors = [NSSet setWithArray: [conf objectForKey: @"color"]];
+  if (!colors) {
+  	//no color specified
+  	NSLog (@"%s:%d: no 'color' configuration for composition %@",
                         __FUNCTION__, __LINE__, conf);
   	return nil;
   }
@@ -441,8 +450,20 @@
   TimeSliceTree *child;
   while ((child = [en nextObject])){
     //if value is != 0, child is present in the swarm
+    //checking if it should be present
     if ([[[child timeSliceValues] objectForKey: filter] doubleValue]){
       [objects addObject: [child name]];
+
+      //finding color
+      NSEnumerator *values = [[child timeSliceValues] keyEnumerator];
+      id category;
+      while ((category = [values nextObject])){
+        if ([[[child timeSliceValues] objectForKey: category] doubleValue] > 0 &&
+                                                        [colors containsObject: category]){
+            [objectsColors setObject: [[child timeSliceColors] objectForKey: category]
+                              forKey: [child name]];
+        }
+      }
     }
   }
   return self;
@@ -461,6 +482,7 @@
   double step = 360/count;
   double s = 0;
   for (i = 0; i < count; i++){
+    [[objectsColors objectForKey: [objects objectAtIndex: i]] set];
     NSBezierPath *path = [NSBezierPath bezierPath];
     [path appendBezierPathWithArcWithCenter: NSMakePoint(bb.origin.x+bb.size.width/2,
                                                       bb.origin.y+bb.size.height/2)
@@ -476,6 +498,7 @@
 - (void) dealloc
 {
 	[objects release];
+  [objectsColors release];
 	[super dealloc];
 }
 @end
