@@ -18,12 +18,14 @@
 #define __GraphView_h
 
 #include <AppKit/AppKit.h>
+#include "TrivaGraphNode.h"
 
 @class GraphView;
 
 @interface DrawView : NSView
 {
-	GraphView *filter;
+  GraphView *filter;
+  TrivaGraphNode *selectedNode;
 }
 - (void) setFilter: (GraphView *)f;
 - (NSColor *) getColor: (NSColor *)c withSaturation: (double) saturation;

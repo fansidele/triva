@@ -89,6 +89,7 @@
 	NSRect bb; //the bounding box of the node (indicates size and position)
 	NSRect screenbb; //the bounding box of the screen
 	NSMutableArray *compositions; //array of TrivaComposition objects
+  BOOL highlighted;
 	
 	BOOL drawable; //is it ready to draw?
 }
@@ -104,6 +105,7 @@
 - (void) addComposition: (TrivaComposition*)comp;
 - (void) removeCompositions;
 - (void) convertFrom: (NSRect) this to: (NSRect) screen;
+- (void) setHighlight: (BOOL) highlight;
 @end
 
 #include "TrivaFilter.h"

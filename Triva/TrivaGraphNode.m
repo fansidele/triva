@@ -611,4 +611,9 @@
 		bb.size.width / this.size.width * screen.size.width,
 		bb.size.height / this.size.width * screen.size.width);
 }
+
+- (void) setHighlight: (BOOL) highlight
+{
+  highlighted = highlight;
+}
 @end

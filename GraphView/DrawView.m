@@ -88,4 +88,47 @@
 		[node draw];
 	}
 }
+
+#ifdef GNUSTEP
+- (BOOL)acceptsFirstResponder
+{
+    return YES;
+}
+#endif
+
+- (BOOL)becomeFirstResponder
+{
+    [[self window] setAcceptsMouseMovedEvents: YES];
+    return YES;
+}
+
+- (void) mouseMoved:(NSEvent *)event
+{
+  NSPoint p;
+  p = [self convertPoint:[event locationInWindow] fromView:nil];
+
+  //search for nodes
+  TrivaGraphNode *node;
+  NSEnumerator *en = [filter enumeratorOfNodes];
+  BOOL found = NO;
+  while ((node = [en nextObject])){
+    if(NSPointInRect (p, [node screenbb])){
+      if (selectedNode){
+        [selectedNode setHighlight: NO];
+      }
+      selectedNode = node;
+      [selectedNode setHighlight: YES];
+      [self setNeedsDisplay: YES];
+      found = YES;
+      break;
+    }
+  }
+  if (!found){
+    if (selectedNode){
+      [selectedNode setHighlight: NO];
+      selectedNode = nil;
+      [self setNeedsDisplay: YES];
+    }
+  }
+}
 @end
