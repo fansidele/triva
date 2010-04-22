@@ -59,4 +59,10 @@
         [defaults setObject: [NSString stringWithFormat: @"%f", point.y] forKey: ty];
         [defaults synchronize];
 }
+
+- (BOOL) windowShouldClose: (id) sender
+{
+  [[NSApplication sharedApplication] terminate:self];
+  return YES;
+}
 @end

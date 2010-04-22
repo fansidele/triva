@@ -47,4 +47,10 @@
 {
 	[self timeSelectionChanged];
 }
+
+- (BOOL) windowShouldClose: (id) sender
+{
+  [[NSApplication sharedApplication] terminate:self];
+  return YES;
+}
 @end

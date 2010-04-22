@@ -624,4 +624,10 @@
 		alpha: a];
 	return ret;
 }
+
+- (BOOL) windowShouldClose: (id) sender
+{
+  [[NSApplication sharedApplication] terminate:self];
+  return YES;
+}
 @end
