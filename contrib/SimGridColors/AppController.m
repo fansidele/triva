@@ -171,7 +171,9 @@
   while ((category = [en nextObject])){
     if (![category isEqualToString: @""]){
       [dictionary setObject: [colors objectForKey: category]
-                forKey: [NSString stringWithFormat: @"%@ Color", category]];
+                forKey: [NSString stringWithFormat: @"p%@ Color", category]];
+      [dictionary setObject: [colors objectForKey: category]
+                forKey: [NSString stringWithFormat: @"b%@ Color", category]];
 
       NSMutableDictionary *categoryColors = [dictionary objectForKey: @"category Colors"];
       if (!categoryColors){
