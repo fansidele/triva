@@ -618,4 +618,9 @@
 {
   highlighted = highlight;
 }
+
+- (void) setTimeSliceTree: (TimeSliceTree *) t
+{
+  timeSliceTree = t;
+}
 @end

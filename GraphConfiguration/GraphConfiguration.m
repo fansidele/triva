@@ -476,6 +476,9 @@
 	t = (TimeSliceTree*)[[self timeSliceTree] searchChildByName: [obj name]];
 	NSMutableDictionary *values = [t timeSliceValues];
 
+  //set timeSliceTree of the object
+  [obj setTimeSliceTree: t];
+
   //setting the bounding box (origin and size)
 	NSRect bb;
   if (graphviz){

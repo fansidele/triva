@@ -19,6 +19,7 @@
 #include <Foundation/Foundation.h>
 #include <General/PajeFilter.h>
 #include <Tree.h>
+#include <TimeSliceTree.h>
 
 @class TrivaFilter;
 @class TrivaGraphNode;
@@ -92,6 +93,8 @@
   BOOL highlighted;
 	
 	BOOL drawable; //is it ready to draw?
+
+  TimeSliceTree *timeSliceTree; //to show values to the user when highlighted
 }
 - (void) setType: (NSString *) n;
 - (NSString *) type;
@@ -106,6 +109,7 @@
 - (void) removeCompositions;
 - (void) convertFrom: (NSRect) this to: (NSRect) screen;
 - (void) setHighlight: (BOOL) highlight;
+- (void) setTimeSliceTree: (TimeSliceTree *) t;
 @end
 
 #include "TrivaFilter.h"
