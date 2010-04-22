@@ -50,6 +50,8 @@ CONFIG_FILES="
   SquarifiedTreemap/GNUmakefile \
   TimeInterval/GNUmakefile \
   TimeSliceAggregation/GNUmakefile \
+  contrib/GNUmakefile \
+  contrib/SimGridColors/GNUmakefile \
   GNUmakefile"
 
 CPPFLAGS="-I../../ -I../ -I../Triva -I./ $CPPFLAGS"
