@@ -486,10 +486,9 @@
     NSBezierPath *path = [NSBezierPath bezierPath];
     [path appendBezierPathWithArcWithCenter: NSMakePoint(bb.origin.x+bb.size.width/2,
                                                       bb.origin.y+bb.size.height/2)
-                                  radius: bb.size.width startAngle: s endAngle: s+0.001];
-    NSRect r = NSMakeRect ([path currentPoint].x, [path currentPoint].y, 3, 3);
-    NSRectFill (r);
-    [[objects objectAtIndex: i] drawAtPoint: [path currentPoint] withAttributes: nil];
+                                  radius: bb.size.width/2 startAngle: s endAngle: s+0.001];
+    [path appendBezierPathWithArcWithCenter: [path currentPoint] radius: 2 startAngle: 0 endAngle: 360];
+    [path fill];
     s += step;
   }
   return YES;
