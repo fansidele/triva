@@ -14,7 +14,8 @@ SUBPROJECTS = Triva \
   LinkView \
   SquarifiedTreemap \
   TimeInterval \
-  TimeSliceAggregation
+  TimeSliceAggregation \
+  contrib
 
 @PROJECT_NAME@_OBJC_FILES = \
 	TrivaApp.m \
