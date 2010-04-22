@@ -587,9 +587,11 @@
 	[NSBezierPath strokeRect: screenbb];
 
 	//draw my name
-	[name drawAtPoint: NSMakePoint (screenbb.origin.x + screenbb.size.width/2,
+  if (highlighted){
+  	[name drawAtPoint: NSMakePoint (screenbb.origin.x + screenbb.size.width/2,
 					screenbb.origin.y + screenbb.size.height/2)
 		 withAttributes: nil];
+  }
   return YES;
 }
 
