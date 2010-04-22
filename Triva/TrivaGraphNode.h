@@ -109,6 +109,7 @@
 - (void) removeCompositions;
 - (void) convertFrom: (NSRect) this to: (NSRect) screen;
 - (void) setHighlight: (BOOL) highlight;
+- (BOOL) highlighted;
 - (void) setTimeSliceTree: (TimeSliceTree *) t;
 @end
 

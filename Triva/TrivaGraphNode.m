@@ -489,6 +489,9 @@
                                   radius: bb.size.width/2 startAngle: s endAngle: s+0.001];
     [path appendBezierPathWithArcWithCenter: [path currentPoint] radius: 2 startAngle: 0 endAngle: 360];
     [path fill];
+    if ([node highlighted]){
+      [[objects objectAtIndex: i] drawAtPoint: [path currentPoint] withAttributes: nil];
+    }
     s += step;
   }
   return YES;
@@ -616,6 +619,11 @@
 - (void) setHighlight: (BOOL) highlight
 {
   highlighted = highlight;
+}
+
+- (BOOL) highlighted
+{
+  return highlighted;
 }
 
 - (void) setTimeSliceTree: (TimeSliceTree *) t
