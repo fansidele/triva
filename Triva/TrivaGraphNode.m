@@ -19,6 +19,15 @@
 #include <limits.h>
 
 @implementation TrivaComposition
+- (id) init
+{
+  self = [super init];
+  if (self){
+    needSpace = YES; //by default everybody needs space inside node to be drawn
+  }
+  return self;
+}
+
 + (id) compositionWithConfiguration: (NSDictionary*) conf
                           forObject: (TrivaGraphNode*) obj
                          withValues: (NSDictionary*) timeSliceValues
@@ -81,6 +90,11 @@
                  andProvider: (TrivaFilter*) prov
 {
 	return nil;
+}
+
+- (BOOL) needSpace
+{
+  return needSpace;
 }
 @end
 
@@ -421,6 +435,11 @@
               withValues: (NSDictionary*) timeSliceValues
               andProvider: (TrivaFilter*) prov
 {
+  self = [self init];
+
+  //swarm objects are drawn around the hive
+  needSpace = NO;
+
   //allocate array for objects
   objects = [[NSMutableArray alloc] init];
   objectsColors = [[NSMutableDictionary alloc] init];
@@ -561,18 +580,29 @@
 
 - (void) refresh
 {
-	int count = [compositions count];
-	NSEnumerator *en = [compositions objectEnumerator];
-	id comp;
-	double accum_x = 0;
-	while ((comp = [en nextObject])){
-		NSRect rect = NSMakeRect (screenbb.origin.x + accum_x,
-					screenbb.origin.y,
-					screenbb.size.width/count,
-					screenbb.size.height);
-		[comp refreshWithinRect: rect];
-		accum_x += screenbb.size.width/count;
-	}
+  //check number of compositions that need space
+  int count = 0;
+  NSEnumerator *en = [compositions objectEnumerator];
+  id composition;
+  while ((composition = [en nextObject])){
+    if ([composition needSpace]){
+      count++;
+    }
+  }
+  en = [compositions objectEnumerator];
+  double accum_x = 0;
+  while ((composition = [en nextObject])){
+    if ([composition needSpace]){
+      NSRect rect = NSMakeRect (screenbb.origin.x + accum_x,
+          screenbb.origin.y,
+          screenbb.size.width/count,
+          screenbb.size.height);
+      [composition refreshWithinRect: rect];
+      accum_x += screenbb.size.width/count;
+    }else{
+      [composition refreshWithinRect: screenbb];
+    }
+  }
 }
 
 - (BOOL) draw

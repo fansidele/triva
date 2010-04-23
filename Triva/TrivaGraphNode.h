@@ -25,6 +25,9 @@
 @class TrivaGraphNode;
 
 @interface TrivaComposition : NSObject
+{
+  BOOL needSpace;
+}
 + (id) compositionWithConfiguration: (NSDictionary*) conf
                           forObject: (TrivaGraphNode*)obj
                          withValues: (NSDictionary*) timeSliceValues
@@ -33,6 +36,7 @@
                    forObject: (TrivaGraphNode*)obj
                   withValues: (NSDictionary*) timeSliceValues
                  andProvider: (TrivaFilter*) prov;
+- (BOOL) needSpace;
 @end
 
 @interface TrivaSeparation : TrivaComposition
