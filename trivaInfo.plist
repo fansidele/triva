@@ -1,0 +1,17 @@
+{
+  ApplicationDescription = "A trace file viewer.";
+  ApplicationName = "Triva";
+  ApplicationRelease = "1.0";
+  ApplicationURL = "http://triva.gforge.inria.fr";
+  Authors = ("Lucas M. Schnorr <schnorr@gmail.com>",
+             "Developed at GPPD, UFRGS, Brazil",
+             "and MOAIS/MESCAL, Grenoble, France",
+	           "Sponsored by: CAPES/COFECUB, CAPES, CNPq, INRIA, CNRS");
+  Copyright = "Copyright (C) 2007, 2008, 2009, 2010 Lucas M. Schnorr.";
+  CopyrightDescription = "Released under the GNU General Public License 3.0";
+  NSExecutable = "Triva";
+  NSMainNibFile = "Triva";
+  NSIcon = "Triva.tiff";
+  NSPrincipalClass = "NSApplication";
+  NSRole = "Viewer";
+}
