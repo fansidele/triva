@@ -477,9 +477,10 @@
       NSEnumerator *values = [[child timeSliceValues] keyEnumerator];
       id category;
       while ((category = [values nextObject])){
-        if ([[[child timeSliceValues] objectForKey: category] doubleValue] > 0 &&
-                                                        [colors containsObject: category]){
-            [objectsColors setObject: [[child timeSliceColors] objectForKey: category]
+        if ([[[child timeSliceValues] objectForKey: category] doubleValue]>0 &&
+                                          [colors containsObject: category]){
+            [objectsColors setObject: [[child timeSliceColors]
+                                          objectForKey: category]
                               forKey: [child name]];
         }
       }
