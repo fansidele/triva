@@ -38,6 +38,7 @@
 + (NSArray *)defaultComponentGraph;
 + (NSArray *)treemapComponentGraph;
 + (NSArray *)graphComponentGraph;
++ (NSArray *)linkViewComponentGraph;
 + (NSArray *)dotComponentGraph;
 + (NSArray *)checkTraceComponentGraph;
 + (NSArray *)listComponentGraph;
@@ -53,6 +54,7 @@
 
 - (void)activateTreemap;
 - (void)activateGraph;
+- (void)activateLinkView;
 - (void)activateDot;
 - (void)activateCheckTrace;
 - (void)activateList;

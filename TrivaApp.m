@@ -29,6 +29,7 @@ NS_DURING
   struct arguments arguments;
   arguments.treemap = 0;
   arguments.graph = 0;
+  arguments.linkview = 0;
   arguments.hierarchy = 0;
   arguments.check = 0;
   arguments.list = 0;
@@ -41,6 +42,8 @@ NS_DURING
     [triva activateTreemap];
   }else if (arguments.graph){
     [triva activateGraph];
+  }else if (arguments.linkview){
+    [triva activateLinkView];
   }else if (arguments.hierarchy) {
     [triva activateDot];
   }else if (arguments.check) {

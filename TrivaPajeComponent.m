@@ -166,6 +166,19 @@
 		) )" propertyList];
 }
 
++ (NSArray *)linkViewComponentGraph
+{
+  return [@"(  \
+  	( FileReader, \
+      PajeEventDecoder, \
+      PajeSimulator, \
+      StorageController, \
+  	  TimeInterval, \
+      TimeSliceAggregation, \
+      LinkView \
+  	) )" propertyList];
+}
+
 + (NSArray *)dotComponentGraph
 {
 	return [@"(  \
@@ -462,6 +475,12 @@
 - (void) activateGraph
 {
   [self addComponentSequences:[[self class] graphComponentGraph]];
+  [self defineMajorComponents];
+}
+
+- (void) activateLinkView
+{
+  [self addComponentSequences:[[self class] linkViewComponentGraph]];
   [self defineMajorComponents];
 }
 

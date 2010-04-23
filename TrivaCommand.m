@@ -26,6 +26,7 @@ static struct argp_option options[] = {
   {0, 0, 0, 0, "You need to use one of the following options:"},
   {"treemap", 't', 0, OPTION_ARG_OPTIONAL, "Treemap Analysis"},
   {"graph",   'g', 0, OPTION_ARG_OPTIONAL, "Graph Analysis"},
+  {"linkview", 'k', 0, OPTION_ARG_OPTIONAL, "Link View (Experimental)"},
   {0, 0, 0, 0, "Other auxiliary options to check the trace file:"},
   {"hierarchy",'h', 0, OPTION_ARG_OPTIONAL, "Export the trace type hierarchy"},
   {"check",   'c', 0, OPTION_ARG_OPTIONAL, "Check the integrity of trace file"},
@@ -36,7 +37,7 @@ static struct argp_option options[] = {
 
 static int has_vis_activated (struct arguments *arg)
 {
-  return arg->treemap || arg->graph ||
+  return arg->treemap || arg->graph || arg->linkview ||
       arg->hierarchy || arg->check || 
       arg->list || arg->instances;
 }
@@ -57,6 +58,10 @@ static int parse_options (int key, char *arg, struct argp_state *state)
     case 'g':
       if (has_vis_activated (arguments)) argp_usage(state);
       arguments->graph = 1;
+      break;
+    case 'k':
+      if (has_vis_activated (arguments)) argp_usage(state);
+      arguments->linkview = 1;
       break;
     case 'h':
       if (has_vis_activated (arguments)) argp_usage(state);

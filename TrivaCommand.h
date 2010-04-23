@@ -21,7 +21,7 @@
 struct arguments
 {
   char *input[1];
-  int treemap, graph; //visualization windows
+  int treemap, graph, linkview; //visualization windows
   int abort; //if parameters are not good
   int hierarchy; //generate type hierarchy
   int check;  //check trace file

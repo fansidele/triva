@@ -42,6 +42,7 @@ CONFIG_FILES="
   Triva/GNUmakefile \
   GraphConfiguration/GNUmakefile \
   GraphView/GNUmakefile \
+  LinkView/GNUmakefile \
   Dot/GNUmakefile \
   CheckTrace/GNUmakefile \
   List/GNUmakefile \
