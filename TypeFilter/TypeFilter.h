@@ -21,11 +21,23 @@
 
 @interface TypeFilter  : PajeFilter
 {
-	NSMutableDictionary *hiddenEntityValues;
-	NSMutableSet *hiddenEntityTypes;
-	NSMutableSet *hiddenContainers;
+  NSMutableDictionary *hiddenEntityValues;
+  NSMutableSet *hiddenEntityTypes;
+  NSMutableSet *hiddenContainers;
 
-	BOOL enableNotifications;
+  BOOL enableNotifications;
+
+  id scrollview;
+  id expression;
+  id instances;
+
+
+  id outlineview;
+  id matrix;
+
+
+  id entities;
+  id selectedType;
 }
 - (void) setNotifications: (BOOL) notifications;
 - (BOOL) isHiddenEntityType: (PajeEntityType *) type;
@@ -40,6 +52,10 @@
                     show: (BOOL) show;
 - (PajeFilter *) inputComponent;
 - (NSArray *)unfilteredObjectsForEntityType:(PajeEntityType *)entityType;
+@end
+
+@interface TypeFilter (GUI)
+- (void) configureGUI;
 @end
 
 #endif

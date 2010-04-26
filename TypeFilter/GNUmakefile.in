@@ -32,7 +32,8 @@ TypeFilter.h
 # Class files
 #
 TypeFilter_OBJC_FILES = \
-TypeFilter.m
+TypeFilter.m \
+TypeFilter+GUI.m
 
 #
 # Makefiles

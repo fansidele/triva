@@ -10,6 +10,7 @@
     };
     FirstResponder = {
 	Actions = (
+	    "regularExpression:",
 	    "orderFrontFontPanel:",
 	    "showPrefPanel:"
 	);
@@ -24,11 +25,12 @@
     };
     TypeFilter = {
 	Actions = (
+	    "regularExpression:"
 	);
 	Outlets = (
-	    browser,
-	    regExpr,
-	    entityTypeSwitch
+	    expression,
+	    scrollview,
+	    instances
 	);
 	Super = NSObject;
     };
