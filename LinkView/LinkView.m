@@ -72,4 +72,11 @@
 	}
 	nodes = [[NSMutableDictionary alloc] init];
 }
+
+
+- (BOOL) windowShouldClose: (id) sender
+{
+  [[NSApplication sharedApplication] terminate:self];
+  return YES;
+}
 @end
