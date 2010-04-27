@@ -53,6 +53,7 @@ CONFIG_FILES="
   SquarifiedTreemap/GNUmakefile \
   TimeInterval/GNUmakefile \
   TimeSliceAggregation/GNUmakefile \
+  TypeFilter/GNUmakefile \
   contrib/GNUmakefile \
   contrib/SimGridColors/GNUmakefile \
   GNUmakefile"

@@ -16,6 +16,7 @@ SUBPROJECTS = Triva \
   SquarifiedTreemap \
   TimeInterval \
   TimeSliceAggregation \
+  TypeFilter \
   contrib
 
 @PROJECT_NAME@_OBJC_FILES = \
