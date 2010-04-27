@@ -6,7 +6,12 @@ BUNDLE_EXTENSION=.bundle
 BUNDLE_INSTALL_DIR=$(GNUSTEP_BUNDLES)/@PROJECT_NAME@
 TimeSliceAggregation_PRINCIPAL_CLASS=TimeSliceAggregation
 
-TimeSliceAggregation_OBJC_FILES = TimeSliceAggregation.m
+TimeSliceAggregation_OBJC_FILES = \
+  TimeSliceAggregation.m \
+  TimeSliceAggregation+State.m \
+  TimeSliceAggregation+Variable.m \
+  TimeSliceAggregation+Link.m \
+  TimeSliceAggregation+Debugging.m
 TimeSliceAggregation_OBJCC_FILES=
 
 TimeSliceAggregation_INCLUDE_DIRS += @CPPFLAGS@

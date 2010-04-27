@@ -79,4 +79,31 @@
 - (TimeSliceTree *) createInstanceHierarchy: (id) instance parent:(TimeSliceTree *) parent;
 @end
 
+@interface TimeSliceAggregation (State)
+- (void) timeSliceOfStateAt: (id) instance
+    withType: (id) type
+    withNode: (TimeSliceTree *) node;
+@end
+
+@interface TimeSliceAggregation (Variable)
+- (void) timeSliceOfVariableAt: (id) instance
+    withType: (id) type
+    withNode: (TimeSliceTree *) node;
+@end
+
+@interface TimeSliceAggregation (Link)
+- (void) timeSliceOfLinkAt: (id) instance
+    withType: (id) type
+    withNode: (TimeSliceTree *) node;
+- (void) createGraphBasedOnLinks: (id) instance
+      withTree: (TimeSliceTree *) node;
+@end
+
+@interface TimeSliceAggregation (Debugging)
+- (void) debug;
+- (void) activateRecordingOfClass: (NSString *)classname;
+- (void) listRecordedObjectsOfClass: (NSString *) classname;
+- (void) debugOf: (PajeEntityType*) type At: (PajeContainer*) container;
+@end
+
 #endif
