@@ -53,6 +53,8 @@
     [timeSliceTypes setObject: type forKey: ent];
   }
 
+  double tsDuration = [sliceEndTime timeIntervalSinceDate: sliceStartTime];
+
   //integrating in time for the selected time slice
   en = [self enumeratorOfEntitiesTyped:type
     inContainer:instance
@@ -80,6 +82,7 @@
 
     //integrating the value of state in time
     double integrated = 1 * duration; //value of state is 1
+    integrated /= tsDuration; //normalizing to time-slice
 
     //getting the current value
     double value = [[timeSliceValues objectForKey: name]
@@ -99,17 +102,6 @@
       [timeSliceDurations setObject:
           [NSNumber numberWithDouble:acc]
         forKey: name];
-    }
-  }
-
-  //normalizing the integrated state values according to the time-slice
-  double time = [sliceEndTime timeIntervalSinceDate: sliceStartTime];
-  en = [allValuesOfStateType objectEnumerator];
-  while ((ent = [en nextObject]) != nil) {
-    double currentValue = [[timeSliceValues objectForKey: ent] doubleValue];
-    if (currentValue){
-      [timeSliceValues setObject: [NSNumber numberWithDouble: currentValue/time]
-                          forKey: ent];
     }
   }
 }
