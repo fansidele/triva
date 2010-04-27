@@ -25,6 +25,7 @@
 		[NSBundle loadNibNamed: @"SquarifiedTreemap" owner: self];
 	}
 	[view setFilter: self];
+  [window setDelegate: self];
 	return self;
 }
 

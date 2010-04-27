@@ -27,6 +27,7 @@
 @interface SquarifiedTreemap  : TrivaFilter
 {
 	IBOutlet TreemapView *view;
+  IBOutlet NSWindow *window;
 }
 @end
 
