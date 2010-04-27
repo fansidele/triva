@@ -57,6 +57,7 @@
   [entities setDataSource: self];
   [entities setDelegate: self];
   [entities setAllowsColumnResizing: YES];
+  [entities setAllowsMultipleSelection: YES];
   [entities sizeToFit];
 
   selectedType = nil;
