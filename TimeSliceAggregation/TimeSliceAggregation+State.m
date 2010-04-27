@@ -102,5 +102,15 @@
     }
   }
 
+  //normalizing the integrated state values according to the time-slice
+  double time = [sliceEndTime timeIntervalSinceDate: sliceStartTime];
+  en = [allValuesOfStateType objectEnumerator];
+  while ((ent = [en nextObject]) != nil) {
+    double currentValue = [[timeSliceValues objectForKey: ent] doubleValue];
+    if (currentValue){
+      [timeSliceValues setObject: [NSNumber numberWithDouble: currentValue/time]
+                          forKey: ent];
+    }
+  }
 }
 @end
