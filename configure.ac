@@ -13,6 +13,8 @@ AC_C_INLINE
 AC_FUNC_MALLOC
 AC_CHECK_FUNCS([sqrt])
 AC_CHECK_FUNCS([bzero])
+AC_CHECK_HEADERS([regex.h], , AC_ERROR([regex.h required]))
+AC_CHECK_FUNC([regcomp])
 AC_CHECK_HEADERS([float.h limits.h sys/time.h])
 AC_CHECK_HEADER([argp.h], , AC_ERROR([argp.h required]))
 AC_CHECK_FUNC([argp_parse])
