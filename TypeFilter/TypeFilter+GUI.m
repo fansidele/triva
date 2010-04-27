@@ -20,6 +20,8 @@
 @implementation TypeFilter (GUI)
 - (void) configureGUI
 {
+  //configuring window
+  [window setDelegate: self];
 
   //configuring right-side, with the type hierarchy
   outlineview = [scrollview documentView];

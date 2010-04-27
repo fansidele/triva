@@ -30,7 +30,8 @@
 	Outlets = (
 	    expression,
 	    scrollview,
-	    instances
+	    instances,
+	    window
 	);
 	Super = NSObject;
     };

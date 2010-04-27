@@ -233,4 +233,10 @@
 {
   return [super allValuesForEntityType:entityType];
 }
+
+- (BOOL) windowShouldClose: (id) sender
+{
+  [[NSApplication sharedApplication] terminate:self];
+  return YES;
+}
 @end

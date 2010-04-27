@@ -28,6 +28,8 @@
 
   BOOL enableNotifications;
 
+  id window;
+
   id scrollview;
   id expression;
   id instances;
