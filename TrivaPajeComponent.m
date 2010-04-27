@@ -147,6 +147,7 @@
                    PajeSimulator, \
                    StorageController, \
 		   TimeInterval, \
+		   TypeFilter, \
 		   TimeSliceAggregation, \
 		   SquarifiedTreemap \
 		) )" propertyList];
