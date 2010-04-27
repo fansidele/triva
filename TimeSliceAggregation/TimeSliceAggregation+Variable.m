@@ -35,6 +35,8 @@
   timeSliceTypes = [node timeSliceTypes];
   timeSliceDurations = [node timeSliceDurations];
 
+  double tsDuration = [sliceEndTime timeIntervalSinceDate: sliceStartTime];
+
   NSEnumerator *en;
   en = [self enumeratorOfEntitiesTyped:type
     inContainer:instance
@@ -55,7 +57,7 @@
     double value = [[ent value] doubleValue];
 
     //integrating in time
-    integrated += duration * value;
+    integrated += (duration/tsDuration) * value;
 
     if (value){
       accumDuration += duration;
