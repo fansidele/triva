@@ -18,6 +18,7 @@
 #define __TypeFilter_h
 #include <Foundation/Foundation.h>
 #include <General/PajeFilter.h>
+#include <regex.h>
 
 @interface TypeFilter  : PajeFilter
 {
@@ -38,6 +39,8 @@
 
   id entities;
   id selectedType;
+
+  regex_t *regex;
 }
 - (void) setNotifications: (BOOL) notifications;
 - (BOOL) isHiddenEntityType: (PajeEntityType *) type;
@@ -56,6 +59,7 @@
 
 @interface TypeFilter (GUI)
 - (void) configureGUI;
+- (void) regularExpression: (id) sender;
 @end
 
 #endif

@@ -15,6 +15,7 @@
     along with Triva.  If not, see <http://www.gnu.org/licenses/>.
 */
 #include "TypeFilter.h"
+#include <regex.h>
 
 @implementation TypeFilter (GUI)
 - (void) configureGUI
@@ -60,7 +61,70 @@
   [entities setAllowsMultipleSelection: YES];
   [entities sizeToFit];
 
+  //configuration expression text field
+  [expression setDelegate: self];
+  regex = (regex_t*)malloc(sizeof(regex_t));
+
   selectedType = nil;
+  
+}
+
+- (void) regularExpression: (id) sender
+{
+  if (selectedType != nil){
+    NSArray *array;
+    if ([super isContainerEntityType: selectedType]){
+      NSEnumerator *en = [super enumeratorOfContainersTyped: selectedType
+                                inContainer: [super rootInstance]];
+      array = [en allObjects];
+    }else{
+      NSEnumerator *en = [[self unfilteredObjectsForEntityType: selectedType]
+                            objectEnumerator];
+      array = [en allObjects];
+    }
+    int i;
+    int count = [array count];
+    for (i = 0; i < count; i++){
+      if ([[entities selectedRowIndexes] containsIndex: i]){
+        if ([super isContainerEntityType: selectedType]){
+          id obj = [array objectAtIndex: i];
+          BOOL hidden = [self isHiddenContainer: obj
+                                  forEntityType: selectedType];
+          [self filterContainer: obj show: hidden];
+        }else{
+          id obj = [array objectAtIndex: i];
+          BOOL hidden = [self isHiddenValue: obj
+                              forEntityType: selectedType];
+          [self filterValue: obj
+              forEntityType: selectedType
+                       show: hidden];
+        }
+      }
+    }
+  }
+  [entities reloadData];
+  [expression becomeFirstResponder];
+}
+
+- (void)controlTextDidChange:(NSNotification *)aNotification
+{
+  //deselect all
+  [entities deselectAll: self];
+
+  [expression setBackgroundColor: [NSColor whiteColor]];
+
+  //create regular expression based on user's input 
+  NSString *expr = [expression stringValue];
+  if ([expr isEqualToString: @""]){
+    return;
+  }
+  if (regcomp (regex, [expr cString], REG_EXTENDED)){
+    [expression setBackgroundColor: [NSColor redColor]];
+    [expression setNeedsDisplay: YES];
+    return;
+  }
+
+  [entities reloadData]; 
 }
 
 /* NSTableViewDataSource Protocol */
@@ -96,7 +160,16 @@
       if ([super isContainerEntityType: selectedType]){
         NSEnumerator *en = [super enumeratorOfContainersTyped: selectedType
                                   inContainer: [super rootInstance]];
-        return [[[en allObjects] objectAtIndex: index] name];
+        NSArray *array = [en allObjects];
+        NSString *name = [[array objectAtIndex: index] name];
+
+        if (![[expression stringValue] isEqualToString: @""]){
+          if (!regexec (regex, [name cString], 0, NULL, 0)){
+            NSIndexSet *set = [NSIndexSet indexSetWithIndex: index];
+            [entities selectRowIndexes: set byExtendingSelection: YES];
+          }
+        }
+        return name;
       }else{
         NSEnumerator *en;
         en = [[self unfilteredObjectsForEntityType: selectedType] objectEnumerator];
