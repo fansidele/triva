@@ -171,9 +171,17 @@
         }
         return name;
       }else{
-        NSEnumerator *en;
-        en = [[self unfilteredObjectsForEntityType: selectedType] objectEnumerator];
-        return [[en allObjects] objectAtIndex: index];
+        NSEnumerator *en = [[self unfilteredObjectsForEntityType: selectedType]
+                                        objectEnumerator];
+        NSArray *array = [en allObjects];
+        NSString *value = [array objectAtIndex: index];
+        if (![[expression stringValue] isEqualToString: @""]){
+          if (!regexec (regex, [value cString], 0, NULL, 0)){
+            NSIndexSet *set = [NSIndexSet indexSetWithIndex: index];
+            [entities selectRowIndexes: set byExtendingSelection: YES];
+          }
+        }
+        return value;
       }
     }else{
     //else selected column
