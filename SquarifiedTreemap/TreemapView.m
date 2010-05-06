@@ -149,4 +149,20 @@
     return YES;
 }
 
+- (void)keyDown:(NSEvent *)theEvent
+{
+  if (([theEvent modifierFlags] | NSAlternateKeyMask) &&
+    [theEvent keyCode] == 33){ //ALT + P
+    NSPrintOperation *op;
+    NSMutableData *data = [NSMutableData data];
+    op = [NSPrintOperation EPSOperationWithView: self
+                                     insideRect: [self bounds]
+                                         toData: data];
+    [op runOperation];
+    NSString *filename = @"treemap-screenshot.eps";
+    [data writeToFile: filename atomically: YES];
+    NSLog (@"screenshot written to %@", filename);
+  }
+}
+
 @end
