@@ -155,6 +155,9 @@
 	}else{
 		overflow = 0;
 	}
+	if ([values count] == 0){
+		needSpace = NO;
+	}
 	return self;
 }
 
@@ -403,6 +406,9 @@
                        withType: [(TrivaGraphNode*)obj type]];
 		[self setGradientType: var withValue: val withMax: ma withMin: mi];
 	}
+	if ([values count] == 0){
+		needSpace = NO;
+	}
 	return self;
 }
 @end
@@ -424,6 +430,9 @@
 			[values setObject: [NSNumber numberWithDouble: 1]
 					forKey: var];
 		}
+	}
+	if ([values count] == 0){
+		needSpace = NO;
 	}
 	return self;
 }
