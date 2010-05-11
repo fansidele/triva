@@ -295,14 +295,6 @@
 		*min = [self minValueForEntityType: valtype inContainer: cont];
 		*max = [self maxValueForEntityType: valtype inContainer: cont];
 	}
-	{
-		//TODO: begin "this should not be here"
-		double t;
-		t = [[self selectionEndTime]timeIntervalSinceDate:[self selectionStartTime]];
-		*min *= t;
-		*max *= t;
-		//TODO: end "this should not be here"
-	}
 }
 
 - (double) evaluateWithValues: (NSDictionary *) values
