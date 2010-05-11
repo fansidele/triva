@@ -84,6 +84,7 @@
   NSRect bb; //the bounding box
   NSMutableArray *objects; //array of strings with the existing objects
   NSMutableDictionary *objectsColors; //dict of string->colors
+  TrivaGraphNode *node;
 }
 @end
 

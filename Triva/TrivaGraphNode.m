@@ -453,6 +453,9 @@
   objects = [[NSMutableArray alloc] init];
   objectsColors = [[NSMutableDictionary alloc] init];
 
+  //saving node
+  node = obj;
+
   //we need the filter
   NSString *filter = [conf objectForKey: @"filter"];
   if (!filter) {
@@ -508,18 +511,27 @@
   int count = [objects count];
   if (!count) return NO;
   int i;
-  double step = 360/count;
+  double step = 20;//count;
   double s = 0;
   for (i = 0; i < count; i++){
     [[objectsColors objectForKey: [objects objectAtIndex: i]] set];
     NSBezierPath *path = [NSBezierPath bezierPath];
-    [path appendBezierPathWithArcWithCenter: NSMakePoint(bb.origin.x+bb.size.width/2,
-                                                      bb.origin.y+bb.size.height/2)
-                                  radius: bb.size.width/2 startAngle: s endAngle: s+0.001];
-    [path appendBezierPathWithArcWithCenter: [path currentPoint] radius: 2 startAngle: 0 endAngle: 360];
+    //position of the dot
+    [path appendBezierPathWithArcWithCenter:
+                          NSMakePoint(bb.origin.x+bb.size.width/2,
+                                      bb.origin.y+bb.size.height/2)
+                                     radius: bb.size.width/2+bb.size.width*.3
+                                 startAngle: s endAngle: s];
+    //drawing the dot
+    [path appendBezierPathWithArcWithCenter: [path currentPoint]
+                                     radius: 3
+                                 startAngle: 0
+                                   endAngle: 360];
     [path fill];
+
     if ([node highlighted]){
-      [[objects objectAtIndex: i] drawAtPoint: [path currentPoint] withAttributes: nil];
+      [[objects objectAtIndex: i] drawAtPoint: [path currentPoint]
+                               withAttributes: nil];
     }
     s += step;
   }
@@ -630,8 +642,8 @@
 
 	//draw my name
   if (highlighted){
-  	[name drawAtPoint: NSMakePoint (screenbb.origin.x + screenbb.size.width/2,
-					screenbb.origin.y + screenbb.size.height/2)
+  	[name drawAtPoint: NSMakePoint (screenbb.origin.x + screenbb.size.width,
+					screenbb.origin.y)
 		 withAttributes: nil];
   }
   return YES;
