@@ -75,8 +75,8 @@ double LMSDistanceBetweenPoints(NSPoint pt1, NSPoint pt2)
 
 - (void) draw
 {
-	NSRect srcRect = [source screenbb];
-	NSRect dstRect = [destination screenbb];
+	NSRect srcRect = [source bb];
+	NSRect dstRect = [destination bb];
 	NSPoint srcPoint = NSMakePoint (srcRect.origin.x+srcRect.size.width/2,
 					srcRect.origin.y+srcRect.size.height/2);
 	NSPoint dstPoint = NSMakePoint (dstRect.origin.x+dstRect.size.width/2,
@@ -99,14 +99,14 @@ double LMSDistanceBetweenPoints(NSPoint pt1, NSPoint pt2)
 	//to the distance between the nodes
 
 	//calculate the distance from src to dst
-	NSRect srcRect = [source screenbb];
-	NSRect dstRect = [destination screenbb];
+	NSRect srcRect = [source bb];
+	NSRect dstRect = [destination bb];
 	NSPoint srcPoint = NSMakePoint (srcRect.origin.x+srcRect.size.width/2,
 					srcRect.origin.y+srcRect.size.height/2);
 	NSPoint dstPoint = NSMakePoint (dstRect.origin.x+dstRect.size.width/2,
 					dstRect.origin.y+dstRect.size.height/2);
 	double distance = LMSDistanceBetweenPoints (srcPoint, dstPoint);
-	screenbb.size.width = distance;
+	bb.size.width = distance;
 
 	//divide my space among my compositions
 	[super refresh];

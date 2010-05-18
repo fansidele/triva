@@ -579,11 +579,6 @@
 	return bb;
 }
 
-- (NSRect) screenbb
-{
-	return screenbb;
-}
-
 - (void) setDrawable: (BOOL) v
 {
 	drawable = v;
@@ -615,14 +610,14 @@
   double accum_x = 0;
   while ((composition = [en nextObject])){
     if ([composition needSpace]){
-      NSRect rect = NSMakeRect (screenbb.origin.x + accum_x,
-          screenbb.origin.y,
-          screenbb.size.width/count,
-          screenbb.size.height);
+      NSRect rect = NSMakeRect (bb.origin.x + accum_x,
+          bb.origin.y,
+          bb.size.width/count,
+          bb.size.height);
       [composition refreshWithinRect: rect];
-      accum_x += screenbb.size.width/count;
+      accum_x += bb.size.width/count;
     }else{
-      [composition refreshWithinRect: screenbb];
+      [composition refreshWithinRect: bb];
     }
   }
 }
@@ -638,12 +633,12 @@
 
 	//draw myself
 	[[NSColor lightGrayColor] set];
-	[NSBezierPath strokeRect: screenbb];
+	[NSBezierPath strokeRect: bb];
 
 	//draw my name
   if (highlighted){
-  	[name drawAtPoint: NSMakePoint (screenbb.origin.x + screenbb.size.width,
-					screenbb.origin.y)
+  	[name drawAtPoint: NSMakePoint (bb.origin.x + bb.size.width,
+					bb.origin.y)
 		 withAttributes: nil];
   }
   return YES;
@@ -657,15 +652,6 @@
 - (void) removeCompositions
 {
 	[compositions removeAllObjects];
-}
-
-- (void) convertFrom: (NSRect) this to: (NSRect) screen
-{
-	screenbb = NSMakeRect (
-		(bb.origin.x-this.origin.x) / this.size.width * screen.size.width,
-		(bb.origin.y-this.origin.y) / this.size.height * screen.size.height,
-		bb.size.width / this.size.width * screen.size.width,
-		bb.size.height / this.size.width * screen.size.width);
 }
 
 - (void) setHighlight: (BOOL) highlight

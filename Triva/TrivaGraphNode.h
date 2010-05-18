@@ -93,7 +93,6 @@
 	NSString *type; //node type (entitytype from paje)
 	//NSString *name (declared in super class); node name (unique id)
 	NSRect bb; //the bounding box of the node (indicates size and position)
-	NSRect screenbb; //the bounding box of the screen
 	NSMutableArray *compositions; //array of TrivaComposition objects
   BOOL highlighted;
 	
@@ -105,14 +104,12 @@
 - (NSString *) type;
 - (void) setBoundingBox: (NSRect) b;
 - (NSRect) bb;
-- (NSRect) screenbb;
 - (void) setDrawable: (BOOL)v;
 - (BOOL) drawable;
 - (void) refresh;
 - (BOOL) draw;
 - (void) addComposition: (TrivaComposition*)comp;
 - (void) removeCompositions;
-- (void) convertFrom: (NSRect) this to: (NSRect) screen;
 - (void) setHighlight: (BOOL) highlight;
 - (BOOL) highlighted;
 - (void) setTimeSliceTree: (TimeSliceTree *) t;
