@@ -117,27 +117,39 @@
 
 - (void) mouseDragged:(NSEvent *)event
 {
-  NSPoint p, dif;
+  NSPoint p;
   p = [self convertPoint:[event locationInWindow] fromView:nil];
-  dif = NSSubtractPoints (p, move);
-  if (NSEqualPoints (translate, NSZeroPoint)){
-    translate = dif;
-  }else{
-    translate = NSAddPoints (translate, dif);
-  }
-  move = p;
-  [self setNeedsDisplay: YES];
+  if ([event modifierFlags] & NSControlKeyMask){
+    //code for changing the position of a node
+    if (selectedNode == nil) {
+      return;
+    }
 
+    NSAffineTransform *t = [self transform];
+    [t invert];
+    NSPoint p2 = [t transformPoint: p];
+
+    NSRect nodebb = [selectedNode bb];
+    nodebb.origin.x = p2.x - nodebb.size.width/2;
+    nodebb.origin.y = p2.y - nodebb.size.height/2;
+    [selectedNode setBoundingBox: nodebb];
+  }else{
+    NSPoint dif;
+    dif = NSSubtractPoints (p, move);
+    if (NSEqualPoints (translate, NSZeroPoint)){
+      translate = dif;
+    }else{
+      translate = NSAddPoints (translate, dif);
+    }
+    move = p;
+  }
+  [self setNeedsDisplay: YES];
 }
 
 - (void) mouseDown: (NSEvent *) event
 {
   move = [self convertPoint:[event locationInWindow] fromView:nil];
 }
-
-/*
-}
-*/
 
 - (void) mouseMoved:(NSEvent *)event
 {
