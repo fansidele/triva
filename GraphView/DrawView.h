@@ -26,6 +26,12 @@
 {
   GraphView *filter;
   TrivaGraphNode *selectedNode;
+
+  //for screen transformation
+  double ratio;
+  NSPoint translate;
+
+  NSPoint move; //for use in mouse(down|dragged)
 }
 - (void) setFilter: (GraphView *)f;
 - (NSColor *) getColor: (NSColor *)c withSaturation: (double) saturation;
