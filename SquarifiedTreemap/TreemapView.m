@@ -73,7 +73,6 @@
 		current = [[TrivaTreemap alloc] initWithTimeSliceTree: tree
 				andProvider: filter];
 		[current setBoundingBox: b];
-		[current convertFrom: b to: b]; //nothing to convert
 		[current refresh];
 	}
 	[self drawTreemap: current];
