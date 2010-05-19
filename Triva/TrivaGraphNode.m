@@ -15,6 +15,7 @@
     along with Triva.  If not, see <http://www.gnu.org/licenses/>.
 */
 #include "TrivaGraphNode.h"
+#include "NSPointFunctions.h"
 #include <float.h>
 #include <limits.h>
 
@@ -211,6 +212,9 @@
 	NSEnumerator *en = [values keyEnumerator];
 	NSString *type;
 	double accum_y = 0;
+
+  NSMutableString *str = [NSMutableString string];
+
 	while ((type = [en nextObject])){
 		double value = [[values objectForKey: type] doubleValue];
 
@@ -226,8 +230,21 @@
 		NSRectFill(vr);
 		[NSBezierPath strokeRect: vr];
 
+    [str appendString: [NSString stringWithFormat: @"%@ = %g\n", type,
+                             value*100]]; //value is always between 0 and 1 here
 		accum_y += vr.size.height;
 	}
+
+  if ([node highlighted]){
+    NSMutableDictionary *attr = [[NSMutableDictionary alloc] init];
+    [attr setValue:[NSFont userFontOfSize: 10] forKey: NSFontAttributeName];
+    [str drawAtPoint: NSAddPoints ([node bb].origin,
+                                   NSMakePoint([node bb].size.width,
+                                               [node bb].size.height))
+      withAttributes: attr];
+    [attr release];
+  }
+
   return YES;
 }
 
