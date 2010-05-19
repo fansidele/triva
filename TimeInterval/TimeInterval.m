@@ -132,6 +132,10 @@
 		selEnd = [[end description] doubleValue];
 	}
 	[self updateLabels];
+
+  NSString *tracefilePath = [[self rootInstance] name];
+  NSString *tf = [[tracefilePath componentsSeparatedByString: @"/"] lastObject];
+  [window setTitle: [NSString stringWithFormat: @"Triva - %@ - TimeInterval", tf]];
 }
 
 - (void) updateLabels

@@ -32,6 +32,9 @@
 
 - (void) timeSelectionChanged
 {
+  NSString *tracefilePath = [[self rootInstance] name];
+  NSString *tf = [[tracefilePath componentsSeparatedByString: @"/"] lastObject];
+  [window setTitle: [NSString stringWithFormat: @"Triva - %@ - GraphConfig", tf]];
 	[view setNeedsDisplay: YES];
 }
 
