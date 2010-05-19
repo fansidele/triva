@@ -21,7 +21,9 @@
 {
 	self = [super init];
 	children = [[NSMutableArray alloc] init];
-	maxDepth = -1;
+	depth = maxDepth = -1;
+  parent = nil;
+  name = nil;
 	return self;
 }
 
