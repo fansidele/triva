@@ -120,6 +120,9 @@
 	}
 */
 
+  //saving node
+  node = obj;
+
 	//we need the size
 	NSString *sizeconf = [conf objectForKey: @"size"];
 	double size = 0;

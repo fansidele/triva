@@ -47,6 +47,7 @@
 	double overflow; //(sum_of_the_values - 1)
 			 //can be used to check if the sum is > 1
 	id filter;
+  TrivaGraphNode *node;
 }
 - (id) initWithFilter: (id) f;
 - (void) setFilter: (id) f;
