@@ -70,6 +70,21 @@
 	[self timeSelectionChanged];
 }
 
+- (void) entitySelectionChanged
+{
+  [self timeSelectionChanged];
+}
+
+- (void) containerSelectionChanged
+{
+  [self timeSelectionChanged];
+}
+
+- (void) dataChangedForEntityType: (PajeEntityType *) type
+{
+  [self timeSelectionChanged];
+}
+
 - (void) setConfiguration: (NSDictionary *) c
 {
 	if (configuration){
