@@ -19,8 +19,8 @@
 #define _SQUARIFIEDTREEMAP_H_
 
 #include <Foundation/Foundation.h>
-#include <TrivaFilter.h>
-#include <TimeSliceTree.h>
+#include <Triva/TrivaFilter.h>
+#include <Triva/TimeSliceTree.h>
 
 @class TreemapView;
 

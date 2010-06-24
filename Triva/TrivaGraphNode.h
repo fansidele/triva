@@ -18,8 +18,8 @@
 #define __TrivaGraphNode_h
 #include <Foundation/Foundation.h>
 #include <General/PajeFilter.h>
-#include <Tree.h>
-#include <TimeSliceTree.h>
+#include <Triva/Tree.h>
+#include <Triva/TimeSliceTree.h>
 
 @class TrivaFilter;
 @class TrivaGraphNode;
