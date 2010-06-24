@@ -19,13 +19,14 @@
 
 #include <Foundation/Foundation.h>
 #include <Triva/TrivaFilter.h>
+#include <Triva/TrivaWindow.h>
 #include <AppKit/AppKit.h>
 #include "DrawView.h"
 
 @interface GraphView : TrivaFilter
 {
   IBOutlet DrawView *view;
-  id window;
+  TrivaWindow *window;
 }
 @end
 
