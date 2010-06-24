@@ -30,8 +30,6 @@ SquarifiedTreemap.m \
 TreemapView.m
 
 SquarifiedTreemap_INCLUDE_DIRS += -I../ -I./
-SquarifiedTreemap_LIB_DIRS += @LIBS@
-SquarifiedTreemap_LDFLAGS += @LDFLAGS@
 
 #
 # Makefiles

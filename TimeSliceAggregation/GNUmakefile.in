@@ -15,8 +15,6 @@ TimeSliceAggregation_OBJC_FILES = \
 TimeSliceAggregation_OBJCC_FILES=
 
 TimeSliceAggregation_INCLUDE_DIRS += -I../ -I./
-TimeSliceAggregation_LIB_DIRS += @LIBS@
-TimeSliceAggregation_LDFLAGS += @LDFLAGS@
 
 include $(GNUSTEP_MAKEFILES)/bundle.make
 

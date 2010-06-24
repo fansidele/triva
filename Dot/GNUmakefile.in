@@ -12,8 +12,6 @@ Dot_OBJC_FILES=Dot.m
 Dot_OBJCC_FILES = 
 
 Dot_INCLUDE_DIRS += -I../ -I./
-Dot_LIB_DIRS += @LIBS@
-Dot_LDFLAGS += @LDFLAGS@
 
 include $(GNUSTEP_MAKEFILES)/bundle.make
 

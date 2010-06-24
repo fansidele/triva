@@ -32,7 +32,6 @@ GraphConfiguration.m \
 GraphConfiguration+Interface.m
 
 GraphConfiguration_INCLUDE_DIRS += -I../ -I./
-GraphConfiguration_LIB_DIRS += @LIBS@
 GraphConfiguration_LDFLAGS += -lgvc -lmatheval
 
 #

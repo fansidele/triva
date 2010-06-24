@@ -58,7 +58,6 @@ CONFIG_FILES="
   contrib/SimGridColors/GNUmakefile \
   GNUmakefile"
 
-AC_SUBST(LIBS)
 AC_SUBST(CONFIG_FILES)
 AC_SUBST(PROJECTS)
 

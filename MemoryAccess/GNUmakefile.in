@@ -12,8 +12,6 @@ MemoryAccess_OBJC_FILES=MALayout.m
 MemoryAccess_OBJCC_FILES=MemoryAccess.mm MAWindowAuto.mm MAWindow.mm MADraw.mm
 
 MemoryAccess_INCLUDE_DIRS += -I../ -I./
-MemoryAccess_LIB_DIRS += @LIBS@
-MemoryAccess_LDFLAGS += @LDFLAGS@
 
 include $(GNUSTEP_MAKEFILES)/bundle.make
 

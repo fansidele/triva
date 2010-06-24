@@ -34,7 +34,6 @@ LDFLAGS += -L./Triva/@PROJECT_NAME@.framework -l@PROJECT_NAME@
 endif
 	
 @PROJECT_NAME@_INCLUDE_DIRS += -I../ -I./
-@PROJECT_NAME@_LIB_DIRS += @LIBS@
 @PROJECT_NAME@_LDFLAGS += -lGeneral
 
 include $(GNUSTEP_MAKEFILES)/aggregate.make

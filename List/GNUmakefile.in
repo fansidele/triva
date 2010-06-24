@@ -10,8 +10,6 @@ List_OBJC_FILES=List.m
 List_OBJCC_FILES = 
 
 List_INCLUDE_DIRS += -I../ -I./
-List_LIB_DIRS += @LIBS@
-List_LDFLAGS += @LDFLAGS@
 
 include $(GNUSTEP_MAKEFILES)/bundle.make
 

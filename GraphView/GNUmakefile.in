@@ -33,8 +33,6 @@ DrawView.m \
 GraphView.m
 
 GraphView_INCLUDE_DIRS += -I../ -I./
-GraphView_LIB_DIRS += @LIBS@
-GraphView_LDFLAGS += @LDFLAGS@
 
 #
 # Makefiles
