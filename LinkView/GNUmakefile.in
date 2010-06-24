@@ -36,7 +36,7 @@ LinkView.m \
 LinkViewNode.m \
 LinkViewEdge.m
 
-LinkView_INCLUDE_DIRS += @CPPFLAGS@
+LinkView_INCLUDE_DIRS += -I../ -I./
 LinkView_LIB_DIRS += @LIBS@
 LinkView_LDFLAGS += @LDFLAGS@
 

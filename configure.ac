@@ -58,8 +58,6 @@ CONFIG_FILES="
   contrib/SimGridColors/GNUmakefile \
   GNUmakefile"
 
-CPPFLAGS="-I../../ -I../ -I../Triva -I./ $CPPFLAGS"
-AC_SUBST(CPPFLAGS)
 AC_SUBST(LIBS)
 AC_SUBST(CONFIG_FILES)
 AC_SUBST(PROJECTS)

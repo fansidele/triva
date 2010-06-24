@@ -9,7 +9,7 @@ CheckTrace_PRINCIPAL_CLASS=CheckTrace
 CheckTrace_OBJC_FILES=CheckTrace.m
 CheckTrace_OBJCC_FILES = 
 
-CheckTrace_INCLUDE_DIRS += @CPPFLAGS@
+CheckTrace_INCLUDE_DIRS += -I../ -I./
 CheckTrace_LIB_DIRS += @LIBS@
 CheckTrace_LDFLAGS += @LDFLAGS@
 
