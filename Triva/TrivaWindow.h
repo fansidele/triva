@@ -14,18 +14,15 @@
     You should have received a copy of the GNU General Public License
     along with Triva.  If not, see <http://www.gnu.org/licenses/>.
 */
-#ifndef __Triva_H_
-#define __Triva_H_
+#ifndef TRIVA_WINDOW_H
+#define TRIVA_WINDOW_H
 
-#include "NSPointFunctions.h"
-#include "TimeSliceGraph.h"
-#include "TimeSliceTree.h"
-#include "Tree.h"
-#include "TrivaFilter.h"
-#include "TrivaGraphEdge.h"
-#include "TrivaGraphNode.h"
-#include "Triva.h"
-#include "TrivaTreemap.h"
-#include "TrivaWindow.h"
+#include <AppKit/AppKit.h>
 
+@interface TrivaWindow : NSWindow
+{
+}
+- (void) saveWindowPosition;
+- (void) restoreWindowPosition;
+@end
 #endif

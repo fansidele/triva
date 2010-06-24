@@ -9,7 +9,8 @@ FRAMEWORK_NAME = @PROJECT_NAME@
 	TimeSliceTree.m \
 	TimeSliceGraph.m \
 	Tree.m \
-	TrivaTreemap.m
+	TrivaTreemap.m \
+	TrivaWindow.m
 
 @PROJECT_NAME@_HEADER_FILES = TrivaFilter.h \
 	TrivaGraphNode.h \
@@ -19,6 +20,7 @@ FRAMEWORK_NAME = @PROJECT_NAME@
 	Tree.h \
 	TrivaTreemap.h \
 	NSPointFunctions.h \
-	Triva.h
+	Triva.h \
+	TrivaWindow.h
 
 include $(GNUSTEP_MAKEFILES)/framework.make
