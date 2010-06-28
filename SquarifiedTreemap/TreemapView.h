@@ -33,6 +33,7 @@
 - (void) setMaxDepthToDraw: (int) d;
 - (int) maxDepthToDraw;
 - (void) setFilter: (SquarifiedTreemap *) f;
+- (void) printTreemap;
 @end
 
 #include "TreemapView.h"

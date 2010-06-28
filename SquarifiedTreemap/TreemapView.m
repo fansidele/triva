@@ -150,20 +150,28 @@
     return YES;
 }
 
+- (void) printTreemap
+{
+  static int counter = 0;
+  NSPrintOperation *op;
+  NSMutableData *data = [NSMutableData data];
+  op = [NSPrintOperation EPSOperationWithView: self
+                                   insideRect: [self bounds]
+                                       toData: data];
+  [op runOperation];
+  NSString *filename = [NSString stringWithFormat: @"%03d-treemap-%@-%@.eps", counter++,
+    [filter selectionStartTime], [filter selectionEndTime]];
+  [data writeToFile: filename atomically: YES];
+  NSLog (@"screenshot written to %@", filename);
+}
+
 - (void)keyDown:(NSEvent *)theEvent
 {
   if (([theEvent modifierFlags] | NSAlternateKeyMask) &&
     [theEvent keyCode] == 33){ //ALT + P
-    NSPrintOperation *op;
-    NSMutableData *data = [NSMutableData data];
-    op = [NSPrintOperation EPSOperationWithView: self
-                                     insideRect: [self bounds]
-                                         toData: data];
-    [op runOperation];
-    NSString *filename = @"treemap-screenshot.eps";
-    [data writeToFile: filename atomically: YES];
-    NSLog (@"screenshot written to %@", filename);
+    [self printTreemap];
   }
+
 }
 
 @end
