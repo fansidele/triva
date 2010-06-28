@@ -74,6 +74,8 @@
 				andProvider: filter];
 		[current setBoundingBox: b];
 		[current refresh];
+		//timeslicetree changed, highlighted is no longer valid
+		highlighted = nil;
 	}
 	[self drawTreemap: current];
 	updateCurrentTreemap = YES;
