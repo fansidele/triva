@@ -295,7 +295,6 @@
 	if (highlighted){
     NSString *str = [NSString stringWithFormat: @"%@\n%f",
         name, treemapValue/[(TrivaTreemap*)parent treemapValue]*100];
-    NSLog (@"%@", str);
     [str drawAtPoint: NSMakePoint (bb.origin.x+1, bb.origin.y+1)
       withAttributes: nil];
 		[[NSColor blackColor] set];
