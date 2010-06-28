@@ -54,7 +54,7 @@
 
 - (BOOL) isFlipped
 {
-	return YES;
+	return NO;
 }
 
 - (void)drawRect:(NSRect)frame
