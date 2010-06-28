@@ -27,6 +27,8 @@
 	[view setFilter: self];
   [window setDelegate: self];
   [window setTitle: @"Triva Squarified Treemap"];
+  [window makeFirstResponder: view];
+
 	return self;
 }
 

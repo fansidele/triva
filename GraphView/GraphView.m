@@ -28,6 +28,8 @@
 	}
 	[view setFilter: self];
 	[window setDelegate: self];
+  [window makeFirstResponder: view];
+
 	return self;
 }
 
