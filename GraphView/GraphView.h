@@ -27,7 +27,10 @@
 {
   IBOutlet DrawView *view;
   TrivaWindow *window;
+
+  BOOL recordMode;
 }
+- (void) setRecordMode;
 @end
 
 #endif

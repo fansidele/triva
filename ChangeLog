@@ -12,6 +12,7 @@
     * Type CRTL + mouse movements to change position of nodes
     * ALT + E exports the nodes coordinates on the screen (to avoid graphviz)
     * ALT + P exports the graph view into an eps file (for your papers)
+    * ALT + R (de)activates "recording" mode during animation
     * Mouse dragging moves the drawing
     * Mouse over node highlights it
     * Mouse wheel is used to zoom in and out

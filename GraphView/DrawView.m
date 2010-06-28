@@ -254,6 +254,9 @@
       rect.origin.y,
       rect.size.width,
       rect.size.height);
+  }else if (([theEvent modifierFlags] | NSAlternateKeyMask) &&
+    [theEvent keyCode] == 27){ //ALT + R
+    [filter setRecordMode];
   }
 }
 @end

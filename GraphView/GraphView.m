@@ -30,6 +30,7 @@
 	[window setDelegate: self];
   [window makeFirstResponder: view];
 
+  recordMode = NO;
 	return self;
 }
 
@@ -41,6 +42,9 @@
   [window restoreWindowPosition];
   [window orderFront: self];
 	[view setNeedsDisplay: YES];
+	if(recordMode){
+		[view printGraph];
+	}
 }
 
 - (void)windowDidMove:(NSNotification *)win
@@ -52,5 +56,11 @@
 {
   [[NSApplication sharedApplication] terminate:self];
   return YES;
+}
+
+- (void) setRecordMode
+{
+  recordMode = !recordMode;
+  NSLog (@"recordMode set to %d", recordMode);
 }
 @end
