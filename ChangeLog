@@ -1,3 +1,26 @@
+2010-06-24 Lucas M. Schnorr <schnorr@gmail.com>
+  * Simplification of the build system (makefiles reworked, simpler configure)
+  * Capturing more notifications on the GraphConfiguration, working with filters
+  * Every window now contains the name of the trace file in its title
+  * Triva closes when at least one of its windows is closed
+  * Time Slice integration now normalizes the values to the size of the interval
+  * TypeFilter search instances based on regular expression (type enter to use)
+  * Bug fixes related to usability issues
+     * Treemap's node highlighting during animation now working
+     * User do not need to click on visualization windows to make them react
+  * GraphView (activated using the -g parameter)
+    * Type CRTL + mouse movements to change position of nodes
+    * ALT + E exports the nodes coordinates on the screen (to avoid graphviz)
+    * ALT + P exports the graph view into an eps file (for your papers)
+    * Mouse dragging moves the drawing
+    * Mouse over node highlights it
+    * Mouse wheel is used to zoom in and out
+    * Using NSAffineTransform for drawing (coordinates and draw simplification)
+    * Experimental support for swarm type
+  * TreemapView (-t parameter)
+    * ALT + P exports the treemap into an eps file (can be used in your papers)
+    * Treemap highlight shows some information about the node (name, value)
+
 2010-04-09 Lucas M. Schnorr <schnorr@gmail.com>
   * Releasing version 1.0 of the tool
   * Added GPLv3 license
