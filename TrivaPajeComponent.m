@@ -418,7 +418,7 @@
 {
     [reader startChunk:chunkNumber];
     if ([reader hasMoreData] && (unsigned int)chunkNumber >= [chunkDates count]) {
-        [chunkDates addObject:[simulator currentTime]];
+//        [chunkDates addObject:[simulator currentTime]];
         timeLimitsChanged = YES;
     }
 }
