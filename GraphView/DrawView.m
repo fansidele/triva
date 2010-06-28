@@ -30,7 +30,7 @@
 
 - (BOOL) isFlipped
 {
-	return YES;
+    return NO;
 }
 
 - (void) setFilter: (GraphView *)f
