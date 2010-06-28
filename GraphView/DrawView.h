@@ -35,6 +35,7 @@
 }
 - (void) setFilter: (GraphView *)f;
 - (NSColor *) getColor: (NSColor *)c withSaturation: (double) saturation;
+- (void) printGraph;
 @end
 
 

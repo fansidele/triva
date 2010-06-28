@@ -219,19 +219,26 @@
   [self setNeedsDisplay: YES];
 }
 
+- (void) printGraph
+{
+  static int counter = 0;
+  NSPrintOperation *op;
+  NSMutableData *data = [NSMutableData data];
+  op = [NSPrintOperation EPSOperationWithView: self
+                                   insideRect: [self bounds]
+                                       toData: data];
+  [op runOperation];
+  NSString *filename = [NSString stringWithFormat: @"%03d-graph-%@-%@.eps",
+    counter++, [filter selectionStartTime], [filter selectionEndTime]];
+  [data writeToFile: filename atomically: YES];
+  NSLog (@"screenshot written to %@", filename);
+}
+
 - (void)keyDown:(NSEvent *)theEvent
 {
   if (([theEvent modifierFlags] | NSAlternateKeyMask) &&
     [theEvent keyCode] == 33){ //ALT + P
-    NSPrintOperation *op;
-    NSMutableData *data = [NSMutableData data];
-    op = [NSPrintOperation EPSOperationWithView: self
-                                     insideRect: [self bounds]
-                                         toData: data];
-    [op runOperation];
-    NSString *filename = @"graph-screenshot.eps";
-    [data writeToFile: filename atomically: YES];
-    NSLog (@"screenshot written to %@", filename);
+    [self printGraph];
   }else if (([theEvent modifierFlags] | NSAlternateKeyMask) &&
     [theEvent keyCode] == 26){
 
