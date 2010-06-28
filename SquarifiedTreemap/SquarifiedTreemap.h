@@ -28,7 +28,10 @@
 {
 	IBOutlet TreemapView *view;
   IBOutlet NSWindow *window;
+
+  BOOL recordMode;
 }
+- (void) setRecordMode;
 @end
 
 #include "TreemapView.h"

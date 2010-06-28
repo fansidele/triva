@@ -29,6 +29,7 @@
   [window setTitle: @"Triva Squarified Treemap"];
   [window makeFirstResponder: view];
 
+  recordMode = NO;
 	return self;
 }
 
@@ -38,6 +39,10 @@
   NSString *tf = [[tracefilePath componentsSeparatedByString: @"/"] lastObject];
   [window setTitle: [NSString stringWithFormat: @"Triva - %@ - GraphConfig", tf]];
 	[view setNeedsDisplay: YES];
+
+  if (recordMode){
+    [view printTreemap];
+  }
 }
 
 - (void) entitySelectionChanged
@@ -59,5 +64,11 @@
 {
   [[NSApplication sharedApplication] terminate:self];
   return YES;
+}
+
+- (void) setRecordMode
+{
+  recordMode = !recordMode;
+  NSLog (@"recordMode set to %d", recordMode);
 }
 @end

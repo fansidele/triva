@@ -19,6 +19,7 @@
     * Experimental support for swarm type
   * TreemapView (-t parameter)
     * ALT + P exports the treemap into an eps file (can be used in your papers)
+    * ALT + R (de)activates "recording" mode during animation
     * Treemap highlight shows some information about the node (name, value)
 
 2010-04-09 Lucas M. Schnorr <schnorr@gmail.com>

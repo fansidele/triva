@@ -170,6 +170,9 @@
   if (([theEvent modifierFlags] | NSAlternateKeyMask) &&
     [theEvent keyCode] == 33){ //ALT + P
     [self printTreemap];
+  }else if (([theEvent modifierFlags] | NSAlternateKeyMask) &&
+    [theEvent keyCode] == 27){ //ALT + R
+    [filter setRecordMode];
   }
 
 }
