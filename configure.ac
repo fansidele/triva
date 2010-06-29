@@ -1,4 +1,4 @@
-AC_INIT(Triva,1.0,schnorr@gmail.com,Triva)
+AC_INIT(Triva,1.1,schnorr@gmail.com,Triva)
 
 if test -z "$GNUSTEP_SYSTEM_ROOT"; then
         AC_MSG_ERROR([You must run the GNUstep.sh script before configuring])
