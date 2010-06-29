@@ -27,6 +27,13 @@
 	);
 	Super = NSView;
     };
+    SliceWindowView = {
+	Actions = (
+	);
+	Outlets = (
+	);
+	Super = NSView;
+    };
     TimeInterval = {
 	Actions = (
 	    "apply:",
@@ -50,7 +57,9 @@
 	    timeSelectionStart,
 	    updateOnChange,
 	    timeSelectionSize,
-	    window
+	    window,
+	    sliceWindow,
+	    sliceWindowView
 	);
 	Super = NSObject;
     };

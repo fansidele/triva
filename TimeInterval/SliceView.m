@@ -57,4 +57,9 @@
 	[[NSColor blackColor] set];
 	[NSBezierPath strokeRect: border];
 }
+
+- (void) mouseDown: (NSEvent *) event
+{
+  [filter switchSliceWindowVisibility];
+}
 @end

@@ -24,6 +24,7 @@
 {
   IBOutlet id traceEndTimeLabel;
   IBOutlet id sliceView;
+  IBOutlet id sliceWindowView;
   IBOutlet id traceStartTimeLabel;
   IBOutlet id forwardLabel;
   IBOutlet id frequencyLabel;
@@ -37,6 +38,7 @@
   IBOutlet id timeSelectionStart;
   IBOutlet id updateOnChange;
   id window;
+  id sliceWindow;
 
   double selStart;
   double selEnd;
@@ -74,6 +76,8 @@
 - (void) setTimeIntervalFrom: (double) start to: (double) end;
 - (double) traceTimeForSliderPosition: (int) position withSize: (double) size;
 */
+
+- (void) switchSliceWindowVisibility;
 @end
 
 #endif

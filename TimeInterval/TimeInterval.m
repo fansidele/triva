@@ -24,6 +24,7 @@
 		[NSBundle loadNibNamed: @"TimeInterval" owner: self];
 	}
 	[sliceView setFilter: self];
+	[sliceWindowView setFilter: self];
 	selStart = 0;
 	selEnd = 0;
 
@@ -151,8 +152,7 @@
 
 //	TODO
 //	[sizeSlider setDoubleValue: end-start];
-
-	[sliceView setNeedsDisplay: YES];
+	[self updateViews];
 }
 
 - (void) apply
@@ -225,5 +225,20 @@
 {
   [[NSApplication sharedApplication] terminate:self];
   return YES;
+}
+
+- (void) updateViews
+{
+	[sliceView setNeedsDisplay: YES];
+	[sliceWindowView setNeedsDisplay: YES];
+}
+
+- (void) switchSliceWindowVisibility
+{
+  if ([sliceWindow isVisible]){
+    [sliceWindow orderOut: nil];
+  }else{
+    [sliceWindow makeKeyAndOrderFront:nil];
+  }
 }
 @end
