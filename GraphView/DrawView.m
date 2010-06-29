@@ -67,7 +67,6 @@
 
 - (void)drawRect:(NSRect)frame
 {
-	NSRect bb = [filter sizeForGraph];
 	NSRect tela = [self bounds];
 
   //white fill on view
@@ -103,12 +102,10 @@
   [transform concat];
 }
 
-#ifdef GNUSTEP
 - (BOOL)acceptsFirstResponder
 {
     return YES;
 }
-#endif
 
 - (BOOL)becomeFirstResponder
 {
