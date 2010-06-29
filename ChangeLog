@@ -1,6 +1,9 @@
 2010-06-29 Lucas M. Schnorr <schnorr@gmail.com>
   * Preparing release 1.1 version
   * Highlighting in Treemap changed (text describing hierarchy and value)
+  * GraphView now supports change the size of components (node and links)
+    * CRTL + scroll wheel changes their sizes
+    * scroll wheel only zoom in and out
 
 2010-06-24 Lucas M. Schnorr <schnorr@gmail.com>
   * Simplification of the build system (makefiles reworked, simpler configure)
