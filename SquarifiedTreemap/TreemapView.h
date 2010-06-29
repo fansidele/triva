@@ -34,6 +34,7 @@
 - (int) maxDepthToDraw;
 - (void) setFilter: (SquarifiedTreemap *) f;
 - (void) printTreemap;
+- (void) setCurrentStatusString: (NSString *)str;
 @end
 
 #include "TreemapView.h"

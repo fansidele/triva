@@ -78,6 +78,9 @@
 		highlighted = nil;
 	}
 	[self drawTreemap: current];
+	if (highlighted){
+		[self setCurrentStatusString: [[highlighted hierarchy] description]];
+	}
 	updateCurrentTreemap = YES;
 }
 
@@ -175,6 +178,12 @@
     [filter setRecordMode];
   }
 
+}
+
+- (void) setCurrentStatusString: (NSString *)str
+{
+  [str drawAtPoint: NSMakePoint (0, 0)
+      withAttributes: nil];
 }
 
 @end
