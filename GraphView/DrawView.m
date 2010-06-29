@@ -186,33 +186,43 @@
 
 - (void)scrollWheel:(NSEvent *)event
 {
-  NSPoint b, a, p;
-  double nratio;
-  NSAffineTransform *t;
-
-  //register the transformed point before changing ratio
-  p = [self convertPoint:[event locationInWindow] fromView:nil];
-  t = [self transform];
-  b = [t transformPoint: p];
-
-  if ([event deltaY] > 0){
-    ratio += ratio*0.1;
+  if (([event modifierFlags] & NSControlKeyMask)){
+    //change the scale of the drawing (used by GraphConfiguration filter)
+    if ([event deltaY] > 0){
+      scale += scale*0.1;
+    }else{
+      scale -= scale*0.1;
+    }
+    [filter graphComponentScalingChanged];
   }else{
-    ratio -= ratio*0.1;
-  }
-
-  //register after changing ratio
-  t = [self transform];
-  a = [t transformPoint: p];
-
-  //get the different before - after
-  NSPoint p2 = NSSubtractPoints (b, a);
-
-  //applies to the transformation variable
-  if (NSEqualPoints (translate, NSZeroPoint)){
-    translate = p2;
-  }else{
-    translate = NSAddPoints (translate, p2);
+    NSPoint b, a, p;
+    double nratio;
+    NSAffineTransform *t;
+ 
+    //register the transformed point before changing ratio
+    p = [self convertPoint:[event locationInWindow] fromView:nil];
+    t = [self transform];
+    b = [t transformPoint: p];
+ 
+    if ([event deltaY] > 0){
+      ratio += ratio*0.1;
+    }else{
+      ratio -= ratio*0.1;
+    }
+ 
+    //register after changing ratio
+    t = [self transform];
+    a = [t transformPoint: p];
+ 
+    //get the different before - after
+    NSPoint p2 = NSSubtractPoints (b, a);
+ 
+    //applies to the transformation variable
+    if (NSEqualPoints (translate, NSZeroPoint)){
+      translate = p2;
+    }else{
+      translate = NSAddPoints (translate, p2);
+    }
   }
   [self setNeedsDisplay: YES];
 }
