@@ -30,7 +30,7 @@
     * ALT + R (de)activates "recording" mode during animation
     * Treemap highlight shows some information about the node (name, value)
 
-2010-04-09 Lucas M. Schnorr <schnorr@gmail.com>
+2010-04-09 (1.0) Lucas M. Schnorr <schnorr@gmail.com>
   * Releasing version 1.0 of the tool
   * Added GPLv3 license
   * Using argp to treat command line parameters (--help and stuff)
