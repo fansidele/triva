@@ -1,39 +1,61 @@
-#==============================================================================
-#| Triva INSTALL file for Debian (Lenny, Testing) and Ubuntu (Jaunty, Karmic) |
-#==============================================================================
+#=====================
+#| Triva INSTALL file
+#=====================
 
-# installing deb packages
+# This installs all the dependencies for a GNUstep installation based
+# on the GNUstep-startup package. The list of packages may depend on
+# your system installation. The list below considers an Ubuntu 10.04.
 
-$ sudo apt-get install libgnustep-gui-dev  libgnustep-base-dev gnustep-back0.16
-$ sudo apt-get install build-essential gobjc
-$ sudo apt-get install autoconf automake 
-$ sudo apt-get install libgraphviz-dev libmatheval1-dev
+$ sudo apt-get install libxml2-dev libxslt1-dev libssl-dev libx11-dev \
+                       libxext-dev libxt-dev libjpeg62-dev libtiff4-dev \
+                       libpng12-dev libffi-dev gobjc
 
-# installing paje from svn sources
+# Installing GNUstep startup from source (change the version according
+# to the GNUstep website)
 
-$ source /usr/share/GNUstep/Makefiles/GNUstep.sh
+$ GNUSTEP=gnustep-startup-0.25.0
+$ wget http://ftpmain.gnustep.org/pub/gnustep/core/$GNUSTEP.tar.gz
+$ tar xfz $GNUSTEP.tar.gz   
+$ cd $GNUSTEP
+$ sudo ./InstallGNUstep
+
+# You might want to put this line in some initialization script 
+$ source /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
+
+# Installing Paje (a dependency for installing Triva)
+
+$ source /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
 $ svn checkout svn://svn.forge.objectweb.org/svnroot/paje/trunk/Paje/
+$ export LANG=C
 $ cd Paje
-$ make
+$ make -j 2
 $ make install GNUSTEP_INSTALLATION_DOMAIN=USER
 
-# installing triva from svn sources
+# Installing Triva (and its dependencies - packages for Ubuntu 10.04)
+# The lines below consider a possibly unstable installation of Triva (based
+# on the SVN development version). Packaged versions can be found on the
+# the website: http://triva.gforge.inria.fr.
 
-$ source /usr/share/GNUstep/Makefiles/GNUstep.sh
+$ sudo apt-get install autoconf automake libgraphviz-dev libmatheval1-dev
+
+$ source /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
 $ svn checkout svn://scm.gforge.inria.fr/svn/triva
 $ export LANG=C
 $ cd triva
 $ ./bootstrap
 $ ./configure
 $ make
+$ make install GNUSTEP_INSTALLATION_DOMAIN=USER
 
-# to execute triva from its source directory, do
+# To execute triva from its source directory, do
 
 $ export \
   LD_LIBRARY_PATH=$LD_LIBRARY_PATH:./Triva/Triva.framework/Versions/Current/
 $ ./Triva.app/Triva --help
 
-# to install it
+# To install it (so you can use it anywhere on your system as your user)
+# Remember to source the GNUstep.sh file before trying to execute Triva
 
+$ source /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
 $ make install GNUSTEP_INSTALLATION_DOMAIN=USER
 $ Triva --help
