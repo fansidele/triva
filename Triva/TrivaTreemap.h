@@ -62,6 +62,10 @@
 
 /* provider */
 - (void) setProvider: (id) prov;
+
+/* request hierarchy */
+- (NSMutableArray *) recursiveHierarchy; /* internal, called by next method */
+- (NSMutableArray *) hierarchy; /* get the hierarchy up to this node */
 @end
 
 #endif

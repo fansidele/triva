@@ -414,4 +414,26 @@
 {
 	return offset;
 }
+
+- (NSMutableArray *) recursiveHierarchy
+{
+  NSMutableArray *ret = [NSMutableArray array];
+  if (parent != nil){
+    [ret addObjectsFromArray: [parent recursiveHierarchy]];
+  }
+
+  if (parent == nil){
+    [ret addObject: [NSString stringWithFormat: @"/"]];
+  }else{
+    [ret addObject: name];
+  }
+  return ret;
+}
+
+- (NSMutableArray *) hierarchy
+{
+  NSMutableArray *ret = [self recursiveHierarchy];
+  [ret addObject: [NSString stringWithFormat: @"%f", [self treemapValue]]];
+  return ret;
+}
 @end
