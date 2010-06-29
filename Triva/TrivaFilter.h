@@ -32,6 +32,8 @@ typedef enum {Local,Global} TrivaScale;
 - (NSEnumerator*) enumeratorOfNodes;
 - (NSEnumerator*) enumeratorOfEdges;
 - (NSRect) sizeForGraph;
+- (double) graphComponentScaling; /* graphconf --> graphview */
+- (void) graphComponentScalingChanged; /* graphconf <-- graphview */
 
 /* aggregated stuff (methods trapped by TimeSliceAggregation component */
 - (TimeSliceTree *) timeSliceTree;

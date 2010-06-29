@@ -43,6 +43,16 @@
 	return [(TrivaFilter*)inputComponent sizeForGraph];
 }
 
+- (double) graphComponentScaling
+{
+  return [(TrivaFilter*)outputComponent graphComponentScaling];
+}
+
+- (void) graphComponentScalingChanged
+{
+  return [(TrivaFilter*)inputComponent graphComponentScalingChanged];
+}
+
 - (TimeSliceTree *) timeSliceTree
 {
 	return [(TrivaFilter*)inputComponent timeSliceTree];
