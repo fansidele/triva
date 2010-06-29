@@ -371,7 +371,7 @@
 
 - (NSString *) description
 {
-	return [NSString stringWithFormat: @"%@_%.2f",name,[self treemapValue]];
+  return name;  
 }
 
 - (void) testTree
