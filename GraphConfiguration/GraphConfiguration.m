@@ -376,7 +376,7 @@
 	}else{
 		s = MAX_SIZE * (size) /(max);
 	}
-	return s;
+	return s * [self graphComponentScaling];
 }
 
 - (NSDictionary*) redefineColorFrom: (NSDictionary*) values
@@ -643,5 +643,11 @@
 {
   [[NSApplication sharedApplication] terminate:self];
   return YES;
+}
+
+- (void) graphComponentScalingChanged
+{
+  [self redefineNodesEdgesLayout];
+  [super timeSelectionChanged];
 }
 @end
