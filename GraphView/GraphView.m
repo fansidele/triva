@@ -63,4 +63,9 @@
   recordMode = !recordMode;
   NSLog (@"recordMode set to %d", recordMode);
 }
+
+- (double) graphComponentScaling
+{
+  return [view scale];
+}
 @end

@@ -25,6 +25,7 @@
 {
   self = [super initWithFrame: frame];
   ratio = 1;
+  scale = 1;
   return self;
 }
 
@@ -258,5 +259,10 @@
     [theEvent keyCode] == 27){ //ALT + R
     [filter setRecordMode];
   }
+}
+
+- (double) scale
+{
+  return scale;
 }
 @end

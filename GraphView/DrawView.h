@@ -32,10 +32,14 @@
   NSPoint translate;
 
   NSPoint move; //for use in mouse(down|dragged)
+
+  //for drawing scale (nodes and links) - used by GraphConfiguration
+  double scale;
 }
 - (void) setFilter: (GraphView *)f;
 - (NSColor *) getColor: (NSColor *)c withSaturation: (double) saturation;
 - (void) printGraph;
+- (double) scale;
 @end
 
 
