@@ -1,3 +1,7 @@
+2010-06-29 Lucas M. Schnorr <schnorr@gmail.com>
+  * Preparing release 1.1 version
+  * Highlighting in Treemap changed (text describing hierarchy and value)
+
 2010-06-24 Lucas M. Schnorr <schnorr@gmail.com>
   * Simplification of the build system (makefiles reworked, simpler configure)
   * Capturing more notifications on the GraphConfiguration, working with filters
