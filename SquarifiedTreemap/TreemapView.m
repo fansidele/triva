@@ -80,6 +80,7 @@
 	[self drawTreemap: current];
 	if (highlighted){
 		[self setCurrentStatusString: [[highlighted hierarchy] description]];
+    [self highlightHierarchy];
 	}
 	updateCurrentTreemap = YES;
 }
@@ -186,4 +187,28 @@
       withAttributes: nil];
 }
 
+- (void) highlightHierarchy
+{
+  //highlight hierarchy
+  NSRect bounds = [self bounds];
+
+  double lineWidth = bounds.size.width*.001; 
+  if (lineWidth < 1) lineWidth = 1;
+  id p = [highlighted parent];
+  while (p){
+    if (![p parent]) break;
+    if ([[p children] count] > 1){
+      NSRect pbb = [p bb];
+      NSRect border = NSMakeRect (pbb.origin.x + 1,
+                                  pbb.origin.y + 1,
+                                  pbb.size.width - 1,
+                                  pbb.size.height -1);
+      NSBezierPath *path = [NSBezierPath bezierPathWithRect: border];
+      [path setLineWidth: lineWidth];
+      [path stroke];
+    }
+    p = [p parent];
+    lineWidth += lineWidth * 0.1;
+  }
+}
 @end
