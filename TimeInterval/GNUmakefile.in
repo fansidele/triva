@@ -39,6 +39,8 @@ TimeInterval_OBJC_FILES = \
 TimeInterval.m \
 SliceView.m
 
+TimeInterval_INCLUDE_DIRS += -I../ -I./
+
 #
 # Makefiles
 #

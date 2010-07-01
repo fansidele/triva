@@ -45,6 +45,8 @@ TypeFilter_OBJC_FILES = \
 TypeFilter.m \
 TypeFilter+GUI.m
 
+TypeFilter_INCLUDE_DIRS += -I../ -I./
+
 #
 # Makefiles
 #
