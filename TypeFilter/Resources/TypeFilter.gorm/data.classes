@@ -23,6 +23,13 @@
 	);
 	Super = NSView;
     };
+    TrivaWindow = {
+	Actions = (
+	);
+	Outlets = (
+	);
+	Super = NSWindow;
+    };
     TypeFilter = {
 	Actions = (
 	    "regularExpression:"

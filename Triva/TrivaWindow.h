@@ -22,7 +22,6 @@
 @interface TrivaWindow : NSWindow
 {
 }
-- (void) saveWindowPosition;
-- (void) restoreWindowPosition;
+- (void) initializeWithDelegate: (id) delegate;
 @end
 #endif

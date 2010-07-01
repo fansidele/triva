@@ -18,6 +18,7 @@
 #define __TypeFilter_h
 #include <Foundation/Foundation.h>
 #include <General/PajeFilter.h>
+#include <Triva/TrivaWindow.h>
 #include <regex.h>
 
 @interface TypeFilter  : PajeFilter
@@ -28,7 +29,7 @@
 
   BOOL enableNotifications;
 
-  id window;
+  TrivaWindow *window;
 
   id scrollview;
   id expression;

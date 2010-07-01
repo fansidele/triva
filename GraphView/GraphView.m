@@ -27,7 +27,7 @@
     [NSBundle loadNibNamed: @"Graph" owner: self];
   }
   [view setFilter: self];
-  [window setDelegate: self];
+  [window initializeWithDelegate: self];
   [window makeFirstResponder: view];
 
   recordMode = NO;
@@ -36,11 +36,6 @@
 
 - (void) timeSelectionChanged
 {
-  NSString *tracefilePath = [[self rootInstance] name];
-  NSString *tf = [[tracefilePath componentsSeparatedByString: @"/"] lastObject];
-  [window setTitle: [NSString stringWithFormat: @"Triva - %@ - GraphView", tf]];
-  [window restoreWindowPosition];
-  [window orderFront: self];
   [view setNeedsDisplay: YES];
   if(recordMode){
     [view printGraph];
@@ -49,7 +44,6 @@
 
 - (void)windowDidMove:(NSNotification *)win
 {
-  [window saveWindowPosition];
 }
 
 - (BOOL) windowShouldClose: (id) sender

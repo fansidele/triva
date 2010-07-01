@@ -18,6 +18,8 @@
 #define __TIMEINTERVAL_H
 #include <Foundation/Foundation.h>
 #include <General/PajeFilter.h>
+#include <Triva/TrivaWindow.h>
+
 #include "SliceView.h"
 
 @interface TimeInterval  : PajeFilter
@@ -37,7 +39,7 @@
   IBOutlet id timeSelectionSize;
   IBOutlet id timeSelectionStart;
   IBOutlet id updateOnChange;
-  id window;
+  TrivaWindow *window;
   id sliceWindow;
 
   double selStart;

@@ -29,4 +29,11 @@
 	);
 	Super = NSObject;
     };
+    TrivaWindow = {
+	Actions = (
+	);
+	Outlets = (
+	);
+	Super = NSWindow;
+    };
 }

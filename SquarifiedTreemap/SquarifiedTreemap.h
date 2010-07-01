@@ -21,13 +21,14 @@
 #include <Foundation/Foundation.h>
 #include <Triva/TrivaFilter.h>
 #include <Triva/TimeSliceTree.h>
+#include <Triva/TrivaWindow.h>
 
 @class TreemapView;
 
 @interface SquarifiedTreemap  : TrivaFilter
 {
 	IBOutlet TreemapView *view;
-  IBOutlet NSWindow *window;
+  IBOutlet TrivaWindow *window;
 
   BOOL recordMode;
 }

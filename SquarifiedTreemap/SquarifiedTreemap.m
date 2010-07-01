@@ -25,8 +25,7 @@
 		[NSBundle loadNibNamed: @"SquarifiedTreemap" owner: self];
 	}
 	[view setFilter: self];
-  [window setDelegate: self];
-  [window setTitle: @"Triva Squarified Treemap"];
+  [window initializeWithDelegate: self];
   [window makeFirstResponder: view];
 
   recordMode = NO;
@@ -35,9 +34,6 @@
 
 - (void) timeSelectionChanged
 {
-  NSString *tracefilePath = [[self rootInstance] name];
-  NSString *tf = [[tracefilePath componentsSeparatedByString: @"/"] lastObject];
-  [window setTitle: [NSString stringWithFormat: @"Triva - %@ - GraphConfig", tf]];
 	[view setNeedsDisplay: YES];
 
   if (recordMode){

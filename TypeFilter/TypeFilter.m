@@ -39,10 +39,6 @@
   [outlineview expandItem:nil expandChildren:YES];
   [scrollview setNeedsDisplay: YES];
   [outlineview setNeedsDisplay: YES];
-
-  NSString *tracefilePath = [[self rootInstance] name];
-  NSString *tf = [[tracefilePath componentsSeparatedByString: @"/"] lastObject];
-  [window setTitle: [NSString stringWithFormat: @"Triva - %@ - TypeFilter", tf]];
   [super hierarchyChanged];
 }
 

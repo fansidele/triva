@@ -21,7 +21,7 @@
 - (void) configureGUI
 {
   //configuring window
-  [window setDelegate: self];
+  [window initializeWithDelegate: self];
 
   //configuring right-side, with the type hierarchy
   outlineview = [scrollview documentView];

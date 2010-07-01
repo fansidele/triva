@@ -21,6 +21,7 @@
 #include <AppKit/AppKit.h>
 #include <Foundation/Foundation.h>
 #include <Triva/TrivaFilter.h>
+#include <Triva/TrivaWindow.h>
 #include <graphviz/gvc.h>
 #include <limits.h>
 #include <float.h>
@@ -41,7 +42,7 @@
   id title;
   id popup;
   id ok;
-  id window;
+  TrivaWindow *window;
 
   BOOL userPositions;
   BOOL graphviz;

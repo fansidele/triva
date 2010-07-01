@@ -57,10 +57,6 @@
     [self redefineNodesEdgesLayout];
     [super timeSelectionChanged];
   }
-
-  NSString *tracefilePath = [[self rootInstance] name];
-  NSString *tf = [[tracefilePath componentsSeparatedByString: @"/"] lastObject];
-  [window setTitle: [NSString stringWithFormat: @"Triva - %@ - GraphConfig", tf]];
 }
 
 - (void) hierarchyChanged
