@@ -66,7 +66,7 @@
  * Internal method that implements the time slice algorithm.
  */
 - (void) timeSliceAt: (id) instance 
-        ofType: (id) type
+        ofType: (PajeEntityType*) type
       withNode: (TimeSliceTree *) node;
 
 /**
@@ -81,19 +81,19 @@
 
 @interface TimeSliceAggregation (State)
 - (void) timeSliceOfStateAt: (id) instance
-    withType: (id) type
+    withType: (PajeStateType*) type
     withNode: (TimeSliceTree *) node;
 @end
 
 @interface TimeSliceAggregation (Variable)
 - (void) timeSliceOfVariableAt: (id) instance
-    withType: (id) type
+    withType: (PajeVariableType*) type
     withNode: (TimeSliceTree *) node;
 @end
 
 @interface TimeSliceAggregation (Link)
 - (void) timeSliceOfLinkAt: (id) instance
-    withType: (id) type
+    withType: (PajeLinkType*) type
     withNode: (TimeSliceTree *) node;
 - (void) createGraphBasedOnLinks: (id) instance
       withTree: (TimeSliceTree *) node;

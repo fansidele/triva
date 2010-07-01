@@ -18,7 +18,7 @@
 
 @implementation TimeSliceAggregation (Variable)
 - (void) timeSliceOfVariableAt: (id) instance
-    withType: (id) type
+    withType: (PajeVariableType*) type
     withNode: (TimeSliceTree *) node
 {
   NSMutableDictionary *timeSliceValues = nil;

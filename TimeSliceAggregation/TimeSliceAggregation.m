@@ -36,16 +36,16 @@
 }
 
 - (void) timeSliceAt: (id) instance
-              ofType: (id) type
+              ofType: (PajeEntityType*) type
             withNode: (TimeSliceTree *) node
 {
-  if ([type isKindOf: [PajeVariableType class]]){
+  if ([type isKindOfClass: [PajeVariableType class]]){
     [self timeSliceOfVariableAt: instance
-      withType: type
+      withType: (PajeVariableType*)type
       withNode: node];
-  }else if ([type isKindOf: [PajeStateType class]]){
+  }else if ([type isKindOfClass: [PajeStateType class]]){
     [self timeSliceOfStateAt: instance
-      withType: type
+      withType: (PajeStateType*)type
       withNode: node];
   }
   return;

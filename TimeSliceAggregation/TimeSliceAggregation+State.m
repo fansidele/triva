@@ -18,7 +18,7 @@
 
 @implementation TimeSliceAggregation (State)
 - (void) timeSliceOfStateAt: (id) instance
-    withType: (id) type
+    withType: (PajeStateType*) type
     withNode: (TimeSliceTree *) node
 {
   NSMutableDictionary *timeSliceValues = nil;

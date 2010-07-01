@@ -18,7 +18,7 @@
 
 @implementation TimeSliceAggregation (Link)
 - (void) timeSliceOfLinkAt: (id) instance
-    withType: (id) type
+    withType: (PajeLinkType*) type
     withNode: (TimeSliceTree *) node
 {
   NSEnumerator *en = nil;
@@ -139,8 +139,9 @@
       }
     }else{
       if ([et isKindOfClass: [PajeLinkType class]]){
+        PajeLinkType *linkType = (PajeLinkType*)et;
         [self timeSliceOfLinkAt: instance
-          withType: et
+          withType: linkType
           withNode: node];
       }
     }

@@ -186,7 +186,7 @@
 
   NSMutableArray *nodeTypes = [NSMutableArray array];
   NSMutableArray *edgeTypes = [NSMutableArray array];
-  NSEnumerator *en, *en2;
+  NSEnumerator *en = NULL, *en2 = NULL;
   NSString *typeName;
   PajeEntityType *type;
   id n;
@@ -244,7 +244,7 @@
         inContainer: root];
     }
     while ((n = [en2 nextObject])){
-      const char *src, *dst;
+      const char *src = NULL, *dst = NULL;
       if ([type isKindOfClass: [PajeLinkType class]]){
         src = [[[n sourceContainer] name] cString];
         dst = [[[n destContainer] name] cString];

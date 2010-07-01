@@ -78,6 +78,7 @@
 */
 
 - (void) switchSliceWindowVisibility;
+- (void) updateViews;
 @end
 
 #endif

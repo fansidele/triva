@@ -415,7 +415,7 @@
 {
   NSMutableArray *ret = [NSMutableArray array];
   if (parent != nil){
-    [ret addObjectsFromArray: [parent recursiveHierarchy]];
+    [ret addObjectsFromArray: [(TrivaTreemap*)parent recursiveHierarchy]];
   }
 
   if (parent == nil){

@@ -196,7 +196,6 @@
     [filter graphComponentScalingChanged];
   }else{
     NSPoint b, a, p;
-    double nratio;
     NSAffineTransform *t;
  
     //register the transformed point before changing ratio

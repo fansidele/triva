@@ -35,6 +35,7 @@
 - (void) setFilter: (SquarifiedTreemap *) f;
 - (void) printTreemap;
 - (void) setCurrentStatusString: (NSString *)str;
+- (void) highlightHierarchy;
 @end
 
 #include "TreemapView.h"
