@@ -34,42 +34,42 @@
                          withValues: (NSDictionary*) timeSliceValues
                         andProvider: (TrivaFilter*) prov
 {
-	if (![conf isKindOfClass: [NSDictionary class]]) {
-		NSLog (@"%s:%d: configuration %@ is not a dictionary",
+  if (![conf isKindOfClass: [NSDictionary class]]) {
+    NSLog (@"%s:%d: configuration %@ is not a dictionary",
                         __FUNCTION__, __LINE__, conf);
-		return nil;
-	}
+    return nil;
+  }
 
-	if (![conf count]) {
-		NSLog (@"%s:%d: configuration %@ is empty",
+  if (![conf count]) {
+    NSLog (@"%s:%d: configuration %@ is empty",
                         __FUNCTION__, __LINE__, conf);
-		return nil;
-	}
+    return nil;
+  }
 
-	NSString *type = [conf objectForKey: @"type"];
-	if (!type){
-		NSLog (@"%s:%d: configuration %@ has no type",
+  NSString *type = [conf objectForKey: @"type"];
+  if (!type){
+    NSLog (@"%s:%d: configuration %@ has no type",
                         __FUNCTION__, __LINE__, conf);
-		return nil;
-	}
+    return nil;
+  }
 
-	if ([type isEqualToString: @"separation"]){
-		return [[TrivaSeparation alloc] initWithConfiguration: conf
+  if ([type isEqualToString: @"separation"]){
+    return [[TrivaSeparation alloc] initWithConfiguration: conf
                                                             forObject: obj
                                                            withValues: timeSliceValues
                                                           andProvider: prov];
-	}else if ([type isEqualToString: @"gradient"]){
-		return [[TrivaGradient alloc] initWithConfiguration: conf
+  }else if ([type isEqualToString: @"gradient"]){
+    return [[TrivaGradient alloc] initWithConfiguration: conf
                                                           forObject: obj
                                                          withValues: timeSliceValues
                                                         andProvider: prov];
-	}else if ([type isEqualToString: @"convergence"]){
-		return [[TrivaConvergence alloc] initWithConfiguration: conf
+  }else if ([type isEqualToString: @"convergence"]){
+    return [[TrivaConvergence alloc] initWithConfiguration: conf
                                                           forObject: obj
                                                          withValues: timeSliceValues
                                                         andProvider: prov];
-	}else if ([type isEqualToString: @"color"]){
-		return [[TrivaColor alloc] initWithConfiguration: conf
+  }else if ([type isEqualToString: @"color"]){
+    return [[TrivaColor alloc] initWithConfiguration: conf
                                                           forObject: obj
                                                          withValues: timeSliceValues
                                                         andProvider: prov];
@@ -78,11 +78,11 @@
                                       forObject: obj
                                     withValues: timeSliceValues
                                           andProvider: prov];
-	}else{
-		NSLog (@"%s:%d: type '%@' of configuration %@ is unknown",
+  }else{
+    NSLog (@"%s:%d: type '%@' of configuration %@ is unknown",
                         __FUNCTION__, __LINE__, type, conf);
-		return nil;
-	}
+    return nil;
+  }
 }
 
 - (id) initWithConfiguration: (NSDictionary*) conf
@@ -90,7 +90,7 @@
                   withValues: (NSDictionary*) timeSliceValues
                  andProvider: (TrivaFilter*) prov
 {
-	return nil;
+  return nil;
 }
 
 - (BOOL) needSpace
@@ -105,135 +105,135 @@
                   withValues: (NSDictionary*) timeSliceValues
                  andProvider: (TrivaFilter*) prov
 {
-	self = [self initWithFilter: prov];
+  self = [self initWithFilter: prov];
 
 /*
-	//TODO: what 'scale' local or global means for separation?
-	//get scale for this composition
-	TrivaScale scale;
-	NSString *scaleconf = [conf objectForKey: @"scale"];
-	if ([scaleconf isEqualToString: @"global"]){
-		scale = Global;
-	}else if ([scaleconf isEqualToString: @"local"]){
-		scale = Local;
-	}else{
-		scale = Global;
-	}
+  //TODO: what 'scale' local or global means for separation?
+  //get scale for this composition
+  TrivaScale scale;
+  NSString *scaleconf = [conf objectForKey: @"scale"];
+  if ([scaleconf isEqualToString: @"global"]){
+    scale = Global;
+  }else if ([scaleconf isEqualToString: @"local"]){
+    scale = Local;
+  }else{
+    scale = Global;
+  }
 */
 
   //saving node
   node = obj;
 
-	//we need the size
-	NSString *sizeconf = [conf objectForKey: @"size"];
-	double size = 0;
-	if (!sizeconf) {
-		//no size specified
-		NSLog (@"%s:%d: no 'size' configuration for composition %@",
+  //we need the size
+  NSString *sizeconf = [conf objectForKey: @"size"];
+  double size = 0;
+  if (!sizeconf) {
+    //no size specified
+    NSLog (@"%s:%d: no 'size' configuration for composition %@",
                         __FUNCTION__, __LINE__, conf);
-		return nil;
-	}
-	size = [prov evaluateWithValues: timeSliceValues withExpr: sizeconf];
-	if (size < 0){
-		//size could not be defined
-		NSLog (@"%s:%d: the value of 'size' for composition %@ is negative or "
-			"could not be defined",
+    return nil;
+  }
+  size = [prov evaluateWithValues: timeSliceValues withExpr: sizeconf];
+  if (size < 0){
+    //size could not be defined
+    NSLog (@"%s:%d: the value of 'size' for composition %@ is negative or "
+      "could not be defined",
                         __FUNCTION__, __LINE__, conf);
-		return nil;
-	}
+    return nil;
+  }
 
-	//get values
-	NSEnumerator *en2 = [[conf objectForKey: @"values"] objectEnumerator];
-	id var;
-	double sum = 0;
-	while ((var = [en2 nextObject])){
-		double val = [prov evaluateWithValues: timeSliceValues withExpr: var];
-		if (val > 0){
-			[values setObject: [NSNumber numberWithDouble: val/size]
-					forKey: var];
-		}
-		sum += val;
-	}
-	if (sum > 1){
-		overflow = sum - 1;
-	}else{
-		overflow = 0;
-	}
-	if ([values count] == 0){
-		needSpace = NO;
-	}
-	return self;
+  //get values
+  NSEnumerator *en2 = [[conf objectForKey: @"values"] objectEnumerator];
+  id var;
+  double sum = 0;
+  while ((var = [en2 nextObject])){
+    double val = [prov evaluateWithValues: timeSliceValues withExpr: var];
+    if (val > 0){
+      [values setObject: [NSNumber numberWithDouble: val/size]
+          forKey: var];
+    }
+    sum += val;
+  }
+  if (sum > 1){
+    overflow = sum - 1;
+  }else{
+    overflow = 0;
+  }
+  if ([values count] == 0){
+    needSpace = NO;
+  }
+  return self;
 }
 
 - (id) init
 {
-	self = [super init];
-	bb = NSZeroRect;
-	overflow = 0;
-	values = [[NSMutableDictionary alloc] init];
-	return self;
+  self = [super init];
+  bb = NSZeroRect;
+  overflow = 0;
+  values = [[NSMutableDictionary alloc] init];
+  return self;
 }
 
 - (id) initWithFilter: (id) f
 {
-	self = [self init];
-	[self setFilter: f];
-	return self;
+  self = [self init];
+  [self setFilter: f];
+  return self;
 }
 
 - (void) setFilter: (id) f
 {
-	filter = f;
+  filter = f;
 }
 
 - (void) dealloc
 {
-	[values release];
-	[super dealloc];
+  [values release];
+  [super dealloc];
 }
 
 - (NSDictionary*) values
 {
-	return values;
+  return values;
 }
 
 - (double) overflow
 {
-	return overflow;
+  return overflow;
 }
 
 - (void) refreshWithinRect: (NSRect) rect
 {
-	bb = rect;
+  bb = rect;
 }
 
 - (BOOL) draw
 {
-	NSEnumerator *en = [values keyEnumerator];
-	NSString *type;
-	double accum_y = 0;
+  NSEnumerator *en = [values keyEnumerator];
+  NSString *type;
+  double accum_y = 0;
 
   NSMutableString *str = [NSMutableString string];
 
-	while ((type = [en nextObject])){
-		double value = [[values objectForKey: type] doubleValue];
+  while ((type = [en nextObject])){
+    double value = [[values objectForKey: type] doubleValue];
 
-		[[filter colorForEntityType:
-			[filter entityTypeWithName: type]] set];
+    [[filter colorForEntityType:
+      [filter entityTypeWithName: type]] set];
 
-		NSRect vr;
-		vr.size.width = bb.size.width;
-		vr.size.height = bb.size.height * value;
-		vr.origin.x = bb.origin.x;
-		vr.origin.y = bb.origin.y + accum_y;
+    NSRect vr;
+    vr.size.width = bb.size.width;
+    vr.size.height = bb.size.height * value;
+    vr.origin.x = bb.origin.x;
+    vr.origin.y = bb.origin.y + accum_y;
 
-		NSRectFill(vr);
-		[NSBezierPath strokeRect: vr];
+    NSRectFill(vr);
+    [NSBezierPath strokeRect: vr];
 
     [str appendString: [NSString stringWithFormat: @"%@ = %g\n", type,
                              value*100]]; //value is always between 0 and 1 here
-		accum_y += vr.size.height;
-	}
+    accum_y += vr.size.height;
+  }
 
   if ([node highlighted]){
     NSMutableDictionary *attr = [[NSMutableDictionary alloc] init];
@@ -250,7 +250,7 @@
 
 - (NSRect) bb
 {
-	return bb;
+  return bb;
 }
 @end
 
@@ -260,150 +260,150 @@
                   withValues: (NSDictionary*) timeSliceValues
                  andProvider: (TrivaFilter*) prov
 {
-	self = [super initWithFilter: prov];
+  self = [super initWithFilter: prov];
 
-	//get scale for this composition
-	TrivaScale scale;
-	NSString *scaleconf = [conf objectForKey: @"scale"];
-	if ([scaleconf isEqualToString: @"global"]){
-		scale = Global;
-	}else if ([scaleconf isEqualToString: @"local"]){
-		scale = Local;
-	}else{
-		scale = Global;
-	}
+  //get scale for this composition
+  TrivaScale scale;
+  NSString *scaleconf = [conf objectForKey: @"scale"];
+  if ([scaleconf isEqualToString: @"global"]){
+    scale = Global;
+  }else if ([scaleconf isEqualToString: @"local"]){
+    scale = Local;
+  }else{
+    scale = Global;
+  }
 
-	//get values
-	NSEnumerator *en2 = [[conf objectForKey: @"values"] objectEnumerator];
-	id var;
-	while ((var = [en2 nextObject])){
-		double val = [prov evaluateWithValues: timeSliceValues withExpr: var];
-		double mi, ma;
-		[prov defineMax: &ma
+  //get values
+  NSEnumerator *en2 = [[conf objectForKey: @"values"] objectEnumerator];
+  id var;
+  while ((var = [en2 nextObject])){
+    double val = [prov evaluateWithValues: timeSliceValues withExpr: var];
+    double mi, ma;
+    [prov defineMax: &ma
                          andMin: &mi
                       withScale: scale
                    fromVariable: var
                        ofObject: [obj name]
                        withType: [(TrivaGraphNode*)obj type]];
-		[self setGradientType: var withValue: val withMax: ma withMin: mi];
-	}
-	return self;
+    [self setGradientType: var withValue: val withMax: ma withMin: mi];
+  }
+  return self;
 }
 
 - (id) init
 {
-	self = [super init];
-	min = [[NSMutableDictionary alloc] init];
-	max = [[NSMutableDictionary alloc] init];
-	return self;
+  self = [super init];
+  min = [[NSMutableDictionary alloc] init];
+  max = [[NSMutableDictionary alloc] init];
+  return self;
 }
 
 - (void) dealloc
 {
-	[min release];
-	[max release];
-	[super dealloc];
+  [min release];
+  [max release];
+  [super dealloc];
 }
 
 - (void) setGradientType: (NSString *) type withValue: (double) val
                 withMax: (double) ma withMin: (double) mi
 {
-	[values setObject: [NSNumber numberWithDouble: val]
-		   forKey: type];
-	[min setObject: [NSNumber numberWithDouble: mi]
-		forKey: type];
-	[max setObject: [NSNumber numberWithDouble: ma]
-		forKey: type];
+  [values setObject: [NSNumber numberWithDouble: val]
+       forKey: type];
+  [min setObject: [NSNumber numberWithDouble: mi]
+    forKey: type];
+  [max setObject: [NSNumber numberWithDouble: ma]
+    forKey: type];
 }
 
 - (NSDictionary *) min
 {
-	return min;
+  return min;
 }
 
 - (NSDictionary *) max
 {
-	return max;
+  return max;
 }
 
 - (void) refreshWithinRect: (NSRect) rect
 {
-	//calculate bb based on number of gradients
-	//knowing that each gradient is a small square
-	bb = rect;
+  //calculate bb based on number of gradients
+  //knowing that each gradient is a small square
+  bb = rect;
 }
 
 - (BOOL) draw
 {
-	int count = [values count];
-	NSEnumerator *en = [values keyEnumerator];
-	NSString *type;
-	double accum_y = 0;
-	while ((type = [en nextObject])){
-		double value = [[values objectForKey: type] doubleValue];
-		double mi = [[min objectForKey: type] doubleValue];
-		double ma = [[max objectForKey: type] doubleValue];
-		double saturation = (value - mi) / (ma - mi);
+  int count = [values count];
+  NSEnumerator *en = [values keyEnumerator];
+  NSString *type;
+  double accum_y = 0;
+  while ((type = [en nextObject])){
+    double value = [[values objectForKey: type] doubleValue];
+    double mi = [[min objectForKey: type] doubleValue];
+    double ma = [[max objectForKey: type] doubleValue];
+    double saturation = (value - mi) / (ma - mi);
 
-		NSColor *color;
-		color = [filter colorForEntityType:
-				[filter entityTypeWithName: type]];
-		color = [filter getColor: color withSaturation: saturation];
-		[color set];
+    NSColor *color;
+    color = [filter colorForEntityType:
+        [filter entityTypeWithName: type]];
+    color = [filter getColor: color withSaturation: saturation];
+    [color set];
 
-		NSRect vr;
-		vr.size.width = bb.size.width;
-		vr.size.height = bb.size.height * 1/count;
-		vr.origin.x = bb.origin.x;
-		vr.origin.y = bb.origin.y + accum_y;
+    NSRect vr;
+    vr.size.width = bb.size.width;
+    vr.size.height = bb.size.height * 1/count;
+    vr.origin.x = bb.origin.x;
+    vr.origin.y = bb.origin.y + accum_y;
 
-		NSRectFill(vr);
-		[NSBezierPath strokeRect: vr];
+    NSRectFill(vr);
+    [NSBezierPath strokeRect: vr];
 
-		[[NSColor blackColor] set];
-		NSBezierPath *path = [NSBezierPath bezierPath];
-		[path moveToPoint: NSMakePoint (vr.origin.x,
+    [[NSColor blackColor] set];
+    NSBezierPath *path = [NSBezierPath bezierPath];
+    [path moveToPoint: NSMakePoint (vr.origin.x,
                                                 vr.origin.y + vr.size.height * (1 - saturation))];
-		[path lineToPoint: NSMakePoint (vr.origin.x + vr.size.width,
+    [path lineToPoint: NSMakePoint (vr.origin.x + vr.size.width,
                                                 vr.origin.y + vr.size.height * (1 - saturation))];
-		[path stroke];
+    [path stroke];
 
-		accum_y += vr.size.height;
-	}
+    accum_y += vr.size.height;
+  }
   return YES;
 }
 @end
 
 @implementation TrivaBar
-	//not implemented yet
+  //not implemented yet
 @end
 
 @implementation TrivaConvergence
 - (void) defineMax: (double*)ma andMin: (double*)mi fromVariable: (NSString*)var
-		ofObject: (NSString*)name withType: (NSString*)type
+    ofObject: (NSString*)name withType: (NSString*)type
 {
-	//define max and min taking into account that this is a convergence composition
-	NSDate *start = [filter selectionStartTime]; //from the beggining of the time window
-	NSDate *end = [filter endTime]; //to the end
+  //define max and min taking into account that this is a convergence composition
+  NSDate *start = [filter selectionStartTime]; //from the beggining of the time window
+  NSDate *end = [filter endTime]; //to the end
 
-	//prepare
-	PajeEntityType *varType = [filter entityTypeWithName: var];
-	PajeEntityType *containerType = [filter entityTypeWithName: type];
-	PajeContainer *container = [filter containerWithName: name type: containerType];
-	*ma = 0;
-	*mi = FLT_MAX;
-	//do it
-	NSEnumerator *en = [filter enumeratorOfEntitiesTyped: varType
+  //prepare
+  PajeEntityType *varType = [filter entityTypeWithName: var];
+  PajeEntityType *containerType = [filter entityTypeWithName: type];
+  PajeContainer *container = [filter containerWithName: name type: containerType];
+  *ma = 0;
+  *mi = FLT_MAX;
+  //do it
+  NSEnumerator *en = [filter enumeratorOfEntitiesTyped: varType
                                                  inContainer: container
                                                     fromTime: start
                                                       toTime: end
                                                  minDuration: 0];
-	id ent;
-	while ((ent = [en nextObject])){
-		double val = [[ent value] doubleValue];
-		if (val > *ma) *ma = val;
-		if (val < *mi) *mi = val;
-	}
+  id ent;
+  while ((ent = [en nextObject])){
+    double val = [[ent value] doubleValue];
+    if (val > *ma) *ma = val;
+    if (val < *mi) *mi = val;
+  }
 }
 
 - (id) initWithConfiguration: (NSDictionary*) conf
@@ -411,25 +411,25 @@
                   withValues: (NSDictionary*) timeSliceValues
                  andProvider: (TrivaFilter*) prov
 {
-	self = [super initWithFilter: prov];
+  self = [super initWithFilter: prov];
 
-	//get values
-	NSEnumerator *en2 = [[conf objectForKey: @"values"] objectEnumerator];
-	id var;
-	while ((var = [en2 nextObject])){
-		double val = [prov evaluateWithValues: timeSliceValues withExpr: var];
-		double mi, ma;
-		[self defineMax: &ma
+  //get values
+  NSEnumerator *en2 = [[conf objectForKey: @"values"] objectEnumerator];
+  id var;
+  while ((var = [en2 nextObject])){
+    double val = [prov evaluateWithValues: timeSliceValues withExpr: var];
+    double mi, ma;
+    [self defineMax: &ma
                          andMin: &mi
                    fromVariable: var
                        ofObject: [obj name]
                        withType: [(TrivaGraphNode*)obj type]];
-		[self setGradientType: var withValue: val withMax: ma withMin: mi];
-	}
-	if ([values count] == 0){
-		needSpace = NO;
-	}
-	return self;
+    [self setGradientType: var withValue: val withMax: ma withMin: mi];
+  }
+  if ([values count] == 0){
+    needSpace = NO;
+  }
+  return self;
 }
 @end
 
@@ -439,22 +439,22 @@
                   withValues: (NSDictionary*) timeSliceValues
                  andProvider: (TrivaFilter*) prov
 {
-	self = [super initWithFilter: prov];
+  self = [super initWithFilter: prov];
 
-	//get values
-	NSEnumerator *en2 = [[conf objectForKey: @"values"] objectEnumerator];
-	id var;
-	while ((var = [en2 nextObject])){
-		double val = [prov evaluateWithValues: timeSliceValues withExpr: var];
-		if (val){
-			[values setObject: [NSNumber numberWithDouble: 1]
-					forKey: var];
-		}
-	}
-	if ([values count] == 0){
-		needSpace = NO;
-	}
-	return self;
+  //get values
+  NSEnumerator *en2 = [[conf objectForKey: @"values"] objectEnumerator];
+  id var;
+  while ((var = [en2 nextObject])){
+    double val = [prov evaluateWithValues: timeSliceValues withExpr: var];
+    if (val){
+      [values setObject: [NSNumber numberWithDouble: 1]
+          forKey: var];
+    }
+  }
+  if ([values count] == 0){
+    needSpace = NO;
+  }
+  return self;
 }
 @end
 
@@ -479,18 +479,18 @@
   //we need the filter
   NSString *filter = [conf objectForKey: @"filter"];
   if (!filter) {
-  	//no filter specified
-  	NSLog (@"%s:%d: no 'filter' configuration for composition %@",
+    //no filter specified
+    NSLog (@"%s:%d: no 'filter' configuration for composition %@",
                         __FUNCTION__, __LINE__, conf);
-  	return nil;
+    return nil;
   }
   //we need the color
   NSSet *colors = [NSSet setWithArray: [conf objectForKey: @"color"]];
   if (!colors) {
-  	//no color specified
-  	NSLog (@"%s:%d: no 'color' configuration for composition %@",
+    //no color specified
+    NSLog (@"%s:%d: no 'color' configuration for composition %@",
                         __FUNCTION__, __LINE__, conf);
-  	return nil;
+    return nil;
   }
 
   //getting the timeslice-node for my object
@@ -560,59 +560,59 @@
 
 - (void) dealloc
 {
-	[objects release];
+  [objects release];
   [objectsColors release];
-	[super dealloc];
+  [super dealloc];
 }
 @end
 
 @implementation TrivaGraphNode
 - (id) init
 {
-	self = [super init];
-	bb = NSZeroRect;
-	compositions = [[NSMutableArray alloc] init];
-	return self;
+  self = [super init];
+  bb = NSZeroRect;
+  compositions = [[NSMutableArray alloc] init];
+  return self;
 }
 
 - (void) setType: (NSString *) n
 {
-	if (type){
-		[type release];
-	}
-	type = n;
-	[type retain];
+  if (type){
+    [type release];
+  }
+  type = n;
+  [type retain];
 }
 
 - (NSString *) type
 {
-	return type;
+  return type;
 }
 
 - (void) setBoundingBox: (NSRect) b
 {
-	bb = b;
+  bb = b;
 }
 
 - (NSRect) bb
 {
-	return bb;
+  return bb;
 }
 
 - (void) setDrawable: (BOOL) v
 {
-	drawable = v;
+  drawable = v;
 }
 
 - (BOOL) drawable
 {
-	return drawable;
+  return drawable;
 }
 
 - (void) dealloc
 {
-	[compositions release];
-	[super dealloc];
+  [compositions release];
+  [super dealloc];
 }
 
 - (void) refresh
@@ -644,34 +644,34 @@
 
 - (BOOL) draw
 {
-	//draw my components
-	NSEnumerator *en = [compositions objectEnumerator];
-	id comp;
-	while ((comp = [en nextObject])){
-		[comp draw];
-	}
+  //draw my components
+  NSEnumerator *en = [compositions objectEnumerator];
+  id comp;
+  while ((comp = [en nextObject])){
+    [comp draw];
+  }
 
-	//draw myself
-	[[NSColor lightGrayColor] set];
-	[NSBezierPath strokeRect: bb];
+  //draw myself
+  [[NSColor lightGrayColor] set];
+  [NSBezierPath strokeRect: bb];
 
-	//draw my name
+  //draw my name
   if (highlighted){
-  	[name drawAtPoint: NSMakePoint (bb.origin.x + bb.size.width,
-					bb.origin.y)
-		 withAttributes: nil];
+    [name drawAtPoint: NSMakePoint (bb.origin.x + bb.size.width,
+          bb.origin.y)
+     withAttributes: nil];
   }
   return YES;
 }
 
 - (void) addComposition: (TrivaComposition*)comp
 {
-	[compositions addObject: comp];
+  [compositions addObject: comp];
 }
 
 - (void) removeCompositions
 {
-	[compositions removeAllObjects];
+  [compositions removeAllObjects];
 }
 
 - (void) setHighlight: (BOOL) highlight

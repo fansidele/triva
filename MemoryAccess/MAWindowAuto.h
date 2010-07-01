@@ -28,16 +28,16 @@ class MADraw;
 ///////////////////////////////////////////////////////////////////////////////
 class MAWindowAuto : public wxFrame 
 {
-	private:
-	
-	protected:
-		MADraw* mDraw;
-		wxStatusBar* statusBar;
-	
-	public:
-		MAWindowAuto( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Triva - MemoryAccess"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 500,300 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
-		~MAWindowAuto();
-	
+  private:
+  
+  protected:
+    MADraw* mDraw;
+    wxStatusBar* statusBar;
+  
+  public:
+    MAWindowAuto( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Triva - MemoryAccess"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 500,300 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
+    ~MAWindowAuto();
+  
 };
 
 #endif //__MAWindowAuto__

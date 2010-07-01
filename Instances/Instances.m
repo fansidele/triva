@@ -19,10 +19,10 @@
 @implementation Instances
 - (id)initWithController:(PajeTraceController *)c
 {
-	self = [super initWithController: c];
-	if (self != nil){
-	}
-	return self;
+  self = [super initWithController: c];
+  if (self != nil){
+  }
+  return self;
 }
 
 - (void)printInstance:(id)instance level:(int)level
@@ -58,7 +58,7 @@
 
 - (void) dumpTraceInTextualFormat
 {
-	[self printInstance:[self rootInstance] level:0];
+  [self printInstance:[self rootInstance] level:0];
 }
 
 - (void)hierarchyChanged

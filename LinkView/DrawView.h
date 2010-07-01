@@ -24,12 +24,12 @@
 
 @interface DrawView : NSView
 {
-	LinkView *filter;
+  LinkView *filter;
 
-	LinkViewNode *current;
+  LinkViewNode *current;
 
-	int maxDepthToDraw;
-	BOOL updateCurrentTreemap;
+  int maxDepthToDraw;
+  BOOL updateCurrentTreemap;
 }
 - (void) setFilter: (LinkView *)f;
 //- (NSColor *) getColor: (NSColor *)c withSaturation: (double) saturation;

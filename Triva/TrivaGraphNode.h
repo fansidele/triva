@@ -41,12 +41,12 @@
 
 @interface TrivaSeparation : TrivaComposition
 {
-	NSRect bb; //the bounding box
-	NSMutableDictionary *values; //(NSString*)name = (NSNumber)value
-			      //the sum of the values must be equal = 1
-	double overflow; //(sum_of_the_values - 1)
-			 //can be used to check if the sum is > 1
-	id filter;
+  NSRect bb; //the bounding box
+  NSMutableDictionary *values; //(NSString*)name = (NSNumber)value
+            //the sum of the values must be equal = 1
+  double overflow; //(sum_of_the_values - 1)
+       //can be used to check if the sum is > 1
+  id filter;
   TrivaGraphNode *node;
 }
 - (id) initWithFilter: (id) f;
@@ -60,11 +60,11 @@
 
 @interface TrivaGradient : TrivaSeparation
 {
-	NSMutableDictionary *min;
-	NSMutableDictionary *max;
+  NSMutableDictionary *min;
+  NSMutableDictionary *max;
 }
 - (void) setGradientType: (NSString *) type withValue: (double) val
-		withMax: (double) max withMin: (double) min;
+    withMax: (double) max withMin: (double) min;
 - (NSDictionary *) min;
 - (NSDictionary *) max;
 @end
@@ -91,13 +91,13 @@
 
 @interface TrivaGraphNode : Tree
 {
-	NSString *type; //node type (entitytype from paje)
-	//NSString *name (declared in super class); node name (unique id)
-	NSRect bb; //the bounding box of the node (indicates size and position)
-	NSMutableArray *compositions; //array of TrivaComposition objects
+  NSString *type; //node type (entitytype from paje)
+  //NSString *name (declared in super class); node name (unique id)
+  NSRect bb; //the bounding box of the node (indicates size and position)
+  NSMutableArray *compositions; //array of TrivaComposition objects
   BOOL highlighted;
-	
-	BOOL drawable; //is it ready to draw?
+  
+  BOOL drawable; //is it ready to draw?
 
   TimeSliceTree *timeSliceTree; //to show values to the user when highlighted
 }

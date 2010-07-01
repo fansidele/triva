@@ -22,8 +22,8 @@
 
 @interface TrivaGraphEdge : TrivaGraphNode
 {
-	TrivaGraphNode *source;
-	TrivaGraphNode *destination;
+  TrivaGraphNode *source;
+  TrivaGraphNode *destination;
 }
 - (void) setSource: (TrivaGraphNode *) s;
 - (void) setDestination: (TrivaGraphNode *) d;

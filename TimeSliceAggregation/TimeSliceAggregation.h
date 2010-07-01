@@ -28,19 +28,19 @@
  */
 @interface TimeSliceAggregation  : TrivaFilter
 {
-	NSDate *sliceStartTime;
-	NSDate *sliceEndTime;
+  NSDate *sliceStartTime;
+  NSDate *sliceEndTime;
 
-	TimeSliceTree *tree;
+  TimeSliceTree *tree;
 
-	//dictionary to keep timeslicetree node names
-	NSMutableDictionary *nodeNames; /*(NSString*)->(TimeSliceTree*) */
+  //dictionary to keep timeslicetree node names
+  NSMutableDictionary *nodeNames; /*(NSString*)->(TimeSliceTree*) */
 
-	BOOL sliceTimeChanged; /* to control the hierarchy creation */
+  BOOL sliceTimeChanged; /* to control the hierarchy creation */
 
-	/* Configuration */
-	BOOL considerExclusiveDuration;
-	BOOL graphAggregationEnabled;
+  /* Configuration */
+  BOOL considerExclusiveDuration;
+  BOOL graphAggregationEnabled;
 }
 /**
  * Method to set the start time for the algorithm.
@@ -58,16 +58,16 @@
  * squarified treemap.
  */
 //- (TimeSliceTree *) treemapWithWidth: (int) width
-//		     andHeight: (int) height
-//		      andDepth: (int) depth
-//		     andValues: (NSSet *) values;
+//         andHeight: (int) height
+//          andDepth: (int) depth
+//         andValues: (NSSet *) values;
 
 /**
  * Internal method that implements the time slice algorithm.
  */
 - (void) timeSliceAt: (id) instance 
-	      ofType: (id) type
-	    withNode: (TimeSliceTree *) node;
+        ofType: (id) type
+      withNode: (TimeSliceTree *) node;
 
 /**
  * Internal method that is called by the hierarchyChanged implementation of

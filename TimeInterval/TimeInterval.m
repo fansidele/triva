@@ -19,23 +19,23 @@
 @implementation TimeInterval
 - (id)initWithController:(PajeTraceController *)c
 {
-	self = [super initWithController: c];
-	if (self != nil){
-		[NSBundle loadNibNamed: @"TimeInterval" owner: self];
-	}
-	[sliceView setFilter: self];
-	[sliceWindowView setFilter: self];
-	selStart = 0;
-	selEnd = 0;
+  self = [super initWithController: c];
+  if (self != nil){
+    [NSBundle loadNibNamed: @"TimeInterval" owner: self];
+  }
+  [sliceView setFilter: self];
+  [sliceWindowView setFilter: self];
+  selStart = 0;
+  selEnd = 0;
 
-	[frequencySlider setMinValue: 0.001];
-	[frequencySlider setMaxValue: 4];
+  [frequencySlider setMinValue: 0.001];
+  [frequencySlider setMaxValue: 4];
 
-	timer = nil;
+  timer = nil;
 
-	[window setDelegate: self];
-	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	//window position
+  [window setDelegate: self];
+  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+  //window position
         NSPoint point;
         NSString *tx = [NSString stringWithFormat: @"%@OriginX", [window title]];
         NSString *ty = [NSString stringWithFormat: @"%@OriginY", [window title]];
@@ -47,92 +47,92 @@
         }else{
                 [window center];
         }
-	return self;
+  return self;
 }
 
 - (void) setTimeIntervalFrom: (double) start to: (double) end
 {
-	selStart = start;
-	selEnd = end;
+  selStart = start;
+  selEnd = end;
 
-	[self updateLabels];
+  [self updateLabels];
 
-	if ([updateOnChange state]){
-		[self apply];
-	}
+  if ([updateOnChange state]){
+    [self apply];
+  }
 }
 
 - (void) apply: (id)sender
 {
-	double start = [timeSelectionStart doubleValue];
-	double size = [timeSelectionSize doubleValue];
-	[self setTimeIntervalFrom: start to: start+size];
-	if (![updateOnChange state]){
-		[self apply];
-	}
+  double start = [timeSelectionStart doubleValue];
+  double size = [timeSelectionSize doubleValue];
+  [self setTimeIntervalFrom: start to: start+size];
+  if (![updateOnChange state]){
+    [self apply];
+  }
 }
 
 - (void) play: (id)sender
 {
-	if (timer){
-		[timer invalidate];
-		timer = nil;
-	}else{
-		SEL selector = @selector (animate);
-		double interval = [frequencySlider doubleValue];
-		timer = [NSTimer scheduledTimerWithTimeInterval: interval
+  if (timer){
+    [timer invalidate];
+    timer = nil;
+  }else{
+    SEL selector = @selector (animate);
+    double interval = [frequencySlider doubleValue];
+    timer = [NSTimer scheduledTimerWithTimeInterval: interval
                                                  target: self
                                                selector: selector
                                                userInfo: nil
                                                 repeats: YES];
-	}
+  }
 }
 
 - (void) sliceSliderChanged: (id)sender
 {
-	double traceEnd = [[[self endTime] description] doubleValue];
-	double start = [startSlider doubleValue];
-	double size = [sizeSlider doubleValue];
-	double end = start+size;
-	if (end > traceEnd){
-		end = traceEnd;
-	}
-	[self setTimeIntervalFrom: start to: end];
+  double traceEnd = [[[self endTime] description] doubleValue];
+  double start = [startSlider doubleValue];
+  double size = [sizeSlider doubleValue];
+  double end = start+size;
+  if (end > traceEnd){
+    end = traceEnd;
+  }
+  [self setTimeIntervalFrom: start to: end];
 }
 
 - (void) forwardSliderChanged: (id)sender
 {
-	[forwardLabel setDoubleValue: [forwardSlider doubleValue]];
+  [forwardLabel setDoubleValue: [forwardSlider doubleValue]];
 }
 
 - (void) frequencySliderChanged: (id)sender
 {
-	[frequencyLabel setDoubleValue: [frequencySlider doubleValue]];
+  [frequencyLabel setDoubleValue: [frequencySlider doubleValue]];
 }
 
 - (void) timeLimitsChanged
 {
-	NSDate *start = [self startTime];
-	NSDate *end = [self endTime];
+  NSDate *start = [self startTime];
+  NSDate *end = [self endTime];
 
-	[traceStartTimeLabel setStringValue: [start description]];
-	[traceEndTimeLabel setStringValue: [end description]];
+  [traceStartTimeLabel setStringValue: [start description]];
+  [traceEndTimeLabel setStringValue: [end description]];
 
-	[startSlider setMinValue: [[start description] doubleValue]];
-	[startSlider setMaxValue: [[end description] doubleValue]];
-	[startSlider setDoubleValue: [[start description] doubleValue]];
+  [startSlider setMinValue: [[start description] doubleValue]];
+  [startSlider setMaxValue: [[end description] doubleValue]];
+  [startSlider setDoubleValue: [[start description] doubleValue]];
 
-	[sizeSlider setMinValue: [[start description] doubleValue]];
-	[sizeSlider setMaxValue: [[end description] doubleValue]];
-	[sizeSlider setDoubleValue: [[end description] doubleValue]];
+  [sizeSlider setMinValue: [[start description] doubleValue]];
+  [sizeSlider setMaxValue: [[end description] doubleValue]];
+  [sizeSlider setDoubleValue: [[end description] doubleValue]];
 
-	if (!selStart){
-		selStart = [[start description] doubleValue];
-	}
-	if (!selEnd){
-		selEnd = [[end description] doubleValue];
-	}
-	[self updateLabels];
+  if (!selStart){
+    selStart = [[start description] doubleValue];
+  }
+  if (!selEnd){
+    selEnd = [[end description] doubleValue];
+  }
+  [self updateLabels];
 
   NSString *tracefilePath = [[self rootInstance] name];
   NSString *tf = [[tracefilePath componentsSeparatedByString: @"/"] lastObject];
@@ -141,73 +141,73 @@
 
 - (void) updateLabels
 {
-	[timeSelectionStart setDoubleValue: selStart];
-	[timeSelectionSize setDoubleValue: selEnd-selStart];
-	[startSlider setDoubleValue: selStart];
-	[sizeSlider setDoubleValue: selEnd-selStart];
+  [timeSelectionStart setDoubleValue: selStart];
+  [timeSelectionSize setDoubleValue: selEnd-selStart];
+  [startSlider setDoubleValue: selStart];
+  [sizeSlider setDoubleValue: selEnd-selStart];
 
-	[forwardSlider setMinValue: 0];
-	[forwardSlider setMaxValue: selEnd-selStart];
-	[forwardLabel setDoubleValue: [forwardSlider doubleValue]];
+  [forwardSlider setMinValue: 0];
+  [forwardSlider setMaxValue: selEnd-selStart];
+  [forwardLabel setDoubleValue: [forwardSlider doubleValue]];
 
-//	TODO
-//	[sizeSlider setDoubleValue: end-start];
-	[self updateViews];
+//  TODO
+//  [sizeSlider setDoubleValue: end-start];
+  [self updateViews];
 }
 
 - (void) apply
 {
-	[super timeSelectionChanged];
+  [super timeSelectionChanged];
 }
 
 // from the protocol 
 - (NSDate *) selectionStartTime
 {
-	if (selStart){
-		return [NSDate dateWithTimeIntervalSinceReferenceDate:selStart];
-	}else{
-		return [super selectionStartTime];
-	}
+  if (selStart){
+    return [NSDate dateWithTimeIntervalSinceReferenceDate:selStart];
+  }else{
+    return [super selectionStartTime];
+  }
 }
 
 - (NSDate *) selectionEndTime
 {
-	if (selEnd){
-		return [NSDate dateWithTimeIntervalSinceReferenceDate: selEnd];
-	}else{
-		return [super selectionEndTime];
-	}
+  if (selEnd){
+    return [NSDate dateWithTimeIntervalSinceReferenceDate: selEnd];
+  }else{
+    return [super selectionEndTime];
+  }
 }
 
 - (void) animate
 {
-	double forward = [forwardSlider doubleValue];
+  double forward = [forwardSlider doubleValue];
 
-	double traceEnd = [[[self endTime] description] doubleValue];
+  double traceEnd = [[[self endTime] description] doubleValue];
 
-	double start = selStart;
-	double end = selEnd;
-	start = start + forward;
-	end = end + forward;
+  double start = selStart;
+  double end = selEnd;
+  start = start + forward;
+  end = end + forward;
 
-	if (end >= traceEnd){
-		if (start >= traceEnd){
-			start = end;
-			[timer invalidate];
-			timer = nil;
-			[playButton setState: NSOffState];
-			return;
-		}
-		end = traceEnd;
-	}
-	if (start > end){
-		start = end;
-	}
+  if (end >= traceEnd){
+    if (start >= traceEnd){
+      start = end;
+      [timer invalidate];
+      timer = nil;
+      [playButton setState: NSOffState];
+      return;
+    }
+    end = traceEnd;
+  }
+  if (start > end){
+    start = end;
+  }
 
-	[self setTimeIntervalFrom: start to: end];
-	if (![updateOnChange state]){
-		[self apply];
-	}
+  [self setTimeIntervalFrom: start to: end];
+  if (![updateOnChange state]){
+    [self apply];
+  }
 }
 
 - (void)windowDidMove:(NSNotification *)win
@@ -229,8 +229,8 @@
 
 - (void) updateViews
 {
-	[sliceView setNeedsDisplay: YES];
-	[sliceWindowView setNeedsDisplay: YES];
+  [sliceView setNeedsDisplay: YES];
+  [sliceWindowView setNeedsDisplay: YES];
 }
 
 - (void) switchSliceWindowVisibility

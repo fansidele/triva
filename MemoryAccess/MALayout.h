@@ -40,16 +40,16 @@
 
 @interface MALayout : NSObject
 {
-	NSDictionary *cpuThreadContainer; //cpuid -> array of threadid
-	PajeContainer *memoryContainer;
+  NSDictionary *cpuThreadContainer; //cpuid -> array of threadid
+  PajeContainer *memoryContainer;
 
-	NSMutableDictionary *memoryLayout;
-	NSMutableDictionary *cpuThreadLayout;
+  NSMutableDictionary *memoryLayout;
+  NSMutableDictionary *cpuThreadLayout;
 
-//	double smallestMemoryAddress;
-//	double highestMemoryAddress;
+//  double smallestMemoryAddress;
+//  double highestMemoryAddress;
 
-	NSArray *memoryWindow;
+  NSArray *memoryWindow;
 }
 - (void) setCPUandThreadContainer: (NSDictionary *) cputhread;
 - (void) setMemoryContainer: (PajeContainer *) mem;

@@ -21,11 +21,11 @@
 
 @interface Tree : NSObject
 {
-	NSString *name;
-	Tree *parent;
-	NSMutableArray *children;
-	int depth;
-	int maxDepth; /* for caching */
+  NSString *name;
+  Tree *parent;
+  NSMutableArray *children;
+  int depth;
+  int maxDepth; /* for caching */
 }
 - (int) depth;
 - (void) setDepth: (int) d;

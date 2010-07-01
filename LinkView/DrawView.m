@@ -22,91 +22,91 @@
 @implementation DrawView
 - (id)initWithFrame:(NSRect)frameRect
 {
-	self = [super initWithFrame: frameRect];
-	maxDepthToDraw = 0;
-	updateCurrentTreemap = YES;
-	return self;
+  self = [super initWithFrame: frameRect];
+  maxDepthToDraw = 0;
+  updateCurrentTreemap = YES;
+  return self;
 }
 
 - (BOOL) isFlipped
 {
-	return YES;
+  return YES;
 }
 
 - (void) setFilter: (LinkView *)f
 {
-	filter = f;
+  filter = f;
 }
 
 /*
 - (NSColor *) getColor: (NSColor *)c withSaturation: (double) saturation
 {
-	if (![[c colorSpaceName] isEqualToString:
-			@"NSCalibratedRGBColorSpace"]){
-		NSLog (@"%s:%d Color provided is not part of the "
-				"RGB color space.", __FUNCTION__, __LINE__);
-		return nil;
-	}
-	float h, s, b, a;
-	[c getHue: &h saturation: &s brightness: &b alpha: &a];
+  if (![[c colorSpaceName] isEqualToString:
+      @"NSCalibratedRGBColorSpace"]){
+    NSLog (@"%s:%d Color provided is not part of the "
+        "RGB color space.", __FUNCTION__, __LINE__);
+    return nil;
+  }
+  float h, s, b, a;
+  [c getHue: &h saturation: &s brightness: &b alpha: &a];
 
-	NSColor *ret = [NSColor colorWithCalibratedHue: h
-		saturation: saturation
-		brightness: b
-		alpha: a];
-	return ret;
+  NSColor *ret = [NSColor colorWithCalibratedHue: h
+    saturation: saturation
+    brightness: b
+    alpha: a];
+  return ret;
 }
 */
 
 - (void) drawRecursive: (LinkViewNode *)node
 {
-	if ([node depth] == maxDepthToDraw+1){
-		return;
-	}
-	[node draw];
-	if ([node depth] == maxDepthToDraw){
-		[node drawEdges];
-	}
-	int i;
-	for (i = 0; i < [[node children] count]; i++){
-		[self drawRecursive:[[node children] objectAtIndex: i]];
-	}
+  if ([node depth] == maxDepthToDraw+1){
+    return;
+  }
+  [node draw];
+  if ([node depth] == maxDepthToDraw){
+    [node drawEdges];
+  }
+  int i;
+  for (i = 0; i < [[node children] count]; i++){
+    [self drawRecursive:[[node children] objectAtIndex: i]];
+  }
 }
 
 - (void)drawRect:(NSRect)frame
 {
-	double offset = 2;
+  double offset = 2;
 
-	NSRect tela = [self bounds];
+  NSRect tela = [self bounds];
 
-	if (updateCurrentTreemap){
-		[filter resetNodes];
+  if (updateCurrentTreemap){
+    [filter resetNodes];
 
-		TimeSliceTree *tree = [filter timeSliceTree];
-		current = [[LinkViewNode alloc] initWithTimeSliceTree: tree
+    TimeSliceTree *tree = [filter timeSliceTree];
+    current = [[LinkViewNode alloc] initWithTimeSliceTree: tree
                                                           andProvider: filter];
-		[current setOffset: offset];
-		[current setBoundingBox: tela];
-		[current refresh];
-	}
-	[self drawRecursive: current];
-	updateCurrentTreemap = YES;
+    [current setOffset: offset];
+    [current setBoundingBox: tela];
+    [current refresh];
+  }
+  [self drawRecursive: current];
+  updateCurrentTreemap = YES;
 }
 
 - (void)scrollWheel:(NSEvent *)event
 {
-	if ([event deltaY] > 0){
-		if (maxDepthToDraw < [current maxDepth]){
-			maxDepthToDraw++;
-			updateCurrentTreemap = NO;
-			[self setNeedsDisplay: YES];
-		}
-	}else{
-		if (maxDepthToDraw > 0){
-			maxDepthToDraw--;
-			updateCurrentTreemap = NO;
-			[self setNeedsDisplay: YES];
-		}
-	}
+  if ([event deltaY] > 0){
+    if (maxDepthToDraw < [current maxDepth]){
+      maxDepthToDraw++;
+      updateCurrentTreemap = NO;
+      [self setNeedsDisplay: YES];
+    }
+  }else{
+    if (maxDepthToDraw > 0){
+      maxDepthToDraw--;
+      updateCurrentTreemap = NO;
+      [self setNeedsDisplay: YES];
+    }
+  }
 }
 @end

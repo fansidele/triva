@@ -24,11 +24,11 @@
 
 @interface TrivaTreemap : TrivaGraphNode
 {
-	float treemapValue;
-	NSMutableArray *aggregatedChildren;
-	BOOL highlighted;
-	double offset;
-	id provider;
+  float treemapValue;
+  NSMutableArray *aggregatedChildren;
+  BOOL highlighted;
+  double offset;
+  id provider;
 }
 - (id) initWithTimeSliceTree: (TimeSliceTree*) tree andProvider: (id) prov;
 - (void) setTreemapValue: (float) v;
@@ -52,7 +52,7 @@
 
 /* search-based methods */
 - (TrivaTreemap *) searchWith: (NSPoint) point
-			limitToDepth: (int) d;
+      limitToDepth: (int) d;
 
 - (NSComparisonResult) compareValue: (TrivaTreemap *) other;
 

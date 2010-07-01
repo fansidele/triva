@@ -27,10 +27,10 @@ static double gettime ()
 @implementation CheckTrace
 - (id)initWithController:(PajeTraceController *)c
 {
-	self = [super initWithController: c];
-	if (self != nil){
-	}
-	return self;
+  self = [super initWithController: c];
+  if (self != nil){
+  }
+  return self;
 }
 
 - (void)iteraNosDados:(id)instance level:(int)level

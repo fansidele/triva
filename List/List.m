@@ -19,10 +19,10 @@
 @implementation List
 - (id)initWithController:(PajeTraceController *)c
 {
-	self = [super initWithController: c];
-	if (self != nil){
-	}
-	return self;
+  self = [super initWithController: c];
+  if (self != nil){
+  }
+  return self;
 }
 
 - (void) list: (id) type level: (int) level

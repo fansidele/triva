@@ -21,31 +21,31 @@
 @implementation LinkViewEdge
 - (void) setWidth: (double) w
 {
-	width = w;
+  width = w;
 }
 
 - (void) setMaxWidth: (double)m
 {
-	max = m;
+  max = m;
 }
 
 - (void) draw
 {
-	if (!source || !destination){
-		return;
-	}
-	
-	NSRect sr = [[[provider nodes] objectForKey: source] bb];
-	NSRect dr = [[[provider nodes] objectForKey: destination] bb];
+  if (!source || !destination){
+    return;
+  }
+  
+  NSRect sr = [[[provider nodes] objectForKey: source] bb];
+  NSRect dr = [[[provider nodes] objectForKey: destination] bb];
 
-	NSPoint origin = NSMakePoint (sr.origin.x + sr.size.width/2,
+  NSPoint origin = NSMakePoint (sr.origin.x + sr.size.width/2,
                           sr.origin.y + sr.size.height/2);
-	NSPoint dest = NSMakePoint (dr.origin.x + dr.size.width/2,
+  NSPoint dest = NSMakePoint (dr.origin.x + dr.size.width/2,
                           dr.origin.y + dr.size.height/2);
-	double w = width/30;
-	if (w < 1) w = 1;
+  double w = width/30;
+  if (w < 1) w = 1;
 
-	[[[NSColor blueColor] colorWithAlphaComponent: 0.2] set];
+  [[[NSColor blueColor] colorWithAlphaComponent: 0.2] set];
 
         NSPoint oNorm = LMSNormalizePoint (NSSubtractPoints(dest,origin));
         NSPoint oNormPerp = NSMakePoint (-oNorm.y, oNorm.x);
@@ -87,6 +87,6 @@
 
 - (void) setProvider: (LinkView*) prov
 {
-	provider = prov;
+  provider = prov;
 }
 @end

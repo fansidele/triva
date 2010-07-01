@@ -24,29 +24,29 @@
 
 @interface TimeSliceTree : Tree
 {
-	/* to be used by the time-slice algorithm */
-	NSMutableDictionary *timeSliceValues;
-	float finalValue;
+  /* to be used by the time-slice algorithm */
+  NSMutableDictionary *timeSliceValues;
+  float finalValue;
 
-	/* max and min values */
-	NSMutableDictionary *maxValues;
-	NSMutableDictionary *minValues;
+  /* max and min values */
+  NSMutableDictionary *maxValues;
+  NSMutableDictionary *minValues;
 
-	/* registering the entity types */
-	NSMutableDictionary *timeSliceTypes;
+  /* registering the entity types */
+  NSMutableDictionary *timeSliceTypes;
 
-	/* registering colors */
-	NSMutableDictionary *timeSliceColors;
+  /* registering colors */
+  NSMutableDictionary *timeSliceColors;
 
-	/* for Aggregation category */
-	NSMutableDictionary *aggregatedValues;
+  /* for Aggregation category */
+  NSMutableDictionary *aggregatedValues;
 
-	/* for registering accumulated durations */
-	NSMutableDictionary *timeSliceDurations;
+  /* for registering accumulated durations */
+  NSMutableDictionary *timeSliceDurations;
 
-	/* for registering graph destinations */
-	//(NSString*) -> (TimeSliceGraph*)
-	NSMutableDictionary *destinations; 
+  /* for registering graph destinations */
+  //(NSString*) -> (TimeSliceGraph*)
+  NSMutableDictionary *destinations; 
 }
 - (NSDictionary *) maxValues;
 - (NSDictionary *) minValues;

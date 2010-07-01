@@ -36,25 +36,25 @@
 
 - (void) setFilter: (GraphView *)f
 {
-	filter = f;
+  filter = f;
 }
 
 - (NSColor *) getColor: (NSColor *)c withSaturation: (double) saturation
 {
-	if (![[c colorSpaceName] isEqualToString:
-			@"NSCalibratedRGBColorSpace"]){
-		NSLog (@"%s:%d Color provided is not part of the "
-				"RGB color space.", __FUNCTION__, __LINE__);
-		return nil;
-	}
-	float h, s, b, a;
-	[c getHue: &h saturation: &s brightness: &b alpha: &a];
+  if (![[c colorSpaceName] isEqualToString:
+      @"NSCalibratedRGBColorSpace"]){
+    NSLog (@"%s:%d Color provided is not part of the "
+        "RGB color space.", __FUNCTION__, __LINE__);
+    return nil;
+  }
+  float h, s, b, a;
+  [c getHue: &h saturation: &s brightness: &b alpha: &a];
 
-	NSColor *ret = [NSColor colorWithCalibratedHue: h
-		saturation: saturation
-		brightness: b
-		alpha: a];
-	return ret;
+  NSColor *ret = [NSColor colorWithCalibratedHue: h
+    saturation: saturation
+    brightness: b
+    alpha: a];
+  return ret;
 }
 
 - (NSAffineTransform*) transform
@@ -67,11 +67,11 @@
 
 - (void)drawRect:(NSRect)frame
 {
-	NSRect tela = [self bounds];
+  NSRect tela = [self bounds];
 
   //white fill on view
-	[[NSColor whiteColor] set];
-	NSRectFill(tela);
+  [[NSColor whiteColor] set];
+  NSRectFill(tela);
 
   //transformations
   NSAffineTransform *transform = [self transform];
@@ -80,22 +80,22 @@
   //set default line width based on ratio
   [NSBezierPath setDefaultLineWidth: 1/ratio];
 
-	//draw nodes and edges
-	NSEnumerator *en;
-	TrivaGraphNode *node;
-	TrivaGraphEdge *edge;
-	en = [filter enumeratorOfEdges];
-	while ((edge = [en nextObject])){
-		if (![edge drawable]) continue;
+  //draw nodes and edges
+  NSEnumerator *en;
+  TrivaGraphNode *node;
+  TrivaGraphEdge *edge;
+  en = [filter enumeratorOfEdges];
+  while ((edge = [en nextObject])){
+    if (![edge drawable]) continue;
     [edge refresh];
-		[edge draw];
-	}
-	en = [filter enumeratorOfNodes];
-	while ((node = [en nextObject])){
-		if (![node drawable]) continue;
+    [edge draw];
+  }
+  en = [filter enumeratorOfNodes];
+  while ((node = [en nextObject])){
+    if (![node drawable]) continue;
     [node refresh];
-		[node draw];
-	}
+    [node draw];
+  }
 
   //undo transformations
   [transform invert];

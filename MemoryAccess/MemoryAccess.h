@@ -22,7 +22,7 @@
 
 @interface MemoryAccess  : PajeFilter
 {
-	MALayout *current;
+  MALayout *current;
 }
 - (MALayout *) layoutWithWidth: (int) width andHeight: (int) height;
 @end

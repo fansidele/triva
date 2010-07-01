@@ -22,13 +22,13 @@
 @implementation LinkView
 - (id)initWithController:(PajeTraceController *)c
 {
-	self = [super initWithController: c];
-	if (self != nil){
-		[NSBundle loadNibNamed: @"Graph" owner: self];
-	}
-	[view setFilter: self];
-	[window setDelegate: self];
-	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+  self = [super initWithController: c];
+  if (self != nil){
+    [NSBundle loadNibNamed: @"Graph" owner: self];
+  }
+  [view setFilter: self];
+  [window setDelegate: self];
+  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         //window position
         NSPoint point;
         NSString *tx = [NSString stringWithFormat: @"%@OriginX", [window title]];
@@ -41,7 +41,7 @@
         }else{
                 [window center];
         }
-	return self;
+  return self;
 }
 
 - (void)windowDidMove:(NSNotification *)win
@@ -57,20 +57,20 @@
 
 - (void) timeSelectionChanged
 {
-	[view setNeedsDisplay: YES];
+  [view setNeedsDisplay: YES];
 }
 
 - (NSMutableDictionary *) nodes
 {
-	return nodes;
+  return nodes;
 }
 
 - (void) resetNodes
 {
-	if (nodes){
-		[nodes release];
-	}
-	nodes = [[NSMutableDictionary alloc] init];
+  if (nodes){
+    [nodes release];
+  }
+  nodes = [[NSMutableDictionary alloc] init];
 }
 
 

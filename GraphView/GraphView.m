@@ -22,16 +22,16 @@
 @implementation GraphView
 - (id)initWithController:(PajeTraceController *)c
 {
-	self = [super initWithController: c];
-	if (self != nil){
-		[NSBundle loadNibNamed: @"Graph" owner: self];
-	}
-	[view setFilter: self];
-	[window setDelegate: self];
+  self = [super initWithController: c];
+  if (self != nil){
+    [NSBundle loadNibNamed: @"Graph" owner: self];
+  }
+  [view setFilter: self];
+  [window setDelegate: self];
   [window makeFirstResponder: view];
 
   recordMode = NO;
-	return self;
+  return self;
 }
 
 - (void) timeSelectionChanged
@@ -41,10 +41,10 @@
   [window setTitle: [NSString stringWithFormat: @"Triva - %@ - GraphView", tf]];
   [window restoreWindowPosition];
   [window orderFront: self];
-	[view setNeedsDisplay: YES];
-	if(recordMode){
-		[view printGraph];
-	}
+  [view setNeedsDisplay: YES];
+  if(recordMode){
+    [view printGraph];
+  }
 }
 
 - (void)windowDidMove:(NSNotification *)win

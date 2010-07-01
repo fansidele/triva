@@ -59,9 +59,9 @@
 /*
 {
 
-	BOOL enable;
-	BOOL animationIsRunning;
-	double frequency, forward;
+  BOOL enable;
+  BOOL animationIsRunning;
+  double frequency, forward;
 }
 // callbacks 
 - (void) animationSliderChanged;

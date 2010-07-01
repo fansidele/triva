@@ -23,10 +23,10 @@
 
 @interface LinkViewEdge : TrivaGraphEdge
 {
-	double width;
-	double max;
+  double width;
+  double max;
 
-	LinkView *provider;
+  LinkView *provider;
 }
 - (void) setWidth: (double) w;
 - (void) setMaxWidth: (double)m;

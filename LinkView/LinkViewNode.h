@@ -23,7 +23,7 @@
 
 @interface LinkViewNode : TrivaTreemap
 {
-	NSMutableArray *edges;
+  NSMutableArray *edges;
 }
 - (void) drawEdges;
 @end
