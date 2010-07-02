@@ -25,6 +25,7 @@
 	current = nil;
 	highlighted = nil;
 	updateCurrentTreemap = YES;
+  offset = 0;
 	return self;
 }
 
@@ -73,6 +74,7 @@
 		current = [[TrivaTreemap alloc] initWithTimeSliceTree: tree
 				andProvider: filter];
 		[current setBoundingBox: b];
+    [current setOffset: offset];
 		[current refresh];
 		//timeslicetree changed, highlighted is no longer valid
 		highlighted = nil;
@@ -102,19 +104,35 @@
 
 - (void)scrollWheel:(NSEvent *)event
 {
-	if ([event deltaY] > 0){
-		if (maxDepthToDraw < [current maxDepth]){
-			maxDepthToDraw++;
-			updateCurrentTreemap = NO;
-			[self setNeedsDisplay: YES];
+  if (([event modifierFlags] & NSControlKeyMask)){
+    if ([event deltaY] > 0){
+      if (offset == 0){
+        offset += 1;
+      }else{
+        offset += offset*.3;
+      }
+    }else{
+      offset -= offset*.3;
+      if (offset < 0){
+        offset = 0;
+      }
+    }
+				[self setNeedsDisplay: YES];
+  }else{
+		if ([event deltaY] > 0){
+			if (maxDepthToDraw < [current maxDepth]){
+				maxDepthToDraw++;
+				updateCurrentTreemap = NO;
+				[self setNeedsDisplay: YES];
+			}
+		}else{
+			if (maxDepthToDraw > 0){
+				maxDepthToDraw--;
+				updateCurrentTreemap = NO;
+				[self setNeedsDisplay: YES];
+			}
 		}
-	}else{
-		if (maxDepthToDraw > 0){
-			maxDepthToDraw--;
-			updateCurrentTreemap = NO;
-			[self setNeedsDisplay: YES];
-		}
-	}
+  }
 }
 
 - (void) setHighlight: (id) node highlight: (BOOL) highlight

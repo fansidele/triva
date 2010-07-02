@@ -29,6 +29,7 @@
 	SquarifiedTreemap *filter;
 	TrivaTreemap *current, *highlighted;
 	BOOL updateCurrentTreemap;
+  double offset;
 }
 - (void) setMaxDepthToDraw: (int) d;
 - (int) maxDepthToDraw;
