@@ -20,21 +20,21 @@
 @implementation SquarifiedTreemap
 - (id)initWithController:(PajeTraceController *)c
 {
-	self = [super initWithController: c];
-	if (self != nil){
-		[NSBundle loadNibNamed: @"SquarifiedTreemap" owner: self];
-	}
-	[view setFilter: self];
+  self = [super initWithController: c];
+  if (self != nil){
+    [NSBundle loadNibNamed: @"SquarifiedTreemap" owner: self];
+  }
+  [view setFilter: self];
   [window initializeWithDelegate: self];
   [window makeFirstResponder: view];
 
   recordMode = NO;
-	return self;
+  return self;
 }
 
 - (void) timeSelectionChanged
 {
-	[view setNeedsDisplay: YES];
+  [view setNeedsDisplay: YES];
 
   if (recordMode){
     [view printTreemap];
@@ -43,17 +43,17 @@
 
 - (void) entitySelectionChanged
 {
-	[self timeSelectionChanged];
+  [self timeSelectionChanged];
 }
 
 - (void) containerSelectionChanged
 {
-	[self timeSelectionChanged];
+  [self timeSelectionChanged];
 }
 
 - (void) dataChangedForEntityType: (PajeEntityType *) type
 {
-	[self timeSelectionChanged];
+  [self timeSelectionChanged];
 }
 
 - (BOOL) windowShouldClose: (id) sender

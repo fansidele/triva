@@ -25,10 +25,10 @@
 
 @interface TreemapView : NSView
 {
-	int maxDepthToDraw;
-	SquarifiedTreemap *filter;
-	TrivaTreemap *current, *highlighted;
-	BOOL updateCurrentTreemap;
+  int maxDepthToDraw;
+  SquarifiedTreemap *filter;
+  TrivaTreemap *current, *highlighted;
+  BOOL updateCurrentTreemap;
   double offset;
 }
 - (void) setMaxDepthToDraw: (int) d;

@@ -20,86 +20,86 @@
 @implementation TreemapView
 - (id)initWithFrame:(NSRect)frameRect
 {
-	self = [super initWithFrame: frameRect];
-	maxDepthToDraw = 0;
-	current = nil;
-	highlighted = nil;
-	updateCurrentTreemap = YES;
+  self = [super initWithFrame: frameRect];
+  maxDepthToDraw = 0;
+  current = nil;
+  highlighted = nil;
+  updateCurrentTreemap = YES;
   offset = 0;
-	return self;
+  return self;
 }
 
 - (void) drawTreemap: (TrivaTreemap*) treemap
 {
-	if ([treemap treemapValue] == 0){
-		return;
-	}
-	if ([treemap depth] == maxDepthToDraw){
-		//draw aggregates
-		int nAggChildren, i;
-		nAggChildren = [[treemap aggregatedChildren] count];
-		for (i = 0; i < nAggChildren; i++){
-			TrivaTreemap *child = [[treemap aggregatedChildren]
-					objectAtIndex: i];
-			[child draw];
-		}
-	}else{
-		//recurse
-		int i;
-		for (i = 0; i < [[treemap children] count]; i++){
-			[self drawTreemap: [[treemap children]
-						objectAtIndex: i]];
-		}
-	}
+  if ([treemap treemapValue] == 0){
+    return;
+  }
+  if ([treemap depth] == maxDepthToDraw){
+    //draw aggregates
+    int nAggChildren, i;
+    nAggChildren = [[treemap aggregatedChildren] count];
+    for (i = 0; i < nAggChildren; i++){
+      TrivaTreemap *child = [[treemap aggregatedChildren]
+          objectAtIndex: i];
+      [child draw];
+    }
+  }else{
+    //recurse
+    int i;
+    for (i = 0; i < [[treemap children] count]; i++){
+      [self drawTreemap: [[treemap children]
+            objectAtIndex: i]];
+    }
+  }
 }
 
 - (BOOL) isFlipped
 {
-	return NO;
+  return NO;
 }
 
 - (void)drawRect:(NSRect)frame
 {
-	NSRect b = [self bounds];
-	if (updateCurrentTreemap){
-		TimeSliceTree *tree = [filter timeSliceTree];
+  NSRect b = [self bounds];
+  if (updateCurrentTreemap){
+    TimeSliceTree *tree = [filter timeSliceTree];
         
-		if (maxDepthToDraw > [tree maxDepth]){
-			maxDepthToDraw = [tree maxDepth];
-		}
+    if (maxDepthToDraw > [tree maxDepth]){
+      maxDepthToDraw = [tree maxDepth];
+    }
         
-		if (current){
-			[current release];
-		}
-		current = [[TrivaTreemap alloc] initWithTimeSliceTree: tree
-				andProvider: filter];
-		[current setBoundingBox: b];
+    if (current){
+      [current release];
+    }
+    current = [[TrivaTreemap alloc] initWithTimeSliceTree: tree
+        andProvider: filter];
+    [current setBoundingBox: b];
     [current setOffset: offset];
-		[current refresh];
-		//timeslicetree changed, highlighted is no longer valid
-		highlighted = nil;
-	}
-	[self drawTreemap: current];
-	if (highlighted){
-		[self setCurrentStatusString: [[highlighted hierarchy] description]];
+    [current refresh];
+    //timeslicetree changed, highlighted is no longer valid
+    highlighted = nil;
+  }
+  [self drawTreemap: current];
+  if (highlighted){
+    [self setCurrentStatusString: [[highlighted hierarchy] description]];
     [self highlightHierarchy];
-	}
-	updateCurrentTreemap = YES;
+  }
+  updateCurrentTreemap = YES;
 }
 
 - (void) setMaxDepthToDraw: (int) d
 {
-	maxDepthToDraw = d;
+  maxDepthToDraw = d;
 }
 
 - (int) maxDepthToDraw
 {
-	return maxDepthToDraw;
+  return maxDepthToDraw;
 }
 
 - (void) setFilter: (SquarifiedTreemap *) f
 {
-	filter = f;
+  filter = f;
 }
 
 - (void)scrollWheel:(NSEvent *)event
@@ -117,45 +117,45 @@
         offset = 0;
       }
     }
-				[self setNeedsDisplay: YES];
+        [self setNeedsDisplay: YES];
   }else{
-		if ([event deltaY] > 0){
-			if (maxDepthToDraw < [current maxDepth]){
-				maxDepthToDraw++;
-				updateCurrentTreemap = NO;
-				[self setNeedsDisplay: YES];
-			}
-		}else{
-			if (maxDepthToDraw > 0){
-				maxDepthToDraw--;
-				updateCurrentTreemap = NO;
-				[self setNeedsDisplay: YES];
-			}
-		}
+    if ([event deltaY] > 0){
+      if (maxDepthToDraw < [current maxDepth]){
+        maxDepthToDraw++;
+        updateCurrentTreemap = NO;
+        [self setNeedsDisplay: YES];
+      }
+    }else{
+      if (maxDepthToDraw > 0){
+        maxDepthToDraw--;
+        updateCurrentTreemap = NO;
+        [self setNeedsDisplay: YES];
+      }
+    }
   }
 }
 
 - (void) setHighlight: (id) node highlight: (BOOL) highlight
 {
-	while (node){
-		[node setHighlighted: highlight];
-		node = [node parent];
-	}	
+  while (node){
+    [node setHighlighted: highlight];
+    node = [node parent];
+  }  
 }
 
 - (void) mouseMoved:(NSEvent *)event
 {
-	NSPoint p;
-	p = [self convertPoint:[event locationInWindow] fromView:nil];
+  NSPoint p;
+  p = [self convertPoint:[event locationInWindow] fromView:nil];
 
-	id node = [current searchWith: p limitToDepth: maxDepthToDraw];
-	if (node != highlighted){
-		[self setHighlight: highlighted highlight: NO];
-		[self setHighlight: node highlight: YES];
-		updateCurrentTreemap = NO;
-		[self setNeedsDisplay: YES];
-		highlighted = node;
-	}
+  id node = [current searchWith: p limitToDepth: maxDepthToDraw];
+  if (node != highlighted){
+    [self setHighlight: highlighted highlight: NO];
+    [self setHighlight: node highlight: YES];
+    updateCurrentTreemap = NO;
+    [self setNeedsDisplay: YES];
+    highlighted = node;
+  }
 }
 
 #ifdef GNUSTEP
