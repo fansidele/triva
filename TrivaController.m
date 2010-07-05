@@ -14,10 +14,10 @@
     You should have received a copy of the GNU General Public License
     along with Triva.  If not, see <http://www.gnu.org/licenses/>.
 */
-#include "TrivaPajeComponent.h"
+#include "TrivaController.h"
 #include "config.h"
 
-@implementation TrivaPajeComponent
+@implementation TrivaController
 - (id) init
 {
   self = [super init];
@@ -342,7 +342,7 @@
 {
   NSString *str;
   str = [NSString stringWithFormat:
-    @"%@: %s received by TrivaPajeComponent.", self, __FUNCTION__];
+    @"%@: %s received by TrivaController.", self, __FUNCTION__];
   [[NSException exceptionWithName: @"Triva" 
         reason: str
         userInfo: nil] raise];

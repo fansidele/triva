@@ -14,7 +14,7 @@
     You should have received a copy of the GNU General Public License
     along with Triva.  If not, see <http://www.gnu.org/licenses/>.
 */
-#include "TrivaPajeComponent.h"
+#include "TrivaController.h"
 #include "TrivaCommand.h"
 
 
@@ -22,7 +22,7 @@ int main (int argc, const char **argv){
   //appkit init
   NSApplication *app = [NSApplication sharedApplication];
   NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-  TrivaPajeComponent *triva = [[TrivaPajeComponent alloc] init];
+  TrivaController *triva = [[TrivaController alloc] init];
 NS_DURING
 
   //parsing args

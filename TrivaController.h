@@ -18,7 +18,7 @@
 #include <General/PajeFilter.h>
 #include <General/PSortedArray.h>
 
-@interface TrivaPajeComponent : NSObject
+@interface TrivaController : NSObject
 {
   id reader;
   id simulator;
