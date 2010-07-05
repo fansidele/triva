@@ -29,16 +29,6 @@ AC_SUBST(ARCHITECTURE)
 
 AM_INIT_AUTOMAKE([gnu -Wno-portability])
 
-dnl ---------------------------------------------------------------------------
-dnl
-dnl defining name of the binary (Triva is default)
-if test -z $PROJECT_NAME; then
-	PROJECT_NAME=Triva
-fi
-AC_SUBST(PROJECT_NAME)
-AC_DEFINE_UNQUOTED([PROJECT_NAME], "${PROJECT_NAME}",
-	[Define name of the project])
-
 #components that are always compiled
 CONFIG_FILES="
   App/GNUmakefile \

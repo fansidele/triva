@@ -19,10 +19,10 @@ BUNDLE_INSTALL_DIR = $(GNUSTEP_BUNDLES)/Triva
 #
 
 ifeq ($(FOUNDATION_LIB), apple)
-  LDFLAGS += -F../Triva -framework @PROJECT_NAME@ -framework General
+  LDFLAGS += -F../Triva -framework Triva -framework General
 else
-  TimeSliceAggregation_BUNDLE_LIBS += -l@PROJECT_NAME@ -lGeneral
-  ADDITIONAL_LIB_DIRS += -L../Triva/@PROJECT_NAME@.framework/Versions/Current
+  TimeSliceAggregation_BUNDLE_LIBS += -lTriva -lGeneral
+  ADDITIONAL_LIB_DIRS += -L../Triva/Triva.framework/Versions/Current
 endif
 
 #

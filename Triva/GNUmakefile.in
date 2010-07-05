@@ -1,8 +1,8 @@
 include $(GNUSTEP_MAKEFILES)/common.make
 
-FRAMEWORK_NAME = @PROJECT_NAME@
+FRAMEWORK_NAME = Triva
 
-@PROJECT_NAME@_OBJC_FILES = \
+Triva_OBJC_FILES = \
 	TrivaFilter.m \
 	TrivaGraphNode.m \
 	TrivaGraphEdge.m \
@@ -12,7 +12,7 @@ FRAMEWORK_NAME = @PROJECT_NAME@
 	TrivaTreemap.m \
 	TrivaWindow.m
 
-@PROJECT_NAME@_HEADER_FILES = TrivaFilter.h \
+Triva_HEADER_FILES = TrivaFilter.h \
 	TrivaGraphNode.h \
 	TrivaGraphEdge.h \
 	TimeSliceTree.h \

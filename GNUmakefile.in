@@ -1,9 +1,9 @@
 include $(GNUSTEP_MAKEFILES)/common.make
 
-PACKAGE_NAME = @PROJECT_NAME@
+PACKAGE_NAME = Triva
 VERSION = @PACKAGE_VERSION@
 
-AGGREGATE_NAME = @PROJECT_NAME@
+AGGREGATE_NAME = Triva
 SUBPROJECTS = Triva \
   App \
   GraphConfiguration \
@@ -23,7 +23,7 @@ SUBPROJECTS = Triva \
 include $(GNUSTEP_MAKEFILES)/aggregate.make
 
 deb:
-	sudo checkinstall --pkgname @PROJECT_NAME@ -d 2 -si \
+	sudo checkinstall --pkgname Triva -d 2 -si \
 		-t debian \
 		--arch @ARCHITECTURE@ \
 		--maintainer "Lucas.Schnorr@imag.fr" \

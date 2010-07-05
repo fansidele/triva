@@ -8,7 +8,7 @@ PACKAGE_NAME = GraphConfiguration
 BUNDLE_NAME = GraphConfiguration
 GraphConfiguration_PRINCIPAL_CLASS = GraphConfiguration
 BUNDLE_EXTENSION = .bundle
-BUNDLE_INSTALL_DIR = $(GNUSTEP_BUNDLES)/@PROJECT_NAME@
+BUNDLE_INSTALL_DIR = $(GNUSTEP_BUNDLES)/Triva
 
 
 #
