@@ -20,8 +20,8 @@
 
 int main (int argc, const char **argv){
   //appkit init
-	NSApplication *app = [NSApplication sharedApplication];
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+  NSApplication *app = [NSApplication sharedApplication];
+  NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
   TrivaPajeComponent *triva = [[TrivaPajeComponent alloc] init];
 NS_DURING
 
@@ -75,6 +75,6 @@ NS_ENDHANDLER
   [app run];
 
   //that's it
-	[pool release];
-	return 0;
+  [pool release];
+  return 0;
 }

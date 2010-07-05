@@ -20,22 +20,22 @@
 @implementation TrivaPajeComponent
 - (id) init
 {
-	self = [super init];
-	components = [NSMutableDictionary dictionary];
-	bundles = [NSMutableDictionary dictionary];
+  self = [super init];
+  components = [NSMutableDictionary dictionary];
+  bundles = [NSMutableDictionary dictionary];
 
-	chunkDates = [[NSClassFromString(@"PSortedArray") alloc]
+  chunkDates = [[NSClassFromString(@"PSortedArray") alloc]
                                 initWithSelector:@selector(self)];
 
-	NSNotificationCenter *notificationCenter;
-	notificationCenter = [NSNotificationCenter defaultCenter];
+  NSNotificationCenter *notificationCenter;
+  notificationCenter = [NSNotificationCenter defaultCenter];
 
-	[notificationCenter addObserver:self
-		selector:@selector(chunkFault:)
-		name:@"PajeChunkNotInMemoryNotification"
-		object:nil];
+  [notificationCenter addObserver:self
+    selector:@selector(chunkFault:)
+    name:@"PajeChunkNotInMemoryNotification"
+    object:nil];
 
-	return self;
+  return self;
 }
 
 - (NSBundle *)loadTrivaBundleNamed:(NSString*)name
@@ -68,11 +68,11 @@
     }
 
     bundlePaths = [NSMutableArray arrayWithArray:
-		[[NSUserDefaults standardUserDefaults]
+    [[NSUserDefaults standardUserDefaults]
                                        arrayForKey:@"BundlePaths"]];
     if (!bundlePaths || [bundlePaths count] == 0) {
         bundlePaths = [NSMutableArray arrayWithArray:
-			NSSearchPathForDirectoriesInDomains(
+      NSSearchPathForDirectoriesInDomains(
                                             NSAllLibrariesDirectory,
                                             NSAllDomainsMask, YES)];
     }
@@ -97,8 +97,8 @@
     bundle = [bundles objectForKey:name];
     if (bundle == nil) {
         if ([self loadBundleNamed:name] == nil){
-		[self loadTrivaBundleNamed:name];
-	}
+    [self loadTrivaBundleNamed:name];
+  }
         bundle = [bundles objectForKey:name];
     }
     return bundle;
@@ -141,180 +141,180 @@
 
 + (NSArray *)treemapComponentGraph
 {
-	return [@"(  \
-		( FileReader, \
-		   PajeEventDecoder, \
-                   PajeSimulator, \
-                   StorageController, \
-		   TimeInterval, \
-		   TypeFilter, \
-		   TimeSliceAggregation, \
-		   SquarifiedTreemap \
-		) )" propertyList];
+  return [@"(  \
+    ( FileReader, \
+       PajeEventDecoder, \
+       PajeSimulator, \
+       StorageController, \
+       TimeInterval, \
+       TypeFilter, \
+       TimeSliceAggregation, \
+       SquarifiedTreemap \
+    ) )" propertyList];
 }
 
 + (NSArray *)graphComponentGraph
 {
-	return [@"(  \
-		( FileReader, \
-		   PajeEventDecoder, \
-                   PajeSimulator, \
-                   StorageController, \
-		   TimeInterval, \
-                   TimeSliceAggregation, \
-		   GraphConfiguration, \
-		   GraphView \
-		) )" propertyList];
+  return [@"(  \
+    ( FileReader, \
+       PajeEventDecoder, \
+       PajeSimulator, \
+       StorageController, \
+       TimeInterval, \
+       TimeSliceAggregation, \
+       GraphConfiguration, \
+       GraphView \
+    ) )" propertyList];
 }
 
 + (NSArray *)linkViewComponentGraph
 {
   return [@"(  \
-  	( FileReader, \
+    ( FileReader, \
       PajeEventDecoder, \
       PajeSimulator, \
       StorageController, \
-  	  TimeInterval, \
+      TimeInterval, \
       TimeSliceAggregation, \
       LinkView \
-  	) )" propertyList];
+    ) )" propertyList];
 }
 
 + (NSArray *)dotComponentGraph
 {
-	return [@"(  \
-		( FileReader, \
-		   PajeEventDecoder, \
-                   PajeSimulator, \
-                   StorageController, \
-		   TimeInterval, \
-                   Dot \
-		) )" propertyList];
+  return [@"(  \
+    ( FileReader, \
+       PajeEventDecoder, \
+       PajeSimulator, \
+       StorageController, \
+       TimeInterval, \
+       Dot \
+    ) )" propertyList];
 }
 
 + (NSArray *)checkTraceComponentGraph
 {
-	return [@"(  \
-		( FileReader, \
-		   PajeEventDecoder, \
-                   PajeSimulator, \
-                   StorageController, \
-                   CheckTrace \
-		) )" propertyList];
+  return [@"(  \
+    ( FileReader, \
+       PajeEventDecoder, \
+       PajeSimulator, \
+       StorageController, \
+       CheckTrace \
+    ) )" propertyList];
 }
 
 + (NSArray *)listComponentGraph
 {
-	return [@"(  \
-		( FileReader, \
-		   PajeEventDecoder, \
-                   PajeSimulator, \
-                   StorageController, \
-                   List \
-		) )" propertyList];
+  return [@"(  \
+    ( FileReader, \
+       PajeEventDecoder, \
+       PajeSimulator, \
+       StorageController, \
+       List \
+    ) )" propertyList];
 }
 
 + (NSArray *)instancesComponentGraph
 {
-	return [@"(  \
-		( FileReader, \
-		   PajeEventDecoder, \
-                   PajeSimulator, \
-                   StorageController, \
-                   Instances \
-		) )" propertyList];
+  return [@"(  \
+    ( FileReader, \
+       PajeEventDecoder, \
+       PajeSimulator, \
+       StorageController, \
+       Instances \
+    ) )" propertyList];
 }
 
 + (NSArray *)defaultComponentGraph
 {
     NSArray *graph = nil;
 #ifdef HAVE_SQUARIFIEDTREEMAP
-	graph = [@"(  \
-		( FileReader, \
-		   PajeEventDecoder, \
-                   PajeSimulator, \
-                   StorageController, \
-		   TimeInterval, \
-		   TimeSliceAggregation, \
-		   SquarifiedTreemap \
-		) )" propertyList];
+  graph = [@"(  \
+    ( FileReader, \
+       PajeEventDecoder, \
+       PajeSimulator, \
+       StorageController, \
+       TimeInterval, \
+       TimeSliceAggregation, \
+       SquarifiedTreemap \
+    ) )" propertyList];
 #endif
 #ifdef HAVE_GRAPHCONFIGURATION
-	graph = [@"(  \
-		( FileReader, \
-		   PajeEventDecoder, \
-                   PajeSimulator, \
-                   StorageController, \
-		   TimeInterval, \
-                   TimeSliceAggregation, \
-		   GraphConfiguration, \
-		   GraphView \
-		) )" propertyList];
+  graph = [@"(  \
+    ( FileReader, \
+       PajeEventDecoder, \
+       PajeSimulator, \
+       StorageController, \
+       TimeInterval, \
+       TimeSliceAggregation, \
+       GraphConfiguration, \
+       GraphView \
+    ) )" propertyList];
 #endif
 #ifdef HAVE_LINKVIEW
-	graph = [@"(  \
-		( FileReader, \
-		   PajeEventDecoder, \
-                   PajeSimulator, \
-                   StorageController, \
-		   TimeInterval, \
-                   TimeSliceAggregation, \
-		   LinkView \
-		) )" propertyList];
+  graph = [@"(  \
+    ( FileReader, \
+       PajeEventDecoder, \
+       PajeSimulator, \
+       StorageController, \
+       TimeInterval, \
+       TimeSliceAggregation, \
+       LinkView \
+    ) )" propertyList];
 #endif
 #ifdef HAVE_NUCAVIEW
-	graph = [@"(  \
-		( FileReader, \
-		   PajeEventDecoder, \
-                   PajeSimulator, \
-                   StorageController, \
-                   TimeInterval, \
-                   TimeSliceAggregation, \
-		   NUCAView, \
-		   GraphView \
-		) )" propertyList];
+  graph = [@"(  \
+    ( FileReader, \
+       PajeEventDecoder, \
+       PajeSimulator, \
+       StorageController, \
+       TimeInterval, \
+       TimeSliceAggregation, \
+       NUCAView, \
+       GraphView \
+    ) )" propertyList];
 #endif
 #ifdef HAVE_NETWORKTOPOLOGY
-	graph = [@"(  \
-		( FileReader, \
-		   PajeEventDecoder, \
-                   PajeSimulator, \
-                   StorageController, \
-		   TimeInterval, \
-                   NetworkTopology \
-		) )" propertyList];
+  graph = [@"(  \
+    ( FileReader, \
+       PajeEventDecoder, \
+       PajeSimulator, \
+       StorageController, \
+       TimeInterval, \
+       NetworkTopology \
+    ) )" propertyList];
 #endif
 #ifdef HAVE_COMMUNICATIONPATTERN
-	graph = [@"(  \
-		( FileReader, \
-		   PajeEventDecoder, \
-                   PajeSimulator, \
-                   StorageController, \
-		   TimeInterval, \
-                   CommunicationPattern \
-		) )" propertyList];
+  graph = [@"(  \
+    ( FileReader, \
+       PajeEventDecoder, \
+       PajeSimulator, \
+       StorageController, \
+       TimeInterval, \
+       CommunicationPattern \
+    ) )" propertyList];
 #endif
 #ifdef HAVE_DOT
-	graph = [@"(  \
-		( FileReader, \
-		   PajeEventDecoder, \
-                   PajeSimulator, \
-                   StorageController, \
-		   TimeInterval, \
-                   Dot \
-		) )" propertyList];
+  graph = [@"(  \
+    ( FileReader, \
+       PajeEventDecoder, \
+       PajeSimulator, \
+       StorageController, \
+       TimeInterval, \
+       Dot \
+    ) )" propertyList];
 #endif
 #ifdef HAVE_HCMREADER
-	graph = [@"(  \
-		( HCMReader, \
-		   PajeEventDecoder, \
-                   PajeSimulator, \
-                   StorageController, \
-		   TimeInterval, \
-		   TypeFilter, \
-		   TimeSliceAggregation, \
-		   SquarifiedTreemap \
-		) )" propertyList];
+  graph = [@"(  \
+    ( HCMReader, \
+       PajeEventDecoder, \
+       PajeSimulator, \
+       StorageController, \
+       TimeInterval, \
+       TypeFilter, \
+       TimeSliceAggregation, \
+       SquarifiedTreemap \
+    ) )" propertyList];
 #endif
     return graph;
 }
@@ -329,10 +329,10 @@
     if (componentClass == Nil) {
         NSBundle *bundle;
         bundle = [self bundleWithName:className];
-	componentClass = NSClassFromString(className);
-	if (componentClass == nil){
-		componentClass = [bundle principalClass];
-	}
+  componentClass = NSClassFromString(className);
+  if (componentClass == nil){
+    componentClass = [bundle principalClass];
+  }
     }
     component = [componentClass componentWithController: (id)self];
     if (component != nil) {
@@ -411,7 +411,7 @@
 
 - (void)readChunk:(int)chunkNumber
 {
-	[reader readNextChunk];
+  [reader readNextChunk];
 }
 
 - (void)startChunk:(int)chunkNumber
@@ -434,12 +434,12 @@
 
 - (void)missingChunk:(int)chunkNumber
 {
-	NSString *str;
-	str = [NSString stringWithFormat:
-		@"%@: %s received by TrivaPajeComponent.", self, __FUNCTION__];
-	[[NSException exceptionWithName: @"Triva" 
-				reason: str
-				userInfo: nil] raise];
+  NSString *str;
+  str = [NSString stringWithFormat:
+    @"%@: %s received by TrivaPajeComponent.", self, __FUNCTION__];
+  [[NSException exceptionWithName: @"Triva" 
+        reason: str
+        userInfo: nil] raise];
 //    [self readChunk:chunkNumber];
 }
 
@@ -447,24 +447,24 @@
 
 - (int)readNextChunk:(id)sender
 {
-	static BOOL chunkStarted = NO;
-	if (!chunkStarted){
-		[self startChunk: [chunkDates count]];
-		chunkStarted = YES;
-	}
+  static BOOL chunkStarted = NO;
+  if (!chunkStarted){
+    [self startChunk: [chunkDates count]];
+    chunkStarted = YES;
+  }
 
-	[self readChunk: -1 /* method ignores this number */];
+  [self readChunk: -1 /* method ignores this number */];
 
-	if (![reader hasMoreData] && chunkStarted){
-		[self endOfChunkLast: ![reader hasMoreData]];
-		chunkStarted = NO;
-	}
+  if (![reader hasMoreData] && chunkStarted){
+    [self endOfChunkLast: ![reader hasMoreData]];
+    chunkStarted = NO;
+  }
 
-	if ([reader hasMoreData]){
-		return 1;
-	}else{
-		return 0;
-	}
+  if ([reader hasMoreData]){
+    return 1;
+  }else{
+    return 0;
+  }
 }
 
 - (void) activateTreemap
@@ -511,9 +511,9 @@
 
 - (void) defineMajorComponents
 {
-	reader = [self componentWithName:@"FileReader"];
-	simulator = [self componentWithName:@"PajeSimulator"];
-	encapsulator = [self componentWithName:@"StorageController"];
+  reader = [self componentWithName:@"FileReader"];
+  simulator = [self componentWithName:@"PajeSimulator"];
+  encapsulator = [self componentWithName:@"StorageController"];
 }
 
 - (void)chunkFault:(NSNotification *)notification
@@ -527,17 +527,17 @@
 
 - (NSDate *) startTime
 {
-	return [encapsulator startTime];
+  return [encapsulator startTime];
 }
 
 - (NSDate *) endTime
 {
-	return [encapsulator endTime];
+  return [encapsulator endTime];
 }
 
 - (void) setReaderWithName: (NSString *) readerName
 {
-	reader = [self componentWithName: readerName];
+  reader = [self componentWithName: readerName];
 }
 
 - (BOOL) hasMoreData
@@ -554,19 +554,19 @@
 
 - (void) addParameter: (NSString *) par
 {
-	if (parameters == nil){
-		parameters = [[NSMutableArray alloc] init];
-	}else{
-		[parameters addObject: par];
-	}
+  if (parameters == nil){
+    parameters = [[NSMutableArray alloc] init];
+  }else{
+    [parameters addObject: par];
+  }
 }
 
 - (NSString *) getParameterNumber: (int) index
 {
-	if ((unsigned int)index < [parameters count]){
-		return [parameters objectAtIndex: index];
-	}else{
-		return nil;
-	}
+  if ((unsigned int)index < [parameters count]){
+    return [parameters objectAtIndex: index];
+  }else{
+    return nil;
+  }
 }
 @end

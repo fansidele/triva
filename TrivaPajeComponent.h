@@ -20,17 +20,17 @@
 
 @interface TrivaPajeComponent : NSObject
 {
-	id reader;
-	id simulator;
-	id encapsulator;
+  id reader;
+  id simulator;
+  id encapsulator;
 
-	NSMutableDictionary *bundles;
-	NSMutableDictionary *components;
+  NSMutableDictionary *bundles;
+  NSMutableDictionary *components;
 
-	PSortedArray *chunkDates;
-	BOOL timeLimitsChanged;
+  PSortedArray *chunkDates;
+  BOOL timeLimitsChanged;
 
-	NSMutableArray *parameters;
+  NSMutableArray *parameters;
 }
 
 - (NSBundle *)bundleWithName:(NSString *)name;
