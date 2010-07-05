@@ -22,7 +22,7 @@ int main (int argc, const char **argv){
   //appkit init
   NSApplication *app = [NSApplication sharedApplication];
   NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-  TrivaController *triva = [[TrivaController alloc] init];
+
 NS_DURING
 
   //parsing args
@@ -37,26 +37,10 @@ NS_DURING
   arguments.abort = 0;
   parse (argc, (char**)argv, &arguments);
 
-  //configuring triva
-  if (arguments.treemap) {
-    [triva activateTreemap];
-  }else if (arguments.graph){
-    [triva activateGraph];
-  }else if (arguments.linkview){
-    [triva activateLinkView];
-  }else if (arguments.hierarchy) {
-    [triva activateDot];
-  }else if (arguments.check) {
-    [triva activateCheckTrace];
-  }else if (arguments.list) {
-    [triva activateList];
-  }else if (arguments.instances) {
-    [triva activateInstances];
-  }else{
-    NSException *exception = [NSException exceptionWithName: @"TrivaException"
-                   reason: @"No visualization option activated" userInfo: nil];
-    [exception raise];
-  }
+  //initializing controller
+  TrivaController *triva = [TrivaController controllerWithArguments: arguments];
+
+  //providing an input trace file
   NSString *input = [NSString stringWithFormat: @"%s", arguments.input[0]];
   id reader = [triva componentWithName: @"FileReader"];
   [reader setInputFilename: input];

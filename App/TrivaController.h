@@ -32,21 +32,7 @@
 
   NSMutableArray *parameters;
 }
-+ (NSArray *)treemapComponentGraph;
-+ (NSArray *)graphComponentGraph;
-+ (NSArray *)linkViewComponentGraph;
-+ (NSArray *)dotComponentGraph;
-+ (NSArray *)checkTraceComponentGraph;
-+ (NSArray *)listComponentGraph;
-+ (NSArray *)instancesComponentGraph;
-
-- (void)activateTreemap;
-- (void)activateGraph;
-- (void)activateLinkView;
-- (void)activateDot;
-- (void)activateCheckTrace;
-- (void)activateList;
-- (void)activateInstances;
++ (id) controllerWithArguments: (struct arguments) arguments;
 - (void)defineMajorComponents;
 @end
 
@@ -82,4 +68,28 @@
              toComponentNamed:(NSString *)n2;
 - (void)addComponentSequence:(NSArray *)componentSequence;
 - (void)addComponentSequences:(NSArray *)componentSequences;
+@end
+
+/*
+ * Triva Controllers
+ */
+@interface TrivaTreemapController : TrivaController
+@end
+
+@interface TrivaGraphController : TrivaController
+@end
+
+@interface TrivaLinkController : TrivaController
+@end
+
+@interface TrivaDotController : TrivaController
+@end
+
+@interface TrivaCheckController : TrivaController
+@end
+
+@interface TrivaListController : TrivaController
+@end
+
+@interface TrivaInstanceController : TrivaController
 @end

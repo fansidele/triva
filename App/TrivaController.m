@@ -15,8 +15,35 @@
     along with Triva.  If not, see <http://www.gnu.org/licenses/>.
 */
 #include "TrivaController.h"
+#include "TrivaCommand.h"
 
 @implementation TrivaController
++ (id) controllerWithArguments: (struct arguments) arguments
+{
+  TrivaController *triva = nil;
+  //configuring triva
+  if (arguments.treemap) {
+    triva = [[TrivaTreemapController alloc] init];
+  }else if (arguments.graph){
+    triva = [[TrivaGraphController alloc] init];
+  }else if (arguments.linkview){
+    triva = [[TrivaLinkController alloc] init];
+  }else if (arguments.hierarchy) {
+    triva = [[TrivaDotController alloc] init];
+  }else if (arguments.check) {
+    triva = [[TrivaCheckController alloc] init];
+  }else if (arguments.list) {
+    triva = [[TrivaListController alloc] init];
+  }else if (arguments.instances) {
+    triva = [[TrivaInstanceController alloc] init];
+  }else{
+    NSException *exception = [NSException exceptionWithName: @"TrivaException"
+                   reason: @"No visualization option activated" userInfo: nil];
+    [exception raise];
+  }
+  return triva;
+}
+
 - (id) init
 {
   self = [super init];
@@ -37,9 +64,19 @@
   return self;
 }
 
-+ (NSArray *)treemapComponentGraph
+- (void) defineMajorComponents
 {
-  return [@"(  \
+  reader = [self componentWithName:@"FileReader"];
+  simulator = [self componentWithName:@"PajeSimulator"];
+  encapsulator = [self componentWithName:@"StorageController"];
+}
+@end
+
+@implementation TrivaTreemapController
+- (id) init
+{
+  self = [super init];
+  NSArray *graph = [@"(  \
     ( FileReader, \
        PajeEventDecoder, \
        PajeSimulator, \
@@ -49,11 +86,17 @@
        TimeSliceAggregation, \
        SquarifiedTreemap \
     ) )" propertyList];
+  [self addComponentSequences: graph];
+  [self defineMajorComponents];
+  return self;
 }
+@end
 
-+ (NSArray *)graphComponentGraph
+@implementation TrivaGraphController
+- (id) init
 {
-  return [@"(  \
+  self = [super init];
+  NSArray *graph = [@"(  \
     ( FileReader, \
        PajeEventDecoder, \
        PajeSimulator, \
@@ -63,11 +106,17 @@
        GraphConfiguration, \
        GraphView \
     ) )" propertyList];
+  [self addComponentSequences: graph];
+  [self defineMajorComponents];
+  return self;
 }
+@end
 
-+ (NSArray *)linkViewComponentGraph
+@implementation TrivaLinkController
+- (id) init
 {
-  return [@"(  \
+  self = [super init];
+  NSArray *graph = [@"(  \
     ( FileReader, \
       PajeEventDecoder, \
       PajeSimulator, \
@@ -76,11 +125,17 @@
       TimeSliceAggregation, \
       LinkView \
     ) )" propertyList];
+  [self addComponentSequences: graph];
+  [self defineMajorComponents];
+  return self;
 }
+@end
 
-+ (NSArray *)dotComponentGraph
+@implementation TrivaDotController
+- (id) init
 {
-  return [@"(  \
+  self = [super init];
+  NSArray *graph = [@"(  \
     ( FileReader, \
        PajeEventDecoder, \
        PajeSimulator, \
@@ -88,87 +143,60 @@
        TimeInterval, \
        Dot \
     ) )" propertyList];
+  [self addComponentSequences: graph];
+  [self defineMajorComponents];
+  return self;
 }
+@end
 
-+ (NSArray *)checkTraceComponentGraph
+@implementation TrivaCheckController
+- (id) init
 {
-  return [@"(  \
+  self = [super init];
+  NSArray *graph = [@"(  \
     ( FileReader, \
        PajeEventDecoder, \
        PajeSimulator, \
        StorageController, \
        CheckTrace \
     ) )" propertyList];
+  [self addComponentSequences: graph];
+  [self defineMajorComponents];
+  return self;
 }
+@end
 
-+ (NSArray *)listComponentGraph
+@implementation TrivaListController
+- (id) init
 {
-  return [@"(  \
+  self = [super init];
+  NSArray *graph = [@"(  \
     ( FileReader, \
        PajeEventDecoder, \
        PajeSimulator, \
        StorageController, \
        List \
     ) )" propertyList];
+  [self addComponentSequences: graph];
+  [self defineMajorComponents];
+  return self;
 }
+@end
 
-+ (NSArray *)instancesComponentGraph
+@implementation TrivaInstanceController
+- (id) init
 {
-  return [@"(  \
+  self = [super init];
+  NSArray *graph = [@"(  \
     ( FileReader, \
        PajeEventDecoder, \
        PajeSimulator, \
        StorageController, \
        Instances \
     ) )" propertyList];
-}
-
-- (void) activateTreemap
-{
-  [self addComponentSequences:[[self class] treemapComponentGraph]];
+  [self addComponentSequences: graph];
   [self defineMajorComponents];
-}
-
-- (void) activateGraph
-{
-  [self addComponentSequences:[[self class] graphComponentGraph]];
-  [self defineMajorComponents];
-}
-
-- (void) activateLinkView
-{
-  [self addComponentSequences:[[self class] linkViewComponentGraph]];
-  [self defineMajorComponents];
-}
-
-- (void) activateDot
-{
-  [self addComponentSequences:[[self class] dotComponentGraph]];
-  [self defineMajorComponents];
-}
-
-- (void) activateCheckTrace
-{
-  [self addComponentSequences:[[self class] checkTraceComponentGraph]];
-  [self defineMajorComponents];
-}
-
-- (void) activateList
-{
-  [self addComponentSequences:[[self class] listComponentGraph]];
-  [self defineMajorComponents];
-}
-
-- (void) activateInstances
-{
-  [self addComponentSequences:[[self class] instancesComponentGraph]];
-  [self defineMajorComponents];
-}
-
-- (void) defineMajorComponents
-{
-  reader = [self componentWithName:@"FileReader"];
-  simulator = [self componentWithName:@"PajeSimulator"];
-  encapsulator = [self componentWithName:@"StorageController"];
+  return self;
 }
 @end
+
