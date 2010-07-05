@@ -51,7 +51,7 @@ $ make install GNUSTEP_INSTALLATION_DOMAIN=USER
 
 $ export \
   LD_LIBRARY_PATH=$LD_LIBRARY_PATH:./Triva/Triva.framework/Versions/Current/
-$ ./Triva.app/Triva --help
+$ ./App/Triva.app/Triva --help
 
 # To install it (so you can use it anywhere on your system as your user)
 # Remember to source the GNUstep.sh file before trying to execute Triva
