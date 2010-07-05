@@ -41,6 +41,7 @@ AC_DEFINE_UNQUOTED([PROJECT_NAME], "${PROJECT_NAME}",
 
 #components that are always compiled
 CONFIG_FILES="
+  App/GNUmakefile \
   Triva/GNUmakefile \
   GraphConfiguration/GNUmakefile \
   GraphView/GNUmakefile \
