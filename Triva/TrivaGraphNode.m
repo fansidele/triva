@@ -55,29 +55,29 @@
 
   if ([type isEqualToString: @"separation"]){
     return [[TrivaSeparation alloc] initWithConfiguration: conf
-                                                            forObject: obj
-                                                           withValues: timeSliceValues
-                                                          andProvider: prov];
+                                                forObject: obj
+                                               withValues: timeSliceValues
+                                              andProvider: prov];
   }else if ([type isEqualToString: @"gradient"]){
     return [[TrivaGradient alloc] initWithConfiguration: conf
-                                                          forObject: obj
-                                                         withValues: timeSliceValues
-                                                        andProvider: prov];
+                                              forObject: obj
+                                             withValues: timeSliceValues
+                                            andProvider: prov];
   }else if ([type isEqualToString: @"convergence"]){
     return [[TrivaConvergence alloc] initWithConfiguration: conf
-                                                          forObject: obj
-                                                         withValues: timeSliceValues
-                                                        andProvider: prov];
+                                                 forObject: obj
+                                                withValues: timeSliceValues
+                                               andProvider: prov];
   }else if ([type isEqualToString: @"color"]){
     return [[TrivaColor alloc] initWithConfiguration: conf
-                                                          forObject: obj
-                                                         withValues: timeSliceValues
-                                                        andProvider: prov];
+                                           forObject: obj
+                                          withValues: timeSliceValues
+                                         andProvider: prov];
   }else if ([type isEqualToString: @"swarm"]){
     return [[TrivaSwarm alloc] initWithConfiguration: conf
-                                      forObject: obj
-                                    withValues: timeSliceValues
-                                          andProvider: prov];
+                                           forObject: obj
+                                          withValues: timeSliceValues
+                                         andProvider: prov];
   }else{
     NSLog (@"%s:%d: type '%@' of configuration %@ is unknown",
                         __FUNCTION__, __LINE__, type, conf);
