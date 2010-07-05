@@ -35,7 +35,6 @@
 
 - (NSBundle *)bundleWithName:(NSString *)name;
 - (NSBundle *)loadBundleNamed:(NSString*)name;
-+ (NSArray *)defaultComponentGraph;
 + (NSArray *)treemapComponentGraph;
 + (NSArray *)graphComponentGraph;
 + (NSArray *)linkViewComponentGraph;
