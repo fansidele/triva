@@ -6,6 +6,7 @@ Triva_OBJC_FILES = \
 	TrivaFilter.m \
 	TrivaGraphNode.m \
 	TrivaGraphEdge.m \
+	TrivaComposition.m \
 	TimeSliceTree.m \
 	TimeSliceGraph.m \
 	Tree.m \
@@ -15,6 +16,7 @@ Triva_OBJC_FILES = \
 Triva_HEADER_FILES = TrivaFilter.h \
 	TrivaGraphNode.h \
 	TrivaGraphEdge.h \
+	TrivaComposition.h \
 	TimeSliceTree.h \
 	TimeSliceGraph.h \
 	Tree.h \

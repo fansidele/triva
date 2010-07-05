@@ -21,73 +21,7 @@
 #include <Triva/Tree.h>
 #include <Triva/TimeSliceTree.h>
 
-@class TrivaFilter;
-@class TrivaGraphNode;
-
-@interface TrivaComposition : NSObject
-{
-  BOOL needSpace;
-}
-+ (id) compositionWithConfiguration: (NSDictionary*) conf
-                          forObject: (TrivaGraphNode*)obj
-                         withValues: (NSDictionary*) timeSliceValues
-                        andProvider: (TrivaFilter*) prov;
-- (id) initWithConfiguration: (NSDictionary*) conf
-                   forObject: (TrivaGraphNode*)obj
-                  withValues: (NSDictionary*) timeSliceValues
-                 andProvider: (TrivaFilter*) prov;
-- (BOOL) needSpace;
-@end
-
-@interface TrivaSeparation : TrivaComposition
-{
-  NSRect bb; //the bounding box
-  NSMutableDictionary *values; //(NSString*)name = (NSNumber)value
-            //the sum of the values must be equal = 1
-  double overflow; //(sum_of_the_values - 1)
-       //can be used to check if the sum is > 1
-  id filter;
-  TrivaGraphNode *node;
-}
-- (id) initWithFilter: (id) f;
-- (void) setFilter: (id) f;
-- (NSDictionary*) values;
-- (double) overflow;
-- (void) refreshWithinRect: (NSRect) rect;
-- (BOOL) draw;
-- (NSRect) bb;
-@end
-
-@interface TrivaGradient : TrivaSeparation
-{
-  NSMutableDictionary *min;
-  NSMutableDictionary *max;
-}
-- (void) setGradientType: (NSString *) type withValue: (double) val
-    withMax: (double) max withMin: (double) min;
-- (NSDictionary *) min;
-- (NSDictionary *) max;
-@end
-
-@interface TrivaBar : TrivaGradient
-@end
-
-@interface TrivaConvergence : TrivaGradient
-- (void) defineMax: (double*)ma andMin: (double*)mi fromVariable: (NSString*)var
-                ofObject: (NSString*)name withType: (NSString*)type;
-@end
-
-@interface TrivaColor : TrivaSeparation
-@end
-
-@interface TrivaSwarm : TrivaComposition
-{
-  NSRect bb; //the bounding box
-  NSMutableArray *objects; //array of strings with the existing objects
-  NSMutableDictionary *objectsColors; //dict of string->colors
-  TrivaGraphNode *node;
-}
-@end
+@class TrivaComposition;
 
 @interface TrivaGraphNode : Tree
 {
@@ -116,5 +50,5 @@
 - (void) setTimeSliceTree: (TimeSliceTree *) t;
 @end
 
-#include "TrivaFilter.h"
+#include <Triva/TrivaComposition.h>
 #endif
