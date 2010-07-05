@@ -59,6 +59,5 @@ CONFIG_FILES="
   contrib/SimGridColors/GNUmakefile \
   GNUmakefile"
 
-AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_FILES($CONFIG_FILES)
 AC_OUTPUT

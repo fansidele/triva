@@ -15,7 +15,6 @@
     along with Triva.  If not, see <http://www.gnu.org/licenses/>.
 */
 #include "TrivaController.h"
-#include "config.h"
 
 @implementation TrivaController (Bundles)
 - (NSBundle *)loadTrivaBundleNamed:(NSString*)name
@@ -28,7 +27,7 @@
   NSString *bundlePath;
   NSBundle *bundle;
 
-  bundleName = [@"Bundles" stringByAppendingPathComponent:@PROJECT_NAME];
+  bundleName = [@"Bundles" stringByAppendingPathComponent:@"Triva"];
   bundleName = [bundleName stringByAppendingPathComponent:name];
   bundleName = [bundleName stringByAppendingPathExtension:@"bundle"];
 

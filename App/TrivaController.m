@@ -15,7 +15,6 @@
     along with Triva.  If not, see <http://www.gnu.org/licenses/>.
 */
 #include "TrivaController.h"
-#include "config.h"
 
 @implementation TrivaController
 - (id) init
