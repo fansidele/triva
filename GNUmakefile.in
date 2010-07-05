@@ -22,7 +22,10 @@ SUBPROJECTS = Triva \
 @PROJECT_NAME@_OBJC_FILES = \
 	TrivaApp.m \
 	TrivaCommand.m \
-	TrivaController.m
+	TrivaController.m \
+  TrivaController+Bundles.m \
+  TrivaController+Chunks.m \
+  TrivaController+Components.m
 
 @PROJECT_NAME@_APPLICATION_ICON = Triva.tiff
 @PROJECT_NAME@_RESOURCE_FILES = Triva.tiff trivaInfo.plist
