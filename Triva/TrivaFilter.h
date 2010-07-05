@@ -18,9 +18,9 @@
 #define __TrivaFilter_h
 #include <Foundation/Foundation.h>
 #include <General/PajeFilter.h>
-#include "TrivaGraphNode.h"
-#include "TrivaGraphEdge.h"
-#include "TimeSliceTree.h"
+#include <Triva/TrivaGraphNode.h>
+#include <Triva/TrivaGraphEdge.h>
+#include <Triva/TimeSliceTree.h>
 
 typedef enum {Local,Global} TrivaScale;
 

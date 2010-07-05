@@ -18,7 +18,7 @@
 #define __TrivaGraphEdge_h
 #include <Foundation/Foundation.h>
 #include <General/PajeFilter.h>
-#include "TrivaGraphNode.h"
+#include <Triva/TrivaGraphNode.h>
 
 @interface TrivaGraphEdge : TrivaGraphNode
 {
