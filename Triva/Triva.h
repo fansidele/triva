@@ -24,6 +24,7 @@
 #include "TrivaFilter.h"
 #include "TrivaGraphEdge.h"
 #include "TrivaGraphNode.h"
+#include "TrivaComposition.h"
 #include "Triva.h"
 #include "TrivaTreemap.h"
 #include "TrivaWindow.h"
