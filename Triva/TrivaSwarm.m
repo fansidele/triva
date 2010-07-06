@@ -22,10 +22,7 @@
               withValues: (NSDictionary*) timeSliceValues
               andProvider: (TrivaFilter*) prov
 {
-  self = [self init];
-
-  //swarm objects are drawn around the hive
-  needSpace = NO;
+  self = [super initWithFilter: prov andSpace: NO];
 
   //allocate array for objects
   objects = [[NSMutableArray alloc] init];
@@ -35,8 +32,8 @@
   node = obj;
 
   //we need the filter
-  NSString *filter = [conf objectForKey: @"filter"];
-  if (!filter) {
+  NSString *filt = [conf objectForKey: @"filter"];
+  if (!filt) {
     //no filter specified
     NSLog (@"%s:%d: no 'filter' configuration for composition %@",
                         __FUNCTION__, __LINE__, conf);
@@ -60,7 +57,7 @@
   while ((child = [en nextObject])){
     //if value is != 0, child is present in the swarm
     //checking if it should be present
-    if ([[[child timeSliceValues] objectForKey: filter] doubleValue]){
+    if ([[[child timeSliceValues] objectForKey: filt] doubleValue]){
       [objects addObject: [child name]];
 
       //finding color

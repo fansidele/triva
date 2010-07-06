@@ -49,7 +49,7 @@
                   withValues: (NSDictionary*) timeSliceValues
                  andProvider: (TrivaFilter*) prov
 {
-  self = [super initWithFilter: prov];
+  self = [super initWithFilter: prov andSpace: YES];
 
   //get values
   NSEnumerator *en2 = [[conf objectForKey: @"values"] objectEnumerator];

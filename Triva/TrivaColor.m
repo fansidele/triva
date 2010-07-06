@@ -22,13 +22,13 @@
                   withValues: (NSDictionary*) timeSliceValues
                  andProvider: (TrivaFilter*) prov
 {
-  self = [super initWithFilter: prov];
+  self = [super initWithFilter: prov andSpace: YES];
 
   //get values
   NSEnumerator *en2 = [[conf objectForKey: @"values"] objectEnumerator];
   id var;
   while ((var = [en2 nextObject])){
-    double val = [prov evaluateWithValues: timeSliceValues withExpr: var];
+    double val = [filter evaluateWithValues: timeSliceValues withExpr: var];
     if (val){
       [values setObject: [NSNumber numberWithDouble: 1]
           forKey: var];

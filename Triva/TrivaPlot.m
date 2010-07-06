@@ -25,8 +25,7 @@
               withValues: (NSDictionary*) timeSliceValues
               andProvider: (TrivaFilter*) prov
 {
-  self = [super init];
-  provider = prov;
+  self = [super initWithFilter: prov andSpace: NO];
 
   //saving node
   node = obj;
@@ -45,26 +44,26 @@
   }
 
   //consider only the time slice
-  NSDate *start = [provider selectionStartTime];
-  NSDate *end = [provider selectionEndTime];
+  NSDate *start = [filter selectionStartTime];
+  NSDate *end = [filter selectionEndTime];
 
   tmin = [start timeIntervalSinceReferenceDate];
   tmax = [end timeIntervalSinceReferenceDate];
   sliceSize = tmax - tmin;
 
   //transform to paje terminology
-  PajeEntityType *varType = [provider entityTypeWithName: var];
-  PajeEntityType *containerType = [provider entityTypeWithName: [obj type]];
-  PajeContainer *container = [provider containerWithName: [obj name]
+  PajeEntityType *varType = [filter entityTypeWithName: var];
+  PajeEntityType *containerType = [filter entityTypeWithName: [obj type]];
+  PajeContainer *container = [filter containerWithName: [obj name]
                                                 type: containerType];
 
   //get max min value for the type
-  vmax = [provider maxValueForEntityType: varType];
-  vmin = [provider minValueForEntityType: varType];
+  vmax = [filter maxValueForEntityType: varType];
+  vmin = [filter minValueForEntityType: varType];
   valueSize = vmax - vmin;
 
   //get the data
-  NSEnumerator *en = [provider enumeratorOfEntitiesTyped: varType
+  NSEnumerator *en = [filter enumeratorOfEntitiesTyped: varType
                                            inContainer: container
                                               fromTime: start
                                                 toTime: end
@@ -94,8 +93,8 @@
 - (BOOL) draw
 {
   //update tmin, tmax
-  NSDate *start = [provider selectionStartTime];
-  NSDate *end = [provider selectionEndTime];
+  NSDate *start = [filter selectionStartTime];
+  NSDate *end = [filter selectionEndTime];
   tmin = [start timeIntervalSinceReferenceDate];
   tmax = [end timeIntervalSinceReferenceDate];
 

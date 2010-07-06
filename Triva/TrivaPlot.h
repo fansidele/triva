@@ -24,7 +24,6 @@
   NSRect bb;
   TrivaGraphNode *node;
   NSArray *objects;
-  TrivaFilter *provider;
 
   double tmin, tmax;
   double vmin, vmax;

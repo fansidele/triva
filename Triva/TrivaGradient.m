@@ -17,12 +17,20 @@
 #include "TrivaGradient.h"
 
 @implementation TrivaGradient
+- (id) initWithFilter: (TrivaFilter *)f andSpace: (BOOL) s
+{
+  self = [super initWithFilter: f andSpace: s];
+  min = [[NSMutableDictionary alloc] init];
+  max = [[NSMutableDictionary alloc] init];
+  return self;
+}
+
 - (id) initWithConfiguration: (NSDictionary*) conf
                    forObject: (TrivaGraphNode*)obj
                   withValues: (NSDictionary*) timeSliceValues
                  andProvider: (TrivaFilter*) prov
 {
-  self = [super initWithFilter: prov];
+  self = [self initWithFilter: prov andSpace: YES];
 
   //get scale for this composition
   TrivaScale scale;
@@ -39,9 +47,9 @@
   NSEnumerator *en2 = [[conf objectForKey: @"values"] objectEnumerator];
   id var;
   while ((var = [en2 nextObject])){
-    double val = [prov evaluateWithValues: timeSliceValues withExpr: var];
+    double val = [filter evaluateWithValues: timeSliceValues withExpr: var];
     double mi, ma;
-    [prov defineMax: &ma
+    [filter defineMax: &ma
                          andMin: &mi
                       withScale: scale
                    fromVariable: var
@@ -49,14 +57,6 @@
                        withType: [(TrivaGraphNode*)obj type]];
     [self setGradientType: var withValue: val withMax: ma withMin: mi];
   }
-  return self;
-}
-
-- (id) init
-{
-  self = [super init];
-  min = [[NSMutableDictionary alloc] init];
-  max = [[NSMutableDictionary alloc] init];
   return self;
 }
 

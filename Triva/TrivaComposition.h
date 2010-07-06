@@ -29,6 +29,7 @@
 @interface TrivaComposition : NSObject
 {
   BOOL needSpace;
+  TrivaFilter *filter;
 }
 + (id) compositionWithConfiguration: (NSDictionary*) conf
                           forObject: (TrivaGraphNode*)obj
@@ -38,6 +39,7 @@
                    forObject: (TrivaGraphNode*)obj
                   withValues: (NSDictionary*) timeSliceValues
                  andProvider: (TrivaFilter*) prov;
+- (id) initWithFilter: (TrivaFilter *) f andSpace: (BOOL) s;
 - (BOOL) needSpace;
 @end
 

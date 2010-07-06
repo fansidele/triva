@@ -15,7 +15,6 @@
     along with Triva.  If not, see <http://www.gnu.org/licenses/>.
 */
 #include "TrivaComposition.h"
-#include "NSPointFunctions.h"
 #include <Triva/TrivaSeparation.h>
 #include <Triva/TrivaGradient.h>
 #include <Triva/TrivaColor.h>
@@ -24,15 +23,6 @@
 #include <Triva/TrivaPlot.h>
 
 @implementation TrivaComposition
-- (id) init
-{
-  self = [super init];
-  if (self){
-    needSpace = YES; //by default everybody needs space inside node to be drawn
-  }
-  return self;
-}
-
 + (id) compositionWithConfiguration: (NSDictionary*) conf
                           forObject: (TrivaGraphNode*) obj
                          withValues: (NSDictionary*) timeSliceValues
@@ -99,7 +89,17 @@
                   withValues: (NSDictionary*) timeSliceValues
                  andProvider: (TrivaFilter*) prov
 {
+  //must be implemented in the subclasses
   return nil;
+}
+
+- (id) initWithFilter: (TrivaFilter *) f
+             andSpace: (BOOL) s
+{
+  self = [super init];
+  needSpace = s;
+  filter = f;
+  return self;
 }
 
 - (BOOL) needSpace

@@ -17,12 +17,21 @@
 #include "TrivaSeparation.h"
 
 @implementation TrivaSeparation
+- (id) initWithFilter: (TrivaFilter *) f andSpace: (BOOL) s
+{
+  self = [super initWithFilter: f andSpace: s];
+  bb = NSZeroRect;
+  overflow = 0;
+  values = [[NSMutableDictionary alloc] init];
+  return self;
+}
+
 - (id) initWithConfiguration: (NSDictionary*) conf
                    forObject: (TrivaGraphNode*)obj
                   withValues: (NSDictionary*) timeSliceValues
                  andProvider: (TrivaFilter*) prov
 {
-  self = [self initWithFilter: prov];
+  self = [self initWithFilter: prov andSpace: YES];
 
 /*
   //TODO: what 'scale' local or global means for separation?
@@ -50,7 +59,7 @@
                         __FUNCTION__, __LINE__, conf);
     return nil;
   }
-  size = [prov evaluateWithValues: timeSliceValues withExpr: sizeconf];
+  size = [filter evaluateWithValues: timeSliceValues withExpr: sizeconf];
   if (size < 0){
     //size could not be defined
     NSLog (@"%s:%d: the value of 'size' for composition %@ is negative or "
@@ -64,7 +73,7 @@
   id var;
   double sum = 0;
   while ((var = [en2 nextObject])){
-    double val = [prov evaluateWithValues: timeSliceValues withExpr: var];
+    double val = [filter evaluateWithValues: timeSliceValues withExpr: var];
     if (val > 0){
       [values setObject: [NSNumber numberWithDouble: val/size]
           forKey: var];
@@ -80,27 +89,6 @@
     needSpace = NO;
   }
   return self;
-}
-
-- (id) init
-{
-  self = [super init];
-  bb = NSZeroRect;
-  overflow = 0;
-  values = [[NSMutableDictionary alloc] init];
-  return self;
-}
-
-- (id) initWithFilter: (id) f
-{
-  self = [self init];
-  [self setFilter: f];
-  return self;
-}
-
-- (void) setFilter: (id) f
-{
-  filter = f;
 }
 
 - (void) dealloc
