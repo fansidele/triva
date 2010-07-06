@@ -30,6 +30,8 @@
 
   double sliceSize;
   double valueSize;
+
+  TrivaScale scale;
 }
 @end
 

@@ -27,6 +27,16 @@
 {
   self = [super initWithFilter: prov andSpace: NO];
 
+  //get scale for this composition
+  NSString *scaleconf = [conf objectForKey: @"scale"];
+  if ([scaleconf isEqualToString: @"global"]){
+    scale = Global;
+  }else if ([scaleconf isEqualToString: @"local"]){
+    scale = Local;
+  }else{
+    scale = Global;
+  }
+
   //saving node
   node = obj;
 
@@ -48,16 +58,20 @@
   tmax = [end timeIntervalSinceReferenceDate];
   sliceSize = tmax - tmin;
 
+  //get max min value for the type based on scale
+  [filter defineMax: &vmax
+             andMin: &vmin
+          withScale: scale
+       fromVariable: var
+           ofObject: [obj name]
+           withType: [(TrivaGraphNode*)obj type]];
+  valueSize = vmax - vmin;
+
   //transform to paje terminology
   PajeEntityType *varType = [filter entityTypeWithName: var];
   PajeEntityType *containerType = [filter entityTypeWithName: [obj type]];
   PajeContainer *container = [filter containerWithName: [obj name]
                                                 type: containerType];
-
-  //get max min value for the type
-  vmax = [filter maxValueForEntityType: varType];
-  vmin = [filter minValueForEntityType: varType];
-  valueSize = vmax - vmin;
 
   //get the data
   NSEnumerator *en = [filter enumeratorOfEntitiesTyped: varType
