@@ -302,13 +302,30 @@
   if (scale == Global){
     *min = [self minValueForEntityType: valtype];
     *max = [self maxValueForEntityType: valtype];
-  }else{
+  }else if (scale == Local){
     //if local scale, *min and *max from this container
     //  container is found based on the name of the obj
     PajeEntityType *type = [self entityTypeWithName: objType]; 
     PajeContainer *cont = [self containerWithName: objName type: type];
     *min = [self minValueForEntityType: valtype inContainer: cont];
     *max = [self maxValueForEntityType: valtype inContainer: cont];
+  }else if (scale == Convergence){
+    PajeEntityType *type = [self entityTypeWithName: objType];
+    PajeContainer *cont = [self containerWithName: objName type: type];
+
+    *max = 0;
+    *min = FLT_MAX;
+    NSEnumerator *en = [self enumeratorOfEntitiesTyped: valtype
+                                           inContainer: cont
+                                              fromTime:[self selectionStartTime]
+                                                toTime: [self endTime]
+                                           minDuration: 0];
+    id ent;
+    while ((ent = [en nextObject])){
+      double val = [[ent value] doubleValue];
+      if (val > *max) *max = val;
+      if (val < *min) *min = val;
+    }
   }
 }
 

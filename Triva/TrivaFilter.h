@@ -22,7 +22,7 @@
 #include <Triva/TrivaGraphEdge.h>
 #include <Triva/TimeSliceTree.h>
 
-typedef enum {Local,Global} TrivaScale;
+typedef enum {Local,Global,Convergence} TrivaScale;
 
 @class TrivaGraphNode;
 @class TrivaGraphEdge;
