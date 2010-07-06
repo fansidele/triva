@@ -686,7 +686,7 @@
     NSAffineTransform *t = [NSAffineTransform transform];
     [t translateXBy: bb.origin.x yBy: bb.origin.y];
     [t concat];
-    [path fill];
+    [path stroke];
     [t invert];
     [t concat];
   }
