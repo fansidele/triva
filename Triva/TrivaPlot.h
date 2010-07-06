@@ -32,6 +32,8 @@
   double valueSize;
 
   TrivaScale scale;
+
+  NSString *var;
 }
 @end
 

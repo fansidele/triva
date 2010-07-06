@@ -33,6 +33,8 @@
     scale = Global;
   }else if ([scaleconf isEqualToString: @"local"]){
     scale = Local;
+  }else if ([scaleconf isEqualToString: @"convergence"]){
+    scale = Convergence;
   }else{
     scale = Global;
   }
@@ -42,7 +44,6 @@
 
   //get only the first value (notice the "break" inside the while)
   NSEnumerator *en2 = [[conf objectForKey: @"values"] objectEnumerator];
-  id var;
   while ((var = [en2 nextObject])){
     break;
   }
