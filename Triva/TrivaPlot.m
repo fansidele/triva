@@ -30,9 +30,6 @@
   //saving node
   node = obj;
 
-  //plot is not drawn inside the visual object
-  needSpace = NO;
-
   //get only the first value (notice the "break" inside the while)
   NSEnumerator *en2 = [[conf objectForKey: @"values"] objectEnumerator];
   id var;
