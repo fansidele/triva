@@ -130,7 +130,7 @@
       te = (te - tmin) / sliceSize * PLOT_WIDTH;
 
       if (te == ts) continue;
-      double value = [[ent value] doubleValue] / valueSize * PLOT_HEIGHT;
+      double value = ([[ent value] doubleValue] - vmin) / valueSize * PLOT_HEIGHT;
       [path lineToPoint: NSMakePoint (te, value)];
       [path lineToPoint: NSMakePoint (ts, value)];
       lastts = ts;
