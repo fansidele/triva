@@ -173,18 +173,17 @@
   start = start + forward;
   end = end + forward;
 
-  if (end >= traceEnd){
-    if (start >= traceEnd){
-      start = end;
-      [timer invalidate];
-      timer = nil;
-      [playButton setState: NSOffState];
-      return;
-    }
+  if (end > traceEnd){
     end = traceEnd;
   }
-  if (start > end){
+
+  //stop-animation condition
+  if (end >= traceEnd){
     start = end;
+    [timer invalidate];
+    timer = nil;
+    [playButton setState: NSOffState];
+    return;
   }
 
   [self setTimeIntervalFrom: start to: end];
