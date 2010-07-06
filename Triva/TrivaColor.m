@@ -14,31 +14,29 @@
     You should have received a copy of the GNU General Public License
     along with Triva.  If not, see <http://www.gnu.org/licenses/>.
 */
-#ifndef __TrivaComposition_h_
-#define __TrivaComposition_h_
-#include <Foundation/Foundation.h>
-#include <General/PajeFilter.h>
-#include <Triva/Tree.h>
-#include <Triva/TimeSliceTree.h>
-#include <Triva/TrivaFilter.h>
-#include <Triva/TrivaGraphNode.h>
+#include "TrivaColor.h"
 
-@class TrivaGraphNode;
-@class TrivaFilter;
-
-@interface TrivaComposition : NSObject
-{
-  BOOL needSpace;
-}
-+ (id) compositionWithConfiguration: (NSDictionary*) conf
-                          forObject: (TrivaGraphNode*)obj
-                         withValues: (NSDictionary*) timeSliceValues
-                        andProvider: (TrivaFilter*) prov;
+@implementation TrivaColor
 - (id) initWithConfiguration: (NSDictionary*) conf
                    forObject: (TrivaGraphNode*)obj
                   withValues: (NSDictionary*) timeSliceValues
-                 andProvider: (TrivaFilter*) prov;
-- (BOOL) needSpace;
-@end
+                 andProvider: (TrivaFilter*) prov
+{
+  self = [super initWithFilter: prov];
 
-#endif
+  //get values
+  NSEnumerator *en2 = [[conf objectForKey: @"values"] objectEnumerator];
+  id var;
+  while ((var = [en2 nextObject])){
+    double val = [prov evaluateWithValues: timeSliceValues withExpr: var];
+    if (val){
+      [values setObject: [NSNumber numberWithDouble: 1]
+          forKey: var];
+    }
+  }
+  if ([values count] == 0){
+    needSpace = NO;
+  }
+  return self;
+}
+@end
