@@ -111,6 +111,18 @@
   tmax = [end timeIntervalSinceReferenceDate];
 
   if (1||[node highlighted]){
+
+    //update vmax, vmin if scale = convergence
+    if (scale == Convergence){
+      [filter defineMax: &vmax
+                 andMin: &vmin
+              withScale: scale
+           fromVariable: var
+               ofObject: [node name]
+               withType: [(TrivaGraphNode*)node type]];
+      valueSize = vmax - vmin;
+    }
+
     //draw a rectangle
     [[NSColor blackColor] set];
     [NSBezierPath strokeRect: bb];
