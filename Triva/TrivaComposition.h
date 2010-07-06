@@ -91,4 +91,19 @@
 }
 @end
 
+@interface TrivaPlot : TrivaComposition
+{
+  NSRect bb;
+  TrivaGraphNode *node;
+  NSArray *objects;
+  TrivaFilter *provider;
+
+  double tmin, tmax;
+  double vmin, vmax;
+
+  double sliceSize;
+  double valueSize;
+}
+@end
+
 #endif
