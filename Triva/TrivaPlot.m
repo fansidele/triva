@@ -128,6 +128,9 @@
     //draw a rectangle
     [[NSColor blackColor] set];
     [NSBezierPath strokeRect: bb];
+    //draw the name of the variable
+    [name drawAtPoint: NSMakePoint (bb.origin.x, bb.origin.y + bb.size.height)
+        withAttributes: nil];
 
     [[NSColor grayColor] set];
     //draw the points in the inverse sense (paje gives us the objects that way
