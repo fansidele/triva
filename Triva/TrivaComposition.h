@@ -28,23 +28,29 @@
 
 @interface TrivaComposition : NSObject
 {
+  NSString *name;
   BOOL needSpace;
   TrivaFilter *filter;
 }
 + (id) compositionWithConfiguration: (NSDictionary*) conf
+                           withName: (NSString*) n
                           forObject: (TrivaGraphNode*)obj
                          withValues: (NSDictionary*) timeSliceValues
                         andProvider: (TrivaFilter*) prov;
 - (id) initWithConfiguration: (NSDictionary*) conf
+                    withName: (NSString*) n
                    forObject: (TrivaGraphNode*)obj
                   withValues: (NSDictionary*) timeSliceValues
                  andProvider: (TrivaFilter*) prov;
-- (id) initWithFilter: (TrivaFilter *) f andSpace: (BOOL) s;
+- (id) initWithFilter: (TrivaFilter *) f
+             andSpace: (BOOL) s
+              andName: (NSString*) name;
 
 - (BOOL) needSpace;
 - (void) refreshWithinRect: (NSRect) rect;
 - (BOOL) draw;
 - (NSRect) bb;
+- (NSString*) name;
 @end
 
 #endif

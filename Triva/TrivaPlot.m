@@ -21,11 +21,12 @@
 
 @implementation TrivaPlot
 - (id) initWithConfiguration: (NSDictionary*) conf
+                withName: (NSString*) n
               forObject: (TrivaGraphNode*) obj
               withValues: (NSDictionary*) timeSliceValues
               andProvider: (TrivaFilter*) prov
 {
-  self = [super initWithFilter: prov andSpace: NO];
+  self = [super initWithFilter: prov andSpace: NO andName: n];
 
   //get scale for this composition
   NSString *scaleconf = [conf objectForKey: @"scale"];

@@ -24,6 +24,7 @@
 
 @implementation TrivaComposition
 + (id) compositionWithConfiguration: (NSDictionary*) conf
+                           withName: (NSString*) n
                           forObject: (TrivaGraphNode*) obj
                          withValues: (NSDictionary*) timeSliceValues
                         andProvider: (TrivaFilter*) prov
@@ -49,31 +50,37 @@
 
   if ([type isEqualToString: @"separation"]){
     return [[TrivaSeparation alloc] initWithConfiguration: conf
+                                                 withName: n
                                                 forObject: obj
                                                withValues: timeSliceValues
                                               andProvider: prov];
   }else if ([type isEqualToString: @"gradient"]){
     return [[TrivaGradient alloc] initWithConfiguration: conf
+                                               withName: n
                                               forObject: obj
                                              withValues: timeSliceValues
                                             andProvider: prov];
   }else if ([type isEqualToString: @"convergence"]){
     return [[TrivaConvergence alloc] initWithConfiguration: conf
+                                                  withName: n
                                                  forObject: obj
                                                 withValues: timeSliceValues
                                                andProvider: prov];
   }else if ([type isEqualToString: @"color"]){
     return [[TrivaColor alloc] initWithConfiguration: conf
+                                            withName: n
                                            forObject: obj
                                           withValues: timeSliceValues
                                          andProvider: prov];
   }else if ([type isEqualToString: @"swarm"]){
     return [[TrivaSwarm alloc] initWithConfiguration: conf
+                                            withName: n
                                            forObject: obj
                                           withValues: timeSliceValues
                                          andProvider: prov];
   }else if ([type isEqualToString: @"plot"]){
     return [[TrivaPlot alloc] initWithConfiguration: conf
+                                            withName: n
                                            forObject: obj
                                           withValues: timeSliceValues
                                          andProvider: prov];
@@ -85,6 +92,7 @@
 }
 
 - (id) initWithConfiguration: (NSDictionary*) conf
+                    withName: (NSString*) n
                    forObject: (TrivaGraphNode*)obj
                   withValues: (NSDictionary*) timeSliceValues
                  andProvider: (TrivaFilter*) prov
@@ -95,10 +103,12 @@
 
 - (id) initWithFilter: (TrivaFilter *) f
              andSpace: (BOOL) s
+              andName: (NSString *) n
 {
   self = [super init];
   needSpace = s;
   filter = f;
+  name = n;
   return self;
 }
 
@@ -122,5 +132,10 @@
 {
   //must be implemented in the subclasses
   return NSZeroRect;
+
+- (NSString*) name
+{
+  return name;
 }
+
 @end

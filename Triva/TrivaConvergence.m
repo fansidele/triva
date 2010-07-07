@@ -45,11 +45,12 @@
 }
 
 - (id) initWithConfiguration: (NSDictionary*) conf
+                    withName: (NSString*) n
                    forObject: (TrivaGraphNode*)obj
                   withValues: (NSDictionary*) timeSliceValues
                  andProvider: (TrivaFilter*) prov
 {
-  self = [super initWithFilter: prov andSpace: YES];
+  self = [super initWithFilter: prov andSpace: YES andName: n];
 
   //get values
   NSEnumerator *en2 = [[conf objectForKey: @"values"] objectEnumerator];

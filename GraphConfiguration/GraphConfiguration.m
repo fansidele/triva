@@ -603,10 +603,11 @@
 
     TrivaComposition *composition;
     composition = [TrivaComposition
-                                       compositionWithConfiguration: compconf
-                                                          forObject: obj
-                                                         withValues: values
-                                                        andProvider: self];
+                                   compositionWithConfiguration: compconf
+                                                       withName: compositionName
+                                                      forObject: obj
+                                                     withValues: values
+                                                    andProvider: self];
     if (composition){
       [obj addComposition: composition];
       [composition release];

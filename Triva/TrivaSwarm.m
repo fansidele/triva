@@ -18,11 +18,12 @@
 
 @implementation TrivaSwarm
 - (id) initWithConfiguration: (NSDictionary*) conf
+                    withName: (NSString*) n
               forObject: (TrivaGraphNode*) obj
               withValues: (NSDictionary*) timeSliceValues
               andProvider: (TrivaFilter*) prov
 {
-  self = [super initWithFilter: prov andSpace: NO];
+  self = [super initWithFilter: prov andSpace: NO andName: n];
 
   //allocate array for objects
   objects = [[NSMutableArray alloc] init];
