@@ -31,9 +31,6 @@
 }
 - (NSDictionary*) values;
 - (double) overflow;
-- (void) refreshWithinRect: (NSRect) rect;
-- (BOOL) draw;
-- (NSRect) bb;
 @end
 
 #endif

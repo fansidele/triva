@@ -40,7 +40,11 @@
                   withValues: (NSDictionary*) timeSliceValues
                  andProvider: (TrivaFilter*) prov;
 - (id) initWithFilter: (TrivaFilter *) f andSpace: (BOOL) s;
+
 - (BOOL) needSpace;
+- (void) refreshWithinRect: (NSRect) rect;
+- (BOOL) draw;
+- (NSRect) bb;
 @end
 
 #endif

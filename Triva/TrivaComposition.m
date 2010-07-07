@@ -106,4 +106,21 @@
 {
   return needSpace;
 }
+
+- (void) refreshWithinRect: (NSRect) rect
+{
+  //must be implemented in the subclasses
+}
+
+- (BOOL) draw
+{
+  //must be implemented in the subclasses
+  return NO;
+}
+
+- (NSRect) bb
+{
+  //must be implemented in the subclasses
+  return NSZeroRect;
+}
 @end
