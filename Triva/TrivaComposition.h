@@ -29,6 +29,7 @@
 @interface TrivaComposition : NSObject
 {
   NSString *name;
+  NSRect bb; //the bounding box
   TrivaGraphNode *node; //to which node this composition is part of
 
   BOOL needSpace;

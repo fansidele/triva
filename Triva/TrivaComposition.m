@@ -132,8 +132,8 @@
 
 - (NSRect) bb
 {
-  //must be implemented in the subclasses
-  return NSZeroRect;
+  return bb;
+}
 
 - (NSString*) name
 {

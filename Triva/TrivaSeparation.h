@@ -22,7 +22,6 @@
 
 @interface TrivaSeparation : TrivaComposition
 {
-  NSRect bb; //the bounding box
   NSMutableDictionary *values; //(NSString*)name = (NSNumber)value
             //the sum of the values must be equal = 1
   double overflow; //(sum_of_the_values - 1)
