@@ -21,7 +21,7 @@
 
 @interface TrivaConvergence : TrivaGradient
 - (void) defineMax: (double*)ma andMin: (double*)mi fromVariable: (NSString*)var
-                ofObject: (NSString*)name withType: (NSString*)type;
+                ofObject: (NSString*)n withType: (NSString*)type;
 @end
 
 #endif

@@ -18,7 +18,7 @@
 
 @implementation TrivaConvergence
 - (void) defineMax: (double*)ma andMin: (double*)mi fromVariable: (NSString*)var
-    ofObject: (NSString*)name withType: (NSString*)type
+    ofObject: (NSString*)n withType: (NSString*)type
 {
   //define max and min taking into account that this is a convergence composition
   NSDate *start = [filter selectionStartTime]; //from the beggining of the time window
@@ -27,7 +27,7 @@
   //prepare
   PajeEntityType *varType = [filter entityTypeWithName: var];
   PajeEntityType *containerType = [filter entityTypeWithName: type];
-  PajeContainer *container = [filter containerWithName: name type: containerType];
+  PajeContainer *container = [filter containerWithName: n type: containerType];
   *ma = 0;
   *mi = FLT_MAX;
   //do it
