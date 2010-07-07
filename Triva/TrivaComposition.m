@@ -140,4 +140,8 @@
   return name;
 }
 
+- (NSString*) description
+{
+  return [NSString stringWithFormat: @"[%@ %@]", [node name], name];
+}
 @end
