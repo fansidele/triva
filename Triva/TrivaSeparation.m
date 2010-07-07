@@ -20,8 +20,9 @@
 - (id) initWithFilter: (TrivaFilter *) f
              andSpace: (BOOL) s
               andName: (NSString*)n
+            andObject: (TrivaGraphNode*)obj
 {
-  self = [super initWithFilter: f andSpace: s andName: n];
+  self = [super initWithFilter: f andSpace: s andName: n andObject: obj];
   bb = NSZeroRect;
   overflow = 0;
   values = [[NSMutableDictionary alloc] init];
@@ -34,7 +35,7 @@
                   withValues: (NSDictionary*) timeSliceValues
                  andProvider: (TrivaFilter*) prov
 {
-  self = [self initWithFilter: prov andSpace: YES andName: n];
+  self = [self initWithFilter: prov andSpace: YES andName: n andObject: obj];
 
 /*
   //TODO: what 'scale' local or global means for separation?

@@ -21,8 +21,6 @@
 
 @interface TrivaPlot : TrivaComposition
 {
-  NSRect bb;
-  TrivaGraphNode *node;
   NSArray *objects;
 
   double tmin, tmax;

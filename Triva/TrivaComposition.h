@@ -29,6 +29,8 @@
 @interface TrivaComposition : NSObject
 {
   NSString *name;
+  TrivaGraphNode *node; //to which node this composition is part of
+
   BOOL needSpace;
   TrivaFilter *filter;
 }
@@ -44,7 +46,8 @@
                  andProvider: (TrivaFilter*) prov;
 - (id) initWithFilter: (TrivaFilter *) f
              andSpace: (BOOL) s
-              andName: (NSString*) name;
+              andName: (NSString*) name
+            andObject: (TrivaGraphNode *)obj;
 
 - (BOOL) needSpace;
 - (void) refreshWithinRect: (NSRect) rect;
