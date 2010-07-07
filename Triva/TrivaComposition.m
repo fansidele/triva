@@ -98,6 +98,8 @@
                  andProvider: (TrivaFilter*) prov
 {
   //must be implemented in the subclasses
+  NSLog (@"%s:%d: this method must be implemented in the subclasses",
+                        __FUNCTION__, __LINE__);
   return nil;
 }
 
@@ -122,11 +124,15 @@
 - (void) refreshWithinRect: (NSRect) rect
 {
   //must be implemented in the subclasses
+  NSLog (@"%s:%d: this method must be implemented in the subclasses",
+                        __FUNCTION__, __LINE__);
 }
 
 - (BOOL) draw
 {
   //must be implemented in the subclasses
+  NSLog (@"%s:%d: this method must be implemented in the subclasses",
+                        __FUNCTION__, __LINE__);
   return NO;
 }
 
