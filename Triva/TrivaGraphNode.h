@@ -34,6 +34,8 @@
   BOOL drawable; //is it ready to draw?
 
   TimeSliceTree *timeSliceTree; //to show values to the user when highlighted
+
+  NSRect currentOutsideBB;
 }
 - (void) setType: (NSString *) n;
 - (NSString *) type;

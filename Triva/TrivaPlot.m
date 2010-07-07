@@ -97,7 +97,8 @@
 
 - (void) refreshWithinRect: (NSRect) rect
 {
-  bb = NSMakeRect (rect.origin.x + rect.size.width + 1,
+  //use only the origin (size from rect is invalid - 0,0)
+  bb = NSMakeRect (rect.origin.x,
                    rect.origin.y,
                    PLOT_WIDTH,
                    PLOT_HEIGHT);

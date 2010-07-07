@@ -25,6 +25,7 @@
   self = [super init];
   bb = NSZeroRect;
   compositions = [[NSMutableArray alloc] init];
+  currentOutsideBB = NSZeroRect;
   return self;
 }
 
@@ -81,6 +82,7 @@
   }
   en = [compositions objectEnumerator];
   double accum_x = 0;
+  currentOutsideBB = NSZeroRect;
   while ((composition = [en nextObject])){
     if ([composition needSpace]){
       NSRect rect = NSMakeRect (bb.origin.x + accum_x,
@@ -90,7 +92,19 @@
       [composition refreshWithinRect: rect];
       accum_x += bb.size.width/count;
     }else{
-      [composition refreshWithinRect: bb];
+      //if there is more than one composition
+      //draw them on the right of the node
+      if (NSEqualRects (currentOutsideBB, NSZeroRect)){
+        NSRect togo = NSMakeRect (bb.origin.x + bb.size.width + 1,
+                                  bb.origin.y, 0, 0);
+        [composition refreshWithinRect: togo];
+      }else{
+        NSRect togo = NSMakeRect (currentOutsideBB.origin.x +
+                                        currentOutsideBB.size.width + 1,
+                                  currentOutsideBB.origin.y, 0, 0);
+        [composition refreshWithinRect: togo];
+      }
+      currentOutsideBB = [composition bb];
     }
   }
 }
