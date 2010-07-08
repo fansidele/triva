@@ -25,7 +25,6 @@
 {
   self = [super initWithFilter: f andConfiguration: conf
                       andSpace: s andName: n andObject: obj];
-  bb = NSZeroRect;
   overflow = 0;
   values = [[NSMutableDictionary alloc] init];
   return self;
@@ -60,8 +59,6 @@
     return nil;
   }
 
-  //saving node
-  node = obj;
   [self redefineLayoutWithValues: timeSliceValues];
   return self;
 }
