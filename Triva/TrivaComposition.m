@@ -118,6 +118,13 @@
   return self;
 }
 
+- (void) redefineLayoutWithValues: (NSDictionary*) timeSliceValues
+{
+  //must be implemented in the subclasses
+  NSLog (@"%s:%d: this method must be implemented in the subclasses",
+                        __FUNCTION__, __LINE__);
+}
+
 - (BOOL) needSpace
 {
   return needSpace;

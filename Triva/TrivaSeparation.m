@@ -53,30 +53,35 @@
     scale = Global;
   }
 */
+  NSString *sizeconf = [configuration objectForKey: @"size"];
+  if (!sizeconf){
+    NSLog (@"%s:%d: no 'size' configuration for composition %@",
+                        __FUNCTION__, __LINE__, configuration);
+    return nil;
+  }
 
   //saving node
   node = obj;
+  [self redefineLayoutWithValues: timeSliceValues];
+  return self;
+}
 
+- (void) redefineLayoutWithValues: (NSDictionary*) timeSliceValues
+{
   //we need the size
-  NSString *sizeconf = [conf objectForKey: @"size"];
+  NSString *sizeconf = [configuration objectForKey: @"size"];
   double size = 0;
-  if (!sizeconf) {
-    //no size specified
-    NSLog (@"%s:%d: no 'size' configuration for composition %@",
-                        __FUNCTION__, __LINE__, conf);
-    return nil;
-  }
   size = [filter evaluateWithValues: timeSliceValues withExpr: sizeconf];
   if (size < 0){
     //size could not be defined
     NSLog (@"%s:%d: the value of 'size' for composition %@ is negative or "
       "could not be defined",
-                        __FUNCTION__, __LINE__, conf);
-    return nil;
+                        __FUNCTION__, __LINE__, configuration);
+    return;
   }
 
   //get values
-  NSEnumerator *en2 = [[conf objectForKey: @"values"] objectEnumerator];
+  NSEnumerator *en2 = [[configuration objectForKey: @"values"]objectEnumerator];
   id var;
   double sum = 0;
   while ((var = [en2 nextObject])){
@@ -95,7 +100,6 @@
   if ([values count] == 0){
     needSpace = NO;
   }
-  return self;
 }
 
 - (void) dealloc

@@ -23,7 +23,9 @@
 {
   NSMutableArray *objects; //array of strings with the existing objects
   NSMutableDictionary *objectsColors; //dict of string->colors
-  TrivaGraphNode *node;
+
+  NSString *filt;
+  NSSet *colors;
 }
 @end
 

@@ -29,7 +29,7 @@
   self = [super initWithFilter: prov andConfiguration: conf
                       andSpace: NO andName: n andObject: obj];
   //get scale for this composition
-  NSString *scaleconf = [conf objectForKey: @"scale"];
+  NSString *scaleconf = [configuration objectForKey: @"scale"];
   if ([scaleconf isEqualToString: @"global"]){
     scale = Global;
   }else if ([scaleconf isEqualToString: @"local"]){
@@ -39,17 +39,19 @@
   }else{
     scale = Global;
   }
+  [self redefineLayoutWithValues: timeSliceValues];
+  return self;
+}
 
-  //saving node
-  node = obj;
-
+- (void) redefineLayoutWithValues: (NSDictionary*) timeSliceValues
+{
   //get only the first value (notice the "break" inside the while)
-  NSEnumerator *en2 = [[conf objectForKey: @"values"] objectEnumerator];
+  NSEnumerator *en2 = [[configuration objectForKey: @"values"]objectEnumerator];
   while ((var = [en2 nextObject])){
     break;
   }
   if (!var){
-    return nil;
+    return;
   }
 
   //consider only the time slice
@@ -65,14 +67,14 @@
              andMin: &vmin
           withScale: scale
        fromVariable: var
-           ofObject: [obj name]
-           withType: [(TrivaGraphNode*)obj type]];
+           ofObject: [node name]
+           withType: [(TrivaGraphNode*)node type]];
   valueSize = vmax - vmin;
 
   //transform to paje terminology
   PajeEntityType *varType = [filter entityTypeWithName: var];
-  PajeEntityType *containerType = [filter entityTypeWithName: [obj type]];
-  PajeContainer *container = [filter containerWithName: [obj name]
+  PajeEntityType *containerType = [filter entityTypeWithName: [node type]];
+  PajeContainer *container = [filter containerWithName: [node name]
                                                 type: containerType];
 
   //get the data
@@ -92,7 +94,6 @@
     NSLog (@"%@ -> %f", var, val);
   }
 */
-  return self;
 }
 
 - (void) refreshWithinRect: (NSRect) rect

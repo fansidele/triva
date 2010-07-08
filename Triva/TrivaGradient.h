@@ -24,6 +24,7 @@
 {
   NSMutableDictionary *min;
   NSMutableDictionary *max;
+  TrivaScale scale;
 }
 - (void) setGradientType: (NSString *) type withValue: (double) val
     withMax: (double) max withMin: (double) min;

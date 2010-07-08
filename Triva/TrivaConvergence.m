@@ -52,23 +52,27 @@
 {
   self = [super initWithFilter: prov andConfiguration: conf
                       andSpace: YES andName: n andObject: obj];
+  [self redefineLayoutWithValues: timeSliceValues];
+  return self;
+}
 
+- (void) redefineLayoutWithValues: (NSDictionary*) timeSliceValues
+{
   //get values
-  NSEnumerator *en2 = [[conf objectForKey: @"values"] objectEnumerator];
+  NSEnumerator *en2 = [[configuration objectForKey: @"values"]objectEnumerator];
   id var;
   while ((var = [en2 nextObject])){
-    double val = [prov evaluateWithValues: timeSliceValues withExpr: var];
+    double val = [filter evaluateWithValues: timeSliceValues withExpr: var];
     double mi, ma;
     [self defineMax: &ma
                          andMin: &mi
                    fromVariable: var
-                       ofObject: [obj name]
-                       withType: [(TrivaGraphNode*)obj type]];
+                       ofObject: [node name]
+                       withType: [(TrivaGraphNode*)node type]];
     [self setGradientType: var withValue: val withMax: ma withMin: mi];
   }
   if ([values count] == 0){
     needSpace = NO;
   }
-  return self;
 }
 @end

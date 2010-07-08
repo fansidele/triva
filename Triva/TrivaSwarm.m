@@ -30,11 +30,8 @@
   objects = [[NSMutableArray alloc] init];
   objectsColors = [[NSMutableDictionary alloc] init];
 
-  //saving node
-  node = obj;
-
   //we need the filter
-  NSString *filt = [conf objectForKey: @"filter"];
+  filt = [conf objectForKey: @"filter"];
   if (!filt) {
     //no filter specified
     NSLog (@"%s:%d: no 'filter' configuration for composition %@",
@@ -42,16 +39,21 @@
     return nil;
   }
   //we need the color
-  NSSet *colors = [NSSet setWithArray: [conf objectForKey: @"color"]];
+  colors = [NSSet setWithArray: [conf objectForKey: @"color"]];
   if (!colors) {
     //no color specified
     NSLog (@"%s:%d: no 'color' configuration for composition %@",
                         __FUNCTION__, __LINE__, conf);
     return nil;
   }
+  [self redefineLayoutWithValues: timeSliceValues];
+  return self;
+}
 
+- (void) redefineLayoutWithValues: (NSDictionary*) timeSliceValues
+{
   //getting the timeslice-node for my object
-  TimeSliceTree *t = (TimeSliceTree*)[[prov timeSliceTree] searchChildByName: [obj name]];
+  TimeSliceTree *t = (TimeSliceTree*)[[filter timeSliceTree] searchChildByName: [node name]];
 
   //check among its children if they were present in the swarm (filter variable indicates presence)
   NSEnumerator *en = [[t children] objectEnumerator];
@@ -75,7 +77,6 @@
       }
     }
   }
-  return self;
 }
 
 - (void) refreshWithinRect: (NSRect) rect

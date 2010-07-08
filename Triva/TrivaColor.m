@@ -25,9 +25,13 @@
 {
   self = [super initWithFilter: prov andConfiguration: conf
                       andSpace: YES andName: n andObject: obj];
+  return self;
+}
 
+- (void) redefineLayoutWithValues: (NSDictionary*) timeSliceValues
+{
   //get values
-  NSEnumerator *en2 = [[conf objectForKey: @"values"] objectEnumerator];
+  NSEnumerator *en2 = [[configuration objectForKey: @"values"]objectEnumerator];
   id var;
   while ((var = [en2 nextObject])){
     double val = [filter evaluateWithValues: timeSliceValues withExpr: var];
@@ -39,6 +43,5 @@
   if ([values count] == 0){
     needSpace = NO;
   }
-  return self;
 }
 @end

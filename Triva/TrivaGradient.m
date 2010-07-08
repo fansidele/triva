@@ -40,7 +40,6 @@
                      andSpace: YES andName: n andObject: obj];
 
   //get scale for this composition
-  TrivaScale scale;
   NSString *scaleconf = [conf objectForKey: @"scale"];
   if ([scaleconf isEqualToString: @"global"]){
     scale = Global;
@@ -50,8 +49,14 @@
     scale = Global;
   }
 
+  [self redefineLayoutWithValues: timeSliceValues];
+  return self;
+}
+
+- (void) redefineLayoutWithValues: (NSDictionary*) timeSliceValues
+{
   //get values
-  NSEnumerator *en2 = [[conf objectForKey: @"values"] objectEnumerator];
+  NSEnumerator *en2 = [[configuration objectForKey: @"values"]objectEnumerator];
   id var;
   while ((var = [en2 nextObject])){
     double val = [filter evaluateWithValues: timeSliceValues withExpr: var];
@@ -60,11 +65,10 @@
                          andMin: &mi
                       withScale: scale
                    fromVariable: var
-                       ofObject: [obj name]
-                       withType: [(TrivaGraphNode*)obj type]];
+                       ofObject: [node name]
+                       withType: [(TrivaGraphNode*)node type]];
     [self setGradientType: var withValue: val withMax: ma withMin: mi];
   }
-  return self;
 }
 
 - (void) dealloc

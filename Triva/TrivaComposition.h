@@ -52,6 +52,7 @@
               andName: (NSString*) name
             andObject: (TrivaGraphNode *)obj;
 
+- (void) redefineLayoutWithValues: (NSDictionary*) timeSliceValues;
 - (BOOL) needSpace;
 - (void) refreshWithinRect: (NSRect) rect;
 - (BOOL) draw;
