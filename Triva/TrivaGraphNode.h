@@ -28,7 +28,7 @@
   NSString *type; //node type (entitytype from paje)
   //NSString *name (declared in super class); node name (unique id)
   NSRect bb; //the bounding box of the node (indicates size and position)
-  NSMutableArray *compositions; //array of TrivaComposition objects
+  NSMutableDictionary *compositions; //NSString -> TrivaComposition
   BOOL highlighted;
   
   BOOL drawable; //is it ready to draw?
@@ -45,8 +45,6 @@
 - (BOOL) drawable;
 - (void) refresh;
 - (BOOL) draw;
-- (void) addComposition: (TrivaComposition*)comp;
-- (void) removeCompositions;
 - (void) setHighlight: (BOOL) highlight;
 - (BOOL) highlighted;
 - (void) setTimeSliceTree: (TimeSliceTree *) t;

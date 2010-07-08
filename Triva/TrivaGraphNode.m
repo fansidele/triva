@@ -24,7 +24,7 @@
 {
   self = [super init];
   bb = NSZeroRect;
-  compositions = [[NSMutableArray alloc] init];
+  compositions = [[NSMutableDictionary alloc] init];
   currentOutsideBB = NSZeroRect;
   return self;
 }
@@ -129,16 +129,6 @@
      withAttributes: nil];
   }
   return YES;
-}
-
-- (void) addComposition: (TrivaComposition*)comp
-{
-  [compositions addObject: comp];
-}
-
-- (void) removeCompositions
-{
-  [compositions removeAllObjects];
 }
 
 - (void) setHighlight: (BOOL) highlight
