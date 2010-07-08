@@ -38,7 +38,7 @@
   NSMutableDictionary *configurations; /* nsstring -> nsstring */
   NSDictionary *configuration; //current configuration
 
-  id conf;
+  id confView;
   id title;
   id popup;
   id ok;

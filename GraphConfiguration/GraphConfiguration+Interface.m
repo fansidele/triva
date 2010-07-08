@@ -35,7 +35,7 @@
   if (lastSelected){
     [self refreshPopupAndSelect: lastSelected];
   }
-  [conf setDelegate: self];
+  [confView setDelegate: self];
   [window initializeWithDelegate: self];
 }
 
@@ -87,7 +87,7 @@
   [popup addItemWithTitle: t];
   [popup selectItemWithTitle: t];
   [title setStringValue: t];
-  [conf setString: c];
+  [confView setString: c];
   [ok setState: NSOnState];
   [configurations setObject: c
      forKey: t];
@@ -115,7 +115,7 @@
   NSString *selected = [popup titleOfSelectedItem];
   NSString *str = [configurations objectForKey: selected];
   [title setStringValue: selected];
-  [conf setString: str];
+  [confView setString: str];
   [ok setState: NSOnState];
   [self updateDefaults];
 }
@@ -124,7 +124,7 @@
 {
   NS_DURING
     NSString *str = [NSString stringWithString:
-          [[conf textStorage] string]];
+          [[confView textStorage] string]];
     id dict = [str propertyList];
     if (dict){
       [configurations setObject: str

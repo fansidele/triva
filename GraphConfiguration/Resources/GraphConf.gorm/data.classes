@@ -21,7 +21,7 @@
 	    "copy:"
 	);
 	Outlets = (
-	    conf,
+	    confView,
 	    popup,
 	    title,
 	    ok,
