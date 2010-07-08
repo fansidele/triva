@@ -39,19 +39,6 @@
   self = [self initWithFilter: prov andConfiguration: conf
                      andSpace: YES andName: n andObject: obj];
 
-/*
-  //TODO: what 'scale' local or global means for separation?
-  //get scale for this composition
-  TrivaScale scale;
-  NSString *scaleconf = [conf objectForKey: @"scale"];
-  if ([scaleconf isEqualToString: @"global"]){
-    scale = Global;
-  }else if ([scaleconf isEqualToString: @"local"]){
-    scale = Local;
-  }else{
-    scale = Global;
-  }
-*/
   NSString *sizeconf = [configuration objectForKey: @"size"];
   if (!sizeconf){
     NSLog (@"%s:%d: no 'size' configuration for composition %@",
