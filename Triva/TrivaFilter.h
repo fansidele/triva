@@ -28,7 +28,7 @@ typedef enum {Local,Global,Convergence} TrivaScale;
 @class TrivaGraphEdge;
 
 @interface TrivaFilter  : PajeFilter
-- (TrivaGraphNode*) findNodeByName: (NSString *)name;
+- (TrivaGraphNode*) findNodeByName: (NSString *)name; /* TODO: to be removed*/
 - (NSEnumerator*) enumeratorOfNodes;
 - (NSEnumerator*) enumeratorOfEdges;
 - (NSRect) sizeForGraph;
