@@ -174,4 +174,10 @@
 - (void)windowDidMove:(NSNotification *)win
 {
 }
+
+- (BOOL) windowShouldClose: (id) sender
+{
+  [[NSApplication sharedApplication] terminate:self];
+  return YES;
+}
 @end

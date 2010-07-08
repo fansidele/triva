@@ -653,12 +653,6 @@
   return ret;
 }
 
-- (BOOL) windowShouldClose: (id) sender
-{
-  [[NSApplication sharedApplication] terminate:self];
-  return YES;
-}
-
 - (void) graphComponentScalingChanged
 {
   [self redefineNodesEdgesLayout];
