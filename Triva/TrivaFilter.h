@@ -46,6 +46,8 @@ typedef enum {Local,Global,Convergence} TrivaScale;
                 fromVariable: (NSString*)var
                 ofObject: (NSString*) objName withType: (NSString*) objType;
 - (NSColor *) getColor: (NSColor *)c withSaturation: (double) saturation; //TODO :remove
+- (double) calculateScreenSizeBasedOnValue: (double) size
+  andMax: (double)max andMin: (double)min;
 @end
 
 #endif

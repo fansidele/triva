@@ -145,4 +145,99 @@
 {
   timeSliceTree = t;
 }
+
+- (BOOL) redefineLayoutWithConfiguration: (NSDictionary *) conf
+                            withProvider: (TrivaFilter *) filter
+                      andTimeSliceValues: (NSDictionary *) values
+{
+  //getting scale configuration for node
+  TrivaScale scale;
+  NSString *scaleconf = [conf objectForKey: @"scale"];
+  if (!scaleconf){
+    static int flag = 1;
+    if (flag){
+      NSLog (@"%s:%d: no 'scale' configuration for type %@."
+        " Assuming its value as 'global'",
+        __FUNCTION__, __LINE__, type);
+      flag = 0;
+    }
+    scale = Global;
+  }else{
+    if ([scaleconf isEqualToString: @"global"]) {
+      scale = Global;
+    }else if ([scaleconf isEqualToString: @"local"]){
+      scale = Local;
+    }else{
+      NSLog (@"%s:%d: unknow 'scale' configuration value "
+        "(%@) for type %@",
+        __FUNCTION__, __LINE__, scaleconf, type);
+      return NO;
+    }
+  }
+
+  //getting size configuration for node
+  NSString *sizeconf = [conf objectForKey: @"size"];
+  if (!sizeconf) {
+    NSLog (@"%s:%d: no 'size' configuration for type %@",
+      __FUNCTION__, __LINE__, type);
+    return NO;
+  }
+
+  //getting max and min for size of node (integrate them in time slice)
+  double min, max;
+  [filter defineMax: &max
+             andMin: &min
+          withScale: scale
+       fromVariable: sizeconf
+           ofObject: name
+           withType: type];
+
+  //size is mandatory
+  double screenSize;
+  double size = [filter evaluateWithValues: values withExpr: sizeconf];
+  if (size < 0){ //negative value if evaluation is unsucessfull
+    screenSize = [sizeconf doubleValue];
+  }else{
+    screenSize = [filter calculateScreenSizeBasedOnValue: size
+                                                  andMax: max
+                                                  andMin: min];
+  }
+  bb.size.width = screenSize;
+  bb.size.height = screenSize;
+/*
+  //converting from graphviz center point to top-left origin
+  if (userPositions == NO){
+    bb.origin.x = bb.origin.x - bb.size.width/2;
+    bb.origin.y = bb.origin.y - bb.size.height/2;
+  }
+*/
+
+  //iterating through compositions
+  NSMutableArray *ar = [NSMutableArray arrayWithArray: [conf allKeys]];
+  NSEnumerator *en = [ar objectEnumerator];
+  NSString *compositionName;
+  while ((compositionName = [en nextObject])){
+    NSDictionary *compconf = [conf objectForKey: compositionName];
+    if (![compconf isKindOfClass: [NSDictionary class]])
+      continue; //ignore if not dict
+    if (![compconf count])
+      continue; //ignore if dictionary is empty
+
+    //check if composition already exist
+    TrivaComposition *comp = [compositions objectForKey: compositionName];
+    if (comp){
+      //redefineLayout of Composition
+      [comp redefineLayoutWithValues: values];
+    }else{
+      comp = [TrivaComposition compositionWithConfiguration: compconf
+                                                   withName: compositionName
+                                                  forObject: self
+                                                 withValues: values
+                                                andProvider: filter];
+      [compositions setObject: comp forKey: compositionName];
+    }
+  }
+  [self setDrawable: YES];
+  return YES;
+}
 @end

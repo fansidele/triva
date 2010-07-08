@@ -22,6 +22,7 @@
 #include <Triva/TimeSliceTree.h>
 
 @class TrivaComposition;
+@class TrivaFilter;
 
 @interface TrivaGraphNode : Tree
 {
@@ -48,6 +49,10 @@
 - (void) setHighlight: (BOOL) highlight;
 - (BOOL) highlighted;
 - (void) setTimeSliceTree: (TimeSliceTree *) t;
+
+- (BOOL) redefineLayoutWithConfiguration: (NSDictionary *) conf
+                            withProvider: (TrivaFilter *) filter
+                      andTimeSliceValues: (NSDictionary *) values;
 @end
 
 #include <Triva/TrivaComposition.h>

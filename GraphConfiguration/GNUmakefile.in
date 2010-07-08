@@ -29,7 +29,9 @@ GraphConfiguration.h
 #
 GraphConfiguration_OBJC_FILES = \
 GraphConfiguration.m \
-GraphConfiguration+Interface.m
+GraphConfiguration+Interface.m \
+GraphConfiguration+Protocol.m \
+GraphConfiguration+Graph.m
 
 GraphConfiguration_INCLUDE_DIRS += -I../ -I./
 GraphConfiguration_LDFLAGS += -lgvc -lmatheval

@@ -29,34 +29,38 @@
 
 @interface GraphConfiguration : TrivaFilter
 {
-  GVC_t *gvc;
-  graph_t *graph;
-
-  NSMutableArray *nodes;
-  NSMutableArray *edges;
-
-  NSMutableDictionary *configurations; /* nsstring -> nsstring */
+  // current graph configuration 
+  NSMutableArray *nodes; //list of nodes (TrivaGraphNode*)
+  NSMutableArray *edges; //list of edges (TrivaGraphEdge*)
   NSDictionary *configuration; //current configuration
 
+  // interface variables 
+  NSMutableDictionary *configurations; // nsstring -> nsstring 
   id confView;
   id title;
   id popup;
   id ok;
   TrivaWindow *window;
 
-  BOOL userPositions;
-  BOOL graphviz;
+  // variables defined during configuration parse 
+  BOOL userPositionEnabled;
+  BOOL graphvizEnabled;
+  BOOL configurationParsed;
+  BOOL layoutRendered;
+
+  // variables needed to obey protocol
   NSRect graphSize;
+
+  //Graphviz
+  GVC_t *gvc;
+  graph_t *graph;
 }
+/*
+ * Method called by interface to set a new configuration
+ * - This should release nodes and edges attributes
+ * - and create a new configuration graph
+ */
 - (void) setConfiguration: (NSDictionary *) conf;
-- (void) createGraph;
-- (void) redefineNodesEdgesLayout;
-- (void) defineMax: (double*)max andMin: (double*)min withScale: (TrivaScale) scale
-                fromVariable: (NSString*)var
-                ofObject: (NSString*) objName withType: (NSString*) objType;
-- (double) evaluateWithValues: (NSDictionary *) values
-                withExpr: (NSString *) expr;
-- (NSColor *) getColor: (NSColor *)c withSaturation: (double) saturation;
 @end
 
 @interface GraphConfiguration (Interface)
@@ -68,6 +72,19 @@
 - (void) change: (id)sender;
 - (void) updateTitle: (id) sender;
 - (void) del: (id) sender;
+@end
+
+@interface GraphConfiguration (Protocol)
+@end
+
+@interface GraphConfiguration (Graph)
+- (void) destroyGraph;
+- (void) initGraph;
+- (BOOL) parseConfiguration: (NSDictionary *) conf;
+- (BOOL) createGraphWithConfiguration: (NSDictionary *) conf;
+- (BOOL) definePositionWithConfiguration: (NSDictionary *) conf;
+- (BOOL) redefineLayoutOfGraphWithConfiguration: (NSDictionary *) conf;
+- (BOOL) redefineLayoutOf: (id) obj withConfiguration: (NSDictionary *) conf;
 @end
 
 #endif
