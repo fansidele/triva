@@ -104,11 +104,13 @@
 }
 
 - (id) initWithFilter: (TrivaFilter *) f
+     andConfiguration: (NSDictionary *) conf
              andSpace: (BOOL) s
               andName: (NSString *) n
             andObject: (TrivaGraphNode *)obj
 {
   self = [super init];
+  configuration = conf;
   needSpace = s;
   filter = f;
   name = n;

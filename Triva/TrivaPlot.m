@@ -26,8 +26,8 @@
               withValues: (NSDictionary*) timeSliceValues
               andProvider: (TrivaFilter*) prov
 {
-  self = [super initWithFilter: prov andSpace: NO andName: n andObject: obj];
-
+  self = [super initWithFilter: prov andConfiguration: conf
+                      andSpace: NO andName: n andObject: obj];
   //get scale for this composition
   NSString *scaleconf = [conf objectForKey: @"scale"];
   if ([scaleconf isEqualToString: @"global"]){

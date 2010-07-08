@@ -18,11 +18,13 @@
 
 @implementation TrivaGradient
 - (id) initWithFilter: (TrivaFilter *)f
+     andConfiguration: (NSDictionary *) conf
              andSpace: (BOOL) s
               andName: (NSString*)n
             andObject: (TrivaGraphNode*)obj
 {
-  self = [super initWithFilter: f andSpace: s andName: n andObject: obj];
+  self = [super initWithFilter: f andConfiguration: conf
+                      andSpace: s andName: n andObject: obj];
   min = [[NSMutableDictionary alloc] init];
   max = [[NSMutableDictionary alloc] init];
   return self;
@@ -34,7 +36,8 @@
                   withValues: (NSDictionary*) timeSliceValues
                  andProvider: (TrivaFilter*) prov
 {
-  self = [self initWithFilter: prov andSpace: YES andName: n andObject: obj];
+  self = [self initWithFilter: prov andConfiguration: conf
+                     andSpace: YES andName: n andObject: obj];
 
   //get scale for this composition
   TrivaScale scale;

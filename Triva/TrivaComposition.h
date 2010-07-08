@@ -31,6 +31,7 @@
   NSString *name;
   NSRect bb; //the bounding box
   TrivaGraphNode *node; //to which node this composition is part of
+  NSDictionary *configuration;
 
   BOOL needSpace;
   TrivaFilter *filter;
@@ -46,6 +47,7 @@
                   withValues: (NSDictionary*) timeSliceValues
                  andProvider: (TrivaFilter*) prov;
 - (id) initWithFilter: (TrivaFilter *) f
+     andConfiguration: (NSDictionary *) conf
              andSpace: (BOOL) s
               andName: (NSString*) name
             andObject: (TrivaGraphNode *)obj;
