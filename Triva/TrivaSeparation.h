@@ -22,13 +22,16 @@
 
 @interface TrivaSeparation : TrivaComposition
 {
-  NSMutableDictionary *values; //(NSString*)name = (NSNumber)value
+  //calculated values
+  NSMutableDictionary *calculatedValues; //(NSString*)name = (NSNumber)value
             //the sum of the values must be equal = 1
   double overflow; //(sum_of_the_values - 1)
        //can be used to check if the sum is > 1
+
+  //from configuration
+  NSString *size;
+  NSArray *values;
 }
-- (NSDictionary*) values;
-- (double) overflow;
 @end
 
 #endif

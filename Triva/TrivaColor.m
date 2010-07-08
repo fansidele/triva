@@ -25,22 +25,43 @@
 {
   self = [super initWithFilter: prov andConfiguration: conf
                       andSpace: YES andName: n andObject: obj];
+  //get values
+  values = [configuration objectForKey: @"values"];
+  if (!values){
+    NSLog (@"%s:%d: no 'values' configuration for composition %@",
+                        __FUNCTION__, __LINE__, configuration);
+    return nil;
+  }else{
+    if (![values isKindOfClass: [NSArray class]]){
+      NSLog (@"%s:%d: 'value' is invalid (%@). "
+              " It should be something like (var,var2)",
+               __FUNCTION__, __LINE__, values);
+      return nil;
+    }
+  }
+  [self redefineLayoutWithValues: timeSliceValues];
   return self;
 }
 
 - (void) redefineLayoutWithValues: (NSDictionary*) timeSliceValues
 {
+  //clear calculatedValues
+  [calculatedValues removeAllObjects];
+
+  //restart needSpace
+  needSpace = YES;
+
   //get values
-  NSEnumerator *en2 = [[configuration objectForKey: @"values"]objectEnumerator];
+  NSEnumerator *en2 = [values objectEnumerator];
   id var;
   while ((var = [en2 nextObject])){
     double val = [filter evaluateWithValues: timeSliceValues withExpr: var];
     if (val){
-      [values setObject: [NSNumber numberWithDouble: 1]
+      [calculatedValues setObject: [NSNumber numberWithDouble: 1]
           forKey: var];
     }
   }
-  if ([values count] == 0){
+  if ([calculatedValues count] == 0){
     needSpace = NO;
   }
 }

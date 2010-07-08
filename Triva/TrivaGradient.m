@@ -55,8 +55,11 @@
 
 - (void) redefineLayoutWithValues: (NSDictionary*) timeSliceValues
 {
+  //clear calculatedValues
+  [calculatedValues removeAllObjects];
+
   //get values
-  NSEnumerator *en2 = [[configuration objectForKey: @"values"]objectEnumerator];
+  NSEnumerator *en2 = [values objectEnumerator];
   id var;
   while ((var = [en2 nextObject])){
     double val = [filter evaluateWithValues: timeSliceValues withExpr: var];
@@ -81,7 +84,7 @@
 - (void) setGradientType: (NSString *) type withValue: (double) val
                 withMax: (double) ma withMin: (double) mi
 {
-  [values setObject: [NSNumber numberWithDouble: val]
+  [calculatedValues setObject: [NSNumber numberWithDouble: val]
        forKey: type];
   [min setObject: [NSNumber numberWithDouble: mi]
     forKey: type];
@@ -108,12 +111,12 @@
 
 - (BOOL) draw
 {
-  int count = [values count];
-  NSEnumerator *en = [values keyEnumerator];
+  int count = [calculatedValues count];
+  NSEnumerator *en = [calculatedValues keyEnumerator];
   NSString *type;
   double accum_y = 0;
   while ((type = [en nextObject])){
-    double value = [[values objectForKey: type] doubleValue];
+    double value = [[calculatedValues objectForKey: type] doubleValue];
     double mi = [[min objectForKey: type] doubleValue];
     double ma = [[max objectForKey: type] doubleValue];
     double saturation = (value - mi) / (ma - mi);

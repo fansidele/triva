@@ -26,7 +26,9 @@
   self = [super initWithFilter: f andConfiguration: conf
                       andSpace: s andName: n andObject: obj];
   overflow = 0;
-  values = [[NSMutableDictionary alloc] init];
+  calculatedValues = [[NSMutableDictionary alloc] init];
+  size = nil;
+  values = nil;
   return self;
 }
 
@@ -39,24 +41,41 @@
   self = [self initWithFilter: prov andConfiguration: conf
                      andSpace: YES andName: n andObject: obj];
 
-  NSString *sizeconf = [configuration objectForKey: @"size"];
-  if (!sizeconf){
+  //get size
+  size = [configuration objectForKey: @"size"];
+  if (!size){
     NSLog (@"%s:%d: no 'size' configuration for composition %@",
                         __FUNCTION__, __LINE__, configuration);
     return nil;
   }
 
+  //get values
+  values = [configuration objectForKey: @"values"];
+  if (!values){
+    NSLog (@"%s:%d: no 'values' configuration for composition %@",
+                        __FUNCTION__, __LINE__, configuration);
+    return nil;
+  }else{
+    if (![values isKindOfClass: [NSArray class]]){
+      NSLog (@"%s:%d: 'value' is invalid (%@). "
+              " It should be something like (var,var2)",
+               __FUNCTION__, __LINE__, values);
+      return nil;
+    }
+  }
   [self redefineLayoutWithValues: timeSliceValues];
   return self;
 }
 
 - (void) redefineLayoutWithValues: (NSDictionary*) timeSliceValues
 {
+  //clear calculatedValues
+  [calculatedValues removeAllObjects];
+
   //we need the size
-  NSString *sizeconf = [configuration objectForKey: @"size"];
-  double size = 0;
-  size = [filter evaluateWithValues: timeSliceValues withExpr: sizeconf];
-  if (size < 0){
+  double s = 0;
+  s = [filter evaluateWithValues: timeSliceValues withExpr: size];
+  if (s < 0){
     //size could not be defined
     NSLog (@"%s:%d: the value of 'size' for composition %@ is negative or "
       "could not be defined",
@@ -65,13 +84,13 @@
   }
 
   //get values
-  NSEnumerator *en2 = [[configuration objectForKey: @"values"]objectEnumerator];
+  NSEnumerator *en2 = [values objectEnumerator];
   id var;
   double sum = 0;
   while ((var = [en2 nextObject])){
     double val = [filter evaluateWithValues: timeSliceValues withExpr: var];
     if (val > 0){
-      [values setObject: [NSNumber numberWithDouble: val/size]
+      [calculatedValues setObject: [NSNumber numberWithDouble: val/s]
           forKey: var];
     }
     sum += val;
@@ -81,25 +100,15 @@
   }else{
     overflow = 0;
   }
-  if ([values count] == 0){
+  if ([calculatedValues count] == 0){
     needSpace = NO;
   }
 }
 
 - (void) dealloc
 {
-  [values release];
+  [calculatedValues release];
   [super dealloc];
-}
-
-- (NSDictionary*) values
-{
-  return values;
-}
-
-- (double) overflow
-{
-  return overflow;
 }
 
 - (void) refreshWithinRect: (NSRect) rect
@@ -109,14 +118,14 @@
 
 - (BOOL) draw
 {
-  NSEnumerator *en = [values keyEnumerator];
+  NSEnumerator *en = [calculatedValues keyEnumerator];
   NSString *type;
   double accum_y = 0;
 
   NSMutableString *str = [NSMutableString string];
 
   while ((type = [en nextObject])){
-    double value = [[values objectForKey: type] doubleValue];
+    double value = [[calculatedValues objectForKey: type] doubleValue];
 
     [[filter colorForEntityType:
       [filter entityTypeWithName: type]] set];
