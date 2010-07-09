@@ -39,21 +39,22 @@
   }else{
     scale = Global;
   }
-  [self redefineLayoutWithValues: timeSliceValues];
-  return self;
-}
 
-- (void) redefineLayoutWithValues: (NSDictionary*) timeSliceValues
-{
   //get only the first value (notice the "break" inside the while)
   NSEnumerator *en2 = [[configuration objectForKey: @"values"]objectEnumerator];
   while ((var = [en2 nextObject])){
     break;
   }
   if (!var){
-    return;
+    return nil;
   }
 
+  [self redefineLayoutWithValues: timeSliceValues];
+  return self;
+}
+
+- (void) redefineLayoutWithValues: (NSDictionary*) timeSliceValues
+{
   //consider only the time slice
   NSDate *start = [filter selectionStartTime];
   NSDate *end = [filter selectionEndTime];
