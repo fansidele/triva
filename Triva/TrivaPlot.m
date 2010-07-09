@@ -36,6 +36,8 @@
     scale = Local;
   }else if ([scaleconf isEqualToString: @"convergence"]){
     scale = Convergence;
+  }else if ([scaleconf isEqualToString: @"arnaud"]){
+    scale = Arnaud;
   }else{
     scale = Global;
   }

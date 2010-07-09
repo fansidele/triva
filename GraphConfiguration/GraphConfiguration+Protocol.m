@@ -80,7 +80,7 @@
     PajeContainer *cont = [self containerWithName: objName type: type];
     *min = [self minValueForEntityType: valtype inContainer: cont];
     *max = [self maxValueForEntityType: valtype inContainer: cont];
-  }else if (scale == Convergence){
+  }else if (scale == Convergence || scale == Arnaud){
     PajeEntityType *type = [self entityTypeWithName: objType];
     PajeContainer *cont = [self containerWithName: objName type: type];
 
