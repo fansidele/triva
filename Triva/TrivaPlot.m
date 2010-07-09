@@ -49,6 +49,15 @@
     return nil;
   }
 
+  //define min,max only once when scale is local, global or arnaud
+  [filter defineMax: &vmax
+             andMin: &vmin
+          withScale: scale
+       fromVariable: var
+           ofObject: [node name]
+           withType: [(TrivaGraphNode*)node type]];
+  valueSize = vmax - vmin;
+
   [self redefineLayoutWithValues: timeSliceValues];
   return self;
 }
@@ -63,14 +72,16 @@
   tmax = [end timeIntervalSinceReferenceDate];
   sliceSize = tmax - tmin;
 
-  //get max min value for the type based on scale
-  [filter defineMax: &vmax
-             andMin: &vmin
-          withScale: scale
-       fromVariable: var
-           ofObject: [node name]
-           withType: [(TrivaGraphNode*)node type]];
-  valueSize = vmax - vmin;
+  //define min, max every time when scale is convergence
+  if (scale == Convergence) {
+    [filter defineMax: &vmax
+               andMin: &vmin
+            withScale: scale
+         fromVariable: var
+             ofObject: [node name]
+             withType: [(TrivaGraphNode*)node type]];
+    valueSize = vmax - vmin;
+  }
 
   //transform to paje terminology
   PajeEntityType *varType = [filter entityTypeWithName: var];
