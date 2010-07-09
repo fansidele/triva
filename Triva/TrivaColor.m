@@ -48,9 +48,6 @@
   //clear calculatedValues
   [calculatedValues removeAllObjects];
 
-  //restart needSpace
-  needSpace = YES;
-
   //get values
   NSEnumerator *en2 = [values objectEnumerator];
   id var;
@@ -63,6 +60,8 @@
   }
   if ([calculatedValues count] == 0){
     needSpace = NO;
+  }else{
+    needSpace = YES;
   }
 }
 @end

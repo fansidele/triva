@@ -73,6 +73,8 @@
   }
   if ([values count] == 0){
     needSpace = NO;
+  }else{
+    needSpace = YES;
   }
 }
 @end

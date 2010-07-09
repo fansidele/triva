@@ -102,6 +102,8 @@
   }
   if ([calculatedValues count] == 0){
     needSpace = NO;
+  }else{
+    needSpace = YES;
   }
 }
 
