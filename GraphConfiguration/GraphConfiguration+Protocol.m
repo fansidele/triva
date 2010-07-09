@@ -169,7 +169,6 @@
 
 - (void) graphComponentScalingChanged
 {
-  [self redefineNodesEdgesLayout];
-  [super timeSelectionChanged];
+  [self timeSelectionChanged];
 }
 @end
