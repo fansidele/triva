@@ -27,10 +27,10 @@
     if (componentClass == Nil) {
         NSBundle *bundle;
         bundle = [self bundleWithName:className];
-  componentClass = NSClassFromString(className);
-  if (componentClass == nil){
-    componentClass = [bundle principalClass];
-  }
+        componentClass = NSClassFromString(className);
+        if (componentClass == nil){
+          componentClass = [bundle principalClass];
+        }
     }
     component = [componentClass componentWithController: (id)self];
     if (component != nil) {
