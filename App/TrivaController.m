@@ -41,6 +41,17 @@
                    reason: @"No visualization option activated" userInfo: nil];
     [exception raise];
   }
+
+  //pass by trace files
+  int i;
+  NSMutableArray *array = [NSMutableArray array];
+  for (i = 0; i < arguments.input_size; i++){
+    [array addObject: [NSString stringWithFormat: @"%s", arguments.input[i]]];
+  }
+  NSLog (@"Tracefile (%@). Reading.... please wait\n", array);
+  [triva setInputFiles: array];
+  NSLog (@"End of reading - %@ to %@.", [triva startTime], [triva endTime]);
+  [triva setSelectionStartTime: [triva startTime] endTime: [triva endTime]];
   return triva;
 }
 
@@ -64,11 +75,17 @@
   return self;
 }
 
-- (void) defineMajorComponents
+- (void) setInputFiles: (NSArray *) files
 {
-  reader = [self componentWithName:@"FileReader"];
-  simulator = [self componentWithName:@"PajeSimulator"];
-  encapsulator = [self componentWithName:@"StorageController"];
+  //reading only the first file by default (subclasses
+  //should override this if necessary)
+  reader = [self componentWithName:@"FileReader" fromDictionary: components];
+  [reader setInputFilename: [files objectAtIndex: 0]];
+  while ([self hasMoreData]){
+    [self readNextChunk: nil];
+  }
+  simulator = [self componentWithName:@"PajeSimulator" fromDictionary: components];
+  encapsulator = [self componentWithName:@"StorageController" fromDictionary: components];
 }
 @end
 
@@ -86,8 +103,7 @@
        TimeSliceAggregation, \
        SquarifiedTreemap \
     ) )" propertyList];
-  [self addComponentSequences: graph];
-  [self defineMajorComponents];
+  [self addComponentSequences: graph withDictionary: components];
   return self;
 }
 @end
@@ -106,8 +122,7 @@
        GraphConfiguration, \
        GraphView \
     ) )" propertyList];
-  [self addComponentSequences: graph];
-  [self defineMajorComponents];
+  [self addComponentSequences: graph withDictionary: components];
   return self;
 }
 @end
@@ -125,8 +140,7 @@
       TimeSliceAggregation, \
       LinkView \
     ) )" propertyList];
-  [self addComponentSequences: graph];
-  [self defineMajorComponents];
+  [self addComponentSequences: graph withDictionary: components];
   return self;
 }
 @end
@@ -143,8 +157,7 @@
        TimeInterval, \
        Dot \
     ) )" propertyList];
-  [self addComponentSequences: graph];
-  [self defineMajorComponents];
+  [self addComponentSequences: graph withDictionary: components];
   return self;
 }
 @end
@@ -160,8 +173,7 @@
        StorageController, \
        CheckTrace \
     ) )" propertyList];
-  [self addComponentSequences: graph];
-  [self defineMajorComponents];
+  [self addComponentSequences: graph withDictionary: components];
   return self;
 }
 @end
@@ -177,8 +189,7 @@
        StorageController, \
        List \
     ) )" propertyList];
-  [self addComponentSequences: graph];
-  [self defineMajorComponents];
+  [self addComponentSequences: graph withDictionary: components];
   return self;
 }
 @end
@@ -194,9 +205,55 @@
        StorageController, \
        Instances \
     ) )" propertyList];
-  [self addComponentSequences: graph];
-  [self defineMajorComponents];
+  [self addComponentSequences: graph withDictionary: components];
   return self;
 }
 @end
 
+@implementation TrivaComparisonController
+- (void) x
+{
+
+}
+
+- (id) init
+{
+  self = [super init];
+/*
+  NSMutableArray *graph = [NSMutableArray array];
+  [graph addObject: @"FileReader"];
+  [graph addObject: @"PajeEventDecoder"];
+  [graph addObject: @"PajeSimulator"];
+  [graph addObject: @"StorageController"];
+*/
+
+//  NSLog (@"%@", [self createComponentWithName: @"FileReader2"
+//                 ofClassNamed: @"FileReader"]);
+//  NSLog (@"%@", [self createComponentWithName: @"FileReader1"
+//                 ofClassNamed: @"FileReader"]);
+
+  NSArray *graph = [@"(  \
+    ( FileReader, \
+       PajeEventDecoder, \
+       PajeSimulator, \
+       StorageController, \
+       Instances \
+    ) )" propertyList];
+
+/*
+  NSLog (@"%@", [self componentWithName: @"FileReader"]);
+  NSLog (@"%@", [self componentWithName: @"FileReader"]);
+  NSLog (@"%@", [self componentWithName: @"FileReader"]);
+*/
+
+/*
+
+  [self addComponentSequences: graph];
+  NSLog (@"%@", components);
+  [self addComponentSequences: graph];
+  NSLog (@"%@", components);
+*/
+
+  return self;
+}
+@end

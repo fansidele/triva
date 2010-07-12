@@ -31,7 +31,7 @@
   BOOL timeLimitsChanged;
 }
 + (id) controllerWithArguments: (struct arguments) arguments;
-- (void)defineMajorComponents;
+- (void) setInputFiles: (NSArray *) files;
 @end
 
 @interface TrivaController (Bundles)
@@ -56,13 +56,18 @@
 
 @interface TrivaController (Components)
 - (id)createComponentWithName:(NSString *)componentName
-                 ofClassNamed:(NSString *)className;
+                 ofClassNamed:(NSString *)className
+               withDictionary:(NSMutableDictionary *) comps;
 - (void)connectComponent:(id)c1 toComponent:(id)c2;
-- (id)componentWithName:(NSString *)name;
+- (id)componentWithName:(NSString *)name
+         fromDictionary:(NSMutableDictionary *) comps;
 - (void)connectComponentNamed:(NSString *)n1
-             toComponentNamed:(NSString *)n2;
-- (void)addComponentSequence:(NSArray *)componentSequence;
-- (void)addComponentSequences:(NSArray *)componentSequences;
+             toComponentNamed:(NSString *)n2
+               fromDictionary:(NSMutableDictionary *) comps;
+- (void)addComponentSequence:(NSArray *)componentSequence
+              withDictionary:(NSMutableDictionary *) comps;
+- (void)addComponentSequences:(NSArray *)componentSequences
+              withDictionary:(NSMutableDictionary *) comps;
 @end
 
 /*

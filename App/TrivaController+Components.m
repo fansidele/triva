@@ -19,6 +19,7 @@
 @implementation TrivaController (Components)
 - (id)createComponentWithName:(NSString *)componentName
                  ofClassNamed:(NSString *)className
+               withDictionary:(NSMutableDictionary *) comps
 {
     Class componentClass;
     id component;
@@ -34,7 +35,7 @@
     }
     component = [componentClass componentWithController: (id)self];
     if (component != nil) {
-        [components setObject:component forKey:componentName];
+        [comps setObject:component forKey:componentName];
     }
     return component;
 }
@@ -48,17 +49,19 @@
 
 
 - (id)componentWithName:(NSString *)name
+         fromDictionary:(NSMutableDictionary *) comps
 {
     id component;
 
-    component = [components objectForKey:name];
+    component = [comps objectForKey:name];
     if (component == nil) {
         NSString *className;
         if ([[NSScanner scannerWithString:name]
                 scanCharactersFromSet:[NSCharacterSet alphanumericCharacterSet]
                            intoString:&className]) {
             component = [self createComponentWithName:name
-                                         ofClassNamed:className];
+                                         ofClassNamed:className
+                                       withDictionary: comps];
         }
     }
     return component;
@@ -67,17 +70,19 @@
 
 - (void)connectComponentNamed:(NSString *)n1
              toComponentNamed:(NSString *)n2
+               fromDictionary:(NSMutableDictionary *) comps
 {
     id c1;
     id c2;
 
-    c1 = [self componentWithName:n1];
-    c2 = [self componentWithName:n2];
+    c1 = [self componentWithName:n1 fromDictionary: comps];
+    c2 = [self componentWithName:n2 fromDictionary: comps];
     [self connectComponent:c1 toComponent:c2];
 }
 
 
 - (void)addComponentSequence:(NSArray *)componentSequence
+              withDictionary:(NSMutableDictionary *) comps
 {
     int index;
     int count;
@@ -89,12 +94,14 @@
         componentName1 = [componentSequence objectAtIndex:index-1];
         componentName2 = [componentSequence objectAtIndex:index];
         [self connectComponentNamed:componentName1
-                   toComponentNamed:componentName2];
+                   toComponentNamed:componentName2
+                     fromDictionary:comps];
     }
 }
 
 
 - (void)addComponentSequences:(NSArray *)componentSequences
+               withDictionary:(NSMutableDictionary *) comps
 {
     int index;
     int count;
@@ -103,7 +110,8 @@
     for (index = 0; index < count; index++) {
         NSArray *componentSequence;
         componentSequence = [componentSequences objectAtIndex:index];
-        [self addComponentSequence:componentSequence];
+        [self addComponentSequence:componentSequence
+                    withDictionary:comps];
     }
 }
 @end

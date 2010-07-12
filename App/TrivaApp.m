@@ -37,19 +37,12 @@ NS_DURING
   arguments.abort = 0;
   parse (argc, (char**)argv, &arguments);
 
-  //initializing controller
+  //initializing controller with options and input file names
   TrivaController *triva = [TrivaController controllerWithArguments: arguments];
-
-  //providing an input trace file
-  NSString *input = [NSString stringWithFormat: @"%s", arguments.input[0]];
-  id reader = [triva componentWithName: @"FileReader"];
-  [reader setInputFilename: input];
-  NSLog (@"Tracefile (%@). Reading.... please wait\n", input);
-  while ([triva hasMoreData]){
-    [triva readNextChunk: nil];
+  if (!triva){
+    [NSException raise:@"TrivaException"
+                format:@"Controller could not be initialized."];
   }
-  NSLog (@"End of reading - %@ to %@.", [triva startTime], [triva endTime]);
-  [triva setSelectionStartTime: [triva startTime] endTime: [triva endTime]];
 NS_HANDLER
   NSLog (@"%@", localException);
   return 1;
