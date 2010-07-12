@@ -29,8 +29,6 @@
 
   PSortedArray *chunkDates;
   BOOL timeLimitsChanged;
-
-  NSMutableArray *parameters;
 }
 + (id) controllerWithArguments: (struct arguments) arguments;
 - (void)defineMajorComponents;
@@ -51,12 +49,9 @@
 - (void)chunkFault:(NSNotification *)notification;
 - (NSDate *) startTime; //starttime of the encapsulator
 - (NSDate *) endTime; //endtime of the encapsulator
-- (void) setReaderWithName: (NSString *) readerName;
 - (BOOL) hasMoreData;
 - (void)setSelectionStartTime:(NSDate *)from
                       endTime:(NSDate *)to;
-- (void) addParameter: (NSString *) par;
-- (NSString *) getParameterNumber: (int) index;
 @end
 
 @interface TrivaController (Components)

@@ -94,11 +94,6 @@
   return [encapsulator endTime];
 }
 
-- (void) setReaderWithName: (NSString *) readerName
-{
-  reader = [self componentWithName: readerName];
-}
-
 - (BOOL) hasMoreData
 {
         return [reader hasMoreData];
@@ -109,23 +104,5 @@
 {
     [encapsulator setSelectionStartTime:from
                                   endTime:to];
-}
-
-- (void) addParameter: (NSString *) par
-{
-  if (parameters == nil){
-    parameters = [[NSMutableArray alloc] init];
-  }else{
-    [parameters addObject: par];
-  }
-}
-
-- (NSString *) getParameterNumber: (int) index
-{
-  if ((unsigned int)index < [parameters count]){
-    return [parameters objectAtIndex: index];
-  }else{
-    return nil;
-  }
 }
 @end
