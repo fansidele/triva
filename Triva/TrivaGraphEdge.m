@@ -86,6 +86,7 @@ double LMSDistanceBetweenPoints(NSPoint pt1, NSPoint pt2)
   NSAffineTransform* xform = [NSAffineTransform transform];
   [xform translateXBy: srcPoint.x yBy: srcPoint.y];
   [xform rotateByDegrees: angle];
+  [xform translateXBy: 0 yBy: -bb.size.height/2];
   [xform concat];
   [super draw];
   [xform invert];
