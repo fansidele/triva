@@ -26,14 +26,10 @@
 @interface TrivaController : NSObject
 {
   id reader;
-  id simulator;
   id encapsulator;
 
   NSMutableDictionary *bundles;
   NSMutableDictionary *components;
-
-  PSortedArray *chunkDates;
-  BOOL timeLimitsChanged;
 }
 + (id) controllerWithArguments: (struct arguments) arguments;
 - (void) setInputFiles: (NSArray *) files;

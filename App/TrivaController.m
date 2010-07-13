@@ -62,18 +62,6 @@
   self = [super init];
   components = [NSMutableDictionary dictionary];
   bundles = [NSMutableDictionary dictionary];
-
-  chunkDates = [[NSClassFromString(@"PSortedArray") alloc]
-                                initWithSelector:@selector(self)];
-
-  NSNotificationCenter *notificationCenter;
-  notificationCenter = [NSNotificationCenter defaultCenter];
-
-  [notificationCenter addObserver:self
-    selector:@selector(chunkFault:)
-    name:@"PajeChunkNotInMemoryNotification"
-    object:nil];
-
   return self;
 }
 
@@ -84,7 +72,6 @@
   reader = [self componentWithName:@"FileReader" fromDictionary: components];
   [reader setInputFilename: [files objectAtIndex: 0]];
   [self readAllTracefileFrom: reader];
-  simulator = [self componentWithName:@"PajeSimulator" fromDictionary: components];
   encapsulator = [self componentWithName:@"StorageController" fromDictionary: components];
   [encapsulator timeLimitsChanged];
 }
