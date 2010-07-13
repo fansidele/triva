@@ -45,6 +45,7 @@ CONFIG_FILES="
   TimeInterval/GNUmakefile \
   TimeSliceAggregation/GNUmakefile \
   TypeFilter/GNUmakefile \
+  Compare/GNUmakefile \
   contrib/GNUmakefile \
   contrib/SimGridColors/GNUmakefile \
   GNUmakefile"
