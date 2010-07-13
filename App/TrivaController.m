@@ -52,7 +52,6 @@
   }
   NSLog (@"Tracefile (%@). Reading.... please wait\n", array);
   [triva setInputFiles: array];
-  NSLog (@"End of reading - %@ to %@.", [triva startTime], [triva endTime]);
   [triva setSelectionStartTime: [triva startTime] endTime: [triva endTime]];
   return triva;
 }
