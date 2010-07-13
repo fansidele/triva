@@ -29,18 +29,47 @@
     ( FileReader, \
        PajeEventDecoder, \
        PajeSimulator, \
-       StorageController \
+       StorageController, \
+       Compare, \
+       TimeSliceAggregation, \
+       SquarifiedTreemap \
     ) )" propertyList];
   NSArray *g2 = [@"(  \
     ( FileReader, \
        PajeEventDecoder, \
        PajeSimulator, \
-       StorageController \
+       StorageController, \
+       Compare, \
+       TimeSliceAggregation, \
+       SquarifiedTreemap \
     ) )" propertyList];
+
+  //create graphs
   seq1 = [NSMutableDictionary dictionary];
   seq2 = [NSMutableDictionary dictionary];
   [self addComponentSequences: g1 withDictionary: seq1];
   [self addComponentSequences: g2 withDictionary: seq2];
+
+  //create the CompareController
+  Class compareControllerClass = NSClassFromString(@"CompareController");
+  if (compareControllerClass == nil){
+    return nil;
+  }
+  id compareController = [[compareControllerClass alloc] init];
+
+  //set the Compare filters' controller
+  SEL method = @selector(setController:);
+  [[seq1 objectForKey: @"Compare"] performSelector: method withObject: compareController];
+  [[seq2 objectForKey: @"Compare"] performSelector: method withObject: compareController];
+
+  //add the compare filters to the controller
+  NSMutableArray *compareFilters = [NSMutableArray array];
+  [compareFilters addObject: [seq1 objectForKey: @"Compare"]];
+  [compareFilters addObject: [seq2 objectForKey: @"Compare"]];
+  method = @selector(addFilters:);
+  [compareController performSelector: method withObject: compareFilters];
+
+
   return self;
 }
 
