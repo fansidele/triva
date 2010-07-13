@@ -33,6 +33,7 @@
 }
 + (id) controllerWithArguments: (struct arguments) arguments;
 - (void) setInputFiles: (NSArray *) files;
+- (void) setSelectionWindow;
 @end
 
 @interface TrivaController (Bundles)
@@ -48,8 +49,6 @@
 - (NSDate *) startTime; //starttime of the encapsulator
 - (NSDate *) endTime; //endtime of the encapsulator
 - (BOOL) hasMoreData;
-- (void)setSelectionStartTime:(NSDate *)from
-                      endTime:(NSDate *)to;
 @end
 
 @interface TrivaController (Components)

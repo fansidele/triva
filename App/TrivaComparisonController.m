@@ -53,4 +53,12 @@
   [self readAllTracefileFrom: reader2];
   storage2 = [self componentWithName:@"StorageController" fromDictionary: seq2];
 }
+
+- (void)setSelectionWindow
+{
+  [storage1 setSelectionStartTime: [storage1 startTime]
+                          endTime: [storage1 endTime]];
+  [storage2 setSelectionStartTime: [storage2 startTime]
+                          endTime: [storage2 endTime]];
+}
 @end

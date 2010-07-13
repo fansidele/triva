@@ -56,11 +56,4 @@
 {
         return [reader hasMoreData];
 }
-
-- (void)setSelectionStartTime:(NSDate *)from
-                      endTime:(NSDate *)to
-{
-    [encapsulator setSelectionStartTime:from
-                                  endTime:to];
-}
 @end

@@ -52,7 +52,7 @@
   }
   NSLog (@"Tracefile (%@). Reading.... please wait\n", array);
   [triva setInputFiles: array];
-  [triva setSelectionStartTime: [triva startTime] endTime: [triva endTime]];
+  [triva setSelectionWindow];
   return triva;
 }
 
@@ -73,6 +73,12 @@
   [self readAllTracefileFrom: reader];
   encapsulator = [self componentWithName:@"StorageController" fromDictionary: components];
   [encapsulator timeLimitsChanged];
+}
+
+- (void)setSelectionWindow
+{
+    [encapsulator setSelectionStartTime: [encapsulator startTime]
+                                endTime: [encapsulator endTime]];
 }
 @end
 
