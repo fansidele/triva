@@ -16,3 +16,4 @@ configure
 *GNUmakefile
 *\.app/
 obj/
+.*.sw*
