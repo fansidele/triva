@@ -27,6 +27,7 @@ static struct argp_option options[] = {
   {"treemap", 't', 0, OPTION_ARG_OPTIONAL, "Treemap Analysis"},
   {"graph",   'g', 0, OPTION_ARG_OPTIONAL, "Graph Analysis"},
   {"linkview", 'k', 0, OPTION_ARG_OPTIONAL, "Link View (Experimental)"},
+  {"comparison", 's', 0, OPTION_ARG_OPTIONAL, "Compare Trace Files (Experimental)"},
   {0, 0, 0, 0, "Other auxiliary options to check the trace file:"},
   {"hierarchy",'h', 0, OPTION_ARG_OPTIONAL, "Export the trace type hierarchy"},
   {"check",   'c', 0, OPTION_ARG_OPTIONAL, "Check the integrity of trace file"},
@@ -37,7 +38,7 @@ static struct argp_option options[] = {
 
 static int has_vis_activated (struct arguments *arg)
 {
-  return arg->treemap || arg->graph || arg->linkview ||
+  return arg->treemap || arg->graph || arg->linkview || arg->comparison ||
       arg->hierarchy || arg->check || 
       arg->list || arg->instances;
 }
@@ -63,6 +64,10 @@ static int parse_options (int key, char *arg, struct argp_state *state)
       if (has_vis_activated (arguments)) argp_usage(state);
       arguments->linkview = 1;
       break;
+    case 's':
+      if (has_vis_activated (arguments)) argp_usage(state);
+      arguments->comparison = 1;
+      break;
     case 'h':
       if (has_vis_activated (arguments)) argp_usage(state);
       arguments->hierarchy = 1;
@@ -81,11 +86,13 @@ static int parse_options (int key, char *arg, struct argp_state *state)
       break;
 
     case ARGP_KEY_ARG:
-      if (state->arg_num > 1)
+      if (arguments->input_size == MAX_INPUT_SIZE) {
         /* Too many arguments. */
         argp_usage (state);
-
+      }
+  
       arguments->input[state->arg_num] = arg;
+      arguments->input_size++;
 
       break;
 
@@ -105,6 +112,7 @@ static struct argp argp = { options, parse_options, args_doc, doc };
 
 int parse (int argc, char **argv, struct arguments *arg)
 {
+  arg->input_size = 0;
   int ret = argp_parse (&argp, argc, argv, 0, 0, arg);
   return ret;
 }

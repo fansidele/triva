@@ -18,10 +18,15 @@
 #define __TRIVA_COMMAND_H
 #include <stdio.h>
 
+#define MAX_INPUT_SIZE 2
+
 struct arguments
 {
-  char *input[1];
+  char *input[MAX_INPUT_SIZE];
+  int input_size;
+
   int treemap, graph, linkview; //visualization windows
+  int comparison;
   int abort; //if parameters are not good
   int hierarchy; //generate type hierarchy
   int check;  //check trace file
