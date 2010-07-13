@@ -8,7 +8,8 @@ Triva_OBJC_FILES = \
 	TrivaController.m \
   TrivaController+Bundles.m \
   TrivaController+Chunks.m \
-  TrivaController+Components.m
+  TrivaController+Components.m \
+  TrivaComparisonController.m 
 
 Triva_APPLICATION_ICON = Triva.tiff
 Triva_RESOURCE_FILES = Triva.tiff trivaInfo.plist

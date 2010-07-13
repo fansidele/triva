@@ -28,6 +28,8 @@
     triva = [[TrivaGraphController alloc] init];
   }else if (arguments.linkview){
     triva = [[TrivaLinkController alloc] init];
+  }else if (arguments.comparison){
+    triva = [[TrivaComparisonController alloc] init];
   }else if (arguments.hierarchy) {
     triva = [[TrivaDotController alloc] init];
   }else if (arguments.check) {
@@ -205,54 +207,6 @@
        Instances \
     ) )" propertyList];
   [self addComponentSequences: graph withDictionary: components];
-  return self;
-}
-@end
-
-@implementation TrivaComparisonController
-- (void) x
-{
-
-}
-
-- (id) init
-{
-  self = [super init];
-/*
-  NSMutableArray *graph = [NSMutableArray array];
-  [graph addObject: @"FileReader"];
-  [graph addObject: @"PajeEventDecoder"];
-  [graph addObject: @"PajeSimulator"];
-  [graph addObject: @"StorageController"];
-*/
-
-//  NSLog (@"%@", [self createComponentWithName: @"FileReader2"
-//                 ofClassNamed: @"FileReader"]);
-//  NSLog (@"%@", [self createComponentWithName: @"FileReader1"
-//                 ofClassNamed: @"FileReader"]);
-
-  NSArray *graph = [@"(  \
-    ( FileReader, \
-       PajeEventDecoder, \
-       PajeSimulator, \
-       StorageController, \
-       Instances \
-    ) )" propertyList];
-
-/*
-  NSLog (@"%@", [self componentWithName: @"FileReader"]);
-  NSLog (@"%@", [self componentWithName: @"FileReader"]);
-  NSLog (@"%@", [self componentWithName: @"FileReader"]);
-*/
-
-/*
-
-  [self addComponentSequences: graph];
-  NSLog (@"%@", components);
-  [self addComponentSequences: graph];
-  NSLog (@"%@", components);
-*/
-
   return self;
 }
 @end

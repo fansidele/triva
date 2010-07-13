@@ -21,6 +21,8 @@
 #include <General/PajeFilter.h>
 #include <General/PSortedArray.h>
 
+@class TrivaComparisonController;
+
 @interface TrivaController : NSObject
 {
   id reader;
@@ -93,5 +95,7 @@
 
 @interface TrivaInstanceController : TrivaController
 @end
+
+#include "TrivaComparisonController.h"
 
 #endif
