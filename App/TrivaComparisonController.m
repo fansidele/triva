@@ -17,11 +17,6 @@
 #include "TrivaComparisonController.h"
 
 @implementation TrivaComparisonController
-- (void) x
-{
-
-}
-
 - (id) init
 {
   self = [super init];
@@ -47,17 +42,15 @@
 - (void) setInputFiles: (NSArray *) files
 {
   //reading the first file
-  reader = [self componentWithName:@"FileReader" fromDictionary: seq1];
-  [reader setInputFilename: [files objectAtIndex: 1]];
-  [self readAllTracefileFrom: reader];
-  simulator = [self componentWithName:@"PajeSimulator" fromDictionary: seq1];
-  encapsulator = [self componentWithName:@"StorageController" fromDictionary: seq1];
+  reader1 = [self componentWithName:@"FileReader" fromDictionary: seq1];
+  [reader1 setInputFilename: [files objectAtIndex: 0]];
+  [self readAllTracefileFrom: reader1];
+  storage1 = [self componentWithName:@"StorageController" fromDictionary: seq1];
 
   //reading the second file
-  reader = [self componentWithName:@"FileReader" fromDictionary: seq2];
-  [reader setInputFilename: [files objectAtIndex: 0]];
-  [self readAllTracefileFrom: reader];
-  simulator = [self componentWithName:@"PajeSimulator" fromDictionary: seq2];
-  encapsulator = [self componentWithName:@"StorageController" fromDictionary: seq2];
+  reader2 = [self componentWithName:@"FileReader" fromDictionary: seq2];
+  [reader2 setInputFilename: [files objectAtIndex: 1]];
+  [self readAllTracefileFrom: reader2];
+  storage2 = [self componentWithName:@"StorageController" fromDictionary: seq2];
 }
 @end
