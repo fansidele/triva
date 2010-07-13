@@ -20,6 +20,11 @@
 - (id) init
 {
   self = [super init];
+
+  //disabling single-file attributes
+  reader = nil;
+  encapsulator = nil;
+
   NSArray *g1 = [@"(  \
     ( FileReader, \
        PajeEventDecoder, \
@@ -46,12 +51,14 @@
   [reader1 setInputFilename: [files objectAtIndex: 0]];
   [self readAllTracefileFrom: reader1];
   storage1 = [self componentWithName:@"StorageController" fromDictionary: seq1];
+  [storage1 timeLimitsChanged];
 
   //reading the second file
   reader2 = [self componentWithName:@"FileReader" fromDictionary: seq2];
   [reader2 setInputFilename: [files objectAtIndex: 1]];
   [self readAllTracefileFrom: reader2];
   storage2 = [self componentWithName:@"StorageController" fromDictionary: seq2];
+  [storage2 timeLimitsChanged];
 }
 
 - (void)setSelectionWindow
