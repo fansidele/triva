@@ -81,11 +81,10 @@
   //should override this if necessary)
   reader = [self componentWithName:@"FileReader" fromDictionary: components];
   [reader setInputFilename: [files objectAtIndex: 0]];
-  while ([self hasMoreData]){
-    [self readNextChunk: nil];
-  }
+  [self readAllTracefileFrom: reader];
   simulator = [self componentWithName:@"PajeSimulator" fromDictionary: components];
   encapsulator = [self componentWithName:@"StorageController" fromDictionary: components];
+  [encapsulator timeLimitsChanged];
 }
 @end
 

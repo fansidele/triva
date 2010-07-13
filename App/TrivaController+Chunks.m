@@ -17,29 +17,6 @@
 #include "TrivaController.h"
 
 @implementation TrivaController (Chunks)
-- (void)readChunk:(int)chunkNumber
-{
-  [reader readNextChunk];
-}
-
-- (void)startChunk:(int)chunkNumber
-{
-    [reader startChunk:chunkNumber];
-    if ([reader hasMoreData] && (unsigned int)chunkNumber >= [chunkDates count]) {
-//        [chunkDates addObject:[simulator currentTime]];
-        timeLimitsChanged = YES;
-    }
-}
-
-- (void)endOfChunkLast:(BOOL)last
-{
-    [reader endOfChunkLast:last];
-    if (timeLimitsChanged) {
-        [encapsulator timeLimitsChanged];
-        timeLimitsChanged = NO;
-    }
-}
-
 - (void)missingChunk:(int)chunkNumber
 {
   NSString *str;
@@ -48,40 +25,21 @@
   [[NSException exceptionWithName: @"Triva" 
         reason: str
         userInfo: nil] raise];
-//    [self readChunk:chunkNumber];
 }
 
-#define CHUNK_SIZE (10*1024*1024)
-
-- (int)readNextChunk:(id)sender
+- (void)readAllTracefileFrom: (id)r
 {
-  static BOOL chunkStarted = NO;
-  if (!chunkStarted){
-    [self startChunk: [chunkDates count]];
-    chunkStarted = YES;
+  int chunkNumber = 0;
+
+  //set chunk size
+  [r setUserChunkSize: 1500000000];
+
+  //read up to the end
+  while ([r hasMoreData]){
+    [r startChunk: chunkNumber++];
+    [r readNextChunk];
+    [r endOfChunkLast: ![r hasMoreData]];
   }
-
-  [self readChunk: -1 /* method ignores this number */];
-
-  if (![reader hasMoreData] && chunkStarted){
-    [self endOfChunkLast: ![reader hasMoreData]];
-    chunkStarted = NO;
-  }
-
-  if ([reader hasMoreData]){
-    return 1;
-  }else{
-    return 0;
-  }
-}
-
-- (void)chunkFault:(NSNotification *)notification
-{
-    int chunkNumber;
-
-    chunkNumber = [[[notification userInfo]
-                          objectForKey:@"ChunkNumber"] intValue];
-    [self readChunk:chunkNumber];
 }
 
 - (NSDate *) startTime

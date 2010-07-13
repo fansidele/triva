@@ -41,12 +41,9 @@
 @end
 
 @interface TrivaController (Chunks)
-- (void)readChunk:(int)chunkNumber;
-- (void)startChunk:(int)chunkNumber;
-- (void)endOfChunkLast:(BOOL)last;
 - (void)missingChunk:(int)chunkNumber;
-- (int)readNextChunk:(id)sender;
-- (void)chunkFault:(NSNotification *)notification;
+- (void)readAllTracefileFrom: (id) r;
+
 - (NSDate *) startTime; //starttime of the encapsulator
 - (NSDate *) endTime; //endtime of the encapsulator
 - (BOOL) hasMoreData;
