@@ -25,6 +25,8 @@
     [NSBundle loadNibNamed: @"Compare" owner: self];
   }
   [window initializeWithDelegate: self];
+  [markerTypeButton removeAllItems];
+  [markerTypeButton setEnabled: NO];
   return self;
 }
 
