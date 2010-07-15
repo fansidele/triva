@@ -30,6 +30,7 @@ Resources/Compare.gorm \
 #
 Compare_HEADER_FILES = \
 Compare.h \
+CompareView.h \
 CompareController.h
 
 #
@@ -37,6 +38,7 @@ CompareController.h
 #
 Compare_OBJC_FILES = \
 Compare.m \
+CompareView.m \
 CompareController.m \
 CompareController+TypeHierarchy.m
 

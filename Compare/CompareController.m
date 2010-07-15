@@ -21,6 +21,10 @@
 {
   self = [super init];
   compareFilters = [[NSMutableArray alloc] init];
+  if (self != nil){
+    [NSBundle loadNibNamed: @"Compare" owner: self];
+  }
+  [window initializeWithDelegate: self];
   return self;
 }
 
@@ -60,5 +64,11 @@
 
   //search for markers
   //TODO
+}
+
+- (BOOL) windowShouldClose: (id) sender
+{
+  [[NSApplication sharedApplication] terminate:self];
+  return YES;
 }
 @end

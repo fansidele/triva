@@ -1,0 +1,59 @@
+{
+    "## Comment" = "Do NOT change this file, Gorm maintains it";
+    AppController = {
+	Actions = (
+	    "showPrefPanel:"
+	);
+	Outlets = (
+	);
+	Super = NSObject;
+    };
+    CompareController = {
+	Actions = (
+	    "apply:",
+	    "play:",
+	    "forwardSliderChanged:",
+	    "frequencySliderChanged:",
+	    "sliceSliderChanged:"
+	);
+	Outlets = (
+	    window,
+	    markerTypeButton,
+	    view
+	);
+	Super = NSObject;
+    };
+    CompareView = {
+	Actions = (
+	);
+	Outlets = (
+	);
+	Super = NSView;
+    };
+    FirstResponder = {
+	Actions = (
+	    "apply:",
+	    "forwardSliderChanged:",
+	    "frequencySliderChanged:",
+	    "sliceSliderChanged:",
+	    "orderFrontFontPanel:",
+	    "play:",
+	    "showPrefPanel:"
+	);
+	Super = NSObject;
+    };
+    SliceWindowView = {
+	Actions = (
+	);
+	Outlets = (
+	);
+	Super = NSView;
+    };
+    TrivaWindow = {
+	Actions = (
+	);
+	Outlets = (
+	);
+	Super = NSWindow;
+    };
+}

@@ -14,35 +14,18 @@
     You should have received a copy of the GNU General Public License
     along with Triva.  If not, see <http://www.gnu.org/licenses/>.
 */
-#ifndef __COMPARE_CONT_H
-#define __COMPARE_CONT_H
+/* All Rights reserved */
+#ifndef __COMPARE_VIEW_H
+#define __COMPARE_VIEW_H
 
-#include <Foundation/Foundation.h>
-#include <Triva/TrivaWindow.h>
-#include <General/PajeFilter.h>
+#include <AppKit/AppKit.h>
+#include "CompareController.h"
 
-@class Compare;
-
-@interface CompareController : NSObject
+@interface CompareView : NSView
 {
-  NSMutableArray *compareFilters;
-
-  //GUI
-  TrivaWindow *window;
-  id view;
-  id markerTypeButton;
+  CompareController *controller; 
 }
-- (void) check;
-- (void) addFilters: (NSArray*) filters;
-- (void) timeLimitsChangedWithSender: (Compare*) c;
+- (void) setController: (CompareController*) cc;
 @end
-
-@interface CompareController (TypeHierarchy)
-- (NSDictionary *) typeHierarchy: (id) filter ofType: (PajeEntityType*) type;
-- (NSDictionary *) typeHierarchy: (id) filter;
-- (BOOL) checkTypeHierarchies: (NSArray*)typeHierarchies; //entry method
-@end
-
-#include "Compare.h"
 
 #endif
