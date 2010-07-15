@@ -109,7 +109,7 @@
 
   //search for timeline 
   Timeline *timeline = [self searchForTimelineAtPoint: p];
-  [timeline mouseAtPoint: p];
+  [timeline mouseMoved: event];
   [self setNeedsDisplay: YES];
 }
 
@@ -120,21 +120,17 @@
 
   //search for timeline 
   Timeline *timeline = [self searchForTimelineAtPoint: p];
-  [timeline leftMouseAtPoint: p];
+  [timeline mouseDown: event];
 }
 
-- (void) rightMouseDown: (NSEvent *) event
+- (void) mouseDragged:(NSEvent *)event
 {
   NSPoint p;
   p = [self convertPoint:[event locationInWindow] fromView:nil];
 
   //search for timeline 
   Timeline *timeline = [self searchForTimelineAtPoint: p];
-  [timeline rightMouseAtPoint: p];
-}
-
-- (void) mouseDragged:(NSEvent *)event
-{
+  [timeline mouseDragged: event];
 }
 @end
 

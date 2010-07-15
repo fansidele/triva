@@ -23,6 +23,8 @@
 #include "Timeline.h"
 #include "Marker.h"
 
+@class Timeline;
+
 @interface CompareView : NSView
 {
   CompareController *controller; 
@@ -34,6 +36,7 @@
 }
 - (void) setController: (CompareController*) cc;
 - (void) updateFilterDate;
+- (Timeline*) searchForTimelineAtPoint: (NSPoint)p;
 @end
 
 #endif

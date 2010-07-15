@@ -21,7 +21,7 @@
 #include <General/PajeFilter.h>
 #include "Compare.h"
 
-@interface Timeline : NSObject
+@interface Timeline : NSResponder
 {
   NSRect bb;
   id filter;

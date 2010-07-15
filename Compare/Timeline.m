@@ -148,4 +148,16 @@
     [filter setTimeIntervalFrom: selStart to: clicked];
   }
 }
+
+- (void) mouseMoved: (NSEvent *) event
+{
+}
+
+- (void) mouseDown: (NSEvent *) event
+{
+}
+
+- (void) mouseDragged: (NSEvent *) event
+{
+}
 @end
