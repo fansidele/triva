@@ -53,6 +53,7 @@
   while ((filter = [en nextObject])){
     Timeline *l = [[Timeline alloc] init];
     [l setFilter: filter];
+    [l setView: self];
     [timelines addObject: l];
     [l release];
   }

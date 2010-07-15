@@ -27,11 +27,13 @@
   id filter;
   double ratio;
   NSPoint currentMousePoint;
+  NSView *view;
 
 //  double selStart; // in seconds
 //  double selEnd; // in seconds
 }
 - (void) setFilter: (id) f;
+- (void) setView: (NSView *) v;
 - (void) setBB: (NSRect) r;
 - (void) setRatio: (double) r;
 - (void) draw;

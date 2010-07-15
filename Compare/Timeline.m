@@ -29,6 +29,11 @@
   filter = f;
 }
 
+- (void) setView: (NSView *) v
+{
+  view = v;
+}
+
 - (void) setBB: (NSRect) r
 {
   bb = r;
