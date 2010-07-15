@@ -14,26 +14,7 @@
     You should have received a copy of the GNU General Public License
     along with Triva.  If not, see <http://www.gnu.org/licenses/>.
 */
-/* All Rights reserved */
-#ifndef __COMPARE_VIEW_H
-#define __COMPARE_VIEW_H
-
-#include <AppKit/AppKit.h>
-#include "CompareController.h"
-#include "Timeline.h"
 #include "Marker.h"
 
-@interface CompareView : NSView
-{
-  CompareController *controller; 
-  double largestEndTime;
-  double ratio;
-  NSMutableArray *timelines;
-
-  BOOL sameMouseForAll;
-}
-- (void) setController: (CompareController*) cc;
-- (void) updateFilterDate;
+@implementation Marker
 @end
-
-#endif

@@ -27,6 +27,7 @@
   [window initializeWithDelegate: self];
   [markerTypeButton removeAllItems];
   [markerTypeButton setEnabled: NO];
+  [view setController: self];
   return self;
 }
 
@@ -43,7 +44,7 @@
 
 - (void) timeLimitsChangedWithSender: (Compare*) c
 {
-  NSLog (@"%@ %@ %@", c, [c startTime], [c endTime]);
+  [view setNeedsDisplay: YES];
 }
 
 - (void) check
@@ -66,6 +67,9 @@
 
   //search for markers
   //TODO
+
+  [view updateFilterDate];
+}
 
 - (NSArray*) filters
 {

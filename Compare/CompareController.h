@@ -22,6 +22,7 @@
 #include <General/PajeFilter.h>
 
 @class Compare;
+@class CompareView;
 
 @interface CompareController : NSObject
 {
@@ -29,7 +30,7 @@
 
   //GUI
   TrivaWindow *window;
-  id view;
+  CompareView *view;
   id markerTypeButton;
 }
 - (void) check;
@@ -45,5 +46,6 @@
 @end
 
 #include "Compare.h"
+#include "CompareView.h"
 
 #endif

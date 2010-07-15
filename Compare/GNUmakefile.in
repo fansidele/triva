@@ -29,6 +29,8 @@ Resources/Compare.gorm \
 # Header files
 #
 Compare_HEADER_FILES = \
+Timeline.h \
+Marker.h \
 Compare.h \
 CompareView.h \
 CompareController.h
@@ -37,6 +39,8 @@ CompareController.h
 # Class files
 #
 Compare_OBJC_FILES = \
+Timeline.m \
+Marker.m \
 Compare.m \
 CompareView.m \
 CompareController.m \

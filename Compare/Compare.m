@@ -40,6 +40,7 @@
 {
   selectionStart = start;
   selectionEnd = end;
+  [controller timeLimitsChangedWithSender: self];
   [self timeSelectionChanged];
 }
 
