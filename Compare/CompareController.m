@@ -39,4 +39,26 @@
 {
   NSLog (@"%@ %@ %@", c, [c startTime], [c endTime]);
 }
+
+- (void) check
+{
+  //get filters
+  id filter1 = [compareFilters objectAtIndex: 0];
+  id filter2 = [compareFilters objectAtIndex: 1];
+
+  //obtain type hierarchies
+  NSMutableArray *typeHierarchies = [NSMutableArray array];
+  [typeHierarchies addObject: [self typeHierarchy: filter1]];
+  [typeHierarchies addObject: [self typeHierarchy: filter2]];
+
+  //check if they are good to go
+  if (![self checkTypeHierarchies: typeHierarchies]){
+    //they do not match, raise exception
+    [NSException raise:@"TrivaException"
+                format:@"The type hierarchies of trace files do not match."];
+  }
+
+  //search for markers
+  //TODO
+}
 @end

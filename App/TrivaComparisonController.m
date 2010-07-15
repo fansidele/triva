@@ -55,7 +55,7 @@
   if (compareControllerClass == nil){
     return nil;
   }
-  id compareController = [[compareControllerClass alloc] init];
+  compareController = [[compareControllerClass alloc] init];
 
   //set the Compare filters' controller
   SEL method = @selector(setController:);
@@ -88,6 +88,10 @@
   [self readAllTracefileFrom: reader2];
   storage2 = [self componentWithName:@"StorageController" fromDictionary: seq2];
   [storage2 timeLimitsChanged];
+
+  //check if trace files are good to go
+  SEL method = @selector(check);
+  [compareController performSelector: method withObject: nil];
 }
 
 - (void)setSelectionWindow

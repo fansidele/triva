@@ -37,7 +37,8 @@ CompareController.h
 #
 Compare_OBJC_FILES = \
 Compare.m \
-CompareController.m
+CompareController.m \
+CompareController+TypeHierarchy.m
 
 Compare_INCLUDE_DIRS += -I../ -I./
 
