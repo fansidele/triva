@@ -16,11 +16,16 @@
 */
 #include "Timeline.h"
 
+#include <float.h>
+#include <math.h>
+
 @implementation Timeline
 - (id) init
 {
   self = [super init];
   currentMousePoint = NSZeroPoint;
+  currentTarget = -1;
+  targetSelected = NO;
   return self;
 }
 
@@ -54,9 +59,9 @@
 
 - (void) draw
 {
-  //border
-  [[NSColor grayColor] set];
-  [NSBezierPath strokeRect: bb];
+  //no-border
+  //[[NSColor grayColor] set];
+  //[NSBezierPath strokeRect: bb];
 
   double selStart = [[[filter selectionStartTime] description] doubleValue];
   double selEnd = [[[filter selectionEndTime] description] doubleValue];
@@ -78,18 +83,48 @@
   [[NSColor lightGrayColor] set];
   [NSBezierPath fillRect: s];
 
-  //draw current mouse point
-  if (!NSEqualPoints (NSZeroPoint, currentMousePoint)){
-    NSRect t = NSMakeRect (currentMousePoint.x,
-                           bb.origin.y + bb.size.height/2 - 10,
+  //draw current mouse point (if it is not dragging)
+  if (!NSEqualPoints (NSZeroPoint, currentMousePoint) && !targetDragging){
+    NSPoint pstr = NSMakePoint (currentMousePoint.x,
+                                bb.origin.y + bb.size.height/2 + 10);
+    NSRect t = NSMakeRect (pstr.x,
+                           pstr.y - 20,
                            2,
                            20);
     [[NSColor blackColor] set];
     [NSBezierPath fillRect: t];
 
     //draw time str
-    NSString *str = [NSString stringWithFormat: @"%f", currentMousePoint.x /ratio];
-    [str drawAtPoint: currentMousePoint withAttributes: nil];
+    NSString *str;
+    str = [NSString stringWithFormat: @"%f", currentMousePoint.x /ratio];
+    [str drawAtPoint: pstr withAttributes: nil];
+  }
+
+  //draw currentTarget
+  if (currentTarget >= 0){
+    NSPoint p = NSMakePoint(currentTarget * ratio,
+                            bb.origin.y + bb.size.height/2);
+    [[NSColor blueColor] set];
+    NSBezierPath *path = [NSBezierPath bezierPath];
+    [path appendBezierPathWithArcWithCenter: p
+                                     radius: 5
+                                 startAngle: 0
+                                   endAngle: 360];
+    [path fill];
+    if (targetSelected){
+      NSBezierPath *path = [NSBezierPath bezierPath];
+      [path appendBezierPathWithArcWithCenter: p
+                                       radius: 7
+                                   startAngle: 0
+                                     endAngle: 360];
+      [[NSColor redColor] set];
+      [path stroke];
+
+      NSString *str;
+      str = [NSString stringWithFormat: @"%f", currentTarget];
+      NSPoint pstr = NSMakePoint (p.x, p.y + 10);
+      [str drawAtPoint: pstr withAttributes: nil];
+    }
   }
 }
 
@@ -98,71 +133,85 @@
   return bb;
 }
 
-- (void) mouseAtPoint: (NSPoint) p
-{
-  currentMousePoint = p;
-}
-
-/*
-- (void) mouseDownAtPoint: (NSPoint) p
-{
-  currentMousePoint = p;
-  double newStart, newEnd;
-  double clicked = p.x/ratio;
-
-  double selStart = [[[filter selectionStartTime] description] doubleValue];
-  double selEnd = [[[filter selectionEndTime] description] doubleValue];
-
-  newStart = selStart;
-  newEnd = selEnd;
-
-  //clicked between current time slice
-  if (clicked > selStart && clicked < selEnd){
-    //if click was closer to start, change start
-    //otherwise, change end 
-    if ((clicked - selStart) < (selEnd - clicked)){
-      newStart = clicked;
-    }else{
-      newEnd = clicked;
-    }
-  }else{
-    if (clicked < selStart){
-      newStart = clicked;
-    }else if (clicked > selEnd){
-      newEnd = clicked;
-    }
-  }
-  [filter setTimeIntervalFrom: newStart to: newEnd];
-}
-*/
-
-- (void) leftMouseAtPoint: (NSPoint) p
-{
-  double clicked = p.x/ratio;
-  double selEnd = [[[filter selectionEndTime] description] doubleValue];
-  if (clicked < selEnd){
-    [filter setTimeIntervalFrom: clicked to: selEnd];
-  }
-}
-
-- (void) rightMouseAtPoint: (NSPoint) p
-{
-  double clicked = p.x/ratio;
-  double selStart = [[[filter selectionStartTime] description] doubleValue];
-  if (clicked > selStart){
-    [filter setTimeIntervalFrom: selStart to: clicked];
-  }
-}
-
 - (void) mouseMoved: (NSEvent *) event
 {
+  NSPoint p = [view convertPoint:[event locationInWindow] fromView:nil];
+  currentMousePoint = p;
+  double mousePosition = p.x/ratio;
+  double aux = FLT_MAX;
+
+  double selStart = [[[filter selectionStartTime] description] doubleValue];
+  double selEnd = [[[filter selectionEndTime] description] doubleValue];
+
+  //search for time slice borders
+  double candidate = fabs (mousePosition - selStart);
+  if (candidate < aux){
+    aux = candidate;
+    currentTarget = selStart;
+    target = SelectionStart;
+  }
+  candidate = fabs (mousePosition - selEnd);
+  if (candidate < aux){
+    aux = candidate;
+    currentTarget = selEnd;
+    target = SelectionEnd;
+  }
+
+  //search for markers
+  //TODO
 }
 
 - (void) mouseDown: (NSEvent *) event
 {
+  NSPoint p = [view convertPoint:[event locationInWindow] fromView:nil];
+  double mousePosition = p.x/ratio;
+
+  targetSelected = YES;
+  offsetFromMouseToTarget = currentTarget - mousePosition;
+  [view setNeedsDisplay: YES];
 }
 
 - (void) mouseDragged: (NSEvent *) event
 {
+  NSPoint p = [view convertPoint:[event locationInWindow] fromView:nil];
+  double mousePosition = p.x/ratio;
+
+  targetDragging = YES;
+
+  currentTarget = mousePosition + offsetFromMouseToTarget;
+
+  //move
+  [view setNeedsDisplay: YES];
 }
+
+- (void) mouseUp: (NSEvent *) event
+{
+  NSPoint p = [view convertPoint:[event locationInWindow] fromView:nil];
+  currentMousePoint = p;
+  double mousePosition = p.x/ratio;
+
+  targetSelected = NO;
+  targetDragging = NO;
+ 
+  //is selection start
+  currentTarget = mousePosition + offsetFromMouseToTarget;
+
+  double selStart = [[[filter selectionStartTime] description] doubleValue];
+  double selEnd = [[[filter selectionEndTime] description] doubleValue];
+
+  if (target == SelectionStart) {
+    [filter setTimeIntervalFrom: currentTarget to: selEnd];
+  }else if (target == SelectionEnd){
+    [filter setTimeIntervalFrom: selStart to: currentTarget];
+  }
+
+  //treats the change of target
+}
+
+/*
+- (BOOL)acceptsFirstResponder
+{
+  return YES;
+}
+*/
 @end

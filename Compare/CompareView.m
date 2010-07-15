@@ -105,8 +105,7 @@
 
 - (void) mouseMoved:(NSEvent *)event
 {
-  NSPoint p;
-  p = [self convertPoint:[event locationInWindow] fromView:nil];
+  NSPoint p = [self convertPoint:[event locationInWindow] fromView:nil];
 
   //search for timeline 
   Timeline *timeline = [self searchForTimelineAtPoint: p];
@@ -132,6 +131,16 @@
   //search for timeline 
   Timeline *timeline = [self searchForTimelineAtPoint: p];
   [timeline mouseDragged: event];
+}
+
+- (void) mouseUp: (NSEvent *)event
+{
+  NSPoint p;
+  p = [self convertPoint:[event locationInWindow] fromView:nil];
+
+  //search for timeline 
+  Timeline *timeline = [self searchForTimelineAtPoint: p];
+  [timeline mouseUp: event];
 }
 @end
 

@@ -21,6 +21,8 @@
 #include <General/PajeFilter.h>
 #include "Compare.h"
 
+enum Target { SelectionStart, SelectionEnd};
+
 @interface Timeline : NSResponder
 {
   NSRect bb;
@@ -28,6 +30,12 @@
   double ratio;
   NSPoint currentMousePoint;
   NSView *view;
+
+  double currentTarget;
+  double offsetFromMouseToTarget;
+  BOOL targetSelected;
+  BOOL targetDragging;
+  enum Target target;
 
 //  double selStart; // in seconds
 //  double selEnd; // in seconds
@@ -38,9 +46,6 @@
 - (void) setRatio: (double) r;
 - (void) draw;
 - (NSRect) bb;
-- (void) mouseAtPoint: (NSPoint) p;
-- (void) leftMouseAtPoint: (NSPoint) p;
-- (void) rightMouseAtPoint: (NSPoint) p;
 - (void) updateSelectionInterval;
 @end
 
