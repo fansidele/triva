@@ -20,6 +20,8 @@
 - (id)initWithController:(PajeTraceController *)c
 {
   self = [super initWithController: c];
+  selectionStart = 0;
+  selectionEnd = 0;
   return self;
 }
 
@@ -32,5 +34,31 @@
 {
   [controller timeLimitsChangedWithSender: self];
   [super timeLimitsChanged];
+}
+
+- (void) setTimeIntervalFrom: (double) start to: (double) end
+{
+  selectionStart = start;
+  selectionEnd = end;
+  [self timeSelectionChanged];
+}
+
+// from the protocol 
+- (NSDate *) selectionStartTime
+{
+  if (selectionStart){
+    return [NSDate dateWithTimeIntervalSinceReferenceDate:selectionStart];
+  }else{
+    return [super selectionStartTime];
+  }
+}
+
+- (NSDate *) selectionEndTime
+{
+  if (selectionEnd){
+    return [NSDate dateWithTimeIntervalSinceReferenceDate: selectionEnd];
+  }else{
+    return [super selectionEndTime];
+  }
 }
 @end

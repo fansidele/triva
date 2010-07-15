@@ -24,8 +24,11 @@
 
 @interface Compare  : PajeFilter
 {
+  double selectionStart;
+  double selectionEnd;
 }
 - (void) setController: (CompareController*) c;
+- (void) setTimeIntervalFrom: (double) start to: (double) end;
 @end
 
 #endif
