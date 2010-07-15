@@ -64,6 +64,10 @@
 
   //search for markers
   //TODO
+
+- (NSArray*) filters
+{
+  return compareFilters;
 }
 
 - (BOOL) windowShouldClose: (id) sender

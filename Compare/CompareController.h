@@ -35,6 +35,7 @@
 - (void) check;
 - (void) addFilters: (NSArray*) filters;
 - (void) timeLimitsChangedWithSender: (Compare*) c;
+- (NSArray*) filters;
 @end
 
 @interface CompareController (TypeHierarchy)
