@@ -20,9 +20,6 @@
 - (id)initWithController:(PajeTraceController *)c
 {
   self = [super initWithController: c];
-//  if (self != nil){
-//    [NSBundle loadNibNamed: @"Compare" owner: self];
-//  }
   return self;
 }
 
