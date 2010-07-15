@@ -18,6 +18,7 @@
 #define __COMPARE_CONT_H
 
 #include <Foundation/Foundation.h>
+#include <General/PajeFilter.h>
 
 @class Compare;
 
