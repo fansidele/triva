@@ -23,13 +23,12 @@
 
 enum Target { SelectionStart, SelectionEnd};
 
-@interface Timeline : NSResponder
+@interface Timeline : NSView
 {
-  NSRect bb;
   id filter;
-  double ratio;
+  id controller;
   NSPoint currentMousePoint;
-  NSView *view;
+  double ratio;
 
   double currentTarget;
   double offsetFromMouseToTarget;
@@ -41,12 +40,7 @@ enum Target { SelectionStart, SelectionEnd};
 //  double selEnd; // in seconds
 }
 - (void) setFilter: (id) f;
-- (void) setView: (NSView *) v;
-- (void) setBB: (NSRect) r;
-- (void) setRatio: (double) r;
-- (void) draw;
-- (NSRect) bb;
-- (void) updateSelectionInterval;
+- (void) setController: (id) c;
 @end
 
 #endif

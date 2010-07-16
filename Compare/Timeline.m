@@ -20,12 +20,13 @@
 #include <math.h>
 
 @implementation Timeline
-- (id) init
+- (id) initWithFrame: (NSRect) frame
 {
-  self = [super init];
+  self = [super initWithFrame: frame];
   currentMousePoint = NSZeroPoint;
   currentTarget = -1;
   targetSelected = NO;
+  [self setAutoresizingMask: NSViewWidthSizable|NSViewHeightSizable];
   return self;
 }
 
@@ -34,34 +35,15 @@
   filter = f;
 }
 
-- (void) setView: (NSView *) v
+- (void) setController: (id) c
 {
-  view = v;
+  controller = c;
 }
 
-- (void) setBB: (NSRect) r
+- (void) drawRect: (NSRect) r
 {
-  bb = r;
-}
-
-- (void) setRatio: (double) r
-{
-  ratio = r;
-}
-
-- (void) updateSelectionInterval
-{
-/*
-  selStart = [[[filter selectionStartTime] description] doubleValue];
-  selEnd = [[[filter selectionEndTime] description] doubleValue];
-*/
-}
-
-- (void) draw
-{
-  //no-border
-  //[[NSColor grayColor] set];
-  //[NSBezierPath strokeRect: bb];
+  NSRect bb = [self bounds];
+  ratio = bb.size.width/[controller largestEndTime];
 
   double selStart = [[[filter selectionStartTime] description] doubleValue];
   double selEnd = [[[filter selectionEndTime] description] doubleValue];
@@ -128,14 +110,9 @@
   }
 }
 
-- (NSRect) bb
-{
-  return bb;
-}
-
 - (void) mouseMoved: (NSEvent *) event
 {
-  NSPoint p = [view convertPoint:[event locationInWindow] fromView:nil];
+  NSPoint p = [self convertPoint:[event locationInWindow] fromView:nil];
   currentMousePoint = p;
   double mousePosition = p.x/ratio;
   double aux = FLT_MAX;
@@ -159,21 +136,23 @@
 
   //search for markers
   //TODO
+
+  [self setNeedsDisplay: YES];
 }
 
 - (void) mouseDown: (NSEvent *) event
 {
-  NSPoint p = [view convertPoint:[event locationInWindow] fromView:nil];
+  NSPoint p = [self convertPoint:[event locationInWindow] fromView:nil];
   double mousePosition = p.x/ratio;
 
   targetSelected = YES;
   offsetFromMouseToTarget = currentTarget - mousePosition;
-  [view setNeedsDisplay: YES];
+  [self setNeedsDisplay: YES];
 }
 
 - (void) mouseDragged: (NSEvent *) event
 {
-  NSPoint p = [view convertPoint:[event locationInWindow] fromView:nil];
+  NSPoint p = [self convertPoint:[event locationInWindow] fromView:nil];
   double mousePosition = p.x/ratio;
 
   targetDragging = YES;
@@ -181,12 +160,12 @@
   currentTarget = mousePosition + offsetFromMouseToTarget;
 
   //move
-  [view setNeedsDisplay: YES];
+  [self setNeedsDisplay: YES];
 }
 
 - (void) mouseUp: (NSEvent *) event
 {
-  NSPoint p = [view convertPoint:[event locationInWindow] fromView:nil];
+  NSPoint p = [self convertPoint:[event locationInWindow] fromView:nil];
   currentMousePoint = p;
   double mousePosition = p.x/ratio;
 
@@ -208,10 +187,8 @@
   //treats the change of target
 }
 
-/*
 - (BOOL)acceptsFirstResponder
 {
   return YES;
 }
-*/
 @end

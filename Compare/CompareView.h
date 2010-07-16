@@ -28,15 +28,12 @@
 @interface CompareView : NSView
 {
   CompareController *controller; 
-  double largestEndTime;
-  double ratio;
   NSMutableArray *timelines;
 
   BOOL sameMouseForAll;
 }
 - (void) setController: (CompareController*) cc;
-- (void) updateFilterDate;
-- (Timeline*) searchForTimelineAtPoint: (NSPoint)p;
+- (void) update;
 @end
 
 #endif
