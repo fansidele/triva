@@ -81,4 +81,19 @@
   [[NSApplication sharedApplication] terminate:self];
   return YES;
 }
+
+
+- (double) largestEndTime
+{
+  NSEnumerator *en = [compareFilters objectEnumerator];
+  NSDate *largest = [NSDate distantPast];
+  id filter;
+  while ((filter = [en nextObject])){
+    if ([largest compare: [filter endTime]] == NSOrderedAscending){
+      largest = [filter endTime];
+    }
+    largest = [largest laterDate: [filter endTime]];
+  }
+  return [[largest description] doubleValue];
+}
 @end

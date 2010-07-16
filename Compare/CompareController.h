@@ -37,6 +37,7 @@
 - (void) addFilters: (NSArray*) filters;
 - (void) timeLimitsChangedWithSender: (Compare*) c;
 - (NSArray*) filters;
+- (double) largestEndTime;
 @end
 
 @interface CompareController (TypeHierarchy)
