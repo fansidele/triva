@@ -38,8 +38,16 @@
 
 - (void) setTimeIntervalFrom: (double) start to: (double) end
 {
+  double startTime = [[[self startTime] description] doubleValue];
+  double endTime = [[[self endTime] description] doubleValue];
+
+  //checks
+  if (end > endTime) end = endTime;
+  if (start < startTime) start = startTime;
+
   selectionStart = start;
   selectionEnd = end;
+
   [controller timeLimitsChangedWithSender: self];
   [self timeSelectionChanged];
 }
