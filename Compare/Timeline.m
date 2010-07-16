@@ -39,24 +39,15 @@
 {
   NSRect frame = [self frame];
 
-
   double selStart = [[[filter selectionStartTime] description] doubleValue];
-  NSRect startFrame = NSMakeRect ((selStart * ratio)-10, //selStart position
+  NSRect startFrame = NSMakeRect ([self timeToPixel: selStart]-10,
                                   frame.size.height/2,     //middle
                                   20,                      //20 pixels-width
                                   frame.size.height/2);   //50% of my height
   [sliceStartMarker setFrame: startFrame];
 
-
-  double traceEnd = [[[filter endTime] description] doubleValue];
   double selEnd = [[[filter selectionEndTime] description] doubleValue];
-  double xpos;
-  if (selEnd == traceEnd){
-    xpos = frame.size.width - 20;
-  }else{
-    xpos = (selEnd * ratio) - 10;
-  }
-  NSRect endFrame = NSMakeRect (xpos,
+  NSRect endFrame = NSMakeRect ([self timeToPixel: selEnd]-10,
                                 frame.size.height/2,
                                 20,
                                 frame.size.height/2);
@@ -73,30 +64,48 @@
   controller = c;
 }
 
+- (void) updateRatio
+{
+  NSRect bb = [self bounds];
+  ratio = (bb.size.width - 10)/[controller largestEndTime];
+}
+
 - (void) drawRect: (NSRect) r
 {
   NSRect bb = [self bounds];
-  ratio = bb.size.width/[controller largestEndTime];
+  [self updateRatio];
 
   double selStart = [[[filter selectionStartTime] description] doubleValue];
   double selEnd = [[[filter selectionEndTime] description] doubleValue];
   double filterEndTime = [[[filter endTime] description] doubleValue];
 
   //drawing the timeline
-  NSRect t = NSMakeRect (bb.origin.x,
-                         bb.origin.y + bb.size.height/2 - 1,
-                         filterEndTime * ratio,
-                         2);
+  NSBezierPath *timeline = [NSBezierPath bezierPath];
+  [timeline moveToPoint: NSMakePoint (bb.origin.x + 5,
+                                      bb.size.height / 2)];
+  [timeline relativeMoveToPoint: NSMakePoint (0, 5)];
+  [timeline relativeLineToPoint: NSMakePoint (0, -10)];
+  [timeline relativeMoveToPoint: NSMakePoint (0, 5)];
+  [timeline lineToPoint: NSMakePoint ([self timeToPixel: filterEndTime], 
+                                      bb.size.height / 2)];
+  [timeline relativeMoveToPoint: NSMakePoint (0, 5)];
+  [timeline relativeLineToPoint: NSMakePoint (0, -10)];
+  [timeline relativeMoveToPoint: NSMakePoint (0, 5)];
   [[NSColor blackColor] set];
-  [NSBezierPath fillRect: t];
+  [timeline stroke];
 
   //drawing the selected time slice
-  NSRect s = NSMakeRect (selStart * ratio,
-                         bb.origin.y + bb.size.height/2 - 2,
-                         (selEnd * ratio) - (selStart * ratio),
-                         4);
+  NSBezierPath *timeslice = [NSBezierPath bezierPath];
+  [timeslice moveToPoint: NSMakePoint ([self timeToPixel: selStart],
+                                       bb.size.height/2 - 2)];
+  [timeslice lineToPoint: NSMakePoint ([self timeToPixel: selEnd],
+                                       bb.size.height/2 - 2)];
+  [timeslice relativeLineToPoint: NSMakePoint (0, 4)];
+  [timeslice lineToPoint: NSMakePoint ([self timeToPixel: selStart],
+                                       bb.size.height/2 + 2)];
+  [timeslice relativeLineToPoint: NSMakePoint (0, -4)];
   [[NSColor lightGrayColor] set];
-  [NSBezierPath fillRect: s];
+  [timeslice fill];
 }
 
 - (BOOL)acceptsFirstResponder
@@ -107,23 +116,23 @@
 - (void) sliceStartChanged
 {
   double selEnd = [[[filter selectionEndTime] description] doubleValue];
-  double start = ([sliceStartMarker frame].origin.x+10) / ratio;
+  double start = [self pixelToTime: [sliceStartMarker position]];
   [filter setTimeIntervalFrom: start to: selEnd];
 }
 - (void) sliceEndChanged
 {
   double selStart = [[[filter selectionStartTime] description] doubleValue];
-  double end = ([sliceEndMarker frame].origin.x+10) / ratio;
+  double end = [self pixelToTime: [sliceEndMarker position]];
   [filter setTimeIntervalFrom: selStart to: end];
 }
 
 - (double) pixelToTime: (double) pixel
 {
-  return pixel / ratio;
+  return (pixel - 5) / ratio;
 }
 
 - (double) timeToPixel: (double) time
 {
-  return time * ratio;
+  return 5 + (time * ratio);
 }
 @end

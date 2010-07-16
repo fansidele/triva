@@ -32,13 +32,11 @@
 - (void) drawRect: (NSRect) r
 {
   r = [self bounds];
-
   [[NSColor blueColor] set];
   NSBezierPath *path = [NSBezierPath bezierPath];
-  [path appendBezierPathWithArcWithCenter:
-            NSMakePoint (r.size.width/2, 10)
+  [path appendBezierPathWithArcWithCenter: NSMakePoint (10, 20)
                             radius: 5 startAngle: 270 endAngle: 269];
-  [path lineToPoint: NSMakePoint (r.size.width/2, 0)];
+  [path lineToPoint: NSMakePoint (10, 0)];
   [path stroke];
   [path fill];
 
@@ -49,7 +47,7 @@
   double time = [timeline pixelToTime:
                       [self convertPoint:NSMakePoint(0,0) toView:nil].x];
   [[NSString stringWithFormat: @"%f", time]
-            drawAtPoint: NSMakePoint(15,-r.size.width)
+            drawAtPoint: NSMakePoint(30,-r.size.width)
          withAttributes: nil];
   [trans invert];
   [trans concat];
@@ -66,6 +64,12 @@
   NSPoint p = [self convertPoint:[event locationInWindow] toView:self];
   [self setFrameOrigin: NSMakePoint(p.x + offset, [self frame].origin.y)];
   [[self superview] setNeedsDisplay: YES];
+}
+
+- (double) position //return in pixels on superview coordinates
+{
+  //depends on the position of the marker drawing
+  return [self frame].origin.x + 10; 
 }
 @end
 

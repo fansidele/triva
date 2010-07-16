@@ -27,6 +27,7 @@
   Timeline *timeline;
 }
 - (void) setTimeline: (Timeline*) t;
+- (double) position;
 @end
 
 @interface SliceStartMarker : Marker
