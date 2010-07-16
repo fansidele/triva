@@ -23,11 +23,44 @@
 - (id) initWithFrame: (NSRect) frame
 {
   self = [super initWithFrame: frame];
-  currentMousePoint = NSZeroPoint;
-  currentTarget = -1;
-  targetSelected = NO;
   [self setAutoresizingMask: NSViewWidthSizable|NSViewHeightSizable];
+
+  //creating Slice Markers
+  sliceStartMarker = [[SliceStartMarker alloc] initWithFrame: frame];
+  sliceEndMarker = [[SliceEndMarker alloc] initWithFrame: frame];
+  [sliceStartMarker setTimeline: self];
+  [sliceEndMarker setTimeline: self];
+  [self addSubview: sliceStartMarker];
+  [self addSubview: sliceEndMarker];
   return self;
+}
+
+- (void) resizeSubviewsWithOldSize: (NSSize) size
+{
+  NSRect frame = [self frame];
+
+
+  double selStart = [[[filter selectionStartTime] description] doubleValue];
+  NSRect startFrame = NSMakeRect ((selStart * ratio)-10, //selStart position
+                                  frame.size.height/2,     //middle
+                                  20,                      //20 pixels-width
+                                  frame.size.height/2);   //50% of my height
+  [sliceStartMarker setFrame: startFrame];
+
+
+  double traceEnd = [[[filter endTime] description] doubleValue];
+  double selEnd = [[[filter selectionEndTime] description] doubleValue];
+  double xpos;
+  if (selEnd == traceEnd){
+    xpos = frame.size.width - 20;
+  }else{
+    xpos = (selEnd * ratio) - 10;
+  }
+  NSRect endFrame = NSMakeRect (xpos,
+                                frame.size.height/2,
+                                20,
+                                frame.size.height/2);
+  [sliceEndMarker setFrame: endFrame];
 }
 
 - (void) setFilter: (id) f
@@ -64,131 +97,33 @@
                          4);
   [[NSColor lightGrayColor] set];
   [NSBezierPath fillRect: s];
-
-  //draw current mouse point (if it is not dragging)
-  if (!NSEqualPoints (NSZeroPoint, currentMousePoint) && !targetDragging){
-    NSPoint pstr = NSMakePoint (currentMousePoint.x,
-                                bb.origin.y + bb.size.height/2 + 10);
-    NSRect t = NSMakeRect (pstr.x,
-                           pstr.y - 20,
-                           2,
-                           20);
-    [[NSColor blackColor] set];
-    [NSBezierPath fillRect: t];
-
-    //draw time str
-    NSString *str;
-    str = [NSString stringWithFormat: @"%f", currentMousePoint.x /ratio];
-    [str drawAtPoint: pstr withAttributes: nil];
-  }
-
-  //draw currentTarget
-  if (currentTarget >= 0){
-    NSPoint p = NSMakePoint(currentTarget * ratio,
-                            bb.origin.y + bb.size.height/2);
-    [[NSColor blueColor] set];
-    NSBezierPath *path = [NSBezierPath bezierPath];
-    [path appendBezierPathWithArcWithCenter: p
-                                     radius: 5
-                                 startAngle: 0
-                                   endAngle: 360];
-    [path fill];
-    if (targetSelected){
-      NSBezierPath *path = [NSBezierPath bezierPath];
-      [path appendBezierPathWithArcWithCenter: p
-                                       radius: 7
-                                   startAngle: 0
-                                     endAngle: 360];
-      [[NSColor redColor] set];
-      [path stroke];
-
-      NSString *str;
-      str = [NSString stringWithFormat: @"%f", currentTarget];
-      NSPoint pstr = NSMakePoint (p.x, p.y + 10);
-      [str drawAtPoint: pstr withAttributes: nil];
-    }
-  }
-}
-
-- (void) mouseMoved: (NSEvent *) event
-{
-  NSPoint p = [self convertPoint:[event locationInWindow] fromView:nil];
-  currentMousePoint = p;
-  double mousePosition = p.x/ratio;
-  double aux = FLT_MAX;
-
-  double selStart = [[[filter selectionStartTime] description] doubleValue];
-  double selEnd = [[[filter selectionEndTime] description] doubleValue];
-
-  //search for time slice borders
-  double candidate = fabs (mousePosition - selStart);
-  if (candidate < aux){
-    aux = candidate;
-    currentTarget = selStart;
-    target = SelectionStart;
-  }
-  candidate = fabs (mousePosition - selEnd);
-  if (candidate < aux){
-    aux = candidate;
-    currentTarget = selEnd;
-    target = SelectionEnd;
-  }
-
-  //search for markers
-  //TODO
-
-  [self setNeedsDisplay: YES];
-}
-
-- (void) mouseDown: (NSEvent *) event
-{
-  NSPoint p = [self convertPoint:[event locationInWindow] fromView:nil];
-  double mousePosition = p.x/ratio;
-
-  targetSelected = YES;
-  offsetFromMouseToTarget = currentTarget - mousePosition;
-  [self setNeedsDisplay: YES];
-}
-
-- (void) mouseDragged: (NSEvent *) event
-{
-  NSPoint p = [self convertPoint:[event locationInWindow] fromView:nil];
-  double mousePosition = p.x/ratio;
-
-  targetDragging = YES;
-
-  currentTarget = mousePosition + offsetFromMouseToTarget;
-
-  //move
-  [self setNeedsDisplay: YES];
-}
-
-- (void) mouseUp: (NSEvent *) event
-{
-  NSPoint p = [self convertPoint:[event locationInWindow] fromView:nil];
-  currentMousePoint = p;
-  double mousePosition = p.x/ratio;
-
-  targetSelected = NO;
-  targetDragging = NO;
- 
-  //is selection start
-  currentTarget = mousePosition + offsetFromMouseToTarget;
-
-  double selStart = [[[filter selectionStartTime] description] doubleValue];
-  double selEnd = [[[filter selectionEndTime] description] doubleValue];
-
-  if (target == SelectionStart) {
-    [filter setTimeIntervalFrom: currentTarget to: selEnd];
-  }else if (target == SelectionEnd){
-    [filter setTimeIntervalFrom: selStart to: currentTarget];
-  }
-
-  //treats the change of target
 }
 
 - (BOOL)acceptsFirstResponder
 {
   return YES;
+}
+
+- (void) sliceStartChanged
+{
+  double selEnd = [[[filter selectionEndTime] description] doubleValue];
+  double start = ([sliceStartMarker frame].origin.x+10) / ratio;
+  [filter setTimeIntervalFrom: start to: selEnd];
+}
+- (void) sliceEndChanged
+{
+  double selStart = [[[filter selectionStartTime] description] doubleValue];
+  double end = ([sliceEndMarker frame].origin.x+10) / ratio;
+  [filter setTimeIntervalFrom: selStart to: end];
+}
+
+- (double) pixelToTime: (double) pixel
+{
+  return pixel / ratio;
+}
+
+- (double) timeToPixel: (double) time
+{
+  return time * ratio;
 }
 @end

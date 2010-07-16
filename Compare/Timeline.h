@@ -20,27 +20,25 @@
 #include <AppKit/AppKit.h>
 #include <General/PajeFilter.h>
 #include "Compare.h"
+#include "Marker.h"
 
-enum Target { SelectionStart, SelectionEnd};
+enum Target { SelectionStart, SelectionEnd, TimeSlice};
 
 @interface Timeline : NSView
 {
   id filter;
   id controller;
-  NSPoint currentMousePoint;
   double ratio;
 
-  double currentTarget;
-  double offsetFromMouseToTarget;
-  BOOL targetSelected;
-  BOOL targetDragging;
-  enum Target target;
-
-//  double selStart; // in seconds
-//  double selEnd; // in seconds
+  SliceStartMarker *sliceStartMarker;
+  SliceEndMarker *sliceEndMarker;
 }
 - (void) setFilter: (id) f;
 - (void) setController: (id) c;
+- (void) sliceStartChanged;
+- (void) sliceEndChanged;
+- (double) pixelToTime: (double) pixel;
+- (double) timeToPixel: (double) time;
 @end
 
 #endif

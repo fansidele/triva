@@ -19,7 +19,21 @@
 
 #include <AppKit/AppKit.h>
 
-@interface Marker : NSObject
+@class Timeline;
+
+@interface Marker : NSView
+{
+  double offset;
+  Timeline *timeline;
+}
+- (void) setTimeline: (Timeline*) t;
 @end
 
+@interface SliceStartMarker : Marker
+@end
+
+@interface SliceEndMarker : Marker
+@end
+
+#include "Timeline.h"
 #endif
