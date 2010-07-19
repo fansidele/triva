@@ -99,4 +99,50 @@
   }
   return [[largest description] doubleValue];
 }
+
+- (BOOL) startSynchronized
+{
+  if ([startSynchronized state] == NSOnState){
+    return YES;
+  }else{
+    return NO;
+  }
+}
+
+- (BOOL) endSynchronized
+{
+  if ([endSynchronized state] == NSOnState){
+    return YES;
+  }else{
+    return NO;
+  }
+}
+
+- (void) setStartTimeInterval: (double) start
+                     ofFilter: (id) filter
+{
+  NSEnumerator *en = [compareFilters objectEnumerator];
+  if ([self startSynchronized]){
+    id f;
+    while ((f = [en nextObject])){
+      [f setSelectionStart: start];
+    }
+  }else{
+    [filter setSelectionStart: start];
+  }
+}
+
+- (void) setEndTimeInterval: (double) end
+                   ofFilter: (id) filter
+{
+  NSEnumerator *en = [compareFilters objectEnumerator];
+  if ([self endSynchronized]){
+    id f;
+    while ((f = [en nextObject])){
+      [f setSelectionEnd: end];
+    }
+  }else{
+    [filter setSelectionEnd: end];
+  }
+}
 @end

@@ -127,15 +127,13 @@
 
 - (void) sliceStartChanged
 {
-  double selEnd = [[[filter selectionEndTime] description] doubleValue];
   double start = [self pixelToTime: [sliceStartMarker position]];
-  [filter setTimeIntervalFrom: start to: selEnd];
+  [controller setStartTimeInterval: start ofFilter: filter];
 }
 - (void) sliceEndChanged
 {
-  double selStart = [[[filter selectionStartTime] description] doubleValue];
   double end = [self pixelToTime: [sliceEndMarker position]];
-  [filter setTimeIntervalFrom: selStart to: end];
+  [controller setEndTimeInterval: end ofFilter: filter];
 }
 
 - (double) pixelToTime: (double) pixel

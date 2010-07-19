@@ -32,12 +32,20 @@
   TrivaWindow *window;
   CompareView *view;
   id markerTypeButton;
+  id startSynchronized;
+  id endSynchronized;
 }
 - (void) check;
 - (void) addFilters: (NSArray*) filters;
 - (void) timeLimitsChangedWithSender: (Compare*) c;
 - (NSArray*) filters;
 - (double) largestEndTime;
+- (BOOL) startSynchronized;
+- (BOOL) endSynchronized;
+- (void) setStartTimeInterval: (double) start
+                     ofFilter: (id) filter;
+- (void) setEndTimeInterval: (double) end
+                   ofFilter: (id) filter;
 @end
 
 @interface CompareController (TypeHierarchy)

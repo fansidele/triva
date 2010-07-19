@@ -19,7 +19,9 @@
 	Outlets = (
 	    window,
 	    markerTypeButton,
-	    view
+	    view,
+	    endSynchronized,
+	    startSynchronized
 	);
 	Super = NSObject;
     };
