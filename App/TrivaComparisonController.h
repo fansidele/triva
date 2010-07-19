@@ -22,10 +22,7 @@
 
 @interface TrivaComparisonController : TrivaController
 {
-  NSMutableDictionary *seq1, *seq2;
-  id reader1, storage1;
-  id reader2, storage2;
-
+  NSMutableArray *graphSequences;
   id compareController;
 }
 - (void) setSelectionWindow;

@@ -21,18 +21,12 @@
 {
   self = [super initWithArguments: arguments];
 
-  NSArray *g1 = nil, *g2 = nil; 
+  graphSequences = [NSMutableArray array];
+
+  int input_size = arguments.input_size, i = 0;
+  NSArray *g = nil;
   if (arguments.treemap){
-    g1 = [@"(  \
-      ( FileReader, \
-         PajeEventDecoder, \
-         PajeSimulator, \
-         StorageController, \
-         Compare, \
-         TimeSliceAggregation, \
-         SquarifiedTreemap \
-      ) )" propertyList];
-    g2 = [@"(  \
+    g = [@"(  \
       ( FileReader, \
          PajeEventDecoder, \
          PajeSimulator, \
@@ -42,17 +36,7 @@
          SquarifiedTreemap \
       ) )" propertyList];
   }else if (arguments.graph){
-    g1 = [@"(  \
-      ( FileReader, \
-         PajeEventDecoder, \
-         PajeSimulator, \
-         StorageController, \
-         Compare, \
-         TimeSliceAggregation, \
-         GraphConfiguration, \
-         GraphView \
-      ) )" propertyList];
-    g2 = [@"(  \
+    g = [@"(  \
       ( FileReader, \
          PajeEventDecoder, \
          PajeSimulator, \
@@ -68,12 +52,12 @@
     [exception raise];
   }
 
-
-  //create graphs
-  seq1 = [NSMutableDictionary dictionary];
-  seq2 = [NSMutableDictionary dictionary];
-  [self addComponentSequences: g1 withDictionary: seq1];
-  [self addComponentSequences: g2 withDictionary: seq2];
+  //loading bundles and creating graph sequences
+  for (i = 0; i < input_size; i++){ 
+    NSMutableDictionary *d = [NSMutableDictionary dictionary];
+    [self addComponentSequences: g withDictionary: d];
+    [graphSequences addObject: d];
+  }
 
   //create the CompareController
   Class compareControllerClass = NSClassFromString(@"CompareController");
@@ -82,16 +66,20 @@
   }
   compareController = [[compareControllerClass alloc] init];
 
-  //set the Compare filters' controller
-  SEL method = @selector(setController:);
-  [[seq1 objectForKey: @"Compare"] performSelector: method withObject: compareController];
-  [[seq2 objectForKey: @"Compare"] performSelector: method withObject: compareController];
-
-  //add the compare filters to the controller
+  //create graph sequences (the number of files to be compared)
   NSMutableArray *compareFilters = [NSMutableArray array];
-  [compareFilters addObject: [seq1 objectForKey: @"Compare"]];
-  [compareFilters addObject: [seq2 objectForKey: @"Compare"]];
-  method = @selector(addFilters:);
+  for (i = 0; i < input_size; i++){ 
+    NSMutableDictionary *d;
+    d = [graphSequences objectAtIndex: i];
+    
+    //set the Compare filters' controller
+    SEL method = @selector(setController:);
+    [[d objectForKey: @"Compare"] performSelector: method withObject: compareController];
+
+    //add the compare filters to the controller
+    [compareFilters addObject: [d objectForKey: @"Compare"]];
+  }
+  SEL method = @selector(addFilters:);
   [compareController performSelector: method withObject: compareFilters];
 
   [self initializeWithArguments: arguments];
@@ -100,30 +88,27 @@
 
 - (void) initializeWithArguments: (struct arguments) arguments
 {
-
   //disabling single-file attributes
   reader = nil;
   encapsulator = nil;
 
-  int i;
+  int input_size = arguments.input_size, i = 0;
   NSMutableArray *files = [NSMutableArray array];
   for (i = 0; i < arguments.input_size; i++){
     [files addObject: [NSString stringWithFormat: @"%s", arguments.input[i]]];
   }
 
-  //reading the first file
-  reader1 = [self componentWithName:@"FileReader" fromDictionary: seq1];
-  [reader1 setInputFilename: [files objectAtIndex: 0]];
-  [self readAllTracefileFrom: reader1];
-  storage1 = [self componentWithName:@"StorageController" fromDictionary: seq1];
-  [storage1 timeLimitsChanged];
+  //reading the files
+  for (i = 0; i < input_size; i++){
+    id graph = [graphSequences objectAtIndex: i];
+    id r = [self componentWithName:@"FileReader" fromDictionary: graph];
+    id storage = [self componentWithName:@"StorageController" fromDictionary: graph];
 
-  //reading the second file
-  reader2 = [self componentWithName:@"FileReader" fromDictionary: seq2];
-  [reader2 setInputFilename: [files objectAtIndex: 1]];
-  [self readAllTracefileFrom: reader2];
-  storage2 = [self componentWithName:@"StorageController" fromDictionary: seq2];
-  [storage2 timeLimitsChanged];
+    [r setInputFilename: [files objectAtIndex: i]];
+    [self readAllTracefileFrom: r];
+    [storage timeLimitsChanged];
+
+  }
 
   //check if trace files are good to go
   SEL method = @selector(check);
@@ -134,9 +119,12 @@
 
 - (void)setSelectionWindow
 {
-  [storage1 setSelectionStartTime: [storage1 startTime]
-                          endTime: [storage1 endTime]];
-  [storage2 setSelectionStartTime: [storage2 startTime]
-                          endTime: [storage2 endTime]];
+  NSEnumerator *en = [graphSequences objectEnumerator];
+  id graph;
+  while ((graph = [en nextObject])){
+    id storage = [self componentWithName:@"StorageController" fromDictionary: graph];
+    [storage setSelectionStartTime: [storage startTime]
+                          endTime: [storage endTime]];
+  }
 }
 @end
