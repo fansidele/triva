@@ -137,6 +137,11 @@
 {
   NSEnumerator *en = [compareFilters objectEnumerator];
   if ([self endSynchronized]){
+    //controlling end time
+    double endTime = [[[filter endTime] description] doubleValue];
+    if (end > endTime) end = endTime;
+
+    //go on
     id f;
     while ((f = [en nextObject])){
       [f setSelectionEnd: end];
