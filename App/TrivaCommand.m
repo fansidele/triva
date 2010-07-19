@@ -36,13 +36,6 @@ static struct argp_option options[] = {
   { 0 }
 };
 
-static int has_vis_activated (struct arguments *arg)
-{
-  return arg->treemap || arg->graph || arg->linkview || arg->comparison ||
-      arg->hierarchy || arg->check || 
-      arg->list || arg->instances;
-}
-
 /* Parse a single option. */
 static int parse_options (int key, char *arg, struct argp_state *state)
 {
@@ -53,35 +46,27 @@ static int parse_options (int key, char *arg, struct argp_state *state)
   switch (key)
     {
     case 't':
-      if (has_vis_activated (arguments)) argp_usage(state);
       arguments->treemap = 1;
       break;
     case 'g':
-      if (has_vis_activated (arguments)) argp_usage(state);
       arguments->graph = 1;
       break;
     case 'k':
-      if (has_vis_activated (arguments)) argp_usage(state);
       arguments->linkview = 1;
       break;
     case 's':
-      if (has_vis_activated (arguments)) argp_usage(state);
       arguments->comparison = 1;
       break;
     case 'h':
-      if (has_vis_activated (arguments)) argp_usage(state);
       arguments->hierarchy = 1;
       break;
     case 'c':
-      if (has_vis_activated (arguments)) argp_usage(state);
       arguments->check = 1;
       break;
     case 'l':
-      if (has_vis_activated (arguments)) argp_usage(state);
       arguments->list = 1;
       break;
     case 'i':
-      if (has_vis_activated (arguments)) argp_usage(state);
       arguments->instances = 1;
       break;
 
