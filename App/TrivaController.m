@@ -22,26 +22,28 @@
 {
   TrivaController *triva = nil;
   //configuring triva
-  if (arguments.treemap) {
-    triva = [[TrivaTreemapController alloc] initWithArguments: arguments];
-  }else if (arguments.graph){
-    triva = [[TrivaGraphController alloc] initWithArguments: arguments];
-  }else if (arguments.linkview){
-    triva = [[TrivaLinkController alloc] initWithArguments: arguments];
-  }else if (arguments.comparison){
+  if (arguments.comparison){
     triva = [[TrivaComparisonController alloc] initWithArguments: arguments];
-  }else if (arguments.hierarchy) {
-    triva = [[TrivaDotController alloc] initWithArguments: arguments];
-  }else if (arguments.check) {
-    triva = [[TrivaCheckController alloc] initWithArguments: arguments];
-  }else if (arguments.list) {
-    triva = [[TrivaListController alloc] initWithArguments: arguments];
-  }else if (arguments.instances) {
-    triva = [[TrivaInstanceController alloc] initWithArguments: arguments];
   }else{
-    NSException *exception = [NSException exceptionWithName: @"TrivaException"
-                   reason: @"No visualization option activated" userInfo: nil];
-    [exception raise];
+    if (arguments.treemap) {
+      triva = [[TrivaTreemapController alloc] initWithArguments: arguments];
+    }else if (arguments.graph){
+      triva = [[TrivaGraphController alloc] initWithArguments: arguments];
+    }else if (arguments.linkview){
+      triva = [[TrivaLinkController alloc] initWithArguments: arguments];
+    }else if (arguments.hierarchy) {
+      triva = [[TrivaDotController alloc] initWithArguments: arguments];
+    }else if (arguments.check) {
+      triva = [[TrivaCheckController alloc] initWithArguments: arguments];
+    }else if (arguments.list) {
+      triva = [[TrivaListController alloc] initWithArguments: arguments];
+    }else if (arguments.instances) {
+      triva = [[TrivaInstanceController alloc] initWithArguments: arguments];
+    }else{
+      NSException *exception = [NSException exceptionWithName: @"TrivaException"
+                     reason: @"No visualization option activated" userInfo: nil];
+      [exception raise];
+    }
   }
   return triva;
 }
