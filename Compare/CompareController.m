@@ -15,6 +15,7 @@
     along with Triva.  If not, see <http://www.gnu.org/licenses/>.
 */
 #include "CompareController.h"
+#include <float.h>
 
 @implementation CompareController
 - (id) init
@@ -28,6 +29,10 @@
   [markerTypeButton removeAllItems];
   [markerTypeButton setEnabled: NO];
   [view setController: self];
+
+  [frequencySlider setMinValue: 0.001];
+  [frequencySlider setMaxValue: 4];
+
   return self;
 }
 
@@ -48,6 +53,11 @@
   //call this method when the time limits of the traces change
   [view timeSelectionChangedWithSender: c];
   [view setNeedsDisplay: YES];
+  
+  //update the smaller slice
+  double smaller = [self smallerSlice];
+  [forwardSlider setMaxValue: smaller];
+  [forwardLabel setDoubleValue: [forwardSlider doubleValue]];
 }
 
 - (void) check
@@ -100,6 +110,22 @@
   return [[largest description] doubleValue];
 }
 
+- (double) smallerSlice
+{
+  NSEnumerator *en = [compareFilters objectEnumerator];
+  double smaller = FLT_MAX;
+  id filter;
+  while ((filter = [en nextObject])){
+    double filStart = [[[filter selectionStartTime] description] doubleValue];
+    double filEnd = [[[filter selectionEndTime] description] doubleValue];
+    double dif = filEnd - filStart;
+    if (dif < smaller){
+      smaller = dif;
+    }
+  }
+  return smaller;
+}
+
 - (BOOL) startSynchronized
 {
   if ([startSynchronized state] == NSOnState){
@@ -148,6 +174,58 @@
     }
   }else{
     [filter setSelectionEnd: end];
+  }
+}
+
+- (void) forwardSliderChanged: (id)sender
+{
+  [forwardLabel setDoubleValue: [forwardSlider doubleValue]];
+}
+
+- (void) frequencySliderChanged: (id)sender
+{
+  [frequencyLabel setDoubleValue: [frequencySlider doubleValue]];
+}
+
+- (void) play: (id)sender
+{
+  if (timer){
+    [timer invalidate];
+    timer = nil;
+  }else{
+    SEL selector = @selector (animate);
+    double interval = [frequencySlider doubleValue];
+    timer = [NSTimer scheduledTimerWithTimeInterval: interval
+      target: self
+      selector: selector
+      userInfo: nil
+      repeats: YES];
+  }
+}
+
+- (void) animate
+{
+  double forward = [forwardSlider doubleValue];
+
+  NSEnumerator *en = [compareFilters objectEnumerator];
+  id filter;
+  while ((filter = [en nextObject])){
+    double selStart = [[[filter selectionStartTime] description] doubleValue];
+    double selEnd = [[[filter selectionEndTime] description] doubleValue];
+    double traceEnd = [[[filter endTime] description] doubleValue];
+
+    double start = selStart + forward;
+    double end = selEnd + forward;
+
+    //one of the filters reached 
+    //stop animation condition
+    if (end > traceEnd){
+      [timer invalidate];
+      timer = nil;
+      [playButton setState: NSOffState];
+      return;
+    }
+    [filter setTimeIntervalFrom: start to: end];
   }
 }
 @end

@@ -34,18 +34,32 @@
   id markerTypeButton;
   id startSynchronized;
   id endSynchronized;
+
+  //for animation
+  id frequencySlider;
+  id frequencyLabel;
+  id forwardSlider;
+  id forwardLabel;
+  id playButton;
+  NSTimer *timer;
 }
 - (void) check;
 - (void) addFilters: (NSArray*) filters;
 - (void) timeLimitsChangedWithSender: (Compare*) c;
 - (NSArray*) filters;
 - (double) largestEndTime;
+- (double) smallerSlice;
 - (BOOL) startSynchronized;
 - (BOOL) endSynchronized;
 - (void) setStartTimeInterval: (double) start
                      ofFilter: (id) filter;
 - (void) setEndTimeInterval: (double) end
                    ofFilter: (id) filter;
+
+//
+- (void) forwardSliderChanged: (id)sender;
+- (void) frequencySliderChanged: (id)sender;
+- (void) play: (id)sender;
 @end
 
 @interface CompareController (TypeHierarchy)

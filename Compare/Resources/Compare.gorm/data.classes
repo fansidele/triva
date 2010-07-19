@@ -21,7 +21,12 @@
 	    markerTypeButton,
 	    view,
 	    endSynchronized,
-	    startSynchronized
+	    startSynchronized,
+	    frequencySlider,
+	    forwardSlider,
+	    forwardLabel,
+	    frequencyLabel,
+	    playButton
 	);
 	Super = NSObject;
     };
