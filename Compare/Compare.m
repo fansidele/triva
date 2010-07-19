@@ -48,7 +48,15 @@
   selectionStart = start;
   selectionEnd = end;
 
+  [self timeSelectionChanged];
+}
+
+- (void) timeSelectionChanged
+{
   [controller timeLimitsChangedWithSender: self];
+  [super timeSelectionChanged];
+}
+
 - (void) setSelectionStart: (double) start
 {
   double startTime = [[[self startTime] description] doubleValue];
