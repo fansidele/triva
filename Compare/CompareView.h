@@ -33,6 +33,7 @@
   BOOL sameMouseForAll;
 }
 - (void) setController: (CompareController*) cc;
+- (void) timeSelectionChangedWithSender: (Compare *) filter;
 - (void) update;
 @end
 

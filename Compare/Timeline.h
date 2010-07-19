@@ -33,11 +33,13 @@ enum Target { SelectionStart, SelectionEnd, TimeSlice};
   SliceStartMarker *sliceStartMarker;
   SliceEndMarker *sliceEndMarker;
 }
+- (id) filter;
 - (void) setFilter: (id) f;
 - (void) setController: (id) c;
 - (void) sliceStartChanged;
 - (void) sliceEndChanged;
 - (void) updateRatio;
+- (void) updateSliceMarkersFrames;
 - (double) pixelToTime: (double) pixel;
 - (double) timeToPixel: (double) time;
 @end

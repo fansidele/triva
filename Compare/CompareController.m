@@ -46,6 +46,7 @@
 {
   //the Compare filters that are on the Paje chain
   //call this method when the time limits of the traces change
+  [view timeSelectionChangedWithSender: c];
   [view setNeedsDisplay: YES];
 }
 

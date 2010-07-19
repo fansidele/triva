@@ -37,6 +37,11 @@
 
 - (void) resizeSubviewsWithOldSize: (NSSize) size
 {
+  [self updateSliceMarkersFrames];
+}
+
+- (void) updateSliceMarkersFrames
+{
   NSRect frame = [self frame];
 
   double selStart = [[[filter selectionStartTime] description] doubleValue];
@@ -45,6 +50,7 @@
                                   20,                      //20 pixels-width
                                   frame.size.height/2);   //50% of my height
   [sliceStartMarker setFrame: startFrame];
+  [sliceStartMarker setNeedsDisplay: YES];
 
   double selEnd = [[[filter selectionEndTime] description] doubleValue];
   NSRect endFrame = NSMakeRect ([self timeToPixel: selEnd]-10,
@@ -52,6 +58,12 @@
                                 20,
                                 frame.size.height/2);
   [sliceEndMarker setFrame: endFrame];
+  [sliceEndMarker setNeedsDisplay: YES];
+}
+
+- (id) filter
+{
+  return filter;
 }
 
 - (void) setFilter: (id) f

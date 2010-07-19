@@ -73,6 +73,17 @@
   }
 }
 
+- (void) timeSelectionChangedWithSender: (Compare *) filter
+{
+  NSEnumerator *en = [[self subviews] objectEnumerator];
+  Timeline *view;
+  while ((view = [en nextObject])){
+    if (filter == [view filter]){
+      [view updateSliceMarkersFrames];
+    }
+  }
+}
+
 - (BOOL)acceptsFirstResponder
 {
   return YES;
