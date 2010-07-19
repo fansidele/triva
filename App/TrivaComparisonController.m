@@ -21,24 +21,53 @@
 {
   self = [super initWithArguments: arguments];
 
-  NSArray *g1 = [@"(  \
-    ( FileReader, \
-       PajeEventDecoder, \
-       PajeSimulator, \
-       StorageController, \
-       Compare, \
-       TimeSliceAggregation, \
-       SquarifiedTreemap \
-    ) )" propertyList];
-  NSArray *g2 = [@"(  \
-    ( FileReader, \
-       PajeEventDecoder, \
-       PajeSimulator, \
-       StorageController, \
-       Compare, \
-       TimeSliceAggregation, \
-       SquarifiedTreemap \
-    ) )" propertyList];
+  NSArray *g1 = nil, *g2 = nil; 
+  if (arguments.treemap){
+    g1 = [@"(  \
+      ( FileReader, \
+         PajeEventDecoder, \
+         PajeSimulator, \
+         StorageController, \
+         Compare, \
+         TimeSliceAggregation, \
+         SquarifiedTreemap \
+      ) )" propertyList];
+    g2 = [@"(  \
+      ( FileReader, \
+         PajeEventDecoder, \
+         PajeSimulator, \
+         StorageController, \
+         Compare, \
+         TimeSliceAggregation, \
+         SquarifiedTreemap \
+      ) )" propertyList];
+  }else if (arguments.graph){
+    g1 = [@"(  \
+      ( FileReader, \
+         PajeEventDecoder, \
+         PajeSimulator, \
+         StorageController, \
+         Compare, \
+         TimeSliceAggregation, \
+         GraphConfiguration, \
+         GraphView \
+      ) )" propertyList];
+    g2 = [@"(  \
+      ( FileReader, \
+         PajeEventDecoder, \
+         PajeSimulator, \
+         StorageController, \
+         Compare, \
+         TimeSliceAggregation, \
+         GraphConfiguration, \
+         GraphView \
+      ) )" propertyList];
+  }else{
+    NSException *exception = [NSException exceptionWithName: @"TrivaException"
+                   reason: @"No visualization option activated for comparing" userInfo: nil];
+    [exception raise];
+  }
+
 
   //create graphs
   seq1 = [NSMutableDictionary dictionary];
