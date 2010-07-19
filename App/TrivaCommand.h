@@ -18,7 +18,7 @@
 #define __TRIVA_COMMAND_H
 #include <stdio.h>
 
-#define MAX_INPUT_SIZE 2
+#define MAX_INPUT_SIZE 100
 
 struct arguments
 {
