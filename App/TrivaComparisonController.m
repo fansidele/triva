@@ -17,13 +17,9 @@
 #include "TrivaComparisonController.h"
 
 @implementation TrivaComparisonController
-- (id) init
+- (id) initWithArguments: (struct arguments) arguments
 {
-  self = [super init];
-
-  //disabling single-file attributes
-  reader = nil;
-  encapsulator = nil;
+  self = [super initWithArguments: arguments];
 
   NSArray *g1 = [@"(  \
     ( FileReader, \
@@ -69,12 +65,23 @@
   method = @selector(addFilters:);
   [compareController performSelector: method withObject: compareFilters];
 
-
+  [self initializeWithArguments: arguments];
   return self;
 }
 
-- (void) setInputFiles: (NSArray *) files
+- (void) initializeWithArguments: (struct arguments) arguments
 {
+
+  //disabling single-file attributes
+  reader = nil;
+  encapsulator = nil;
+
+  int i;
+  NSMutableArray *files = [NSMutableArray array];
+  for (i = 0; i < arguments.input_size; i++){
+    [files addObject: [NSString stringWithFormat: @"%s", arguments.input[i]]];
+  }
+
   //reading the first file
   reader1 = [self componentWithName:@"FileReader" fromDictionary: seq1];
   [reader1 setInputFilename: [files objectAtIndex: 0]];
@@ -92,6 +99,8 @@
   //check if trace files are good to go
   SEL method = @selector(check);
   [compareController performSelector: method withObject: nil];
+
+  [self setSelectionWindow];
 }
 
 - (void)setSelectionWindow

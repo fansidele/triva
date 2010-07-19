@@ -23,40 +23,30 @@
   TrivaController *triva = nil;
   //configuring triva
   if (arguments.treemap) {
-    triva = [[TrivaTreemapController alloc] init];
+    triva = [[TrivaTreemapController alloc] initWithArguments: arguments];
   }else if (arguments.graph){
-    triva = [[TrivaGraphController alloc] init];
+    triva = [[TrivaGraphController alloc] initWithArguments: arguments];
   }else if (arguments.linkview){
-    triva = [[TrivaLinkController alloc] init];
+    triva = [[TrivaLinkController alloc] initWithArguments: arguments];
   }else if (arguments.comparison){
-    triva = [[TrivaComparisonController alloc] init];
+    triva = [[TrivaComparisonController alloc] initWithArguments: arguments];
   }else if (arguments.hierarchy) {
-    triva = [[TrivaDotController alloc] init];
+    triva = [[TrivaDotController alloc] initWithArguments: arguments];
   }else if (arguments.check) {
-    triva = [[TrivaCheckController alloc] init];
+    triva = [[TrivaCheckController alloc] initWithArguments: arguments];
   }else if (arguments.list) {
-    triva = [[TrivaListController alloc] init];
+    triva = [[TrivaListController alloc] initWithArguments: arguments];
   }else if (arguments.instances) {
-    triva = [[TrivaInstanceController alloc] init];
+    triva = [[TrivaInstanceController alloc] initWithArguments: arguments];
   }else{
     NSException *exception = [NSException exceptionWithName: @"TrivaException"
                    reason: @"No visualization option activated" userInfo: nil];
     [exception raise];
   }
-
-  //pass by trace files
-  int i;
-  NSMutableArray *array = [NSMutableArray array];
-  for (i = 0; i < arguments.input_size; i++){
-    [array addObject: [NSString stringWithFormat: @"%s", arguments.input[i]]];
-  }
-  NSLog (@"Tracefile (%@). Reading.... please wait\n", array);
-  [triva setInputFiles: array];
-  [triva setSelectionWindow];
   return triva;
 }
 
-- (id) init
+- (id) initWithArguments: (struct arguments) arguments
 {
   self = [super init];
   components = [NSMutableDictionary dictionary];
@@ -64,8 +54,15 @@
   return self;
 }
 
-- (void) setInputFiles: (NSArray *) files
+- (void) initializeWithArguments: (struct arguments) arguments
 {
+  int i;
+  NSMutableArray *files = [NSMutableArray array];
+  for (i = 0; i < arguments.input_size; i++){
+    [files addObject: [NSString stringWithFormat: @"%s", arguments.input[i]]];
+  }
+  NSLog (@"Tracefile (%@). Reading.... please wait\n", files);
+
   //reading only the first file by default (subclasses
   //should override this if necessary)
   reader = [self componentWithName:@"FileReader" fromDictionary: components];
@@ -73,19 +70,15 @@
   [self readAllTracefileFrom: reader];
   encapsulator = [self componentWithName:@"StorageController" fromDictionary: components];
   [encapsulator timeLimitsChanged];
-}
-
-- (void)setSelectionWindow
-{
-    [encapsulator setSelectionStartTime: [encapsulator startTime]
-                                endTime: [encapsulator endTime]];
+  [encapsulator setSelectionStartTime: [encapsulator startTime]
+                              endTime: [encapsulator endTime]];
 }
 @end
 
 @implementation TrivaTreemapController
-- (id) init
+- (id) initWithArguments: (struct arguments) arguments
 {
-  self = [super init];
+  self = [super initWithArguments: arguments];
   NSArray *graph = [@"(  \
     ( FileReader, \
        PajeEventDecoder, \
@@ -97,14 +90,15 @@
        SquarifiedTreemap \
     ) )" propertyList];
   [self addComponentSequences: graph withDictionary: components];
+  [self initializeWithArguments: arguments];
   return self;
 }
 @end
 
 @implementation TrivaGraphController
-- (id) init
+- (id) initWithArguments: (struct arguments) arguments
 {
-  self = [super init];
+  self = [super initWithArguments: arguments];
   NSArray *graph = [@"(  \
     ( FileReader, \
        PajeEventDecoder, \
@@ -116,14 +110,15 @@
        GraphView \
     ) )" propertyList];
   [self addComponentSequences: graph withDictionary: components];
+  [self initializeWithArguments: arguments];
   return self;
 }
 @end
 
 @implementation TrivaLinkController
-- (id) init
+- (id) initWithArguments: (struct arguments) arguments
 {
-  self = [super init];
+  self = [super initWithArguments: arguments];
   NSArray *graph = [@"(  \
     ( FileReader, \
       PajeEventDecoder, \
@@ -134,14 +129,15 @@
       LinkView \
     ) )" propertyList];
   [self addComponentSequences: graph withDictionary: components];
+  [self initializeWithArguments: arguments];
   return self;
 }
 @end
 
 @implementation TrivaDotController
-- (id) init
+- (id) initWithArguments: (struct arguments) arguments
 {
-  self = [super init];
+  self = [super initWithArguments: arguments];
   NSArray *graph = [@"(  \
     ( FileReader, \
        PajeEventDecoder, \
@@ -151,14 +147,15 @@
        Dot \
     ) )" propertyList];
   [self addComponentSequences: graph withDictionary: components];
+  [self initializeWithArguments: arguments];
   return self;
 }
 @end
 
 @implementation TrivaCheckController
-- (id) init
+- (id) initWithArguments: (struct arguments) arguments
 {
-  self = [super init];
+  self = [super initWithArguments: arguments];
   NSArray *graph = [@"(  \
     ( FileReader, \
        PajeEventDecoder, \
@@ -167,14 +164,15 @@
        CheckTrace \
     ) )" propertyList];
   [self addComponentSequences: graph withDictionary: components];
+  [self initializeWithArguments: arguments];
   return self;
 }
 @end
 
 @implementation TrivaListController
-- (id) init
+- (id) initWithArguments: (struct arguments) arguments
 {
-  self = [super init];
+  self = [super initWithArguments: arguments];
   NSArray *graph = [@"(  \
     ( FileReader, \
        PajeEventDecoder, \
@@ -183,14 +181,15 @@
        List \
     ) )" propertyList];
   [self addComponentSequences: graph withDictionary: components];
+  [self initializeWithArguments: arguments];
   return self;
 }
 @end
 
 @implementation TrivaInstanceController
-- (id) init
+- (id) initWithArguments: (struct arguments) arguments
 {
-  self = [super init];
+  self = [super initWithArguments: arguments];
   NSArray *graph = [@"(  \
     ( FileReader, \
        PajeEventDecoder, \
@@ -199,6 +198,7 @@
        Instances \
     ) )" propertyList];
   [self addComponentSequences: graph withDictionary: components];
+  [self initializeWithArguments: arguments];
   return self;
 }
 @end

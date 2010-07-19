@@ -32,8 +32,8 @@
   NSMutableDictionary *components;
 }
 + (id) controllerWithArguments: (struct arguments) arguments;
-- (void) setInputFiles: (NSArray *) files;
-- (void) setSelectionWindow;
+- (id) initWithArguments: (struct arguments) arguments;
+- (void) initializeWithArguments: (struct arguments) arguments;
 @end
 
 @interface TrivaController (Bundles)

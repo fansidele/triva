@@ -18,6 +18,7 @@
 #define TrivaComparisonController_h_
 
 #include "TrivaController.h"
+#include "TrivaCommand.h"
 
 @interface TrivaComparisonController : TrivaController
 {
@@ -27,6 +28,7 @@
 
   id compareController;
 }
+- (void) setSelectionWindow;
 @end
 
 #endif
