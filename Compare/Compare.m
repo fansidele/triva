@@ -49,8 +49,22 @@
   selectionEnd = end;
 
   [controller timeLimitsChangedWithSender: self];
+- (void) setSelectionStart: (double) start
+{
+  double startTime = [[[self startTime] description] doubleValue];
+  if (start < startTime) start = startTime;
+  selectionStart = start;
   [self timeSelectionChanged];
 }
+
+- (void) setSelectionEnd: (double) end
+{
+  double endTime = [[[self endTime] description] doubleValue];
+  if (end > endTime) end = endTime;
+  selectionEnd = end;
+  [self timeSelectionChanged];
+}
+
 
 // from the protocol 
 - (NSDate *) selectionStartTime

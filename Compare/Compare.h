@@ -29,6 +29,8 @@
 }
 - (void) setController: (CompareController*) c;
 - (void) setTimeIntervalFrom: (double) start to: (double) end;
+- (void) setSelectionStart: (double) start;
+- (void) setSelectionEnd: (double) end;
 @end
 
 #endif
