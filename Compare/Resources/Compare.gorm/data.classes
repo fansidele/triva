@@ -14,7 +14,8 @@
 	    "play:",
 	    "forwardSliderChanged:",
 	    "frequencySliderChanged:",
-	    "sliceSliderChanged:"
+	    "sliceSliderChanged:",
+	    "synchronizedChanged:"
 	);
 	Outlets = (
 	    window,
@@ -42,10 +43,11 @@
 	    "apply:",
 	    "forwardSliderChanged:",
 	    "frequencySliderChanged:",
-	    "sliceSliderChanged:",
+	    "synchronizedChanged:",
 	    "orderFrontFontPanel:",
 	    "play:",
-	    "showPrefPanel:"
+	    "showPrefPanel:",
+	    "sliceSliderChanged:"
 	);
 	Super = NSObject;
     };

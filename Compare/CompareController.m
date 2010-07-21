@@ -33,6 +33,19 @@
   [frequencySlider setMinValue: 0.001];
   [frequencySlider setMaxValue: 4];
 
+  //checking user defaults
+  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+  if ([defaults boolForKey:@"ComparisonStartSynchronized"]){
+    [startSynchronized setState: NSOnState];
+  }else{
+    [startSynchronized setState: NSOffState];
+  }
+
+  if ([defaults boolForKey:@"ComparisonEndSynchronized"]){
+    [endSynchronized setState: NSOnState];
+  }else{
+    [endSynchronized setState: NSOffState];
+  }
   return self;
 }
 
@@ -174,6 +187,22 @@
     }
   }else{
     [filter setSelectionEnd: end];
+  }
+}
+
+- (void) synchronizedChanged: (id)sender
+{
+  //save state on user defaults
+  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+  if ([startSynchronized state] == NSOnState){
+    [defaults setObject: @"YES" forKey: @"ComparisonStartSynchronized"];
+  }else{
+    [defaults setObject: @"NO" forKey: @"ComparisonStartSynchronized"];
+  }
+  if ([endSynchronized state] == NSOnState){
+    [defaults setObject: @"YES" forKey: @"ComparisonEndSynchronized"];
+  }else{
+    [defaults setObject: @"NO" forKey: @"ComparisonEndSynchronized"];
   }
 }
 

@@ -57,6 +57,7 @@
                    ofFilter: (id) filter;
 
 //
+- (void) synchronizedChanged: (id)sender;
 - (void) forwardSliderChanged: (id)sender;
 - (void) frequencySliderChanged: (id)sender;
 - (void) play: (id)sender;
