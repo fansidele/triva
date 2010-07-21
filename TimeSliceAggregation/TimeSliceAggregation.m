@@ -111,15 +111,21 @@
   sliceTimeChanged = YES;
 }
 
+- (void) releaseTree
+{
+  if (tree){
+    [tree release];
+    tree = nil;
+    [nodeNames release];
+    nodeNames = [[NSMutableDictionary alloc] init];
+  }
+}
+
 - (void) calculateBehavioralHierarchy
 {
 //  NSLog (@"Calculating behavioral hierarchy...");
   /* re-create hierarchy */
-  if (tree){
-    [tree release];
-    [nodeNames release];
-    nodeNames = [[NSMutableDictionary alloc] init];
-  }
+  [self releaseTree];
   tree = [self createInstanceHierarchy: [self rootInstance]
               parent: nil];  
 
@@ -159,6 +165,12 @@
     [sliceEndTime retain];
     timeSliceChanged = YES;
   }
+  if ([sliceStartTime isEqualToDate: sliceEndTime]){
+    //if slice is nil, release tree
+    [self releaseTree];
+    timeSliceChanged = NO;
+  }
+
   if (timeSliceChanged == YES){
     [self calculateBehavioralHierarchy];
   }
