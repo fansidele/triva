@@ -44,7 +44,8 @@ Marker.m \
 Compare.m \
 CompareView.m \
 CompareController.m \
-CompareController+TypeHierarchy.m
+CompareController+TypeHierarchy.m \
+CompareController+Marker.m
 
 Compare_INCLUDE_DIRS += -I../ -I./
 

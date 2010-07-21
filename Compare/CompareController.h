@@ -69,6 +69,12 @@
 - (BOOL) checkTypeHierarchies: (NSArray*)typeHierarchies; //entry method
 @end
 
+@interface CompareController (Marker)
+- (NSArray*) markerTypesWithContainerType: (PajeEntityType *) contType
+                               fromFilter: (id) filter;
+- (NSArray*) markerTypes;
+@end
+
 #include "Compare.h"
 #include "CompareView.h"
 

@@ -90,7 +90,15 @@
   }
 
   //search for markers
-  //TODO
+  NSArray *markerTypes = [self markerTypes];
+  if ([markerTypes count]){
+    en = [markerTypes objectEnumerator];
+    id type;
+    while ((type = [en nextObject])){
+      [markerTypeButton addItemWithTitle: [type description]];
+    }
+    [markerTypeButton setEnabled: YES];
+  }
 
   [view update];
 }
