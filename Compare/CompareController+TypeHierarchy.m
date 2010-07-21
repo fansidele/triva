@@ -43,9 +43,15 @@
 
 - (BOOL) checkTypeHierarchies: (NSArray*)typeHierarchies
 {
-  NSDictionary *t1 = [typeHierarchies objectAtIndex: 0];
-  NSDictionary *t2 = [typeHierarchies objectAtIndex: 1];
-
-  return [t1 isEqualToDictionary: t2];
+  NSEnumerator *en = [typeHierarchies objectEnumerator];
+  NSDictionary *t1 = [en nextObject];
+  NSDictionary *t2 = nil;
+  while ((t2 = [en nextObject])){
+    if (![t1 isEqualToDictionary: t2]){
+      return NO;
+    }
+    t1 = t2;
+  }
+  return YES;
 }
 @end

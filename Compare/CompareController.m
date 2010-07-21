@@ -75,14 +75,12 @@
 
 - (void) check
 {
-  //get filters
-  id filter1 = [compareFilters objectAtIndex: 0];
-  id filter2 = [compareFilters objectAtIndex: 1];
-
-  //obtain type hierarchies
   NSMutableArray *typeHierarchies = [NSMutableArray array];
-  [typeHierarchies addObject: [self typeHierarchy: filter1]];
-  [typeHierarchies addObject: [self typeHierarchy: filter2]];
+  NSEnumerator *en = [compareFilters objectEnumerator];
+  id filter = nil;
+  while ((filter = [en nextObject])){
+    [typeHierarchies addObject: [self typeHierarchy: filter]];
+  }
 
   //check if they are good to go
   if (![self checkTypeHierarchies: typeHierarchies]){
