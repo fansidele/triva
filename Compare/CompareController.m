@@ -98,6 +98,7 @@
       [markerTypeButton addItemWithTitle: [type description]];
     }
     [markerTypeButton setEnabled: YES];
+    [view markerTypeChanged: self];
   }
 
   [view update];
