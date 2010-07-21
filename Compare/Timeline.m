@@ -118,6 +118,10 @@
   [timeslice relativeLineToPoint: NSMakePoint (0, -4)];
   [[NSColor lightGrayColor] set];
   [timeslice fill];
+
+  //draw the name of the trace file for this timeline
+  [[filter traceDescription] drawAtPoint: NSMakePoint(0,0)
+                          withAttributes: nil];
 }
 
 - (BOOL)acceptsFirstResponder
