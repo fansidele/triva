@@ -35,6 +35,8 @@
 - (void) setController: (CompareController*) cc;
 - (void) timeSelectionChangedWithSender: (Compare *) filter;
 - (void) update;
+
+- (void) markerTypeChanged: (id) sender;
 @end
 
 #endif

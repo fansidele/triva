@@ -15,7 +15,8 @@
 	    "forwardSliderChanged:",
 	    "frequencySliderChanged:",
 	    "sliceSliderChanged:",
-	    "synchronizedChanged:"
+	    "synchronizedChanged:",
+	    "markerTypeChanged:"
 	);
 	Outlets = (
 	    window,
@@ -33,6 +34,7 @@
     };
     CompareView = {
 	Actions = (
+	    "markerTypeChanged:"
 	);
 	Outlets = (
 	);
@@ -43,11 +45,13 @@
 	    "apply:",
 	    "forwardSliderChanged:",
 	    "frequencySliderChanged:",
-	    "synchronizedChanged:",
+	    "markerTypeChanged:",
+	    "newAction:",
 	    "orderFrontFontPanel:",
 	    "play:",
 	    "showPrefPanel:",
-	    "sliceSliderChanged:"
+	    "sliceSliderChanged:",
+	    "synchronizedChanged:"
 	);
 	Super = NSObject;
     };

@@ -84,6 +84,15 @@
   }
 }
 
+- (void) markerTypeChanged: (id) sender
+{
+  NSEnumerator *en = [[self subviews] objectEnumerator];
+  Timeline *view;
+  while ((view = [en nextObject])){
+    [view updateMarkers];
+  }
+}
+
 - (BOOL)acceptsFirstResponder
 {
   return YES;
