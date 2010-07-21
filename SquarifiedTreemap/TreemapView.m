@@ -63,6 +63,16 @@
   NSRect b = [self bounds];
   if (updateCurrentTreemap){
     TimeSliceTree *tree = [filter timeSliceTree];
+    if (tree == nil){
+      [[NSColor whiteColor] set];
+      NSRectFill (b);
+      [[NSColor blackColor] set];
+      NSString *message = @"Please, set a time slice.";
+      NSSize size = [message sizeWithAttributes: nil];
+      NSPoint p = NSMakePoint (b.size.width/2 - size.width/2, b.size.height/2);
+      [message drawAtPoint: p withAttributes: nil];
+      return;
+    }
         
     if (maxDepthToDraw > [tree maxDepth]){
       maxDepthToDraw = [tree maxDepth];
