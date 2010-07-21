@@ -103,6 +103,11 @@
   [view update];
 }
 
+- (NSString *) currentMarkerType
+{
+  return [markerTypeButton titleOfSelectedItem];
+}
+
 - (NSArray*) filters
 {
   return compareFilters;

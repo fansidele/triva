@@ -46,6 +46,7 @@
 - (void) check;
 - (void) addFilters: (NSArray*) filters;
 - (void) timeLimitsChangedWithSender: (Compare*) c;
+- (NSString *) currentMarkerType;
 - (NSArray*) filters;
 - (double) largestEndTime;
 - (double) smallerSlice;
