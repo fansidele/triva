@@ -35,9 +35,45 @@
   return self;
 }
 
+- (void) updateMarkers
+{
+  //removing "Normal" markers
+  NSEnumerator *en = [[self subviews] objectEnumerator];
+  id subview;
+  while ((subview = [en nextObject])){
+    if ([subview isKindOfClass: [NormalMarker class]]){
+      [subview removeFromSuperview];
+    }
+  } 
+
+  //adding them according to their presence on the filter
+  PajeEntityType *type = [filter entityTypeWithName: 
+                                [controller currentMarkerType]];
+  PajeContainer *root = [filter rootInstance];
+  
+  en = [filter enumeratorOfEntitiesTyped: type
+                             inContainer: root
+                      fromTime: [filter startTime]
+                        toTime: [filter endTime]
+                    minDuration: 0];
+  id entity;
+  while ((entity = [en nextObject])){
+    double timestamp = [[[entity startTime] description] doubleValue];
+    NSRect markerFrame = NSMakeRect ([self timeToPixel: timestamp]-10,
+                                     0,
+                                     20,
+                                     [self frame].size.height/2);
+    NormalMarker *marker = [[NormalMarker alloc] initWithFrame: markerFrame];
+    [marker setTimeline: self];
+    [self addSubview: marker];
+    [marker release];
+  }
+}
+
 - (void) resizeSubviewsWithOldSize: (NSSize) size
 {
   [self updateSliceMarkersFrames];
+  [self updateMarkers];
 }
 
 - (void) updateSliceMarkersFrames

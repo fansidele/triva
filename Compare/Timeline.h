@@ -40,6 +40,7 @@ enum Target { SelectionStart, SelectionEnd, TimeSlice};
 - (void) sliceEndChanged;
 - (void) updateRatio;
 - (void) updateSliceMarkersFrames;
+- (void) updateMarkers;
 - (double) pixelToTime: (double) pixel;
 - (double) timeToPixel: (double) time;
 @end
