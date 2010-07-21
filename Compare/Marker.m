@@ -38,19 +38,6 @@
     tag = [self addTrackingRect: [self bounds] owner: self userData: nil assumeInside: NO];
   }
 
-  r = [self bounds];
-  if (highlighted){
-    [[NSColor redColor] set];
-  }else{
-    [[NSColor blueColor] set];
-  }
-  NSBezierPath *path = [NSBezierPath bezierPath];
-  [path appendBezierPathWithArcWithCenter: NSMakePoint (10, 20)
-                            radius: 5 startAngle: 270 endAngle: 269];
-  [path lineToPoint: NSMakePoint (10, 0)];
-  [path stroke];
-  [path fill];
-
   NSAffineTransform *trans = [NSAffineTransform transform];
   [trans rotateByDegrees: 90];
   [trans concat];
@@ -63,6 +50,12 @@
   }
   [trans invert];
   [trans concat];
+
+  if (highlighted){
+    [[NSColor redColor] set];
+  }else{
+    [[NSColor blueColor] set];
+  }
 }
 
 - (void) mouseDown: (NSEvent*) event
@@ -98,6 +91,19 @@
 @end
 
 @implementation SliceStartMarker
+- (void) drawRect: (NSRect) r
+{
+  [super drawRect: r];
+  NSBezierPath *path = [NSBezierPath bezierPath];
+  [path moveToPoint: NSMakePoint (10, 30)];
+  [path lineToPoint: NSMakePoint (20, 20)];
+  [path lineToPoint: NSMakePoint (10, 10)];
+  [path lineToPoint: NSMakePoint (10, 30)];
+  [path lineToPoint: NSMakePoint (10, 0)];
+  [path stroke];
+  [path fill];
+}
+
 - (void) mouseUp: (NSEvent*) event
 {
   [timeline sliceStartChanged];
@@ -105,6 +111,19 @@
 @end
 
 @implementation SliceEndMarker
+- (void) drawRect: (NSRect) r
+{
+  [super drawRect: r];
+  NSBezierPath *path = [NSBezierPath bezierPath];
+  [path moveToPoint: NSMakePoint (10, 30)];
+  [path lineToPoint: NSMakePoint (0, 20)];
+  [path lineToPoint: NSMakePoint (10, 10)];
+  [path lineToPoint: NSMakePoint (10, 30)];
+  [path lineToPoint: NSMakePoint (10, 0)];
+  [path stroke];
+  [path fill];
+}
+
 - (void) mouseUp: (NSEvent*) event
 {
   [timeline sliceEndChanged];
