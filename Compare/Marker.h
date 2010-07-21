@@ -25,6 +25,7 @@
 {
   double offset;
   Timeline *timeline;
+  BOOL highlighted;
 }
 - (void) setTimeline: (Timeline*) t;
 - (double) position;

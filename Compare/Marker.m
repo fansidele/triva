@@ -21,6 +21,7 @@
 {
   self = [super initWithFrame: frame];
   timeline = nil;
+  highlighted = NO;
   return self;
 }
 
@@ -31,8 +32,18 @@
 
 - (void) drawRect: (NSRect) r
 {
+  {
+    static int tag = 0;
+    [self removeTrackingRect: tag];
+    tag = [self addTrackingRect: [self bounds] owner: self userData: nil assumeInside: NO];
+  }
+
   r = [self bounds];
-  [[NSColor blueColor] set];
+  if (highlighted){
+    [[NSColor redColor] set];
+  }else{
+    [[NSColor blueColor] set];
+  }
   NSBezierPath *path = [NSBezierPath bezierPath];
   [path appendBezierPathWithArcWithCenter: NSMakePoint (10, 20)
                             radius: 5 startAngle: 270 endAngle: 269];
@@ -43,12 +54,13 @@
   NSAffineTransform *trans = [NSAffineTransform transform];
   [trans rotateByDegrees: 90];
   [trans concat];
-
-  double time = [timeline pixelToTime:
+  if (highlighted){
+    double time = [timeline pixelToTime:
                       [self convertPoint:NSMakePoint(0,0) toView:nil].x];
-  [[NSString stringWithFormat: @"%f", time]
+    [[NSString stringWithFormat: @"%f", time]
             drawAtPoint: NSMakePoint(30,-r.size.width)
          withAttributes: nil];
+  }
   [trans invert];
   [trans concat];
 }
@@ -70,6 +82,18 @@
 {
   //depends on the position of the marker drawing
   return [self frame].origin.x + 10; 
+}
+
+- (void) mouseEntered: (NSEvent*) event
+{
+  highlighted = YES;
+  [self setNeedsDisplay: YES];
+}
+
+- (void) mouseExited: (NSEvent*) event
+{
+  highlighted = NO;
+  [self setNeedsDisplay: YES];
 }
 @end
 
