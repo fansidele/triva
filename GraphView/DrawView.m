@@ -151,7 +151,6 @@
 
 - (void) mouseMoved:(NSEvent *)event
 {
-//  NSLog (@"%s", __FUNCTION__);
   NSPoint p, p2;
   p = [self convertPoint:[event locationInWindow] fromView:nil];
 
