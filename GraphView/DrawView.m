@@ -194,33 +194,31 @@
     }
     [filter graphComponentScalingChanged];
   }else{
-    NSPoint b, a, p;
+    NSPoint screenPositionAfter, screenPositionBefore, graphPoint;
     NSAffineTransform *t;
- 
-    //register the transformed point before changing ratio
-    p = [self convertPoint:[event locationInWindow] fromView:nil];
+
+    screenPositionBefore = [self convertPoint: [event locationInWindow]
+                                     fromView: nil];
     t = [self transform];
-    b = [t transformPoint: p];
- 
+    [t invert];
+    graphPoint = [t transformPoint: screenPositionBefore];
+
+    //updating the ratio considering 10% of its value 
     if ([event deltaY] > 0){
       ratio += ratio*0.1;
     }else{
       ratio -= ratio*0.1;
     }
- 
-    //register after changing ratio
+
     t = [self transform];
-    a = [t transformPoint: p];
- 
-    //get the different before - after
-    NSPoint p2 = NSSubtractPoints (b, a);
- 
-    //applies to the transformation variable
-    if (NSEqualPoints (translate, NSZeroPoint)){
-      translate = p2;
-    }else{
-      translate = NSAddPoints (translate, p2);
-    }
+    screenPositionAfter = [t transformPoint: graphPoint];
+
+    //update translate to compensate change on scale
+    translate = NSAddPoints (translate,
+                    NSSubtractPoints (screenPositionBefore, screenPositionAfter));
+
+    [self setNeedsDisplay: YES];
+    return;
   }
   [self setNeedsDisplay: YES];
 }
