@@ -20,8 +20,8 @@
 - (id)initWithController:(PajeTraceController *)c
 {
   self = [super initWithController: c];
-  selectionStart = 0;
-  selectionEnd = 0;
+  selectionStart = -1;
+  selectionEnd = -1;
   return self;
 }
 
@@ -60,15 +60,26 @@
 - (void) setSelectionStart: (double) start
 {
   double startTime = [[[self startTime] description] doubleValue];
+  double endTime = [[[self endTime] description] doubleValue];
+
   if (start < startTime) start = startTime;
+  if (start > endTime) start = endTime;
+  if (selectionEnd >= 0){
+    if (start > selectionEnd) start = selectionEnd;
+  }
   selectionStart = start;
   [self timeSelectionChanged];
 }
 
 - (void) setSelectionEnd: (double) end
 {
+  double startTime = [[[self startTime] description] doubleValue];
   double endTime = [[[self endTime] description] doubleValue];
   if (end > endTime) end = endTime;
+  if (end < startTime) end = startTime;
+  if (selectionStart >= 0){
+    if (end < selectionStart) end = selectionStart;
+  }
   selectionEnd = end;
   [self timeSelectionChanged];
 }
@@ -77,7 +88,7 @@
 // from the protocol 
 - (NSDate *) selectionStartTime
 {
-  if (selectionStart){
+  if (selectionStart >= 0){
     return [NSDate dateWithTimeIntervalSinceReferenceDate:selectionStart];
   }else{
     return [super selectionStartTime];
@@ -86,7 +97,7 @@
 
 - (NSDate *) selectionEndTime
 {
-  if (selectionEnd){
+  if (selectionEnd >= 0){
     return [NSDate dateWithTimeIntervalSinceReferenceDate: selectionEnd];
   }else{
     return [super selectionEndTime];
