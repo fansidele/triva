@@ -129,3 +129,22 @@
   [timeline sliceEndChanged];
 }
 @end
+
+@implementation NormalMarker
+- (void) drawRect: (NSRect) r
+{
+  [super drawRect: r];
+  NSBezierPath *path = [NSBezierPath bezierPath];
+  [path moveToPoint: NSMakePoint (10, r.size.height)];
+  [path lineToPoint: NSMakePoint (10, 10)];
+  [path appendBezierPathWithArcWithCenter: NSMakePoint(10,10)
+                              radius: 5 startAngle: 90 endAngle: 89];
+  [path stroke];
+  [path fill];
+}
+
+- (void) mouseDragged: (NSEvent*) event
+{}
+- (void) mouseDown: (NSEvent*) event
+{}
+@end

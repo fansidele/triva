@@ -37,5 +37,8 @@
 @interface SliceEndMarker : Marker
 @end
 
+@interface NormalMarker : Marker
+@end
+
 #include "Timeline.h"
 #endif
