@@ -19,6 +19,8 @@
 #include <float.h>
 #include <math.h>
 
+#define BORDERGAP 30
+
 @implementation Timeline
 - (id) initWithFrame: (NSRect) frame
 {
@@ -118,7 +120,7 @@
 - (void) updateRatio
 {
   NSRect bb = [self bounds];
-  ratio = (bb.size.width - 10)/[controller largestEndTime];
+  ratio = (bb.size.width - BORDERGAP)/[controller largestEndTime];
 }
 
 - (void) drawRect: (NSRect) r
@@ -132,7 +134,7 @@
 
   //drawing the timeline
   NSBezierPath *timeline = [NSBezierPath bezierPath];
-  [timeline moveToPoint: NSMakePoint (bb.origin.x + 5,
+  [timeline moveToPoint: NSMakePoint (bb.origin.x + (BORDERGAP/2),
                                       bb.size.height / 2)];
   [timeline relativeMoveToPoint: NSMakePoint (0, 5)];
   [timeline relativeLineToPoint: NSMakePoint (0, -10)];
@@ -181,11 +183,11 @@
 
 - (double) pixelToTime: (double) pixel
 {
-  return (pixel - 5) / ratio;
+  return (pixel - (BORDERGAP/2)) / ratio;
 }
 
 - (double) timeToPixel: (double) time
 {
-  return 5 + (time * ratio);
+  return (BORDERGAP/2) + (time * ratio);
 }
 @end
