@@ -98,10 +98,14 @@
       [markerTypeButton addItemWithTitle: [type description]];
     }
     [markerTypeButton setEnabled: YES];
-    [view markerTypeChanged: self];
   }
 
   [view update];
+
+  //activate markers if there is one in the list
+  if ([markerTypes count]){
+    [view markerTypeChanged: self];
+  }
 }
 
 - (NSString *) currentMarkerType
