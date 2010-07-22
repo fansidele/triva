@@ -38,6 +38,7 @@ enum Target { SelectionStart, SelectionEnd, TimeSlice};
 - (void) setController: (id) c;
 - (void) sliceStartChanged;
 - (void) sliceEndChanged;
+- (void) sliceChanged;
 - (void) updateRatio;
 - (void) updateSliceMarkersFrames;
 - (void) updateMarkers;

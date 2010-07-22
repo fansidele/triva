@@ -181,6 +181,10 @@
   [controller setEndTimeInterval: end ofFilter: filter];
 }
 
+- (void) sliceChanged
+{
+}
+
 - (double) pixelToTime: (double) pixel
 {
   return (pixel - (BORDERGAP/2)) / ratio;
