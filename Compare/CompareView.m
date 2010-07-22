@@ -79,7 +79,7 @@
   Timeline *view;
   while ((view = [en nextObject])){
     if (filter == [view filter]){
-      [view updateSliceMarkersFrames];
+      [view timeSelectionChanged];
     }
   }
 }

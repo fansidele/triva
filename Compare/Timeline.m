@@ -28,78 +28,61 @@
   [self setAutoresizingMask: NSViewWidthSizable|NSViewHeightSizable];
 
   //creating Slice Markers
-  sliceStartMarker = [[SliceStartMarker alloc] initWithFrame: frame];
-  sliceEndMarker = [[SliceEndMarker alloc] initWithFrame: frame];
-  [sliceStartMarker setName: @"start"];
-  [sliceStartMarker setTimeline: self];
-  [sliceEndMarker setName: @"end"];
-  [sliceEndMarker setTimeline: self];
-  [self addSubview: sliceStartMarker];
-  [self addSubview: sliceEndMarker];
+  slice = [[Slice alloc] initWithFrame: frame];
+  markers = [[Markers alloc] initWithFrame: frame];
+  [slice setTimeline: self];
+  [markers setTimeline: self];
+  [self addSubview: slice];
+  [self addSubview: markers];
   return self;
 }
 
 - (void) updateMarkers
 {
-  //removing "Normal" markers
-  NSEnumerator *en = [[self subviews] objectEnumerator];
-  id subview;
-  while ((subview = [en nextObject])){
-    if ([subview isKindOfClass: [NormalMarker class]]){
-      [subview removeFromSuperview];
-    }
-  } 
+  //remove existing markers
+  [markers clean];
 
   //adding them according to their presence on the filter
   PajeEntityType *type = [filter entityTypeWithName: 
                                 [controller currentMarkerType]];
   PajeContainer *root = [filter rootInstance];
   
-  en = [filter enumeratorOfEntitiesTyped: type
-                             inContainer: root
-                      fromTime: [filter startTime]
-                        toTime: [filter endTime]
-                    minDuration: 0];
+  NSEnumerator *en = [filter enumeratorOfEntitiesTyped: type
+                                           inContainer: root
+                                              fromTime: 0
+                                                toTime: [filter endTime]
+                                           minDuration: 0];
   id entity;
+  NSMutableDictionary *d = [NSMutableDictionary dictionary];
   while ((entity = [en nextObject])){
-    double timestamp = [[[entity startTime] description] doubleValue];
-    NSRect markerFrame = NSMakeRect ([self timeToPixel: timestamp]-10,
-                                     0,
-                                     20,
-                                     [self frame].size.height/2);
-    NormalMarker *marker = [[NormalMarker alloc] initWithFrame: markerFrame];
-    [marker setName: [entity name]];
-    [marker setTimeline: self];
-    [self addSubview: marker];
-    [marker release];
+    [d setObject: [entity startTime] forKey: [entity name]];
   }
+  [markers add: d];
+  [markers setNeedsDisplay: YES];
 }
 
 - (void) resizeSubviewsWithOldSize: (NSSize) size
 {
-  [self updateSliceMarkersFrames];
-  [self updateMarkers];
+  NSRect frame = [self frame];
+  NSRect sliceRect = NSMakeRect (0, frame.size.height/2,
+                                 frame.size.width, frame.size.height/2);
+  [slice setFrame: sliceRect];
+  [slice setNeedsDisplay: YES];
+
+  NSRect markersRect = NSMakeRect (0,0, frame.size.width, frame.size.height/2);
+  [markers setFrame: markersRect];
+  [markers setNeedsDisplay: YES];
+
+  [self timeSelectionChanged];
 }
 
-- (void) updateSliceMarkersFrames
+- (void) timeSelectionChanged
 {
-  NSRect frame = [self frame];
-
   double selStart = [[[filter selectionStartTime] description] doubleValue];
-  NSRect startFrame = NSMakeRect ([self timeToPixel: selStart]-10,
-                                  frame.size.height/2,     //middle
-                                  20,                      //20 pixels-width
-                                  frame.size.height/2);   //50% of my height
-  [sliceStartMarker setFrame: startFrame];
-  [sliceStartMarker setNeedsDisplay: YES];
-
   double selEnd = [[[filter selectionEndTime] description] doubleValue];
-  NSRect endFrame = NSMakeRect ([self timeToPixel: selEnd]-10,
-                                frame.size.height/2,
-                                20,
-                                frame.size.height/2);
-  [sliceEndMarker setFrame: endFrame];
-  [sliceEndMarker setNeedsDisplay: YES];
+  [slice setStartPosition: [self timeToPixel: selStart]];
+  [slice setEndPosition: [self timeToPixel: selEnd]];
+  [slice setNeedsDisplay: YES];
 }
 
 - (id) filter
@@ -128,8 +111,6 @@
   NSRect bb = [self bounds];
   [self updateRatio];
 
-  double selStart = [[[filter selectionStartTime] description] doubleValue];
-  double selEnd = [[[filter selectionEndTime] description] doubleValue];
   double filterEndTime = [[[filter endTime] description] doubleValue];
 
   //drawing the timeline
@@ -147,19 +128,6 @@
   [[NSColor blackColor] set];
   [timeline stroke];
 
-  //drawing the selected time slice
-  NSBezierPath *timeslice = [NSBezierPath bezierPath];
-  [timeslice moveToPoint: NSMakePoint ([self timeToPixel: selStart],
-                                       bb.size.height/2 - 2)];
-  [timeslice lineToPoint: NSMakePoint ([self timeToPixel: selEnd],
-                                       bb.size.height/2 - 2)];
-  [timeslice relativeLineToPoint: NSMakePoint (0, 4)];
-  [timeslice lineToPoint: NSMakePoint ([self timeToPixel: selStart],
-                                       bb.size.height/2 + 2)];
-  [timeslice relativeLineToPoint: NSMakePoint (0, -4)];
-  [[NSColor lightGrayColor] set];
-  [timeslice fill];
-
   //draw the name of the trace file for this timeline
   [[filter traceDescription] drawAtPoint: NSMakePoint(0,0)
                           withAttributes: nil];
@@ -172,17 +140,20 @@
 
 - (void) sliceStartChanged
 {
-  double start = [self pixelToTime: [sliceStartMarker position]];
+  double start = [self pixelToTime: [slice startPosition]];
   [controller setStartTimeInterval: start ofFilter: filter];
 }
 - (void) sliceEndChanged
 {
-  double end = [self pixelToTime: [sliceEndMarker position]];
+  double end = [self pixelToTime: [slice endPosition]];
   [controller setEndTimeInterval: end ofFilter: filter];
 }
 
 - (void) sliceChanged
 {
+  double start = [self pixelToTime: [slice startPosition]];
+  double end = [self pixelToTime: [slice endPosition]];
+  [controller setTimeIntervalStart: start end: end ofFilter: filter];
 }
 
 - (double) pixelToTime: (double) pixel

@@ -21,6 +21,8 @@
 #include <General/PajeFilter.h>
 #include "Compare.h"
 #include "Marker.h"
+#include "Slice.h"
+#include "Markers.h"
 
 enum Target { SelectionStart, SelectionEnd, TimeSlice};
 
@@ -30,8 +32,8 @@ enum Target { SelectionStart, SelectionEnd, TimeSlice};
   id controller;
   double ratio;
 
-  SliceStartMarker *sliceStartMarker;
-  SliceEndMarker *sliceEndMarker;
+  Slice *slice;
+  Markers *markers;
 }
 - (id) filter;
 - (void) setFilter: (id) f;
@@ -40,8 +42,8 @@ enum Target { SelectionStart, SelectionEnd, TimeSlice};
 - (void) sliceEndChanged;
 - (void) sliceChanged;
 - (void) updateRatio;
-- (void) updateSliceMarkersFrames;
 - (void) updateMarkers;
+- (void) timeSelectionChanged;
 - (double) pixelToTime: (double) pixel;
 - (double) timeToPixel: (double) time;
 @end
