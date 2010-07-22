@@ -25,6 +25,11 @@
   return self;
 }
 
+- (void) setName: (NSString *)n
+{
+  name = n;
+}
+
 - (void) setTimeline: (Timeline*) t
 {
   timeline = t;
@@ -141,6 +146,8 @@
   [path lineToPoint: NSMakePoint (10,0)];
   [path stroke];
   [path fill];
+
+  [name drawAtPoint: NSMakePoint(0,0) withAttributes: nil];
 }
 
 - (BOOL) isFlipped

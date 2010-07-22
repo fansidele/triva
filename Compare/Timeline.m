@@ -28,7 +28,9 @@
   //creating Slice Markers
   sliceStartMarker = [[SliceStartMarker alloc] initWithFrame: frame];
   sliceEndMarker = [[SliceEndMarker alloc] initWithFrame: frame];
+  [sliceStartMarker setName: @"start"];
   [sliceStartMarker setTimeline: self];
+  [sliceEndMarker setName: @"end"];
   [sliceEndMarker setTimeline: self];
   [self addSubview: sliceStartMarker];
   [self addSubview: sliceEndMarker];
@@ -64,6 +66,7 @@
                                      20,
                                      [self frame].size.height/2);
     NormalMarker *marker = [[NormalMarker alloc] initWithFrame: markerFrame];
+    [marker setName: [entity name]];
     [marker setTimeline: self];
     [self addSubview: marker];
     [marker release];

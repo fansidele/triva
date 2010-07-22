@@ -23,11 +23,13 @@
 
 @interface Marker : NSView
 {
+  NSString *name;
   double offset;
   Timeline *timeline;
   BOOL highlighted;
 }
 - (void) setTimeline: (Timeline*) t;
+- (void) setName: (NSString *)n;
 - (double) position;
 @end
 
