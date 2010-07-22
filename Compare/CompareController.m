@@ -202,6 +202,36 @@
   }
 }
 
+- (void) setTimeIntervalStart: (double) start
+                          end: (double) end
+                     ofFilter: (id) filter
+{
+  if (![self startSynchronized] && ![self endSynchronized]){
+    [filter setTimeIntervalFrom: start to: end];
+    return;
+  }
+
+  NSEnumerator *en = [compareFilters objectEnumerator];
+  id f;
+  while ((f = [en nextObject])){
+    double s = [[[f selectionStartTime] description] doubleValue];
+    double e = [[[f selectionEndTime] description] doubleValue];
+
+    double rs, re; //start and end that will be used
+    if ([self startSynchronized]){
+      rs = start;
+    }else{
+      rs = s;
+    }
+    if ([self endSynchronized]){
+      re = end;
+    }else{
+      re = e;
+    }
+    [f setTimeIntervalFrom: rs to: re];
+  }
+}
+
 - (void) synchronizedChanged: (id)sender
 {
   //save state on user defaults

@@ -56,7 +56,9 @@
                      ofFilter: (id) filter;
 - (void) setEndTimeInterval: (double) end
                    ofFilter: (id) filter;
-
+- (void) setTimeIntervalStart: (double) start
+                          end: (double) end
+                     ofFilter: (id) filter;
 //
 - (void) synchronizedChanged: (id)sender;
 - (void) forwardSliderChanged: (id)sender;
