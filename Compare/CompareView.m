@@ -87,9 +87,9 @@
 - (void) markerTypeChanged: (id) sender
 {
   NSEnumerator *en = [[self subviews] objectEnumerator];
-  Timeline *view;
-  while ((view = [en nextObject])){
-    [view updateMarkers];
+  Timeline *timeline;
+  while ((timeline = [en nextObject])){
+    [timeline updateMarkers];
   }
 }
 
