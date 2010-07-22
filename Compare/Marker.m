@@ -135,12 +135,17 @@
 {
   [super drawRect: r];
   NSBezierPath *path = [NSBezierPath bezierPath];
-  [path moveToPoint: NSMakePoint (10, r.size.height)];
-  [path lineToPoint: NSMakePoint (10, 10)];
-  [path appendBezierPathWithArcWithCenter: NSMakePoint(10,10)
-                              radius: 5 startAngle: 90 endAngle: 89];
+  [path appendBezierPathWithArcWithCenter: NSMakePoint(10,20)
+                              radius: 5 startAngle: 0 endAngle: 360];
+  [path moveToPoint: NSMakePoint(10,20)];
+  [path lineToPoint: NSMakePoint (10,0)];
   [path stroke];
   [path fill];
+}
+
+- (BOOL) isFlipped
+{
+  return YES;
 }
 
 - (void) mouseDragged: (NSEvent*) event
