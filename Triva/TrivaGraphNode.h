@@ -37,6 +37,8 @@
   TimeSliceTree *timeSliceTree; //to show values to the user when highlighted
 
   NSRect currentOutsideBB;
+
+  NSMutableSet *connectedNodes; //contains the TrivaGraphNode's connected to me
 }
 - (void) setType: (NSString *) n;
 - (NSString *) type;
@@ -49,6 +51,8 @@
 - (void) setHighlight: (BOOL) highlight;
 - (BOOL) highlighted;
 - (void) setTimeSliceTree: (TimeSliceTree *) t;
+- (void) addConnectedNode: (TrivaGraphNode*) n;
+- (NSSet*) connectedNodes;
 
 - (BOOL) redefineLayoutWithConfiguration: (NSDictionary *) conf
                             withProvider: (TrivaFilter *) filter

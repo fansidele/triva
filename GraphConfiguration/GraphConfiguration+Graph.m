@@ -160,15 +160,21 @@
         agedge (graph, s, d);
       }
 
+      TrivaGraphNode *sourceNode, *destNode;
+      sourceNode = [self findNodeByName: [NSString stringWithFormat:@"%s",src]];
+      destNode = [self findNodeByName: [NSString stringWithFormat:@"%s", dst]];
+
       TrivaGraphEdge *edge = [[TrivaGraphEdge alloc] init];
       [edge setName: [n name]];
       [edge setType: [type name]];
-      [edge setSource:
-        [self findNodeByName: [NSString stringWithFormat:@"%s", src]]];
-      [edge setDestination:
-        [self findNodeByName: [NSString stringWithFormat:@"%s", dst]]];
+      [edge setSource: sourceNode];
+      [edge setDestination: destNode];
       [edges addObject: edge];
       [edge release];
+
+      //to detect if there is more than one link 
+      //between two TrivaGraphNode's
+      [sourceNode addConnectedNode: destNode];
     }
   }
 

@@ -26,6 +26,7 @@
   bb = NSZeroRect;
   compositions = [[NSMutableDictionary alloc] init];
   currentOutsideBB = NSZeroRect;
+  connectedNodes = [[NSMutableSet alloc] init];
   return self;
 }
 
@@ -66,6 +67,7 @@
 - (void) dealloc
 {
   [compositions release];
+  [connectedNodes release];
   [super dealloc];
 }
 
@@ -144,6 +146,16 @@
 - (void) setTimeSliceTree: (TimeSliceTree *) t
 {
   timeSliceTree = t;
+}
+
+- (void) addConnectedNode: (TrivaGraphNode*) n
+{
+  [connectedNodes addObject: n];
+}
+
+- (NSSet*) connectedNodes
+{
+  return connectedNodes;
 }
 
 - (BOOL) redefineLayoutWithConfiguration: (NSDictionary *) conf
