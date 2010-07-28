@@ -73,6 +73,11 @@
   [[NSColor whiteColor] set];
   NSRectFill(tela);
 
+  //write the name of the file
+  [[filter traceDescription] drawAtPoint: NSMakePoint(0,0)
+                          withAttributes: nil];
+
+
   //transformations
   NSAffineTransform *transform = [self transform];
   [transform concat];
