@@ -26,6 +26,7 @@
   self = [super initWithFilter: f andConfiguration: conf
                       andSpace: s andName: n andObject: obj];
   overflow = 0;
+  direction = NO;
   calculatedValues = [[NSMutableDictionary alloc] init];
   size = nil;
   values = nil;
@@ -62,6 +63,12 @@
                __FUNCTION__, __LINE__, values);
       return nil;
     }
+  }
+
+  //get direction
+  NSString *dir = [configuration objectForKey: @"direction"];
+  if (dir){
+    direction = YES;
   }
   [self redefineLayoutWithValues: timeSliceValues];
   return self;
@@ -138,9 +145,20 @@
     vr.origin.x = bb.origin.x;
     vr.origin.y = bb.origin.y + accum_y;
 
-    NSRectFill(vr);
-    [NSBezierPath strokeRect: vr];
-
+    if (direction){ 
+      NSBezierPath *path = [NSBezierPath bezierPath];
+      [path moveToPoint: NSMakePoint (bb.origin.x, bb.origin.y + accum_y)];
+      [path relativeLineToPoint: NSMakePoint (0, bb.size.height*value)];
+      [path relativeLineToPoint: NSMakePoint (bb.size.width-10, 0)];
+      [path relativeLineToPoint: NSMakePoint (10, -(bb.size.height*value/2))];
+      [path relativeLineToPoint: NSMakePoint (-10, -(bb.size.height*value/2))];
+      [path relativeLineToPoint: NSMakePoint (-bb.size.width+10, 0)];
+      [path stroke];
+      [path fill];
+    }else{
+      NSRectFill(vr);
+      [NSBezierPath strokeRect: vr];
+    }
     [str appendString: [NSString stringWithFormat: @"%@ = %g\n", type,
                              value*100]]; //value is always between 0 and 1 here
     accum_y += vr.size.height;

@@ -31,6 +31,7 @@
   //from configuration
   NSString *size;
   NSArray *values;
+  BOOL direction;
 }
 @end
 
