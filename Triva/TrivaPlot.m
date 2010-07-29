@@ -58,6 +58,9 @@
        fromVariable: var
            ofObject: [node name]
            withType: [(TrivaGraphNode*)node type]];
+  double vdelta = .1*(vmax-vmin);
+  vmax += vdelta;
+  vmin -= vdelta;
   valueSize = vmax - vmin;
 
   [self redefineLayoutWithValues: timeSliceValues];
