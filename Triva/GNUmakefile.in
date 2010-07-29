@@ -13,6 +13,7 @@ Triva_OBJC_FILES = \
 	TrivaConvergence.m \
 	TrivaSwarm.m \
 	TrivaPlot.m \
+	TrivaFFT.m \
 	TimeSliceTree.m \
 	TimeSliceGraph.m \
 	Tree.m \
@@ -29,6 +30,7 @@ Triva_HEADER_FILES = TrivaFilter.h \
 	TrivaConvergence.h \
 	TrivaSwarm.h \
 	TrivaPlot.h \
+	TrivaFFT.h \
 	TimeSliceTree.h \
 	TimeSliceGraph.h \
 	Tree.h \
@@ -36,5 +38,7 @@ Triva_HEADER_FILES = TrivaFilter.h \
 	NSPointFunctions.h \
 	Triva.h \
 	TrivaWindow.h
+
+Triva_LDFLAGS += -lm -lgsl -lgslcblas
 
 include $(GNUSTEP_MAKEFILES)/framework.make

@@ -21,6 +21,7 @@
 #include <Triva/TrivaConvergence.h>
 #include <Triva/TrivaSwarm.h>
 #include <Triva/TrivaPlot.h>
+#include <Triva/TrivaFFT.h>
 
 @implementation TrivaComposition
 + (id) compositionWithConfiguration: (NSDictionary*) conf
@@ -80,6 +81,12 @@
                                          andProvider: prov];
   }else if ([type isEqualToString: @"plot"]){
     return [[TrivaPlot alloc] initWithConfiguration: conf
+                                            withName: n
+                                           forObject: obj
+                                          withValues: timeSliceValues
+                                         andProvider: prov];
+  }else if ([type isEqualToString: @"fft"]){
+    return [[TrivaFFT alloc] initWithConfiguration: conf
                                             withName: n
                                            forObject: obj
                                           withValues: timeSliceValues
