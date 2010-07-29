@@ -147,7 +147,11 @@
     [name drawAtPoint: NSMakePoint (bb.origin.x, bb.origin.y + bb.size.height)
         withAttributes: nil];
 
-    [[NSColor grayColor] set];
+    //getting the color
+    [[filter colorForEntityType:
+      [filter entityTypeWithName: var]] set];
+
+
     //draw the points in the inverse sense (paje gives us the objects that way
     NSBezierPath *path = [NSBezierPath bezierPath];
     [path moveToPoint: NSMakePoint (PLOT_WIDTH,0)];

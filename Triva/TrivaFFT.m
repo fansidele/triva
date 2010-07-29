@@ -142,7 +142,12 @@
   double yratio = bb.size.height/(ymax - ymin);
   int i;
   NSBezierPath *path = [NSBezierPath bezierPath];
-  [[NSColor blueColor] set];
+
+  //getting color
+  [[filter colorForEntityType:
+      [filter entityTypeWithName: var]] set];
+
+
   //ignore frequency 0, start at 1
   [path moveToPoint: NSMakePoint (1*xratio, spec[1]*yratio)];
   for (i = 2; i < n/2; i++){
