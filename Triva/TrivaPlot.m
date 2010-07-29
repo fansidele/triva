@@ -182,6 +182,7 @@
     [t translateXBy: bb.origin.x yBy: bb.origin.y];
     [t concat];
     [path stroke];
+    [path fill];
     [t invert];
     [t concat];
   }
