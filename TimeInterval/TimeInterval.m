@@ -97,6 +97,11 @@
   [frequencyLabel setDoubleValue: [frequencySlider doubleValue]];
 }
 
+- (void) timeSelectionChanged
+{
+  [self timeLimitsChanged];
+}
+
 - (void) timeLimitsChanged
 {
   NSDate *start = [self startTime];
