@@ -59,7 +59,8 @@
 	    timeSelectionSize,
 	    window,
 	    sliceWindow,
-	    sliceWindowView
+	    sliceWindowView,
+	    forwardOnChange
 	);
 	Super = NSObject;
     };

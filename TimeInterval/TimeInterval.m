@@ -107,6 +107,16 @@
   NSDate *start = [self startTime];
   NSDate *end = [self endTime];
 
+  if ([forwardOnChange state]){
+    //save current size
+    double sliceSize = selEnd - selStart;
+    //update selStart and selEnd from the end of the trace
+    selStart = [[end description] doubleValue] - sliceSize;
+    selEnd = [[end description] doubleValue];
+    //trigger the apply action
+    [self performSelector: @selector(apply) withObject: self afterDelay: 0];
+  }
+
   [traceStartTimeLabel setStringValue: [start description]];
   [traceEndTimeLabel setStringValue: [end description]];
 

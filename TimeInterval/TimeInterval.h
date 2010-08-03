@@ -39,6 +39,7 @@
   IBOutlet id timeSelectionSize;
   IBOutlet id timeSelectionStart;
   IBOutlet id updateOnChange;
+  IBOutlet id forwardOnChange;
   TrivaWindow *window;
   id sliceWindow;
 
