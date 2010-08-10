@@ -100,13 +100,10 @@
       [calculatedValues setObject: [NSNumber numberWithDouble: val/s]
           forKey: var];
     }
-    sum += val;
+    sum += val/s;
   }
-  if (sum > 1){
-    overflow = sum - 1;
-  }else{
-    overflow = 0;
-  }
+  overflow = sum - 1;
+
   if ([calculatedValues count] == 0){
     needSpace = NO;
   }else{
