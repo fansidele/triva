@@ -105,49 +105,36 @@
 {
   if (!expr) return -2;
 
-  NSMutableString *size_def = [NSMutableString stringWithString: expr];
-  int number = 0;
-  if (values){
-    NSEnumerator *en2 = [values keyEnumerator];
-    NSString *val;
-    while ((val = [en2 nextObject])){
-      NSString *repl = [NSString stringWithFormat: @"%@",
-        [values objectForKey: val]];
-      number += [size_def replaceOccurrencesOfString: val
-        withString: repl
-        options: NSLiteralSearch
-        range: NSMakeRange(0, [size_def length])];
-    }
-  }
-
-  //math eval to define size
-  char **names;
-  int count;
-  void *f = evaluator_create ((char*)[size_def cString]);
-  evaluator_get_variables (f, &names, &count);
-  if (count != 0){
-//    NSLog (@"%s:%d Expression (%@) has variables that are "
-//      "not present in the aggregated tree. Considering "
-//      "that their values is zero.",
-//      __FUNCTION__, __LINE__, size_def);
-    int i;
-    double *zeros = (double*)malloc(count*sizeof(double));
-    for (i = 0; i < count; i++){
-      zeros[i] = 0;
-    }
-    double ret = evaluator_evaluate (f, count, names, zeros);
-    evaluator_destroy (f);
-    free (zeros);
-    return ret;
+  char **expr_names;
+  double *expr_values, ret;
+  int count, i;
+  void *f = evaluator_create ((char*)[expr cString]);
+  evaluator_get_variables (f, &expr_names, &count);
+  if (count == 0){
+    //nothing to evaluate, return negative value
+    return -1;
   }else{
-    if (!number){
-      evaluator_destroy (f);
-      return -1; /* to indicate that is a numeric value */
+    //ok, we have some variables to be defined
+    expr_values = (double*)malloc (count * sizeof(double));
+    for (i = 0; i < count; i++){
+      NSString *var = [NSString stringWithFormat: @"%s", expr_names[i]];  
+      NSString *val = [values objectForKey: var];
+      if (val){
+        expr_values[i] = [val doubleValue];
+      }else{
+        NSLog (@"%s:%d Expression (%@) has variables that are "
+          "not present in the aggregated tree. Considering "
+          "that their values is zero.",
+          __FUNCTION__, __LINE__, expr);
+        expr_values[i] = 0;
+ 
+      }
     }
-    double ret = evaluator_evaluate (f, 0, NULL, NULL);
+    ret = evaluator_evaluate (f, count, expr_names, expr_values);
     evaluator_destroy (f);
-    return ret;
+    free(expr_values);
   }
+  return ret; 
 }
 
 - (NSColor *) getColor: (NSColor *)c withSaturation: (double) saturation
