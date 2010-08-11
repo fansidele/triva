@@ -42,6 +42,18 @@
   [super hierarchyChanged];
 }
 
+- (void) timeSelectionChanged
+{
+  [self hierarchyChanged];
+  [super timeSelectionChanged];
+}
+
+- (void) timeLimitsChanged
+{
+  [self hierarchyChanged];
+  [super timeLimitsChanged];
+}
+
 - (void)dealloc
 {
   [hiddenEntityTypes release];
