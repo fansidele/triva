@@ -85,6 +85,11 @@
   }
 }
 
+- (NSMutableDictionary*) differences
+{
+  return dif;
+}
+
 - (BOOL) mergedTree
 {
   return mergedTree;
