@@ -47,6 +47,14 @@
 {
 }
 
+//
+// TrivaFilter protocol
+//
+- (TimeSliceTree*) timeSliceTree
+{
+  return mergedTree;
+}
+
 
 //
 // Intercepted Filter Commands

@@ -23,6 +23,7 @@
 @interface Merge  : TrivaFilter
 {
   NSMutableArray *interceptFilters;
+  TimeSliceTree *mergedTree;
 }
 - (void) timeLimitsChangedWithSender: (id) sender;
 - (void) timeSelectionChangedWithSender: (id) sender;
