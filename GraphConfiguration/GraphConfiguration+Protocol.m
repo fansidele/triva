@@ -65,9 +65,12 @@
   return nil;
 }
 
-- (void) defineMax: (double*)max andMin: (double*)min withScale: (TrivaScale) scale
-    fromVariable: (NSString*)var
-    ofObject: (NSString*) objName withType: (NSString*) objType
+- (void) defineMax: (double*)max
+            andMin: (double*)min
+         withScale: (TrivaScale) scale
+      fromVariable: (NSString*)var
+          ofObject: (NSString*) objName
+          withType: (NSString*) objType
 {
   PajeEntityType *valtype = [self entityTypeWithName: var];
   if (scale == Global){
@@ -98,6 +101,22 @@
       if (val < *min) *min = val;
     }
   }
+}
+
+- (BOOL) expressionHasVariables: (NSString*) expr
+{
+  BOOL ret;
+  char **expr_names;
+  int count;
+  void *f = evaluator_create ((char*)[expr cString]);
+  evaluator_get_variables (f, &expr_names, &count);
+  if (count == 0){
+    ret = NO;
+  }else{
+    ret = YES;
+  }
+  evaluator_destroy (f);
+  return ret;
 }
 
 - (double) evaluateWithValues: (NSDictionary *) values

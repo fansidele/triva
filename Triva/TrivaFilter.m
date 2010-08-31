@@ -63,6 +63,11 @@
   return [(TrivaFilter*)inputComponent debugOf: type At: container];
 }
 
+- (BOOL) expressionHasVariables: (NSString*) expr
+{
+  return [(TrivaFilter*)inputComponent expressionHasVariables: expr];
+}
+
 - (double) evaluateWithValues: (NSDictionary *) values
                 withExpr: (NSString *) expr
 {

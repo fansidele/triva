@@ -209,23 +209,22 @@
   }
 
   //getting max and min for size of node (integrate them in time slice)
-  double min, max;
-  [filter defineMax: &max
-             andMin: &min
-          withScale: scale
-       fromVariable: sizeconf
-           ofObject: name
-           withType: type];
-
   //size is mandatory
+  double min, max;
   double screenSize;
-  double size = [filter evaluateWithValues: values withExpr: sizeconf];
-  if (size < 0){ //negative value if evaluation is unsucessfull
-    screenSize = [sizeconf doubleValue];
-  }else{
+  if ([filter expressionHasVariables: sizeconf]){
+    [filter defineMax: &max
+               andMin: &min
+            withScale: scale
+         fromVariable: sizeconf
+             ofObject: name
+             withType: type];
+    double size = [filter evaluateWithValues: values withExpr: sizeconf];
     screenSize = [filter calculateScreenSizeBasedOnValue: size
                                                   andMax: max
                                                   andMin: min];
+  }else{
+    screenSize = [sizeconf doubleValue];
   }
   bb.size.width = screenSize;
   bb.size.height = screenSize;

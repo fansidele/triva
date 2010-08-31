@@ -40,6 +40,7 @@ typedef enum {Local,Global,Convergence,Arnaud} TrivaScale;
 
 /* auxiliary methods */
 - (void) debugOf: (PajeEntityType*) type At: (PajeContainer*) container;
+- (BOOL) expressionHasVariables: (NSString*) expr;
 - (double) evaluateWithValues: (NSDictionary *) values
                 withExpr: (NSString *) expr;
 - (void) defineMax: (double*)max andMin: (double*)min withScale: (TrivaScale) scale //TODO : remove
