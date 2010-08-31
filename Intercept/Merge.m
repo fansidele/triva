@@ -54,12 +54,13 @@
   NSEnumerator *en = [interceptFilters objectEnumerator];
   id intercept = [en nextObject];
   //B use first time slice tree as base
-  mergedTree = [[intercept timeSliceTree] copyWithZone: NSDefaultMallocZone()];
+  mergedTree = [[TimeSliceDifTree alloc]initWithTree:[intercept timeSliceTree]];
   while ((intercept = [en nextObject])){
     [mergedTree subtractTree: [intercept timeSliceTree]];
   }
   //C aggregate?
-  [mergedTree doAggregation];
+//  [mergedTree doAggregation];
+  [mergedTree testTreeWithLevel: 0];
   [super timeSelectionChanged];
 }
 

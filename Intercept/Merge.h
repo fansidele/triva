@@ -23,7 +23,7 @@
 @interface Merge  : TrivaFilter
 {
   NSMutableArray *interceptFilters;
-  TimeSliceTree *mergedTree;
+  TimeSliceDifTree *mergedTree;
 }
 - (void) addFilters: (NSArray *) filters;
 

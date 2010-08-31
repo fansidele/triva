@@ -75,9 +75,5 @@
                         withNodeNames: (NSDictionary *) nodeNames;
 @end
 
-@interface TimeSliceTree (Merge)
-- (void) subtractTree: (TimeSliceTree*) tree;
-@end
-
 #include "TimeSliceGraph.h"
 #endif

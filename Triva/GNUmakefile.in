@@ -15,7 +15,7 @@ Triva_OBJC_FILES = \
 	TrivaPlot.m \
 	TrivaFFT.m \
 	TimeSliceTree.m \
-	TimeSliceTree+Merge.m \
+	TimeSliceDifTree.m \
 	TimeSliceGraph.m \
 	Tree.m \
 	TrivaTreemap.m \
@@ -33,6 +33,7 @@ Triva_HEADER_FILES = TrivaFilter.h \
 	TrivaPlot.h \
 	TrivaFFT.h \
 	TimeSliceTree.h \
+	TimeSliceDifTree.h \
 	TimeSliceGraph.h \
 	Tree.h \
 	TrivaTreemap.h \

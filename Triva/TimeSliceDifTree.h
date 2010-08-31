@@ -14,20 +14,20 @@
     You should have received a copy of the GNU General Public License
     along with Triva.  If not, see <http://www.gnu.org/licenses/>.
 */
-#ifndef __Triva_H_
-#define __Triva_H_
+#ifndef __TimeSliceDifTree_H_
+#define __TimeSliceDifTree_H_
 
-#include "NSPointFunctions.h"
-#include "TimeSliceGraph.h"
+#include <Foundation/Foundation.h>
 #include "TimeSliceTree.h"
-#include "TimeSliceDifTree.h"
-#include "Tree.h"
-#include "TrivaFilter.h"
-#include "TrivaGraphEdge.h"
-#include "TrivaGraphNode.h"
-#include "TrivaComposition.h"
-#include "Triva.h"
-#include "TrivaTreemap.h"
-#include "TrivaWindow.h"
+
+@interface TimeSliceDifTree : TimeSliceTree
+{
+  NSMutableDictionary *dif;
+  BOOL mergedTree;
+}
+- (id) initWithTree: (TimeSliceTree*) tree;
+- (void) subtractTree: (TimeSliceTree*) tree;
+- (BOOL) mergedTree;
+@end
 
 #endif
