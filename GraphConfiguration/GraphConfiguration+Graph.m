@@ -254,6 +254,11 @@
 {
   //getting values integrated within the time-slice
   id t = [[self timeSliceTree] searchChildByName: [obj name]];
+  if (t == nil){
+    NSLog (@"%s:%d The child %@ of TimeSliceTree (%@) does not "
+            "exist.", __FUNCTION__, __LINE__, [obj name], [self timeSliceTree]);
+    return NO;
+  }
   NSMutableDictionary *values = [t timeSliceValues];
 
   //check to see if timeslicetree is a "merged" tree (with differences)
