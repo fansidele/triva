@@ -33,6 +33,12 @@
 - (void) addFilters: (NSArray *) filters
 {
   [interceptFilters addObjectsFromArray: filters];
+  if ([interceptFilters count]){
+    //responder is the first filter
+    inputComponent = [interceptFilters objectAtIndex: 0];
+  }else{
+    inputComponent = nil;
+  }
 }
 
 - (void) timeLimitsChangedWithSender: (id) sender
