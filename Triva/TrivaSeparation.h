@@ -32,6 +32,9 @@
   NSString *size;
   NSArray *values;
   BOOL direction;
+
+  //differences for comparison (nil if not comparison)
+  NSDictionary *diffForComparison;
 }
 @end
 

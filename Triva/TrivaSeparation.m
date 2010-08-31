@@ -30,6 +30,7 @@
   calculatedValues = [[NSMutableDictionary alloc] init];
   size = nil;
   values = nil;
+  diffForComparison = nil;
   return self;
 }
 
@@ -49,6 +50,22 @@
     NSLog (@"%s:%d: no 'size' configuration for composition %@",
                         __FUNCTION__, __LINE__, configuration);
     return nil;
+  }
+
+  //check for differences
+  if (differences){
+    id value = [differences objectForKey: size];
+    if (value){
+      if ([value doubleValue] != 0){
+        NSLog (@"%s:%d: 'size' configuration for composition %@ has "
+                "different values during comparison",
+                        __FUNCTION__, __LINE__, configuration);
+        return nil;
+      }
+    }
+    //saving differences
+    diffForComparison = differences;
+    [diffForComparison retain];
   }
 
   //get values
@@ -115,6 +132,7 @@
 - (void) dealloc
 {
   [calculatedValues release];
+  [diffForComparison release];
   [super dealloc];
 }
 
@@ -134,8 +152,25 @@
   while ((type = [en nextObject])){
     double value = [[calculatedValues objectForKey: type] doubleValue];
 
-    [[filter colorForEntityType:
-      [filter entityTypeWithName: type]] set];
+    if (!diffForComparison){
+      [[filter colorForEntityType:
+        [filter entityTypeWithName: type]] set];
+    }else{
+      //defining color based on the differences
+      NSColor *color = [filter colorForEntityType:
+                          [filter entityTypeWithName: type]];
+      //get difference for type
+      double val = [[diffForComparison objectForKey: type] doubleValue];
+      float h, s, b, a;
+      [color getHue:&h saturation:&s brightness:&b alpha:&a];
+      if (val > 0){
+        [[NSColor colorWithCalibratedHue:h saturation: 1 brightness: b alpha:a] set];
+      }else if (val < 0){
+        [[NSColor colorWithCalibratedHue:h saturation: .5 brightness: b alpha:a] set];
+      }else{
+        //this should not happen, because its size will be equal to 0
+      }
+    }
 
     NSRect vr;
     vr.size.width = bb.size.width;
