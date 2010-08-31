@@ -15,6 +15,7 @@ Triva_OBJC_FILES = \
 	TrivaPlot.m \
 	TrivaFFT.m \
 	TimeSliceTree.m \
+	TimeSliceTree+Merge.m \
 	TimeSliceGraph.m \
 	Tree.m \
 	TrivaTreemap.m \
