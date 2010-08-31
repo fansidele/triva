@@ -201,7 +201,8 @@
     double val = [[differences objectForKey: sizeconf] doubleValue];
     if (val != 0){
       //platform is different, abort
-      NSLog (@"%s:%d: 'size' for type %@ are different",
+      NSLog (@"%s:%d: 'size' configuration for type %@ "
+              "has different values during comparison",
         __FUNCTION__, __LINE__, type);
       return NO;
     }
