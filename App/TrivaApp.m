@@ -31,6 +31,7 @@ NS_DURING
   arguments.graph = 0;
   arguments.linkview = 0;
   arguments.comparison = 0;
+  arguments.merge = 0;
   arguments.hierarchy = 0;
   arguments.check = 0;
   arguments.list = 0;
