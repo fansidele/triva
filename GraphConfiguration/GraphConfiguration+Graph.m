@@ -253,8 +253,7 @@
 - (BOOL) redefineLayoutOf: (id) obj withConfiguration: (NSDictionary *) conf
 {
   //getting values integrated within the time-slice
-  TimeSliceTree *t;
-  t = (TimeSliceTree*)[[self timeSliceTree] searchChildByName: [obj name]];
+  id t = [[self timeSliceTree] searchChildByName: [obj name]];
   NSMutableDictionary *values = [t timeSliceValues];
 
   //check to see if timeslicetree is a "merged" tree (with differences)
