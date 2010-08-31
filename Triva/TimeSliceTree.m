@@ -140,15 +140,15 @@
 //  return [NSString stringWithFormat: @"%@-%@", name, aggregatedValues];
 }
 
-- (void) testTree
+- (void) testTreeWithLevel:(int)level
 {
+  NSLog (@"%*.*s %d %@ - %@ %.2f", level,level,"", [self hash], name, timeSliceValues, finalValue);
   int i;
   if ([children count] != 0){
     for (i = 0; i < [children count]; i++){
-      [[children objectAtIndex: i] testTree];
+      [[children objectAtIndex: i] testTreeWithLevel: level+1];
     }
   }
-  NSLog (@"%@ - %@ - %.2f", name, timeSliceColors, finalValue);
 }
 
 - (void) doAggregation
