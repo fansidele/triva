@@ -352,6 +352,32 @@
   }
   return;
 }
+
+- (id)copyWithZone: (NSZone*)zone
+{
+  TimeSliceTree *copy = [[TimeSliceTree allocWithZone: zone] init];
+  [copy setName: [self name]];
+  [copy setParent: [self parent]];
+  [copy setDepth: [self depth]];
+  [copy setMaxDepth: [self maxDepth]];
+
+  [[copy timeSliceValues] addEntriesFromDictionary: [self timeSliceValues]];
+  [[copy timeSliceTypes] addEntriesFromDictionary: [self timeSliceTypes]];
+  [[copy timeSliceColors] addEntriesFromDictionary: [self timeSliceColors]];
+  [[copy timeSliceDurations] addEntriesFromDictionary: [self timeSliceDurations]];
+  [[copy aggregatedValues] addEntriesFromDictionary: [self aggregatedValues]];
+  [copy setFinalValue: [self finalValue]];
+
+  //copying hierarchy
+  NSEnumerator *en = [children objectEnumerator];
+  id child;
+  while ((child = [en nextObject])){
+    TimeSliceTree *childcopy = [child copyWithZone: zone];
+    [copy addChild: childcopy];
+    [childcopy release];
+  }
+  return copy;
+}
 @end
 
 
