@@ -109,8 +109,8 @@
   void *f = evaluator_create ((char*)[expr cString]);
   evaluator_get_variables (f, &expr_names, &count);
   if (count == 0){
-    //nothing to evaluate, return negative value
-    return -1;
+    //no variables detected, return doubleValue
+    return [expr doubleValue];
   }else{
     //ok, we have some variables to be defined
     expr_values = (double*)malloc (count * sizeof(double));
