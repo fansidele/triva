@@ -257,6 +257,14 @@
   t = (TimeSliceTree*)[[self timeSliceTree] searchChildByName: [obj name]];
   NSMutableDictionary *values = [t timeSliceValues];
 
+  //check to see if timeslicetree is a "merged" tree (with differences)
+  NSDictionary *differences;
+  if ([t mergedTree]){
+    differences = [t differences];
+  }else{
+    differences = nil;
+  }
+
   //set timeSliceTree of the object TODO: remove this
   [obj setTimeSliceTree: t];
 
@@ -264,6 +272,7 @@
   //NSLog (@"[obj name] = %@, conf = %@ values = %@", [obj name], conf, values);
   if(![obj redefineLayoutWithConfiguration: conf
                               withProvider: self
+                           withDifferences: differences
                         andTimeSliceValues: values]){
     return NO;
   }
