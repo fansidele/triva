@@ -98,15 +98,7 @@
   [calculatedValues removeAllObjects];
 
   //we need the size
-  double s = 0;
-  s = [filter evaluateWithValues: timeSliceValues withExpr: size];
-  if (s < 0){
-    //size could not be defined
-    NSLog (@"%s:%d: the value of 'size' for composition %@ is negative or "
-      "could not be defined",
-                        __FUNCTION__, __LINE__, configuration);
-    return;
-  }
+  double s = [filter evaluateWithValues: timeSliceValues withExpr: size];
 
   //get values
   NSEnumerator *en2 = [values objectEnumerator];
