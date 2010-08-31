@@ -122,10 +122,14 @@
       if (val){
         expr_values[i] = [val doubleValue];
       }else{
-        NSLog (@"%s:%d Expression (%@) has variables that are "
-          "not present in the aggregated tree (%@). Considering "
-          "that their values is zero.",
-          __FUNCTION__, __LINE__, expr, values);
+        static BOOL appeared = NO;
+        if (!appeared){
+          NSLog (@"%s:%d Expression (%@) has variables that are "
+            "not present in the aggregated tree (%@). Considering "
+            "that their values is zero. This message appears only once.",
+            __FUNCTION__, __LINE__, expr, values);
+          appeared = YES;
+        }
         expr_values[i] = 0;
  
       }
