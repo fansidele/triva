@@ -196,6 +196,17 @@
     return NO;
   }
 
+  //check to see if there is difference in size
+  if (differences){
+    double val = [[differences objectForKey: sizeconf] doubleValue];
+    if (val != 0){
+      //platform is different, abort
+      NSLog (@"%s:%d: 'size' for type %@ are different",
+        __FUNCTION__, __LINE__, type);
+      return NO;
+    }
+  }
+
   //getting max and min for size of node (integrate them in time slice)
   double min, max;
   [filter defineMax: &max
