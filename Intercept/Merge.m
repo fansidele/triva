@@ -41,6 +41,20 @@
 
 - (void) timeSelectionChangedWithSender: (id) sender
 {
+  //update merged tree
+  //A release current merged tree
+  [mergedTree release];
+  mergedTree = nil;
+  NSEnumerator *en = [interceptFilters objectEnumerator];
+  id intercept = [en nextObject];
+  //B use first time slice tree as base
+  mergedTree = [[intercept timeSliceTree] copyWithZone: NSDefaultMallocZone()];
+  while ((intercept = [en nextObject])){
+    [mergedTree subtractTree: [intercept timeSliceTree]];
+  }
+  //C aggregate?
+  [mergedTree doAggregation];
+  [super timeSelectionChanged];
 }
 
 - (void) hierarchyChangedWithSender: (id) sender
