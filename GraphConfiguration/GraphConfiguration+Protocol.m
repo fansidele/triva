@@ -123,9 +123,9 @@
         expr_values[i] = [val doubleValue];
       }else{
         NSLog (@"%s:%d Expression (%@) has variables that are "
-          "not present in the aggregated tree. Considering "
+          "not present in the aggregated tree (%@). Considering "
           "that their values is zero.",
-          __FUNCTION__, __LINE__, expr);
+          __FUNCTION__, __LINE__, expr, values);
         expr_values[i] = 0;
  
       }
