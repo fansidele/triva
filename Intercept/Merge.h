@@ -25,6 +25,8 @@
   NSMutableArray *interceptFilters;
   TimeSliceTree *mergedTree;
 }
+- (void) addFilters: (NSArray *) filters;
+
 - (void) timeLimitsChangedWithSender: (id) sender;
 - (void) timeSelectionChangedWithSender: (id) sender;
 - (void) hierarchyChangedWithSender: (id) sender;
