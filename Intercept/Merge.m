@@ -60,7 +60,7 @@
   }
   //C aggregate?
 //  [mergedTree doAggregation];
-  [mergedTree testTreeWithLevel: 0];
+//  [mergedTree testTreeWithLevel: 0];
   [super timeSelectionChanged];
 }
 
