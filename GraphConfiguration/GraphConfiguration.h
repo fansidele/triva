@@ -20,8 +20,7 @@
 
 #include <AppKit/AppKit.h>
 #include <Foundation/Foundation.h>
-#include <Triva/TrivaFilter.h>
-#include <Triva/TrivaWindow.h>
+#include <Triva/Triva.h>
 #include <graphviz/gvc.h>
 #include <limits.h>
 #include <float.h>
