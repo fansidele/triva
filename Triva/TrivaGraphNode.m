@@ -160,6 +160,7 @@
 
 - (BOOL) redefineLayoutWithConfiguration: (NSDictionary *) conf
                             withProvider: (TrivaFilter *) filter
+                         withDifferences: (NSDictionary *) differences
                       andTimeSliceValues: (NSDictionary *) values
 {
   //getting scale configuration for node
@@ -244,6 +245,7 @@
       comp = [TrivaComposition compositionWithConfiguration: compconf
                                                    withName: compositionName
                                                   forObject: self
+                                            withDifferences: differences
                                                  withValues: values
                                                 andProvider: filter];
       [compositions setObject: comp forKey: compositionName];

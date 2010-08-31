@@ -56,6 +56,7 @@
 
 - (BOOL) redefineLayoutWithConfiguration: (NSDictionary *) conf
                             withProvider: (TrivaFilter *) filter
+                         withDifferences: (NSDictionary *) differences
                       andTimeSliceValues: (NSDictionary *) values;
 @end
 

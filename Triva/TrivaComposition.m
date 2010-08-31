@@ -27,6 +27,7 @@
 + (id) compositionWithConfiguration: (NSDictionary*) conf
                            withName: (NSString*) n
                           forObject: (TrivaGraphNode*) obj
+                    withDifferences: (NSDictionary*) differences
                          withValues: (NSDictionary*) timeSliceValues
                         andProvider: (TrivaFilter*) prov
 {
@@ -53,42 +54,49 @@
     return [[TrivaSeparation alloc] initWithConfiguration: conf
                                                  withName: n
                                                 forObject: obj
+                                          withDifferences: differences
                                                withValues: timeSliceValues
                                               andProvider: prov];
   }else if ([type isEqualToString: @"gradient"]){
     return [[TrivaGradient alloc] initWithConfiguration: conf
                                                withName: n
                                               forObject: obj
+                                        withDifferences: differences
                                              withValues: timeSliceValues
                                             andProvider: prov];
   }else if ([type isEqualToString: @"convergence"]){
     return [[TrivaConvergence alloc] initWithConfiguration: conf
                                                   withName: n
                                                  forObject: obj
+                                           withDifferences: differences
                                                 withValues: timeSliceValues
                                                andProvider: prov];
   }else if ([type isEqualToString: @"color"]){
     return [[TrivaColor alloc] initWithConfiguration: conf
                                             withName: n
                                            forObject: obj
+                                     withDifferences: differences
                                           withValues: timeSliceValues
                                          andProvider: prov];
   }else if ([type isEqualToString: @"swarm"]){
     return [[TrivaSwarm alloc] initWithConfiguration: conf
                                             withName: n
                                            forObject: obj
+                                     withDifferences: differences
                                           withValues: timeSliceValues
                                          andProvider: prov];
   }else if ([type isEqualToString: @"plot"]){
     return [[TrivaPlot alloc] initWithConfiguration: conf
                                             withName: n
                                            forObject: obj
+                                     withDifferences: differences
                                           withValues: timeSliceValues
                                          andProvider: prov];
   }else if ([type isEqualToString: @"fft"]){
     return [[TrivaFFT alloc] initWithConfiguration: conf
                                             withName: n
                                            forObject: obj
+                                     withDifferences: differences
                                           withValues: timeSliceValues
                                          andProvider: prov];
   }else{
@@ -101,6 +109,7 @@
 - (id) initWithConfiguration: (NSDictionary*) conf
                     withName: (NSString*) n
                    forObject: (TrivaGraphNode*)obj
+             withDifferences: (NSDictionary*) differences
                   withValues: (NSDictionary*) timeSliceValues
                  andProvider: (TrivaFilter*) prov
 {

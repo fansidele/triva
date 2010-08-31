@@ -23,6 +23,7 @@
 - (id) initWithConfiguration: (NSDictionary*) conf
                 withName: (NSString*) na
               forObject: (TrivaGraphNode*) obj
+        withDifferences: (NSDictionary*) differences
               withValues: (NSDictionary*) timeSliceValues
               andProvider: (TrivaFilter*) prov
 {
