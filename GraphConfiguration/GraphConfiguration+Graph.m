@@ -262,11 +262,11 @@
   NSMutableDictionary *values = [t timeSliceValues];
 
   //check to see if timeslicetree is a "merged" tree (with differences)
-  NSDictionary *differences;
-  if ([t mergedTree]){
-    differences = [t differences];
-  }else{
-    differences = nil;
+  NSDictionary *differences = nil;
+  if ([t isKindOfClass: [TimeSliceDifTree class]]){
+    if ([t mergedTree]){
+      differences = [t differences];
+    }
   }
 
   //set timeSliceTree of the object TODO: remove this
