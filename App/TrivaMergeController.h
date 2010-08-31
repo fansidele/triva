@@ -14,27 +14,20 @@
     You should have received a copy of the GNU General Public License
     along with Triva.  If not, see <http://www.gnu.org/licenses/>.
 */
-#ifndef __TRIVA_COMMAND_H
-#define __TRIVA_COMMAND_H
-#include <stdio.h>
+#ifndef TrivaMergeController_h_
+#define TrivaMergeController_h_
 
-#define MAX_INPUT_SIZE 100
+#include "TrivaController.h"
+#include "TrivaCommand.h"
 
-struct arguments
+@interface TrivaMergeController : TrivaController
 {
-  char *input[MAX_INPUT_SIZE];
-  int input_size;
-
-  int treemap, graph, linkview; //visualization windows
-  int comparison;
-  int merge;
-  int abort; //if parameters are not good
-  int hierarchy; //generate type hierarchy
-  int check;  //check trace file
-  int list; // list entity types
-  int instances; //list types and instances
-};
-
-int parse (int argc, char **argv, struct arguments *arg);
+  NSMutableDictionary *graphVisualization;
+  NSMutableArray *graphSequences;
+  id compareController;
+  id mergeController;
+}
+- (void) setSelectionWindow;
+@end
 
 #endif

@@ -19,6 +19,7 @@ SUBPROJECTS = Triva \
   TimeSliceAggregation \
   TypeFilter \
   Compare \
+  Intercept \
   contrib
 
 include $(GNUSTEP_MAKEFILES)/aggregate.make

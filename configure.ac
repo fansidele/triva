@@ -48,6 +48,7 @@ CONFIG_FILES="
   Compare/GNUmakefile \
   contrib/GNUmakefile \
   contrib/SimGridColors/GNUmakefile \
+  Intercept/GNUmakefile \
   GNUmakefile"
 
 AC_CONFIG_FILES($CONFIG_FILES)

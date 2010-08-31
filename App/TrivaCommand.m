@@ -28,6 +28,7 @@ static struct argp_option options[] = {
   {"graph",   'g', 0, OPTION_ARG_OPTIONAL, "Graph Analysis"},
   {"linkview", 'k', 0, OPTION_ARG_OPTIONAL, "Link View (Experimental)"},
   {"comparison", 's', 0, OPTION_ARG_OPTIONAL, "Compare Trace Files (Experimental)"},
+  {"merge", 'm', 0, OPTION_ARG_OPTIONAL, "Compare (Merge) Trace Files (Experimental)"},
   {0, 0, 0, 0, "Other auxiliary options to check the trace file:"},
   {"hierarchy",'h', 0, OPTION_ARG_OPTIONAL, "Export the trace type hierarchy"},
   {"check",   'c', 0, OPTION_ARG_OPTIONAL, "Check the integrity of trace file"},
@@ -56,6 +57,9 @@ static int parse_options (int key, char *arg, struct argp_state *state)
       break;
     case 's':
       arguments->comparison = 1;
+      break;
+    case 'm':
+      arguments->merge = 1;
       break;
     case 'h':
       arguments->hierarchy = 1;

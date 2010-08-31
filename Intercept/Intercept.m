@@ -14,27 +14,35 @@
     You should have received a copy of the GNU General Public License
     along with Triva.  If not, see <http://www.gnu.org/licenses/>.
 */
-#ifndef __TRIVA_COMMAND_H
-#define __TRIVA_COMMAND_H
-#include <stdio.h>
+#include "Intercept.h"
 
-#define MAX_INPUT_SIZE 100
-
-struct arguments
+@implementation Intercept
+- (id)initWithController:(PajeTraceController *)c
 {
-  char *input[MAX_INPUT_SIZE];
-  int input_size;
+  self = [super initWithController: c];
+  return self;
+}
 
-  int treemap, graph, linkview; //visualization windows
-  int comparison;
-  int merge;
-  int abort; //if parameters are not good
-  int hierarchy; //generate type hierarchy
-  int check;  //check trace file
-  int list; // list entity types
-  int instances; //list types and instances
-};
+- (void) setMerge: (id) m
+{
+  merge = m;
+}
 
-int parse (int argc, char **argv, struct arguments *arg);
+- (void) timeLimitsChanged
+{
+  [merge timeLimitsChangedWithSender: self];
+  [super timeLimitsChanged];
+}
 
-#endif
+- (void) timeSelectionChanged
+{
+  [merge timeSelectionChangedWithSender: self];
+  [super timeSelectionChanged];
+}
+
+- (void) hierarchyChanged
+{
+  [merge hierarchyChangedWithSender: self];
+  [super hierarchyChanged];
+}
+@end

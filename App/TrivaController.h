@@ -92,5 +92,6 @@
 @end
 
 #include "TrivaComparisonController.h"
+#include "TrivaMergeController.h"
 
 #endif

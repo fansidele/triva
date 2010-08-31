@@ -24,6 +24,8 @@
   //configuring triva
   if (arguments.comparison){
     triva = [[TrivaComparisonController alloc] initWithArguments: arguments];
+  }else if (arguments.merge){
+    triva = [[TrivaMergeController alloc] initWithArguments: arguments];
   }else{
     if (arguments.treemap) {
       triva = [[TrivaTreemapController alloc] initWithArguments: arguments];

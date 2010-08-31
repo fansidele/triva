@@ -1,0 +1,50 @@
+include $(GNUSTEP_MAKEFILES)/common.make
+
+VERSION = 0.1
+PACKAGE_NAME = Intercept
+BUNDLE_NAME = Intercept
+Intercept_PRINCIPAL_CLASS = Intercept
+BUNDLE_EXTENSION = .bundle
+BUNDLE_INSTALL_DIR = $(GNUSTEP_BUNDLES)/Triva
+
+#
+# Additional libraries
+#
+
+ifeq ($(FOUNDATION_LIB), apple)
+  LDFLAGS += -F../Triva -framework Triva -framework General
+else
+  TimeSliceAggregation_BUNDLE_LIBS += -lTriva -lGeneral
+  ADDITIONAL_LIB_DIRS += -L../Triva/Triva.framework/Versions/Current
+endif
+
+#
+# Resource files
+#
+Intercept_RESOURCE_FILES = #\
+#Resources/Merge.gorm \
+
+
+#
+# Header files
+#
+Intercept_HEADER_FILES = \
+Intercept.h \
+Merge.h
+
+#
+# Class files
+#
+Intercept_OBJC_FILES = \
+Intercept.m \
+Merge.m
+
+Intercept_INCLUDE_DIRS += -I../ -I./
+
+#
+# Makefiles
+#
+-include GNUmakefile.preamble
+include $(GNUSTEP_MAKEFILES)/aggregate.make
+include $(GNUSTEP_MAKEFILES)/bundle.make
+-include GNUmakefile.postamble
