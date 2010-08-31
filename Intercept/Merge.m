@@ -84,6 +84,7 @@
   return @"Merged Trace";
 }
 
+/*
 - (void)hideEntityType:(PajeEntityType *)entityType
 {
 }
@@ -462,5 +463,5 @@ ofContainersTyped:(PajeEntityType *)containerType
 {
   return nil;
 }
-
+*/
 @end
