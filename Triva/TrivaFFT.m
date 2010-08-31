@@ -77,7 +77,6 @@
     start /= delta;
     end /= delta;
 
-    double val = [[entity value] doubleValue];;
     int istart = (int)start;
     if (istart < 0) istart = 0;
     int iend = (int)end;
