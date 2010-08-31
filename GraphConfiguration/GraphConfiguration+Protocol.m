@@ -103,8 +103,6 @@
 - (double) evaluateWithValues: (NSDictionary *) values
     withExpr: (NSString *) expr
 {
-  if (!expr) return -2;
-
   char **expr_names;
   double *expr_values, ret;
   int count, i;
