@@ -269,4 +269,9 @@
   [self setDrawable: YES];
   return YES;
 }
+
+- (NSString *) description
+{
+  return [NSString stringWithFormat: @"%@ - %@", type, name];
+}
 @end

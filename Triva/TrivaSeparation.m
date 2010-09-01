@@ -206,4 +206,17 @@
 {
   return bb;
 }
+
+- (NSString *) description
+{
+  NSMutableString *ret = [NSMutableString string];
+  NSEnumerator *en = [calculatedValues keyEnumerator];
+  NSString *type;
+  while ((type = [en nextObject])){
+    double value = [[calculatedValues objectForKey: type] doubleValue];
+    [ret appendString: [NSString stringWithFormat: @"%@ = %g\n", type,
+                             value*100]]; //value is always between 0 and 1 here
+  }
+  return ret;
+}
 @end
