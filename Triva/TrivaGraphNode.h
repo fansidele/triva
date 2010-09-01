@@ -48,6 +48,7 @@
 - (BOOL) drawable;
 - (void) refresh;
 - (BOOL) draw;
+- (void) drawHighlight;
 - (void) setHighlight: (BOOL) highlight;
 - (BOOL) highlighted;
 - (void) setTimeSliceTree: (TimeSliceTree *) t;

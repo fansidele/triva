@@ -94,12 +94,14 @@
     if (![edge drawable]) continue;
     [edge refresh];
     [edge draw];
+    if ([edge highlighted]) [edge drawHighlight];
   }
   en = [filter enumeratorOfNodes];
   while ((node = [en nextObject])){
     if (![node drawable]) continue;
     [node refresh];
     [node draw];
+    if ([node highlighted]) [node drawHighlight];
   }
 
   //undo transformations

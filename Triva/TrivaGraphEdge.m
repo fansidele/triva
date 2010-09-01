@@ -106,6 +106,16 @@ double LMSDistanceBetweenPoints(NSPoint pt1, NSPoint pt2)
   [transform concat];
 }
 
+- (void) drawHighlight
+{
+  NSAffineTransform *t = [NSAffineTransform transform];
+  [t translateXBy: origin.x yBy: origin.y];
+  [t concat];
+  [super drawHighlight];
+  [t invert];
+  [t concat];
+}
+
 - (void) refresh
 {
   //screenbb is already updated by call to [convertFrom:bb to:tela]

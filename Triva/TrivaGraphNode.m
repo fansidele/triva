@@ -127,6 +127,22 @@
   return YES;
 }
 
+- (void) drawHighlight
+{
+  NSMutableString *str = [NSMutableString string];
+  [str appendString: [self description]];
+  [str appendString: @"\n"];
+  //higlight components
+  NSEnumerator *en = [compositions objectEnumerator];
+  id comp;
+  while ((comp = [en nextObject])){
+    [str appendString: [comp description]];
+  }
+  //draw highlight text
+  [str drawAtPoint: NSMakePoint (bb.origin.x + bb.size.width,
+        bb.origin.y) withAttributes: nil];
+}
+
 - (void) setHighlight: (BOOL) highlight
 {
   highlighted = highlight;
