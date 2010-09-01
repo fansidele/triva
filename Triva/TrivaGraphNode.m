@@ -124,12 +124,6 @@
   [[NSColor lightGrayColor] set];
   [NSBezierPath strokeRect: bb];
 
-  //draw my name
-  if (highlighted){
-    [name drawAtPoint: NSMakePoint (bb.origin.x + bb.size.width,
-          bb.origin.y)
-     withAttributes: nil];
-  }
   return YES;
 }
 
