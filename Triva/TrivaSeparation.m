@@ -169,20 +169,22 @@
     vr.origin.x = bb.origin.x;
     vr.origin.y = bb.origin.y + accum_y;
 
+    NSBezierPath *path = [NSBezierPath bezierPath];
     if (direction){ 
-      NSBezierPath *path = [NSBezierPath bezierPath];
       [path moveToPoint: NSMakePoint (bb.origin.x, bb.origin.y + accum_y)];
       [path relativeLineToPoint: NSMakePoint (0, bb.size.height*value)];
       [path relativeLineToPoint: NSMakePoint (bb.size.width-10, 0)];
       [path relativeLineToPoint: NSMakePoint (10, -(bb.size.height*value/2))];
       [path relativeLineToPoint: NSMakePoint (-10, -(bb.size.height*value/2))];
       [path relativeLineToPoint: NSMakePoint (-bb.size.width+10, 0)];
-      [path stroke];
-      [path fill];
     }else{
-      NSRectFill(vr);
-      [NSBezierPath strokeRect: vr];
+      [path appendBezierPathWithRect: vr];
     }
+    [path fill];
+    if ([selectedType isEqualToString: type]){
+      [[NSColor blackColor] set];
+    }
+    [path stroke];
     accum_y += vr.size.height;
   }
   return YES;
