@@ -125,4 +125,17 @@ double LMSDistanceBetweenPoints(NSPoint pt1, NSPoint pt2)
   //divide my space among my compositions
   [super refresh];
 }
+
+- (BOOL) pointInsideEdge: (NSPoint) p
+{
+  NSBezierPath *path = [NSBezierPath bezierPath];
+  [path appendBezierPathWithRect: bb];
+
+  NSAffineTransform *t = [NSAffineTransform transform];
+  [t translateXBy: origin.x yBy: origin.y];
+  [t rotateByDegrees: angle];
+  
+  [path transformUsingAffineTransform: t];
+  return [path containsPoint: p];
+}
 @end

@@ -33,6 +33,7 @@
 - (void) setDestination: (TrivaGraphNode *) d;
 - (TrivaGraphNode *) source;
 - (TrivaGraphNode *) destination;
+- (BOOL) pointInsideEdge: (NSPoint) p;
 @end
 
 #endif
