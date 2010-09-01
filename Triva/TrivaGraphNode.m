@@ -296,8 +296,10 @@
 {
   NSEnumerator *en = [compositions objectEnumerator];
   id comp;
+  BOOL found = NO;
   while ((comp = [en nextObject])){
-    [comp mouseInside: mPoint withTransform: transform];
+    found = [comp mouseInside: mPoint withTransform: transform];
   }
+  return found;
 }
 @end
