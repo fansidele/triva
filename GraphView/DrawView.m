@@ -185,6 +185,33 @@
       selectedNode = nil;
       [self setNeedsDisplay: YES];
     }
+  }else{
+    return;
+  }
+
+  //search for edges
+  TrivaGraphEdge *edge = nil;
+  en = [filter enumeratorOfEdges];
+  found = NO;
+  while ((edge = [en nextObject])){
+    if ([edge pointInsideEdge: p2]){
+      if (selectedEdge){
+        [selectedEdge setHighlight: NO];
+        selectedEdge = nil;
+      }
+      selectedEdge = edge;
+      [selectedEdge setHighlight: YES];
+      [self setNeedsDisplay: YES];
+      found = YES;
+      break;
+    }
+  }
+  if (!found){
+    if (selectedEdge){
+      [selectedEdge setHighlight: NO];
+      selectedEdge = nil;
+      [self setNeedsDisplay: YES];
+    }
   }
 }
 
