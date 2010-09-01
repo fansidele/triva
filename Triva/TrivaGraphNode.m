@@ -284,4 +284,9 @@
 {
   return [NSString stringWithFormat: @"%@ - %@", type, name];
 }
+
+- (BOOL) mouseInside: (NSPoint) mPoint
+{
+  return NSPointInRect (mPoint, bb);
+}
 @end

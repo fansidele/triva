@@ -136,7 +136,7 @@ double LMSDistanceBetweenPoints(NSPoint pt1, NSPoint pt2)
   [super refresh];
 }
 
-- (BOOL) pointInsideEdge: (NSPoint) p
+- (BOOL) mouseInside: (NSPoint) mPoint
 {
   NSBezierPath *path = [NSBezierPath bezierPath];
   [path appendBezierPathWithRect: bb];
@@ -144,8 +144,7 @@ double LMSDistanceBetweenPoints(NSPoint pt1, NSPoint pt2)
   NSAffineTransform *t = [NSAffineTransform transform];
   [t translateXBy: origin.x yBy: origin.y];
   [t rotateByDegrees: angle];
-  
   [path transformUsingAffineTransform: t];
-  return [path containsPoint: p];
+  return [path containsPoint: mPoint];
 }
 @end

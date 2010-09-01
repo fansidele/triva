@@ -59,6 +59,8 @@
                             withProvider: (TrivaFilter *) filter
                          withDifferences: (NSDictionary *) differences
                       andTimeSliceValues: (NSDictionary *) values;
+
+- (BOOL) mouseInside: (NSPoint) mPoint;
 @end
 
 #include <Triva/TrivaComposition.h>

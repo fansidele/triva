@@ -170,7 +170,7 @@
   NSEnumerator *en = [filter enumeratorOfNodes];
   BOOL found = NO;
   while ((node = [en nextObject])){
-    if(NSPointInRect (p2, [node bb])){
+    if([node mouseInside: p2]){
       if (selectedNode){
         [selectedNode setHighlight: NO];
       }
@@ -196,7 +196,7 @@
   en = [filter enumeratorOfEdges];
   found = NO;
   while ((edge = [en nextObject])){
-    if ([edge pointInsideEdge: p2]){
+    if ([edge mouseInside: p2]){
       if (selectedEdge){
         [selectedEdge setHighlight: NO];
         selectedEdge = nil;
