@@ -287,6 +287,17 @@
 
 - (BOOL) mouseInside: (NSPoint) mPoint
 {
+  [self mouseInsideCompositions: mPoint withTransform: nil];
   return NSPointInRect (mPoint, bb);
+}
+
+- (BOOL) mouseInsideCompositions: (NSPoint) mPoint
+                   withTransform: (NSAffineTransform*)transform
+{
+  NSEnumerator *en = [compositions objectEnumerator];
+  id comp;
+  while ((comp = [en nextObject])){
+    [comp mouseInside: mPoint withTransform: transform];
+  }
 }
 @end

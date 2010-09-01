@@ -61,6 +61,8 @@
                       andTimeSliceValues: (NSDictionary *) values;
 
 - (BOOL) mouseInside: (NSPoint) mPoint;
+- (BOOL) mouseInsideCompositions: (NSPoint) mPoint
+                   withTransform: (NSAffineTransform*)transform;
 @end
 
 #include <Triva/TrivaComposition.h>

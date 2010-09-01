@@ -60,6 +60,8 @@
 - (BOOL) draw;
 - (NSRect) bb;
 - (NSString*) name;
+- (BOOL) mouseInside: (NSPoint)mPoint
+       withTransform: (NSAffineTransform*)transform;
 @end
 
 #endif

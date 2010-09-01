@@ -175,4 +175,13 @@
 {
   return [NSString stringWithFormat: @"[%@ %@]", [node name], name];
 }
+
+- (BOOL) mouseInside: (NSPoint)mPoint
+       withTransform: (NSAffineTransform*)transform
+{
+  //must be implemented in the subclasses
+  NSLog (@"%s:%d: this method must be implemented in the subclasses",
+                        __FUNCTION__, __LINE__);
+  return NO;
+}
 @end

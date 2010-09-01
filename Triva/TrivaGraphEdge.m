@@ -145,6 +145,8 @@ double LMSDistanceBetweenPoints(NSPoint pt1, NSPoint pt2)
   [t translateXBy: origin.x yBy: origin.y];
   [t rotateByDegrees: angle];
   [path transformUsingAffineTransform: t];
+
+  [self mouseInsideCompositions: mPoint withTransform: t];
   return [path containsPoint: mPoint];
 }
 @end

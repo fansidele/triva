@@ -35,6 +35,9 @@
 
   //differences for comparison (nil if not comparison)
   NSDictionary *diffForComparison;
+ 
+  //for highlight
+  NSString *selectedType;
 }
 @end
 

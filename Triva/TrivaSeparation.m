@@ -31,6 +31,7 @@
   size = nil;
   values = nil;
   diffForComparison = nil;
+  selectedType = nil;
   return self;
 }
 
@@ -195,6 +196,15 @@
 - (NSString *) description
 {
   NSMutableString *ret = [NSMutableString string];
+
+  if (selectedType){
+    double value;
+    value = [[calculatedValues objectForKey: selectedType] doubleValue];
+    [ret appendString: [NSString stringWithFormat: @"%@ = %g\n",
+                  selectedType, value*100]];
+    return ret;
+  }
+
   NSEnumerator *en = [calculatedValues keyEnumerator];
   NSString *type;
   while ((type = [en nextObject])){
@@ -203,5 +213,39 @@
                              value*100]]; //value is always between 0 and 1 here
   }
   return ret;
+}
+
+- (BOOL) mouseInside: (NSPoint)mPoint
+       withTransform: (NSAffineTransform*)transform
+{
+  NSEnumerator *en = [calculatedValues keyEnumerator];
+  NSString *type;
+  double accum_y = 0;
+  BOOL found = NO;
+  while ((type = [en nextObject])){
+    double value = [[calculatedValues objectForKey: type] doubleValue];
+    NSRect vr;
+    vr.size.width = bb.size.width;
+    vr.size.height = bb.size.height * value;
+    vr.origin.x = bb.origin.x;
+    vr.origin.y = bb.origin.y + accum_y;
+    accum_y += vr.size.height;
+
+    NSBezierPath *path = [NSBezierPath bezierPath];
+    [path appendBezierPathWithRect: vr];
+
+    if (transform){
+      [path transformUsingAffineTransform: transform];
+    }
+    if ([path containsPoint: mPoint]){
+      selectedType = type;
+      found = YES;
+      break;
+    }
+  }
+  if (!found){
+    selectedType = nil;
+  }
+  return found;
 }
 @end
