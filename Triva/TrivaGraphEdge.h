@@ -24,6 +24,10 @@
 {
   TrivaGraphNode *source;
   TrivaGraphNode *destination;
+
+  //for drawing transformations
+  NSPoint origin;
+  double angle;
 }
 - (void) setSource: (TrivaGraphNode *) s;
 - (void) setDestination: (TrivaGraphNode *) d;

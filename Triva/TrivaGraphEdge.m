@@ -32,6 +32,14 @@ double LMSDistanceBetweenPoints(NSPoint pt1, NSPoint pt2)
 }
 
 @implementation TrivaGraphEdge
+- (id) init
+{
+  self = [super init];
+  origin = NSZeroPoint;
+  angle = 0;
+  return self;
+}
+
 - (void) setSource: (TrivaGraphNode *) s;
 {
   [source release];
@@ -81,18 +89,21 @@ double LMSDistanceBetweenPoints(NSPoint pt1, NSPoint pt2)
           srcRect.origin.y+srcRect.size.height/2);
   NSPoint dstPoint = NSMakePoint (dstRect.origin.x+dstRect.size.width/2,
           dstRect.origin.y+dstRect.size.height/2);
-  double angle = LMSAngleBetweenPoints (dstPoint, srcPoint);
 
-  NSAffineTransform* xform = [NSAffineTransform transform];
-  [xform translateXBy: srcPoint.x yBy: srcPoint.y];
-  [xform rotateByDegrees: angle];
+  //calculating drawing transformation
+  origin = srcPoint;
+  angle = LMSAngleBetweenPoints (dstPoint, srcPoint);
+
+  NSAffineTransform *transform = [NSAffineTransform transform];
+  [transform translateXBy: origin.x yBy: origin.y];
+  [transform rotateByDegrees: angle];
   if (![[destination connectedNodes] containsObject: source]){
-    [xform translateXBy: 0 yBy: -bb.size.height/2];
+    [transform translateXBy: 0 yBy: -bb.size.height/2];
   }
-  [xform concat];
+  [transform concat];
   [super draw];
-  [xform invert];
-  [xform concat];
+  [transform invert];
+  [transform concat];
 }
 
 - (void) refresh
