@@ -39,6 +39,8 @@
   NSRect currentOutsideBB;
 
   NSMutableSet *connectedNodes; //contains the TrivaGraphNode's connected to me
+
+  NSPoint highlightPoint;
 }
 - (void) setType: (NSString *) n;
 - (NSString *) type;

@@ -138,9 +138,8 @@
   while ((comp = [en nextObject])){
     [str appendString: [comp description]];
   }
-  //draw highlight text
-  [str drawAtPoint: NSMakePoint (bb.origin.x + bb.size.width,
-        bb.origin.y) withAttributes: nil];
+  //draw highlight text in the highlighPoint
+  [str drawAtPoint: highlightPoint withAttributes: nil];
 }
 
 - (void) setHighlight: (BOOL) highlight
@@ -294,6 +293,10 @@
 - (BOOL) mouseInsideCompositions: (NSPoint) mPoint
                    withTransform: (NSAffineTransform*)transform
 {
+  //save highlight point
+  highlightPoint = mPoint;
+
+  //do the job
   NSEnumerator *en = [compositions objectEnumerator];
   id comp;
   BOOL found = NO;
