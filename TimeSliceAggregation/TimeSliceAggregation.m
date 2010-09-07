@@ -91,26 +91,6 @@
   return node;
 }
 
-- (void) setSliceStartTime: (NSDate *) time
-{
-  if (sliceStartTime != nil){
-    [sliceStartTime release];
-  }
-  sliceStartTime = time;
-  [sliceStartTime retain];
-  sliceTimeChanged = YES;
-}
-
-- (void) setSliceEndTime: (NSDate *) time
-{
-  if (sliceEndTime != nil){
-    [sliceEndTime release];
-  }
-  sliceEndTime = time;
-  [sliceEndTime retain];
-  sliceTimeChanged = YES;
-}
-
 - (void) releaseTree
 {
   if (tree){

@@ -43,16 +43,6 @@
   BOOL graphAggregationEnabled;
 }
 /**
- * Method to set the start time for the algorithm.
- */
-- (void) setSliceStartTime: (NSDate *) time;
-
-/**
- * Method to set the end time for the algorithm.
- */
-- (void) setSliceEndTime: (NSDate *) time;
-
-/**
  * Method that re-calculate the treemap considering the three parameters
  * and the slice start and end time previously defined. It results a 
  * squarified treemap.
