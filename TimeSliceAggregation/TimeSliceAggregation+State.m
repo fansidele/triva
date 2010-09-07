@@ -53,6 +53,9 @@
     [timeSliceTypes setObject: type forKey: ent];
   }
 
+  NSDate *sliceStartTime = [self selectionStartTime];
+  NSDate *sliceEndTime = [self selectionEndTime];
+
   double tsDuration = [sliceEndTime timeIntervalSinceDate: sliceStartTime];
 
   //integrating in time for the selected time slice

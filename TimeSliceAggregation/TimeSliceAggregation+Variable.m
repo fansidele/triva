@@ -35,6 +35,9 @@
   timeSliceTypes = [node timeSliceTypes];
   timeSliceDurations = [node timeSliceDurations];
 
+  NSDate *sliceStartTime = [self selectionStartTime];
+  NSDate *sliceEndTime = [self selectionEndTime];
+
   double tsDuration = [sliceEndTime timeIntervalSinceDate: sliceStartTime];
 
   NSEnumerator *en;

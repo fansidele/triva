@@ -28,9 +28,6 @@
  */
 @interface TimeSliceAggregation  : TrivaFilter
 {
-  NSDate *sliceStartTime;
-  NSDate *sliceEndTime;
-
   TimeSliceTree *tree;
 
   //dictionary to keep timeslicetree node names

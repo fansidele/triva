@@ -66,6 +66,10 @@
 
 - (void) debugOf: (PajeEntityType*) type At: (PajeContainer*) container
 {
+  NSDate *sliceStartTime = [self selectionStartTime];
+  NSDate *sliceEndTime = [self selectionEndTime];
+
+
   NSLog (@"DEBUG START");
   NSLog (@"slice (%@ - %@)", sliceStartTime, sliceEndTime);
   NSLog (@"type = %@ container = %@", [type name], [container name]);

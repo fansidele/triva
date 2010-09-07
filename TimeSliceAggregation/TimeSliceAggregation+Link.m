@@ -24,6 +24,9 @@
   NSEnumerator *en = nil;
   id ent = nil;
 
+  NSDate *sliceStartTime = [self selectionStartTime];
+  NSDate *sliceEndTime = [self selectionEndTime];
+
   //integrating in time for the selected time slice
   en = [self enumeratorOfEntitiesTyped:type
     inContainer:instance

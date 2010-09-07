@@ -22,8 +22,6 @@
   self = [super initWithController: c];
   if (self != nil){
   }
-  sliceStartTime = [NSDate dateWithTimeIntervalSinceReferenceDate: 0];
-  sliceEndTime = [NSDate dateWithTimeIntervalSinceReferenceDate: 0];
 
   nodeNames = [[NSMutableDictionary alloc] init];
 
@@ -127,57 +125,10 @@
 //  NSLog (@"Done");
 }
 
-- (void) timeSelectionChanged2
-{
-//  NSLog (@"%s - %@,%@", __FUNCTION__,
-//    [self selectionStartTime],
-//    [self selectionEndTime]);
-  BOOL timeSliceChanged = NO;
-  if ([sliceStartTime isEqualToDate: [self selectionStartTime]] == NO){
-    [sliceStartTime release];
-    sliceStartTime = [self selectionStartTime];
-    [sliceStartTime retain];
-    timeSliceChanged = YES;
-  }
-  if ([sliceEndTime isEqualToDate: [self selectionEndTime]] == NO){
-    [sliceEndTime release];
-    sliceEndTime = [self selectionEndTime];
-    [sliceEndTime retain];
-    timeSliceChanged = YES;
-  }
-  if ([sliceStartTime isEqualToDate: sliceEndTime]){
-    //if slice is nil, release tree
-    [self releaseTree];
-    timeSliceChanged = NO;
-  }
-
-  if (timeSliceChanged == YES){
-    [self calculateBehavioralHierarchy];
-  }
-  /* let notification goes on */
-  [outputComponent timeSelectionChanged];
-}
-
 -(void)timeSelectionChanged
 {
-  NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-/*
-  GSDebugAllocationActive(YES);
-  if (1){
-    Class *array = GSDebugAllocationClassList();
-    int i;
-    for (i=0;array[i];i++){
-      NSLog (@"%d %@\n", GSDebugAllocationPeak (array[i]),
-        array[i]);
-    }
-    NSLog (@"");
-  }else{
-    [self activateRecordingOfClass: @"GSCInlineString"];
-    [self listRecordedObjectsOfClass: @"GSCInlineString"];
-  }
-*/
-  [self timeSelectionChanged2];
-  [pool release];
+  [self calculateBehavioralHierarchy];
+  [super timeSelectionChanged];
 }
 
 - (void) entitySelectionChanged
