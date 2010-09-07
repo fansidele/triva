@@ -33,6 +33,13 @@
   return self;
 }
 
+- (void) dealloc
+{
+  [tree release];
+  [nodeNames release];
+  [super dealloc];
+}
+
 - (void) timeSliceAt: (id) instance
               ofType: (PajeEntityType*) type
             withNode: (TimeSliceTree *) node
