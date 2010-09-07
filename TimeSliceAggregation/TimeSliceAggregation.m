@@ -134,6 +134,13 @@
 
 -(void)timeSelectionChanged
 {
+  NSDate *sliceStartTime = [self selectionStartTime];
+  NSDate *sliceEndTime = [self selectionEndTime];
+  
+  if ([sliceStartTime timeIntervalSinceDate: sliceEndTime] == 0){
+    return;
+  }
+
   [self calculateBehavioralHierarchy];
   [super timeSelectionChanged];
 }
