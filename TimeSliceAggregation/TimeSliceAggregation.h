@@ -33,8 +33,6 @@
   //dictionary to keep timeslicetree node names
   NSMutableDictionary *nodeNames; /*(NSString*)->(TimeSliceTree*) */
 
-  BOOL sliceTimeChanged; /* to control the hierarchy creation */
-
   /* Configuration */
   BOOL considerExclusiveDuration;
   BOOL graphAggregationEnabled;
