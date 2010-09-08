@@ -221,21 +221,18 @@
     }
   }
 
-  //getting max and min for size of node (integrate them in time slice)
+  //getting max and min for size of node (within time slice)
   //size is mandatory
-  double min, max;
   double screenSize;
   if ([filter expressionHasVariables: sizeconf]){
-    [filter defineMax: &max
-               andMin: &min
-            withScale: scale
-         fromVariable: sizeconf
-             ofObject: name
-             withType: type];
+    double max = [filter maxOfVariable: sizeconf withScale: scale
+                          ofObject: name withType: type];
+    double min = [filter minOfVariable: sizeconf withScale: scale
+                          ofObject: name withType: type];
     double size = [filter evaluateWithValues: values withExpr: sizeconf];
     screenSize = [filter calculateScreenSizeBasedOnValue: size
-                                                  andMax: max
-                                                  andMin: min];
+                                                andMax: max
+                                                andMin: min];
   }else{
     screenSize = [sizeconf doubleValue];
   }
