@@ -63,44 +63,6 @@
   return nil;
 }
 
-- (void) defineMax: (double*)max
-            andMin: (double*)min
-         withScale: (TrivaScale) scale
-      fromVariable: (NSString*)var
-          ofObject: (NSString*) objName
-          withType: (NSString*) objType
-{
-  PajeEntityType *valtype = [self entityTypeWithName: var];
-  if (scale == Global){
-    *min = [self minValueForEntityType: valtype];
-    *max = [self maxValueForEntityType: valtype];
-  }else if (scale == Local){
-    //if local scale, *min and *max from this container
-    //  container is found based on the name of the obj
-    PajeEntityType *type = [self entityTypeWithName: objType]; 
-    PajeContainer *cont = [self containerWithName: objName type: type];
-    *min = [self minValueForEntityType: valtype inContainer: cont];
-    *max = [self maxValueForEntityType: valtype inContainer: cont];
-  }else if (scale == Convergence || scale == Arnaud){
-    PajeEntityType *type = [self entityTypeWithName: objType];
-    PajeContainer *cont = [self containerWithName: objName type: type];
-
-    *max = 0;
-    *min = FLT_MAX;
-    NSEnumerator *en = [self enumeratorOfEntitiesTyped: valtype
-                                           inContainer: cont
-                                              fromTime:[self selectionStartTime]
-                                                toTime: [self endTime]
-                                           minDuration: 0];
-    id ent;
-    while ((ent = [en nextObject])){
-      double val = [[ent value] doubleValue];
-      if (val > *max) *max = val;
-      if (val < *min) *min = val;
-    }
-  }
-}
-
 - (BOOL) expressionHasVariables: (NSString*) expr
 {
   BOOL ret;
@@ -176,5 +138,95 @@
 - (void) graphComponentScalingChanged
 {
   [self timeSelectionChanged];
+}
+
+- (void) __defineMax: (double*)max
+            andMin: (double*)min
+         withScale: (TrivaScale) scale
+      fromVariable: (NSString*)var
+          ofObject: (NSString*) objName
+          withType: (NSString*) objType
+{
+  PajeEntityType *valtype = [self entityTypeWithName: var];
+  if (scale == Global){
+    *min = [self minValueForEntityType: valtype];
+    *max = [self maxValueForEntityType: valtype];
+  }else if (scale == Local){
+    //if local scale, *min and *max from this container
+    //  container is found based on the name of the obj
+    PajeEntityType *type = [self entityTypeWithName: objType]; 
+    PajeContainer *cont = [self containerWithName: objName type: type];
+    *min = [self minValueForEntityType: valtype inContainer: cont];
+    *max = [self maxValueForEntityType: valtype inContainer: cont];
+  }else if (scale == Convergence || scale == Arnaud){
+    PajeEntityType *type = [self entityTypeWithName: objType];
+    PajeContainer *cont = [self containerWithName: objName type: type];
+
+    *max = 0;
+    *min = FLT_MAX;
+    NSEnumerator *en = [self enumeratorOfEntitiesTyped: valtype
+                                           inContainer: cont
+                                              fromTime:[self selectionStartTime]
+                                                toTime: [self endTime]
+                                           minDuration: 0];
+    id ent;
+    while ((ent = [en nextObject])){
+      double val = [[ent value] doubleValue];
+      if (val > *max) *max = val;
+      if (val < *min) *min = val;
+    }
+  }
+}
+
+- (double) maxOfVariable: (NSString *) variable
+               withScale: (TrivaScale) scale
+                ofObject: (NSString *) entityName
+                withType: (NSString *) entityType
+{
+  double max = -FLT_MAX;
+
+  //check if it is already on cache
+  NSNumber *number = [maxCache objectForKey: variable];
+  if (number) return [number doubleValue];
+
+  //get the array of objects from entities
+  NSEnumerator *en;
+  id entity;
+  en = [[entities objectForKey: entityType] objectEnumerator];
+  while ((entity = [en nextObject])){
+    TimeSliceTree *tst = [[self timeSliceTree] searchChildByName: [entity name]];
+    double val = [self evaluateWithValues: [tst timeSliceValues]
+                                 withExpr: variable];
+    if (val > max) max = val;
+  }
+  //save the value on the maxCache
+  [maxCache setObject: [NSNumber numberWithDouble: max] forKey: variable];
+  return max;
+}
+
+- (double) minOfVariable: (NSString *) variable
+               withScale: (TrivaScale) scale
+                ofObject: (NSString *) entityName
+                withType: (NSString *) entityType
+{
+  double min = FLT_MAX;
+
+  //check if it is already on cache
+  NSNumber *number = [minCache objectForKey: variable];
+  if (number) return [number doubleValue];
+
+  //get the array of objects from entities
+  NSEnumerator *en;
+  id entity;
+  en = [[entities objectForKey: entityType] objectEnumerator];
+  while ((entity = [en nextObject])){
+    TimeSliceTree *tst = [[self timeSliceTree] searchChildByName: [entity name]];
+    double val = [self evaluateWithValues: [tst timeSliceValues]
+                                 withExpr: variable];
+    if (val < min) min = val;
+  }
+  //save the value on the maxCache
+  [minCache setObject: [NSNumber numberWithDouble: min] forKey: variable];
+  return min;
 }
 @end
