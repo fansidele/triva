@@ -99,7 +99,7 @@
   [calculatedValues removeAllObjects];
 
   //we need the size
-  double s = [filter evaluateWithValues: timeSliceValues withExpr: size];
+  sepSize = [filter evaluateWithValues: timeSliceValues withExpr: size];
 
   //get values
   NSEnumerator *en2 = [values objectEnumerator];
@@ -108,10 +108,10 @@
   while ((var = [en2 nextObject])){
     double val = [filter evaluateWithValues: timeSliceValues withExpr: var];
     if (val > 0){
-      [calculatedValues setObject: [NSNumber numberWithDouble: val/s]
+      [calculatedValues setObject: [NSNumber numberWithDouble: val/sepSize]
           forKey: var];
     }
-    sum += val/s;
+    sum += val/sepSize;
   }
   overflow = sum - 1;
 
@@ -202,8 +202,8 @@
   if (selectedType){
     double value;
     value = [[calculatedValues objectForKey: selectedType] doubleValue];
-    [ret appendString: [NSString stringWithFormat: @"%@ = %g\n",
-                  selectedType, value*100]];
+    [ret appendString: [NSString stringWithFormat: @"%@ = %g (%f)\n",
+                  selectedType, value*sepSize, value*100]];
     return ret;
   }
 
@@ -211,8 +211,8 @@
   NSString *type;
   while ((type = [en nextObject])){
     double value = [[calculatedValues objectForKey: type] doubleValue];
-    [ret appendString: [NSString stringWithFormat: @"%@ = %g\n", type,
-                             value*100]]; //value is always between 0 and 1 here
+    [ret appendString: [NSString stringWithFormat: @"%@ = %g (%f)\n", type,
+                             value*sepSize, value*100]]; //value is always between 0 and 1 here
   }
   return ret;
 }

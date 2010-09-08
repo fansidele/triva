@@ -27,6 +27,7 @@
             //the sum of the values must be equal = 1
   double overflow; //(sum_of_the_values - 1)
        //can be used to check if the sum is > 1
+  double sepSize;
 
   //from configuration
   NSString *size;
