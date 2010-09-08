@@ -53,6 +53,9 @@
   //Graphviz
   GVC_t *gvc;
   graph_t *graph;
+
+  // variables for defining max and min
+  NSMutableDictionary *entities; // type -> array of nodes/edges
 }
 /*
  * Method called by interface to set a new configuration

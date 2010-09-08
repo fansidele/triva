@@ -29,6 +29,8 @@
     agclose (graph);
     graph = NULL;
   }
+
+  [entities release];
 }
 
 - (void) initGraph
@@ -45,6 +47,9 @@
   userPositionEnabled = NO;
   configurationParsed = NO;
   layoutRendered = NO;
+
+  //dictionary to hold all TimeSlice entities used in graph
+  entities = [[NSMutableDictionary alloc] init];
 }
 
 - (BOOL) parseConfiguration: (NSDictionary *) conf
@@ -113,6 +118,18 @@
       [node setName: [n name]];
       [node setType: [type name]];
       [nodes addObject: node];
+
+      //add it to the entities dictionary
+      NSMutableArray *array = [entities objectForKey: [type name]];
+      if (array){
+        [array addObject: node];
+      }else{
+        array = [[NSMutableArray alloc] init];
+        [array addObject: node];
+        [entities setObject: array forKey: [type name]];
+        [array release];
+      }
+
       [node release];
     }
   }
@@ -170,6 +187,20 @@
       [edge setSource: sourceNode];
       [edge setDestination: destNode];
       [edges addObject: edge];
+
+
+      //add it to the entities dictionary
+      NSMutableArray *array = [entities objectForKey: [type name]];
+      if (array){
+        [array addObject: edge];
+      }else{
+        array = [[NSMutableArray alloc] init];
+        [array addObject: edge];
+        [entities setObject: array forKey: [type name]];
+        [array release];
+      }
+
+
       [edge release];
 
       //to detect if there is more than one link 
