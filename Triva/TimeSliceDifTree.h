@@ -27,6 +27,7 @@
 }
 - (id) initWithTree: (TimeSliceTree*) tree;
 - (void) subtractTree: (TimeSliceTree*) tree;
+- (void) ratioTree: (TimeSliceTree*) tree;
 - (NSMutableDictionary*) differences;
 - (BOOL) mergedTree;
 @end

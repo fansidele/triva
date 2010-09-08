@@ -67,22 +67,96 @@
   }
 
   //calculating differences
-  NSEnumerator *en = [timeSliceValues keyEnumerator];
-  id key;
-  while ((key = [en nextObject])){
-    double val = [[timeSliceValues objectForKey: key] doubleValue];
-    double treeVal = [[[tree timeSliceValues] objectForKey: key] doubleValue];
-    double val_dif = val - treeVal;
-    if (val_dif > 0) {
-      [dif setObject: @"1" forKey: key];
-      [timeSliceValues setObject: [NSNumber numberWithDouble: abs(val - treeVal)] forKey: key];
-    }else if (val_dif < 0){
-      [dif setObject: @"-1" forKey: key];
-      [timeSliceValues setObject: [NSNumber numberWithDouble: abs(val - treeVal)] forKey: key];
+  NSDictionary *tA = [self timeSliceValues];
+  NSDictionary *tB = [tree timeSliceValues];
+
+  NSMutableDictionary *newTSV; //TSV: TimeSliceValues
+  newTSV = [[NSMutableDictionary alloc] init];
+
+  id variable;
+  NSEnumerator *en = [tA keyEnumerator];
+  while ((variable = [en nextObject])){
+    double vA = [[tA objectForKey: variable] doubleValue];
+    double vB = [[tB objectForKey: variable] doubleValue];
+    double vdif = vA - vB;
+
+    //save original values
+    NSString *variableA, *variableB;
+    variableA = [NSString stringWithFormat: @"A_%@", variable];
+    variableB = [NSString stringWithFormat: @"B_%@", variable];
+
+    [newTSV setObject: [NSNumber numberWithDouble: vA]
+               forKey: variableA];
+    [newTSV setObject: [NSNumber numberWithDouble: vB]
+               forKey: variableB];
+
+    //saving absolute difference
+    [newTSV setObject: [NSNumber numberWithDouble: abs(vdif)]
+               forKey: variable];
+   
+    //register for which side is the difference 
+    if (vdif > 0) {
+      [dif setObject: @"1" forKey: variable];
+    }else if (vdif < 0){
+      [dif setObject: @"-1" forKey: variable];
     }else{
-      [dif setObject: @"0" forKey: key];
+      [dif setObject: @"0" forKey: variable];
     }
   }
+  [self setTimeSliceValues: newTSV];
+  [newTSV release];
+}
+
+- (void) ratioTree: (TimeSliceTree*) tree
+{
+  mergedTree = YES;
+
+  //recurse
+  int i;
+  for (i = 0; i < [children count]; i++){
+    TimeSliceDifTree *child = [children objectAtIndex: i];
+    TimeSliceTree *treeChild = [[tree children] objectAtIndex: i];
+    [child ratioTree: treeChild];
+  }
+
+  //calculating differences
+  NSDictionary *tA = [self timeSliceValues];
+  NSDictionary *tB = [tree timeSliceValues];
+
+  NSMutableDictionary *newTSV; //TSV: TimeSliceValues
+  newTSV = [[NSMutableDictionary alloc] init];
+
+  id variable;
+  NSEnumerator *en = [tA keyEnumerator];
+  while ((variable = [en nextObject])){
+    double vA = [[tA objectForKey: variable] doubleValue];
+    double vB = [[tB objectForKey: variable] doubleValue];
+
+    //save original values
+    NSString *variableA, *variableB;
+    variableA = [NSString stringWithFormat: @"A_%@", variable];
+    variableB = [NSString stringWithFormat: @"B_%@", variable];
+
+    [newTSV setObject: [NSNumber numberWithDouble: vA]
+               forKey: variableA];
+    [newTSV setObject: [NSNumber numberWithDouble: vB]
+               forKey: variableB];
+
+    if (vA == 0 || vB == 0){
+    }else{
+      double ratio;
+      if (vA > vB){
+        ratio = 1 - vB/vA;
+      }else{
+        ratio = 1 - vA/vB;
+      }
+      //save ratio
+      [newTSV setObject: [NSNumber numberWithDouble: ratio] 
+                 forKey: variable];
+    }
+  }
+  [self setTimeSliceValues: newTSV];
+  [newTSV release];
 }
 
 - (NSMutableDictionary*) differences
