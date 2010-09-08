@@ -68,7 +68,7 @@
 
  
   //Step B: Create the Merge Controller (responsible for merging)
-  Class mergeClass = NSClassFromString(@"Merge");
+  Class mergeClass = NSClassFromString(@"Difference");
   if (mergeClass == nil) return nil;
   mergeController = [[mergeClass alloc] initWithController: self];
 

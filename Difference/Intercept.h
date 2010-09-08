@@ -19,11 +19,11 @@
 
 #include <Foundation/Foundation.h>
 #include <Triva/Triva.h>
-#include "Merge.h"
+#include "Difference.h"
 
 @interface Intercept  : TrivaFilter
 {
-  Merge *merge;
+  Difference *merge;
 }
 - (void) setMerge: (id) m;
 @end

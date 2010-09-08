@@ -14,13 +14,13 @@
     You should have received a copy of the GNU General Public License
     along with Triva.  If not, see <http://www.gnu.org/licenses/>.
 */
-#ifndef __Merge_H
-#define __Merge_H
+#ifndef __Difference_H
+#define __Difference_H
 
 #include <Foundation/Foundation.h>
 #include <Triva/Triva.h>
 
-@interface Merge  : TrivaFilter
+@interface Difference  : TrivaFilter
 {
   NSMutableArray *interceptFilters;
   TimeSliceDifTree *mergedTree;

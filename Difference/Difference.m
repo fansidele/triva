@@ -14,9 +14,9 @@
     You should have received a copy of the GNU General Public License
     along with Triva.  If not, see <http://www.gnu.org/licenses/>.
 */
-#include "Merge.h"
+#include "Difference.h"
 
-@implementation Merge
+@implementation Difference
 - (id)initWithController:(id)c
 {
   self = [super initWithController: c];

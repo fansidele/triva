@@ -1,9 +1,9 @@
 include $(GNUSTEP_MAKEFILES)/common.make
 
 VERSION = 0.1
-PACKAGE_NAME = Intercept
-BUNDLE_NAME = Intercept
-Intercept_PRINCIPAL_CLASS = Intercept
+PACKAGE_NAME = Difference
+BUNDLE_NAME = Difference
+Difference_PRINCIPAL_CLASS = Intercept
 BUNDLE_EXTENSION = .bundle
 BUNDLE_INSTALL_DIR = $(GNUSTEP_BUNDLES)/Triva
 
@@ -21,25 +21,25 @@ endif
 #
 # Resource files
 #
-Intercept_RESOURCE_FILES = #\
-#Resources/Merge.gorm \
+Difference_RESOURCE_FILES = #\
+#Resources/Difference.gorm \
 
 
 #
 # Header files
 #
-Intercept_HEADER_FILES = \
+Difference_HEADER_FILES = \
 Intercept.h \
-Merge.h
+Difference.h
 
 #
 # Class files
 #
-Intercept_OBJC_FILES = \
+Difference_OBJC_FILES = \
 Intercept.m \
-Merge.m
+Difference.m
 
-Intercept_INCLUDE_DIRS += -I../ -I./
+Difference_INCLUDE_DIRS += -I../ -I./
 
 #
 # Makefiles
