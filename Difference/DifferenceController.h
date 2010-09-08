@@ -14,35 +14,22 @@
     You should have received a copy of the GNU General Public License
     along with Triva.  If not, see <http://www.gnu.org/licenses/>.
 */
-#include "Intercept.h"
+#ifndef __DifferenceController_H
+#define __DifferenceController_H
 
-@implementation Intercept
-- (id)initWithController:(PajeTraceController *)c
-{
-  self = [super initWithController: c];
-  return self;
-}
+#include <Foundation/Foundation.h>
+#include <Triva/Triva.h>
 
-- (void) setMerge: (id) m
+@interface DifferenceController  : TrivaFilter
 {
-  merge = m;
+  NSMutableArray *interceptFilters;
+  TimeSliceDifTree *mergedTree;
 }
+- (void) addFilters: (NSArray *) filters;
 
-- (void) timeLimitsChanged
-{
-  [merge timeLimitsChangedWithSender: self];
-  [super timeLimitsChanged];
-}
-
-- (void) timeSelectionChanged
-{
-  [merge timeSelectionChangedWithSender: self];
-  [super timeSelectionChanged];
-}
-
-- (void) hierarchyChanged
-{
-  [merge hierarchyChangedWithSender: self];
-  [super hierarchyChanged];
-}
+- (void) timeLimitsChangedWithSender: (id) sender;
+- (void) timeSelectionChangedWithSender: (id) sender;
+- (void) hierarchyChangedWithSender: (id) sender;
 @end
+
+#endif

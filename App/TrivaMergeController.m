@@ -33,7 +33,7 @@
        StorageController, \
        Compare, \
        TimeSliceAggregation, \
-       Intercept \
+       Difference \
     ) )" propertyList];
 
   //loading bundles and creating graph sequences
@@ -67,32 +67,33 @@
   [compareController performSelector: method withObject: compareFilters];
 
  
-  //Step B: Create the Merge Controller (responsible for merging)
-  Class mergeClass = NSClassFromString(@"Difference");
-  if (mergeClass == nil) return nil;
-  mergeController = [[mergeClass alloc] initWithController: self];
+  //Step B: Create the Difference Controller (responsible for merging)
+  Class difContrClass = NSClassFromString(@"DifferenceController");
+  if (difContrClass == nil) return nil;
+  differenceController = [[difContrClass alloc] initWithController: self];
 
   //set merge controller for all Intercept filters
   NSMutableArray *interceptFilters = [NSMutableArray array];
   for (i = 0; i < input_size; i++){ 
     NSMutableDictionary *d = [graphSequences objectAtIndex: i];
-    id intercept = [d objectForKey: @"Intercept"];
+    id intercept = [d objectForKey: @"Difference"];
+    NSLog (@"%@", intercept);
 
-    method = @selector(setMerge:);
-    [intercept performSelector: method withObject: mergeController];
+    method = @selector(setController:);
+    [intercept performSelector: method withObject: differenceController];
     [interceptFilters addObject: intercept];
   }
   method = @selector(addFilters:);
-  [mergeController performSelector: method withObject: interceptFilters];
+  [differenceController performSelector: method withObject: interceptFilters];
 
-  //Step C: Connect visualization components with the mergeController
+  //Step C: Connect visualization components with the differenceController
   g = [@"(  \
     ( GraphConfiguration, \
       GraphView \
     ) )" propertyList];
   graphVisualization = [[NSMutableDictionary alloc] init];
   [self addComponentSequences: g withDictionary: graphVisualization];
-  [self connectComponent: mergeController
+  [self connectComponent: differenceController
              toComponent: 
                   [graphVisualization objectForKey: @"GraphConfiguration"]];
 

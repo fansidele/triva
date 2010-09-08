@@ -25,7 +25,7 @@
   NSMutableDictionary *graphVisualization;
   NSMutableArray *graphSequences;
   id compareController;
-  id mergeController;
+  id differenceController;
 }
 - (void) setSelectionWindow;
 @end

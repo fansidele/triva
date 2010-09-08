@@ -22,14 +22,9 @@
 
 @interface Difference  : TrivaFilter
 {
-  NSMutableArray *interceptFilters;
-  TimeSliceDifTree *mergedTree;
+  id controller;
 }
-- (void) addFilters: (NSArray *) filters;
-
-- (void) timeLimitsChangedWithSender: (id) sender;
-- (void) timeSelectionChangedWithSender: (id) sender;
-- (void) hierarchyChangedWithSender: (id) sender;
+- (void) setController: (id) c;
 @end
 
 #endif

@@ -3,7 +3,7 @@ include $(GNUSTEP_MAKEFILES)/common.make
 VERSION = 0.1
 PACKAGE_NAME = Difference
 BUNDLE_NAME = Difference
-Difference_PRINCIPAL_CLASS = Intercept
+Difference_PRINCIPAL_CLASS = Difference
 BUNDLE_EXTENSION = .bundle
 BUNDLE_INSTALL_DIR = $(GNUSTEP_BUNDLES)/Triva
 
@@ -29,15 +29,15 @@ Difference_RESOURCE_FILES = #\
 # Header files
 #
 Difference_HEADER_FILES = \
-Intercept.h \
-Difference.h
+Difference.h \
+DifferenceController.h
 
 #
 # Class files
 #
 Difference_OBJC_FILES = \
-Intercept.m \
-Difference.m
+Difference.m \
+DifferenceController.m
 
 Difference_INCLUDE_DIRS += -I../ -I./
 
