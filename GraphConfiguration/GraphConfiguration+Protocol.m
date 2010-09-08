@@ -19,8 +19,6 @@
 #include <AppKit/AppKit.h>
 #include "GraphConfiguration.h"
 
-#define MAX_SIZE   60
-
 @implementation GraphConfiguration (Protocol)
 // implementation the TrivaFilter "protocol" 
 - (NSEnumerator*) enumeratorOfNodes
