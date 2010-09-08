@@ -43,12 +43,19 @@ typedef enum {Local,Global,Convergence,Arnaud} TrivaScale;
 - (BOOL) expressionHasVariables: (NSString*) expr;
 - (double) evaluateWithValues: (NSDictionary *) values
                 withExpr: (NSString *) expr;
-- (void) defineMax: (double*)max andMin: (double*)min withScale: (TrivaScale) scale //TODO : remove
-                fromVariable: (NSString*)var
-                ofObject: (NSString*) objName withType: (NSString*) objType;
 - (NSColor *) getColor: (NSColor *)c withSaturation: (double) saturation; //TODO :remove
 - (double) calculateScreenSizeBasedOnValue: (double) size
   andMax: (double)max andMin: (double)min;
+
+// new part of protocol
+- (double) maxOfVariable: (NSString *) variable
+               withScale: (TrivaScale) scale
+                ofObject: (NSString *) entityName
+                withType: (NSString *) entityType;
+- (double) minOfVariable: (NSString *) variable
+               withScale: (TrivaScale) scale
+                ofObject: (NSString *) entityName
+                withType: (NSString *) entityType;
 @end
 
 #endif

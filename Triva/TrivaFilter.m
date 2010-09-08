@@ -75,13 +75,6 @@
       withExpr: expr];
 }
 
-- (void) defineMax: (double*)max andMin: (double*)min withScale: (TrivaScale) scale
-                fromVariable: (NSString*)var
-                ofObject: (NSString*) objName withType: (NSString*) objType
-{
-  return; // TODO: remove
-}
-
 - (NSColor *) getColor: (NSColor *)c withSaturation: (double) saturation
 {
   return nil; // TODO: remove
@@ -95,4 +88,26 @@
         andMax: max andMin: min]; //TODO: remove
 }
 */
+
+- (double) maxOfVariable: (NSString *) variable
+               withScale: (TrivaScale) scale
+                ofObject: (NSString *) entityName
+                withType: (NSString *) entityType
+{
+  return [(TrivaFilter*)inputComponent maxOfVariable: variable
+                                           withScale: scale
+                                            ofObject: entityName
+                                            withType: entityType];
+}
+
+- (double) minOfVariable: (NSString *) variable
+               withScale: (TrivaScale) scale
+                ofObject: (NSString *) entityName
+                withType: (NSString *) entityType
+{
+  return [(TrivaFilter*)inputComponent minOfVariable: variable
+                                           withScale: scale
+                                            ofObject: entityName
+                                            withType: entityType];
+}
 @end
