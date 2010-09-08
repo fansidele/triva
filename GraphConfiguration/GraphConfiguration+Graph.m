@@ -263,6 +263,9 @@
 
 - (BOOL) redefineLayoutOfGraphWithConfiguration: (NSDictionary *) conf
 {
+  maxCache = [[NSMutableDictionary alloc] init];
+  minCache = [[NSMutableDictionary alloc] init];
+
   NSMutableArray *all = [NSMutableArray array];
   [all addObjectsFromArray: nodes];
   [all addObjectsFromArray: edges];
@@ -278,6 +281,9 @@
     [self redefineLayoutOf: object withConfiguration: objectConf];
   }
   layoutRendered = YES;
+
+  [maxCache release];
+  [minCache release];
   return YES;
 }
 

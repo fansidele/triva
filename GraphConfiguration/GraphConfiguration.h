@@ -56,6 +56,8 @@
 
   // variables for defining max and min
   NSMutableDictionary *entities; // type -> array of nodes/edges
+  NSMutableDictionary *minCache;  // min cache
+  NSMutableDictionary *maxCache;  // max cache
 }
 /*
  * Method called by interface to set a new configuration
