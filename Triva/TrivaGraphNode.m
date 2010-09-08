@@ -205,22 +205,6 @@
     return NO;
   }
 
-  //check to see if there is difference in size
-  if (differences){
-
-    //only check if size is a variable
-    if ([filter expressionHasVariables: sizeconf]){
-      double val = [[differences objectForKey: sizeconf] doubleValue];
-      if (val != 0){
-        //platform is different, abort
-        NSLog (@"%s:%d: 'size' configuration for type %@ (node %@) "
-              "has different values during comparison",
-          __FUNCTION__, __LINE__, type, name);
-        return NO;
-      }
-    }
-  }
-
   //getting max and min for size of node (within time slice)
   //size is mandatory
   double screenSize;

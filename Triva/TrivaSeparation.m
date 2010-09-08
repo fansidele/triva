@@ -55,15 +55,6 @@
 
   //check for differences
   if (differences){
-    id value = [differences objectForKey: size];
-    if (value){
-      if ([value doubleValue] != 0){
-        NSLog (@"%s:%d: 'size' configuration for composition %@ has "
-                "different values during comparison",
-                        __FUNCTION__, __LINE__, configuration);
-        return nil;
-      }
-    }
     //saving differences
     diffForComparison = differences;
     [diffForComparison retain];
