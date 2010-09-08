@@ -1,3 +1,27 @@
+2010-09-07 (try-1.2) Lucas M. Schnorr <schnorr@gmail.com>
+  * New logo for the tool featuring the "Cuia"
+  * Complete re-write of the TrivaController (several controllers added)
+  * GraphView & GraphConfiguration
+    * scale parameter always considered as Global (for now)
+    * CRTL + mouse wheel changes the size of all graph objects
+    * Better drawing (support for two links between two nodes)
+    * Improved highlight support
+  * TimeInterval
+    * Click on the time slice view opens a bigger window showing the time slice
+    * Support for online visualization (combined with Distributed Dimvisual)
+  * SquarifiedTreemap
+    * Highlighting the hierarchy under the mouse
+    * CRTL + scroll wheel changes the offset (space between rectangles)
+  * General/Interaction
+    * Remembering position of each Triva window on the screen between executions
+  * Compare method for trace comparison (splitted views)
+    * This method only synchronizes the slice of time between two traces 
+    * It can be activated using -s parameter
+    * Splitted views must be configured separately (if view is a graph)
+  * Merge method for trace comparison (single view of differences)
+    * Time slice synchronization (with markers)
+    * Differences calculated as a Subtract and Ratio (for two trace files)
+
 2010-06-29 (1.1) Lucas M. Schnorr <schnorr@gmail.com>
   * New release
 
