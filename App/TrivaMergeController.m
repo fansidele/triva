@@ -77,7 +77,6 @@
   for (i = 0; i < input_size; i++){ 
     NSMutableDictionary *d = [graphSequences objectAtIndex: i];
     id intercept = [d objectForKey: @"Difference"];
-    NSLog (@"%@", intercept);
 
     method = @selector(setController:);
     [intercept performSelector: method withObject: differenceController];
