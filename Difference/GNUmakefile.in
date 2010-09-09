@@ -21,8 +21,8 @@ endif
 #
 # Resource files
 #
-Difference_RESOURCE_FILES = #\
-#Resources/Difference.gorm \
+Difference_RESOURCE_FILES = \
+Resources/Difference.gorm \
 
 
 #

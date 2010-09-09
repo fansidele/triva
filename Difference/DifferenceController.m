@@ -20,7 +20,9 @@
 - (id)initWithController:(id)c
 {
   self = [super initWithController: c];
+  [NSBundle loadNibNamed: @"Difference" owner: self];
   interceptFilters = [[NSMutableArray alloc] init];
+  [window initializeWithDelegate: self];
   return self;
 }
 
@@ -43,6 +45,7 @@
 
 - (void) timeLimitsChangedWithSender: (id) sender
 {
+  [self updateGUI];
 }
 
 - (void) timeSelectionChangedWithSender: (id) sender
@@ -56,7 +59,13 @@
   //B use first time slice tree as base
   mergedTree = [[TimeSliceDifTree alloc]initWithTree:[intercept timeSliceTree]];
   while ((intercept = [en nextObject])){
-    [mergedTree subtractTree: [intercept timeSliceTree]];
+    if (configuredOperation == Subtract){
+      [mergedTree subtractTree: [intercept timeSliceTree]];
+    }else if (configuredOperation == Ratio){
+      [mergedTree ratioTree: [intercept timeSliceTree]];
+    }else{
+      [mergedTree subtractTree: [intercept timeSliceTree]];
+    }
   }
   //C aggregate?
 //  [mergedTree doAggregation];
@@ -66,6 +75,7 @@
 
 - (void) hierarchyChangedWithSender: (id) sender
 {
+  [self updateGUI];
 }
 
 //
@@ -465,4 +475,50 @@ ofContainersTyped:(PajeEntityType *)containerType
   return nil;
 }
 */
+
+- (BOOL) windowShouldClose: (id) sender
+{
+  [[NSApplication sharedApplication] terminate:self];
+  return YES;
+}
+
+- (void) updateGUI
+{
+  id filter;
+  NSEnumerator *en = [interceptFilters objectEnumerator];
+  while ((filter = [en nextObject])){
+  }
+  if ([interceptFilters count] >= 1){
+    [traceA setStringValue:
+       [[[[interceptFilters objectAtIndex: 0] traceDescription]
+            pathComponents] lastObject]];
+  }
+  if ([interceptFilters count] >= 2){
+    [traceB setStringValue:
+       [[[[interceptFilters objectAtIndex: 1] traceDescription]
+            pathComponents] lastObject]];
+  }
+  [numberOfTraceFiles setIntValue: [interceptFilters count]];
+
+  [operation removeAllItems];
+  [operation addItemWithTitle: SUBTRACT_OPERATION];
+  [operation addItemWithTitle: RATIO_OPERATION];
+  [operation selectItemAtIndex: 0];
+  [self operationChanged: self];
+}
+
+- (void) operationChanged: (id)sender
+{
+  NSString *selected = [operation titleOfSelectedItem];
+  if ([selected isEqualToString: SUBTRACT_OPERATION]){
+    configuredOperation = Subtract;  
+  }else if ([selected isEqualToString: RATIO_OPERATION]){
+    configuredOperation = Ratio; 
+  }else{
+    configuredOperation = Subtract;  
+  }
+
+  //trigger changes
+  [self timeSelectionChangedWithSender: self];
+}
 @end

@@ -19,17 +19,34 @@
 
 #include <Foundation/Foundation.h>
 #include <Triva/Triva.h>
+#include <Triva/TrivaWindow.h>
+
+typedef enum {Subtract,Ratio} TrivaDifferenceOperation;
+#define SUBTRACT_OPERATION @"-"
+#define RATIO_OPERATION    @"/"
 
 @interface DifferenceController  : TrivaFilter
 {
   NSMutableArray *interceptFilters;
   TimeSliceDifTree *mergedTree;
+
+  //GUI
+  TrivaWindow *window;
+  id numberOfTraceFiles;
+  id traceB;
+  id traceA;
+  id operation;
+
+  TrivaDifferenceOperation configuredOperation;
 }
 - (void) addFilters: (NSArray *) filters;
 
 - (void) timeLimitsChangedWithSender: (id) sender;
 - (void) timeSelectionChangedWithSender: (id) sender;
 - (void) hierarchyChangedWithSender: (id) sender;
+
+- (void) updateGUI;
+- (void) operationChanged: (id)sender;
 @end
 
 #endif
