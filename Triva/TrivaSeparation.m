@@ -193,7 +193,7 @@
   if (selectedType){
     double value;
     value = [[calculatedValues objectForKey: selectedType] doubleValue];
-    [ret appendString: [NSString stringWithFormat: @"%@ = %.2g (%.2f%%)\n",
+    [ret appendString: [NSString stringWithFormat: @"%@ = %f (%.2f%%)\n",
                   selectedType, value*sepSize, value*100]];
     return ret;
   }
@@ -202,7 +202,7 @@
   NSString *type;
   while ((type = [en nextObject])){
     double value = [[calculatedValues objectForKey: type] doubleValue];
-    [ret appendString: [NSString stringWithFormat: @"%@ = %.2g (%.2f%%)\n", type,
+    [ret appendString: [NSString stringWithFormat: @"%@ = %f (%.2f%%)\n", type,
                              value*sepSize, value*100]]; //value is always between 0 and 1 here
   }
   return ret;
