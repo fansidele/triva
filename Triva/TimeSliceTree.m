@@ -142,7 +142,7 @@
 
 - (void) testTreeWithLevel:(int)level
 {
-  NSLog (@"%*.*s %d %@ - %@ %.2f", level,level,"", [self hash], name, timeSliceValues, finalValue);
+  NSLog (@"%*.*s %@ - %@ %.2f", level,level,"", name, timeSliceValues, finalValue);
   int i;
   if ([children count] != 0){
     for (i = 0; i < [children count]; i++){
