@@ -194,7 +194,7 @@
     double value;
     value = [[calculatedValues objectForKey: selectedType] doubleValue];
     [ret appendString: [NSString stringWithFormat: @"%@ = %f (%.2f%%)\n",
-                  selectedType, value*sepSize, value*100]];
+                  selectedType, value*sepSize*[[diffForComparison objectForKey: selectedType] doubleValue], value*100]];
     return ret;
   }
 
@@ -203,7 +203,7 @@
   while ((type = [en nextObject])){
     double value = [[calculatedValues objectForKey: type] doubleValue];
     [ret appendString: [NSString stringWithFormat: @"%@ = %f (%.2f%%)\n", type,
-                             value*sepSize, value*100]]; //value is always between 0 and 1 here
+                             value*sepSize*[[diffForComparison objectForKey: selectedType] doubleValue], value*100]]; //value is always between 0 and 1 here
   }
   return ret;
 }
