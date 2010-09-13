@@ -91,7 +91,7 @@
                forKey: variableB];
 
     //saving absolute difference
-    [newTSV setObject: [NSNumber numberWithDouble: abs(vdif)]
+    [newTSV setObject: [NSNumber numberWithDouble: fabs(vdif)]
                forKey: variable];
    
     //register for which side is the difference 
