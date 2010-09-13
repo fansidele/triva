@@ -31,7 +31,7 @@
          PajeEventDecoder, \
          PajeSimulator, \
          StorageController, \
-         Compare, \
+         TimeSync, \
          TypeFilter, \
          TimeSliceAggregation, \
          SquarifiedTreemap \
@@ -42,7 +42,7 @@
          PajeEventDecoder, \
          PajeSimulator, \
          StorageController, \
-         Compare, \
+         TimeSync, \
          TimeSliceAggregation, \
          GraphConfiguration, \
          GraphView \
@@ -60,8 +60,8 @@
     [graphSequences addObject: d];
   }
 
-  //create the CompareController
-  Class compareControllerClass = NSClassFromString(@"CompareController");
+  //create the TimeSyncController
+  Class compareControllerClass = NSClassFromString(@"TimeSyncController");
   if (compareControllerClass == nil){
     return nil;
   }
@@ -73,12 +73,12 @@
     NSMutableDictionary *d;
     d = [graphSequences objectAtIndex: i];
     
-    //set the Compare filters' controller
+    //set the TimeSync filters' controller
     SEL method = @selector(setController:);
-    [[d objectForKey: @"Compare"] performSelector: method withObject: compareController];
+    [[d objectForKey: @"TimeSync"] performSelector: method withObject: compareController];
 
     //add the compare filters to the controller
-    [compareFilters addObject: [d objectForKey: @"Compare"]];
+    [compareFilters addObject: [d objectForKey: @"TimeSync"]];
   }
   SEL method = @selector(addFilters:);
   [compareController performSelector: method withObject: compareFilters];

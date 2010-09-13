@@ -21,10 +21,10 @@
 #include <Triva/TrivaWindow.h>
 #include <General/PajeFilter.h>
 
-@class Compare;
+@class TimeSync;
 @class CompareView;
 
-@interface CompareController : NSObject
+@interface TimeSyncController : NSObject
 {
   NSMutableArray *compareFilters;
 
@@ -45,7 +45,7 @@
 }
 - (void) check;
 - (void) addFilters: (NSArray*) filters;
-- (void) timeLimitsChangedWithSender: (Compare*) c;
+- (void) timeLimitsChangedWithSender: (TimeSync*) c;
 - (NSString *) currentMarkerType;
 - (NSArray*) filters;
 - (double) largestEndTime;
@@ -56,6 +56,7 @@
                      ofFilter: (id) filter;
 - (void) setEndTimeInterval: (double) end
                    ofFilter: (id) filter;
+- (void) timeSelectionChangedOfFilter: (TimeSync*) filter;
 - (void) setTimeIntervalStart: (double) start
                           end: (double) end
                      ofFilter: (id) filter;
@@ -66,19 +67,19 @@
 - (void) play: (id)sender;
 @end
 
-@interface CompareController (TypeHierarchy)
+@interface TimeSyncController (TypeHierarchy)
 - (NSDictionary *) typeHierarchy: (id) filter ofType: (PajeEntityType*) type;
 - (NSDictionary *) typeHierarchy: (id) filter;
 - (BOOL) checkTypeHierarchies: (NSArray*)typeHierarchies; //entry method
 @end
 
-@interface CompareController (Marker)
+@interface TimeSyncController (Marker)
 - (NSArray*) markerTypesWithContainerType: (PajeEntityType *) contType
                                fromFilter: (id) filter;
 - (NSArray*) markerTypes;
 @end
 
-#include "Compare.h"
+#include "TimeSync.h"
 #include "CompareView.h"
 
 #endif

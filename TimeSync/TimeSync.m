@@ -14,9 +14,9 @@
     You should have received a copy of the GNU General Public License
     along with Triva.  If not, see <http://www.gnu.org/licenses/>.
 */
-#include "Compare.h"
+#include "TimeSync.h"
 
-@implementation Compare
+@implementation TimeSync
 - (id)initWithController:(PajeTraceController *)c
 {
   self = [super initWithController: c];
@@ -25,7 +25,7 @@
   return self;
 }
 
-- (void) setController: (CompareController*) c
+- (void) setController: (TimeSyncController*) c
 {
   controller = c;
 }
@@ -68,7 +68,6 @@
     if (start > selectionEnd) start = selectionEnd;
   }
   selectionStart = start;
-  [self timeSelectionChanged];
 }
 
 - (void) setSelectionEnd: (double) end
@@ -81,7 +80,6 @@
     if (end < selectionStart) end = selectionStart;
   }
   selectionEnd = end;
-  [self timeSelectionChanged];
 }
 
 

@@ -14,16 +14,16 @@
     You should have received a copy of the GNU General Public License
     along with Triva.  If not, see <http://www.gnu.org/licenses/>.
 */
-#include "CompareController.h"
+#include "TimeSyncController.h"
 #include <float.h>
 
-@implementation CompareController
+@implementation TimeSyncController
 - (id) init
 {
   self = [super init];
   compareFilters = [[NSMutableArray alloc] init];
   if (self != nil){
-    [NSBundle loadNibNamed: @"Compare" owner: self];
+    [NSBundle loadNibNamed: @"TimeSync" owner: self];
   }
   [window initializeWithDelegate: self];
   [markerTypeButton removeAllItems];
@@ -60,9 +60,9 @@
   [compareFilters addObjectsFromArray: filters];
 }
 
-- (void) timeLimitsChangedWithSender: (Compare*) c
+- (void) timeLimitsChangedWithSender: (TimeSync*) c
 {
-  //the Compare filters that are on the Paje chain
+  //the TimeSync filters that are on the Paje chain
   //call this method when the time limits of the traces change
   [view timeSelectionChangedWithSender: c];
   [view setNeedsDisplay: YES];
@@ -203,6 +203,19 @@
     }
   }else{
     [filter setSelectionEnd: end];
+  }
+}
+
+- (void) timeSelectionChangedOfFilter: (TimeSync*) filter
+{
+  NSEnumerator *en = [compareFilters objectEnumerator];
+  if ([self startSynchronized] || [self endSynchronized]){
+    id f;
+    while ((f = [en nextObject])){
+      [f timeSelectionChanged];
+    }
+  }else{
+    [filter timeSelectionChanged];
   }
 }
 

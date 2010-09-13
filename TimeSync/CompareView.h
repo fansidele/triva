@@ -19,24 +19,38 @@
 #define __COMPARE_VIEW_H
 
 #include <AppKit/AppKit.h>
-#include "CompareController.h"
-#include "Timeline.h"
-#include "Marker.h"
+#include <float.h>
+#include "TimeSyncController.h"
 
-@class Timeline;
+typedef enum { Start, End, Nothing } DragWhat;
 
 @interface CompareView : NSView
 {
-  CompareController *controller; 
+  TimeSyncController *controller; 
+
+  int nTimeline; //number of timelines
+  double largestTimestamp; //largest timeline among all
+
+  double pixelToTimeRatio; //pixel to time
+
+  NSPoint mousePoint;
+
   NSMutableArray *timelines;
 
-  BOOL sameMouseForAll;
+  DragWhat dragWhat;
+  id dragFilter;
+  BOOL draggingOperation;
 }
-- (void) setController: (CompareController*) cc;
-- (void) timeSelectionChangedWithSender: (Compare *) filter;
+- (void) setController: (TimeSyncController*) cc;
+- (void) timeSelectionChangedWithSender: (TimeSync *) filter;
 - (void) update;
 
 - (void) markerTypeChanged: (id) sender;
+
+- (void) drawText: (NSString*)str atPoint:(NSPoint)p;
+
+- (double) pixelToTime: (double) pixel;
+- (double) timeToPixel: (double) time;
 @end
 
 #endif

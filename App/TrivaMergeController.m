@@ -31,7 +31,7 @@
        PajeEventDecoder, \
        PajeSimulator, \
        StorageController, \
-       Compare, \
+       TimeSync, \
        TimeSliceAggregation, \
        Difference \
     ) )" propertyList];
@@ -43,8 +43,8 @@
     [graphSequences addObject: d];
   }
 
-  //Step A: Create the CompareController (responsible for time synchronization)
-  Class compareControllerClass = NSClassFromString(@"CompareController");
+  //Step A: Create the TimeSyncController (responsible for time synchronization)
+  Class compareControllerClass = NSClassFromString(@"TimeSyncController");
   if (compareControllerClass == nil){
     return nil;
   }
@@ -56,12 +56,12 @@
     NSMutableDictionary *d;
     d = [graphSequences objectAtIndex: i];
     
-    //set the Compare filters' controller
+    //set the TimeSync filters' controller
     method = @selector(setController:);
-    [[d objectForKey: @"Compare"] performSelector: method withObject: compareController];
+    [[d objectForKey: @"TimeSync"] performSelector: method withObject: compareController];
 
     //add the compare filters to the controller
-    [compareFilters addObject: [d objectForKey: @"Compare"]];
+    [compareFilters addObject: [d objectForKey: @"TimeSync"]];
   }
   method = @selector(addFilters:);
   [compareController performSelector: method withObject: compareFilters];

@@ -14,9 +14,9 @@
     You should have received a copy of the GNU General Public License
     along with Triva.  If not, see <http://www.gnu.org/licenses/>.
 */
-#include "CompareController.h"
+#include "TimeSyncController.h"
 
-@implementation CompareController (TypeHierarchy)
+@implementation TimeSyncController (TypeHierarchy)
 - (NSDictionary *) typeHierarchy: (id) filter ofType: (PajeEntityType*) type
 {
   NSMutableDictionary *ret = [NSMutableDictionary dictionary];

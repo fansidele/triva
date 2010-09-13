@@ -63,6 +63,8 @@
       [mergedTree subtractTree: [intercept timeSliceTree]];
     }else if (configuredOperation == Ratio){
       [mergedTree ratioTree: [intercept timeSliceTree]];
+    }else if (configuredOperation == LogDif){
+      [mergedTree logdifTree: [intercept timeSliceTree]];
     }else{
       [mergedTree subtractTree: [intercept timeSliceTree]];
     }
@@ -503,6 +505,7 @@ ofContainersTyped:(PajeEntityType *)containerType
   [operation removeAllItems];
   [operation addItemWithTitle: SUBTRACT_OPERATION];
   [operation addItemWithTitle: RATIO_OPERATION];
+  [operation addItemWithTitle: LOGDIF_OPERATION];
   [operation selectItemAtIndex: 0];
   [self operationChanged: self];
 }
@@ -514,6 +517,8 @@ ofContainersTyped:(PajeEntityType *)containerType
     configuredOperation = Subtract;  
   }else if ([selected isEqualToString: RATIO_OPERATION]){
     configuredOperation = Ratio; 
+  }else if ([selected isEqualToString: LOGDIF_OPERATION]){
+    configuredOperation = LogDif;
   }else{
     configuredOperation = Subtract;  
   }

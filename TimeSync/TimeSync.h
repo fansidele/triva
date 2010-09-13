@@ -14,23 +14,23 @@
     You should have received a copy of the GNU General Public License
     along with Triva.  If not, see <http://www.gnu.org/licenses/>.
 */
-#ifndef __Markers_h_
-#define __Markers_h_
+#ifndef __TimeSync_H
+#define __TimeSync_H
 
-#include <AppKit/AppKit.h>
+#include <Foundation/Foundation.h>
+#include <General/PajeFilter.h>
+#include <Triva/TrivaWindow.h>
+#include "TimeSyncController.h"
 
-@class Timeline;
-
-@interface Markers : NSView
+@interface TimeSync  : PajeFilter
 {
-  NSMutableDictionary *markers;
-  Timeline *timeline;
+  double selectionStart;
+  double selectionEnd;
 }
-- (void) setTimeline: (Timeline*) t;
-- (void) clean;
-- (void) add: (NSDictionary*) d; 
-
+- (void) setController: (TimeSyncController*) c;
+- (void) setTimeIntervalFrom: (double) start to: (double) end;
+- (void) setSelectionStart: (double) start;
+- (void) setSelectionEnd: (double) end;
 @end
 
-#include "Timeline.h"
 #endif

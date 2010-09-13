@@ -21,9 +21,10 @@
 #include <Triva/Triva.h>
 #include <Triva/TrivaWindow.h>
 
-typedef enum {Subtract,Ratio} TrivaDifferenceOperation;
-#define SUBTRACT_OPERATION @"-"
-#define RATIO_OPERATION    @"/"
+typedef enum {Subtract,Ratio,LogDif} TrivaDifferenceOperation;
+#define SUBTRACT_OPERATION @"A - B"
+#define RATIO_OPERATION    @"max(A,B) / min(A, B)"
+#define LOGDIF_OPERATION   @"log (A) - log (B)"
 
 @interface DifferenceController  : TrivaFilter
 {
