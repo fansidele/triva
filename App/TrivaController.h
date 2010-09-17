@@ -91,6 +91,9 @@
 @interface TrivaInstanceController : TrivaController
 @end
 
+@interface TrivaStatController : TrivaController
+@end
+
 #include "TrivaComparisonController.h"
 #include "TrivaMergeController.h"
 

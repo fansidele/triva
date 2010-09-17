@@ -32,6 +32,7 @@ static struct argp_option options[] = {
   {0, 0, 0, 0, "Other auxiliary options to check the trace file:"},
   {"hierarchy",'h', 0, OPTION_ARG_OPTIONAL, "Export the trace type hierarchy"},
   {"check",   'c', 0, OPTION_ARG_OPTIONAL, "Check the integrity of trace file"},
+  {"stat",    'a', 0, OPTION_ARG_OPTIONAL, "Memory utilization"},
   {"list",    'l', 0, OPTION_ARG_OPTIONAL, "List entity types"},
   {"instances", 'i', 0, OPTION_ARG_OPTIONAL, "List instances of containers"},
   { 0 }
@@ -63,6 +64,9 @@ static int parse_options (int key, char *arg, struct argp_state *state)
       break;
     case 'h':
       arguments->hierarchy = 1;
+      break;
+    case 'a':
+      arguments->stat = 1;
       break;
     case 'c':
       arguments->check = 1;

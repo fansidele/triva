@@ -14,28 +14,22 @@
     You should have received a copy of the GNU General Public License
     along with Triva.  If not, see <http://www.gnu.org/licenses/>.
 */
-#ifndef __TRIVA_COMMAND_H
-#define __TRIVA_COMMAND_H
-#include <stdio.h>
+#ifndef __CHECKTRACE_H
+#define __CHECKTRACE_H
+#include <Foundation/Foundation.h>
+#include <General/PajeFilter.h>
 
-#define MAX_INPUT_SIZE 100
-
-struct arguments
+@interface StatTrace  : PajeFilter
 {
-  char *input[MAX_INPUT_SIZE];
-  int input_size;
+  long long nContainer;
+  long long nState;
+  long long nEvent;
+  long long nVariable;
+  long long nLink;
 
-  int treemap, graph, linkview; //visualization windows
-  int comparison;
-  int merge;
-  int abort; //if parameters are not good
-  int hierarchy; //generate type hierarchy
-  int check;  //check trace file
-  int list; // list entity types
-  int instances; //list types and instances
-  int stat; //perform stats on reading the trace, memory used by core
-};
-
-int parse (int argc, char **argv, struct arguments *arg);
+  long long memUsed;
+  double timeTraverse;
+}
+@end
 
 #endif

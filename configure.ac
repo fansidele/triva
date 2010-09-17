@@ -38,6 +38,7 @@ CONFIG_FILES="
   LinkView/GNUmakefile \
   Dot/GNUmakefile \
   CheckTrace/GNUmakefile \
+  StatTrace/GNUmakefile \
   List/GNUmakefile \
   Instances/GNUmakefile \
   LinkView/GNUmakefile \

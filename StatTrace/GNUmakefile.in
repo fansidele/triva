@@ -1,0 +1,18 @@
+include $(GNUSTEP_MAKEFILES)/common.make
+
+PACKAGE_NAME=StatTrace
+BUNDLE_NAME=StatTrace
+BUNDLE_EXTENSION=.bundle
+BUNDLE_INSTALL_DIR=$(GNUSTEP_BUNDLES)/Triva
+StatTrace_PRINCIPAL_CLASS=StatTrace
+
+StatTrace_OBJC_FILES=StatTrace.m
+StatTrace_OBJCC_FILES = 
+
+StatTrace_INCLUDE_DIRS += -I../ -I./
+
+include $(GNUSTEP_MAKEFILES)/bundle.make
+
+after-distclean::
+after-all::
+after-clean:: 

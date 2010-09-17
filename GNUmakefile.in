@@ -11,6 +11,7 @@ SUBPROJECTS = Triva \
   LinkView \
   Dot \
   CheckTrace \
+  StatTrace \
   List \
   Instances \
   LinkView \

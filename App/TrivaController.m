@@ -35,6 +35,8 @@
       triva = [[TrivaLinkController alloc] initWithArguments: arguments];
     }else if (arguments.hierarchy) {
       triva = [[TrivaDotController alloc] initWithArguments: arguments];
+    }else if (arguments.stat) {
+      triva = [[TrivaStatController alloc] initWithArguments: arguments];
     }else if (arguments.check) {
       triva = [[TrivaCheckController alloc] initWithArguments: arguments];
     }else if (arguments.list) {
@@ -200,6 +202,23 @@
        PajeSimulator, \
        StorageController, \
        Instances \
+    ) )" propertyList];
+  [self addComponentSequences: graph withDictionary: components];
+  [self initializeWithArguments: arguments];
+  return self;
+}
+@end
+
+@implementation TrivaStatController
+- (id) initWithArguments: (struct arguments) arguments
+{
+  self = [super initWithArguments: arguments];
+  NSArray *graph = [@"(  \
+    ( FileReader, \
+       PajeEventDecoder, \
+       PajeSimulator, \
+       StorageController, \
+       StatTrace \
     ) )" propertyList];
   [self addComponentSequences: graph withDictionary: components];
   [self initializeWithArguments: arguments];
