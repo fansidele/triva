@@ -14,8 +14,8 @@
     You should have received a copy of the GNU General Public License
     along with Triva.  If not, see <http://www.gnu.org/licenses/>.
 */
-#ifndef __CHECKTRACE_H
-#define __CHECKTRACE_H
+#ifndef __StatTrace_H
+#define __StatTrace_H
 #include <Foundation/Foundation.h>
 #include <General/PajeFilter.h>
 
