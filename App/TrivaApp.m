@@ -34,6 +34,7 @@ NS_DURING
   arguments.merge = 0;
   arguments.hierarchy = 0;
   arguments.check = 0;
+  arguments.stat = 0;
   arguments.list = 0;
   arguments.instances = 0;
   arguments.abort = 0;
