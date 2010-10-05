@@ -168,6 +168,25 @@
         fdst = [[conf objectForKey: [type name]] objectForKey: @"dst"];
         src = [[n valueOfFieldNamed: fsrc] cString];
         dst = [[n valueOfFieldNamed: fdst] cString];
+        if (!(src && dst)){
+          PajeEntityType *source_type = [self entityTypeWithName: fsrc];
+          NSEnumerator *en3 = [self enumeratorOfEntitiesTyped: source_type
+                                                  inContainer: n
+                                                     fromTime: [self startTime]
+                                                       toTime: [self endTime]
+                                                  minDuration: 0];
+          NSString *source_hostname = [[en3 nextObject] value];
+
+          PajeEntityType *destin_type = [self entityTypeWithName: fdst];
+          NSEnumerator *en4 = [self enumeratorOfEntitiesTyped: destin_type
+                                                  inContainer: n
+                                                     fromTime: [self startTime]
+                                                       toTime: [self endTime]
+                                                  minDuration: 0];
+          NSString *destin_hostname = [[en4 nextObject] value];
+          src = [source_hostname cString];
+          dst = [destin_hostname cString];
+        }
       }
 
       if (!userPositionEnabled && graphvizEnabled){
