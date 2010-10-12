@@ -7,47 +7,22 @@ TimeSync_PRINCIPAL_CLASS = TimeSync
 BUNDLE_EXTENSION = .bundle
 BUNDLE_INSTALL_DIR = $(GNUSTEP_BUNDLES)/Triva
 
-#
-# Additional libraries
-#
-
 ifeq ($(FOUNDATION_LIB), apple)
   LDFLAGS += -F../Triva -framework Triva -framework General
 else
-  TimeSliceAggregation_BUNDLE_LIBS += -lTriva -lGeneral
   ADDITIONAL_LIB_DIRS += -L../Triva/Triva.framework/Versions/Current
 endif
 
-#
-# Resource files
-#
-TimeSync_RESOURCE_FILES = \
-Resources/TimeSync.gorm \
-
-
-#
-# Header files
-#
-TimeSync_HEADER_FILES = \
-TimeSync.h \
-CompareView.h \
-TimeSyncController.h
-
-#
-# Class files
-#
-TimeSync_OBJC_FILES = \
-TimeSync.m \
+TimeSync_RESOURCE_FILES = Resources/TimeSync.gorm
+TimeSync_HEADER_FILES = TimeSync.h CompareView.h TimeSyncController.h
+TimeSync_OBJC_FILES = TimeSync.m \
 CompareView.m \
 TimeSyncController.m \
 TimeSyncController+TypeHierarchy.m \
 TimeSyncController+Marker.m
+TimeSync_INCLUDE_DIRS += -I../ -I./ @CPPFLAGS@
+TimeSync_LDFLAGS += @LDFLAGS@
 
-TimeSync_INCLUDE_DIRS += -I../ -I./
-
-#
-# Makefiles
-#
 -include GNUmakefile.preamble
 include $(GNUSTEP_MAKEFILES)/aggregate.make
 include $(GNUSTEP_MAKEFILES)/bundle.make

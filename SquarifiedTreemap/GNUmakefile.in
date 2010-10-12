@@ -7,43 +7,18 @@ SquarifiedTreemap_PRINCIPAL_CLASS = SquarifiedTreemap
 BUNDLE_EXTENSION = .bundle
 BUNDLE_INSTALL_DIR = $(GNUSTEP_BUNDLES)/Triva
 
-#
-# Additional libraries
-#
-
 ifeq ($(FOUNDATION_LIB), apple)
   LDFLAGS += -F../Triva -framework Triva -framework General
 else
-  TimeSliceAggregation_BUNDLE_LIBS += -lTriva -lGeneral
   ADDITIONAL_LIB_DIRS += -L../Triva/Triva.framework/Versions/Current
 endif
 
-#
-# Resource files
-#
-SquarifiedTreemap_RESOURCE_FILES = \
-Resources/SquarifiedTreemap.gorm \
+SquarifiedTreemap_RESOURCE_FILES = Resources/SquarifiedTreemap.gorm
+SquarifiedTreemap_HEADER_FILES = SquarifiedTreemap.h TreemapView.h
+SquarifiedTreemap_OBJC_FILES = SquarifiedTreemap.m TreemapView.m
+SquarifiedTreemap_INCLUDE_DIRS += -I../ -I./ @CPPFLAGS@
+SquarifiedTreemap_LDFLAGS += @LDFLAGS@
 
-
-#
-# Header files
-#
-SquarifiedTreemap_HEADER_FILES = \
-SquarifiedTreemap.h \
-TreemapView.h
-
-#
-# Class files
-#
-SquarifiedTreemap_OBJC_FILES = \
-SquarifiedTreemap.m \
-TreemapView.m
-
-SquarifiedTreemap_INCLUDE_DIRS += -I../ -I./
-
-#
-# Makefiles
-#
 -include GNUmakefile.preamble
 include $(GNUSTEP_MAKEFILES)/aggregate.make
 include $(GNUSTEP_MAKEFILES)/bundle.make

@@ -6,6 +6,12 @@ BUNDLE_EXTENSION=.bundle
 BUNDLE_INSTALL_DIR=$(GNUSTEP_BUNDLES)/Triva
 HCMReader_PRINCIPAL_CLASS=HCMReader
 
+ifeq ($(FOUNDATION_LIB), apple)
+  LDFLAGS += -F../Triva -framework Triva -framework General
+else
+  ADDITIONAL_LIB_DIRS += -L../Triva/Triva.framework/Versions/Current
+endif
+
 HCMReader_OBJC_FILES=HCMReader.m
 
 HCMReader_INCLUDE_DIRS += -I../ -I./

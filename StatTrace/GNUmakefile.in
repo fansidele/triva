@@ -6,10 +6,15 @@ BUNDLE_EXTENSION=.bundle
 BUNDLE_INSTALL_DIR=$(GNUSTEP_BUNDLES)/Triva
 StatTrace_PRINCIPAL_CLASS=StatTrace
 
-StatTrace_OBJC_FILES=StatTrace.m
-StatTrace_OBJCC_FILES = 
+ifeq ($(FOUNDATION_LIB), apple)
+  LDFLAGS += -F../Triva -framework Triva -framework General
+else
+  ADDITIONAL_LIB_DIRS += -L../Triva/Triva.framework/Versions/Current
+endif
 
-StatTrace_INCLUDE_DIRS += -I../ -I./
+StatTrace_OBJC_FILES=StatTrace.m
+StatTrace_INCLUDE_DIRS += -I../ -I./ @CPPFLAGS@
+StatTrace_LDFLAGS += @LDFLAGS@
 
 include $(GNUSTEP_MAKEFILES)/bundle.make
 

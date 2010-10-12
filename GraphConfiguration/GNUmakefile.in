@@ -1,8 +1,5 @@
 include $(GNUSTEP_MAKEFILES)/common.make
 
-#
-# Bundle
-#
 VERSION = 0.1
 PACKAGE_NAME = GraphConfiguration
 BUNDLE_NAME = GraphConfiguration
@@ -10,35 +7,23 @@ GraphConfiguration_PRINCIPAL_CLASS = GraphConfiguration
 BUNDLE_EXTENSION = .bundle
 BUNDLE_INSTALL_DIR = $(GNUSTEP_BUNDLES)/Triva
 
+ifeq ($(FOUNDATION_LIB), apple)
+  LDFLAGS += -F../Triva -framework Triva -framework General -lgraph
+else
+  ADDITIONAL_LIB_DIRS += -L../Triva/Triva.framework/Versions/Current
+endif
 
-#
-# Resource files
-#
-GraphConfiguration_RESOURCE_FILES = \
-Resources/GraphConf.gorm \
-
-
-#
-# Header files
-#
-GraphConfiguration_HEADER_FILES = \
-GraphConfiguration.h
-
-#
-# Class files
-#
+GraphConfiguration_RESOURCE_FILES = Resources/GraphConf.gorm
+GraphConfiguration_HEADER_FILES = GraphConfiguration.h
 GraphConfiguration_OBJC_FILES = \
 GraphConfiguration.m \
 GraphConfiguration+Interface.m \
 GraphConfiguration+Protocol.m \
 GraphConfiguration+Graph.m
 
-GraphConfiguration_INCLUDE_DIRS += -I../ -I./
-GraphConfiguration_LDFLAGS += -lgvc -lmatheval
+GraphConfiguration_INCLUDE_DIRS += -I../ -I./ @CPPFLAGS@
+GraphConfiguration_LDFLAGS += @LDFLAGS@ -lgvc -lmatheval
 
-#
-# Makefiles
-#
 -include GNUmakefile.preamble
 include $(GNUSTEP_MAKEFILES)/aggregate.make
 include $(GNUSTEP_MAKEFILES)/bundle.make

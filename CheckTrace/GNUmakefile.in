@@ -6,10 +6,17 @@ BUNDLE_EXTENSION=.bundle
 BUNDLE_INSTALL_DIR=$(GNUSTEP_BUNDLES)/Triva
 CheckTrace_PRINCIPAL_CLASS=CheckTrace
 
+ifeq ($(FOUNDATION_LIB), apple)
+  LDFLAGS += -F../Triva -framework Triva -framework General
+else
+  ADDITIONAL_LIB_DIRS += -L../Triva/Triva.framework/Versions/Current
+endif
+
 CheckTrace_OBJC_FILES=CheckTrace.m
 CheckTrace_OBJCC_FILES = 
 
-CheckTrace_INCLUDE_DIRS += -I../ -I./
+CheckTrace_INCLUDE_DIRS += -I../ -I./ @CPPFLAGS@
+CheckTrace_LDFLAGS += @LDFLAGS@
 
 include $(GNUSTEP_MAKEFILES)/bundle.make
 

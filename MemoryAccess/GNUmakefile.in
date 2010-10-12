@@ -8,10 +8,16 @@ BUNDLE_EXTENSION=.bundle
 BUNDLE_INSTALL_DIR=$(GNUSTEP_BUNDLES)/Triva
 MemoryAccess_PRINCIPAL_CLASS=SquarifiedTreemap
 
+ifeq ($(FOUNDATION_LIB), apple)
+  LDFLAGS += -F../Triva -framework Triva -framework General
+else
+  ADDITIONAL_LIB_DIRS += -L../Triva/Triva.framework/Versions/Current
+endif
+
 MemoryAccess_OBJC_FILES=MALayout.m
 MemoryAccess_OBJCC_FILES=MemoryAccess.mm MAWindowAuto.mm MAWindow.mm MADraw.mm
-
-MemoryAccess_INCLUDE_DIRS += -I../ -I./
+MemoryAccess_INCLUDE_DIRS += -I../ -I./ @CPPFLAGS@
+MemoryAccess_LDFLAGS += @LDFLAGS@
 
 include $(GNUSTEP_MAKEFILES)/bundle.make
 

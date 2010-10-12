@@ -6,10 +6,16 @@ BUNDLE_EXTENSION=.bundle
 BUNDLE_INSTALL_DIR=$(GNUSTEP_BUNDLES)/Triva
 List_PRINCIPAL_CLASS=List
 
+ifeq ($(FOUNDATION_LIB), apple)
+  LDFLAGS += -F../Triva -framework Triva -framework General
+else
+  ADDITIONAL_LIB_DIRS += -L../Triva/Triva.framework/Versions/Current
+endif
+
 List_OBJC_FILES=List.m
 List_OBJCC_FILES = 
-
-List_INCLUDE_DIRS += -I../ -I./
+List_INCLUDE_DIRS += -I../ -I./ @CPPFLAGS@
+List_LDFLAGS += @LDFLAGS@
 
 include $(GNUSTEP_MAKEFILES)/bundle.make
 

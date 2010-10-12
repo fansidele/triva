@@ -1,8 +1,5 @@
 include $(GNUSTEP_MAKEFILES)/common.make
 
-#
-# Bundle
-#
 VERSION = 0.1
 PACKAGE_NAME = LinkView
 BUNDLE_NAME = LinkView
@@ -10,48 +7,18 @@ LinkView_PRINCIPAL_CLASS = LinkView
 BUNDLE_EXTENSION = .bundle
 BUNDLE_INSTALL_DIR = $(GNUSTEP_BUNDLES)/Triva
 
-#
-# Additional libraries
-#
-
 ifeq ($(FOUNDATION_LIB), apple)
   LDFLAGS += -F../Triva -framework Triva -framework General
 else
-  TimeSliceAggregation_BUNDLE_LIBS += -lTriva -lGeneral
   ADDITIONAL_LIB_DIRS += -L../Triva/Triva.framework/Versions/Current
 endif
 
+LinkView_RESOURCE_FILES = Resources/Graph.gorm
+LinkView_HEADER_FILES = DrawView.h LinkView.h LinkViewNode.h LinkViewEdge.h
+LinkView_OBJC_FILES = DrawView.m LinkView.m LinkViewNode.m LinkViewEdge.m
+LinkView_INCLUDE_DIRS += -I../ -I./ @CPPFLAGS@
+LinkView_LDFLAGS += @LDFLAGS@
 
-#
-# Resource files
-#
-LinkView_RESOURCE_FILES = \
-Resources/Graph.gorm \
-
-
-#
-# Header files
-#
-LinkView_HEADER_FILES = \
-DrawView.h \
-LinkView.h \
-LinkViewNode.h \
-LinkViewEdge.h
-
-#
-# Class files
-#
-LinkView_OBJC_FILES = \
-DrawView.m \
-LinkView.m \
-LinkViewNode.m \
-LinkViewEdge.m
-
-LinkView_INCLUDE_DIRS += -I../ -I./
-
-#
-# Makefiles
-#
 -include GNUmakefile.preamble
 include $(GNUSTEP_MAKEFILES)/aggregate.make
 include $(GNUSTEP_MAKEFILES)/bundle.make

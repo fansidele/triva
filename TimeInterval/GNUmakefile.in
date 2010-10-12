@@ -7,43 +7,18 @@ TimeInterval_PRINCIPAL_CLASS = TimeInterval
 BUNDLE_EXTENSION = .bundle
 BUNDLE_INSTALL_DIR = $(GNUSTEP_BUNDLES)/Triva
 
-#
-# Additional libraries
-#
-
 ifeq ($(FOUNDATION_LIB), apple)
   LDFLAGS += -F../Triva -framework Triva -framework General
 else
-  TimeSliceAggregation_BUNDLE_LIBS += -lTriva -lGeneral
   ADDITIONAL_LIB_DIRS += -L../Triva/Triva.framework/Versions/Current
 endif
 
-#
-# Resource files
-#
-TimeInterval_RESOURCE_FILES = \
-Resources/TimeInterval.gorm \
+TimeInterval_RESOURCE_FILES = Resources/TimeInterval.gorm
+TimeInterval_HEADER_FILES = TimeInterval.h SliceView.h
+TimeInterval_OBJC_FILES = TimeInterval.m SliceView.m
+TimeInterval_INCLUDE_DIRS += -I../ -I./ @CPPFLAGS@
+TimeInterval_LDFLAGS += @LDFLAGS@
 
-
-#
-# Header files
-#
-TimeInterval_HEADER_FILES = \
-TimeInterval.h \
-SliceView.h
-
-#
-# Class files
-#
-TimeInterval_OBJC_FILES = \
-TimeInterval.m \
-SliceView.m
-
-TimeInterval_INCLUDE_DIRS += -I../ -I./
-
-#
-# Makefiles
-#
 -include GNUmakefile.preamble
 include $(GNUSTEP_MAKEFILES)/aggregate.make
 include $(GNUSTEP_MAKEFILES)/bundle.make
