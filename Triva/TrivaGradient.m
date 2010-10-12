@@ -65,12 +65,14 @@
   while ((var = [en2 nextObject])){
     double val = [filter evaluateWithValues: timeSliceValues withExpr: var];
     double mi, ma;
-    [filter defineMax: &ma
-                         andMin: &mi
-                      withScale: scale
-                   fromVariable: var
-                       ofObject: [node name]
-                       withType: [(TrivaGraphNode*)node type]];
+    ma = [filter maxOfVariable: var
+                     withScale: scale
+                      ofObject: [node name]
+                      withType: [(TrivaGraphNode*)node type]];
+    mi = [filter minOfVariable: var
+                     withScale: scale
+                      ofObject: [node name]
+                      withType: [(TrivaGraphNode*)node type]];
     [self setGradientType: var withValue: val withMax: ma withMin: mi];
   }
 }

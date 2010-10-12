@@ -53,12 +53,14 @@
   }
 
   //define min,max only once when scale is local, global or arnaud
-  [filter defineMax: &vmax
-             andMin: &vmin
-          withScale: scale
-       fromVariable: var
-           ofObject: [node name]
-           withType: [(TrivaGraphNode*)node type]];
+  vmax = [filter maxOfVariable: var
+                     withScale: scale
+                      ofObject: [node name]
+                      withType: [(TrivaGraphNode*)node type]];
+  vmin = [filter maxOfVariable: var
+                     withScale: scale
+                      ofObject: [node name]
+                      withType: [(TrivaGraphNode*)node type]];
   double vdelta = .1*(vmax-vmin);
   vmax += vdelta;
   vmin -= vdelta;
@@ -80,12 +82,14 @@
 
   //define min, max every time when scale is convergence
   if (scale == Convergence) {
-    [filter defineMax: &vmax
-               andMin: &vmin
-            withScale: scale
-         fromVariable: var
-             ofObject: [node name]
-             withType: [(TrivaGraphNode*)node type]];
+    vmax = [filter maxOfVariable: var
+                     withScale: scale
+                      ofObject: [node name]
+                      withType: [(TrivaGraphNode*)node type]];
+    vmin = [filter maxOfVariable: var
+                     withScale: scale
+                      ofObject: [node name]
+                      withType: [(TrivaGraphNode*)node type]];
     valueSize = vmax - vmin;
   }
 
@@ -135,12 +139,14 @@
 
     //update vmax, vmin if scale = convergence
     if (scale == Convergence){
-      [filter defineMax: &vmax
-                 andMin: &vmin
-              withScale: scale
-           fromVariable: var
-               ofObject: [node name]
-               withType: [(TrivaGraphNode*)node type]];
+      vmax = [filter maxOfVariable: var
+                     withScale: scale
+                      ofObject: [node name]
+                      withType: [(TrivaGraphNode*)node type]];
+      vmin = [filter maxOfVariable: var
+                     withScale: scale
+                      ofObject: [node name]
+                      withType: [(TrivaGraphNode*)node type]];
       valueSize = vmax - vmin;
     }
 
