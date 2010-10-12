@@ -26,7 +26,7 @@
 {
   float treemapValue;
   NSMutableArray *aggregatedChildren;
-  BOOL highlighted;
+  BOOL isHighlighted;
   double offset;
   id provider;
 }

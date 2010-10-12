@@ -24,7 +24,7 @@
 {
   self = [super init];
   treemapValue = 0;
-  highlighted = NO;
+  isHighlighted = NO;
   provider = nil;
   aggregatedChildren = nil;
   offset = 0;
@@ -292,7 +292,7 @@
                    ofEntityType: [provider entityTypeWithName: type]] set];
   NSRectFill(bb);
   [NSBezierPath strokeRect: bb];
-  if (highlighted){
+  if (isHighlighted){
     [[NSColor blackColor] set];
     NSRect highlightedBorder = NSMakeRect (bb.origin.x + 1,
                                                        bb.origin.y + 1,
@@ -383,12 +383,12 @@
 
 - (BOOL) highlighted
 {
-  return highlighted;
+  return isHighlighted;
 }
 
 - (void) setHighlighted: (BOOL) v
 {
-  highlighted = v;
+  isHighlighted = v;
 }
 
 - (void) setProvider: (id) prov
