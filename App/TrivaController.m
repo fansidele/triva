@@ -149,7 +149,6 @@
        PajeEventDecoder, \
        PajeSimulator, \
        StorageController, \
-       TimeInterval, \
        Dot \
     ) )" propertyList];
   [self addComponentSequences: graph withDictionary: components];
