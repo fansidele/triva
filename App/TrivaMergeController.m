@@ -70,7 +70,7 @@
   //Step B: Create the Difference Controller (responsible for merging)
   Class difContrClass = NSClassFromString(@"DifferenceController");
   if (difContrClass == nil) return nil;
-  differenceController = [[difContrClass alloc] initWithController: self];
+  differenceController = [[difContrClass alloc] initWithController: (id)self];
 
   //set merge controller for all Intercept filters
   NSMutableArray *interceptFilters = [NSMutableArray array];

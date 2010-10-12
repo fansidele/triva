@@ -194,7 +194,9 @@
   id entity;
   en = [[entities objectForKey: entityType] objectEnumerator];
   while ((entity = [en nextObject])){
-    TimeSliceTree *tst = [[self timeSliceTree] searchChildByName: [entity name]];
+    TimeSliceTree *tst;
+    tst = (TimeSliceTree *)[[self timeSliceTree] searchChildByName:
+                                                            [entity name]];
     double val = [self evaluateWithValues: [tst timeSliceValues]
                                  withExpr: variable];
     if (val > max) max = val;
@@ -220,7 +222,9 @@
   id entity;
   en = [[entities objectForKey: entityType] objectEnumerator];
   while ((entity = [en nextObject])){
-    TimeSliceTree *tst = [[self timeSliceTree] searchChildByName: [entity name]];
+    TimeSliceTree *tst;
+    tst = (TimeSliceTree *)[[self timeSliceTree] searchChildByName:
+                                                            [entity name]];
     double val = [self evaluateWithValues: [tst timeSliceValues]
                                  withExpr: variable];
     if (val < min) min = val;
