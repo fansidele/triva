@@ -38,7 +38,7 @@
   NSRect sr = [[[provider nodes] objectForKey: source] bb];
   NSRect dr = [[[provider nodes] objectForKey: destination] bb];
 
-  NSPoint origin = NSMakePoint (sr.origin.x + sr.size.width/2,
+  NSPoint xorigin = NSMakePoint (sr.origin.x + sr.size.width/2,
                           sr.origin.y + sr.size.height/2);
   NSPoint dest = NSMakePoint (dr.origin.x + dr.size.width/2,
                           dr.origin.y + dr.size.height/2);
@@ -47,20 +47,20 @@
 
   [[[NSColor blueColor] colorWithAlphaComponent: 0.2] set];
 
-        NSPoint oNorm = LMSNormalizePoint (NSSubtractPoints(dest,origin));
+        NSPoint oNorm = LMSNormalizePoint (NSSubtractPoints(dest,xorigin));
         NSPoint oNormPerp = NSMakePoint (-oNorm.y, oNorm.x);
 
-        double distance = LMSDistanceBetweenPoints (dest, origin);
+        double distance = LMSDistanceBetweenPoints (dest, xorigin);
         NSPoint middle = NSSubtractPoints (dest, LMSMultiplyPoint(oNorm,distance/2));
         NSPoint controli = NSAddPoints (middle, LMSMultiplyPoint(oNormPerp,100));
         NSPoint controlv = NSAddPoints (middle, LMSMultiplyPoint(oNormPerp,100-w));
 
-        NSPoint osiNorm = LMSNormalizePoint (NSSubtractPoints(controli, origin));
+        NSPoint osiNorm = LMSNormalizePoint (NSSubtractPoints(controli, xorigin));
         NSPoint osiNormPerp = NSMakePoint (-osiNorm.y, osiNorm.x);
         NSPoint dsiNorm = LMSNormalizePoint (NSSubtractPoints(controli, dest));
         NSPoint dsiNormPerp = NSMakePoint (-dsiNorm.y, dsiNorm.x);
 
-        NSPoint osvNorm = LMSNormalizePoint (NSSubtractPoints(controlv, origin));
+        NSPoint osvNorm = LMSNormalizePoint (NSSubtractPoints(controlv, xorigin));
         NSPoint osvNormPerp = NSMakePoint (-osvNorm.y, osvNorm.x);
         NSPoint dsvNorm = LMSNormalizePoint (NSSubtractPoints(controlv, dest));
         NSPoint dsvNormPerp = NSMakePoint (-dsvNorm.y, dsvNorm.x);
@@ -70,16 +70,16 @@
 
         NSBezierPath *linha = [NSBezierPath bezierPath];
         //linha
-        [linha moveToPoint: NSAddPoints (origin, LMSMultiplyPoint (osiNormPerp, w/2))];
+        [linha moveToPoint: NSAddPoints (xorigin, LMSMultiplyPoint (osiNormPerp, w/2))];
         [linha curveToPoint: NSAddPoints (base, LMSMultiplyPoint (dsiNormPerp, -w/2))
               controlPoint1: controli
               controlPoint2: controli];
         [linha lineToPoint: dest];
         [linha lineToPoint: NSAddPoints (base,  LMSMultiplyPoint (dsvNormPerp, w/2))];
-        [linha curveToPoint: NSAddPoints (origin, LMSMultiplyPoint (osvNormPerp,-w/2))
+        [linha curveToPoint: NSAddPoints (xorigin, LMSMultiplyPoint (osvNormPerp,-w/2))
                 controlPoint1: controlv
                 controlPoint2: controlv];
-        [linha lineToPoint: NSAddPoints (origin, LMSMultiplyPoint (osiNormPerp, w/2))];
+        [linha lineToPoint: NSAddPoints (xorigin, LMSMultiplyPoint (osiNormPerp, w/2))];
         [linha fill];
 
 
