@@ -22,9 +22,9 @@
 
 @interface Difference  : TrivaFilter
 {
-  id controller;
+  id difController;
 }
-- (void) setController: (id) c;
+- (void) setDifController: (id) c;
 @end
 
 #endif

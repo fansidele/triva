@@ -23,9 +23,9 @@
   return self;
 }
 
-- (void) setController: (id) c
+- (void) setDifController: (id) c
 {
-  controller = c;
+  difController = c;
 }
 
 - (void) timeLimitsChanged

@@ -78,7 +78,7 @@
     NSMutableDictionary *d = [graphSequences objectAtIndex: i];
     id intercept = [d objectForKey: @"Difference"];
 
-    method = @selector(setController:);
+    method = @selector(setDifController:);
     [intercept performSelector: method withObject: differenceController];
     [interceptFilters addObject: intercept];
   }
