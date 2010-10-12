@@ -30,19 +30,19 @@
 
 - (void) timeLimitsChanged
 {
-  [controller timeLimitsChangedWithSender: self];
+  [difController timeLimitsChangedWithSender: self];
   [super timeLimitsChanged];
 }
 
 - (void) timeSelectionChanged
 {
-  [controller timeSelectionChangedWithSender: self];
+  [difController timeSelectionChangedWithSender: self];
   [super timeSelectionChanged];
 }
 
 - (void) hierarchyChanged
 {
-  [controller hierarchyChangedWithSender: self];
+  [difController hierarchyChangedWithSender: self];
   [super hierarchyChanged];
 }
 @end
