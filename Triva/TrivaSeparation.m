@@ -143,8 +143,13 @@
                           [filter entityTypeWithName: type]];
       //get difference for type
       double val = [[diffForComparison objectForKey: type] doubleValue];
+#ifdef GNUSTEP
       float h, s, b, a;
       [color getHue:&h saturation:&s brightness:&b alpha:&a];
+#else
+      CGFloat h, s, b, a;
+      [color getHue:&h saturation:&s brightness:&b alpha:&a];
+#endif
       if (val > 0){
         [[NSColor colorWithCalibratedHue:h saturation: 1 brightness: b alpha:a] set];
       }else if (val < 0){
