@@ -81,7 +81,7 @@ double LMSDistanceBetweenPoints(NSPoint pt1, NSPoint pt2)
   bb.size.height = b.size.height;
 }
 
-- (void) draw
+- (BOOL) draw
 {
   NSRect srcRect = [source bb];
   NSRect dstRect = [destination bb];
@@ -104,6 +104,7 @@ double LMSDistanceBetweenPoints(NSPoint pt1, NSPoint pt2)
   [super draw];
   [transform invert];
   [transform concat];
+  return YES;
 }
 
 - (void) refresh
