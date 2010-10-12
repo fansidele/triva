@@ -1,0 +1,38 @@
+#===================================
+#| Triva INSTALL file (for Apple OSes)
+#===================================
+
+# Install GNUstep-make package for Apple, like this:
+
+wget http://ftpmain.gnustep.org/pub/gnustep/core/gnustep-make-2.4.0.tar.gz
+tar xfz gnustep-make-2.4.0.tar.gz
+cd gnustep-make-2.4.0
+./configure --with-library-combo=apple-apple-apple
+make install
+
+# Install Paje
+
+svn checkout svn://svn.forge.objectweb.org/svnroot/paje/trunk/Paje/
+export LANG=C
+cd Paje
+source /Library/GNUstep//Makefiles/GNUstep.sh
+make
+make install
+
+# Install other Triva's dependencies
+
+port install argp-standalone
+port install libmatheval
+port install graphviz-devel
+port install gsl-devel
+
+# Install Triva
+
+svn checkout svn://scm.gforge.inria.fr/svn/triva
+export LANG=C
+cd triva
+source /Library/GNUstep//Makefiles/GNUstep.sh
+./bootstrap
+LDFLAGS=-L/opt/local/lib/ CPPFLAGS=-I/opt/local/include/ ./configure
+make
+make install
