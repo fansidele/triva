@@ -13,7 +13,9 @@ else
   ADDITIONAL_LIB_DIRS += -L../Triva/Triva.framework/Versions/Current
 endif
 
-GraphConfiguration_RESOURCE_FILES = Resources/GraphConf.gorm
+GraphConfiguration_RESOURCE_FILES = \
+	Resources/GraphConf.gorm \
+	Resources/GraphConf.nib
 GraphConfiguration_HEADER_FILES = GraphConfiguration.h
 GraphConfiguration_OBJC_FILES = \
 GraphConfiguration.m \

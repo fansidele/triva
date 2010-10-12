@@ -13,7 +13,9 @@ else
   ADDITIONAL_LIB_DIRS += -L../Triva/Triva.framework/Versions/Current
 endif
 
-GraphView_RESOURCE_FILES = Resources/Graph.gorm
+GraphView_RESOURCE_FILES = \
+	Resources/Graph.gorm \
+	Resources/Graph.nib
 GraphView_HEADER_FILES = DrawView.h GraphView.h
 GraphView_OBJC_FILES = DrawView.m GraphView.m
 GraphView_INCLUDE_DIRS += -I../ -I./ @CPPFLAGS@

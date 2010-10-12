@@ -13,7 +13,9 @@ else
   ADDITIONAL_LIB_DIRS += -L../Triva/Triva.framework/Versions/Current
 endif
 
-TypeFilter_RESOURCE_FILES = Resources/TypeFilter.gorm
+TypeFilter_RESOURCE_FILES = \
+	Resources/TypeFilter.gorm \
+	Resources/TypeFilter.nib
 TypeFilter_HEADER_FILES = TypeFilter.h
 TypeFilter_OBJC_FILES = TypeFilter.m TypeFilter+GUI.m
 TypeFilter_INCLUDE_DIRS += -I../ -I./ @CPPFLAGS@

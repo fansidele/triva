@@ -1,0 +1,29 @@
+{
+    IBClasses = (
+	{
+	    CLASS = TrivaWindow;
+	    LANGUAGE = ObjC;
+	    SUPERCLASS = NSWindow;
+	},
+	{
+	    CLASS = GraphView;
+	    LANGUAGE = ObjC;
+	    OUTLETS = {
+		view = id;
+		window = id;
+	    };
+	    SUPERCLASS = NSObject;
+	},
+	{
+	    CLASS = DrawView;
+	    LANGUAGE = ObjC;
+	    SUPERCLASS = NSView;
+	},
+	{
+	    CLASS = FirstResponder;
+	    LANGUAGE = ObjC;
+	    SUPERCLASS = NSObject;
+	}
+    );
+    IBVersion = 1;
+}

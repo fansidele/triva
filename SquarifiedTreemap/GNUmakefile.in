@@ -13,7 +13,9 @@ else
   ADDITIONAL_LIB_DIRS += -L../Triva/Triva.framework/Versions/Current
 endif
 
-SquarifiedTreemap_RESOURCE_FILES = Resources/SquarifiedTreemap.gorm
+SquarifiedTreemap_RESOURCE_FILES = \
+  Resources/SquarifiedTreemap.gorm \
+	Resources/SquarifiedTreemap.nib
 SquarifiedTreemap_HEADER_FILES = SquarifiedTreemap.h TreemapView.h
 SquarifiedTreemap_OBJC_FILES = SquarifiedTreemap.m TreemapView.m
 SquarifiedTreemap_INCLUDE_DIRS += -I../ -I./ @CPPFLAGS@

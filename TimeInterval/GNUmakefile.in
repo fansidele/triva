@@ -13,7 +13,9 @@ else
   ADDITIONAL_LIB_DIRS += -L../Triva/Triva.framework/Versions/Current
 endif
 
-TimeInterval_RESOURCE_FILES = Resources/TimeInterval.gorm
+TimeInterval_RESOURCE_FILES = \
+	Resources/TimeInterval.gorm \
+	Resources/TimeInterval.nib
 TimeInterval_HEADER_FILES = TimeInterval.h SliceView.h
 TimeInterval_OBJC_FILES = TimeInterval.m SliceView.m
 TimeInterval_INCLUDE_DIRS += -I../ -I./ @CPPFLAGS@
