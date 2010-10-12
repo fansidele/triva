@@ -85,10 +85,12 @@
 @end
 
 @interface TimeSliceAggregation (Debugging)
+#ifdef GNUSTEP
 - (void) debug;
 - (void) activateRecordingOfClass: (NSString *)classname;
 - (void) listRecordedObjectsOfClass: (NSString *) classname;
 - (void) debugOf: (PajeEntityType*) type At: (PajeContainer*) container;
+#endif
 @end
 
 #endif

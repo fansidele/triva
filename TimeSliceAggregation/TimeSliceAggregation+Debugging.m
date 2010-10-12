@@ -17,6 +17,7 @@
 #include "TimeSliceAggregation.h"
 
 @implementation TimeSliceAggregation (Debugging)
+#ifdef GNUSTEP
 - (void) debug
 {
   GSDebugAllocationActive(YES);
@@ -103,4 +104,5 @@
   NSLog (@"integrated value = %f", integrated);
   NSLog (@"DEBUG END");
 }
+#endif
 @end
