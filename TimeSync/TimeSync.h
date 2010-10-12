@@ -26,8 +26,9 @@
 {
   double selectionStart;
   double selectionEnd;
+  TimeSyncController *timeSyncController;
 }
-- (void) setController: (TimeSyncController*) c;
+- (void) setTimeSyncController: (TimeSyncController*) c;
 - (void) setTimeIntervalFrom: (double) start to: (double) end;
 - (void) setSelectionStart: (double) start;
 - (void) setSelectionEnd: (double) end;

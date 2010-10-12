@@ -25,14 +25,14 @@
   return self;
 }
 
-- (void) setController: (TimeSyncController*) c
+- (void) setTimeSyncController: (TimeSyncController*) c
 {
-  controller = c;
+  timeSyncController = c;
 }
 
 - (void) timeLimitsChanged
 {
-  [controller timeLimitsChangedWithSender: self];
+  [timeSyncController timeLimitsChangedWithSender: self];
   [super timeLimitsChanged];
 }
 
@@ -53,7 +53,7 @@
 
 - (void) timeSelectionChanged
 {
-  [controller timeLimitsChangedWithSender: self];
+  [timeSyncController timeLimitsChangedWithSender: self];
   [super timeSelectionChanged];
 }
 
