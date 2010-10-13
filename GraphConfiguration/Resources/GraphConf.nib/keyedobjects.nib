@@ -292,7 +292,7 @@
 		<integer>15</integer>
 	    </dict>
 	    <key>NSEnabled</key>
-	    <integer>1</integer>
+	    <true/>
 	    <key>NSFrame</key>
 	    <dict>
 		<key>CF$UID</key>
@@ -837,7 +837,7 @@
 		<integer>54</integer>
 	    </dict>
 	    <key>NSEnabled</key>
-	    <integer>1</integer>
+	    <true/>
 	    <key>NSFrame</key>
 	    <dict>
 		<key>CF$UID</key>
@@ -903,7 +903,7 @@
 		<integer>51</integer>
 	    </dict>
 	    <key>NSDrawsBackground</key>
-	    <integer>0</integer>
+	    <false/>
 	    <key>NSSupport</key>
 	    <dict>
 		<key>CF$UID</key>
@@ -967,7 +967,7 @@
 		<integer>62</integer>
 	    </dict>
 	    <key>NSEnabled</key>
-	    <integer>1</integer>
+	    <true/>
 	    <key>NSFrame</key>
 	    <dict>
 		<key>CF$UID</key>
@@ -1033,7 +1033,7 @@
 		<integer>59</integer>
 	    </dict>
 	    <key>NSDrawsBackground</key>
-	    <integer>1</integer>
+	    <true/>
 	    <key>NSSupport</key>
 	    <dict>
 		<key>CF$UID</key>
@@ -1062,7 +1062,7 @@
 		<integer>67</integer>
 	    </dict>
 	    <key>NSEnabled</key>
-	    <integer>1</integer>
+	    <true/>
 	    <key>NSFrame</key>
 	    <dict>
 		<key>CF$UID</key>
@@ -1114,7 +1114,7 @@
 		<integer>68</integer>
 	    </dict>
 	    <key>NSAltersState</key>
-	    <integer>0</integer>
+	    <false/>
 	    <key>NSArrowPosition</key>
 	    <integer>1</integer>
 	    <key>NSButtonFlags</key>
@@ -1157,13 +1157,13 @@
 	    <key>NSPreferredEdge</key>
 	    <integer>1</integer>
 	    <key>NSPullDown</key>
-	    <integer>0</integer>
+	    <false/>
 	    <key>NSSelectedIndex</key>
 	    <integer>0</integer>
 	    <key>NSTag</key>
 	    <integer>0</integer>
 	    <key>NSUsesItemFromMenu</key>
-	    <integer>1</integer>
+	    <true/>
 	</dict>
 	<string></string>
 	<dict>
@@ -1178,7 +1178,7 @@
 		<integer>0</integer>
 	    </dict>
 	    <key>NSIsDisabled</key>
-	    <integer>0</integer>
+	    <false/>
 	    <key>NSKeyEquiv</key>
 	    <dict>
 		<key>CF$UID</key>
@@ -1275,7 +1275,7 @@
 		<integer>0</integer>
 	    </dict>
 	    <key>NSIsDisabled</key>
-	    <integer>0</integer>
+	    <false/>
 	    <key>NSKeyEquiv</key>
 	    <dict>
 		<key>CF$UID</key>
@@ -1340,7 +1340,7 @@
 		<integer>0</integer>
 	    </dict>
 	    <key>NSIsDisabled</key>
-	    <integer>0</integer>
+	    <false/>
 	    <key>NSKeyEquiv</key>
 	    <dict>
 		<key>CF$UID</key>
@@ -1431,7 +1431,7 @@
 		<integer>86</integer>
 	    </dict>
 	    <key>NSEnabled</key>
-	    <integer>1</integer>
+	    <true/>
 	    <key>NSFrame</key>
 	    <dict>
 		<key>CF$UID</key>
@@ -1532,7 +1532,7 @@
 		<integer>93</integer>
 	    </dict>
 	    <key>NSEnabled</key>
-	    <integer>0</integer>
+	    <false/>
 	    <key>NSFrame</key>
 	    <dict>
 		<key>CF$UID</key>
@@ -1703,7 +1703,7 @@ MC4wMDAwMDA=</data>
 		<integer>105</integer>
 	    </dict>
 	    <key>NSEnabled</key>
-	    <integer>1</integer>
+	    <true/>
 	    <key>NSFrame</key>
 	    <dict>
 		<key>CF$UID</key>
@@ -1798,7 +1798,7 @@ MC4wMDAwMDA=</data>
 		<integer>111</integer>
 	    </dict>
 	    <key>NSEnabled</key>
-	    <integer>1</integer>
+	    <true/>
 	    <key>NSFrame</key>
 	    <dict>
 		<key>CF$UID</key>

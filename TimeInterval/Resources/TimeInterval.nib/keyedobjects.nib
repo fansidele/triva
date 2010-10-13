@@ -481,7 +481,7 @@
 	    <key>NSTitlePosition</key>
 	    <integer>2</integer>
 	    <key>NSTransparent</key>
-	    <integer>0</integer>
+	    <false/>
 	    <key>NSvFlags</key>
 	    <integer>0</integer>
 	</dict>
@@ -563,7 +563,7 @@
 		<integer>36</integer>
 	    </dict>
 	    <key>NSEnabled</key>
-	    <integer>1</integer>
+	    <true/>
 	    <key>NSFrame</key>
 	    <dict>
 		<key>CF$UID</key>
@@ -629,7 +629,7 @@
 		<integer>33</integer>
 	    </dict>
 	    <key>NSDrawsBackground</key>
-	    <integer>0</integer>
+	    <false/>
 	    <key>NSSupport</key>
 	    <dict>
 		<key>CF$UID</key>
@@ -755,7 +755,7 @@
 		<integer>52</integer>
 	    </dict>
 	    <key>NSEnabled</key>
-	    <integer>1</integer>
+	    <true/>
 	    <key>NSFrame</key>
 	    <dict>
 		<key>CF$UID</key>
@@ -821,7 +821,7 @@
 		<integer>49</integer>
 	    </dict>
 	    <key>NSDrawsBackground</key>
-	    <integer>0</integer>
+	    <false/>
 	    <key>NSSupport</key>
 	    <dict>
 		<key>CF$UID</key>
@@ -951,7 +951,7 @@
 	    <key>NSTitlePosition</key>
 	    <integer>2</integer>
 	    <key>NSTransparent</key>
-	    <integer>0</integer>
+	    <false/>
 	    <key>NSvFlags</key>
 	    <integer>0</integer>
 	</dict>
@@ -1073,7 +1073,7 @@
 		<integer>70</integer>
 	    </dict>
 	    <key>NSEnabled</key>
-	    <integer>1</integer>
+	    <true/>
 	    <key>NSFrame</key>
 	    <dict>
 		<key>CF$UID</key>
@@ -1267,7 +1267,7 @@ MC4wMDAwMDA=</data>
 		<integer>84</integer>
 	    </dict>
 	    <key>NSEnabled</key>
-	    <integer>1</integer>
+	    <true/>
 	    <key>NSFrame</key>
 	    <dict>
 		<key>CF$UID</key>
@@ -1314,7 +1314,7 @@ MC4wMDAwMDA=</data>
 		<integer>85</integer>
 	    </dict>
 	    <key>NSAllowsTickMarkValuesOnly</key>
-	    <integer>0</integer>
+	    <false/>
 	    <key>NSAltIncValue</key>
 	    <real>-1</real>
 	    <key>NSCellFlags</key>
@@ -1381,7 +1381,7 @@ MC4wMDAwMDA=</data>
 		<integer>90</integer>
 	    </dict>
 	    <key>NSEnabled</key>
-	    <integer>1</integer>
+	    <true/>
 	    <key>NSFrame</key>
 	    <dict>
 		<key>CF$UID</key>
@@ -1447,7 +1447,7 @@ MC4wMDAwMDA=</data>
 		<integer>87</integer>
 	    </dict>
 	    <key>NSDrawsBackground</key>
-	    <integer>0</integer>
+	    <false/>
 	    <key>NSSupport</key>
 	    <dict>
 		<key>CF$UID</key>
@@ -1488,7 +1488,7 @@ MC4wMDAwMDA=</data>
 		<integer>96</integer>
 	    </dict>
 	    <key>NSEnabled</key>
-	    <integer>1</integer>
+	    <true/>
 	    <key>NSFrame</key>
 	    <dict>
 		<key>CF$UID</key>
@@ -1554,7 +1554,7 @@ MC4wMDAwMDA=</data>
 		<integer>93</integer>
 	    </dict>
 	    <key>NSDrawsBackground</key>
-	    <integer>0</integer>
+	    <false/>
 	    <key>NSSupport</key>
 	    <dict>
 		<key>CF$UID</key>
@@ -1616,7 +1616,7 @@ MC4wMDAwMDA=</data>
 		<integer>105</integer>
 	    </dict>
 	    <key>NSEnabled</key>
-	    <integer>1</integer>
+	    <true/>
 	    <key>NSFrame</key>
 	    <dict>
 		<key>CF$UID</key>
@@ -1682,7 +1682,7 @@ MC4wMDAwMDA=</data>
 		<integer>102</integer>
 	    </dict>
 	    <key>NSDrawsBackground</key>
-	    <integer>1</integer>
+	    <true/>
 	    <key>NSSupport</key>
 	    <dict>
 		<key>CF$UID</key>
@@ -1711,7 +1711,7 @@ MC4wMDAwMDA=</data>
 		<integer>110</integer>
 	    </dict>
 	    <key>NSEnabled</key>
-	    <integer>1</integer>
+	    <true/>
 	    <key>NSFrame</key>
 	    <dict>
 		<key>CF$UID</key>
@@ -1777,7 +1777,7 @@ MC4wMDAwMDA=</data>
 		<integer>107</integer>
 	    </dict>
 	    <key>NSDrawsBackground</key>
-	    <integer>0</integer>
+	    <false/>
 	    <key>NSSupport</key>
 	    <dict>
 		<key>CF$UID</key>
@@ -1804,7 +1804,7 @@ MC4wMDAwMDA=</data>
 		<integer>115</integer>
 	    </dict>
 	    <key>NSEnabled</key>
-	    <integer>1</integer>
+	    <true/>
 	    <key>NSFrame</key>
 	    <dict>
 		<key>CF$UID</key>
@@ -1870,7 +1870,7 @@ MC4wMDAwMDA=</data>
 		<integer>112</integer>
 	    </dict>
 	    <key>NSDrawsBackground</key>
-	    <integer>0</integer>
+	    <false/>
 	    <key>NSSupport</key>
 	    <dict>
 		<key>CF$UID</key>
@@ -1897,7 +1897,7 @@ MC4wMDAwMDA=</data>
 		<integer>120</integer>
 	    </dict>
 	    <key>NSEnabled</key>
-	    <integer>1</integer>
+	    <true/>
 	    <key>NSFrame</key>
 	    <dict>
 		<key>CF$UID</key>
@@ -1963,7 +1963,7 @@ MC4wMDAwMDA=</data>
 		<integer>117</integer>
 	    </dict>
 	    <key>NSDrawsBackground</key>
-	    <integer>1</integer>
+	    <true/>
 	    <key>NSSupport</key>
 	    <dict>
 		<key>CF$UID</key>
@@ -1992,7 +1992,7 @@ MC4wMDAwMDA=</data>
 		<integer>125</integer>
 	    </dict>
 	    <key>NSEnabled</key>
-	    <integer>1</integer>
+	    <true/>
 	    <key>NSFrame</key>
 	    <dict>
 		<key>CF$UID</key>
@@ -2093,7 +2093,7 @@ MC4wMDAwMDA=</data>
 		<integer>132</integer>
 	    </dict>
 	    <key>NSEnabled</key>
-	    <integer>1</integer>
+	    <true/>
 	    <key>NSFrame</key>
 	    <dict>
 		<key>CF$UID</key>
@@ -2140,7 +2140,7 @@ MC4wMDAwMDA=</data>
 		<integer>85</integer>
 	    </dict>
 	    <key>NSAllowsTickMarkValuesOnly</key>
-	    <integer>0</integer>
+	    <false/>
 	    <key>NSAltIncValue</key>
 	    <real>-1</real>
 	    <key>NSCellFlags</key>
@@ -2184,7 +2184,7 @@ MC4wMDAwMDA=</data>
 		<integer>136</integer>
 	    </dict>
 	    <key>NSEnabled</key>
-	    <integer>1</integer>
+	    <true/>
 	    <key>NSFrame</key>
 	    <dict>
 		<key>CF$UID</key>
@@ -2360,7 +2360,7 @@ MC4wMDAwMDA=</data>
 	    <key>NSTitlePosition</key>
 	    <integer>2</integer>
 	    <key>NSTransparent</key>
-	    <integer>0</integer>
+	    <false/>
 	    <key>NSvFlags</key>
 	    <integer>0</integer>
 	</dict>
@@ -2462,7 +2462,7 @@ MC4wMDAwMDA=</data>
 		<integer>151</integer>
 	    </dict>
 	    <key>NSEnabled</key>
-	    <integer>1</integer>
+	    <true/>
 	    <key>NSFrame</key>
 	    <dict>
 		<key>CF$UID</key>
@@ -2563,7 +2563,7 @@ MC4wMDAwMDA=</data>
 		<integer>158</integer>
 	    </dict>
 	    <key>NSEnabled</key>
-	    <integer>1</integer>
+	    <true/>
 	    <key>NSFrame</key>
 	    <dict>
 		<key>CF$UID</key>
@@ -2629,7 +2629,7 @@ MC4wMDAwMDA=</data>
 		<integer>155</integer>
 	    </dict>
 	    <key>NSDrawsBackground</key>
-	    <integer>0</integer>
+	    <false/>
 	    <key>NSSupport</key>
 	    <dict>
 		<key>CF$UID</key>
@@ -2656,7 +2656,7 @@ MC4wMDAwMDA=</data>
 		<integer>163</integer>
 	    </dict>
 	    <key>NSEnabled</key>
-	    <integer>1</integer>
+	    <true/>
 	    <key>NSFrame</key>
 	    <dict>
 		<key>CF$UID</key>
@@ -2703,7 +2703,7 @@ MC4wMDAwMDA=</data>
 		<integer>85</integer>
 	    </dict>
 	    <key>NSAllowsTickMarkValuesOnly</key>
-	    <integer>0</integer>
+	    <false/>
 	    <key>NSAltIncValue</key>
 	    <real>-1</real>
 	    <key>NSCellFlags</key>
@@ -2747,7 +2747,7 @@ MC4wMDAwMDA=</data>
 		<integer>167</integer>
 	    </dict>
 	    <key>NSEnabled</key>
-	    <integer>1</integer>
+	    <true/>
 	    <key>NSFrame</key>
 	    <dict>
 		<key>CF$UID</key>
@@ -2813,7 +2813,7 @@ MC4wMDAwMDA=</data>
 		<integer>164</integer>
 	    </dict>
 	    <key>NSDrawsBackground</key>
-	    <integer>0</integer>
+	    <false/>
 	    <key>NSSupport</key>
 	    <dict>
 		<key>CF$UID</key>
@@ -2856,7 +2856,7 @@ MC4wMDAwMDA=</data>
 		<integer>173</integer>
 	    </dict>
 	    <key>NSEnabled</key>
-	    <integer>1</integer>
+	    <true/>
 	    <key>NSFrame</key>
 	    <dict>
 		<key>CF$UID</key>
@@ -2922,7 +2922,7 @@ MC4wMDAwMDA=</data>
 		<integer>170</integer>
 	    </dict>
 	    <key>NSDrawsBackground</key>
-	    <integer>0</integer>
+	    <false/>
 	    <key>NSSupport</key>
 	    <dict>
 		<key>CF$UID</key>
@@ -2949,7 +2949,7 @@ MC4wMDAwMDA=</data>
 		<integer>178</integer>
 	    </dict>
 	    <key>NSEnabled</key>
-	    <integer>1</integer>
+	    <true/>
 	    <key>NSFrame</key>
 	    <dict>
 		<key>CF$UID</key>
@@ -2996,7 +2996,7 @@ MC4wMDAwMDA=</data>
 		<integer>85</integer>
 	    </dict>
 	    <key>NSAllowsTickMarkValuesOnly</key>
-	    <integer>0</integer>
+	    <false/>
 	    <key>NSAltIncValue</key>
 	    <real>-1</real>
 	    <key>NSCellFlags</key>
@@ -3040,7 +3040,7 @@ MC4wMDAwMDA=</data>
 		<integer>182</integer>
 	    </dict>
 	    <key>NSEnabled</key>
-	    <integer>1</integer>
+	    <true/>
 	    <key>NSFrame</key>
 	    <dict>
 		<key>CF$UID</key>
@@ -3106,7 +3106,7 @@ MC4wMDAwMDA=</data>
 		<integer>179</integer>
 	    </dict>
 	    <key>NSDrawsBackground</key>
-	    <integer>0</integer>
+	    <false/>
 	    <key>NSSupport</key>
 	    <dict>
 		<key>CF$UID</key>

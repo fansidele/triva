@@ -437,7 +437,7 @@
 		<integer>67</integer>
 	    </dict>
 	    <key>NSEnabled</key>
-	    <integer>1</integer>
+	    <true/>
 	    <key>NSFrame</key>
 	    <dict>
 		<key>CF$UID</key>
@@ -645,16 +645,16 @@
 		<integer>0</integer>
 	    </dict>
 	    <key>NSHidden</key>
-	    <integer>0</integer>
+	    <false/>
 	    <key>NSIdentifier</key>
 	    <dict>
 		<key>CF$UID</key>
 		<integer>33</integer>
 	    </dict>
 	    <key>NSIsEditable</key>
-	    <integer>0</integer>
+	    <false/>
 	    <key>NSIsResizable</key>
-	    <integer>1</integer>
+	    <true/>
 	    <key>NSMaxWidth</key>
 	    <real>100000</real>
 	    <key>NSMinWidth</key>
@@ -701,7 +701,7 @@
 		<integer>16</integer>
 	    </dict>
 	    <key>NSDrawsBackground</key>
-	    <integer>0</integer>
+	    <false/>
 	    <key>NSSupport</key>
 	    <dict>
 		<key>CF$UID</key>
@@ -793,7 +793,7 @@
 		<integer>45</integer>
 	    </dict>
 	    <key>NSDrawsBackground</key>
-	    <integer>1</integer>
+	    <true/>
 	    <key>NSSupport</key>
 	    <dict>
 		<key>CF$UID</key>
@@ -1043,16 +1043,16 @@
 		<integer>0</integer>
 	    </dict>
 	    <key>NSHidden</key>
-	    <integer>0</integer>
+	    <false/>
 	    <key>NSIdentifier</key>
 	    <dict>
 		<key>CF$UID</key>
 		<integer>60</integer>
 	    </dict>
 	    <key>NSIsEditable</key>
-	    <integer>1</integer>
+	    <true/>
 	    <key>NSIsResizable</key>
-	    <integer>1</integer>
+	    <true/>
 	    <key>NSMaxWidth</key>
 	    <real>100000</real>
 	    <key>NSMinWidth</key>
@@ -1158,7 +1158,7 @@
 		<integer>45</integer>
 	    </dict>
 	    <key>NSDrawsBackground</key>
-	    <integer>1</integer>
+	    <true/>
 	    <key>NSSupport</key>
 	    <dict>
 		<key>CF$UID</key>
@@ -1264,7 +1264,7 @@
 	    <key>NSCurValue</key>
 	    <real>1</real>
 	    <key>NSEnabled</key>
-	    <integer>1</integer>
+	    <true/>
 	    <key>NSFrame</key>
 	    <dict>
 		<key>CF$UID</key>
@@ -1526,7 +1526,7 @@
 		<integer>109</integer>
 	    </dict>
 	    <key>NSEnabled</key>
-	    <integer>1</integer>
+	    <true/>
 	    <key>NSFrame</key>
 	    <dict>
 		<key>CF$UID</key>
@@ -1653,16 +1653,16 @@
 		<integer>0</integer>
 	    </dict>
 	    <key>NSHidden</key>
-	    <integer>0</integer>
+	    <false/>
 	    <key>NSIdentifier</key>
 	    <dict>
 		<key>CF$UID</key>
 		<integer>92</integer>
 	    </dict>
 	    <key>NSIsEditable</key>
-	    <integer>1</integer>
+	    <true/>
 	    <key>NSIsResizable</key>
-	    <integer>1</integer>
+	    <true/>
 	    <key>NSMaxWidth</key>
 	    <real>100000</real>
 	    <key>NSMinWidth</key>
@@ -1709,7 +1709,7 @@
 		<integer>85</integer>
 	    </dict>
 	    <key>NSDrawsBackground</key>
-	    <integer>0</integer>
+	    <false/>
 	    <key>NSSupport</key>
 	    <dict>
 		<key>CF$UID</key>
@@ -1750,7 +1750,7 @@
 		<integer>97</integer>
 	    </dict>
 	    <key>NSDrawsBackground</key>
-	    <integer>1</integer>
+	    <true/>
 	    <key>NSSupport</key>
 	    <dict>
 		<key>CF$UID</key>
@@ -1900,16 +1900,16 @@
 		<integer>0</integer>
 	    </dict>
 	    <key>NSHidden</key>
-	    <integer>0</integer>
+	    <false/>
 	    <key>NSIdentifier</key>
 	    <dict>
 		<key>CF$UID</key>
 		<integer>104</integer>
 	    </dict>
 	    <key>NSIsEditable</key>
-	    <integer>1</integer>
+	    <true/>
 	    <key>NSIsResizable</key>
-	    <integer>1</integer>
+	    <true/>
 	    <key>NSMaxWidth</key>
 	    <real>100000</real>
 	    <key>NSMinWidth</key>
@@ -2004,7 +2004,7 @@
 		<integer>97</integer>
 	    </dict>
 	    <key>NSDrawsBackground</key>
-	    <integer>1</integer>
+	    <true/>
 	    <key>NSSupport</key>
 	    <dict>
 		<key>CF$UID</key>
@@ -2085,7 +2085,7 @@
 	    <key>NSCurValue</key>
 	    <real>1</real>
 	    <key>NSEnabled</key>
-	    <integer>1</integer>
+	    <true/>
 	    <key>NSFrame</key>
 	    <dict>
 		<key>CF$UID</key>
@@ -2167,7 +2167,7 @@
 		<integer>122</integer>
 	    </dict>
 	    <key>NSEnabled</key>
-	    <integer>1</integer>
+	    <true/>
 	    <key>NSFrame</key>
 	    <dict>
 		<key>CF$UID</key>
@@ -2233,7 +2233,7 @@
 		<integer>119</integer>
 	    </dict>
 	    <key>NSDrawsBackground</key>
-	    <integer>1</integer>
+	    <true/>
 	    <key>NSSupport</key>
 	    <dict>
 		<key>CF$UID</key>
@@ -2274,7 +2274,7 @@
 		<integer>128</integer>
 	    </dict>
 	    <key>NSEnabled</key>
-	    <integer>1</integer>
+	    <true/>
 	    <key>NSFrame</key>
 	    <dict>
 		<key>CF$UID</key>
@@ -2340,7 +2340,7 @@
 		<integer>125</integer>
 	    </dict>
 	    <key>NSDrawsBackground</key>
-	    <integer>0</integer>
+	    <false/>
 	    <key>NSSupport</key>
 	    <dict>
 		<key>CF$UID</key>
@@ -2381,7 +2381,7 @@
 		<integer>134</integer>
 	    </dict>
 	    <key>NSEnabled</key>
-	    <integer>1</integer>
+	    <true/>
 	    <key>NSFrame</key>
 	    <dict>
 		<key>CF$UID</key>
@@ -2447,7 +2447,7 @@
 		<integer>131</integer>
 	    </dict>
 	    <key>NSDrawsBackground</key>
-	    <integer>0</integer>
+	    <false/>
 	    <key>NSSupport</key>
 	    <dict>
 		<key>CF$UID</key>
@@ -2474,7 +2474,7 @@
 		<integer>139</integer>
 	    </dict>
 	    <key>NSEnabled</key>
-	    <integer>1</integer>
+	    <true/>
 	    <key>NSFrame</key>
 	    <dict>
 		<key>CF$UID</key>
@@ -2540,7 +2540,7 @@
 		<integer>136</integer>
 	    </dict>
 	    <key>NSDrawsBackground</key>
-	    <integer>0</integer>
+	    <false/>
 	    <key>NSSupport</key>
 	    <dict>
 		<key>CF$UID</key>
@@ -2693,16 +2693,16 @@
 		<integer>0</integer>
 	    </dict>
 	    <key>NSHidden</key>
-	    <integer>0</integer>
+	    <false/>
 	    <key>NSIdentifier</key>
 	    <dict>
 		<key>CF$UID</key>
 		<integer>151</integer>
 	    </dict>
 	    <key>NSIsEditable</key>
-	    <integer>0</integer>
+	    <false/>
 	    <key>NSIsResizable</key>
-	    <integer>0</integer>
+	    <false/>
 	    <key>NSMaxWidth</key>
 	    <real>100000</real>
 	    <key>NSMinWidth</key>
@@ -2797,7 +2797,7 @@
 		<integer>0</integer>
 	    </dict>
 	    <key>NSDrawsBackground</key>
-	    <integer>1</integer>
+	    <true/>
 	    <key>NSSupport</key>
 	    <dict>
 		<key>CF$UID</key>
@@ -2858,16 +2858,16 @@
 		<integer>0</integer>
 	    </dict>
 	    <key>NSHidden</key>
-	    <integer>0</integer>
+	    <false/>
 	    <key>NSIdentifier</key>
 	    <dict>
 		<key>CF$UID</key>
 		<integer>161</integer>
 	    </dict>
 	    <key>NSIsEditable</key>
-	    <integer>1</integer>
+	    <true/>
 	    <key>NSIsResizable</key>
-	    <integer>1</integer>
+	    <true/>
 	    <key>NSMaxWidth</key>
 	    <real>100000</real>
 	    <key>NSMinWidth</key>
@@ -2914,7 +2914,7 @@
 		<integer>0</integer>
 	    </dict>
 	    <key>NSDrawsBackground</key>
-	    <integer>0</integer>
+	    <false/>
 	    <key>NSSupport</key>
 	    <dict>
 		<key>CF$UID</key>
@@ -2954,7 +2954,7 @@
 		<integer>0</integer>
 	    </dict>
 	    <key>NSDrawsBackground</key>
-	    <integer>1</integer>
+	    <true/>
 	    <key>NSSupport</key>
 	    <dict>
 		<key>CF$UID</key>
@@ -3034,16 +3034,16 @@
 		<integer>0</integer>
 	    </dict>
 	    <key>NSHidden</key>
-	    <integer>0</integer>
+	    <false/>
 	    <key>NSIdentifier</key>
 	    <dict>
 		<key>CF$UID</key>
 		<integer>171</integer>
 	    </dict>
 	    <key>NSIsEditable</key>
-	    <integer>1</integer>
+	    <true/>
 	    <key>NSIsResizable</key>
-	    <integer>1</integer>
+	    <true/>
 	    <key>NSMaxWidth</key>
 	    <real>100000</real>
 	    <key>NSMinWidth</key>
@@ -3090,7 +3090,7 @@
 		<integer>0</integer>
 	    </dict>
 	    <key>NSDrawsBackground</key>
-	    <integer>0</integer>
+	    <false/>
 	    <key>NSSupport</key>
 	    <dict>
 		<key>CF$UID</key>
@@ -3130,7 +3130,7 @@
 		<integer>0</integer>
 	    </dict>
 	    <key>NSDrawsBackground</key>
-	    <integer>1</integer>
+	    <true/>
 	    <key>NSSupport</key>
 	    <dict>
 		<key>CF$UID</key>
