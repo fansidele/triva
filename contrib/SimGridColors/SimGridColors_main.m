@@ -68,11 +68,11 @@ main(int argc, const char *argv[])
 
     NSLog (@"Graph configuration with: %@", categories);    
     NSString *graphConfKey = @"SimGrid Graph Configuration";
-    NSMutableDictionary *graphConf = [NSMutableDictionary dictionary];
-    NSMutableDictionary *hostConf = [NSMutableDictionary dictionary];
-    NSMutableDictionary *hostConfComp = [NSMutableDictionary dictionary];
-    NSMutableDictionary *linkConf = [NSMutableDictionary dictionary];
-    NSMutableDictionary *linkConfComp = [NSMutableDictionary dictionary];
+    NSMutableDictionary *graphConf = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary *hostConf = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary *hostConfComp = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary *linkConf = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary *linkConfComp = [[NSMutableDictionary alloc] init];
 
     [graphConf setObject: [NSArray arrayWithObjects: @"HOST", nil]
                   forKey: @"node"];
@@ -99,7 +99,7 @@ main(int argc, const char *argv[])
     [graphConf setObject: linkConf forKey: @"LINK"];
 
     NSMutableDictionary *graphConfs;
-    graphConfs = [NSMutableDictionary dictionaryWithDictionary:
+    graphConfs = [[NSMutableDictionary alloc] initWithDictionary:
                     [trivaDefaults objectForKey: @"GraphConfigurationItems"]];
     [graphConfs setObject: [graphConf description] forKey: graphConfKey];
     [trivaDefaults setObject: graphConfs forKey: @"GraphConfigurationItems"];
