@@ -9,11 +9,14 @@ BUNDLE_INSTALL_DIR = $(GNUSTEP_BUNDLES)/Triva
 
 ifeq ($(FOUNDATION_LIB), apple)
   LDFLAGS += -F../Triva -framework Triva -framework General
+  ADDITIONAL_INCLUDE_DIRS += -framework Renaissance
+  ADDITIONAL_GUI_LIBS += -framework Renaissance
 else
   ADDITIONAL_LIB_DIRS += -L../Triva/Triva.framework/Versions/Current
+  ADDITIONAL_GUI_LIBS += -lRenaissance
 endif
 
-LinkView_RESOURCE_FILES = Resources/Graph.gorm
+LinkView_RESOURCE_FILES = LinkView.gsmarkup
 LinkView_HEADER_FILES = DrawView.h LinkView.h LinkViewNode.h LinkViewEdge.h
 LinkView_OBJC_FILES = DrawView.m LinkView.m LinkViewNode.m LinkViewEdge.m
 LinkView_INCLUDE_DIRS += -I../ -I./ @CPPFLAGS@

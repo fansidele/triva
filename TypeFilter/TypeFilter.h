@@ -17,6 +17,8 @@
 #ifndef __TypeFilter_h
 #define __TypeFilter_h
 #include <Foundation/Foundation.h>
+#include <AppKit/AppKit.h>
+#include <Renaissance/Renaissance.h>
 #include <General/PajeFilter.h>
 #include <Triva/TrivaWindow.h>
 #include <regex.h>

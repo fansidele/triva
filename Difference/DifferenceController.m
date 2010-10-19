@@ -20,7 +20,7 @@
 - (id)initWithController:(id)c
 {
   self = [super initWithController: c];
-  [NSBundle loadNibNamed: @"Difference" owner: self];
+  [NSBundle loadGSMarkupNamed: @"Difference" owner: self];
   interceptFilters = [[NSMutableArray alloc] init];
   [window initializeWithDelegate: self];
   return self;

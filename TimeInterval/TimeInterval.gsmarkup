@@ -1,0 +1,135 @@
+<?xml version="1.0"?>
+<!DOCTYPE gsmarkup>
+
+<gsmarkup>
+  <objects>
+    <window id="window"
+            instanceOf="TrivaWindow"
+            width="300"
+            title="Triva - Time Interval"
+            resizable="no" closable="yes">
+      <vbox>
+        <!-- Trace Time -->
+        <box title="Trace Time" halign="wexpand">
+          <hbox>
+            <textField id="traceStartTimeLabel"
+                       halign="expand"
+                       textAlignment="center"
+                       enabled="no">0.0</textField>
+            <hspace />
+            <textField id="traceEndTimeLabel"
+                       halign="expand"
+                       textAlignment="center"
+                       enabled="no">0.0</textField>
+          </hbox>
+        </box>
+
+        <!-- Time Slice Configuration -->
+        <box title="Time Slice Configuration" halign="wexpand">
+          <vbox halign="wexpand">
+            <button id="forwardOnChange"
+                    title="Forward Start Slice on Trace Update"
+                    type="switch"
+                    halign="left"/>
+            <button id="updateOnChange"
+                    title="Update Drawings on Sliders Change"
+                    type="switch"
+                    halign="left"/>
+            <hbox>
+              <label>Start</label>
+              <hspace />
+              <textField id="timeSelectionStart"
+                         action="apply:" />
+            </hbox>
+            <slider id="startSlider"
+                    action="sliceSliderChanged:"
+                    sendActionOn="anyEvent"
+                    height="17"
+                    halign="expand" />
+            <vspace />
+            <hbox>
+              <label>Size</label>
+              <hspace />
+              <textField id="timeSelectionSize"
+                         action="apply:" />
+            </hbox>
+            <slider id="sizeSlider"
+                    action="sliceSliderChanged:"
+                    height="17"
+                    halign="expand" />
+            <view id="sliceView"
+                  instanceOf="SliceView" 
+                  halign="expand" height="30" />
+            <hbox>
+              <hspace />
+              <button id="applyButton"
+                      action="apply:"
+                      title="Apply" />
+            </hbox>
+          </vbox>
+        </box>
+
+        <!-- Time Slice Animation -->
+        <box title="Time Slice Animation" halign="wexpand">
+          <vbox halign="wexpand">
+            <hbox>
+              <label>Forward (in seconds)</label>
+              <hspace />
+              <textField id="forwardLabel"
+                         action="sliceSliderChanged:" />
+            </hbox>
+            <slider id="forwardSlider"
+                    action="forwardSliderChanged:"
+                    sendActionOn="anyEvent"
+                    height="17"
+                    halign="expand" />
+            <vspace />
+            <hbox>
+              <label>Frequency (in seconds)</label>
+              <hspace />
+              <textField id="frequencyLabel"
+                         action="sliceSliderChanged:" />
+            </hbox>
+            <slider id="frequencySlider"
+                    action="frequencySliderChanged:"
+                    sendActionOn="anyEvent"
+                    height="17"
+                    halign="expand" />
+            <hbox>
+              <hspace />
+              <button id="playButton"
+                      action="play:"
+                      type="pushOnPushOff"
+                      title="Play" />
+            </hbox>
+          </vbox>
+          
+
+        </box>
+
+      </vbox>
+
+
+
+
+    </window>
+  </objects>
+
+  <connectors>
+    <outlet source="#NSOwner" target="#window" key="window" />
+    <outlet source="#NSOwner" target="#traceStartTimeLabel" key="traceStartTimeLabel" />
+    <outlet source="#NSOwner" target="#traceEndTimeLabel" key="traceEndTimeLabel" />
+    <outlet source="#NSOwner" target="#sliceView" key="sliceView" />
+    <outlet source="#NSOwner" target="#forwardLabel" key="forwardLabel" />
+    <outlet source="#NSOwner" target="#frequencyLabel" key="frequencyLabel" />
+    <outlet source="#NSOwner" target="#playButton" key="playButton" />
+    <outlet source="#NSOwner" target="#timeSelectionStart" key="timeSelectionStart" />
+    <outlet source="#NSOwner" target="#timeSelectionSize" key="timeSelectionSize" />
+    <outlet source="#NSOwner" target="#updateOnChange" key="updateOnChange" />
+    <outlet source="#NSOwner" target="#forwardOnChange" key="forwardOnChange" />
+    <outlet source="#NSOwner" target="#startSlider" key="startSlider" />
+    <outlet source="#NSOwner" target="#sizeSlider" key="sizeSlider" />
+    <outlet source="#NSOwner" target="#forwardSlider" key="forwardSlider" />
+    <outlet source="#NSOwner" target="#frequencySlider" key="frequencySlider" />
+  </connectors>
+</gsmarkup>

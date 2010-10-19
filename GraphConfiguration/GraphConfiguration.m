@@ -26,7 +26,7 @@
 {
   self = [super initWithController: c];
   if (self != nil){
-    [NSBundle loadNibNamed: @"GraphConf" owner: self];
+    [NSBundle loadGSMarkupNamed: @"GraphConfiguration" owner: self];
   }
   [self initInterface];
   //initialiation of graphviz

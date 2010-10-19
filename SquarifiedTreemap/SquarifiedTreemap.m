@@ -22,7 +22,7 @@
 {
   self = [super initWithController: c];
   if (self != nil){
-    [NSBundle loadNibNamed: @"SquarifiedTreemap" owner: self];
+    [NSBundle loadGSMarkupNamed: @"SquarifiedTreemap" owner: self];
   }
   [view setFilter: self];
   [window initializeWithDelegate: self];

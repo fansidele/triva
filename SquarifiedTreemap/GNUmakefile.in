@@ -9,13 +9,15 @@ BUNDLE_INSTALL_DIR = $(GNUSTEP_BUNDLES)/Triva
 
 ifeq ($(FOUNDATION_LIB), apple)
   LDFLAGS += -F../Triva -framework Triva -framework General
+  ADDITIONAL_INCLUDE_DIRS += -framework Renaissance
+  ADDITIONAL_GUI_LIBS += -framework Renaissance
 else
   ADDITIONAL_LIB_DIRS += -L../Triva/Triva.framework/Versions/Current
+  ADDITIONAL_GUI_LIBS += -lRenaissance
 endif
 
 SquarifiedTreemap_RESOURCE_FILES = \
-  Resources/SquarifiedTreemap.gorm \
-	Resources/SquarifiedTreemap.nib
+	SquarifiedTreemap.gsmarkup
 SquarifiedTreemap_HEADER_FILES = SquarifiedTreemap.h TreemapView.h
 SquarifiedTreemap_OBJC_FILES = SquarifiedTreemap.m TreemapView.m
 SquarifiedTreemap_INCLUDE_DIRS += -I../ -I./ @CPPFLAGS@

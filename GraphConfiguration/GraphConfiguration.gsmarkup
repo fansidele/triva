@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<!DOCTYPE gsmarkup>
+
+<gsmarkup>
+  <objects>
+    <window id="window"
+            instanceOf="TrivaWindow"
+            width="300" height="300"
+            title="Triva - Graph Configuration"
+            resizable="yes" closable="yes">
+      <vbox>
+        <hbox>
+          <popUpButton id="popup"
+                       target="#NSOwner"
+                       action="change:"
+                       halign="wexpand"
+                       pullsDown="yes">
+             <popUpButtonItem tag="0" title="GraphConf0" />
+             <popUpButtonItem tag="1" title="GraphConf1" />
+             <popUpButtonItem tag="2" title="GraphConf2" />
+          </popUpButton>
+          <button id="ok"
+                  type="switch"
+                  enabled="no" />
+          <button title="Del"
+                  target="#NSOwner"
+                  action="del:" />
+          <button title="Copy"
+                  target="#NSOwner"
+                  action="copy:" />
+          <button title="New"
+                  target="#NSOwner"
+                  action="new:" />
+        </hbox>
+        <scrollView halign="expand"
+                     hasVerticalScroller="yes"
+                     hasHorizontalScroller="yes" >
+          <textView id="confView" 
+                    delegate="#NSOwner" />
+        </scrollView>
+        <hbox>
+          <label>Name:</label>
+          <textField id="title"
+                     allowsEditingTextAttributes="no"
+                     editable="yes"
+                     selectable="no" />
+          <button title="Apply"
+                  target="#NSOwner"
+                  action="apply:" />
+        </hbox>
+      </vbox>
+    </window>
+  </objects>
+
+  <connectors>
+    <outlet source="#NSOwner" target="#window" key="window" />
+    <outlet source="#NSOwner" target="#confView" key="confView" />
+    <outlet source="#NSOwner" target="#popup" key="popup" />
+    <outlet source="#NSOwner" target="#ok" key="ok" />
+    <outlet source="#NSOwner" target="#title" key="title" />
+  </connectors>
+</gsmarkup>

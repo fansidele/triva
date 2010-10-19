@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<!DOCTYPE gsmarkup>
+
+<gsmarkup>
+  <objects>
+    <window id="window"
+            instanceOf="TrivaWindow"
+            width="300"
+            title="Triva - Difference"
+            resizable="yes" closable="yes">
+      <vbox>
+        <hbox>
+          <label>Number of Trace Files:</label>
+          <textField id="numberOfTraceFiles" enabled="no" />
+        </hbox>
+        <hbox>
+          <label>A:</label>
+          <textField id="traceA" enabled="no" />
+        </hbox>
+        <hbox>
+          <label>B:</label>
+          <textField id="traceB" enabled="no" />
+        </hbox>
+        <hbox>
+          <label>Operation:</label>
+          <popUpButton id="operation"
+                       target="#NSOwner"
+                       action="operationChanged:"
+                       halign="wexpand"
+                       height="30">
+          </popUpButton>
+        </hbox>
+      </vbox>
+    </window>
+  </objects>
+
+  <connectors>
+    <outlet source="#NSOwner" target="#window" key="window" />
+    <outlet source="#NSOwner" target="#numberOfTraceFiles" key="numberOfTraceFiles" />
+    <outlet source="#NSOwner" target="#traceA" key="traceA" />
+    <outlet source="#NSOwner" target="#traceB" key="traceB" />
+    <outlet source="#NSOwner" target="#operation" key="operation" />
+  </connectors>
+</gsmarkup>

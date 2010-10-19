@@ -22,7 +22,7 @@
 {
   self = [super initWithController: c];
   if (self != nil){
-    [NSBundle loadNibNamed: @"TypeFilter" owner: self];
+    [NSBundle loadGSMarkupNamed: @"TypeFilter" owner: self];
   }
   [self configureGUI];
 

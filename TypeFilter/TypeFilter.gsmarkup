@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<!DOCTYPE gsmarkup>
+
+<gsmarkup>
+  <objects>
+    <window id="window"
+            instanceOf="TrivaWindow"
+            width="500" height="300"
+            title="Triva - Type Filter"
+            resizable="yes" closable="yes">
+      <vbox>
+        <hbox>
+          <label halign="left">Type Hierarchy Selection</label>
+          <hspace />
+          <label halign="right">Entities Selection</label>
+        </hbox>
+        <hbox>
+          <scrollView id="scrollview"
+                      halign="expand"
+                      hasVerticalScroller="yes"
+                      hasHorizontalScroller="no">
+            <outlineView dataSource="#TypeFilter"
+                         delegate="#TypeFilter"
+                         target="#TypeFilter"
+                         outlineColumn="0">
+              <tableColumn title="Type"
+                           identifier="type" minWidth="100" />
+              <tableColumn title="Selected" identifier="sel" minWidth="10" />
+            </outlineView>
+          </scrollView>
+          <vbox>
+            <scrollView id="instances"
+                        halign="expand"
+                        hasVerticalScroller="yes"
+                        hasHorizontalScroller="no"/>
+            <hbox>
+               <label>Search:</label>
+               <textField id="expression"
+                          delegate="#TypeFilter"
+                          target="#NSOwner"
+                          action="regularExpression:"
+                          halign="expand" />
+            </hbox>
+          </vbox>
+        </hbox>
+      </vbox>
+    </window>
+  </objects>
+
+  <connectors>
+    <outlet source="#NSOwner" target="#window" key="window" />
+    <outlet source="#NSOwner" target="#scrollview" key="scrollview" />
+    <outlet source="#NSOwner" target="#instances" key="instances" />
+    <outlet source="#NSOwner" target="#expression" key="expression" />
+  </connectors>
+</gsmarkup>

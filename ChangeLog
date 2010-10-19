@@ -1,5 +1,6 @@
 2010-09-07 (try-1.2) Lucas M. Schnorr <schnorr@gmail.com>
   * New logo for the tool featuring the "Cuia"
+  * Using GNUstep's Renaissance to be portable with MacOSes
   * Complete re-write of the TrivaController (several controllers added)
   * GraphView & GraphConfiguration
     * scale parameter always considered as Global (for now)

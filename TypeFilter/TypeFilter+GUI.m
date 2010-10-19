@@ -33,9 +33,10 @@
 
   NSTableColumn *column;
   column = [[outlineview tableColumns] objectAtIndex: 1];
-  NSButtonCell *bCell = (NSButtonCell*)[column dataCell];
+  NSButtonCell *bCell = [[NSButtonCell alloc] init];
   [bCell setButtonType: NSSwitchButton];
   [bCell setTitle: @""];
+  [column setDataCell: bCell];
 
   //configuring left-side, with the list of entities
   entities = [[NSTableView alloc] init];

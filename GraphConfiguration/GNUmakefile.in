@@ -9,13 +9,15 @@ BUNDLE_INSTALL_DIR = $(GNUSTEP_BUNDLES)/Triva
 
 ifeq ($(FOUNDATION_LIB), apple)
   LDFLAGS += -F../Triva -framework Triva -framework General -lgraph
+  ADDITIONAL_INCLUDE_DIRS += -framework Renaissance
+  ADDITIONAL_GUI_LIBS += -framework Renaissance
 else
   ADDITIONAL_LIB_DIRS += -L../Triva/Triva.framework/Versions/Current
+  ADDITIONAL_GUI_LIBS += -lRenaissance
 endif
 
 GraphConfiguration_RESOURCE_FILES = \
-	Resources/GraphConf.gorm \
-	Resources/GraphConf.nib
+  GraphConfiguration.gsmarkup
 GraphConfiguration_HEADER_FILES = GraphConfiguration.h
 GraphConfiguration_OBJC_FILES = \
 GraphConfiguration.m \

@@ -19,6 +19,8 @@
 #define _SQUARIFIEDTREEMAP_H_
 
 #include <Foundation/Foundation.h>
+#include <AppKit/AppKit.h>
+#include <Renaissance/Renaissance.h>
 #include <Triva/TrivaFilter.h>
 #include <Triva/TimeSliceTree.h>
 #include <Triva/TrivaWindow.h>

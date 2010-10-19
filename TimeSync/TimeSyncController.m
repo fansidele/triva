@@ -23,9 +23,10 @@
   self = [super init];
   compareFilters = [[NSMutableArray alloc] init];
   if (self != nil){
-    [NSBundle loadNibNamed: @"TimeSync" owner: self];
+    [NSBundle loadGSMarkupNamed: @"TimeSync" owner: self];
   }
   [window initializeWithDelegate: self];
+  [window setAcceptsMouseMovedEvents: YES];
   [markerTypeButton removeAllItems];
   [markerTypeButton setEnabled: NO];
   [view setController: self];

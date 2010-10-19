@@ -21,7 +21,7 @@
 {
   self = [super initWithController: c];
   if (self != nil){
-    [NSBundle loadNibNamed: @"TimeInterval" owner: self];
+    [NSBundle loadGSMarkupNamed: @"TimeInterval" owner: self];
   }
   [sliceView setFilter: self];
   [sliceWindowView setFilter: self];

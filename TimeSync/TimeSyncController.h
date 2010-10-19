@@ -18,6 +18,8 @@
 #define __COMPARE_CONT_H
 
 #include <Foundation/Foundation.h>
+#include <AppKit/AppKit.h>
+#include <Renaissance/Renaissance.h>
 #include <Triva/TrivaWindow.h>
 #include <General/PajeFilter.h>
 

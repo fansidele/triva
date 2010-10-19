@@ -20,6 +20,7 @@
 
 #include <AppKit/AppKit.h>
 #include <Foundation/Foundation.h>
+#include <Renaissance/Renaissance.h>
 #include <Triva/Triva.h>
 #include <graphviz/gvc.h>
 #include <limits.h>

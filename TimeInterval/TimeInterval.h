@@ -17,6 +17,8 @@
 #ifndef __TIMEINTERVAL_H
 #define __TIMEINTERVAL_H
 #include <Foundation/Foundation.h>
+#include <AppKit/AppKit.h>
+#include <Renaissance/Renaissance.h>
 #include <General/PajeFilter.h>
 #include <Triva/TrivaWindow.h>
 

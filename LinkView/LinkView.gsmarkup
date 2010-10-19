@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE gsmarkup>
+
+<gsmarkup>
+  <objects>
+    <window id="window"
+            instanceOf="TrivaWindow"
+            width="500" height="300"
+            title="Triva - Link View"
+            resizable="yes" closable="yes">
+      <view id="view"
+            instanceOf="DrawView"
+            halign="expand" />
+    </window>
+  </objects>
+
+  <connectors>
+    <outlet source="#NSOwner" target="#window" key="window" />
+    <outlet source="#NSOwner" target="#view" key="view" />
+  </connectors>
+</gsmarkup>

@@ -18,6 +18,8 @@
 #define __DifferenceController_H
 
 #include <Foundation/Foundation.h>
+#include <AppKit/AppKit.h>
+#include <Renaissance/Renaissance.h>
 #include <Triva/Triva.h>
 #include <Triva/TrivaWindow.h>
 

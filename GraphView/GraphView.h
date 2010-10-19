@@ -18,6 +18,8 @@
 #define __GraphView_H
 
 #include <Foundation/Foundation.h>
+#include <AppKit/AppKit.h>
+#include <Renaissance/Renaissance.h>
 #include <Triva/TrivaFilter.h>
 #include <Triva/TrivaWindow.h>
 #include <AppKit/AppKit.h>

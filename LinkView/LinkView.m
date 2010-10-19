@@ -24,7 +24,7 @@
 {
   self = [super initWithController: c];
   if (self != nil){
-    [NSBundle loadNibNamed: @"Graph" owner: self];
+    [NSBundle loadGSMarkupNamed: @"LinkView" owner: self];
   }
   [view setFilter: self];
   [window setDelegate: self];

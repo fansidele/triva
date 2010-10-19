@@ -9,11 +9,14 @@ BUNDLE_INSTALL_DIR = $(GNUSTEP_BUNDLES)/Triva
 
 ifeq ($(FOUNDATION_LIB), apple)
   LDFLAGS += -F../Triva -framework Triva -framework General
+  ADDITIONAL_INCLUDE_DIRS += -framework Renaissance
+  ADDITIONAL_GUI_LIBS += -framework Renaissance
 else
   ADDITIONAL_LIB_DIRS += -L../Triva/Triva.framework/Versions/Current
+  ADDITIONAL_GUI_LIBS += -lRenaissance
 endif
 
-TimeSync_RESOURCE_FILES = Resources/TimeSync.gorm
+TimeSync_RESOURCE_FILES = TimeSync.gsmarkup
 TimeSync_HEADER_FILES = TimeSync.h CompareView.h TimeSyncController.h
 TimeSync_OBJC_FILES = TimeSync.m \
 CompareView.m \
