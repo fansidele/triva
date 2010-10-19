@@ -57,7 +57,7 @@
     d = [graphSequences objectAtIndex: i];
     
     //set the TimeSync filters' controller
-    method = @selector(setController:);
+    method = @selector(setTimeSyncController:);
     [[d objectForKey: @"TimeSync"] performSelector: method withObject: compareController];
 
     //add the compare filters to the controller
