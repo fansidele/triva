@@ -14,10 +14,7 @@
                        target="#NSOwner"
                        action="change:"
                        halign="wexpand"
-                       pullsDown="yes">
-             <popUpButtonItem tag="0" title="GraphConf0" />
-             <popUpButtonItem tag="1" title="GraphConf1" />
-             <popUpButtonItem tag="2" title="GraphConf2" />
+                       height="20">
           </popUpButton>
           <button id="ok"
                   type="switch"
