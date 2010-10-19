@@ -41,6 +41,9 @@
         <hbox>
           <label>Name:</label>
           <textField id="title"
+                     target="#NSOwner"
+                     action="updateTitle:"
+                     delegate="#NSOwner"
                      allowsEditingTextAttributes="no"
                      editable="yes"
                      selectable="yes" />
