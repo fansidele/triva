@@ -43,7 +43,7 @@
           <textField id="title"
                      allowsEditingTextAttributes="no"
                      editable="yes"
-                     selectable="no" />
+                     selectable="yes" />
           <button title="Apply"
                   target="#NSOwner"
                   action="apply:" />
