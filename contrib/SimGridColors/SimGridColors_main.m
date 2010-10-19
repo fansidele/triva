@@ -59,8 +59,8 @@ main(int argc, const char *argv[])
       NSString *b_category;
       p_category = [NSString stringWithFormat: @"p%@ Color", category];
       b_category = [NSString stringWithFormat: @"b%@ Color", category];
-      [trivaDefaults setObject: color forKey: p_category];
-      [trivaDefaults setObject: color forKey: b_category];
+      [trivaDefaults setObject: [color description] forKey: p_category];
+      [trivaDefaults setObject: [color description] forKey: b_category];
 
       [pCategories addObject: [NSString stringWithFormat: @"p%@", category]];
       [bCategories addObject: [NSString stringWithFormat: @"b%@", category]];
