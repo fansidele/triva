@@ -31,6 +31,15 @@ $ cd Paje
 $ make -j 2
 $ make install GNUSTEP_INSTALLATION_DOMAIN=USER
 
+# Installing GNUstep's Renaissance (adapted for Triva)
+
+$ wget http://triva.gforge.inria.fr/Renaissance-0.9.1-triva.tar.gz
+$ tar xfz Renaissance-0.9.1-triva.tar.gz
+$ cd Renaissance-0.9.1-triva
+$ source /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
+$ make
+$ make install
+
 # Installing Triva (and its dependencies - packages for Ubuntu 10.04)
 # The lines below consider a possibly unstable installation of Triva (based
 # on the SVN development version). Packaged versions can be found on the

@@ -26,6 +26,17 @@ port install libmatheval
 port install graphviz-devel
 port install gsl-devel
 
+# Install Renaissance (modified for Triva)
+
+wget http://triva.gforge.inria.fr/Renaissance-0.9.1-triva.tar.gz
+tar xfz Renaissance-0.9.1-triva.tar.gz
+cd Renaissance-0.9.1-triva
+source /Library/GNUstep//Makefiles/GNUstep.sh
+export ADDITIONAL_FLAGS="-isysroot /Developer/SDKs/MacOSX10.6.sdk -mmacosx-version-min=10.6"
+export ADDITIONAL_LDFLAGS="-isysroot /Developer/SDKs/MacOSX10.6.sdk -mmacosx-version-min=10.6"
+make
+make install
+
 # Install Triva
 
 svn checkout svn://scm.gforge.inria.fr/svn/triva
