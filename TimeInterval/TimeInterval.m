@@ -87,9 +87,35 @@
   [self setTimeIntervalFrom: start to: end];
 }
 
+- (void) forwardLabelChanged: (id) sender
+{
+  double value = [forwardLabel doubleValue];
+  if (value < [forwardSlider minValue]){
+    value = [forwardSlider minValue];
+  }
+  if (value > [forwardSlider maxValue]){
+    value = [forwardSlider maxValue];
+  }
+  [forwardSlider setDoubleValue: value];
+  [forwardLabel setDoubleValue: value];
+}
+
 - (void) forwardSliderChanged: (id)sender
 {
   [forwardLabel setDoubleValue: [forwardSlider doubleValue]];
+}
+
+- (void) frequencyLabelChanged: (id) sender
+{
+  double value = [frequencyLabel doubleValue];
+  if (value < [frequencySlider minValue]){
+    value = [frequencySlider minValue];
+  }
+  if (value > [frequencySlider maxValue]){
+    value = [frequencySlider maxValue];
+  }
+  [frequencySlider setDoubleValue: value];
+  [frequencyLabel setDoubleValue: value];
 }
 
 - (void) frequencySliderChanged: (id)sender

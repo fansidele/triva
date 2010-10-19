@@ -58,7 +58,9 @@
 - (void) apply: (id)sender;
 - (void) play: (id)sender;
 - (void) forwardSliderChanged: (id)sender;
+- (void) forwardLabelChanged: (id) sender;
 - (void) frequencySliderChanged: (id)sender;
+- (void) frequencyLabelChanged: (id) sender;
 - (void) sliceSliderChanged: (id)sender;
 
 /*
