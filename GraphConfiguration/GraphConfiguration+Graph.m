@@ -226,6 +226,7 @@
   }
 
   [self definePositionWithConfiguration: conf];
+  [self saveGraphPositionsToUserDefaults: [self traceUniqueLabel]];
   return YES;
 }
 
