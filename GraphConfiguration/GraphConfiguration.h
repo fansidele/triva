@@ -91,4 +91,12 @@
 - (BOOL) redefineLayoutOf: (id) obj withConfiguration: (NSDictionary *) conf;
 @end
 
+@interface GraphConfiguration (Position)
+- (NSString *) traceUniqueLabel;
+- (void) saveGraphPositionsToUserDefaults: (NSString *) label;
+- (void) retrieveGraphPositionsFromUserDefaults: (NSString *) label;
+- (void) retrieveGraphPositionsFromConfiguration: (NSDictionary *) conf;
+- (void) retrieveGraphPositionsFromGraphviz;
+@end
+
 #endif

@@ -245,40 +245,38 @@
 
 - (BOOL) definePositionWithConfiguration: (NSDictionary *) conf
 {
-  NSMutableArray *all = [NSMutableArray array];
-  [all addObjectsFromArray: nodes];
-  [all addObjectsFromArray: edges];
-
   //recalculate position of all nodes and edges based on
-  //- user provided positions if configuration has that
-  //- graphviz if it was activated
-  //- otherwise, return false
-  NSEnumerator *en = [all objectEnumerator];
-  id object;
-  while ((object = [en nextObject])){
-    NSRect bb = NSZeroRect;
-    if (userPositionEnabled){
-      NSDictionary *pos = [conf objectForKey: [object name]];
-      if (pos){
-        bb.origin.x = [[pos objectForKey: @"x"] doubleValue];
-        bb.origin.y = [[pos objectForKey: @"y"] doubleValue];
-      }
-    }else if (graphvizEnabled){
-      Agnode_t *n = agfindnode (graph, (char *)[[object name] cString]);
-      if (n){
-#ifdef GNUSTEP
-        bb.origin.x = ND_coord_i(n).x;
-        bb.origin.y = ND_coord_i(n).y;
-#else
-        bb.origin.x = ND_coord(n).x;
-        bb.origin.y = ND_coord(n).y;
-#endif
-      }
-    }else{
-      return NO;
-    }
-    [object setBoundingBox: bb];
+  //1 - user provided positions if configuration has that
+  //2 - user defaults (previous run of triva)
+  //3 - graphviz if it was activated
+  //4 - otherwise, return false
+
+NS_DURING
+  if (userPositionEnabled){
+    [self retrieveGraphPositionsFromConfiguration: conf];
   }
+NS_HANDLER
+  NSLog (@"%@", localException);
+  NSLog (@"Fallback is check positions from user defaults (previous run)");
+NS_ENDHANDLER
+
+NS_DURING
+  [self retrieveGraphPositionsFromUserDefaults: [self traceUniqueLabel]];
+NS_HANDLER
+  NSLog (@"%@", localException);
+  NSLog (@"Fallback is calculate positions with Graphviz.");
+NS_ENDHANDLER
+
+NS_DURING
+  if (graphvizEnabled){
+    [self retrieveGraphPositionsFromGraphviz];
+  }
+NS_HANDLER
+  NSLog (@"%@", localException);
+  [localException raise];
+NS_ENDHANDLER
+
+  [self saveGraphPositionsToUserDefaults: [self traceUniqueLabel]];
   return YES;
 }
 
