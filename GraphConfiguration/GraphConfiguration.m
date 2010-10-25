@@ -65,12 +65,6 @@
                  userInfo: nil];
       [exception raise];
     }
-    if (![self definePositionWithConfiguration: configuration]){
-      NSException *exception = [NSException exceptionWithName: @"TrivaException"
-                  reason: @"Nodes could not be positioned. Check configuration."
-                userInfo: nil];
-      [exception raise];
-    }
     [self timeSelectionChanged];
   }
 }
