@@ -277,7 +277,6 @@ NS_ENDHANDLER
       return YES;
     }
   }
-  [self saveGraphPositionsToUserDefaults: [self traceUniqueLabel]];
   return YES;
 }
 
