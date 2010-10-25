@@ -33,7 +33,7 @@
   [entities release];
 }
 
-- (void) initGraph
+- (BOOL) parseConfiguration: (NSDictionary *) conf
 {
   nodes = [[NSMutableArray alloc] init];
   edges = [[NSMutableArray alloc] init];
@@ -50,10 +50,7 @@
 
   //dictionary to hold all TimeSlice entities used in graph
   entities = [[NSMutableDictionary alloc] init];
-}
 
-- (BOOL) parseConfiguration: (NSDictionary *) conf
-{
   if (!conf){
     return NO;
   }

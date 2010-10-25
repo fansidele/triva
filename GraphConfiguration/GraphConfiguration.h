@@ -84,7 +84,6 @@
 
 @interface GraphConfiguration (Graph)
 - (void) destroyGraph;
-- (void) initGraph;
 - (BOOL) parseConfiguration: (NSDictionary *) conf;
 - (BOOL) createGraphWithConfiguration: (NSDictionary *) conf;
 - (BOOL) definePositionWithConfiguration: (NSDictionary *) conf;

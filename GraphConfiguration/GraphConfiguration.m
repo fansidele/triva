@@ -51,7 +51,6 @@
   [configuration retain];
 
   [self destroyGraph];
-  [self initGraph];
   [self parseConfiguration: configuration];
 
   [self hierarchyChanged];
