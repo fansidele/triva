@@ -225,21 +225,7 @@
     }
   }
 
-  //run graphviz
-  if (!userPositionEnabled && graphvizEnabled){
-    NSLog (@"%s:%d Executing GraphViz Layout... (this might "
-            "take a while)", __FUNCTION__, __LINE__);
-    NSString *algo = [conf objectForKey: @"graphviz-algorithm"];
-    gvFreeLayout (gvc, graph);
-    if (algo){
-      gvLayout (gvc, graph, (char*)[algo cString]);
-    }else{
-      gvLayout (gvc, graph, (char*)"neato");
-    }
-    NSLog (@"%s:%d GraphViz Layout done", __FUNCTION__, __LINE__);
-  }
-  NSLog (@"%s:%d Got %d nodes and %d edges", __FUNCTION__, __LINE__,
-      [nodes count], [edges count]);
+  [self definePositionWithConfiguration: conf];
   return YES;
 }
 
