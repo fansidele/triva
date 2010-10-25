@@ -271,17 +271,12 @@ NS_HANDLER
   NSLog (@"Fallback is calculate positions with Graphviz.");
 NS_ENDHANDLER
 
-NS_DURING
+  //last option is graphviz
   if (graphvizEnabled){
     if ([self retrieveGraphPositionsFromGraphviz: conf]){
       return YES;
     }
   }
-NS_HANDLER
-  NSLog (@"%@", localException);
-  [localException raise];
-NS_ENDHANDLER
-
   [self saveGraphPositionsToUserDefaults: [self traceUniqueLabel]];
   return YES;
 }
