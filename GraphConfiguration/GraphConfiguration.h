@@ -94,9 +94,9 @@
 @interface GraphConfiguration (Position)
 - (NSString *) traceUniqueLabel;
 - (void) saveGraphPositionsToUserDefaults: (NSString *) label;
-- (void) retrieveGraphPositionsFromUserDefaults: (NSString *) label;
-- (void) retrieveGraphPositionsFromConfiguration: (NSDictionary *) conf;
-- (void) retrieveGraphPositionsFromGraphviz;
+- (BOOL) retrieveGraphPositionsFromUserDefaults: (NSString *) label;
+- (BOOL) retrieveGraphPositionsFromConfiguration: (NSDictionary *) conf;
+- (BOOL) retrieveGraphPositionsFromGraphviz: (NSDictionary *) conf;
 @end
 
 #endif

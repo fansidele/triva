@@ -56,7 +56,7 @@
   [defaults synchronize];
 }
 
-- (void) retrieveGraphPositionsFromUserDefaults: (NSString *) label
+- (BOOL) retrieveGraphPositionsFromUserDefaults: (NSString *) label
 {
   NSUserDefaults *defaults;
   NSString *key;
@@ -76,7 +76,7 @@
   dict = [defaults objectForKey: key];
   if (!dict){
     [exception raise];
-    return;
+    return NO;
   }
   en = [nodes objectEnumerator];
   while ((node = [en nextObject])){
@@ -87,7 +87,7 @@
 
     if (!xk || !yk) {
       [exception raise];
-      return;
+      return NO;
     }
 
     xv = [dict objectForKey: xk];
@@ -98,9 +98,10 @@
     bb.origin.y = [yv doubleValue];
     [node setBoundingBox: bb];
   }
+  return YES;
 }
 
-- (void) retrieveGraphPositionsFromConfiguration: (NSDictionary *) conf
+- (BOOL) retrieveGraphPositionsFromConfiguration: (NSDictionary *) conf
 {
   NSEnumerator *en;
 
@@ -125,10 +126,12 @@
                   format:@"User defined positions are incomplete. "
                           "Need to have a position for  nodes: %@", 
                                                    missingNodePosition];
+      return NO;
   }
+  return YES;
 }
 
-- (void) retrieveGraphPositionsFromGraphviz
+- (BOOL) retrieveGraphPositionsFromGraphviz: (NSDictionary *) conf
 {
   NSEnumerator *en = [nodes objectEnumerator];
   TrivaGraphNode *node;
@@ -147,5 +150,6 @@
     }
     [node setBoundingBox: bb];
   }
+  return YES;
 }
 @end

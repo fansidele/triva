@@ -253,7 +253,9 @@
 
 NS_DURING
   if (userPositionEnabled){
-    [self retrieveGraphPositionsFromConfiguration: conf];
+    if ([self retrieveGraphPositionsFromConfiguration: conf]){
+      return YES;
+    }
   }
 NS_HANDLER
   NSLog (@"%@", localException);
@@ -261,7 +263,9 @@ NS_HANDLER
 NS_ENDHANDLER
 
 NS_DURING
-  [self retrieveGraphPositionsFromUserDefaults: [self traceUniqueLabel]];
+  if ([self retrieveGraphPositionsFromUserDefaults: [self traceUniqueLabel]]){
+    return YES;
+  }
 NS_HANDLER
   NSLog (@"%@", localException);
   NSLog (@"Fallback is calculate positions with Graphviz.");
@@ -269,7 +273,9 @@ NS_ENDHANDLER
 
 NS_DURING
   if (graphvizEnabled){
-    [self retrieveGraphPositionsFromGraphviz];
+    if ([self retrieveGraphPositionsFromGraphviz: conf]){
+      return YES;
+    }
   }
 NS_HANDLER
   NSLog (@"%@", localException);
