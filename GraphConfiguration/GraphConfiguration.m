@@ -66,6 +66,8 @@
       [exception raise];
     }
     [self timeSelectionChanged];
+  }else{
+    [self apply: self];
   }
 }
 
