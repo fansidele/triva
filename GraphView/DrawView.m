@@ -26,6 +26,9 @@
   self = [super initWithFrame: frame];
   ratio = 1;
   scale = 1;
+  movingSingleNode = NO;
+  selectingArea = NO;
+  selectedArea = NSZeroRect;
   return self;
 }
 
@@ -104,6 +107,17 @@
     if ([node highlighted]) [node drawHighlight];
   }
 
+  if (!NSEqualRects(selectedArea, NSZeroRect)) {
+    NSBezierPath *path = [NSBezierPath bezierPathWithRect: selectedArea];
+    if (highlightSelectedArea){
+      [path setLineWidth: 2];
+    }else{
+      [path setLineWidth: 1];
+    }
+    [[NSColor blueColor] set];
+    [path stroke];
+  }
+
   //undo transformations
   [transform invert];
   [transform concat];
@@ -124,7 +138,46 @@
 {
   NSPoint p;
   p = [self convertPoint:[event locationInWindow] fromView:nil];
-  if ([event modifierFlags] & NSControlKeyMask){
+
+  if (selectingArea){
+    NSAffineTransform *t = [self transform];
+    [t invert];
+    NSPoint b = [t transformPoint: p];
+    NSPoint a = selectedArea.origin;
+ 
+    NSPoint origin, diagonal;
+    NSSize size;
+ 
+    if (b.x == a.x || b.y == a.y) return;
+ 
+    if (b.x > a.x && b.y > a.y) {
+      //top right
+      origin = a;
+      diagonal = b;
+    } else if (b.x < a.x && b.y < a.y) {
+      //bottom left
+      origin = b;
+      diagonal = NSMakePoint(a.x+selectedArea.size.width, a.y+selectedArea.size.height);
+    } else if (b.x > a.x && b.y < a.y){
+      //bottom right
+      origin = NSMakePoint (a.x, b.y);
+      diagonal = NSMakePoint (b.x, a.y + selectedArea.size.height);
+    } else if (b.x < a.x && b.y > a.y) {
+      //top left
+      origin = NSMakePoint (b.x, a.y);
+      diagonal = NSMakePoint (a.x + selectedArea.size.width, b.y);
+    }
+ 
+    size.width = diagonal.x - origin.x;
+    size.height = diagonal.y - origin.y;
+ 
+    selectedArea.origin = origin;
+    selectedArea.size = size;
+ 
+    [self setNeedsDisplay: YES];
+  }
+
+  if (movingSingleNode){
     //code for changing the position of a node
     if (selectedNode == nil) {
       return;
@@ -154,6 +207,31 @@
 - (void) mouseDown: (NSEvent *) event
 {
   move = [self convertPoint:[event locationInWindow] fromView:nil];
+
+  if ([event modifierFlags] & NSControlKeyMask){
+    if (selectedNode != nil){
+      //moving a single node
+      movingSingleNode = YES;
+    }else{
+      //selecting area
+      selectingArea = YES;
+      NSAffineTransform *t = [self transform];
+      [t invert];
+      NSPoint pt = [t transformPoint: move];
+      selectedArea.origin = pt;
+      selectedArea.size = NSZeroSize;
+    }
+  }
+}
+
+- (void) mouseUp: (NSEvent *) event
+{
+  if (selectingArea){
+    //do multiple node selection
+  }
+
+  selectingArea = NO;
+  movingSingleNode = NO;
 }
 
 - (void) mouseMoved:(NSEvent *)event
@@ -164,6 +242,14 @@
   NSAffineTransform *t = [self transform];
   [t invert];
   p2 = [t transformPoint: p];
+
+  //search for selected areas
+  if (NSPointInRect (p2, selectedArea)){
+    highlightSelectedArea = YES;
+  }else{
+    highlightSelectedArea = NO;
+  }
+  [self setNeedsDisplay: YES];
 
   //search for nodes
   TrivaGraphNode *node;

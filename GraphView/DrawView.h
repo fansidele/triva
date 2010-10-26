@@ -36,6 +36,16 @@
 
   //for drawing scale (nodes and links) - used by GraphConfiguration
   double scale;
+
+
+  //interaction states
+  BOOL movingSingleNode;
+  BOOL selectingArea;
+
+  //drawing selectedArea
+  NSRect selectedArea;
+  BOOL highlightSelectedArea;
+
 }
 - (void) setFilter: (GraphView *)f;
 - (NSColor *) getColor: (NSColor *)c withSaturation: (double) saturation;
