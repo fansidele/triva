@@ -25,8 +25,8 @@
   }
   [sliceView setFilter: self];
   [sliceWindowView setFilter: self];
-  selStart = 0;
-  selEnd = 0;
+  selStart = -1;
+  selEnd = -1;
 
   [frequencySlider setMinValue: 0.001];
   [frequencySlider setMaxValue: 4];
@@ -137,10 +137,10 @@
     //save current size
     double sliceSize = selEnd - selStart;
     //update selStart and selEnd from the end of the trace
-    selStart = [[end description] doubleValue] - sliceSize;
-    selEnd = [[end description] doubleValue];
+    [self setTimeIntervalFrom: [[end description] doubleValue] - sliceSize
+                           to: [[end description] doubleValue]];
     //trigger the apply action
-    [self performSelector: @selector(apply) withObject: self afterDelay: 0];
+    [self apply];
   }
 
   [traceStartTimeLabel setStringValue: [start description]];
@@ -154,11 +154,10 @@
   [sizeSlider setMaxValue: [[end description] doubleValue]];
   [sizeSlider setDoubleValue: [[end description] doubleValue]];
 
-  if (!selStart){
-    selStart = [[start description] doubleValue];
-  }
-  if (!selEnd){
-    selEnd = [[end description] doubleValue];
+  if (selStart < 0 && selEnd < 0){
+    [self setTimeIntervalFrom: [[start description] doubleValue]
+                           to: [[end description] doubleValue]];
+    [self apply];
   }
   [self updateLabels];
 }
@@ -187,7 +186,7 @@
 // from the protocol 
 - (NSDate *) selectionStartTime
 {
-  if (selStart){
+  if (selStart >= 0){
     return [NSDate dateWithTimeIntervalSinceReferenceDate:selStart];
   }else{
     return [super selectionStartTime];
@@ -196,7 +195,7 @@
 
 - (NSDate *) selectionEndTime
 {
-  if (selEnd){
+  if (selEnd >= 0){
     return [NSDate dateWithTimeIntervalSinceReferenceDate: selEnd];
   }else{
     return [super selectionEndTime];
