@@ -155,13 +155,8 @@
     NSRect bb = [node bb];
     Agnode_t *n = agfindnode (graph, (char *)[[node name] cString]);
     if (n){
-#ifdef GNUSTEP
-      bb.origin.x = ND_coord_i(n).x;
-      bb.origin.y = ND_coord_i(n).y;
-#else
       bb.origin.x = ND_coord(n).x;
       bb.origin.y = ND_coord(n).y;
-#endif
     }
     [node setBoundingBox: bb];
   }

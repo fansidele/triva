@@ -27,6 +27,12 @@
 #include <float.h>
 #include <matheval.h>
 
+//for compatibility with some graphviz's
+//installations (ubuntu's lucid, for example)
+#ifndef ND_coord
+#define ND_coord ND_coord_i
+#endif
+
 @interface GraphConfiguration : TrivaFilter
 {
   // current graph configuration 
