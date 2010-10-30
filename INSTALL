@@ -8,7 +8,8 @@
 
 $ sudo apt-get install libxml2-dev libxslt1-dev libssl-dev libx11-dev \
                        libxext-dev libxt-dev libjpeg62-dev libtiff4-dev \
-                       libpng12-dev libffi-dev gobjc
+                       libpng12-dev libffi-dev gobjc \
+                       build-essential
 
 # Installing GNUstep startup from source (change the version according
 # to the GNUstep website)
@@ -45,7 +46,9 @@ $ make install
 # on the SVN development version). Packaged versions can be found on the
 # the website: http://triva.gforge.inria.fr.
 
-$ sudo apt-get install autoconf automake libgraphviz-dev libmatheval1-dev
+$ sudo apt-get install autoconf automake \
+                       libgraphviz-dev libmatheval1-dev \
+                       libgsl0-dev
 
 $ source /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
 $ svn checkout svn://scm.gforge.inria.fr/svn/triva
