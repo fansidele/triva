@@ -31,6 +31,8 @@
   NSRect bb; //the bounding box of the node (indicates size and position)
   NSMutableDictionary *compositions; //NSString -> TrivaComposition
   BOOL highlighted;
+  BOOL compositionHighlighted; //YES if at at least one composition return YES
+                              //during redefineLayoutWithValues
   
   BOOL drawable; //is it ready to draw?
 

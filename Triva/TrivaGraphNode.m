@@ -121,9 +121,14 @@
   }
 
   //draw myself
-  [[NSColor lightGrayColor] set];
-  [NSBezierPath strokeRect: bb];
-
+  NSBezierPath *border = [NSBezierPath bezierPathWithRect: bb];
+  if (compositionHighlighted){
+    [[NSColor redColor] set];
+    [border setLineWidth: 2]; 
+  }else{
+    [[NSColor lightGrayColor] set];
+  }
+  [border stroke];
   return YES;
 }
 
@@ -234,6 +239,7 @@
   NSMutableArray *ar = [NSMutableArray arrayWithArray: [conf allKeys]];
   NSEnumerator *en = [ar objectEnumerator];
   NSString *compositionName;
+  compositionHighlighted = NO;
   while ((compositionName = [en nextObject])){
     NSDictionary *compconf = [conf objectForKey: compositionName];
     if (![compconf isKindOfClass: [NSDictionary class]])
@@ -245,7 +251,7 @@
     TrivaComposition *comp = [compositions objectForKey: compositionName];
     if (comp){
       //redefineLayout of Composition
-      [comp redefineLayoutWithValues: values];
+      compositionHighlighted |= [comp redefineLayoutWithValues: values];
     }else{
       comp = [TrivaComposition compositionWithConfiguration: compconf
                                                    withName: compositionName
@@ -253,7 +259,7 @@
                                             withDifferences: differences
                                                  withValues: values
                                                 andProvider: filter];
-      [comp redefineLayoutWithValues: values];
+      compositionHighlighted |= [comp redefineLayoutWithValues: values];
       [compositions setObject: comp forKey: compositionName];
     }
   }
