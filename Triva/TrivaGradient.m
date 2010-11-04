@@ -52,7 +52,7 @@
   return self;
 }
 
-- (void) redefineLayoutWithValues: (NSDictionary*) timeSliceValues
+- (BOOL) redefineLayoutWithValues: (NSDictionary*) timeSliceValues
 {
   //clear calculatedValues
   [calculatedValues removeAllObjects];
@@ -73,6 +73,7 @@
                       withType: [(TrivaGraphNode*)node type]];
     [self setGradientType: var withValue: val withMax: ma withMin: mi];
   }
+  return NO;
 }
 
 - (void) dealloc

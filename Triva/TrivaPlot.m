@@ -68,7 +68,7 @@
   return self;
 }
 
-- (void) redefineLayoutWithValues: (NSDictionary*) timeSliceValues
+- (BOOL) redefineLayoutWithValues: (NSDictionary*) timeSliceValues
 {
   //consider only the time slice
   NSDate *start = [filter selectionStartTime];
@@ -114,6 +114,7 @@
     NSLog (@"%@ -> %f", var, val);
   }
 */
+  return NO;
 }
 
 - (void) refreshWithinRect: (NSRect) rect

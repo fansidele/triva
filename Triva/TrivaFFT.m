@@ -41,7 +41,7 @@
   return self;
 }
 
-- (void) redefineLayoutWithValues: (NSDictionary*) timeSliceValues
+- (BOOL) redefineLayoutWithValues: (NSDictionary*) timeSliceValues
 {
   //consider only the time slice
   //calculate delta and n
@@ -114,6 +114,7 @@
     if (spec[i] < ymin) ymin = spec[i];
   }
   free(cc);
+  return NO;
 }
 
 - (void) refreshWithinRect: (NSRect) rect

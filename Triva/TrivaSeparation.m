@@ -90,7 +90,7 @@
   return self;
 }
 
-- (void) redefineLayoutWithValues: (NSDictionary*) timeSliceValues
+- (BOOL) redefineLayoutWithValues: (NSDictionary*) timeSliceValues
 {
   //clear calculatedValues
   [calculatedValues removeAllObjects];
@@ -116,6 +116,16 @@
     needSpace = NO;
   }else{
     needSpace = YES;
+  }
+
+  if (threshold < 0){
+    return NO;
+  }
+
+  if (sum > threshold) {
+    return YES;
+  }else{
+    return NO;
   }
 }
 

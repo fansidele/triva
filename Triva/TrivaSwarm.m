@@ -50,7 +50,7 @@
   return self;
 }
 
-- (void) redefineLayoutWithValues: (NSDictionary*) timeSliceValues
+- (BOOL) redefineLayoutWithValues: (NSDictionary*) timeSliceValues
 {
   //getting the timeslice-node for my object
   TimeSliceTree *t = (TimeSliceTree*)[[filter timeSliceTree] searchChildByName: [node name]];
@@ -77,6 +77,7 @@
       }
     }
   }
+  return NO;
 }
 
 - (void) refreshWithinRect: (NSRect) rect

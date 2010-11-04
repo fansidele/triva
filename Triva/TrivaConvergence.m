@@ -55,7 +55,7 @@
   return self;
 }
 
-- (void) redefineLayoutWithValues: (NSDictionary*) timeSliceValues
+- (BOOL) redefineLayoutWithValues: (NSDictionary*) timeSliceValues
 {
   //get values
   NSEnumerator *en2 = [[configuration objectForKey: @"values"]objectEnumerator];
@@ -75,5 +75,6 @@
   }else{
     needSpace = YES;
   }
+  return NO;
 }
 @end
