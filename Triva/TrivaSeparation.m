@@ -80,7 +80,6 @@
   if (dir){
     direction = YES;
   }
-  [self redefineLayoutWithValues: timeSliceValues];
   return self;
 }
 

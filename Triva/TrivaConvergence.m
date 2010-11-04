@@ -52,7 +52,6 @@
 {
   self = [super initWithFilter: prov andConfiguration: conf
                       andSpace: YES andName: n andObject: obj];
-  [self redefineLayoutWithValues: timeSliceValues];
   return self;
 }
 

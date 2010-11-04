@@ -253,6 +253,7 @@
                                             withDifferences: differences
                                                  withValues: values
                                                 andProvider: filter];
+      [comp redefineLayoutWithValues: values];
       [compositions setObject: comp forKey: compositionName];
     }
   }

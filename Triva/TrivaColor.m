@@ -39,7 +39,6 @@
       return nil;
     }
   }
-  [self redefineLayoutWithValues: timeSliceValues];
   return self;
 }
 

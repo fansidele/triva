@@ -65,8 +65,6 @@
   vmax += vdelta;
   vmin -= vdelta;
   valueSize = vmax - vmin;
-
-  [self redefineLayoutWithValues: timeSliceValues];
   return self;
 }
 

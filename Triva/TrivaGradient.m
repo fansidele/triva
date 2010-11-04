@@ -49,8 +49,6 @@
   }else{
     scale = Global;
   }
-
-  [self redefineLayoutWithValues: timeSliceValues];
   return self;
 }
 

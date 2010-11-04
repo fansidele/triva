@@ -47,7 +47,6 @@
                         __FUNCTION__, __LINE__, conf);
     return nil;
   }
-  [self redefineLayoutWithValues: timeSliceValues];
   return self;
 }
 
