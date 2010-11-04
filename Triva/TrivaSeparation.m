@@ -74,6 +74,13 @@
       return nil;
     }
   }
+  //get threshold
+  NSString *thre = [configuration objectForKey: @"threshold"];
+  if (thre){
+    threshold = [thre doubleValue];
+  }else{
+    threshold = -1;
+  }
 
   //get direction
   NSString *dir = [configuration objectForKey: @"direction"];

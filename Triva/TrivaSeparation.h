@@ -29,6 +29,8 @@
        //can be used to check if the sum is > 1
   double sepSize;
 
+  double threshold; //(0, 1]
+
   //from configuration
   NSString *size;
   NSArray *values;
