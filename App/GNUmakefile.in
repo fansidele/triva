@@ -13,7 +13,7 @@ Triva_OBJC_FILES = \
   TrivaMergeController.m
 
 Triva_APPLICATION_ICON = Triva.tiff
-Triva_RESOURCE_FILES = Triva.tiff trivaInfo.plist
+Triva_RESOURCE_FILES = Triva.tiff trivaInfo.plist Triva.plist
 
 ifeq ($(FOUNDATION_LIB), apple)
 LDFLAGS += -F../Triva -framework Triva -framework General -largp

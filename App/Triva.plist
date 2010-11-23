@@ -1,0 +1,39 @@
+{
+  Triva = {
+    grouped = yes;
+    Graphical = {
+        graph   = { type = bool;
+                    short = g;
+                    description = "Configurable Graph"; };
+        treemap = { type = bool;
+                    short = t;
+                    description = "Squarified Treemap"; };
+        merge   = { type = bool;
+                    short = m;
+                    description = "Merge Trace Files (Experimental)"; };
+        comparison = { type = bool;
+                       short = s;
+                       description = "Compare Trace Files (Experimental)"; };
+        linkview = { type = bool;
+                     short = k;
+                     description = "Link View (Experimental)"; };
+    };
+    Textual = {
+        stat = { type = bool;
+                    short = s;
+                    description = "Trace Statistics and Memory Utilization"; };
+        check = { type = bool;
+                    short = c;
+                    description = "Check Trace File Integrity"; };
+        hierarchy = { type = bool;
+                    short = h;
+                    description = "Export Trace Type Hierarchy (dot)"; };
+        list = { type = bool;
+                    short = l;
+                    description = "Print Trace Type Hierarchy"; };
+        instances = { type = bool;
+                    short = i;
+                    description = "List All Trace Entities"; };
+    };
+  };
+}
