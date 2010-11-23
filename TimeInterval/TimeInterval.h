@@ -19,12 +19,11 @@
 #include <Foundation/Foundation.h>
 #include <AppKit/AppKit.h>
 #include <Renaissance/Renaissance.h>
-#include <General/PajeFilter.h>
-#include <Triva/TrivaWindow.h>
+#include <Triva/Triva.h>
 
 #include "SliceView.h"
 
-@interface TimeInterval  : PajeFilter
+@interface TimeInterval  : TrivaFilter
 {
   IBOutlet id traceEndTimeLabel;
   IBOutlet id sliceView;
