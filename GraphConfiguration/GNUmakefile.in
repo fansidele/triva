@@ -17,7 +17,8 @@ else
 endif
 
 GraphConfiguration_RESOURCE_FILES = \
-  GraphConfiguration.gsmarkup
+  GraphConfiguration.gsmarkup \
+  GraphConfiguration.plist \
 GraphConfiguration_HEADER_FILES = GraphConfiguration.h
 GraphConfiguration_OBJC_FILES = \
 GraphConfiguration.m \

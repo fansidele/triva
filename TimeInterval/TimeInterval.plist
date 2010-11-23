@@ -1,0 +1,18 @@
+{
+  TimeInterval = {
+    ti_update = { type = bool;
+               description = "Update on slider change"; };
+    ti_start = { type = double;
+               description = "Start of time slice"; };
+    ti_size = { type = bool;
+               description = "Size of time slice"; };
+    ti_apply = { type = bool;
+               description = "Apply the configuration"; };
+    ti_animate = { type = bool;
+               description = "Start animation"; };
+    ti_forward = { type = double;
+               description = "Animation: value to move time-slice"; };
+    ti_frequency = { type = double;
+               description = "Animation: frequency of updates"; };
+  };
+}

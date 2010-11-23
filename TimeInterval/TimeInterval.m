@@ -257,19 +257,11 @@
   }
 }
 
-- (NSDictionary*) defaultOptions
++ (NSDictionary *) defaultOptions
 {
-  NSMutableDictionary *ret = [NSMutableDictionary dictionary];
-  NSMutableDictionary *options = [NSMutableDictionary dictionary];
-  [options setObject: @"bool" forKey: @"update"];
-  [options setObject: @"double" forKey: @"start"];
-  [options setObject: @"double" forKey: @"size"];
-  [options setObject: @"bool" forKey: @"apply"];
-  [options setObject: @"bool" forKey: @"animate"];
-  [options setObject: @"double" forKey: @"forward"];
-  [options setObject: @"double" forKey: @"frequency"];
-  [ret setObject: options forKey: @"TimeInterval"];
-  [ret addEntriesFromDictionary: [super defaultOptions]];
-  return ret;
+  NSBundle *bundle;
+  bundle = [NSBundle bundleForClass: NSClassFromString(@"TimeInterval")];
+  NSString *file = [bundle pathForResource: @"TimeInterval" ofType: @"plist"];
+  return [NSDictionary dictionaryWithContentsOfFile: file];
 }
 @end

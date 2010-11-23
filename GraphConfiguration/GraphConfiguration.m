@@ -174,15 +174,12 @@
   }
 */
 
-
-- (NSDictionary*) defaultOptions
++ (NSDictionary *) defaultOptions
 {
-  NSMutableDictionary *ret = [NSMutableDictionary dictionary];
-  NSMutableDictionary *options = [NSMutableDictionary dictionary];
-  [options setObject: @"file" forKey: @"graph"];
-  [options setObject: @"bool" forKey: @"apply"];
-  [ret setObject: options forKey: @"GraphConfiguration"];
-  [ret addEntriesFromDictionary: [super defaultOptions]];
-  return ret;
+  NSBundle *bundle;
+  bundle = [NSBundle bundleForClass: NSClassFromString(@"GraphConfiguration")];
+  NSString *file = [bundle pathForResource: @"GraphConfiguration"
+                                    ofType: @"plist"];
+  return [NSDictionary dictionaryWithContentsOfFile: file];
 }
 @end

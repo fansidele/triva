@@ -1,0 +1,8 @@
+{
+  GraphConfiguration = {
+    gc_conf = { type = bool;
+               description = "Graph Configuration in Property List Format"; };
+    gc_apply = { type = bool;
+               description = "Apply the configuration"; };
+  };
+}
