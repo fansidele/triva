@@ -16,26 +16,27 @@
 */
 #ifndef __TRIVA_COMMAND_H
 #define __TRIVA_COMMAND_H
-#include <stdio.h>
+#include <Foundation/Foundation.h>
+#include <Triva/Triva.h>
 
-#define MAX_INPUT_SIZE 100
+typedef enum { TrivaHelp,
+               TrivaError,
+               TrivaCommandConfigured } TrivaCommandState;
 
-struct arguments
+@interface TrivaCommand : NSObject
 {
-  char *input[MAX_INPUT_SIZE];
-  int input_size;
-
-  int treemap, graph, linkview; //visualization windows
-  int comparison;
-  int merge;
-  int abort; //if parameters are not good
-  int hierarchy; //generate type hierarchy
-  int check;  //check trace file
-  int list; // list entity types
-  int instances; //list types and instances
-  int stat; //perform stats on reading the trace, memory used by core
-};
-
-int parse (int argc, char **argv, struct arguments *arg);
+  TrivaCommandState state;
+  TrivaConfiguration *configuration;
+}
++ (void) printSingleOption: (NSString *) name
+            withAttributes: (NSDictionary *) attr;
++ (void) printFirstLevelOptions: (NSDictionary*) dict;
++ (void) printOptions: (NSDictionary*) dictionary;
+- (id) initWithArguments: (const char**)argv
+                 andSize: (int) argc
+       andDefaultOptions: (NSDictionary *) options;
+- (TrivaCommandState) state;
+- (TrivaConfiguration *) configuration;
+@end
 
 #endif

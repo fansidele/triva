@@ -17,14 +17,14 @@
 #include "TrivaMergeController.h"
 
 @implementation TrivaMergeController
-- (id) initWithArguments: (struct arguments) arguments
+- (id) initWithConfiguration: (TrivaConfiguration *) configuration
 {
-  self = [super initWithArguments: arguments];
+  self = [super initWithConfiguration: configuration];
   SEL method;
 
   graphSequences = [NSMutableArray array];
 
-  int input_size = arguments.input_size, i = 0;
+  int input_size = [[configuration inputFiles] count], i = 0;
   NSArray *g = nil;
   g = [@"(  \
     ( FileReader, \
@@ -96,24 +96,21 @@
              toComponent: 
                   [graphVisualization objectForKey: @"GraphConfiguration"]];
 
-  [self initializeWithArguments: arguments];
+  [self initializeWithConfiguration: configuration];
   return self;
 }
 
-- (void) initializeWithArguments: (struct arguments) arguments
+- (void) initializeWithConfiguration: (TrivaConfiguration *) configuration
 {
   //disabling single-file attributes
   reader = nil;
   encapsulator = nil;
 
-  int input_size = arguments.input_size, i = 0;
-  NSMutableArray *files = [NSMutableArray array];
-  for (i = 0; i < arguments.input_size; i++){
-    [files addObject: [NSString stringWithFormat: @"%s", arguments.input[i]]];
-  }
+  NSArray *files = [configuration inputFiles];
+  int i;
 
   //reading the files
-  for (i = 0; i < input_size; i++){
+  for (i = 0; i < [files count]; i++){
     id graph = [graphSequences objectAtIndex: i];
     id r = [self componentWithName:@"FileReader" fromDictionary: graph];
     id storage = [self componentWithName:@"StorageController" fromDictionary: graph];

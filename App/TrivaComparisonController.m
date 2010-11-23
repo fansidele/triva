@@ -17,15 +17,15 @@
 #include "TrivaComparisonController.h"
 
 @implementation TrivaComparisonController
-- (id) initWithArguments: (struct arguments) arguments
+- (id) initWithConfiguration: (TrivaConfiguration *) configuration
 {
-  self = [super initWithArguments: arguments];
+  self = [super initWithConfiguration: configuration];
 
   graphSequences = [NSMutableArray array];
 
-  int input_size = arguments.input_size, i = 0;
+  int input_size = [[configuration inputFiles] count], i = 0;
   NSArray *g = nil;
-  if (arguments.treemap){
+  if ([configuration visualizationComponent] == TrivaSquarifiedTreemap){
     g = [@"(  \
       ( FileReader, \
          PajeEventDecoder, \
@@ -36,7 +36,7 @@
          TimeSliceAggregation, \
          SquarifiedTreemap \
       ) )" propertyList];
-  }else if (arguments.graph){
+  }else if ([configuration visualizationComponent] == TrivaGraphView){
     g = [@"(  \
       ( FileReader, \
          PajeEventDecoder, \
@@ -83,24 +83,21 @@
   SEL method = @selector(addFilters:);
   [compareController performSelector: method withObject: compareFilters];
 
-  [self initializeWithArguments: arguments];
+  [self initializeWithConfiguration: configuration];
   return self;
 }
 
-- (void) initializeWithArguments: (struct arguments) arguments
+- (void) initializeWithConfiguration: (TrivaConfiguration *) configuration
 {
   //disabling single-file attributes
   reader = nil;
   encapsulator = nil;
 
-  int input_size = arguments.input_size, i = 0;
-  NSMutableArray *files = [NSMutableArray array];
-  for (i = 0; i < arguments.input_size; i++){
-    [files addObject: [NSString stringWithFormat: @"%s", arguments.input[i]]];
-  }
+  NSArray *files = [configuration inputFiles];
+  int i;
 
   //reading the files
-  for (i = 0; i < input_size; i++){
+  for (i = 0; i < [files count]; i++){
     id graph = [graphSequences objectAtIndex: i];
     id r = [self componentWithName:@"FileReader" fromDictionary: graph];
     id storage = [self componentWithName:@"StorageController" fromDictionary: graph];

@@ -20,6 +20,7 @@
 #include <Foundation/Foundation.h>
 #include <General/PajeFilter.h>
 #include <General/PSortedArray.h>
+#include <Triva/Triva.h>
 
 @class TrivaComparisonController;
 
@@ -31,9 +32,10 @@
   NSMutableDictionary *bundles;
   NSMutableDictionary *components;
 }
-+ (id) controllerWithArguments: (struct arguments) arguments;
-- (id) initWithArguments: (struct arguments) arguments;
-- (void) initializeWithArguments: (struct arguments) arguments;
++ (id) controllerWithConfiguration: (TrivaConfiguration *) configuration;
+- (id) initWithConfiguration: (TrivaConfiguration *) configuration;
+- (void) initializeWithConfiguration: (TrivaConfiguration *) configuration;
+- (NSDictionary *) defaultOptions;
 @end
 
 @interface TrivaController (Bundles)

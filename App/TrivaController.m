@@ -18,31 +18,31 @@
 #include "TrivaCommand.h"
 
 @implementation TrivaController
-+ (id) controllerWithArguments: (struct arguments) arguments
++ (id) controllerWithConfiguration: (TrivaConfiguration *) configuration
 {
   TrivaController *triva = nil;
   //configuring triva
-  if (arguments.comparison){
-    triva = [[TrivaComparisonController alloc] initWithArguments: arguments];
-  }else if (arguments.merge){
-    triva = [[TrivaMergeController alloc] initWithArguments: arguments];
+  if ([configuration visualizationComponent] == TrivaComparison){
+    triva = [[TrivaComparisonController alloc] initWithConfiguration: configuration];
+  }else if ([configuration visualizationComponent] == TrivaMerge){
+    triva = [[TrivaMergeController alloc] initWithConfiguration: configuration];
   }else{
-    if (arguments.treemap) {
-      triva = [[TrivaTreemapController alloc] initWithArguments: arguments];
-    }else if (arguments.graph){
-      triva = [[TrivaGraphController alloc] initWithArguments: arguments];
-    }else if (arguments.linkview){
-      triva = [[TrivaLinkController alloc] initWithArguments: arguments];
-    }else if (arguments.hierarchy) {
-      triva = [[TrivaDotController alloc] initWithArguments: arguments];
-    }else if (arguments.stat) {
-      triva = [[TrivaStatController alloc] initWithArguments: arguments];
-    }else if (arguments.check) {
-      triva = [[TrivaCheckController alloc] initWithArguments: arguments];
-    }else if (arguments.list) {
-      triva = [[TrivaListController alloc] initWithArguments: arguments];
-    }else if (arguments.instances) {
-      triva = [[TrivaInstanceController alloc] initWithArguments: arguments];
+    if ([configuration visualizationComponent] == TrivaSquarifiedTreemap) {
+      triva = [[TrivaTreemapController alloc] initWithConfiguration: configuration];
+    }else if ([configuration visualizationComponent] == TrivaGraphView){
+      triva = [[TrivaGraphController alloc] initWithConfiguration: configuration];
+    }else if ([configuration visualizationComponent] == TrivaLinkView){
+      triva = [[TrivaLinkController alloc] initWithConfiguration: configuration];
+    }else if ([configuration visualizationComponent] == TrivaHierarchy) {
+      triva = [[TrivaDotController alloc] initWithConfiguration: configuration];
+    }else if ([configuration visualizationComponent] == TrivaStat) {
+      triva = [[TrivaStatController alloc] initWithConfiguration: configuration];
+    }else if ([configuration visualizationComponent] == TrivaCheck) {
+      triva = [[TrivaCheckController alloc] initWithConfiguration: configuration];
+    }else if ([configuration visualizationComponent] == TrivaList) {
+      triva = [[TrivaListController alloc] initWithConfiguration: configuration];
+    }else if ([configuration visualizationComponent] == TrivaInstances) {
+      triva = [[TrivaInstanceController alloc] initWithConfiguration: configuration];
     }else{
       NSException *exception = [NSException exceptionWithName: @"TrivaException"
                      reason: @"No visualization option activated" userInfo: nil];
@@ -52,7 +52,7 @@
   return triva;
 }
 
-- (id) initWithArguments: (struct arguments) arguments
+- (id) initWithConfiguration: (TrivaConfiguration *) configuration
 {
   self = [super init];
   components = [NSMutableDictionary dictionary];
@@ -60,13 +60,9 @@
   return self;
 }
 
-- (void) initializeWithArguments: (struct arguments) arguments
+- (void) initializeWithConfiguration: (TrivaConfiguration *) configuration
 {
-  int i;
-  NSMutableArray *files = [NSMutableArray array];
-  for (i = 0; i < arguments.input_size; i++){
-    [files addObject: [NSString stringWithFormat: @"%s", arguments.input[i]]];
-  }
+  NSArray *files = [configuration inputFiles];
   NSLog (@"Tracefile (%@). Reading.... please wait\n", files);
 
   //reading only the first file by default (subclasses
@@ -79,12 +75,37 @@
   [encapsulator setSelectionStartTime: [encapsulator startTime]
                               endTime: [encapsulator endTime]];
 }
+
+- (NSDictionary *) defaultOptions
+{
+  NSMutableDictionary *allOptions = [NSMutableDictionary dictionary];
+
+  //add components options
+  Class cl;
+  id dict;
+  NSArray *ar = [NSArray arrayWithObjects: @"TimeInterval",
+                                           @"GraphConfiguration", nil];
+  NSEnumerator *en = [ar objectEnumerator];
+  id className;
+  while ((className = [en nextObject])){
+    cl = [[self loadTrivaBundleNamed: className] principalClass];
+    dict = [cl defaultOptions];
+    [allOptions addEntriesFromDictionary: dict];
+  }
+
+  //add triva options
+  NSBundle *bundle = [NSBundle mainBundle];
+  NSString *file = [bundle pathForResource: @"Triva" ofType: @"plist"];
+  [allOptions addEntriesFromDictionary:
+                 [NSDictionary dictionaryWithContentsOfFile: file]];
+  return allOptions;
+}
 @end
 
 @implementation TrivaTreemapController
-- (id) initWithArguments: (struct arguments) arguments
+- (id) initWithConfiguration: (TrivaConfiguration *) configuration
 {
-  self = [super initWithArguments: arguments];
+  self = [super initWithConfiguration: configuration];
   NSArray *graph = [@"(  \
     ( FileReader, \
        PajeEventDecoder, \
@@ -96,15 +117,15 @@
        SquarifiedTreemap \
     ) )" propertyList];
   [self addComponentSequences: graph withDictionary: components];
-  [self initializeWithArguments: arguments];
+  [self initializeWithConfiguration: configuration];
   return self;
 }
 @end
 
 @implementation TrivaGraphController
-- (id) initWithArguments: (struct arguments) arguments
+- (id) initWithConfiguration: (TrivaConfiguration *) configuration
 {
-  self = [super initWithArguments: arguments];
+  self = [super initWithConfiguration: configuration];
   NSArray *graph = [@"(  \
     ( FileReader, \
        PajeEventDecoder, \
@@ -116,15 +137,15 @@
        GraphView \
     ) )" propertyList];
   [self addComponentSequences: graph withDictionary: components];
-  [self initializeWithArguments: arguments];
+  [self initializeWithConfiguration: configuration];
   return self;
 }
 @end
 
 @implementation TrivaLinkController
-- (id) initWithArguments: (struct arguments) arguments
+- (id) initWithConfiguration: (TrivaConfiguration *) configuration
 {
-  self = [super initWithArguments: arguments];
+  self = [super initWithConfiguration: configuration];
   NSArray *graph = [@"(  \
     ( FileReader, \
       PajeEventDecoder, \
@@ -135,15 +156,15 @@
       LinkView \
     ) )" propertyList];
   [self addComponentSequences: graph withDictionary: components];
-  [self initializeWithArguments: arguments];
+  [self initializeWithConfiguration: configuration];
   return self;
 }
 @end
 
 @implementation TrivaDotController
-- (id) initWithArguments: (struct arguments) arguments
+- (id) initWithConfiguration: (TrivaConfiguration *) configuration
 {
-  self = [super initWithArguments: arguments];
+  self = [super initWithConfiguration: configuration];
   NSArray *graph = [@"(  \
     ( FileReader, \
        PajeEventDecoder, \
@@ -152,15 +173,15 @@
        Dot \
     ) )" propertyList];
   [self addComponentSequences: graph withDictionary: components];
-  [self initializeWithArguments: arguments];
+  [self initializeWithConfiguration: configuration];
   return self;
 }
 @end
 
 @implementation TrivaCheckController
-- (id) initWithArguments: (struct arguments) arguments
+- (id) initWithConfiguration: (TrivaConfiguration *) configuration
 {
-  self = [super initWithArguments: arguments];
+  self = [super initWithConfiguration: configuration];
   NSArray *graph = [@"(  \
     ( FileReader, \
        PajeEventDecoder, \
@@ -169,15 +190,15 @@
        CheckTrace \
     ) )" propertyList];
   [self addComponentSequences: graph withDictionary: components];
-  [self initializeWithArguments: arguments];
+  [self initializeWithConfiguration: configuration];
   return self;
 }
 @end
 
 @implementation TrivaListController
-- (id) initWithArguments: (struct arguments) arguments
+- (id) initWithConfiguration: (TrivaConfiguration *) configuration
 {
-  self = [super initWithArguments: arguments];
+  self = [super initWithConfiguration: configuration];
   NSArray *graph = [@"(  \
     ( FileReader, \
        PajeEventDecoder, \
@@ -186,15 +207,15 @@
        List \
     ) )" propertyList];
   [self addComponentSequences: graph withDictionary: components];
-  [self initializeWithArguments: arguments];
+  [self initializeWithConfiguration: configuration];
   return self;
 }
 @end
 
 @implementation TrivaInstanceController
-- (id) initWithArguments: (struct arguments) arguments
+- (id) initWithConfiguration: (TrivaConfiguration *) configuration
 {
-  self = [super initWithArguments: arguments];
+  self = [super initWithConfiguration: configuration];
   NSArray *graph = [@"(  \
     ( FileReader, \
        PajeEventDecoder, \
@@ -203,15 +224,15 @@
        Instances \
     ) )" propertyList];
   [self addComponentSequences: graph withDictionary: components];
-  [self initializeWithArguments: arguments];
+  [self initializeWithConfiguration: configuration];
   return self;
 }
 @end
 
 @implementation TrivaStatController
-- (id) initWithArguments: (struct arguments) arguments
+- (id) initWithConfiguration: (TrivaConfiguration *) configuration
 {
-  self = [super initWithArguments: arguments];
+  self = [super initWithConfiguration: configuration];
   NSArray *graph = [@"(  \
     ( FileReader, \
        PajeEventDecoder, \
@@ -220,7 +241,7 @@
        StatTrace \
     ) )" propertyList];
   [self addComponentSequences: graph withDictionary: components];
-  [self initializeWithArguments: arguments];
+  [self initializeWithConfiguration: configuration];
   return self;
 }
 @end

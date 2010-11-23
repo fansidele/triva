@@ -15,97 +15,156 @@
     along with Triva.  If not, see <http://www.gnu.org/licenses/>.
 */
 #include "TrivaCommand.h"
-#include <argp.h>
 
-const char *triva_program_version = "triva v2.0";
-const char *triva_address = "http://triva.gforge.inria.fr";
-static char doc[] = "Trace Analysis through Visualization";
-static char args_doc[] = "TRACEFILE";
-
-static struct argp_option options[] = {
-  {0, 0, 0, 0, "You need to use one of the following options:"},
-  {"treemap", 't', 0, OPTION_ARG_OPTIONAL, "Treemap Analysis"},
-  {"graph",   'g', 0, OPTION_ARG_OPTIONAL, "Graph Analysis"},
-  {"linkview", 'k', 0, OPTION_ARG_OPTIONAL, "Link View (Experimental)"},
-  {"comparison", 's', 0, OPTION_ARG_OPTIONAL, "Compare Trace Files (Experimental)"},
-  {"merge", 'm', 0, OPTION_ARG_OPTIONAL, "Compare (Merge) Trace Files (Experimental)"},
-  {0, 0, 0, 0, "Other auxiliary options to check the trace file:"},
-  {"hierarchy",'h', 0, OPTION_ARG_OPTIONAL, "Export the trace type hierarchy"},
-  {"check",   'c', 0, OPTION_ARG_OPTIONAL, "Check the integrity of trace file"},
-  {"stat",    'a', 0, OPTION_ARG_OPTIONAL, "Memory utilization"},
-  {"list",    'l', 0, OPTION_ARG_OPTIONAL, "List entity types"},
-  {"instances", 'i', 0, OPTION_ARG_OPTIONAL, "List instances of containers"},
-  { 0 }
-};
-
-/* Parse a single option. */
-static int parse_options (int key, char *arg, struct argp_state *state)
+@implementation TrivaCommand
+- (id) initWithArguments: (const char**)argv
+                 andSize: (int) argc
+       andDefaultOptions: (NSDictionary *) options
 {
-  /* Get the input argument from argp_parse, which we
-     know is a pointer to our arguments structure. */
-  struct arguments *arguments = state->input;
+  configuration = [[TrivaConfiguration alloc] init];
+  NSException *ex;
+  NSString *reason;
+  NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+  NSEnumerator *en = [options keyEnumerator];
+  NSString *key;
+  while ((key = [en nextObject])){
+    [dict addEntriesFromDictionary: [options objectForKey: key]];
+  }
 
-  switch (key)
-    {
-    case 't':
-      arguments->treemap = 1;
-      break;
-    case 'g':
-      arguments->graph = 1;
-      break;
-    case 'k':
-      arguments->linkview = 1;
-      break;
-    case 's':
-      arguments->comparison = 1;
-      break;
-    case 'm':
-      arguments->merge = 1;
-      break;
-    case 'h':
-      arguments->hierarchy = 1;
-      break;
-    case 'a':
-      arguments->stat = 1;
-      break;
-    case 'c':
-      arguments->check = 1;
-      break;
-    case 'l':
-      arguments->list = 1;
-      break;
-    case 'i':
-      arguments->instances = 1;
-      break;
+  self = [super init];
+  int i;
+  for (i = 1; i < argc; i++){
+    char *option = (char*)argv[i];
+    char *option_par = (char*)argv[i+1];
 
-    case ARGP_KEY_ARG:
-      if (arguments->input_size == MAX_INPUT_SIZE) {
-        /* Too many arguments. */
-        argp_usage (state);
-      }
-  
-      arguments->input[state->arg_num] = arg;
-      arguments->input_size++;
-
-      break;
-
-    case ARGP_KEY_END:
-      if (state->arg_num < 1)
-        /* Not enough arguments. */
-        argp_usage (state);
-      break;
-
-    default:
-      return ARGP_ERR_UNKNOWN;
+    //help escape
+    if (!strcmp (option, "--help") || !strcmp (option, "-h")){
+      state = TrivaHelp;
+      return self;
     }
-  return 0;
+    
+    NSString *opt = [NSString stringWithFormat: @"%s", option];
+    NSString *opt_par = [NSString stringWithFormat: @"%s", option_par];
+    //check if option contains -'s, if it doens't consider as input file
+    NSRange range = [opt rangeOfString: @"-"];
+    if (range.length == 0 || (range.location != 0 && range.length != 0)) {
+      [configuration addInputFile: opt];
+      continue;
+    }
+    //treat as normal option 
+    opt = [opt stringByReplacingOccurrencesOfString: @"-" withString: @""];
+    id detail = [dict objectForKey: opt];
+    if (!detail){
+      reason = [NSString stringWithFormat: @"unknown parameter %s", option];
+      ex = [NSException exceptionWithName: @"TrivaCommandLineException"
+                                   reason: reason
+                                 userInfo: nil];
+      [ex raise];
+    }else{
+      //check type
+      NSString *type = [detail objectForKey: @"type"];
+      if ([type isEqualToString: @"bool"]){
+        [configuration setOption: opt withValue: @"1"];
+      }else{
+        //check parameter for option
+        NSRange range = [opt_par rangeOfString: @"-"];
+        if (range.location == 0 && (range.length == 1 || range.length == 2)){
+          reason = [NSString stringWithFormat:
+               @"parameter %s must be followed by a %@", option,
+                  [detail objectForKey: @"type"]];
+          ex = [NSException exceptionWithName: @"TrivaCommandLineException"
+                                       reason: reason
+                                     userInfo: nil];
+          [ex raise];
+        }else{
+          [configuration setOption: opt withValue: opt_par];
+          i++; //we used opt_par
+        }
+      }
+    }
+  }
+  state = TrivaCommandConfigured;
+  return self;
 }
 
-static struct argp argp = { options, parse_options, args_doc, doc };
-
-int parse (int argc, char **argv, struct arguments *arg)
+- (TrivaCommandState) state
 {
-  arg->input_size = 0;
-  int ret = argp_parse (&argp, argc, argv, 0, 0, arg);
-  return ret;
+  return state;
 }
+
+- (TrivaConfiguration *) configuration
+{
+  return configuration;
+}
+
++ (void) printSingleOption: (NSString *) name
+            withAttributes: (NSDictionary *) attr
+{
+  NSString *type = [attr objectForKey: @"type"];
+  NSString *description = [attr objectForKey: @"description"];
+  NSString *simple = [attr objectForKey: @"short"];
+  char aux[100];
+  if ([type isEqualToString: @"bool"]){
+    if (simple){
+      snprintf (aux, 100, "    -%s, --%s", [simple cString],
+                                           [name cString]);
+    }else{
+      snprintf (aux, 100, "    --%s", [name cString]);
+    }
+  }else if ([type isEqualToString: @"double"]){
+    if (simple){
+      snprintf (aux, 100, "    -%s, --%s {double}", [simple cString],
+                                           [name cString]);
+    }else{
+      snprintf (aux, 100, "    --%s {double}", [name cString]);
+    }
+  }else if ([type isEqualToString: @"file"]){
+    if (simple){
+      snprintf (aux, 100, "    -%s, --%s {file}", [simple cString],
+                                                  [name cString]);
+    }else{
+      snprintf (aux, 100, "    --%s {file}", [name cString]);
+    }
+  }
+  int len = strlen (aux);
+  printf ("%s%*.*s %s\n", aux, 30-len, 30-len, "", [description cString]);
+}
+
++ (void) printFirstLevelOptions: (NSDictionary*) dict
+{
+  NSEnumerator *en = [dict keyEnumerator];
+  NSString *key;
+  BOOL grouped = [dict objectForKey: @"grouped"] ? YES : NO;
+  while ((key = [en nextObject])){
+    if ([key isEqualToString: @"grouped"]) continue;
+    id contents = [dict objectForKey: key];
+    if (grouped){
+      printf ("  %s:\n", [key cString]);
+      NSEnumerator *en2 = [contents keyEnumerator];
+      NSString *name;
+      while ((name = [en2 nextObject])){
+        [self printSingleOption: name
+               withAttributes: [contents objectForKey: name]];
+      } 
+    }else{
+      [self printSingleOption: key
+               withAttributes: contents];
+    }
+  }
+}
+
++ (void) printOptions: (NSDictionary*) dictionary
+{
+  NSEnumerator *en = [dictionary keyEnumerator];
+  NSString *key;
+  printf ("Usage: Triva [OPTIONS...] TRACE0 [TRACE1]\n");
+  printf ("Trace Analysis through Visualization\n");
+  printf ("\n");
+  while ((key = [en nextObject])){
+    printf ("%s\n", [key cString]);
+    NSDictionary *options = [dictionary objectForKey: key];
+    [self printFirstLevelOptions: options];
+  }
+
+}
+@end

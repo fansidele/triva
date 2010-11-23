@@ -17,42 +17,35 @@
 #include "TrivaController.h"
 #include "TrivaCommand.h"
 
-
 int main (int argc, const char **argv){
   //appkit init
   NSApplication *app = [NSApplication sharedApplication];
   NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 
+  //parsing command line
+  TrivaController *triva = [[TrivaController alloc] init];
+  NSDictionary *allOptions = [triva defaultOptions];
+  TrivaCommand *command;
 NS_DURING
-
-  //parsing args
-  struct arguments arguments;
-  arguments.treemap = 0;
-  arguments.graph = 0;
-  arguments.linkview = 0;
-  arguments.comparison = 0;
-  arguments.merge = 0;
-  arguments.hierarchy = 0;
-  arguments.check = 0;
-  arguments.stat = 0;
-  arguments.list = 0;
-  arguments.instances = 0;
-  arguments.abort = 0;
-  parse (argc, (char**)argv, &arguments);
-
-  //initializing controller with options and input file names
-  TrivaController *triva = [TrivaController controllerWithArguments: arguments];
-  if (!triva){
-    [NSException raise:@"TrivaException"
-                format:@"Controller could not be initialized."];
-  }
+  command = [[TrivaCommand alloc] initWithArguments: argv
+                                            andSize: argc
+                                  andDefaultOptions: allOptions];
 NS_HANDLER
-  NSLog (@"%@", localException);
-  return 1;
+  printf ("%s: %s\n\n", [[localException name] cString],
+                    [[localException reason] cString]);
+  exit(1);
 NS_ENDHANDLER
+  if ([command state] == TrivaHelp){
+    [TrivaCommand printOptions: allOptions];
+  }else if ([command state] == TrivaCommandConfigured){
+    printf ("%s", [[[command configuration] description] cString]);
 
-  //run the application
-  [app run];
+    //initializing controller with options and input file names
+    triva = [TrivaController controllerWithConfiguration:
+                                                       [command configuration]];
+    //run the application
+    [app run];
+  }
 
   //that's it
   [pool release];
