@@ -56,6 +56,10 @@ typedef enum {Local,Global,Convergence,Arnaud} TrivaScale;
                withScale: (TrivaScale) scale
                 ofObject: (NSString *) entityName
                 withType: (NSString *) entityType;
+
+
+//configuration from the command line
+- (NSDictionary*) defaultOptions;
 @end
 
 #endif

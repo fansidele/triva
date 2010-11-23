@@ -108,4 +108,17 @@
                                             ofObject: entityName
                                             withType: entityType];
 }
+
+- (NSDictionary*) defaultOptions
+{
+  NSMutableDictionary *options = [NSMutableDictionary dictionary];
+  if ([inputComponent isKindOfClass: [TrivaFilter class]]){
+    return [(TrivaFilter*)inputComponent defaultOptions];
+    [options addEntriesFromDictionary:
+        [(TrivaFilter*)inputComponent defaultOptions]];
+  }else{
+    return nil;
+  }
+  return options;
+}
 @end

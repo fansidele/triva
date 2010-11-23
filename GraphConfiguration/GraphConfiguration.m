@@ -173,4 +173,16 @@
     bb.origin.y = bb.origin.y - bb.size.height/2;
   }
 */
+
+
+- (NSDictionary*) defaultOptions
+{
+  NSMutableDictionary *ret = [NSMutableDictionary dictionary];
+  NSMutableDictionary *options = [NSMutableDictionary dictionary];
+  [options setObject: @"file" forKey: @"graph"];
+  [options setObject: @"bool" forKey: @"apply"];
+  [ret setObject: options forKey: @"GraphConfiguration"];
+  [ret addEntriesFromDictionary: [super defaultOptions]];
+  return ret;
+}
 @end
