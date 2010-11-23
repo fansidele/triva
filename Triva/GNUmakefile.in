@@ -19,7 +19,8 @@ Triva_OBJC_FILES = \
 	TimeSliceGraph.m \
 	Tree.m \
 	TrivaTreemap.m \
-	TrivaWindow.m
+	TrivaWindow.m \
+	TrivaConfiguration.m
 
 Triva_HEADER_FILES = TrivaFilter.h \
 	TrivaGraphNode.h \
@@ -39,7 +40,8 @@ Triva_HEADER_FILES = TrivaFilter.h \
 	TrivaTreemap.h \
 	NSPointFunctions.h \
 	Triva.h \
-	TrivaWindow.h
+	TrivaWindow.h \
+	TrivaConfiguration.h
 
 Triva_INCLUDE_DIRS += -I../ -I./ @CPPFLAGS@
 Triva_LDFLAGS += @LDFLAGS@ -lm -lgsl -lgslcblas
