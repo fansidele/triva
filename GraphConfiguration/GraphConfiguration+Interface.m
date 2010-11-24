@@ -34,6 +34,8 @@
   lastSelected = [defaults objectForKey: @"GraphConfigurationSelected"];
   if (lastSelected){
     [self refreshPopupAndSelect: lastSelected];
+  }else{
+    [self refreshPopupAndSelect: nil];
   }
   [confView setDelegate: self];
   [window initializeWithDelegate: self];
