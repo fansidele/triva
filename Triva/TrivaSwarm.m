@@ -40,7 +40,7 @@
     return nil;
   }
   //we need the color
-  colors = [NSSet setWithArray: [conf objectForKey: @"color"]];
+  colors = [[NSSet alloc] initWithArray: [conf objectForKey: @"color"]];
   if (!colors) {
     //no color specified
     NSLog (@"%s:%d: no 'color' configuration for composition %@",
@@ -52,6 +52,12 @@
 
 - (BOOL) redefineLayoutWithValues: (NSDictionary*) timeSliceValues
 {
+  //clear previously calculated information
+  [objects release];
+  [objectsColors release];
+  objects = [[NSMutableArray alloc] init];
+  objectsColors = [[NSMutableDictionary alloc] init];
+
   //getting the timeslice-node for my object
   TimeSliceTree *t = (TimeSliceTree*)[[filter timeSliceTree] searchChildByName: [node name]];
 
@@ -119,8 +125,15 @@
 
 - (void) dealloc
 {
+  [colors release];
   [objects release];
   [objectsColors release];
   [super dealloc];
+}
+
+- (BOOL) mouseInside: (NSPoint)mPoint
+       withTransform: (NSAffineTransform*)transform
+{
+  return NO;
 }
 @end
