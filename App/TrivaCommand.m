@@ -43,16 +43,17 @@
       return self;
     }
     
-    NSString *opt = [NSString stringWithFormat: @"%s", option];
+    NSMutableString *optx = [NSMutableString stringWithFormat: @"%s", option];
     NSString *opt_par = [NSString stringWithFormat: @"%s", option_par];
     //check if option contains -'s, if it doens't consider as input file
-    NSRange range = [opt rangeOfString: @"-"];
+    NSRange range = [optx rangeOfString: @"-"];
     if (range.length == 0 || (range.location != 0 && range.length != 0)) {
-      [configuration addInputFile: opt];
+      [configuration addInputFile: optx];
       continue;
     }
     //treat as normal option 
-    opt = [opt stringByReplacingOccurrencesOfString: @"-" withString: @""];
+    NSString *opt;
+    opt = [optx stringByReplacingOccurrencesOfString: @"-" withString: @""];
     id detail = [dict objectForKey: opt];
     if (!detail){
       reason = [NSString stringWithFormat: @"unknown parameter %s", option];
