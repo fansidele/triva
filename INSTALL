@@ -26,10 +26,10 @@ $ source /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
 # Installing Paje (a dependency for installing Triva)
 
 $ source /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
-$ svn checkout svn://svn.forge.objectweb.org/svnroot/paje/trunk/Paje/
+$ git clone git://paje.git.sourceforge.net/gitroot/paje/paje Paje
 $ export LANG=C
 $ cd Paje
-$ make -j 2
+$ make
 $ make install GNUSTEP_INSTALLATION_DOMAIN=USER
 
 # Installing GNUstep's Renaissance (adapted for Triva)

@@ -12,7 +12,7 @@ make install
 
 # Install Paje
 
-svn checkout svn://svn.forge.objectweb.org/svnroot/paje/trunk/Paje/
+git clone git://paje.git.sourceforge.net/gitroot/paje/paje Paje
 export LANG=C
 cd Paje
 source /Library/GNUstep//Makefiles/GNUstep.sh
