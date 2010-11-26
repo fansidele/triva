@@ -226,7 +226,7 @@
   }
 
   [self definePositionWithConfiguration: conf];
-  [self saveGraphPositionsToUserDefaults: [self traceUniqueLabel]];
+//  [self saveGraphPositionsToUserDefaults: [self traceUniqueLabel]];
   return YES;
 }
 
@@ -249,6 +249,7 @@ NS_HANDLER
   NSLog (@"Fallback is check positions from user defaults (previous run)");
 NS_ENDHANDLER
 
+/*
 NS_DURING
   if ([self retrieveGraphPositionsFromUserDefaults: [self traceUniqueLabel]]){
     return YES;
@@ -257,6 +258,7 @@ NS_HANDLER
   NSLog (@"%@", localException);
   NSLog (@"Fallback is calculate positions with Graphviz.");
 NS_ENDHANDLER
+*/
 
   //last option is graphviz
   if (graphvizEnabled){
