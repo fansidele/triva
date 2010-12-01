@@ -4,7 +4,7 @@
                description = "Update on slider change"; };
     ti_start = { type = double;
                description = "Start of time slice"; };
-    ti_size = { type = bool;
+    ti_size = { type = double;
                description = "Size of time slice"; };
     ti_apply = { type = bool;
                description = "Apply the configuration"; };
