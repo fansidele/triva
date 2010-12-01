@@ -43,6 +43,7 @@
     NSString *str;
     str = [NSString stringWithString:[[confView textStorage] string]];
     [self setGraphConfiguration: str withTitle: [title stringValue]];
+    [self apply];
   }
 }
 

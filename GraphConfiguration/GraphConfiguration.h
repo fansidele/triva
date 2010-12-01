@@ -67,12 +67,14 @@
   BOOL hideWindow;
 }
 /*
- * Method called by interface to set a new configuration
- * - This should release nodes and edges attributes
- * - and create a new configuration graph
+ * Called by interface and command-line options to set a new configuration
  */
 - (void) setGraphConfiguration: (NSString *) conf
                      withTitle: (NSString *) t;
+/*
+ * Called by interface and command-line options to apply the new configuration
+ */
+- (void) apply;
 @end
 
 @interface GraphConfiguration (Interface)

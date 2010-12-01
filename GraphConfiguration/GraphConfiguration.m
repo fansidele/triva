@@ -33,6 +33,7 @@
   gvc = gvContext();
 
   hideWindow = NO;
+  configuration = nil;
   return self;
 }
 
@@ -66,12 +67,15 @@
   //save in file the new configuration
   [c writeToFile: t atomically: YES];
 
+  //interface
+  [self refreshInterfaceWithConfiguration: c withTitle: t];
+}
+
+- (void) apply
+{
   //graph 
   [self destroyGraph];
   [self parseConfiguration: configuration];
-
-  //interface
-  [self refreshInterfaceWithConfiguration: c withTitle: t];
 
   //let's inform other components that we have changes
   [self hierarchyChanged];
@@ -170,14 +174,13 @@
     }
   }
 
+  if (gc){
+    [self setGraphConfiguration: gc
+                      withTitle: gct];
+  }
+
   if (apply){
-    if (gc){
-      [self setGraphConfiguration: gc
-                        withTitle: gct];
-    }else{
-      //nothing to apply, try GUI
-      [self apply: self];
-    }
+    [self apply];
   }
 }
 
