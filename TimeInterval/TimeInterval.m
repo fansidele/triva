@@ -267,6 +267,51 @@
   return [NSDictionary dictionaryWithContentsOfFile: file];
 }
 
+- (void) setConfiguration: (TrivaConfiguration *) conf
+{
+  //extract my configuration and put in myOptions dictionary
+  NSDictionary *myOptions = [conf configuredOptionsForClass: [self class]];
+
+  //configure myself using the configuration in myOptions
+  NSEnumerator *en = [myOptions keyEnumerator];
+  NSString *key;
+  double s = [[[self startTime] description] doubleValue];
+  double e = [[[self endTime] description] doubleValue];
+  BOOL apply = NO;
+  BOOL animate = NO;
+  while ((key = [en nextObject])){
+    NSString *value = [myOptions objectForKey: key];
+    if (0){
+    }else if([key isEqualToString: @"ti_hide"]){
+      hideWindow = YES;
+    }else if([key isEqualToString: @"ti_update"]){
+      [updateOnChange setState: YES];
+    }else if([key isEqualToString: @"ti_start"]){
+      s = [value doubleValue];
+    }else if([key isEqualToString: @"ti_size"]){
+      e = s + [value doubleValue];
+    }else if([key isEqualToString: @"ti_apply"]){
+      apply = YES;
+    }else if([key isEqualToString: @"ti_forward"]){
+      [forwardLabel setStringValue: value];
+      [self forwardLabelChanged: self];
+    }else if([key isEqualToString: @"ti_frequency"]){
+      [frequencyLabel setStringValue: value];
+      [self frequencyLabelChanged: self];
+    }else if([key isEqualToString: @"ti_animate"]){
+      animate = YES;
+    }
+  }
+  [self setTimeIntervalFrom: s to: e];
+  if (apply){
+    [self apply: self];
+  }
+  if (animate){
+    [playButton performClick: self];
+    [self play: self];
+  }
+}
+
 - (void) show
 {
   if (!hideWindow){
