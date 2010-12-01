@@ -82,4 +82,30 @@
   [ret appendString: @"\n"];
   return ret;
 }
+
+- (NSDictionary *) configuredOptions
+{
+  return conf;
+}
+
+- (NSDictionary *) configuredOptionsForClass: (Class) componentClass
+{
+  //extract configuration for componentClass and put in ret dictionary
+  NSMutableDictionary *ret = [NSMutableDictionary dictionary];
+  NSDictionary *options = conf;
+  NSDictionary *base; 
+  NSEnumerator *en;
+  NSString *key;
+  base = [[componentClass defaultOptions]
+              objectForKey: NSStringFromClass(componentClass)];
+  en = [base keyEnumerator];
+  while ((key = [en nextObject])){
+    NSString *value = [options objectForKey: key];
+    if ([options objectForKey: key]){
+      [ret setObject: [options objectForKey: key] forKey: key];
+    }
+  }
+
+  return ret;
+}
 @end

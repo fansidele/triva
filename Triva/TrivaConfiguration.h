@@ -38,6 +38,8 @@ typedef enum { TrivaGraphView,
 - (void) setOption: (NSString*) option withValue: (NSString*) value;
 - (void) addInputFile: (NSString *) filename;
 - (NSArray *) inputFiles;
+- (NSDictionary *) configuredOptions;
+- (NSDictionary *) configuredOptionsForClass: (Class) componentClass;
 @end
 
 #endif
