@@ -67,4 +67,9 @@
   recordMode = !recordMode;
   NSLog (@"recordMode set to %d", recordMode);
 }
+
+- (void) show
+{
+  [window orderFront: self];
+}
 @end

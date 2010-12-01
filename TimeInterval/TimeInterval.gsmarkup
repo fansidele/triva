@@ -7,7 +7,7 @@
             instanceOf="TrivaWindow"
             width="300"
             title="Triva - Time Interval"
-            resizable="no" closable="yes">
+            resizable="no" closable="yes" visible="no">
       <vbox>
         <!-- Trace Time -->
         <box title="Trace Time" halign="wexpand">

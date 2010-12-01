@@ -114,4 +114,10 @@
   /* to be implemented by sub-classes */
   return nil;
 }
+
+- (void) show
+{
+  /* to be implemented by sub-classes */
+  return;
+}
 @end

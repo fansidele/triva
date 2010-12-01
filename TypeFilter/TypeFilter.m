@@ -251,4 +251,9 @@
   [[NSApplication sharedApplication] terminate:self];
   return YES;
 }
+
+- (void) show
+{
+  [window orderFront: self];
+}
 @end

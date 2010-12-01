@@ -82,6 +82,14 @@ NS_HANDLER
   NSLog (@"Reason: %@", [localException reason]);
   exit(1);
 NS_ENDHANDLER
+
+  //open component windows
+  en = [components objectEnumerator];
+  while ((component = [en nextObject])){
+    if ([component isKindOfClass: [TrivaFilter class]]){
+      [component show];
+    }
+  }
 }
 
 - (NSDictionary *) defaultOptions

@@ -62,4 +62,9 @@
 {
   return [view scale];
 }
+
+- (void) show
+{
+  [window orderFront: self];
+}
 @end

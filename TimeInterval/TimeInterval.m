@@ -264,4 +264,9 @@
   NSString *file = [bundle pathForResource: @"TimeInterval" ofType: @"plist"];
   return [NSDictionary dictionaryWithContentsOfFile: file];
 }
+
+- (void) show
+{
+  [window orderFront: self];
+}
 @end

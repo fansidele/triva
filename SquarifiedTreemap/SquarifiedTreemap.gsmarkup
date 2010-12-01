@@ -7,7 +7,7 @@
             instanceOf="TrivaWindow"
             width="500" height="300"
             title="Triva - Squarified Treemap"
-            resizable="yes" closable="yes">
+            resizable="yes" closable="yes" visible="no">
       <view id="view"
             instanceOf="TreemapView"
             halign="expand" />

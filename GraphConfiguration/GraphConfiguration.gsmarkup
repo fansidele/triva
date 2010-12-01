@@ -7,7 +7,7 @@
             instanceOf="TrivaWindow"
             width="300" height="300"
             title="Triva - Graph Configuration"
-            resizable="yes" closable="yes">
+            resizable="yes" closable="yes" visible="no">
       <vbox>
         <hbox>
           <popUpButton id="popup"

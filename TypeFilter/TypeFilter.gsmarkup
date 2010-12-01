@@ -7,7 +7,7 @@
             instanceOf="TrivaWindow"
             width="500" height="300"
             title="Triva - Type Filter"
-            resizable="yes" closable="yes">
+            resizable="yes" closable="yes" visible="no">
       <vbox>
         <hbox>
           <label halign="left">Type Hierarchy Selection</label>

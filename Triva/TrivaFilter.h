@@ -60,6 +60,7 @@ typedef enum {Local,Global,Convergence,Arnaud} TrivaScale;
 
 //configuration from the command line
 + (NSDictionary*) defaultOptions;
+- (void) show;
 @end
 
 #endif
