@@ -62,10 +62,11 @@
 
 - (void) initializeWithConfiguration: (TrivaConfiguration *) configuration
 {
-  NSArray *files = [configuration inputFiles];
-  NSLog (@"Tracefile (%@). Reading.... please wait\n", files);
+
 
 NS_DURING
+  NSArray *files = [configuration inputFiles];
+  NSLog (@"Tracefile (%@). Reading.... please wait\n", files);
   //reading only the first file by default (subclasses
   //should override this if necessary)
   reader = [self componentWithName:@"FileReader" fromDictionary: components];
@@ -76,7 +77,7 @@ NS_DURING
   [encapsulator setSelectionStartTime: [encapsulator startTime]
                               endTime: [encapsulator endTime]];
 NS_HANDLER
-  NSLog (@"Tracefile (%@). Exception on reading.", files);
+  NSLog (@"Exception on reading.");
   NSLog (@"Info: %@", [localException userInfo]);
   NSLog (@"Name: %@", [localException name]);
   NSLog (@"Reason: %@", [localException reason]);
