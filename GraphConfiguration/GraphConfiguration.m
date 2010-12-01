@@ -42,7 +42,7 @@
 }
 
 //  Entry method from interface: a new configuration arrives
-- (void) setConfiguration: (NSDictionary *) c
+- (void) setGUIConfiguration: (NSDictionary *) c
 {
   if (configuration){
     [configuration release];

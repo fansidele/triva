@@ -71,7 +71,7 @@
  * - This should release nodes and edges attributes
  * - and create a new configuration graph
  */
-- (void) setConfiguration: (NSDictionary *) conf;
+- (void) setGUIConfiguration: (NSDictionary *) conf;
 @end
 
 @interface GraphConfiguration (Interface)

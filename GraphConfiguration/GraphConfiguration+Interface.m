@@ -76,7 +76,7 @@
 
   if ([ok state] == NSOnState){
     NS_DURING
-    [self setConfiguration: dict];
+    [self setGUIConfiguration: dict];
     NS_HANDLER
       NSLog (@"%@", localException);
     NS_ENDHANDLER
