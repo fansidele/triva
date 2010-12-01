@@ -17,20 +17,6 @@
 #include "TrivaGraphEdge.h"
 #include <math.h>
 
-double LMSAngleBetweenPoints (NSPoint pt1, NSPoint pt2)
-{
-  double ptxd = pt1.x - pt2.x;
-  double ptyd = pt1.y - pt2.y;
-  return 90-(atan2 (ptxd, ptyd)/M_PI*180);
-}
-
-double LMSDistanceBetweenPoints(NSPoint pt1, NSPoint pt2)
-{
-  double ptxd = pt1.x - pt2.x;
-  double ptyd = pt1.y - pt2.y;
-  return sqrt( ptxd*ptxd + ptyd*ptyd );
-}
-
 @implementation TrivaGraphEdge
 - (id) init
 {
