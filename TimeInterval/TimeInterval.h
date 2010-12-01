@@ -48,6 +48,8 @@
   double selEnd;
 
   NSTimer *timer;
+
+  BOOL hideWindow;
 }
 - (void) setTimeIntervalFrom: (double) start to: (double) end;
 - (void) updateLabels;

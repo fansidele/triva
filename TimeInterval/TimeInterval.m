@@ -33,6 +33,8 @@
 
   timer = nil;
 
+  hideWindow = NO;
+
   [window initializeWithDelegate: self];
   return self;
 }
@@ -267,6 +269,8 @@
 
 - (void) show
 {
-  [window orderFront: self];
+  if (!hideWindow){
+    [window orderFront: self];
+  }
 }
 @end

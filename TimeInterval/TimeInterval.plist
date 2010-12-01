@@ -14,5 +14,7 @@
                description = "Animation: value to move time-slice"; };
     ti_frequency = { type = double;
                description = "Animation: frequency of updates"; };
+    ti_hide = { type = bool;
+               description = "Hide the TimeInterval window"; };
   };
 }
