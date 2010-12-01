@@ -113,6 +113,8 @@
                                  startAngle: 0
                                    endAngle: 360];
     [path fill];
+    [[NSColor blackColor] set];
+    [path stroke];
 
     if ([node highlighted]){
       [[objects objectAtIndex: i] drawAtPoint: [path currentPoint]
