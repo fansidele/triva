@@ -115,6 +115,12 @@
   return nil;
 }
 
+- (void) setConfiguration: (TrivaConfiguration*) opt
+{
+  /* to be implemented by sub-classes */
+  return;
+}
+
 - (void) show
 {
   /* to be implemented by sub-classes */

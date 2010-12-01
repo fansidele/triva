@@ -23,12 +23,12 @@
 #include "TimeSliceDifTree.h"
 #include "Tree.h"
 #include "TrivaFilter.h"
+#include "TrivaConfiguration.h"
 #include "TrivaGraphEdge.h"
 #include "TrivaGraphNode.h"
 #include "TrivaComposition.h"
 #include "Triva.h"
 #include "TrivaTreemap.h"
 #include "TrivaWindow.h"
-#include "TrivaConfiguration.h"
 
 #endif

@@ -18,14 +18,13 @@
 #define __TrivaFilter_h
 #include <Foundation/Foundation.h>
 #include <General/PajeFilter.h>
-#include <Triva/TrivaGraphNode.h>
-#include <Triva/TrivaGraphEdge.h>
-#include <Triva/TimeSliceTree.h>
+#include <Triva/Triva.h>
 
 typedef enum {Local,Global,Convergence,Arnaud} TrivaScale;
 
 @class TrivaGraphNode;
 @class TrivaGraphEdge;
+@class TrivaConfiguration;
 
 @interface TrivaFilter  : PajeFilter
 - (TrivaGraphNode*) findNodeByName: (NSString *)name; /* TODO: to be removed*/
@@ -60,6 +59,7 @@ typedef enum {Local,Global,Convergence,Arnaud} TrivaScale;
 
 //configuration from the command line
 + (NSDictionary*) defaultOptions;
+- (void) setConfiguration: (TrivaConfiguration*) opt;
 - (void) show;
 @end
 
