@@ -84,6 +84,17 @@ NS_HANDLER
   exit(1);
 NS_ENDHANDLER
 
+  NSEnumerator *en;
+  id component;
+
+  //configuring components
+  en = [components objectEnumerator];
+  while ((component = [en nextObject])){
+    if ([component isKindOfClass: [TrivaFilter class]]){
+      [component setConfiguration: configuration];
+    }
+  }
+
   //open component windows
   en = [components objectEnumerator];
   while ((component = [en nextObject])){
