@@ -31,6 +31,8 @@
   [self initInterface];
   //initialiation of graphviz
   gvc = gvContext();
+
+  hideWindow = NO;
   return self;
 }
 
@@ -183,6 +185,8 @@
 
 - (void) show
 {
-  [window orderFront: self];
+  if (!hideWindow){
+    [window orderFront: self];
+  }
 }
 @end

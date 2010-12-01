@@ -4,5 +4,7 @@
                description = "Graph Configuration in Property List Format"; };
     gc_apply = { type = bool;
                description = "Apply the configuration"; };
+    gc_hide = { type = bool;
+              description = "Hide the GraphConfiguration window"; };
   };
 }

@@ -65,6 +65,8 @@
   NSMutableDictionary *entities; // type -> array of nodes/edges
   NSMutableDictionary *minCache;  // min cache
   NSMutableDictionary *maxCache;  // max cache
+
+  BOOL hideWindow;
 }
 /*
  * Method called by interface to set a new configuration
