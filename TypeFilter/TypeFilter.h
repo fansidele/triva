@@ -19,11 +19,10 @@
 #include <Foundation/Foundation.h>
 #include <AppKit/AppKit.h>
 #include <Renaissance/Renaissance.h>
-#include <General/PajeFilter.h>
-#include <Triva/TrivaWindow.h>
+#include <Triva/Triva.h>
 #include <regex.h>
 
-@interface TypeFilter  : PajeFilter
+@interface TypeFilter  : TrivaFilter
 {
   NSMutableDictionary *hiddenEntityValues;
   NSMutableSet *hiddenEntityTypes;
