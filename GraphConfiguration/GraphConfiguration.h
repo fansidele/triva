@@ -80,6 +80,7 @@
 - (void) refreshInterfaceWithConfiguration: (NSString *) gc
                       withTitle: (NSString *) gct;
 - (void) apply: (id)sender;
+- (void) updateTitle: (id)sender;
 - (void) textDidChange: (id) sender;
 @end
 

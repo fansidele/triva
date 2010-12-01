@@ -46,6 +46,15 @@
   }
 }
 
+- (void) updateTitle: (id)sender
+{
+  if ([ok state] == NSOnState){
+    NSString *str;
+    str = [NSString stringWithString:[[confView textStorage] string]];
+    [self setGraphConfiguration: str withTitle: [title stringValue]];
+  }
+}
+
 - (void) textDidChange: (id) sender
 {
   NSString *str = nil;

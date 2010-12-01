@@ -16,8 +16,8 @@
                    allowsEditingTextAttributes="no"
                    font="label huge"
                    textAlignment="center"
-                   editable="no"
-                   selectable="no" />
+                   editable="yes"
+                   selectable="yes" />
         <scrollView halign="expand"
                      hasVerticalScroller="yes"
                      hasHorizontalScroller="yes" >
