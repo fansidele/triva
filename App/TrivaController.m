@@ -81,6 +81,7 @@ NS_HANDLER
   NSLog (@"Info: %@", [localException userInfo]);
   NSLog (@"Name: %@", [localException name]);
   NSLog (@"Reason: %@", [localException reason]);
+  NSLog (@"Configuration provided: %@", [configuration configuredOptions]);
   exit(1);
 NS_ENDHANDLER
 
@@ -88,12 +89,21 @@ NS_ENDHANDLER
   id component;
 
   //configuring components
+NS_DURING
   en = [components objectEnumerator];
   while ((component = [en nextObject])){
     if ([component isKindOfClass: [TrivaFilter class]]){
       [component setConfiguration: configuration];
     }
   }
+NS_HANDLER
+  NSLog (@"Exception on configuring components.");
+  NSLog (@"Info: %@", [localException userInfo]);
+  NSLog (@"Name: %@", [localException name]);
+  NSLog (@"Reason: %@", [localException reason]);
+  NSLog (@"Configuration provided: %@", [configuration configuredOptions]);
+  exit(1);
+NS_ENDHANDLER
 
   //open component windows
   en = [components objectEnumerator];
