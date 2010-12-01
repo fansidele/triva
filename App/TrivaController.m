@@ -65,6 +65,7 @@
   NSArray *files = [configuration inputFiles];
   NSLog (@"Tracefile (%@). Reading.... please wait\n", files);
 
+NS_DURING
   //reading only the first file by default (subclasses
   //should override this if necessary)
   reader = [self componentWithName:@"FileReader" fromDictionary: components];
@@ -74,6 +75,13 @@
   [encapsulator timeLimitsChanged];
   [encapsulator setSelectionStartTime: [encapsulator startTime]
                               endTime: [encapsulator endTime]];
+NS_HANDLER
+  NSLog (@"Tracefile (%@). Exception on reading.", files);
+  NSLog (@"Info: %@", [localException userInfo]);
+  NSLog (@"Name: %@", [localException name]);
+  NSLog (@"Reason: %@", [localException reason]);
+  exit(1);
+NS_ENDHANDLER
 }
 
 - (NSDictionary *) defaultOptions
