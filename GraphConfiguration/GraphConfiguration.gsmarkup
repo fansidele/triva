@@ -9,42 +9,29 @@
             title="Triva - Graph Configuration"
             resizable="yes" closable="yes" visible="no">
       <vbox>
-        <hbox>
-          <popUpButton id="popup"
-                       target="#NSOwner"
-                       action="change:"
-                       halign="wexpand"
-                       height="20">
-          </popUpButton>
-          <button id="ok"
-                  type="switch"
-                  enabled="no" />
-          <button title="Del"
-                  target="#NSOwner"
-                  action="del:" />
-          <button title="Copy"
-                  target="#NSOwner"
-                  action="copy:" />
-          <button title="New"
-                  target="#NSOwner"
-                  action="new:" />
-        </hbox>
+        <textField id="title"
+                   target="#NSOwner"
+                   action="updateTitle:"
+                   delegate="#NSOwner"
+                   allowsEditingTextAttributes="no"
+                   font="label huge"
+                   textAlignment="center"
+                   editable="no"
+                   selectable="no" />
         <scrollView halign="expand"
                      hasVerticalScroller="yes"
                      hasHorizontalScroller="yes" >
           <textView id="confView" 
+                    font="message 1.5"
                     delegate="#NSOwner" />
         </scrollView>
         <hbox>
-          <label>Name:</label>
-          <textField id="title"
-                     target="#NSOwner"
-                     action="updateTitle:"
-                     delegate="#NSOwner"
-                     allowsEditingTextAttributes="no"
-                     editable="yes"
-                     selectable="yes" />
-          <button title="Apply"
+          <label>Valid Configuration:</label>
+          <button id="ok"
+                  type="switch"
+                  enabled="no" />
+          <hspace/>
+          <button title="Apply Configuration"
                   target="#NSOwner"
                   action="apply:" />
         </hbox>
@@ -55,7 +42,7 @@
   <connectors>
     <outlet source="#NSOwner" target="#window" key="window" />
     <outlet source="#NSOwner" target="#confView" key="confView" />
-    <outlet source="#NSOwner" target="#popup" key="popup" />
+<!--    <outlet source="#NSOwner" target="#popup" key="popup" />-->
     <outlet source="#NSOwner" target="#ok" key="ok" />
     <outlet source="#NSOwner" target="#title" key="title" />
   </connectors>

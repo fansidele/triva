@@ -22,158 +22,44 @@
 @implementation GraphConfiguration (Interface)
 - (void) initInterface
 {
-  configurations = [[NSMutableDictionary alloc] init];
-  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-  id exist = [defaults objectForKey: @"GraphConfigurationItems"];
-  if (exist){
-    [configurations addEntriesFromDictionary: exist];
-  }
-
-  // gui configuration
-  NSString *lastSelected;
-  lastSelected = [defaults objectForKey: @"GraphConfigurationSelected"];
-  if (lastSelected){
-    [self refreshPopupAndSelect: lastSelected];
-  }else{
-    [self refreshPopupAndSelect: nil];
-  }
   [confView setDelegate: self];
   [window initializeWithDelegate: self];
 }
 
-- (void) updateDefaults
+- (void) refreshInterfaceWithConfiguration: (NSString *) gc
+                      withTitle: (NSString *) gct
 {
-  NSUserDefaults *defaults;
-  defaults = [NSUserDefaults standardUserDefaults];
-  [defaults setObject: configurations
-         forKey: @"GraphConfigurationItems"];
+  //use configuration dictionary
+  //use graphConfigurationFilename string
 
-  NSString *selected = [popup titleOfSelectedItem];
-  if (selected){
-    [defaults setObject: selected
-         forKey: @"GraphConfigurationSelected"];
-  }
-  [defaults synchronize];
-}
-
-- (void) refreshPopupAndSelect: (NSString*)toselect
-{
-  [popup removeAllItems];
-  [popup addItemsWithTitles: [configurations allKeys]];
-  int select = 0;
-  if ([configurations objectForKey: toselect]){
-    select = [popup indexOfItemWithTitle: toselect];
-  }
-  [popup selectItemAtIndex: select];
-  [self change: self];
+  [title setStringValue: gct];
+  [confView setString: gc];
+  [self textDidChange: self];
 }
 
 - (void) apply: (id)sender
 {
-  NSString *current = [popup titleOfSelectedItem];
-  NSDictionary *dict = [[configurations objectForKey: current]
-          propertyList];
-
   if ([ok state] == NSOnState){
-    NS_DURING
-    [self setGUIConfiguration: dict];
-    NS_HANDLER
-      NSLog (@"%@", localException);
-    NS_ENDHANDLER
+    NSString *str;
+    str = [NSString stringWithString:[[confView textStorage] string]];
+    [self setGraphConfiguration: str withTitle: [title stringValue]];
   }
-}
-
-- (void) newWithTitle: (NSString*)t andConf: (NSString*) c
-{
-  [popup addItemWithTitle: t];
-  [popup selectItemWithTitle: t];
-  [title setStringValue: t];
-  [confView setString: c];
-  [ok setState: NSOnState];
-  [configurations setObject: c
-     forKey: t];
-  [self updateDefaults];
-}
-
-- (void) new: (id)sender
-{
-  static int counter = 0;
-  NSString *nTitle=[NSString stringWithFormat:@"*(unnamed-%d)",counter++];
-  while ([configurations objectForKey: nTitle]){
-    nTitle = [NSString stringWithFormat:@"*(unnamed-%d)",counter++];
-  }
-  NSString *basic = @"{\n\
-  node = ();\n\
-  edge = ();\n\
-\n\
-  graphviz-algorithm = neato;\n\
-}";
-  [self newWithTitle: nTitle andConf: basic];
-}
-
-- (void) change: (id)sender
-{
-  NSString *selected = [popup titleOfSelectedItem];
-  NSString *str = [configurations objectForKey: selected];
-  [title setStringValue: selected];
-  [confView setString: str];
-  [ok setState: NSOnState];
-  [self updateDefaults];
 }
 
 - (void) textDidChange: (id) sender
 {
+  NSString *str = nil;
+  NSDictionary *dict = nil;
   NS_DURING
-    NSString *str = [NSString stringWithString:
-          [[confView textStorage] string]];
-    id dict = [str propertyList];
+    str = [NSString stringWithString:[[confView textStorage] string]];
+    dict = [str propertyList];
     if (dict){
-      [configurations setObject: str
-           forKey: [popup titleOfSelectedItem]];
       [ok setState: NSOnState];
-      [self updateDefaults];
     }
   NS_HANDLER
     [ok setState: NSOffState];
     NSLog (@"%@", localException);
   NS_ENDHANDLER
-}
-
-- (void) updateTitle: (id) sender
-{
-  if (![title stringValue]){
-    return;
-  }
-
-  NSString *current = [popup titleOfSelectedItem];
-  NSDictionary *dict = [configurations objectForKey: current];
-  [dict retain];
-  [configurations removeObjectForKey: current];
-  [configurations setObject: dict forKey: [title stringValue]];
-  [dict release];
-
-  [self refreshPopupAndSelect: [title stringValue]];
-  [self updateDefaults];
-}
-
-- (void) del: (id) sender
-{
-  [configurations removeObjectForKey: [popup titleOfSelectedItem]];
-  [self refreshPopupAndSelect: nil];
-  [self updateDefaults];
-}
-
-- (void) copy: (id) sender
-{
-  NSString *current = [popup titleOfSelectedItem];
-  NSDictionary *dict = [configurations objectForKey: current];
-
-  NSString *new = [NSString stringWithFormat: @"%@-copy", current];
-  [self newWithTitle: new andConf: [dict description]];
-}
-
-- (void)windowDidMove:(NSNotification *)win
-{
 }
 
 - (BOOL) windowShouldClose: (id) sender

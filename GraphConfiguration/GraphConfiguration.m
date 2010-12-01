@@ -39,22 +39,41 @@
 - (void) dealloc
 {
   [configuration release];
-  [configurations release];
   [super dealloc];
 }
 
 //  Entry method from interface: a new configuration arrives
-- (void) setGUIConfiguration: (NSDictionary *) c
+- (void) setGraphConfiguration: (NSString *) c
+                     withTitle: (NSString *) t
 {
+
+  NSData* plistData = [c dataUsingEncoding:NSUTF8StringEncoding];
+  NSString *error;
+  NSPropertyListFormat format;
+  NSDictionary* plist = [NSPropertyListSerialization
+                                propertyListFromData: plistData
+                                    mutabilityOption:NSPropertyListImmutable
+                                              format:&format
+                                    errorDescription:&error];
+
+  //update the configuration that is used for creating the graph
   if (configuration){
     [configuration release];
   }
-  configuration = [NSDictionary dictionaryWithDictionary: c];
+  configuration = plist;
   [configuration retain];
 
+  //save in file the new configuration
+  [c writeToFile: t atomically: YES];
+
+  //graph 
   [self destroyGraph];
   [self parseConfiguration: configuration];
 
+  //interface
+  [self refreshInterfaceWithConfiguration: c withTitle: t];
+
+  //let's inform other components that we have changes
   [self hierarchyChanged];
 }
 
@@ -189,7 +208,8 @@
   NSDictionary *myOptions = [conf configuredOptionsForClass: [self class]];
 
   //configure myself using the configuration in myOptions
-  NSDictionary *gc = nil;
+  NSString *gc = nil;
+  NSString *gct = nil;
   NSEnumerator *en = [myOptions keyEnumerator];
   NSString *key;
   BOOL apply = NO;
@@ -197,7 +217,8 @@
     NSString *value = [myOptions objectForKey: key];
     if (0){
     }else if([key isEqualToString: @"gc_conf"]){
-      gc = [NSDictionary dictionaryWithContentsOfFile: value];
+      gct = value;
+      gc = [NSString stringWithContentsOfFile: value];
       if (!gc){
         //file not found, launch exception
         NSException *ex;
@@ -215,7 +236,8 @@
 
   if (apply){
     if (gc){
-      [self setGUIConfiguration: gc];
+      [self setGraphConfiguration: gc
+                        withTitle: gct];
     }else{
       //nothing to apply, try GUI
       [self apply: self];

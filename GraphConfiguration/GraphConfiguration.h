@@ -41,11 +41,9 @@
   NSDictionary *configuration; //current configuration
 
   // interface variables 
-  NSMutableDictionary *configurations; // nsstring -> nsstring 
   id confView;
-  id title;
-  id popup;
-  id ok;
+  NSTextField *title;
+  NSButton *ok;
   TrivaWindow *window;
 
   // variables defined during configuration parse 
@@ -73,18 +71,16 @@
  * - This should release nodes and edges attributes
  * - and create a new configuration graph
  */
-- (void) setGUIConfiguration: (NSDictionary *) conf;
+- (void) setGraphConfiguration: (NSString *) conf
+                     withTitle: (NSString *) t;
 @end
 
 @interface GraphConfiguration (Interface)
 - (void) initInterface;
-- (void) updateDefaults;
-- (void) refreshPopupAndSelect: (NSString*)toselect;
+- (void) refreshInterfaceWithConfiguration: (NSString *) gc
+                      withTitle: (NSString *) gct;
 - (void) apply: (id)sender;
-- (void) new: (id)sender;
-- (void) change: (id)sender;
-- (void) updateTitle: (id) sender;
-- (void) del: (id) sender;
+- (void) textDidChange: (id) sender;
 @end
 
 @interface GraphConfiguration (Protocol)
