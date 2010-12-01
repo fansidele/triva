@@ -183,6 +183,46 @@
   return [NSDictionary dictionaryWithContentsOfFile: file];
 }
 
+- (void) setConfiguration: (TrivaConfiguration *) conf
+{
+  //extract my configuration and put in myOptions dictionary
+  NSDictionary *myOptions = [conf configuredOptionsForClass: [self class]];
+
+  //configure myself using the configuration in myOptions
+  NSDictionary *gc = nil;
+  NSEnumerator *en = [myOptions keyEnumerator];
+  NSString *key;
+  BOOL apply = NO;
+  while ((key = [en nextObject])){
+    NSString *value = [myOptions objectForKey: key];
+    if (0){
+    }else if([key isEqualToString: @"gc_conf"]){
+      gc = [NSDictionary dictionaryWithContentsOfFile: value];
+      if (!gc){
+        //file not found, launch exception
+        NSException *ex;
+        ex = [NSException exceptionWithName: @"GraphConfigurationFileNotFound"
+                   reason: [NSString stringWithFormat: @"file = %@", value]
+                 userInfo: nil];
+        [ex raise];
+      }
+    }else if([key isEqualToString: @"gc_hide"]){
+      hideWindow = YES;
+    }else if([key isEqualToString: @"gc_apply"]){
+      apply = YES;
+    }
+  }
+
+  if (apply){
+    if (gc){
+      [self setGUIConfiguration: gc];
+    }else{
+      //nothing to apply, try GUI
+      [self apply: self];
+    }
+  }
+}
+
 - (void) show
 {
   if (!hideWindow){
