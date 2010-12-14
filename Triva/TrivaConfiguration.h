@@ -38,6 +38,9 @@ typedef enum { TrivaConfigurationHelp,
   NSMutableArray *input;
 
   TrivaConfigurationState state;
+
+  BOOL ignorable; //YES if errors during application of this 
+                  //configuration may be ignored, default is NO
 }
 - (id) initWithArguments: (const char**)argv
                  andSize: (int) argc
@@ -54,6 +57,8 @@ typedef enum { TrivaConfigurationHelp,
 - (NSDictionary *) configuredOptionsForClass: (Class) componentClass;
 - (BOOL) serverMode;
 - (int) serverPort;
+- (void) setIgnore: (BOOL) ign;
+- (BOOL) ignore;
 @end
 
 #endif

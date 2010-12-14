@@ -22,6 +22,7 @@
   self = [super init];
   conf = [[NSMutableDictionary alloc] init];
   input = [[NSMutableArray alloc] init];
+  ignorable = NO;
   return self;
 }
 
@@ -225,5 +226,15 @@
 - (TrivaConfigurationState) configurationState
 {
   return state;
+}
+
+- (void) setIgnore: (BOOL) ign
+{
+  ignorable = ign;
+}
+
+- (BOOL) ignore
+{
+  return ignorable;
 }
 @end
