@@ -135,6 +135,7 @@ NS_ENDHANDLER
     }
     [conf release];
   }
+  close (client_socket);
 
   [pool release];
 }
