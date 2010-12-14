@@ -81,15 +81,11 @@
 NS_DURING
   NSEnumerator *en = [components objectEnumerator];
   id component;
-  NSLog (@"START");
   while ((component = [en nextObject])){
     if ([component isKindOfClass: [TrivaFilter class]]){
-      NSLog (@"%@, conf = %@", component, configuration);
       [component setConfiguration: configuration];
-      NSLog (@"after");
     }
   }
-  NSLog (@"END");
 NS_HANDLER
   NSLog (@"Exception on configuring components.");
   NSLog (@"Info: %@", [localException userInfo]);
