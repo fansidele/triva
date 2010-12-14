@@ -277,6 +277,7 @@
   NSString *key;
   double s = [[[self startTime] description] doubleValue];
   double e = [[[self endTime] description] doubleValue];
+  double size = -1;
   BOOL apply = NO;
   BOOL animate = NO;
   while ((key = [en nextObject])){
@@ -289,7 +290,7 @@
     }else if([key isEqualToString: @"ti_start"]){
       s = [value doubleValue];
     }else if([key isEqualToString: @"ti_size"]){
-      e = s + [value doubleValue];
+      size = [value doubleValue];
     }else if([key isEqualToString: @"ti_apply"]){
       apply = YES;
     }else if([key isEqualToString: @"ti_forward"]){
@@ -301,6 +302,9 @@
     }else if([key isEqualToString: @"ti_animate"]){
       animate = YES;
     }
+  }
+  if (size >= 0){
+    e = s + size;
   }
   [self setTimeIntervalFrom: s to: e];
   if (apply){
