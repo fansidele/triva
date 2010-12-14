@@ -147,6 +147,11 @@
   [input addObject: filename];
 }
 
+- (void) removeAllInputFiles
+{
+  [input removeAllObjects];
+}
+
 - (NSArray *) inputFiles
 {
   return input;
