@@ -119,6 +119,13 @@
     }else{
       snprintf (aux, 100, "    --%s {double}", [name cString]);
     }
+  }else if ([type isEqualToString: @"int"]){
+    if (simple){
+      snprintf (aux, 100, "    -%s, --%s {int}", [simple cString],
+                                           [name cString]);
+    }else{
+      snprintf (aux, 100, "    --%s {int}", [name cString]);
+    }
   }else if ([type isEqualToString: @"file"]){
     if (simple){
       snprintf (aux, 100, "    -%s, --%s {file}", [simple cString],
