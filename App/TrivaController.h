@@ -39,6 +39,7 @@
 - (id) initWithConfiguration: (TrivaConfiguration *) configuration;
 - (void) initializeWithConfiguration: (TrivaConfiguration *) configuration;
 - (NSDictionary *) defaultOptions;
+- (void) updateWithConfiguration: (TrivaConfiguration *) configuration;
 @end
 
 @interface TrivaController (Bundles)
