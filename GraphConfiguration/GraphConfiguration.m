@@ -169,6 +169,8 @@
       }
     }else if([key isEqualToString: @"gc_hide"]){
       hideWindow = YES;
+    }else if([key isEqualToString: @"gc_show"]){
+      hideWindow = NO;
     }else if([key isEqualToString: @"gc_apply"]){
       apply = YES;
     }
@@ -181,6 +183,19 @@
 
   if (apply){
     [self apply];
+  }
+
+  if (hideWindow){
+    [self hide];
+  }else{
+    [self show];
+  }
+}
+
+- (void) hide
+{
+  if (hideWindow){
+    [window orderOut: self];
   }
 }
 

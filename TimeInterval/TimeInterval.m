@@ -283,6 +283,8 @@
   while ((key = [en nextObject])){
     NSString *value = [myOptions objectForKey: key];
     if (0){
+    }else if([key isEqualToString: @"ti_show"]){
+      hideWindow = NO;
     }else if([key isEqualToString: @"ti_hide"]){
       hideWindow = YES;
     }else if([key isEqualToString: @"ti_update"]){
@@ -313,6 +315,19 @@
   if (animate){
     [playButton performClick: self];
     [self play: self];
+  }
+
+  if (hideWindow) {
+    [self hide];
+  }else{
+    [self show];
+  }
+}
+
+- (void) hide
+{
+  if (hideWindow){
+    [window orderOut: self];
   }
 }
 

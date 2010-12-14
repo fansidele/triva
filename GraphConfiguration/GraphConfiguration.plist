@@ -6,5 +6,7 @@
                description = "Apply the configuration"; };
     gc_hide = { type = bool;
               description = "Hide the GraphConfiguration window"; };
+    gc_show = { type = bool;
+              description = "Show the GraphConfiguration window"; };
   };
 }

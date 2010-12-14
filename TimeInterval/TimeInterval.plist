@@ -16,5 +16,7 @@
                description = "Animation: frequency of updates"; };
     ti_hide = { type = bool;
                description = "Hide the TimeInterval window"; };
+    ti_show = { type = bool;
+               description = "Show the TimeInterval window"; };
   };
 }
