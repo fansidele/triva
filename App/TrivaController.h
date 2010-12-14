@@ -21,6 +21,7 @@
 #include <General/PajeFilter.h>
 #include <General/PSortedArray.h>
 #include <Triva/Triva.h>
+#include "TrivaServerSocket.h"
 
 @class TrivaComparisonController;
 
@@ -31,6 +32,8 @@
 
   NSMutableDictionary *bundles;
   NSMutableDictionary *components;
+
+  TrivaServerSocket *server;
 }
 + (id) controllerWithConfiguration: (TrivaConfiguration *) configuration;
 - (id) initWithConfiguration: (TrivaConfiguration *) configuration;

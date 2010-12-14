@@ -40,6 +40,8 @@ typedef enum { TrivaGraphView,
 - (NSArray *) inputFiles;
 - (NSDictionary *) configuredOptions;
 - (NSDictionary *) configuredOptionsForClass: (Class) componentClass;
+- (BOOL) serverMode;
+- (int) serverPort;
 @end
 
 #endif

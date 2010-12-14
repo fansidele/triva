@@ -52,11 +52,26 @@
   return triva;
 }
 
+- (void) dealloc
+{
+  [server release];
+  [super dealloc];
+}
+
 - (id) initWithConfiguration: (TrivaConfiguration *) configuration
 {
   self = [super init];
   components = [NSMutableDictionary dictionary];
   bundles = [NSMutableDictionary dictionary];
+  if ([configuration serverMode]){
+    int serverPort = [configuration serverPort];
+    server = [[TrivaServerSocket alloc] initWithPort: serverPort];
+    [NSThread detachNewThreadSelector: @selector(runServer:)
+                             toTarget: server
+                           withObject: self];
+  }else{
+    server = nil;
+  }
   return self;
 }
 

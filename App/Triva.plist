@@ -20,5 +20,7 @@
                     description = "Print Trace Type Hierarchy"; };
         instances = { type = bool;
                     description = "List All Trace Entities"; };
+        server = { type = int;
+                  description = "Wait commands on the specified port"; };
   };
 }

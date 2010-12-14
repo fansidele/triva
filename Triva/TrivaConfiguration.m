@@ -108,4 +108,22 @@
 
   return ret;
 }
+
+- (BOOL) serverMode
+{
+  if ([conf objectForKey: @"server"]){
+    return YES;
+  }else{
+    return NO;
+  }
+}
+
+- (int) serverPort
+{
+  if ([self serverMode]){
+    return [[conf objectForKey: @"server"] intValue];
+  }else{
+    return -1;
+  }
+}
 @end

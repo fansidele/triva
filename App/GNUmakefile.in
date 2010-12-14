@@ -10,7 +10,8 @@ Triva_OBJC_FILES = \
   TrivaController+Chunks.m \
   TrivaController+Components.m \
   TrivaComparisonController.m \
-  TrivaMergeController.m
+  TrivaMergeController.m \
+	TrivaServerSocket.m
 
 Triva_APPLICATION_ICON = Triva.tiff
 Triva_RESOURCE_FILES = Triva.tiff trivaInfo.plist Triva.plist
