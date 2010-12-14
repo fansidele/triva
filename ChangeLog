@@ -1,6 +1,11 @@
 2010-11-30 (try-1.3) Lucas M. Schnorr <schnorr@gmail.com>
   * New command line parameter scheme
     * TimeInterval and GraphConfiguration now acts according to command line
+  * New parameter --server <port> makes Triva receive commands through a socket
+    * All the command-line options are also available through socket, except
+      the opening of new trace files
+    * Each command passed by socket must be at most 1024 bytes long, and
+      the first \n or \r found is transformed in EOL
 
 2010-10-26 (1.2) Lucas M. Schnorr <schnorr@gmail.com>
   * The "portability" release: Linux and MacOS
