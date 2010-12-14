@@ -42,6 +42,8 @@ typedef enum { TrivaConfigurationHelp,
 - (id) initWithArguments: (const char**)argv
                  andSize: (int) argc
        andDefaultOptions: (NSDictionary *) options;
+- (id) initWithString: (NSString *) commands
+          andDefaultOptions: (NSDictionary *) options;
 - (TrivaVisualizationComponent) visualizationComponent;
 - (TrivaConfigurationState) configurationState;
 - (void) setOption: (NSString*) option withValue: (NSString*) value;

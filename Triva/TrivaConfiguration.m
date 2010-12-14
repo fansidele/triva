@@ -25,9 +25,8 @@
   return self;
 }
 
-- (id) initWithArguments: (const char**)argv
-                 andSize: (int) argc
-       andDefaultOptions: (NSDictionary *) options
+- (id) initWithString: (NSString *) commands
+          andDefaultOptions: (NSDictionary *) options
 {
   self = [self init];
 
@@ -40,10 +39,14 @@
     [dict addEntriesFromDictionary: [options objectForKey: key]];
   }
 
+
+  NSArray *ar = [commands componentsSeparatedByString: @" "];
   int i;
-  for (i = 1; i < argc; i++){
-    char *option = (char*)argv[i];
-    char *option_par = (char*)argv[i+1];
+  for (i = 0; i < [ar count]; i++){
+    const char *option = [[ar objectAtIndex: i] cString];
+    const char *option_par;
+    if (i+1 < [ar count]) option_par = [[ar objectAtIndex: i+1] cString];
+    else option_par = NULL;
 
     //help escape
     if (!strcmp (option, "--help") || !strcmp (option, "-h")){
@@ -94,6 +97,22 @@
   }
   state = TrivaConfigurationOK;
   return self;
+}
+
+- (id) initWithArguments: (const char**)argv
+                 andSize: (int) argc
+       andDefaultOptions: (NSDictionary *) options
+{
+  self = [self init];
+
+  NSMutableString *commands = [NSMutableString string];
+  int i;
+  for (i = 1; i < argc; i++){
+    char *option = (char*)argv[i];
+    [commands appendString: [NSString stringWithFormat: @"%s", option]];
+    if (i + 1 < argc) [commands appendString: @" "];
+  }
+  return [self initWithString: commands andDefaultOptions: options];
 }
 
 - (void) dealloc
@@ -171,7 +190,7 @@
               objectForKey: NSStringFromClass(componentClass)];
   en = [base keyEnumerator];
   while ((key = [en nextObject])){
-    NSString *value = [options objectForKey: key];
+    //NSString *value = [options objectForKey: key];
     if ([options objectForKey: key]){
       [ret setObject: [options objectForKey: key] forKey: key];
     }
