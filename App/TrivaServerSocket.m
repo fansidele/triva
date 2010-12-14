@@ -111,6 +111,29 @@
         if (msg[i] == '\n') { msg[i] = '\0'; break; }
       }
     }
+    NSString *message;
+    TrivaConfiguration *conf = nil;
+    message = [NSString stringWithFormat: @"%s", msg];
+NS_DURING
+    conf = [[TrivaConfiguration alloc] initWithString: message
+                             andDefaultOptions: [controller defaultOptions]];
+NS_HANDLER
+    NSLog (@"Exception on creating the configuration.");
+    NSLog (@"Info: %@", [localException userInfo]);
+    NSLog (@"Name: %@", [localException name]);
+    NSLog (@"Reason: %@", [localException reason]);
+    NSLog (@"Socket message: [%@]", message);
+    continue;
+NS_ENDHANDLER
+    [conf removeAllInputFiles]; //socket-based conf without opening of files
+    [conf setIgnore: YES];
+    if ([conf configurationState] == TrivaConfigurationOK){
+      [controller
+                performSelectorOnMainThread: @selector(updateWithConfiguration:)
+                                 withObject: conf
+                              waitUntilDone: YES];
+    }
+    [conf release];
   }
 
   [pool release];
