@@ -29,12 +29,21 @@ typedef enum { TrivaGraphView,
                TrivaList,
                TrivaInstances } TrivaVisualizationComponent;
 
+typedef enum { TrivaConfigurationHelp,
+               TrivaConfigurationOK } TrivaConfigurationState;
+
 @interface TrivaConfiguration : NSObject
 {
   NSMutableDictionary *conf;
   NSMutableArray *input;
+
+  TrivaConfigurationState state;
 }
+- (id) initWithArguments: (const char**)argv
+                 andSize: (int) argc
+       andDefaultOptions: (NSDictionary *) options;
 - (TrivaVisualizationComponent) visualizationComponent;
+- (TrivaConfigurationState) configurationState;
 - (void) setOption: (NSString*) option withValue: (NSString*) value;
 - (void) addInputFile: (NSString *) filename;
 - (NSArray *) inputFiles;

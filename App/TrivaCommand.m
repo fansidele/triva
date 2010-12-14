@@ -21,71 +21,21 @@
                  andSize: (int) argc
        andDefaultOptions: (NSDictionary *) options
 {
-  configuration = [[TrivaConfiguration alloc] init];
-  NSException *ex;
-  NSString *reason;
-  NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-  NSEnumerator *en = [options keyEnumerator];
-  NSString *key;
-  while ((key = [en nextObject])){
-    [dict addEntriesFromDictionary: [options objectForKey: key]];
-  }
-
-  self = [super init];
-  int i;
-  for (i = 1; i < argc; i++){
-    char *option = (char*)argv[i];
-    char *option_par = (char*)argv[i+1];
-
-    //help escape
-    if (!strcmp (option, "--help") || !strcmp (option, "-h")){
-      state = TrivaHelp;
-      return self;
-    }
-    
-    NSMutableString *optx = [NSMutableString stringWithFormat: @"%s", option];
-    NSString *opt_par = [NSString stringWithFormat: @"%s", option_par];
-    //check if option contains -'s, if it doens't consider as input file
-    NSRange range = [optx rangeOfString: @"-"];
-    if (range.length == 0 || (range.location != 0 && range.length != 0)) {
-      [configuration addInputFile: optx];
-      continue;
-    }
-    //treat as normal option 
-    NSString *opt;
-    opt = [optx stringByReplacingOccurrencesOfString: @"-" withString: @""];
-    id detail = [dict objectForKey: opt];
-    if (!detail){
-      reason = [NSString stringWithFormat: @"unknown parameter %s", option];
-      ex = [NSException exceptionWithName: @"TrivaCommandLineException"
-                                   reason: reason
-                                 userInfo: nil];
-      [ex raise];
-    }else{
-      //check type
-      NSString *type = [detail objectForKey: @"type"];
-      if ([type isEqualToString: @"bool"]){
-        [configuration setOption: opt withValue: @"1"];
-      }else{
-        //check parameter for option
-        NSRange range = [opt_par rangeOfString: @"-"];
-        if (range.location == 0 && (range.length == 1 || range.length == 2)){
-          reason = [NSString stringWithFormat:
-               @"parameter %s must be followed by a %@", option,
-                  [detail objectForKey: @"type"]];
-          ex = [NSException exceptionWithName: @"TrivaCommandLineException"
-                                       reason: reason
-                                     userInfo: nil];
-          [ex raise];
-        }else{
-          [configuration setOption: opt withValue: opt_par];
-          i++; //we used opt_par
-        }
-      }
-    }
+  configuration = [[TrivaConfiguration alloc] initWithArguments: argv
+                                      andSize: argc
+                            andDefaultOptions: options];
+  if ([configuration configurationState] == TrivaConfigurationHelp){
+    state = TrivaHelp;
+    return self;
   }
   state = TrivaCommandConfigured;
   return self;
+}
+
+- (void) dealloc
+{
+  [configuration release];
+  [super dealloc];
 }
 
 - (TrivaCommandState) state
