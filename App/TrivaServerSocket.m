@@ -87,6 +87,8 @@
 
 - (void) serveClient: (id) controller
 {
+  NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+
   NSDictionary *dict = [[NSThread currentThread] threadDictionary];
   int client_socket = [[dict objectForKey: @"client"] intValue];
   char msg[1024];
@@ -96,5 +98,7 @@
       break;
     }
   }
+
+  [pool release];
 }
 @end
