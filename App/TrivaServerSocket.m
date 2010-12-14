@@ -94,8 +94,22 @@
   char msg[1024];
   while (1){
     int x = recv(client_socket, msg, sizeof(msg), 0);
-    if (x <= 0){
+    if (x <= 0){ //normal (0) or error (-1) EOF
       break;
+    }
+    if (x <= 2){ //ignore anything smaller or equal to 2 bytes (\r\n)
+      continue;
+    }
+    //we handle only one line of 1024 bytes each time
+    //the first \n or \r is considered as EOL
+    {
+      //remove \r\n from the message
+      int len = strlen (msg);
+      int i;
+      for (i = 0; i < len; i++){
+        if (msg[i] == '\r') { msg[i] = '\0'; break; }
+        if (msg[i] == '\n') { msg[i] = '\0'; break; }
+      }
     }
   }
 
