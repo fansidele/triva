@@ -96,7 +96,9 @@ NS_HANDLER
   NSLog (@"Name: %@", [localException name]);
   NSLog (@"Reason: %@", [localException reason]);
   NSLog (@"Configuration provided: %@", [configuration configuredOptions]);
-  exit(1);
+  if (![configuration ignore]){
+    exit(1);
+  }
 NS_ENDHANDLER
   [pool release];
 }
