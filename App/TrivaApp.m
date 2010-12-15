@@ -22,19 +22,14 @@ int main (int argc, const char **argv){
   NSApplication *app = [NSApplication sharedApplication];
   NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 
+NS_DURING
   //parsing command line
   TrivaController *triva = [[TrivaController alloc] init];
   NSDictionary *allOptions = [triva defaultOptions];
   TrivaCommand *command;
-NS_DURING
   command = [[TrivaCommand alloc] initWithArguments: argv
                                             andSize: argc
                                   andDefaultOptions: allOptions];
-NS_HANDLER
-  printf ("%s: %s\n\n", [[localException name] cString],
-                    [[localException reason] cString]);
-  exit(1);
-NS_ENDHANDLER
   if ([command state] == TrivaHelp){
     [TrivaCommand printOptions: allOptions];
   }else if ([command state] == TrivaCommandConfigured){
@@ -46,6 +41,11 @@ NS_ENDHANDLER
     //run the application
     [app run];
   }
+NS_HANDLER
+  printf ("%s: %s\n\n", [[localException name] cString],
+                    [[localException reason] cString]);
+  exit(1);
+NS_ENDHANDLER
 
   //that's it
   [pool release];
