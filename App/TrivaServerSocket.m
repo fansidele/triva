@@ -21,10 +21,16 @@
 {
   self = [super init];
   server_port = port;
+  NSException *ex;
+  NSString *reason;
 
   server_socket = socket (AF_INET, SOCK_STREAM, 0);
   if (server_socket < 0){
-    NSLog (@"error on socket creation");
+    reason = [NSString stringWithFormat: @"server socket creation failed"];
+    ex = [NSException exceptionWithName: @"TrivaServerSocketException"
+                                 reason: reason
+                               userInfo: nil];
+    [ex raise];
     return nil;
   }
 
@@ -34,7 +40,12 @@
 
   int b = bind (server_socket, (struct sockaddr *)&sin, sizeof(sin));
   if (b < 0){
-    NSLog (@"error on bind");
+    reason = [NSString stringWithFormat:
+                @"binding failed (server socket port %d)", server_port];
+    ex = [NSException exceptionWithName: @"TrivaServerSocketException"
+                                 reason: reason
+                               userInfo: nil];
+    [ex raise];
     close (server_socket);
     return nil;
   }
@@ -50,9 +61,16 @@
 {
   NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
   keepListening = YES;
+  NSException *ex;
+  NSString *reason;
 
   if (listen(server_socket, 1)) {
-    NSLog (@"Error on listen");
+    reason = [NSString stringWithFormat:
+                    @"listen failed (port %d)", server_port];
+    ex = [NSException exceptionWithName: @"TrivaServerSocketException"
+                                 reason: reason
+                               userInfo: nil];
+    [ex raise];
     return;
   }
 
@@ -62,7 +80,12 @@
   while (keepListening){
     int client = accept(server_socket, (struct sockaddr *) &sin, &sinlen);
     if (client < 0){
-      NSLog (@"Error on accept from server");
+      reason = [NSString stringWithFormat:
+                    @"accept failed (port %d)", server_port];
+      ex = [NSException exceptionWithName: @"TrivaServerSocketException"
+                                 reason: reason
+                               userInfo: nil];
+      [ex raise];
       break;
     }
     NSThread *thread = [[NSThread alloc] initWithTarget: self
