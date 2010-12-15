@@ -85,35 +85,62 @@
   [super dealloc];
 }
 
+- (int) getLineWithBuffer: (char**) buf
+                  andSize: (size_t*) n
+                andStream: (FILE*) stream
+{
+  size_t i;
+  int ch;
+
+  if (!*buf) {
+    *buf = malloc(512);
+    *n = 512;
+  }
+
+  if (feof(stream))
+    return (ssize_t) - 1;
+
+  for (i = 0; (ch = fgetc(stream)) != EOF; i++) {
+    if (ch == '\r') { i--; continue; };
+
+    if (i >= (*n) + 1)
+      *buf = realloc(*buf, *n += 512);
+
+    (*buf)[i] = ch;
+
+    if ((*buf)[i] == '\n') {
+      //i++;
+      (*buf)[i] = '\0';
+      break;
+    }
+  }
+
+  if (i == *n)
+    *buf = realloc(*buf, *n += 1);
+
+  (*buf)[i] = '\0';
+
+  return (ssize_t) i;
+}
+
 - (void) serveClient: (id) controller
 {
   NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 
   NSDictionary *dict = [[NSThread currentThread] threadDictionary];
   int client_socket = [[dict objectForKey: @"client"] intValue];
-  char msg[1024];
+  FILE *stream = fdopen (client_socket, "r");
+  if (stream == NULL) return;
   while (1){
-    int x = recv(client_socket, msg, sizeof(msg), 0);
-    if (x <= 0){ //normal (0) or error (-1) EOF
-      break;
-    }
-    if (x <= 2){ //ignore anything smaller or equal to 2 bytes (\r\n)
-      continue;
-    }
-    //we handle only one line of 1024 bytes each time
-    //the first \n or \r is considered as EOL
-    {
-      //remove \r\n from the message
-      int len = strlen (msg);
-      int i;
-      for (i = 0; i < len; i++){
-        if (msg[i] == '\r') { msg[i] = '\0'; break; }
-        if (msg[i] == '\n') { msg[i] = '\0'; break; }
-      }
-    }
+    char *buffer = NULL;
+    size_t length = 0;
+    ssize_t read;
+
+    read = [self getLineWithBuffer: &buffer andSize: &length andStream: stream];
+    if (read <= 0) break;
     NSString *message;
     TrivaConfiguration *conf = nil;
-    message = [NSString stringWithFormat: @"%s", msg];
+    message = [NSString stringWithFormat: @"%s", buffer];
 NS_DURING
     conf = [[TrivaConfiguration alloc] initWithString: message
                              andDefaultOptions: [controller defaultOptions]];
@@ -134,6 +161,7 @@ NS_ENDHANDLER
                               waitUntilDone: YES];
     }
     [conf release];
+    free (buffer);
   }
   close (client_socket);
 

@@ -39,6 +39,9 @@
 - (void) stopServer;
 - (void) runServer: (id) sender;
 - (void) serveClient: (id) controller;
+- (int) getLineWithBuffer: (char**) buf
+                  andSize: (size_t*) n
+                andStream: (FILE*) stream;
 @end
 
 #endif
