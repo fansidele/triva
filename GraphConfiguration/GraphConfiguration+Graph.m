@@ -175,8 +175,7 @@ NS_ENDHANDLER
     [manager layoutOfNode: node
                withValues: [nodeTree timeSliceValues]
              andMinValues: [[self timeSliceTree] minValues]
-             andMaxValues: [[self timeSliceTree] maxValues]
-              andProvider: self];
+             andMaxValues: [[self timeSliceTree] maxValues]];
   }
 }
 

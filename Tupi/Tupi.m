@@ -207,7 +207,7 @@
 */
 }
 
-- (void) layoutWith: (NSDictionary*)conf andValues: (NSDictionary*)values andMinValues: (NSDictionary *) min andMaxValues: (NSDictionary*) max andProvider: (id) provider
+- (void) layoutWith: (NSDictionary*)conf andValues: (NSDictionary*)values andMinValues: (NSDictionary *) min andMaxValues: (NSDictionary*) max
 {
   NSString *sizeconf = [conf objectForKey: @"size"];
   double screensize;

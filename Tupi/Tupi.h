@@ -52,7 +52,7 @@ typedef enum {
 
 - (void) draw;
 
-- (void) layoutWith: (NSDictionary*)conf andValues: (NSDictionary*)values andMinValues: (NSDictionary *) min andMaxValues: (NSDictionary*) max andProvider: (id) provider;
+- (void) layoutWith: (NSDictionary*)conf andValues: (NSDictionary*)values andMinValues: (NSDictionary *) min andMaxValues: (NSDictionary*) max;
 
 - (BOOL) expressionHasVariables: (NSString*) expr;
 - (double) evaluateWithValues: (NSDictionary *) values
