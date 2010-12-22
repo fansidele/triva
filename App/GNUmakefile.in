@@ -17,9 +17,9 @@ Triva_APPLICATION_ICON = Triva.tiff
 Triva_RESOURCE_FILES = Triva.tiff trivaInfo.plist Triva.plist
 
 ifeq ($(FOUNDATION_LIB), apple)
-LDFLAGS += -F../Triva -framework Triva -framework General
+LDFLAGS += -F../Triva -framework Triva -framework General -F../Tupi -framework Tupi
 else
-LDFLAGS += -L../Triva/Triva.framework -lTriva -lGeneral
+LDFLAGS += -L../Triva/Triva.framework -lTriva -lGeneral -L../Tupi/Tupi.framework/ -lTupi
 endif
 	
 Triva_INCLUDE_DIRS += -I../ -I./ @CPPFLAGS@

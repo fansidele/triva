@@ -1,0 +1,11 @@
+include $(GNUSTEP_MAKEFILES)/common.make
+
+FRAMEWORK_NAME = Tupi
+
+Tupi_OBJC_FILES = Tupi.m TupiConfiguration.m TupiManager.m
+Tupi_HEADER_FILES = Tupi.h TupiConfiguration.h TupiManager.h
+
+Tupi_INCLUDE_DIRS += -I../ -I./ @CPPFLAGS@
+Tupi_LDFLAGS += @LDFLAGS@ -lm -lgraph -lgvc
+
+include $(GNUSTEP_MAKEFILES)/framework.make

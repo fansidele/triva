@@ -5,6 +5,7 @@ VERSION = @PACKAGE_VERSION@
 
 AGGREGATE_NAME = Triva
 SUBPROJECTS = Triva \
+	Tupi \
   App \
   GraphConfiguration \
   GraphView \
