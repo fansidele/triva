@@ -26,6 +26,11 @@
   return [manager enumeratorOfNodes];
 }
 
+- (id) currentTupiManager
+{
+  return manager;
+}
+
 - (NSRect) sizeForGraph
 {
 //FIXME

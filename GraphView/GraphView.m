@@ -58,11 +58,6 @@
   NSLog (@"recordMode set to %d", recordMode);
 }
 
-- (double) graphComponentScaling
-{
-  return [view scale];
-}
-
 - (void) show
 {
   [window orderFront: self];
