@@ -201,6 +201,17 @@
       return NO;
     }
   }
+  //getting the type of this node (should it be drawn as a NODE or as a EDGE
+  NSString *drawType = [conf objectForKey: @"type"];
+  if ([drawType isEqualToString: @"node"]){
+    drawingType = TRIVA_NODE;
+  }else if ([drawType isEqualToString: @"edge"]){
+    drawingType = TRIVA_EDGE;
+  }else{
+    //FIXME
+    NSLog (@"FIXME %s:%d", __FUNCTION__, __LINE__);
+    exit(1);
+  }
 
   //getting size configuration for node
   NSString *sizeconf = [conf objectForKey: @"size"];

@@ -24,6 +24,11 @@
 @class TrivaComposition;
 @class TrivaFilter;
 
+typedef enum {
+  TRIVA_NODE,
+  TRIVA_EDGE,
+} GraphNodeType;
+
 @interface TrivaGraphNode : Tree
 {
   NSString *type; //node type (entitytype from paje)
@@ -43,6 +48,8 @@
   NSMutableSet *connectedNodes; //contains the TrivaGraphNode's connected to me
 
   NSPoint highlightPoint;
+
+  GraphNodeType drawingType;
 }
 - (void) setType: (NSString *) n;
 - (NSString *) type;
