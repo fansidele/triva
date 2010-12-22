@@ -18,6 +18,7 @@
 #define __Tupi_h
 #include <Foundation/Foundation.h>
 #include <AppKit/AppKit.h>
+#include <matheval.h>
 
 typedef enum {
   TUPI_NODE,
@@ -47,6 +48,10 @@ typedef enum {
 - (void) draw;
 
 - (void) layoutWith: (NSDictionary*)conf andValues: (NSDictionary*)values andProvider: (id) provider;
+
+- (BOOL) expressionHasVariables: (NSString*) expr;
+- (double) evaluateWithValues: (NSDictionary *) values
+    withExpr: (NSString *) expr;
 @end
 
 #include <Triva/TrivaComposition.h>

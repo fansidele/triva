@@ -6,6 +6,6 @@ Tupi_OBJC_FILES = Tupi.m TupiConfiguration.m TupiManager.m
 Tupi_HEADER_FILES = Tupi.h TupiConfiguration.h TupiManager.h
 
 Tupi_INCLUDE_DIRS += -I../ -I./ @CPPFLAGS@
-Tupi_LDFLAGS += @LDFLAGS@ -lm -lgraph -lgvc
+Tupi_LDFLAGS += @LDFLAGS@ -lm -lgraph -lgvc -lmatheval
 
 include $(GNUSTEP_MAKEFILES)/framework.make
