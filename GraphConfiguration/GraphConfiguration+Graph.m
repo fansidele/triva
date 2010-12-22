@@ -166,7 +166,11 @@
     }else{
       start_slice = [self selectionStartTime];
     }
-    end_slice = [self endTime];
+    if ([[self endTime] timeIntervalSinceReferenceDate] == 0){
+      end_slice = [NSDate dateWithTimeIntervalSinceReferenceDate: 1];
+    }else{
+      end_slice = [self endTime];
+    }
 
     //check if edge is a link or container
     if ([type isKindOfClass: [PajeLinkType class]]){
