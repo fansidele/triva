@@ -62,7 +62,6 @@
 
 - (void) refresh
 {
-/*
   //check number of compositions that need space
   int count = 0;
   NSEnumerator *en = [compositions objectEnumerator];
