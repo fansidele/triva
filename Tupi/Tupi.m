@@ -26,12 +26,14 @@
   name = nil;
   type = nil;
   bb = NSZeroRect;
+  compositions = [[NSMutableDictionary alloc] init];
   return self;
 }
 
 - (void) dealloc
 {
   [connectedNodes release];
+  [compositions release];
   [super dealloc];
 }
 
@@ -225,6 +227,29 @@
   }
   bb.size.width = screensize;
   bb.size.height = screensize;
+
+  //compositions
+  NSMutableArray *ar = [NSMutableArray arrayWithArray: [conf allKeys]];
+  NSEnumerator *en = [ar objectEnumerator];
+  NSString *compositionName;
+  while ((compositionName = [en nextObject])){
+    NSDictionary *compconf = [conf objectForKey: compositionName];
+    if (![compconf isKindOfClass: [NSDictionary class]]) continue;
+    if (![compconf count]) continue;
+    
+    //check if composition already exist
+    TupiComposition *comp = [compositions objectForKey: compositionName];
+    if (!comp){
+      comp = [TupiComposition compositionWithConfiguration: compconf
+                                                  withName: compositionName
+                                                withValues: values
+                                                withColors: colors
+                                                  withNode: self];
+      [comp refreshWithinRect: bb];
+      [compositions setObject: comp forKey: compositionName];
+    }
+    [comp redefineLayoutWithValues: values];
+  }
 }
 
 

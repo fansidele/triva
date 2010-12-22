@@ -18,6 +18,7 @@
 #define __Tupi_h
 #include <Foundation/Foundation.h>
 #include <AppKit/AppKit.h>
+#include <Tupi/TupiComposition.h>
 #include <matheval.h>
 
 #define MAX_SIZE   40
@@ -35,6 +36,8 @@ typedef enum {
   NSMutableSet *connectedNodes;
   NSRect bb;
   BOOL highlight;
+
+  NSMutableDictionary *compositions;
 }
 - (void) setName: (NSString *) n;
 - (void) setType: (NSString *) n;

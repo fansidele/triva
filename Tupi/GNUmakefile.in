@@ -2,8 +2,12 @@ include $(GNUSTEP_MAKEFILES)/common.make
 
 FRAMEWORK_NAME = Tupi
 
-Tupi_OBJC_FILES = Tupi.m TupiConfiguration.m TupiManager.m TupiView.m
-Tupi_HEADER_FILES = Tupi.h TupiConfiguration.h TupiManager.h TupiView.h
+Tupi_OBJC_FILES = Tupi.m TupiConfiguration.m TupiManager.m TupiView.m \
+	TupiSeparation.m \
+	TupiComposition.m
+Tupi_HEADER_FILES = Tupi.h TupiConfiguration.h TupiManager.h TupiView.h \
+	TupiSeparation.h \
+	TupiComposition.h
 
 Tupi_INCLUDE_DIRS += -I../ -I./ @CPPFLAGS@
 Tupi_LDFLAGS += @LDFLAGS@ -lm -lgraph -lgvc -lmatheval
