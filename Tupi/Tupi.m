@@ -28,6 +28,11 @@
   tupiType = TUPI_UNDEF;
   bb = NSZeroRect;
   compositions = [[NSMutableDictionary alloc] init];
+  transformAngle = 0;
+  transformPoint = NSMakePoint(0,0);
+  return self;
+}
+
 - (id) initWithConfiguration: (NSDictionary*) dict
 {
   self = [self init];
@@ -100,7 +105,11 @@
 
 - (BOOL) pointInside: (NSPoint) p
 {
-  BOOL ret = NSPointInRect (p, bb);
+  NSBezierPath *path = [NSBezierPath bezierPath];
+  [path appendBezierPathWithRect: bb];
+  NSAffineTransform *transform = [self transform];
+  [path transformUsingAffineTransform: transform];
+  BOOL ret = [path containsPoint: p];
   if (ret) {
     //update compositions
     NSEnumerator *en = [compositions objectEnumerator];
@@ -135,6 +144,14 @@
 - (NSSet*) connectedNodes
 {
   return connectedNodes;
+}
+
+- (NSAffineTransform*) transform
+{
+  NSAffineTransform *transform = [NSAffineTransform transform];
+  [transform translateXBy: transformPoint.x yBy: transformPoint.y];
+  [transform rotateByDegrees: transformAngle];
+  return transform;
 }
 
 - (NSString *) description
@@ -212,8 +229,9 @@
   }
 
 */
-  [NSBezierPath strokeRect: NSMakeRect (-1,-1,2,2)]; 
 
+  NSAffineTransform *transform;
+  transform = [self transform];
   [transform concat];
 
   //draw my components
@@ -234,10 +252,8 @@
   [[NSColor grayColor] set];
   [border stroke];
 
-/*
   [transform invert];
   [transform concat];
-*/
 }
 
 - (void) layoutWith: (NSDictionary*)conf values: (NSDictionary*)values minValues: (NSDictionary *) min maxValues: (NSDictionary*) max colors: (NSDictionary*) colors

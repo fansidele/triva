@@ -40,6 +40,10 @@ typedef enum {
   double size;
 
   NSMutableDictionary *compositions;
+
+  //for transformation
+  NSPoint transformPoint;
+  double transformAngle;
 }
 - (id) initWithConfiguration: (NSDictionary*) dict;
 - (void) setName: (NSString *) n;
@@ -49,11 +53,13 @@ typedef enum {
 - (void) setBoundingBox: (NSRect) b;
 - (void) connectToNode: (Tupi*) n;
 
+
 - (NSString *) name;
 - (NSString *) type;
 - (TupiType) tupiType;
 - (NSRect) boundingBox;
 - (NSSet*) connectedNodes;
+- (NSAffineTransform*) transform;
 - (BOOL) pointInside: (NSPoint) p;
 
 - (void) drawLayout;
