@@ -69,7 +69,13 @@
   return self;
 }
 
-- (BOOL) redefineLayoutWithValues: (NSDictionary*) timeSliceValues
+- (void) dealloc
+{
+  [calculatedValues release];
+  [super dealloc];
+}
+
+- (void) layoutWithValues: (NSDictionary*) timeSliceValues
 {
   //clear calculatedValues
   [calculatedValues removeAllObjects];
@@ -91,35 +97,29 @@
   }
   overflow = sum - 1;
 
-  if ([calculatedValues count] == 0){
-    needSpace = NO;
-  }else{
-    needSpace = YES;
-  }
+//  if ([calculatedValues count] == 0){
+//    needSpace = NO;
+//  }else{
+//    needSpace = YES;
+//  }
 
-  if (threshold < 0){
-    return NO;
-  }
-
-  if (sum > threshold) {
-    return YES;
-  }else{
-    return NO;
-  }
+//  if (threshold < 0){
+//    return NO;
+//  }
+//
+//  if (sum > threshold) {
+//    return YES;
+//  }else{
+//    return NO;
+//  }
 }
 
-- (void) dealloc
-{
-  [calculatedValues release];
-  [super dealloc];
-}
-
-- (void) refreshWithinRect: (NSRect) rect
+- (void) layoutWithRect: (NSRect) rect
 {
   bb = rect;
 }
 
-- (void) draw
+- (void) drawLayout
 {
   NSEnumerator *en = [calculatedValues keyEnumerator];
   NSString *type;
@@ -153,7 +153,6 @@
     [path stroke];
     accum_y += vr.size.height;
   }
-  return YES;
 }
 
 - (NSRect) bb

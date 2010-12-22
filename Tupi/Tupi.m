@@ -148,7 +148,7 @@
 }
 */
 
-- (void) draw
+- (void) drawLayout
 {
 /*
   NSAffineTransform *transform = [NSAffineTransform transform];
@@ -195,7 +195,7 @@
   NSEnumerator *en = [compositions objectEnumerator];
   id comp;
   while ((comp = [en nextObject])){
-    [comp draw];
+    [comp drawLayout];
   }
   
   //draw myself
@@ -250,10 +250,10 @@
                                                 withValues: values
                                                 withColors: colors
                                                   withNode: self];
-      [comp refreshWithinRect: bb];
       [compositions setObject: comp forKey: compositionName];
     }
-    [comp redefineLayoutWithValues: values];
+    [comp layoutWithRect: bb];
+    [comp layoutWithValues: values];
   }
 }
 

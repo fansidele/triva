@@ -53,7 +53,7 @@ typedef enum {
 - (NSSet*) connectedNodes;
 - (BOOL) pointInside: (NSPoint) p;
 
-- (void) draw;
+- (void) drawLayout;
 
 - (void) layoutWith: (NSDictionary*)conf values: (NSDictionary*)values minValues: (NSDictionary *) min maxValues: (NSDictionary*) max colors: (NSDictionary*) colors;
 

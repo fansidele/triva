@@ -41,10 +41,11 @@
                   withColors: (NSDictionary*) colors
                     withNode: (Tupi*) obj;
 
-- (BOOL) redefineLayoutWithValues: (NSDictionary*) timeSliceValues;
+- (void) layoutWithValues: (NSDictionary*) timeSliceValues;
+- (void) layoutWithRect: (NSRect) rect;
+- (void) drawLayout;
+
 - (BOOL) needSpace;
-- (void) refreshWithinRect: (NSRect) rect;
-- (void) draw;
 - (NSRect) bb;
 - (NSString*) name;
 - (BOOL) mouseInside: (NSPoint)mPoint

@@ -111,7 +111,22 @@
   return self;
 }
 
-- (BOOL) redefineLayoutWithValues: (NSDictionary*) timeSliceValues
+- (void) layoutWithValues: (NSDictionary*) timeSliceValues
+{
+  //must be implemented in the subclasses
+  NSLog (@"%s:%d: this method must be implemented in the subclasses",
+                        __FUNCTION__, __LINE__);
+  return NO;
+}
+
+- (void) layoutWithRect: (NSRect) rect
+{
+  //must be implemented in the subclasses
+  NSLog (@"%s:%d: this method must be implemented in the subclasses",
+                        __FUNCTION__, __LINE__);
+}
+
+- (void) drawLayout
 {
   //must be implemented in the subclasses
   NSLog (@"%s:%d: this method must be implemented in the subclasses",
@@ -122,21 +137,6 @@
 - (BOOL) needSpace
 {
   return needSpace;
-}
-
-- (void) refreshWithinRect: (NSRect) rect
-{
-  //must be implemented in the subclasses
-  NSLog (@"%s:%d: this method must be implemented in the subclasses",
-                        __FUNCTION__, __LINE__);
-}
-
-- (void) draw
-{
-  //must be implemented in the subclasses
-  NSLog (@"%s:%d: this method must be implemented in the subclasses",
-                        __FUNCTION__, __LINE__);
-  return NO;
 }
 
 - (NSRect) bb

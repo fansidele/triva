@@ -54,7 +54,7 @@
   Tupi *node;
   NSEnumerator *en = [tupiManager enumeratorOfNodes];
   while ((node = [en nextObject])){
-    [node draw];
+    [node drawLayout];
   }
 }
 
