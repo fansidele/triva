@@ -42,8 +42,8 @@
   if ([ok state] == NSOnState){
     NSString *str;
     str = [NSString stringWithString:[[confView textStorage] string]];
-    [self setGraphConfiguration: str withTitle: [title stringValue]];
-    [self apply];
+    [self saveGraphConfiguration: str withTitle: [title stringValue]];
+    [self applyGraphConfiguration];
   }
 }
 
@@ -52,7 +52,7 @@
   if ([ok state] == NSOnState){
     NSString *str;
     str = [NSString stringWithString:[[confView textStorage] string]];
-    [self setGraphConfiguration: str withTitle: [title stringValue]];
+    [self saveGraphConfiguration: str withTitle: [title stringValue]];
   }
 }
 

@@ -18,94 +18,12 @@
 #include "GraphConfiguration.h"
 
 @implementation GraphConfiguration (Position)
-- (NSString *) traceUniqueLabel
-{
-  NSString *filename = [self traceDescription];
-  if (filename){
-    return [[filename pathComponents] lastObject];
-  }
-  return nil;
-}
-
-- (void) saveGraphPositionsToUserDefaults: (NSString *) label
-{
-  NSUserDefaults *defaults;
-  NSString *key;
-  NSEnumerator *en;
-  TrivaGraphNode *node;
-  NSMutableDictionary *dict;
-
-  defaults = [NSUserDefaults standardUserDefaults];
-  key = [NSString stringWithFormat: @"%@-GraphConfigurationPosition", label];
-  //check if it already exists on defaults
-  if ([defaults objectForKey: key]){
-    //if it exits, delete and continue
-    [defaults removeObjectForKey: key];
-  }
-  en = [nodes objectEnumerator];
-  dict = [NSMutableDictionary dictionary];
-  while ((node = [en nextObject])){
-    NSString *xk = [NSString stringWithFormat: @"%@-x", [node description]];
-    NSString *xv = [NSString stringWithFormat: @"%f", [node boundingBox].origin.x];
-    NSString *yk = [NSString stringWithFormat: @"%@-y", [node description]];
-    NSString *yv = [NSString stringWithFormat: @"%f", [node boundingBox].origin.y];
-    [dict setObject: xv forKey: xk];
-    [dict setObject: yv forKey: yk];
-  }
-  [defaults setObject: dict forKey: key];
-  [defaults synchronize];
-}
-
-- (BOOL) retrieveGraphPositionsFromUserDefaults: (NSString *) label
-{
-  NSUserDefaults *defaults;
-  NSString *key;
-  NSEnumerator *en;
-  TrivaGraphNode *node;
-  NSMutableDictionary *dict;
-  NSException *exception;
-
-  exception = [NSException exceptionWithName: @"GraphConfigurationException"
-                  reason: @"User defaults has no or incomplete position "
-                          "configuration for the elements of this trace file."
-                    userInfo: nil];
-
-  defaults = [NSUserDefaults standardUserDefaults];
-  key = [NSString stringWithFormat: @"%@-GraphConfigurationPosition", label];
-  //check if it already exists on defaults
-  dict = [defaults objectForKey: key];
-  if (!dict){
-    [exception raise];
-    return NO;
-  }
-  en = [nodes objectEnumerator];
-  while ((node = [en nextObject])){
-    NSString *xk = [NSString stringWithFormat: @"%@-x", [node description]];
-    NSString *xv;
-    NSString *yk = [NSString stringWithFormat: @"%@-y", [node description]];
-    NSString *yv;
-
-    if (!xk || !yk) {
-      [exception raise];
-      return NO;
-    }
-
-    xv = [dict objectForKey: xk];
-    yv = [dict objectForKey: yk];
-
-    NSRect bb = [node boundingBox];
-    bb.origin.x = [xv doubleValue];
-    bb.origin.y = [yv doubleValue];
-    [node setBoundingBox: bb];
-  }
-  return YES;
-}
-
+/*
 - (BOOL) retrieveGraphPositionsFromConfiguration: (NSDictionary *) conf
 {
   NSEnumerator *en;
 
-  en = [nodes objectEnumerator];
+  en = [manager enumeratorOfNodes];
   TrivaGraphNode *node;
 
   NSMutableArray *missingNodePosition = [NSMutableArray array];
@@ -130,35 +48,5 @@
   }
   return YES;
 }
-
-- (BOOL) retrieveGraphPositionsFromGraphviz: (NSDictionary *) conf
-{
-  //we have to run graphviz layout (slow)
-  NSLog (@"%s:%d Executing GraphViz Layout... (this might "
-            "take a while)", __FUNCTION__, __LINE__);
-  NSString *algo = [conf objectForKey: @"graphviz-algorithm"];
-  gvFreeLayout (gvc, graph);
-  if (algo){
-    gvLayout (gvc, graph, (char*)[algo cString]);
-  }else{
-    gvLayout (gvc, graph, (char*)"neato");
-  }
-  NSLog (@"%s:%d GraphViz Layout done", __FUNCTION__, __LINE__);
-  NSLog (@"%s:%d Got %d nodes", __FUNCTION__, __LINE__, [nodes count]);
-
-  //copy that information to nodes
-  NSEnumerator *en = [nodes objectEnumerator];
-  TrivaGraphNode *node;
-
-  while ((node = [en nextObject])){
-    NSRect bb = [node boundingBox];
-    Agnode_t *n = agfindnode (graph, (char *)[[node name] cString]);
-    if (n){
-      bb.origin.x = ND_coord(n).x;
-      bb.origin.y = ND_coord(n).y;
-    }
-    [node setBoundingBox: bb];
-  }
-  return YES;
-}
+*/
 @end

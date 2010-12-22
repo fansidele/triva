@@ -20,62 +20,6 @@
 #include "GraphConfiguration.h"
 
 @implementation GraphConfiguration (Graph)
-- (void) destroyGraph
-{
-  [nodes release];
-
-  if (graph){
-    agclose (graph);
-    graph = NULL;
-  }
-
-  [entities release];
-}
-
-- (BOOL) parseConfiguration: (NSDictionary *) conf
-{
-  nodes = [[NSMutableArray alloc] init];
-
-  graph = agopen ((char *)"graph", AGRAPHSTRICT);
-  agnodeattr (graph, (char*)"label", (char*)"");
-  agraphattr (graph, (char*)"overlap", (char*)"false");
-  agraphattr (graph, (char*)"splines", (char*)"true");
-
-  graphvizEnabled = NO;
-  userPositionEnabled = NO;
-  configurationParsed = NO;
-  layoutRendered = NO;
-
-  //dictionary to hold all TimeSlice entities used in graph
-  entities = [[NSMutableDictionary alloc] init];
-
-  if (!conf){
-    return NO;
-  }
- 
-  //check if graphviz should be used
-  if ([conf objectForKey: @"graphviz-algorithm"]){
-    graphvizEnabled = YES;
-  }else{
-    graphvizEnabled = NO;
-  }
-
-  //checking if user provided positions for nodes
-  id area = [conf objectForKey: @"area"];
-  if (area){
-    userPositionEnabled = YES;
-  }else{
-    userPositionEnabled = NO;
-  }
-
-  configurationParsed = YES;
-
-  NSLog (@"graphvizEnabled = %d", graphvizEnabled);
-  NSLog (@"userPositionEnabled = %d", userPositionEnabled);
-  NSLog (@"configurationParsed = %d", configurationParsed);
-  return YES;
-}
-
 - (NSMutableArray*) getTypeFrom: (PajeEntityType*) type withName: (NSString*) name
 {
   NSMutableArray *ret = [NSMutableArray array];
@@ -94,21 +38,11 @@
   return ret;
 }
 
-- (BOOL) createGraphWithConfiguration: (NSDictionary*) conf
+- (BOOL) createGraph
 {
-  //remove all existing nodes
-  [nodes removeAllObjects];
-
   NSLog (@"%s", __FUNCTION__);
   //configurationParsed should be YES when arrive here (won't check)
   //prefer user positions than those from graphviz
-  if (userPositionEnabled){
-    NSDictionary *area = [conf objectForKey: @"area"];
-    graphSize.origin.x = [[area objectForKey: @"x"] doubleValue];
-    graphSize.origin.y = [[area objectForKey: @"y"] doubleValue];
-    graphSize.size.width = [[area objectForKey: @"width"] doubleValue];
-    graphSize.size.height = [[area objectForKey: @"height"] doubleValue];
-  }
 
   NSMutableArray *nodeTypes = [NSMutableArray array];
   NSMutableArray *edgeTypes = [NSMutableArray array];
@@ -117,33 +51,25 @@
   PajeEntityType *type;
   PajeEntity* entity;
 
-  //obtaining node type based on configuration
-  NSArray *node_types = [conf objectForKey: @"node"];
-  if (!node_types || ![node_types isKindOfClass: [NSArray class]]){
-    //FIXME
-    NSLog (@"FIXME %s:%d", __FUNCTION__, __LINE__);
-    exit(1);
-  }
-
   //transform the list given by the user on entity types
-  en1 = [node_types objectEnumerator];
+  en1 = [[manager nodeTypes] objectEnumerator];
   while ((typeName = [en1 nextObject])){
     NSArray *types = [self getTypeFrom: [[self rootInstance] entityType] withName: typeName];
     [nodeTypes addObjectsFromArray: types];
   }
 
+  [manager startAdding];
   //for each type, iterate through its instances creating the TrivaGraphNodes of the graph
   en1 = [nodeTypes objectEnumerator];
   while ((type = [en1 nextObject])){
-    en2 = [self enumeratorOfContainersTyped: type inContainer: [self rootInstance]];
+    en2 = [self enumeratorOfContainersTyped: type
+                                inContainer: [self rootInstance]];
     while ((entity = [en2 nextObject])){
-      if (!userPositionEnabled && graphvizEnabled){
-        agnode (graph, (char*)[[entity name] cString]);
-      }
-      TrivaGraphNode *node = [[TrivaGraphNode alloc] init];
+      Tupi *node = [[Tupi alloc] init];
       [node setName: [entity name]];
-      [node setType: [type name]];
-      [nodes addObject: node];
+      [node setType: TUPI_NODE];
+      [manager addNode: node];
+      [node release];
 
 /*
       //add it to the entities dictionary
@@ -156,21 +82,12 @@
         [entities setObject: array forKey: [type name]];
         [array release];
       }
-      [node release];
 */
     }
   }
 
-  //obtaining edge type based on configuration
-  NSArray *edge_types = [conf objectForKey: @"edge"];
-  if (!edge_types || ![edge_types isKindOfClass: [NSArray class]]){
-    //FIXME
-    NSLog (@"FIXME %s:%d", __FUNCTION__, __LINE__);
-    exit(1);
-  }
-
   //transform the list given by the user on entity types
-  en1 = [edge_types objectEnumerator];
+  en1 = [[manager edgeTypes] objectEnumerator];
   while ((typeName = [en1 nextObject])){
     NSArray *types = [self getTypeFrom: [[self rootInstance] entityType] withName: typeName];
     [edgeTypes addObjectsFromArray: types];
@@ -207,32 +124,17 @@
                                      toTime: end_slice
                                 minDuration: 0];
     while ((entity = [en2 nextObject])){
-      const char *src = NULL, *dst = NULL;
-      src = [[[entity sourceContainer] name] cString];
-      dst = [[[entity destContainer] name] cString];
-
-      if (!userPositionEnabled && graphvizEnabled){
-        Agnode_t *s = agfindnode (graph, (char*)src);
-        Agnode_t *d = agfindnode (graph, (char*)dst);
-        if (!s || !d) continue; //ignore this edge completely
-        agedge (graph, s, d);
-      }
-
-      TrivaGraphNode *sourceNode, *destNode;
-      sourceNode = [self findNodeByName: [NSString stringWithFormat:@"%s",src]];
-      destNode = [self findNodeByName: [NSString stringWithFormat:@"%s", dst]];
-      if (![[sourceNode name] isEqualToString: [destNode name]]){
-        [sourceNode addConnectedNode: destNode];
-        [destNode addConnectedNode: sourceNode];
-      }
+      Tupi *sourceNode, *destNode;
+      sourceNode = [manager findNodeByName: [[entity sourceContainer] name]];
+      destNode = [manager findNodeByName: [[entity destContainer] name]];
+      [manager connectNode: sourceNode toNode: destNode];
     }
   }
-
-  [self definePositionWithConfiguration: conf];
-//  [self saveGraphPositionsToUserDefaults: [self traceUniqueLabel]];
+  [manager endAdding];
   return YES;
 }
 
+/*
 - (BOOL) definePositionWithConfiguration: (NSDictionary *) conf
 {
   //recalculate position of all nodes and edges based on
@@ -242,7 +144,7 @@
   //4 - otherwise, return false
 
 NS_DURING
-  if (userPositionEnabled){
+  if ([manager userPosition]){
     if ([self retrieveGraphPositionsFromConfiguration: conf]){
       return YES;
     }
@@ -252,51 +154,30 @@ NS_HANDLER
   NSLog (@"Fallback is check positions from user defaults (previous run)");
 NS_ENDHANDLER
 
-/*
-NS_DURING
-  if ([self retrieveGraphPositionsFromUserDefaults: [self traceUniqueLabel]]){
-    return YES;
-  }
-NS_HANDLER
-  NSLog (@"%@", localException);
-  NSLog (@"Fallback is calculate positions with Graphviz.");
-NS_ENDHANDLER
-*/
-
   //last option is graphviz
-  if (graphvizEnabled){
+  if ([manager graphviz]){
     if ([self retrieveGraphPositionsFromGraphviz: conf]){
       return YES;
     }
   }
   return YES;
 }
+*/
 
-- (BOOL) redefineLayoutOfGraphWithConfiguration: (NSDictionary *) conf
+- (void) redefineLayout
 {
-  maxCache = [[NSMutableDictionary alloc] init];
-  minCache = [[NSMutableDictionary alloc] init];
-
-  NSMutableArray *all = [NSMutableArray array];
-  [all addObjectsFromArray: nodes];
-
-  NSEnumerator *en = [all objectEnumerator];
-  id object;
-  while ((object = [en nextObject])){
-    NSString *type = [(TrivaGraphNode*)object type];
-    NSDictionary *objectConf = [conf objectForKey: type];
-    if (!objectConf) {
-      return NO;
-    }
-    [self redefineLayoutOf: object withConfiguration: objectConf];
+  NSEnumerator *en = [manager enumeratorOfNodes];
+  Tupi *node;
+  while ((node = [en nextObject])){
+    TimeSliceTree *nodeTree = [[self timeSliceTree]
+                                        searchChildByName: [node name]];
+    [manager layoutOfNode: node
+               withValues: [nodeTree timeSliceValues]
+              andProvider: self];
   }
-  layoutRendered = YES;
-
-  [maxCache release];
-  [minCache release];
-  return YES;
 }
 
+/*
 - (BOOL) redefineLayoutOf: (id) obj withConfiguration: (NSDictionary *) conf
 {
   TimeSliceTree *tree = [self timeSliceTree];
@@ -337,4 +218,5 @@ NS_ENDHANDLER
   }
   return YES;
 }
+*/
 @end

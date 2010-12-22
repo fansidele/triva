@@ -23,14 +23,17 @@
 // implementation the TrivaFilter "protocol" 
 - (NSEnumerator*) enumeratorOfNodes
 {
-  return [nodes objectEnumerator];
+  return [manager enumeratorOfNodes];
 }
 
 - (NSRect) sizeForGraph
 {
-  if (userPositionEnabled){
-    return graphSize;
-  }else if (graphvizEnabled){
+//FIXME
+  return [manager sizeForGraph];
+/*
+  if ([configuration userPosition]){
+    return [configuration userRect];
+  }else if ([configuration graphviz]){
     NSRect ret;
     ret.origin.x = ret.origin.y = 0;
     if (graph){
@@ -44,18 +47,12 @@
   }else{
     return NSZeroRect;
   }
+*/
 }
 
-- (TrivaGraphNode*) findNodeByName: (NSString *)name
+- (Tupi*) findNodeByName: (NSString *)name
 {
-  TrivaGraphNode *ret;
-  NSEnumerator *en = [nodes objectEnumerator];
-  while ((ret = [en nextObject])){
-    if ([name isEqualToString: [ret name]]){
-      return ret;
-    }
-  }
-  return nil;
+  return [manager findNodeByName: name];
 }
 
 - (BOOL) expressionHasVariables: (NSString*) expr

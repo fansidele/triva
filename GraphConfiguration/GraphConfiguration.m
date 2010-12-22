@@ -29,40 +29,28 @@
     [NSBundle loadGSMarkupNamed: @"GraphConfiguration" owner: self];
   }
   [self initInterface];
-  //initialiation of graphviz
-  gvc = gvContext();
-
   hideWindow = NO;
-  configuration = nil;
   return self;
 }
 
 - (void) dealloc
 {
-  [configuration release];
   [super dealloc];
 }
 
 //  Entry method from interface: a new configuration arrives
-- (void) setGraphConfiguration: (NSString *) c
+- (void) saveGraphConfiguration: (NSString *) c
                      withTitle: (NSString *) t
 {
-
   NSData* plistData = [c dataUsingEncoding:NSUTF8StringEncoding];
   NSString *error;
   NSPropertyListFormat format;
-  NSDictionary* plist = [NSPropertyListSerialization
-                                propertyListFromData: plistData
-                                    mutabilityOption:NSPropertyListImmutable
-                                              format:&format
-                                    errorDescription:&error];
-
-  //update the configuration that is used for creating the graph
-  if (configuration){
-    [configuration release];
-  }
-  configuration = plist;
-  [configuration retain];
+  [plist release];
+  plist = [NSPropertyListSerialization
+                propertyListFromData: plistData
+                    mutabilityOption:NSPropertyListImmutable
+                              format:&format
+                    errorDescription:&error];
 
   //save in file the new configuration
   [c writeToFile: t atomically: YES];
@@ -71,11 +59,10 @@
   [self refreshInterfaceWithConfiguration: c withTitle: t];
 }
 
-- (void) apply
+- (void) applyGraphConfiguration
 {
-  //graph 
-  [self destroyGraph];
-  [self parseConfiguration: configuration];
+  [manager release];
+  manager = [[TupiManager alloc] initWithConfigurationDictionary: plist];
 
   //let's inform other components that we have changes
   [self hierarchyChanged];
@@ -83,26 +70,15 @@
 
 - (void) hierarchyChanged
 {
-  if (configurationParsed){
-    if (![self createGraphWithConfiguration: configuration]){
-      NSException *exception = [NSException exceptionWithName: @"TrivaException"
-                   reason: @"Graph could not be created. Check configuration."
-                 userInfo: nil];
-      [exception raise];
-    }
-    [self timeSelectionChanged];
-  }
+  [self createGraph];
+  [self timeSelectionChanged];
+  [super hierarchyChanged];
 }
 
 - (void) timeSelectionChanged
 {
-  static int first_time = 1;
-  if (first_time){
-    first_time = 0;
-  }else{
-    [self redefineLayoutOfGraphWithConfiguration: configuration];
-    [super timeSelectionChanged];
-  }
+  [self redefineLayout];
+  [super timeSelectionChanged];
 }
 
 - (void) entitySelectionChanged
@@ -177,12 +153,12 @@
   }
 
   if (gc){
-    [self setGraphConfiguration: gc
+    [self saveGraphConfiguration: gc
                       withTitle: gct];
   }
 
   if (apply){
-    [self apply];
+    [self applyGraphConfiguration];
   }
 
   if (hideWindow){

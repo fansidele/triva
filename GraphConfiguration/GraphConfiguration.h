@@ -22,7 +22,8 @@
 #include <Foundation/Foundation.h>
 #include <Renaissance/Renaissance.h>
 #include <Triva/Triva.h>
-#include <graphviz/gvc.h>
+#include <Tupi/Tupi.h>
+#include <Tupi/TupiManager.h>
 #include <limits.h>
 #include <float.h>
 #include <matheval.h>
@@ -36,27 +37,14 @@
 @interface GraphConfiguration : TrivaFilter
 {
   // current graph configuration 
-  NSMutableArray *nodes; //list of nodes (TrivaGraphNode*)
-  NSDictionary *configuration; //current configuration
+  NSDictionary *plist;
+  TupiManager *manager;
 
   // interface variables 
   id confView;
   NSTextField *title;
   NSButton *ok;
   TrivaWindow *window;
-
-  // variables defined during configuration parse 
-  BOOL userPositionEnabled;
-  BOOL graphvizEnabled;
-  BOOL configurationParsed;
-  BOOL layoutRendered;
-
-  // variables needed to obey protocol
-  NSRect graphSize;
-
-  //Graphviz
-  GVC_t *gvc;
-  graph_t *graph;
 
   // variables for defining max and min
   NSMutableDictionary *entities; // type -> array of nodes/edges
@@ -68,12 +56,12 @@
 /*
  * Called by interface and command-line options to set a new configuration
  */
-- (void) setGraphConfiguration: (NSString *) conf
-                     withTitle: (NSString *) t;
+- (void) saveGraphConfiguration: (NSString *) conf
+                      withTitle: (NSString *) t;
 /*
  * Called by interface and command-line options to apply the new configuration
  */
-- (void) apply;
+- (void) applyGraphConfiguration;
 @end
 
 @interface GraphConfiguration (Interface)
@@ -89,22 +77,11 @@
 @end
 
 @interface GraphConfiguration (Graph)
-- (void) destroyGraph;
-- (BOOL) parseConfiguration: (NSDictionary *) conf;
-- (BOOL) createGraphWithConfiguration: (NSDictionary *) conf;
-- (BOOL) definePositionWithConfiguration: (NSDictionary *) conf;
-- (BOOL) redefineLayoutOfGraphWithConfiguration: (NSDictionary *) conf;
-- (BOOL) redefineLayoutOf: (id) obj withConfiguration: (NSDictionary *) conf;
-- (NSMutableArray*) getTypeFrom: (PajeEntityType*) type
-                       withName: (NSString*) name;
+- (BOOL) createGraph;
+- (void) redefineLayout;
 @end
 
 @interface GraphConfiguration (Position)
-- (NSString *) traceUniqueLabel;
-- (void) saveGraphPositionsToUserDefaults: (NSString *) label;
-- (BOOL) retrieveGraphPositionsFromUserDefaults: (NSString *) label;
-- (BOOL) retrieveGraphPositionsFromConfiguration: (NSDictionary *) conf;
-- (BOOL) retrieveGraphPositionsFromGraphviz: (NSDictionary *) conf;
 @end
 
 #endif
