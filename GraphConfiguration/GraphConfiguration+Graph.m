@@ -120,7 +120,8 @@
   //obtaining node type based on configuration, put instances on "nodes" attr
   en = [[conf objectForKey: @"node"] objectEnumerator];
   while ((typeName = [en nextObject])){
-    [nodeTypes addObject: [self entityTypeWithName: typeName]];
+    NSArray *types = [self getTypeFrom: [[self rootInstance] entityType] withName: typeName];
+    [nodeTypes addObjectsFromArray: types];
   }
   en = [nodeTypes objectEnumerator];
   while ((type = [en nextObject])){
@@ -152,7 +153,8 @@
   //obtaining edge type based on configuration, put instances on "edges" attr
   en = [[conf objectForKey: @"edge"] objectEnumerator];
   while ((typeName = [en nextObject])){
-    [edgeTypes addObject: [self entityTypeWithName: typeName]];
+    NSArray *types = [self getTypeFrom: [[self rootInstance] entityType] withName: typeName];
+    [edgeTypes addObjectsFromArray: types];
   }
   en = [edgeTypes objectEnumerator];
   while ((type = [en nextObject])){
