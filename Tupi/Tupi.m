@@ -141,7 +141,6 @@
 
 - (void) draw
 {
-  NSLog (@"%@ %@", name, connectedNodes);
 /*
   NSAffineTransform *transform = [NSAffineTransform transform];
   if (drawingType == TRIVA_EDGE){
@@ -192,12 +191,14 @@
   
   //draw myself
   NSBezierPath *border = [NSBezierPath bezierPathWithRect: bb];
+  if (highlight){
  // if (compositionHighlighted){
 //    [[NSColor redColor] set];
  //   [border setLineWidth: 2]; 
-//  }else{
-    [[NSColor lightGrayColor] set];
-//  }
+    [[NSColor yellowColor] set];
+  }else{
+    [[NSColor blackColor] set];
+  }
   [border stroke];
 
 /*
