@@ -33,6 +33,7 @@
 {
   TupiConfiguration *configuration;
   NSMutableDictionary *nodes;
+  Tupi *selectedNode;
 
   //Graphviz
   GVC_t *gvc;
@@ -48,6 +49,9 @@
 
 - (void) startAdding;
 - (void) endAdding;
+
+//from the view
+- (BOOL) searchAndHighlightAtPoint: (NSPoint) p;
 @end
 
 #endif

@@ -22,6 +22,10 @@
 {
   self = [super init];
   connectedNodes = [[NSMutableSet alloc] init];
+  highlight = NO;
+  name = nil;
+  type = nil;
+  bb = NSZeroRect;
   return self;
 }
 
@@ -54,6 +58,11 @@
   tupiType = n;
 }
 
+- (void) setHighlight: (BOOL) high
+{
+  highlight = high;
+}
+
 - (void) setBoundingBox: (NSRect) b
 {
   bb = b;
@@ -62,6 +71,11 @@
 - (void) connectToNode: (Tupi*) n
 {
   [connectedNodes addObject: n];
+}
+
+- (BOOL) pointInside: (NSPoint) p
+{
+  return NSPointInRect (p, bb);
 }
 
 - (NSString *) name

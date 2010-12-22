@@ -115,6 +115,21 @@
   }
 }
 
+- (BOOL) searchAndHighlightAtPoint: (NSPoint) p
+{
+  [selectedNode setHighlight: NO];
+  NSEnumerator *en = [nodes objectEnumerator];
+  Tupi *node;
+  while ((node = [en nextObject])){
+    if ([node pointInside: p]){
+      selectedNode = node;
+      [node setHighlight: YES];
+      return YES;
+    }
+  }
+  return NO;
+}
+
 /*
  * TupiConfiguration protocol
  */

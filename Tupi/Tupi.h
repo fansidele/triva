@@ -32,10 +32,12 @@ typedef enum {
   TupiType tupiType;
   NSMutableSet *connectedNodes;
   NSRect bb;
+  BOOL highlight;
 }
 - (void) setName: (NSString *) n;
 - (void) setType: (NSString *) n;
 - (void) setTupiType: (TupiType) n;
+- (void) setHighlight: (BOOL) highlight;
 - (void) setBoundingBox: (NSRect) b;
 - (void) connectToNode: (Tupi*) n;
 
@@ -44,6 +46,7 @@ typedef enum {
 - (TupiType) tupiType;
 - (NSRect) boundingBox;
 - (NSSet*) connectedNodes;
+- (BOOL) pointInside: (NSPoint) p;
 
 - (void) draw;
 
