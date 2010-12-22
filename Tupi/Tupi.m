@@ -209,7 +209,24 @@
 
 - (void) layoutWith: (NSDictionary*)conf andValues: (NSDictionary*)values andMinValues: (NSDictionary *) min andMaxValues: (NSDictionary*) max andProvider: (id) provider
 {
+  NSString *sizeconf = [conf objectForKey: @"size"];
+  double screensize;
+  if ([self expressionHasVariables: sizeconf]){
+    double minVal = [self evaluateWithValues: min withExpr: sizeconf];
+    double maxVal = [self evaluateWithValues: max withExpr: sizeconf];
+    double size = [self evaluateWithValues: values withExpr: sizeconf];
+    if ((maxVal - minVal) != 0) {
+      screensize = MAX_SIZE * (size) / (maxVal - minVal);
+    }else{
+      screensize = MAX_SIZE * (size) / (maxVal);
+    }
+  }else{
+    screensize = [sizeconf doubleValue];
+  }
+  bb.size.width = screensize;
+  bb.size.height = screensize;
 }
+
 
 - (BOOL) expressionHasVariables: (NSString*) expr
 {

@@ -20,6 +20,8 @@
 #include <AppKit/AppKit.h>
 #include <matheval.h>
 
+#define MAX_SIZE   40
+
 typedef enum {
   TUPI_NODE,
   TUPI_EDGE,
