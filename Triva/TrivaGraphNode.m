@@ -256,7 +256,6 @@
       [compositions setObject: comp forKey: compositionName];
     }
   }
-  [self setDrawable: YES];
   return YES;
 }
 
