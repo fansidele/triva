@@ -197,7 +197,6 @@
         dst = [[n valueOfFieldNamed: fdst] cString];
         if (!(src && dst)){
           PajeEntityType *source_type = [self entityTypeWithName: fsrc];
-          NSDate *startt = [NSDate dateWithTimeIntervalSinceReferenceDate: -1];
           NSEnumerator *en3 = [self enumeratorOfEntitiesTyped: source_type
                                                   inContainer: n
                                                      fromTime: start_slice
