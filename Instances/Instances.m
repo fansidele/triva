@@ -44,11 +44,13 @@
         } else {
             NSEnumerator *en3;
             PajeEntity *ent;
+            NSDate *startt = [NSDate dateWithTimeIntervalSinceReferenceDate: -1];
+            NSDate *endt = [self endTime];
             en3 = [self enumeratorOfEntitiesTyped:et
                                       inContainer:instance
-                                         fromTime:[self selectionStartTime]
-                                           toTime:[self selectionEndTime]
-                                      minDuration:0.0];
+                                         fromTime:startt
+                                           toTime:endt
+                                      minDuration:0];
             while ((ent = [en3 nextObject]) != nil) {
                 NSLog(@"e%*.*s%@", level+2, level+2, "", [self descriptionForEntity:ent]);
             }
