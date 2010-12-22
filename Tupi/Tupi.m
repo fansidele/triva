@@ -216,8 +216,9 @@
   //draw myself
   NSBezierPath *border = [NSBezierPath bezierPathWithRect: bb];
   if (highlight){
-    [name drawAtPoint: NSMakePoint (bb.origin.x,
-                                    bb.origin.y+bb.size.height)
+    NSString *str = [NSString stringWithFormat: @"%@ - %f", name, size];
+    [str drawAtPoint: NSMakePoint (bb.origin.x,
+                                   bb.origin.y+bb.size.height)
        withAttributes: nil];
   }
   [[NSColor grayColor] set];
