@@ -43,8 +43,6 @@ typedef enum {
 
   TimeSliceTree *timeSliceTree; //to show values to the user when highlighted
 
-  NSRect currentOutsideBB;
-
   NSMutableSet *connectedNodes; //contains the TrivaGraphNode's connected to me
 
   NSPoint highlightPoint;

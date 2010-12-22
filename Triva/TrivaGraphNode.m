@@ -25,7 +25,6 @@
   self = [super init];
   bb = NSZeroRect;
   compositions = [[NSMutableDictionary alloc] init];
-  currentOutsideBB = NSZeroRect;
   connectedNodes = [[NSMutableSet alloc] init];
   return self;
 }
@@ -84,7 +83,7 @@
   }
   en = [compositions objectEnumerator];
   double accum_x = 0;
-  currentOutsideBB = NSZeroRect;
+  NSRect currentOutsideBB = NSZeroRect;
   while ((composition = [en nextObject])){
     if ([composition needSpace]){
       NSRect rect = NSMakeRect (bb.origin.x + accum_x,
