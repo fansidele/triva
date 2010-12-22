@@ -79,7 +79,7 @@
   NSEnumerator *en = [compositions objectEnumerator];
   id comp;
   while ((comp = [en nextObject])){
-    [comp refreshWithinRect: bb];
+    [comp layoutWithRect: bb];
   }
 }
 
