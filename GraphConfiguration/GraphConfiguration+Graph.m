@@ -174,6 +174,8 @@ NS_ENDHANDLER
                                         searchChildByName: [node name]];
     [manager layoutOfNode: node
                withValues: [nodeTree timeSliceValues]
+             andMinValues: [[self timeSliceTree] minValues]
+             andMaxValues: [[self timeSliceTree] maxValues]
               andProvider: self];
   }
 }

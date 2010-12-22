@@ -75,10 +75,10 @@
   return [nodes objectForKey: name];
 }
 
-- (void) layoutOfNode: (Tupi*) node withValues: (NSDictionary*) values andProvider: (id) provider
+- (void) layoutOfNode: (Tupi*) node withValues: (NSDictionary*) values andMinValues: (NSDictionary*) min andMaxValues: (NSDictionary*) max andProvider: (id) provider
 {
   NSDictionary *nodeConf = [configuration configurationForType: [node type]];
-  [node layoutWith: nodeConf andValues: values andProvider: provider];
+  [node layoutWith: nodeConf andValues: values andMinValues: min andMaxValues: max andProvider: provider];
 }
 
 - (NSRect) sizeForGraph
