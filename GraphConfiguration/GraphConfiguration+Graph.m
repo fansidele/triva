@@ -66,19 +66,6 @@
                                 inContainer: [self rootInstance]];
     while ((entity = [en2 nextObject])){
       [manager createNodeWithName: [entity name] type: [type name]];
-
-/*
-      //add it to the entities dictionary
-      NSMutableArray *array = [entities objectForKey: [type name]];
-      if (array){
-        [array addObject: node];
-      }else{
-        array = [[NSMutableArray alloc] init];
-        [array addObject: node];
-        [entities setObject: array forKey: [type name]];
-        [array release];
-      }
-*/
     }
   }
 
@@ -89,7 +76,7 @@
     [edgeTypes addObjectsFromArray: types];
   }
 
-  //for each edge type, iterate through its instances connecting the existing TrivaGraphNodes of the graph
+  //for each edge type, iterate through its instances connecting nodes
   en1 = [edgeTypes objectEnumerator];
   while ((type = [en1 nextObject])){
     //check if edge is a link or container

@@ -115,6 +115,7 @@
   }
 }
 
+/*
 - (double) maxOfVariable: (NSString *) variable
                withScale: (TrivaScale) scale
                 ofObject: (NSString *) entityName
@@ -170,4 +171,5 @@
   [minCache setObject: [NSNumber numberWithDouble: min] forKey: variable];
   return min;
 }
+*/
 @end
