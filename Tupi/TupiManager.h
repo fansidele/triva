@@ -44,7 +44,7 @@
 - (void) connectNode: (Tupi*) n1 toNode: (Tupi*) n2;
 - (NSEnumerator*) enumeratorOfNodes;
 - (Tupi*) findNodeByName: (NSString*) name;
-- (void) layoutOfNode: (Tupi*) node withValues: (NSDictionary*) values andMinValues: (NSDictionary*) min andMaxValues: (NSDictionary*) max;
+- (void) layoutOfNode: (Tupi*) node withValues: (NSDictionary*) values minValues: (NSDictionary*) min maxValues: (NSDictionary*) max colors: (NSDictionary*) colors;
 - (NSRect) sizeForGraph;
 
 - (void) startAdding;

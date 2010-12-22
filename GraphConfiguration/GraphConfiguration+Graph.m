@@ -174,8 +174,9 @@ NS_ENDHANDLER
                                         searchChildByName: [node name]];
     [manager layoutOfNode: node
                withValues: [nodeTree timeSliceValues]
-             andMinValues: [[self timeSliceTree] minValues]
-             andMaxValues: [[self timeSliceTree] maxValues]];
+                minValues: [[self timeSliceTree] minValues]
+                maxValues: [[self timeSliceTree] maxValues]
+                   colors: [nodeTree timeSliceColors]];
   }
 }
 
