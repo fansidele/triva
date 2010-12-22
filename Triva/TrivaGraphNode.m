@@ -219,9 +219,9 @@
     double min = [filter minOfVariable: sizeconf withScale: scale
                           ofObject: name withType: type];
     double size = [filter evaluateWithValues: values withExpr: sizeconf];
-    screenSize = [filter calculateScreenSizeBasedOnValue: size
-                                                andMax: max
-                                                andMin: min];
+//    screenSize = [filter calculateScreenSizeBasedOnValue: size
+//                                                andMax: max
+//                                                andMin: min];
   }else{
     screenSize = [sizeconf doubleValue];
   }

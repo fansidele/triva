@@ -96,19 +96,6 @@
   [self timeSelectionChanged];
 }
 
-- (double) calculateScreenSizeBasedOnValue: (double) size
-  andMax: (double)max andMin: (double)min
-{
-  double s = 0;
-  if ((max - min) != 0) {
-    s = MAX_SIZE * (size) /
-      (max - min);
-  }else{
-    s = MAX_SIZE * (size) /(max);
-  }
-  return s * [self graphComponentScaling];
-}
-
 + (NSDictionary *) defaultOptions
 {
   NSBundle *bundle;

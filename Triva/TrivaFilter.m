@@ -70,13 +70,6 @@
   return nil; // TODO: remove
 }
 
-- (double) calculateScreenSizeBasedOnValue: (double) size
-  andMax: (double)max andMin: (double)min
-{
-  return [(TrivaFilter*)inputComponent calculateScreenSizeBasedOnValue: size
-        andMax: max andMin: min]; //TODO: remove
-}
-
 - (double) maxOfVariable: (NSString *) variable
                withScale: (TrivaScale) scale
                 ofObject: (NSString *) entityName
