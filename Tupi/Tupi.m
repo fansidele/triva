@@ -253,7 +253,7 @@
   //draw myself
   NSBezierPath *border = [NSBezierPath bezierPathWithRect: bb];
   if (highlight){
-    NSString *str = [NSString stringWithFormat: @"%@ - %f", name, size];
+    NSString *str = [NSString stringWithFormat: @"%@(%@) - %f", name, type, size];
     [str drawAtPoint: NSMakePoint (bb.origin.x,
                                    bb.origin.y+bb.size.height)
        withAttributes: nil];
