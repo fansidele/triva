@@ -78,6 +78,24 @@
   return YES;
 }
 
+- (NSMutableArray*) getTypeFrom: (PajeEntityType*) type withName: (NSString*) name
+{
+  NSMutableArray *ret = [NSMutableArray array];
+
+  if ([type isKindOfClass: [PajeContainerType class]]){
+    NSEnumerator *en = [[self containedTypesForContainerType: type] objectEnumerator];
+    PajeEntityType *childType;
+    while ((childType = [en nextObject])){
+      [ret addObjectsFromArray: [self getTypeFrom: childType withName: name]];
+    }
+  }
+  if ([[type name] isEqualToString: name]){
+    [ret addObject: type];
+  }
+  
+  return ret;
+}
+
 - (BOOL) createGraphWithConfiguration: (NSDictionary*) conf
 {
   NSLog (@"%s", __FUNCTION__);

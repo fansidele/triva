@@ -96,6 +96,8 @@
 - (BOOL) definePositionWithConfiguration: (NSDictionary *) conf;
 - (BOOL) redefineLayoutOfGraphWithConfiguration: (NSDictionary *) conf;
 - (BOOL) redefineLayoutOf: (id) obj withConfiguration: (NSDictionary *) conf;
+- (NSMutableArray*) getTypeFrom: (PajeEntityType*) type
+                       withName: (NSString*) name;
 @end
 
 @interface GraphConfiguration (Position)
