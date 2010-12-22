@@ -304,4 +304,14 @@
   }
   return found;
 }
+
+- (NSUInteger)hash
+{
+  return [name hash];
+}
+
+- (BOOL)isEqual:(id)anObject
+{
+  return [name isEqual: [anObject name]];
+}
 @end
