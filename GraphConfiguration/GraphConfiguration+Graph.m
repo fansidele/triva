@@ -303,36 +303,37 @@ NS_ENDHANDLER
   if (!tree){
     //FIXME
     NSLog (@"FIXME %s:%d", __FUNCTION__, __LINE__);
-    exit(1);
+//    exit(1);
   }
 
   //getting values integrated within the time-slice
-  id t = [[self timeSliceTree] searchChildByName: [obj name]];
-  if (t == nil){
-    NSLog (@"%s:%d The child %@ of TimeSliceTree (%@) does not "
-            "exist.", __FUNCTION__, __LINE__, [obj name], [self timeSliceTree]);
-    return NO;
-  }
-  NSMutableDictionary *values = [t timeSliceValues];
-
-  //check to see if timeslicetree is a "merged" tree (with differences)
+  NSDictionary *values = nil;
   NSDictionary *differences = nil;
-  if ([t isKindOfClass: [TimeSliceDifTree class]]){
-    if ([t mergedTree]){
-      differences = [t differences];
+  TimeSliceTree *objTree = [tree searchChildByName: [obj name]];
+  if (!objTree){
+    NSLog (@"FIXME %s:%d", __FUNCTION__, __LINE__);
+//    exit(1);
+  }else{
+    values = [objTree timeSliceValues];
+
+    //check to see if timeslicetree is a "merged" tree (with differences)
+    if ([objTree isKindOfClass: [TimeSliceDifTree class]]){
+      if ([objTree mergedTree]){
+        differences = [objTree differences];
+      }
     }
+
+    //set timeSliceTree of the object TODO: remove this
+    [obj setTimeSliceTree: objTree];
   }
-
-  //set timeSliceTree of the object TODO: remove this
-  [obj setTimeSliceTree: t];
-
   //position for object is already defined, let it calculate the rest
   //NSLog (@"[obj name] = %@, conf = %@ values = %@", [obj name], conf, values);
   if(![obj redefineLayoutWithConfiguration: conf
                               withProvider: self
                            withDifferences: differences
                         andTimeSliceValues: values]){
-    return NO;
+    NSLog (@"FIXME %s:%d", __FUNCTION__, __LINE__);
+//    exit(1);
   }
   return YES;
 }
