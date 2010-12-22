@@ -65,12 +65,7 @@
     en2 = [self enumeratorOfContainersTyped: type
                                 inContainer: [self rootInstance]];
     while ((entity = [en2 nextObject])){
-      Tupi *node = [[Tupi alloc] init];
-      [node setName: [entity name]];
-      [node setType: [type name]];
-      [node setTupiType: TUPI_NODE];
-      [manager addNode: node];
-      [node release];
+      [manager createNodeWithName: [entity name] type: [type name]];
 
 /*
       //add it to the entities dictionary

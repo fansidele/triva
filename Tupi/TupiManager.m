@@ -47,10 +47,15 @@
   [super dealloc];
 }
 
-- (void) addNode: (Tupi*) node
+- (void) createNodeWithName: (NSString*) name type: (NSString*) type
 {
-  [nodes setObject: node forKey: [node name]];
+  NSDictionary *dict = [configuration configurationForType: type];
+  Tupi *node = [[Tupi alloc] initWithConfiguration: dict];
+  [node setName: name];
+  [node setType: type];
   agnode (graph, (char*)[[node name] cString]);
+  [nodes setObject: node forKey: name];
+  [node release];
 }
 
 - (void) connectNode: (Tupi*) n1 toNode: (Tupi*) n2

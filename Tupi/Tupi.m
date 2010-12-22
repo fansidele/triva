@@ -25,8 +25,18 @@
   highlight = NO;
   name = nil;
   type = nil;
+  tupiType = TUPI_UNDEF;
   bb = NSZeroRect;
   compositions = [[NSMutableDictionary alloc] init];
+- (id) initWithConfiguration: (NSDictionary*) dict
+{
+  self = [self init];
+  NSString *nodetype = [dict objectForKey: @"type"];
+  if (nodetype && [nodetype isEqualToString: @"edge"]){
+    tupiType = TUPI_EDGE;
+  }else{
+    tupiType = TUPI_NODE;
+  }
   return self;
 }
 

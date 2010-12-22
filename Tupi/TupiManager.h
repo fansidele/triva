@@ -40,7 +40,7 @@
   graph_t *graph;
 }
 - (id) initWithConfigurationDictionary: (NSDictionary*) conf;
-- (void) addNode: (Tupi*) node;
+- (void) createNodeWithName: (NSString*) name type: (NSString*) type;
 - (void) connectNode: (Tupi*) n1 toNode: (Tupi*) n2;
 - (NSEnumerator*) enumeratorOfNodes;
 - (Tupi*) findNodeByName: (NSString*) name;

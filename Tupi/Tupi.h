@@ -26,6 +26,7 @@
 typedef enum {
   TUPI_NODE,
   TUPI_EDGE,
+  TUPI_UNDEF
 } TupiType;
 
 @interface Tupi : NSObject
@@ -40,6 +41,7 @@ typedef enum {
 
   NSMutableDictionary *compositions;
 }
+- (id) initWithConfiguration: (NSDictionary*) dict;
 - (void) setName: (NSString *) n;
 - (void) setType: (NSString *) n;
 - (void) setTupiType: (TupiType) n;
