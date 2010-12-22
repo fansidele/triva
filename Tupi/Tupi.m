@@ -236,7 +236,7 @@
   if ([self expressionHasVariables: sizeconf]){
     double minVal = [self evaluateWithValues: min withExpr: sizeconf];
     double maxVal = [self evaluateWithValues: max withExpr: sizeconf];
-    double size = [self evaluateWithValues: values withExpr: sizeconf];
+    size = [self evaluateWithValues: values withExpr: sizeconf];
     if ((maxVal - minVal) != 0) {
       screensize = MAX_SIZE * (size) / (maxVal - minVal);
     }else{

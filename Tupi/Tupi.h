@@ -36,6 +36,7 @@ typedef enum {
   NSMutableSet *connectedNodes;
   NSRect bb;
   BOOL highlight;
+  double size;
 
   NSMutableDictionary *compositions;
 }
