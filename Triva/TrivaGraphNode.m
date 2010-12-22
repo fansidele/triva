@@ -53,16 +53,6 @@
   return bb;
 }
 
-- (void) setDrawable: (BOOL) v
-{
-  drawable = v;
-}
-
-- (BOOL) drawable
-{
-  return drawable;
-}
-
 - (void) dealloc
 {
   [compositions release];
@@ -72,6 +62,7 @@
 
 - (void) refresh
 {
+/*
   //check number of compositions that need space
   int count = 0;
   NSEnumerator *en = [compositions objectEnumerator];

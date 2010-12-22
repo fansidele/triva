@@ -93,7 +93,6 @@
   TrivaGraphNode *node;
   en = [filter enumeratorOfNodes];
   while ((node = [en nextObject])){
-    if (![node drawable]) continue;
     [node refresh];
     [node draw];
     if ([node highlighted]) [node drawHighlight];

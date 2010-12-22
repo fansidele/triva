@@ -38,8 +38,6 @@ typedef enum {
   BOOL highlighted;
   BOOL compositionHighlighted; //YES if at at least one composition return YES
                               //during redefineLayoutWithValues
-  
-  BOOL drawable; //is it ready to draw?
 
   TimeSliceTree *timeSliceTree; //to show values to the user when highlighted
 
@@ -53,8 +51,6 @@ typedef enum {
 - (NSString *) type;
 - (void) setBoundingBox: (NSRect) b;
 - (NSRect) boundingBox;
-- (void) setDrawable: (BOOL)v;
-- (BOOL) drawable;
 - (void) refresh;
 - (BOOL) draw;
 - (void) drawHighlight;
