@@ -299,6 +299,13 @@ NS_ENDHANDLER
 
 - (BOOL) redefineLayoutOf: (id) obj withConfiguration: (NSDictionary *) conf
 {
+  TimeSliceTree *tree = [self timeSliceTree];
+  if (!tree){
+    //FIXME
+    NSLog (@"FIXME %s:%d", __FUNCTION__, __LINE__);
+    exit(1);
+  }
+
   //getting values integrated within the time-slice
   id t = [[self timeSliceTree] searchChildByName: [obj name]];
   if (t == nil){
