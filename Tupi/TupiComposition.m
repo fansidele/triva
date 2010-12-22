@@ -116,7 +116,6 @@
   //must be implemented in the subclasses
   NSLog (@"%s:%d: this method must be implemented in the subclasses",
                         __FUNCTION__, __LINE__);
-  return NO;
 }
 
 - (void) layoutWithRect: (NSRect) rect
@@ -131,7 +130,16 @@
   //must be implemented in the subclasses
   NSLog (@"%s:%d: this method must be implemented in the subclasses",
                         __FUNCTION__, __LINE__);
-  return NO;
+}
+
+- (void) setHighlight: (BOOL) v
+{
+  highlight = v;
+}
+
+- (BOOL) highlight
+{
+  return highlight;
 }
 
 - (BOOL) needSpace
@@ -154,8 +162,7 @@
   return [NSString stringWithFormat: @"[%@ %@]", [node name], name];
 }
 
-- (BOOL) mouseInside: (NSPoint)mPoint
-       withTransform: (NSAffineTransform*)transform
+- (BOOL) pointInside: (NSPoint)mPoint
 {
   //must be implemented in the subclasses
   NSLog (@"%s:%d: this method must be implemented in the subclasses",

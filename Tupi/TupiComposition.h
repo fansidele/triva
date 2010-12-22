@@ -29,6 +29,7 @@
   NSDictionary *configuration;
 
   BOOL needSpace;
+  BOOL highlight;
 }
 + (id) compositionWithConfiguration: (NSDictionary*) conf
                            withName: (NSString*) n
@@ -45,11 +46,12 @@
 - (void) layoutWithRect: (NSRect) rect;
 - (void) drawLayout;
 
+- (void) setHighlight: (BOOL) v;
+- (BOOL) highlight;
 - (BOOL) needSpace;
 - (NSRect) bb;
 - (NSString*) name;
-- (BOOL) mouseInside: (NSPoint)mPoint
-       withTransform: (NSAffineTransform*)transform;
+- (BOOL) pointInside: (NSPoint)mPoint;
 @end
 
 #endif

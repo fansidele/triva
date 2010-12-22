@@ -63,6 +63,12 @@
 - (void) setHighlight: (BOOL) high
 {
   highlight = high;
+  //update compositions
+  NSEnumerator *en = [compositions objectEnumerator];
+  id comp;
+  while ((comp = [en nextObject])){
+    [comp setHighlight: high];
+  }
 }
 
 - (void) setBoundingBox: (NSRect) b
@@ -84,7 +90,16 @@
 
 - (BOOL) pointInside: (NSPoint) p
 {
-  return NSPointInRect (p, bb);
+  BOOL ret = NSPointInRect (p, bb);
+  if (ret) {
+    //update compositions
+    NSEnumerator *en = [compositions objectEnumerator];
+    id comp;
+    while ((comp = [en nextObject])){
+      [comp pointInside: p];
+    }
+  }
+  return ret;
 }
 
 - (NSString *) name

@@ -39,6 +39,8 @@
   NSString *selectedType;
 
   NSDictionary *colors;
+
+  NSPoint hitPoint;
 }
 @end
 

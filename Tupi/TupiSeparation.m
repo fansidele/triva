@@ -150,6 +150,10 @@
 //    if ([selectedType isEqualToString: type]){
 //      [[NSColor blackColor] set];
 //    }
+    if ([self highlight]){
+      [[NSColor blueColor] set];  
+      [type drawAtPoint: bb.origin withAttributes: nil];
+    }
     [path stroke];
     accum_y += vr.size.height;
   }
@@ -183,37 +187,9 @@ return name;
   return ret;
 }
 
-- (BOOL) mouseInside: (NSPoint)mPoint
-       withTransform: (NSAffineTransform*)transform
+- (BOOL) pointInside: (NSPoint)mPoint
 {
-  NSEnumerator *en = [calculatedValues keyEnumerator];
-  NSString *type;
-  double accum_y = 0;
-  BOOL found = NO;
-  while ((type = [en nextObject])){
-    double value = [[calculatedValues objectForKey: type] doubleValue];
-    NSRect vr;
-    vr.size.width = bb.size.width;
-    vr.size.height = bb.size.height * value;
-    vr.origin.x = bb.origin.x;
-    vr.origin.y = bb.origin.y + accum_y;
-    accum_y += vr.size.height;
-
-    NSBezierPath *path = [NSBezierPath bezierPath];
-    [path appendBezierPathWithRect: vr];
-
-    if (transform){
-      [path transformUsingAffineTransform: transform];
-    }
-    if ([path containsPoint: mPoint]){
-      selectedType = type;
-      found = YES;
-      break;
-    }
-  }
-  if (!found){
-    selectedType = nil;
-  }
-  return found;
+  hitPoint = mPoint;
+  return NSPointInRect(hitPoint, bb);
 }
 @end
