@@ -68,6 +68,13 @@
 - (void) setBoundingBox: (NSRect) b
 {
   bb = b;
+
+  //update bounding boxes of compositions
+  NSEnumerator *en = [compositions objectEnumerator];
+  id comp;
+  while ((comp = [en nextObject])){
+    [comp refreshWithinRect: bb];
+  }
 }
 
 - (void) connectToNode: (Tupi*) n
