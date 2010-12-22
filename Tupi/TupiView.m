@@ -37,19 +37,6 @@
 
 - (void)drawRect:(NSRect)frame
 {
-  NSRect tela = [self bounds];
-
-  //white fill on view
-  [[NSColor whiteColor] set];
-  NSRectFill(tela);
-
-  //write the name of the file
-  [@"oi" drawAtPoint: NSMakePoint(0,0)
-                          withAttributes: nil];
-
-  //set default line width based on ratio
-  //[NSBezierPath setDefaultLineWidth: 1/ratio];
-
   //draw
   Tupi *node;
   NSEnumerator *en = [tupiManager enumeratorOfNodes];

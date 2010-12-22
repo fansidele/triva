@@ -71,6 +71,21 @@
 
 - (void)drawRect:(NSRect)frame
 {
+  NSRect tela = [self bounds];
+
+  //white fill on view
+  [[NSColor whiteColor] set];
+  NSRectFill(tela);
+
+  //draw the name of the file
+  [[filter traceDescription]
+                          drawAtPoint: NSMakePoint(0,0)
+                       withAttributes: nil];
+
+  //set default line width based on ratio
+  [NSBezierPath setDefaultLineWidth: 1/ratio];
+
+
   NSAffineTransform *transform = [self transform];
   [transform concat];
   [self setTupiManager: [filter currentTupiManager]];
