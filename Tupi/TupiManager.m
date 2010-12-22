@@ -21,6 +21,7 @@
 {
   self = [super init];
   nodes = [[NSMutableDictionary alloc] init];
+  selectedNode = nil;
   configuration = nil;
   gvc = gvContext();
   graph = agopen ((char *)"graph", AGRAPHSTRICT);
