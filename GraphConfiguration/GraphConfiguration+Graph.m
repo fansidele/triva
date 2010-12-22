@@ -96,6 +96,9 @@
 
 - (BOOL) createGraphWithConfiguration: (NSDictionary*) conf
 {
+  //remove all existing nodes
+  [nodes removeAllObjects];
+
   NSLog (@"%s", __FUNCTION__);
   //configurationParsed should be YES when arrive here (won't check)
   //prefer user positions than those from graphviz
