@@ -107,6 +107,10 @@
   return;
 }
 
+- (void)scrollWheel:(NSEvent *)event
+{
+}
+
 /*
 - (void) printGraph
 {
