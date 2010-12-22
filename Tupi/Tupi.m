@@ -186,6 +186,7 @@
     }
   }
 
+*/
   [NSBezierPath strokeRect: NSMakeRect (-1,-1,2,2)]; 
 
   [transform concat];
@@ -196,18 +197,15 @@
   while ((comp = [en nextObject])){
     [comp draw];
   }
-*/
   
   //draw myself
   NSBezierPath *border = [NSBezierPath bezierPathWithRect: bb];
   if (highlight){
- // if (compositionHighlighted){
-//    [[NSColor redColor] set];
- //   [border setLineWidth: 2]; 
-    [[NSColor yellowColor] set];
-  }else{
-    [[NSColor blackColor] set];
+    [name drawAtPoint: NSMakePoint (bb.origin.x,
+                                    bb.origin.y+bb.size.height)
+       withAttributes: nil];
   }
+  [[NSColor grayColor] set];
   [border stroke];
 
 /*
