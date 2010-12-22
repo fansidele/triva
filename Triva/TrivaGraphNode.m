@@ -237,13 +237,6 @@
   }
   bb.size.width = screenSize;
   bb.size.height = screenSize;
-/*
-  //converting from graphviz center point to top-left origin
-  if (userPositions == NO){
-    bb.origin.x = bb.origin.x - bb.size.width/2;
-    bb.origin.y = bb.origin.y - bb.size.height/2;
-  }
-*/
 
   //iterating through compositions
   NSMutableArray *ar = [NSMutableArray arrayWithArray: [conf allKeys]];
