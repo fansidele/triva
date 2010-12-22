@@ -19,23 +19,18 @@
 
 #include <AppKit/AppKit.h>
 #include <Triva/TrivaGraphNode.h>
+#include <Tupi/TupiView.h>
 
 @class GraphView;
 
-@interface DrawView : NSView
+@interface DrawView : TupiView
 {
   GraphView *filter;
-  TrivaGraphNode *selectedNode;
 
   //for screen transformation
   double ratio;
   NSPoint translate;
-
   NSPoint move; //for use in mouse(down|dragged)
-
-  //for drawing scale (nodes and links) - used by GraphConfiguration
-  double scale;
-
 
   //interaction states
   BOOL movingSingleNode;
@@ -44,12 +39,10 @@
   //drawing selectedArea
   NSRect selectedArea;
   BOOL highlightSelectedArea;
-
 }
 - (void) setFilter: (GraphView *)f;
 - (NSColor *) getColor: (NSColor *)c withSaturation: (double) saturation;
 - (void) printGraph;
-- (double) scale;
 @end
 
 

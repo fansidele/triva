@@ -23,8 +23,10 @@
 - (id) initWithFrame: (NSRect) frame
 {
   self = [super initWithFrame: frame];
+  translate = NSZeroPoint;
+  move = NSZeroPoint;
   ratio = 1;
-  scale = 1;
+
   movingSingleNode = NO;
   selectingArea = NO;
   selectedArea = NSZeroRect;
@@ -69,46 +71,10 @@
 
 - (void)drawRect:(NSRect)frame
 {
-  NSRect tela = [self bounds];
-
-  //white fill on view
-  [[NSColor whiteColor] set];
-  NSRectFill(tela);
-
-  //write the name of the file
-  [[filter traceDescription] drawAtPoint: NSMakePoint(0,0)
-                          withAttributes: nil];
-
-
-  //transformations
   NSAffineTransform *transform = [self transform];
   [transform concat];
-
-  //set default line width based on ratio
-  [NSBezierPath setDefaultLineWidth: 1/ratio];
-
-  //draw
-  NSEnumerator *en;
-  TrivaGraphNode *node;
-  en = [filter enumeratorOfNodes];
-  while ((node = [en nextObject])){
-    [node refresh];
-    [node draw];
-    if ([node highlighted]) [node drawHighlight];
-  }
-
-  if (!NSEqualRects(selectedArea, NSZeroRect)) {
-    NSBezierPath *path = [NSBezierPath bezierPathWithRect: selectedArea];
-    if (highlightSelectedArea){
-      [path setLineWidth: 2];
-    }else{
-      [path setLineWidth: 1];
-    }
-    [[NSColor blueColor] set];
-    [path stroke];
-  }
-
-  //undo transformations
+  [self setTupiManager: [filter currentTupiManager]];
+  [super drawRect: frame];
   [transform invert];
   [transform concat];
 }
@@ -129,6 +95,23 @@
   NSPoint p;
   p = [self convertPoint:[event locationInWindow] fromView:nil];
 
+  if ([event modifierFlags] & NSControlKeyMask){
+    //if something should be done for this event, do it here
+    NSPoint dif;
+    dif = NSSubtractPoints (p, move);
+    if (NSEqualPoints (translate, NSZeroPoint)){
+      translate = dif;
+    }else{
+      translate = NSAddPoints (translate, dif);
+    }
+    move = p;
+ 
+    [self setNeedsDisplay: YES];
+  }
+  [super mouseDragged: event];
+  return;
+
+/*
   if (selectingArea){
     NSAffineTransform *t = [self transform];
     [t invert];
@@ -192,12 +175,18 @@
     move = p;
   }
   [self setNeedsDisplay: YES];
+*/
 }
 
 - (void) mouseDown: (NSEvent *) event
 {
-  move = [self convertPoint:[event locationInWindow] fromView:nil];
-
+  if ([event modifierFlags] & NSControlKeyMask){
+    //if something should be done for this event, do it here
+    move = [self convertPoint:[event locationInWindow] fromView:nil];
+  }
+  [super mouseDown: event];
+  return;
+/*
   if ([event modifierFlags] & NSControlKeyMask){
     if (selectedNode != nil){
       //moving a single node
@@ -212,20 +201,35 @@
       selectedArea.size = NSZeroSize;
     }
   }
+*/
 }
 
 - (void) mouseUp: (NSEvent *) event
 {
+  if ([event modifierFlags] & NSControlKeyMask){
+    //if something should be done for this event, do it here
+  }
+  [super mouseUp: event];
+  return;
+/*
+  return;
   if (selectingArea){
     //do multiple node selection
   }
 
   selectingArea = NO;
   movingSingleNode = NO;
+*/
 }
 
 - (void) mouseMoved:(NSEvent *)event
 {
+  if ([event modifierFlags] & NSControlKeyMask){
+    //if something should be done for this event, do it here
+  }
+  [super mouseMoved: event];
+  return;
+/*
   NSPoint p, p2;
   p = [self convertPoint:[event locationInWindow] fromView:nil];
 
@@ -266,46 +270,41 @@
   }else{
     return;
   }
+*/
 }
 
 - (void)scrollWheel:(NSEvent *)event
 {
-  if (([event modifierFlags] & NSControlKeyMask)){
-    //change the scale of the drawing (used by GraphConfiguration filter)
-    if ([event deltaY] > 0){
-      scale += scale*0.1;
-    }else{
-      scale -= scale*0.1;
-    }
-    [filter graphComponentScalingChanged];
-  }else{
+  if ([event modifierFlags] & NSControlKeyMask){
+    //if something should be done for this event, do it here
+
     NSPoint screenPositionAfter, screenPositionBefore, graphPoint;
     NSAffineTransform *t;
-
+ 
     screenPositionBefore = [self convertPoint: [event locationInWindow]
                                      fromView: nil];
     t = [self transform];
     [t invert];
     graphPoint = [t transformPoint: screenPositionBefore];
-
+ 
     //updating the ratio considering 10% of its value 
     if ([event deltaY] > 0){
       ratio += ratio*0.1;
     }else{
       ratio -= ratio*0.1;
     }
-
+ 
     t = [self transform];
     screenPositionAfter = [t transformPoint: graphPoint];
-
+ 
     //update translate to compensate change on scale
     translate = NSAddPoints (translate,
                     NSSubtractPoints (screenPositionBefore, screenPositionAfter));
-
+ 
     [self setNeedsDisplay: YES];
-    return;
   }
-  [self setNeedsDisplay: YES];
+  [super scrollWheel: event];
+  return;
 }
 
 - (void) printGraph
@@ -347,10 +346,5 @@
     [theEvent keyCode] == 27){ //ALT + R
     [filter setRecordMode];
   }
-}
-
-- (double) scale
-{
-  return scale;
 }
 @end
