@@ -27,6 +27,7 @@ typedef enum {Local,Global,Convergence,Arnaud} TrivaScale;
 @class TrivaConfiguration;
 
 @interface TrivaFilter  : PajeFilter
+- (id) currentTupiManager;
 - (TrivaGraphNode*) findNodeByName: (NSString *)name; /* TODO: to be removed*/
 - (NSEnumerator*) enumeratorOfNodes;
 - (NSRect) sizeForGraph;

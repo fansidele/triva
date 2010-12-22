@@ -23,6 +23,11 @@
   return self;
 }
 
+- (id) currentTupiManager
+{
+  return [(TrivaFilter*)inputComponent currentTupiManager];
+}
+
 - (TrivaGraphNode*) findNodeByName: (NSString *)name
 {
   return [(TrivaFilter*)inputComponent findNodeByName: name];
