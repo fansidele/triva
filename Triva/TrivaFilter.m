@@ -33,11 +33,6 @@
   return [(TrivaFilter*)inputComponent enumeratorOfNodes];
 }
 
-- (NSEnumerator*) enumeratorOfEdges
-{
-  return [(TrivaFilter*)inputComponent enumeratorOfEdges];
-}
-
 - (NSRect) sizeForGraph
 {
   return [(TrivaFilter*)inputComponent sizeForGraph];

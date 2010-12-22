@@ -37,7 +37,6 @@
 {
   // current graph configuration 
   NSMutableArray *nodes; //list of nodes (TrivaGraphNode*)
-  NSMutableArray *edges; //list of edges (TrivaGraphEdge*)
   NSDictionary *configuration; //current configuration
 
   // interface variables 

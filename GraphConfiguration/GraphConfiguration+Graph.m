@@ -23,7 +23,6 @@
 - (void) destroyGraph
 {
   [nodes release];
-  [edges release];
 
   if (graph){
     agclose (graph);
@@ -36,7 +35,6 @@
 - (BOOL) parseConfiguration: (NSDictionary *) conf
 {
   nodes = [[NSMutableArray alloc] init];
-  edges = [[NSMutableArray alloc] init];
 
   graph = agopen ((char *)"graph", AGRAPHSTRICT);
   agnodeattr (graph, (char*)"label", (char*)"");
@@ -111,30 +109,40 @@
 
   NSMutableArray *nodeTypes = [NSMutableArray array];
   NSMutableArray *edgeTypes = [NSMutableArray array];
-  NSEnumerator *en = NULL, *en2 = NULL;
+  NSEnumerator *en1 = NULL, *en2 = NULL;
   NSString *typeName;
   PajeEntityType *type;
-  id n;
-  id root = [self rootInstance]; //TODO: should I support children from others?
+  PajeEntity* entity;
 
-  //obtaining node type based on configuration, put instances on "nodes" attr
-  en = [[conf objectForKey: @"node"] objectEnumerator];
-  while ((typeName = [en nextObject])){
+  //obtaining node type based on configuration
+  NSArray *node_types = [conf objectForKey: @"node"];
+  if (!node_types || ![node_types isKindOfClass: [NSArray class]]){
+    //FIXME
+    NSLog (@"FIXME %s:%d", __FUNCTION__, __LINE__);
+    exit(1);
+  }
+
+  //transform the list given by the user on entity types
+  en1 = [node_types objectEnumerator];
+  while ((typeName = [en1 nextObject])){
     NSArray *types = [self getTypeFrom: [[self rootInstance] entityType] withName: typeName];
     [nodeTypes addObjectsFromArray: types];
   }
-  en = [nodeTypes objectEnumerator];
-  while ((type = [en nextObject])){
-    en2 = [self enumeratorOfContainersTyped: type inContainer: root];
-    while ((n = [en2 nextObject])){
+
+  //for each type, iterate through its instances creating the TrivaGraphNodes of the graph
+  en1 = [nodeTypes objectEnumerator];
+  while ((type = [en1 nextObject])){
+    en2 = [self enumeratorOfContainersTyped: type inContainer: [self rootInstance]];
+    while ((entity = [en2 nextObject])){
       if (!userPositionEnabled && graphvizEnabled){
-        agnode (graph, (char*)[[n name] cString]);
+        agnode (graph, (char*)[[entity name] cString]);
       }
       TrivaGraphNode *node = [[TrivaGraphNode alloc] init];
-      [node setName: [n name]];
+      [node setName: [entity name]];
       [node setType: [type name]];
       [nodes addObject: node];
 
+/*
       //add it to the entities dictionary
       NSMutableArray *array = [entities objectForKey: [type name]];
       if (array){
@@ -145,19 +153,36 @@
         [entities setObject: array forKey: [type name]];
         [array release];
       }
-
       [node release];
+*/
     }
   }
 
-  //obtaining edge type based on configuration, put instances on "edges" attr
-  en = [[conf objectForKey: @"edge"] objectEnumerator];
-  while ((typeName = [en nextObject])){
+  //obtaining edge type based on configuration
+  NSArray *edge_types = [conf objectForKey: @"edge"];
+  if (!edge_types || ![edge_types isKindOfClass: [NSArray class]]){
+    //FIXME
+    NSLog (@"FIXME %s:%d", __FUNCTION__, __LINE__);
+    exit(1);
+  }
+
+  //transform the list given by the user on entity types
+  en1 = [edge_types objectEnumerator];
+  while ((typeName = [en1 nextObject])){
     NSArray *types = [self getTypeFrom: [[self rootInstance] entityType] withName: typeName];
     [edgeTypes addObjectsFromArray: types];
   }
-  en = [edgeTypes objectEnumerator];
-  while ((type = [en nextObject])){
+
+  //for each edge type, iterate through its instances connecting the existing TrivaGraphNodes of the graph
+  en1 = [edgeTypes objectEnumerator];
+  while ((type = [en1 nextObject])){
+    //check if edge is a link or container
+    if (![type isKindOfClass: [PajeLinkType class]]){
+      //FIXME
+      NSLog (@"FIXME %s:%d", __FUNCTION__, __LINE__);
+      exit(1);
+    }
+
     //define slice of time to search for edges
     NSDate *start_slice, *end_slice;
     if ([[self selectionStartTime] isEqualToDate: [self startTime]]){
@@ -173,52 +198,15 @@
     }
 
     //check if edge is a link or container
-    if ([type isKindOfClass: [PajeLinkType class]]){
-      en2 = [self enumeratorOfEntitiesTyped: type
-                                inContainer: root
+    NSEnumerator *en2 = [self enumeratorOfEntitiesTyped: type
+                                inContainer: [self rootInstance]
                                    fromTime: start_slice
                                      toTime: end_slice
                                 minDuration: 0];
-    }else if ([type isKindOfClass: [PajeContainerType class]]){
-      en2 = [self enumeratorOfContainersTyped: type
-                                  inContainer: root];
-    }
-    while ((n = [en2 nextObject])){
+    while ((entity = [en2 nextObject])){
       const char *src = NULL, *dst = NULL;
-      //definition of source and destination of an edge 
-      //if type is link, the source and destination are obtained directly
-      //if type is container
-      //        instance of the container must have fields "src" and "dst"
-      //        that contain the name of the nodes this container edge connects 
-      if ([type isKindOfClass: [PajeLinkType class]]){
-        src = [[[n sourceContainer] name] cString];
-        dst = [[[n destContainer] name] cString];
-      }else if ([type isKindOfClass: [PajeContainerType class]]){
-        NSString *fsrc, *fdst;
-        fsrc = [[conf objectForKey: [type name]] objectForKey: @"src"];
-        fdst = [[conf objectForKey: [type name]] objectForKey: @"dst"];
-        src = [[n valueOfFieldNamed: fsrc] cString];
-        dst = [[n valueOfFieldNamed: fdst] cString];
-        if (!(src && dst)){
-          PajeEntityType *source_type = [self entityTypeWithName: fsrc];
-          NSEnumerator *en3 = [self enumeratorOfEntitiesTyped: source_type
-                                                  inContainer: n
-                                                     fromTime: start_slice
-                                                       toTime: end_slice
-                                                  minDuration: 0];
-          NSString *source_hostname = [[en3 nextObject] value];
-
-          PajeEntityType *destin_type = [self entityTypeWithName: fdst];
-          NSEnumerator *en4 = [self enumeratorOfEntitiesTyped: destin_type
-                                                  inContainer: n
-                                                     fromTime: 0
-                                                       toTime: [self endTime]
-                                                  minDuration: 0];
-          NSString *destin_hostname = [[en4 nextObject] value];
-          src = [source_hostname cString];
-          dst = [destin_hostname cString];
-        }
-      }
+      src = [[[entity sourceContainer] name] cString];
+      dst = [[[entity destContainer] name] cString];
 
       if (!userPositionEnabled && graphvizEnabled){
         Agnode_t *s = agfindnode (graph, (char*)src);
@@ -230,32 +218,10 @@
       TrivaGraphNode *sourceNode, *destNode;
       sourceNode = [self findNodeByName: [NSString stringWithFormat:@"%s",src]];
       destNode = [self findNodeByName: [NSString stringWithFormat:@"%s", dst]];
-
-      TrivaGraphEdge *edge = [[TrivaGraphEdge alloc] init];
-      [edge setName: [n name]];
-      [edge setType: [type name]];
-      [edge setSource: sourceNode];
-      [edge setDestination: destNode];
-      [edges addObject: edge];
-
-
-      //add it to the entities dictionary
-      NSMutableArray *array = [entities objectForKey: [type name]];
-      if (array){
-        [array addObject: edge];
-      }else{
-        array = [[NSMutableArray alloc] init];
-        [array addObject: edge];
-        [entities setObject: array forKey: [type name]];
-        [array release];
+      if (![[sourceNode name] isEqualToString: [destNode name]]){
+        [sourceNode addConnectedNode: destNode];
+        [destNode addConnectedNode: sourceNode];
       }
-
-
-      [edge release];
-
-      //to detect if there is more than one link 
-      //between two TrivaGraphNode's
-      [sourceNode addConnectedNode: destNode];
     }
   }
 
@@ -310,7 +276,6 @@ NS_ENDHANDLER
 
   NSMutableArray *all = [NSMutableArray array];
   [all addObjectsFromArray: nodes];
-  [all addObjectsFromArray: edges];
 
   NSEnumerator *en = [all objectEnumerator];
   id object;

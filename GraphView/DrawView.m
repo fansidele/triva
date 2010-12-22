@@ -88,17 +88,9 @@
   //set default line width based on ratio
   [NSBezierPath setDefaultLineWidth: 1/ratio];
 
-  //draw nodes and edges
+  //draw
   NSEnumerator *en;
   TrivaGraphNode *node;
-  TrivaGraphEdge *edge;
-  en = [filter enumeratorOfEdges];
-  while ((edge = [en nextObject])){
-    if (![edge drawable]) continue;
-    [edge refresh];
-    [edge draw];
-    if ([edge highlighted]) [edge drawHighlight];
-  }
   en = [filter enumeratorOfNodes];
   while ((node = [en nextObject])){
     if (![node drawable]) continue;
@@ -275,31 +267,6 @@
     }
   }else{
     return;
-  }
-
-  //search for edges
-  TrivaGraphEdge *edge = nil;
-  en = [filter enumeratorOfEdges];
-  found = NO;
-  while ((edge = [en nextObject])){
-    if ([edge mouseInside: p2]){
-      if (selectedEdge){
-        [selectedEdge setHighlight: NO];
-        selectedEdge = nil;
-      }
-      selectedEdge = edge;
-      [selectedEdge setHighlight: YES];
-      [self setNeedsDisplay: YES];
-      found = YES;
-      break;
-    }
-  }
-  if (!found){
-    if (selectedEdge){
-      [selectedEdge setHighlight: NO];
-      selectedEdge = nil;
-      [self setNeedsDisplay: YES];
-    }
   }
 }
 

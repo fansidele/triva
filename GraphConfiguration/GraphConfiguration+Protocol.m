@@ -26,11 +26,6 @@
   return [nodes objectEnumerator];
 }
 
-- (NSEnumerator*) enumeratorOfEdges
-{
-  return [edges objectEnumerator];
-}
-
 - (NSRect) sizeForGraph
 {
   if (userPositionEnabled){

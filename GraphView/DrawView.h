@@ -26,7 +26,6 @@
 {
   GraphView *filter;
   TrivaGraphNode *selectedNode;
-  TrivaGraphEdge *selectedEdge;
 
   //for screen transformation
   double ratio;

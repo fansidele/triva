@@ -144,8 +144,7 @@
     gvLayout (gvc, graph, (char*)"neato");
   }
   NSLog (@"%s:%d GraphViz Layout done", __FUNCTION__, __LINE__);
-  NSLog (@"%s:%d Got %d nodes and %d edges", __FUNCTION__, __LINE__,
-      [nodes count], [edges count]);
+  NSLog (@"%s:%d Got %d nodes", __FUNCTION__, __LINE__, [nodes count]);
 
   //copy that information to nodes
   NSEnumerator *en = [nodes objectEnumerator];
