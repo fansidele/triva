@@ -60,6 +60,7 @@ typedef enum {
 - (NSRect) boundingBox;
 - (NSSet*) connectedNodes;
 - (NSAffineTransform*) transform;
+- (NSPoint) centerPoint;
 - (BOOL) pointInside: (NSPoint) p;
 
 - (void) drawLayout;

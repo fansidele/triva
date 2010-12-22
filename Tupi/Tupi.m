@@ -154,6 +154,12 @@
   return transform;
 }
 
+- (NSPoint) centerPoint
+{
+  return NSMakePoint (bb.origin.x + bb.size.width/2,
+                      bb.origin.y + bb.size.height/2);
+}
+
 - (NSString *) description
 {
   return name;
@@ -170,12 +176,6 @@
 }
 
 /*
-- (NSPoint) centerPoint
-{
-  return NSMakePoint (bb.origin.x + bb.size.width/2,
-                      bb.origin.y + bb.size.height/2);
-}
-
 - (NSPoint) connectionPointTo: (Tupi *) node
 {
   NSPoint center = [self centerPoint];
@@ -229,6 +229,15 @@
   }
 
 */
+
+  Tupi *connected;
+  NSEnumerator *en1 = [connectedNodes objectEnumerator];
+  while ((connected = [en1 nextObject])){
+    NSBezierPath *path = [NSBezierPath bezierPath];
+    [path moveToPoint: [self centerPoint]];
+    [path lineToPoint: [connected centerPoint]];
+    [path stroke];
+  }
 
   NSAffineTransform *transform;
   transform = [self transform];
