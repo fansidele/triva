@@ -126,4 +126,10 @@
   /* to be implemented by sub-classes */
   return;
 }
+
+- (void) hide
+{
+  /* to be implemented by sub-classes */
+  return;
+}
 @end

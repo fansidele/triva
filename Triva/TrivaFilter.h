@@ -61,6 +61,7 @@ typedef enum {Local,Global,Convergence,Arnaud} TrivaScale;
 + (NSDictionary*) defaultOptions;
 - (void) setConfiguration: (TrivaConfiguration*) opt;
 - (void) show;
+- (void) hide;
 @end
 
 #endif
