@@ -179,7 +179,7 @@
     [t invert];
     NSPoint p2 = [t transformPoint: p];
 
-    NSRect nodebb = [selectedNode bb];
+    NSRect nodebb = [selectedNode boundingBox];
     nodebb.origin.x = p2.x - nodebb.size.width/2;
     nodebb.origin.y = p2.y - nodebb.size.height/2;
     [selectedNode setBoundingBox: nodebb];
@@ -336,7 +336,7 @@
     TrivaGraphNode *node;
     NSEnumerator *en = [filter enumeratorOfNodes];
     while ((node = [en nextObject])){
-      NSPoint p = [node bb].origin;
+      NSPoint p = [node boundingBox].origin;
       NSLog (@"%@ = { x = %f; y = %f; };", [node name], p.x, p.y);
     }
     NSRect rect = [filter sizeForGraph];

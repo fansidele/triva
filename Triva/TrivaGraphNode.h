@@ -54,7 +54,7 @@ typedef enum {
 - (void) setType: (NSString *) n;
 - (NSString *) type;
 - (void) setBoundingBox: (NSRect) b;
-- (NSRect) bb;
+- (NSRect) boundingBox;
 - (void) setDrawable: (BOOL)v;
 - (BOOL) drawable;
 - (void) refresh;

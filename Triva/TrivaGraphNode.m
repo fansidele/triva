@@ -49,7 +49,7 @@
   bb = b;
 }
 
-- (NSRect) bb
+- (NSRect) boundingBox
 {
   return bb;
 }

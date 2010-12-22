@@ -325,12 +325,12 @@
         TrivaTreemap *child = [aggregatedChildren
               objectAtIndex: i];
         if ([child treemapValue] &&
-          x >= [child bb].origin.x &&
-                x <= [child bb].origin.x+
-            [child bb].size.width&&
-           y >= [child bb].origin.y &&
-                y <= [child bb].origin.y+
-              [child bb].size.height){
+          x >= [child boundingBox].origin.x &&
+                x <= [child boundingBox].origin.x+
+            [child boundingBox].size.width&&
+           y >= [child boundingBox].origin.y &&
+                y <= [child boundingBox].origin.y+
+              [child boundingBox].size.height){
             ret = child;
             break;
         }

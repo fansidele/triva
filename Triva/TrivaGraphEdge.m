@@ -69,8 +69,8 @@
 
 - (BOOL) draw
 {
-  NSRect srcRect = [source bb];
-  NSRect dstRect = [destination bb];
+  NSRect srcRect = [source boundingBox];
+  NSRect dstRect = [destination boundingBox];
   NSPoint srcPoint = NSMakePoint (srcRect.origin.x+srcRect.size.width/2,
           srcRect.origin.y+srcRect.size.height/2);
   NSPoint dstPoint = NSMakePoint (dstRect.origin.x+dstRect.size.width/2,
@@ -100,8 +100,8 @@
   //to the distance between the nodes
 
   //calculate the distance from src to dst
-  NSRect srcRect = [source bb];
-  NSRect dstRect = [destination bb];
+  NSRect srcRect = [source boundingBox];
+  NSRect dstRect = [destination boundingBox];
   NSPoint srcPoint = NSMakePoint (srcRect.origin.x+srcRect.size.width/2,
           srcRect.origin.y+srcRect.size.height/2);
   NSPoint dstPoint = NSMakePoint (dstRect.origin.x+dstRect.size.width/2,
@@ -116,7 +116,7 @@
 - (BOOL) mouseInside: (NSPoint) mPoint
 {
   NSBezierPath *path = [NSBezierPath bezierPath];
-  [path appendBezierPathWithRect: bb];
+  [path appendBezierPathWithRect: [self boundingBox]];
 
   NSAffineTransform *t = [NSAffineTransform transform];
   [t translateXBy: origin.x yBy: origin.y];

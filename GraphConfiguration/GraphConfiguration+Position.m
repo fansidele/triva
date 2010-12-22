@@ -46,9 +46,9 @@
   dict = [NSMutableDictionary dictionary];
   while ((node = [en nextObject])){
     NSString *xk = [NSString stringWithFormat: @"%@-x", [node description]];
-    NSString *xv = [NSString stringWithFormat: @"%f", [node bb].origin.x];
+    NSString *xv = [NSString stringWithFormat: @"%f", [node boundingBox].origin.x];
     NSString *yk = [NSString stringWithFormat: @"%@-y", [node description]];
-    NSString *yv = [NSString stringWithFormat: @"%f", [node bb].origin.y];
+    NSString *yv = [NSString stringWithFormat: @"%f", [node boundingBox].origin.y];
     [dict setObject: xv forKey: xk];
     [dict setObject: yv forKey: yk];
   }
@@ -93,7 +93,7 @@
     xv = [dict objectForKey: xk];
     yv = [dict objectForKey: yk];
 
-    NSRect bb = [node bb];
+    NSRect bb = [node boundingBox];
     bb.origin.x = [xv doubleValue];
     bb.origin.y = [yv doubleValue];
     [node setBoundingBox: bb];
@@ -112,7 +112,7 @@
 
   while ((node = [en nextObject])){
     NSDictionary *pos = [conf objectForKey: [node name]];
-    NSRect bb = [node bb];
+    NSRect bb = [node boundingBox];
     if (pos){
       bb.origin.x = [[pos objectForKey: @"x"] doubleValue];
       bb.origin.y = [[pos objectForKey: @"y"] doubleValue];
@@ -151,7 +151,7 @@
   TrivaGraphNode *node;
 
   while ((node = [en nextObject])){
-    NSRect bb = [node bb];
+    NSRect bb = [node boundingBox];
     Agnode_t *n = agfindnode (graph, (char *)[[node name] cString]);
     if (n){
       bb.origin.x = ND_coord(n).x;
