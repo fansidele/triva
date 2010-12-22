@@ -131,6 +131,16 @@
   return NO;
 }
 
+- (BOOL) moveHighlightToPoint: (NSPoint) p
+{
+  if (!selectedNode) return NO;
+  NSRect nodebb = [selectedNode boundingBox];
+  nodebb.origin.x = p.x - nodebb.size.width/2;
+  nodebb.origin.y = p.y - nodebb.size.height/2;
+  [selectedNode setBoundingBox: nodebb];
+  return YES;
+}
+
 /*
  * TupiConfiguration protocol
  */

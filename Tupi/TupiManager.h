@@ -52,6 +52,7 @@
 
 //from the view
 - (BOOL) searchAndHighlightAtPoint: (NSPoint) p;
+- (BOOL) moveHighlightToPoint: (NSPoint) p;
 @end
 
 #endif
