@@ -127,6 +127,7 @@
       return YES;
     }
   }
+  selectedNode = nil;
   return NO;
 }
 
