@@ -30,8 +30,6 @@ typedef enum {Local,Global,Convergence,Arnaud} TrivaScale;
 - (TrivaGraphNode*) findNodeByName: (NSString *)name; /* TODO: to be removed*/
 - (NSEnumerator*) enumeratorOfNodes;
 - (NSRect) sizeForGraph;
-- (double) graphComponentScaling; /* graphconf --> graphview */
-- (void) graphComponentScalingChanged; /* graphconf <-- graphview */
 
 /* aggregated stuff (methods trapped by TimeSliceAggregation component */
 - (TimeSliceTree *) timeSliceTree;

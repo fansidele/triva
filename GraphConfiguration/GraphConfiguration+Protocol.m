@@ -127,11 +127,6 @@
   return ret;
 }
 
-- (void) graphComponentScalingChanged
-{
-  [self timeSelectionChanged];
-}
-
 - (void) __defineMax: (double*)max
             andMin: (double*)min
          withScale: (TrivaScale) scale
