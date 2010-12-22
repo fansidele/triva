@@ -67,7 +67,8 @@
     while ((entity = [en2 nextObject])){
       Tupi *node = [[Tupi alloc] init];
       [node setName: [entity name]];
-      [node setType: TUPI_NODE];
+      [node setType: [type name]];
+      [node setTupiType: TUPI_NODE];
       [manager addNode: node];
       [node release];
 
