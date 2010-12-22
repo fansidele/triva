@@ -117,7 +117,11 @@
 
 - (BOOL) searchAndHighlightAtPoint: (NSPoint) p
 {
-  [selectedNode setHighlight: NO];
+  BOOL wasSelected = NO;
+  if (selectedNode) {
+    [selectedNode setHighlight: NO];
+    wasSelected = YES;
+  }
   NSEnumerator *en = [nodes objectEnumerator];
   Tupi *node;
   while ((node = [en nextObject])){
@@ -128,7 +132,7 @@
     }
   }
   selectedNode = nil;
-  return NO;
+  return wasSelected;
 }
 
 - (BOOL) moveHighlightToPoint: (NSPoint) p
