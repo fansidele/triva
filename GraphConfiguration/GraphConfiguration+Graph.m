@@ -158,12 +158,22 @@
   }
   en = [edgeTypes objectEnumerator];
   while ((type = [en nextObject])){
+    //define slice of time to search for edges
+    NSDate *start_slice, *end_slice;
+    if ([[self selectionStartTime] isEqualToDate: [self startTime]]){
+      //to get links that start and end at timestamp 0
+      start_slice = [NSDate dateWithTimeIntervalSinceReferenceDate: -1];
+    }else{
+      start_slice = [self selectionStartTime];
+    }
+    end_slice = [self endTime];
+
     //check if edge is a link or container
     if ([type isKindOfClass: [PajeLinkType class]]){
       en2 = [self enumeratorOfEntitiesTyped: type
                                 inContainer: root
-                                   fromTime: [self startTime]
-                                     toTime: [self endTime]
+                                   fromTime: start_slice
+                                     toTime: end_slice
                                 minDuration: 0];
     }else if ([type isKindOfClass: [PajeContainerType class]]){
       en2 = [self enumeratorOfContainersTyped: type
@@ -187,10 +197,11 @@
         dst = [[n valueOfFieldNamed: fdst] cString];
         if (!(src && dst)){
           PajeEntityType *source_type = [self entityTypeWithName: fsrc];
+          NSDate *startt = [NSDate dateWithTimeIntervalSinceReferenceDate: -1];
           NSEnumerator *en3 = [self enumeratorOfEntitiesTyped: source_type
                                                   inContainer: n
-                                                     fromTime: 0
-                                                       toTime: [self endTime]
+                                                     fromTime: start_slice
+                                                       toTime: end_slice
                                                   minDuration: 0];
           NSString *source_hostname = [[en3 nextObject] value];
 
