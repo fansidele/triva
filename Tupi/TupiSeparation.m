@@ -124,6 +124,7 @@
   NSEnumerator *en = [calculatedValues keyEnumerator];
   NSString *type;
   double accum_y = 0;
+  NSMutableString *str = [NSMutableString string];
 
   while ((type = [en nextObject])){
     [[colors objectForKey: type] set];
@@ -151,11 +152,15 @@
 //      [[NSColor blackColor] set];
 //    }
     if ([self highlight]){
-      [[NSColor blueColor] set];  
+      [str appendString: [NSString stringWithFormat: @"%@ - %f (%.2f%%)\n",
+                                  type, value*sepSize, 100*value]];
       [type drawAtPoint: bb.origin withAttributes: nil];
     }
     [path stroke];
     accum_y += vr.size.height;
+  }
+  if ([self highlight]){
+    [str drawAtPoint: bb.origin withAttributes: nil];
   }
 }
 
