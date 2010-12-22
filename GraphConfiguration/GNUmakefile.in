@@ -31,7 +31,7 @@ GraphConfiguration+Position.m \
 GraphConfiguration+Graph.m
 
 GraphConfiguration_INCLUDE_DIRS += -I../ -I./ @CPPFLAGS@
-GraphConfiguration_LDFLAGS += @LDFLAGS@ -lmatheval -lTupi
+GraphConfiguration_LDFLAGS += @LDFLAGS@ -lTupi
 
 -include GNUmakefile.preamble
 include $(GNUSTEP_MAKEFILES)/aggregate.make
