@@ -45,7 +45,6 @@
   NSData* plistData = [c dataUsingEncoding:NSUTF8StringEncoding];
   NSString *error;
   NSPropertyListFormat format;
-  [plist release];
   plist = [NSPropertyListSerialization
                 propertyListFromData: plistData
                     mutabilityOption:NSPropertyListImmutable
