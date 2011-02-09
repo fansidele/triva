@@ -226,7 +226,7 @@
   while (p){
     if (![p parent]) break;
     if ([[p children] count] > 1){
-      NSRect pbb = [p bb];
+      NSRect pbb = [p boundingBox];
       NSRect border = NSMakeRect (pbb.origin.x + 1,
                                   pbb.origin.y + 1,
                                   pbb.size.width - 1,
