@@ -41,9 +41,6 @@
   /* for Aggregation category */
   NSMutableDictionary *aggregatedValues;
 
-  /* for registering accumulated durations */
-  NSMutableDictionary *timeSliceDurations;
-
   /* for registering graph destinations */
   //(NSString*) -> (TimeSliceGraph*)
   NSMutableDictionary *destinations; 
@@ -57,8 +54,6 @@
 - (void) setTimeSliceValues: (NSMutableDictionary *) values;
 - (NSMutableDictionary *) timeSliceValues;
 - (void) setAggregatedValues: (NSMutableDictionary *) aggValues;
--  (NSMutableDictionary *) timeSliceDurations;
-- (void) setTimeSliceDurations: (NSMutableDictionary *) d;
 - (NSMutableDictionary *) aggregatedValues;
 - (NSComparisonResult) compareValue: (TimeSliceTree *) other;
 - (float) finalValue;

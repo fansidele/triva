@@ -24,7 +24,6 @@
   NSMutableDictionary *timeSliceValues = nil;
   NSMutableDictionary *timeSliceColors = nil;
   NSMutableDictionary *timeSliceTypes = nil;
-  NSMutableDictionary *timeSliceDurations = nil;
   NSString *name = [type name]; //the name is the variable type name
   double integrated = 0;
   id ent = nil;
@@ -33,7 +32,6 @@
   timeSliceValues = [node timeSliceValues];  
   timeSliceColors = [node timeSliceColors];
   timeSliceTypes = [node timeSliceTypes];
-  timeSliceDurations = [node timeSliceDurations];
 
   NSDate *sliceStartTime = [self selectionStartTime];
   NSDate *sliceEndTime = [self selectionEndTime];
@@ -66,8 +64,6 @@
       accumDuration += duration;
     }
   }
-  [timeSliceDurations setValue: [NSNumber numberWithDouble: accumDuration]
-        forKey: name];
   [timeSliceValues setValue: [NSNumber numberWithDouble: integrated]
          forKey: name];
   [timeSliceColors setValue: [self colorForEntityType: type] forKey: name];

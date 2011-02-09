@@ -26,7 +26,6 @@
   minValues = [[NSMutableDictionary alloc] init];
   timeSliceColors = [[NSMutableDictionary alloc] init];
   aggregatedValues = [[NSMutableDictionary alloc] init];
-  timeSliceDurations = [[NSMutableDictionary alloc] init];
   destinations = [[NSMutableDictionary alloc] init];
   timeSliceTypes = [[NSMutableDictionary alloc] init];
   return self;
@@ -39,7 +38,6 @@
   [minValues release];
   [timeSliceColors release];
   [aggregatedValues release];
-  [timeSliceDurations release];
   [destinations release];
   [timeSliceTypes release];
   [super dealloc];
@@ -99,19 +97,6 @@
 {
   return aggregatedValues;
 }
-
-- (void) setTimeSliceDurations: (NSMutableDictionary *) d
-{
-  [timeSliceDurations release];
-  timeSliceDurations = d;
-  [timeSliceDurations retain];
-}
-
--  (NSMutableDictionary *) timeSliceDurations
-{
-  return timeSliceDurations;
-}
-
 
 - (float) finalValue
 {
@@ -364,7 +349,6 @@
   [[copy timeSliceValues] addEntriesFromDictionary: [self timeSliceValues]];
   [[copy timeSliceTypes] addEntriesFromDictionary: [self timeSliceTypes]];
   [[copy timeSliceColors] addEntriesFromDictionary: [self timeSliceColors]];
-  [[copy timeSliceDurations] addEntriesFromDictionary: [self timeSliceDurations]];
   [[copy aggregatedValues] addEntriesFromDictionary: [self aggregatedValues]];
   [copy setFinalValue: [self finalValue]];
 

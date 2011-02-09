@@ -34,7 +34,6 @@
   [[self timeSliceValues] addEntriesFromDictionary: [tree timeSliceValues]];
   [[self timeSliceTypes] addEntriesFromDictionary: [tree timeSliceTypes]];
   [[self timeSliceColors] addEntriesFromDictionary: [tree timeSliceColors]];
-  [[self timeSliceDurations]addEntriesFromDictionary:[tree timeSliceDurations]];
   [[self aggregatedValues] addEntriesFromDictionary: [tree aggregatedValues]];
   [self setFinalValue: [tree finalValue]];
 

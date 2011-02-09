@@ -91,11 +91,9 @@
     }
     
     NSMutableDictionary *timeSliceValues = nil;
-    NSMutableDictionary *timeSliceDurations = nil;
 
     //getting the existing timeSliceValues for this node
     timeSliceValues = [edge timeSliceValues];  
-    timeSliceDurations = [edge timeSliceDurations];
 
     //the name is the value of the link
     NSString *name = [ent value];
@@ -108,17 +106,6 @@
     //saving in the timeSliceValues dict
     [timeSliceValues setObject: [NSNumber numberWithDouble: value]
             forKey: name];
-
-    //getting current accumulated duration for this name
-    if (value){
-      double acc;
-      acc = [[timeSliceDurations objectForKey: name]
-          doubleValue];
-      acc += duration;
-      [timeSliceDurations setObject:
-          [NSNumber numberWithDouble:acc]
-        forKey: name];
-    }
   }
 }
 
