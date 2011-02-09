@@ -38,16 +38,6 @@
   BOOL graphAggregationEnabled;
 }
 /**
- * Method that re-calculate the treemap considering the three parameters
- * and the slice start and end time previously defined. It results a 
- * squarified treemap.
- */
-//- (TimeSliceTree *) treemapWithWidth: (int) width
-//         andHeight: (int) height
-//          andDepth: (int) depth
-//         andValues: (NSSet *) values;
-
-/**
  * Internal method that implements the time slice algorithm.
  */
 - (void) timeSliceAt: (id) instance 
