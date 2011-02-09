@@ -21,36 +21,34 @@
     withType: (PajeStateType*) type
     withNode: (TimeSliceTree *) node
 {
-  NSMutableDictionary *timeSliceValues = nil;
-  NSMutableDictionary *timeSliceColors = nil;
-  NSMutableDictionary *timeSliceTypes = nil;
-  NSMutableDictionary *timeSliceDurations = nil;
   NSEnumerator *en = nil;
   id ent = nil;
+  NSMutableDictionary *tsValues = nil;
+  NSMutableDictionary *tsColors = nil;
+  NSMutableDictionary *tsTypes = nil;
 
-  //getting the existing timeSliceValues for this node
-  timeSliceValues = [node timeSliceValues];  
-  timeSliceColors = [node timeSliceColors];
-  timeSliceTypes = [node timeSliceTypes];
-  timeSliceDurations = [node timeSliceDurations];
+  //getting the existing tsValues for this node
+  tsValues = [node timeSliceValues];  
+  tsColors = [node timeSliceColors];
+  tsTypes = [node timeSliceTypes];
 
   //intializing state values to zero (in timeSliveValues dict) if they do not exist yet
   NSArray *allValuesOfStateType = [self allValuesForEntityType: type];
   en = [allValuesOfStateType objectEnumerator];
   while ((ent = [en nextObject]) != nil) {
-    NSString *currentValue = [timeSliceValues objectForKey: ent];
+    NSString *currentValue = [tsValues objectForKey: ent];
     if (!currentValue) {
-      [timeSliceValues setObject: [NSNumber numberWithDouble: 0]
+      [tsValues setObject: [NSNumber numberWithDouble: 0]
               forKey: ent];
     }
   }
   //setting colors for values of the entity type
   en = [allValuesOfStateType objectEnumerator];
   while ((ent = [en nextObject]) != nil) {
-    [timeSliceColors setObject: [self colorForValue: ent
+    [tsColors setObject: [self colorForValue: ent
                ofEntityType: type]
       forKey: ent];
-    [timeSliceTypes setObject: type forKey: ent];
+    [tsTypes setObject: type forKey: ent];
   }
 
   NSDate *sliceStartTime = [self selectionStartTime];
@@ -88,24 +86,11 @@
     integrated /= tsDuration; //normalizing to time-slice
 
     //getting the current value
-    double value = [[timeSliceValues objectForKey: name]
-          doubleValue];
+    double value = [[tsValues objectForKey: name] doubleValue];
     value += integrated;
 
-    //saving in the timeSliceValues dict
-    [timeSliceValues setObject: [NSNumber numberWithDouble: value]
-            forKey: name];
-
-    //getting current accumulated duration for this name
-    if (value){
-      double acc;
-      acc = [[timeSliceDurations objectForKey: name]
-          doubleValue];
-      acc += duration;
-      [timeSliceDurations setObject:
-          [NSNumber numberWithDouble:acc]
-        forKey: name];
-    }
+    //saving in the tsValues dict
+    [tsValues setObject: [NSNumber numberWithDouble: value] forKey: name];
   }
 }
 @end

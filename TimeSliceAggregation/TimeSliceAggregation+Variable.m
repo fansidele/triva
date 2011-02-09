@@ -21,30 +21,17 @@
     withType: (PajeVariableType*) type
     withNode: (TimeSliceTree *) node
 {
-  NSMutableDictionary *timeSliceValues = nil;
-  NSMutableDictionary *timeSliceColors = nil;
-  NSMutableDictionary *timeSliceTypes = nil;
-  NSString *name = [type name]; //the name is the variable type name
-  double integrated = 0;
-  id ent = nil;
-
-  //getting the existing timeSliceValues for this node
-  timeSliceValues = [node timeSliceValues];  
-  timeSliceColors = [node timeSliceColors];
-  timeSliceTypes = [node timeSliceTypes];
-
   NSDate *sliceStartTime = [self selectionStartTime];
   NSDate *sliceEndTime = [self selectionEndTime];
-
   double tsDuration = [sliceEndTime timeIntervalSinceDate: sliceStartTime];
 
-  NSEnumerator *en;
-  en = [self enumeratorOfEntitiesTyped:type
+  id ent = nil;
+  double integrated = 0;
+  NSEnumerator *en = [self enumeratorOfEntitiesTyped:type
     inContainer:instance
     fromTime: sliceStartTime
     toTime: sliceEndTime 
     minDuration:0];
-  double accumDuration = 0;
   while ((ent = [en nextObject]) != nil) {
     NSDate *start = [ent startTime];
     NSDate *end = [ent endTime];
@@ -59,14 +46,15 @@
 
     //integrating in time
     integrated += (duration/tsDuration) * value;
-
-    if (value){
-      accumDuration += duration;
-    }
   }
-  [timeSliceValues setValue: [NSNumber numberWithDouble: integrated]
-         forKey: name];
-  [timeSliceColors setValue: [self colorForEntityType: type] forKey: name];
-  [timeSliceTypes setObject: type forKey: name];
+
+  //registering on the node
+  NSString *name = [type name]; //the name is the variable type name
+  NSMutableDictionary *tsValues = [node timeSliceValues];
+  NSMutableDictionary *tsColors = [node timeSliceColors];
+  NSMutableDictionary *tsTypes = [node timeSliceTypes];
+  [tsValues setObject: [NSNumber numberWithDouble: integrated] forKey: name];
+  [tsColors setObject: [self colorForEntityType: type] forKey: name];
+  [tsTypes setObject: type forKey: name];
 }
 @end
