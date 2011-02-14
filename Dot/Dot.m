@@ -144,8 +144,8 @@
   NSEnumerator *en = [[self containedTypesForContainerType: type] objectEnumerator];
   id et;
   [ret appendString:
-    [NSString stringWithFormat:@"\"%@\"[label=\"%@\",shape=\"rectangle\"];\n",
-      [type name], [type name]]];
+    [NSString stringWithFormat:@"\"%p\"[label=\"%@\",shape=\"rectangle\"];\n",
+      type, [type name]]];
   while ((et = [en nextObject]) != nil) {
           if ([self isContainerEntityType: et]) {
       [ret appendString: [self dotTypeHierarchy: et]];
@@ -166,12 +166,12 @@
         fillcolor = @"red";
       }
       [ret appendString:
-        [NSString stringWithFormat:@"\"%@\"[shape=\"%@\" style=filled, fillcolor=\"%@\"];\n",
+        [NSString stringWithFormat:@"\"%p\"[label=\"%@\", shape=\"%@\", style=filled, fillcolor=\"%@\"];\n", et,
           [et name], @"rectangle", fillcolor]];
     }
     [ret appendString:
-      [NSString stringWithFormat: @"\"%@\"->\"%@\";\n",
-        [type name], [et name]]];
+      [NSString stringWithFormat: @"\"%p\"->\"%p\";\n",
+        type, et]];
   }
   return ret;
 
