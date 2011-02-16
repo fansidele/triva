@@ -109,11 +109,15 @@ static int pega_memoria ()
   double t1 = gettime();
   [self iteraNosDados:[self rootInstance] level:0];
   timeTraverse = gettime() - t1;
-  //report
-  NSLog (@"c = %d; s = %d; e = %d; v = %d; l = %d; mem = %d; t = %f",
-      nContainer, nState, nEvent, nVariable, nLink, memUsed, timeTraverse);
-  //exit
-  exit(0);
+  NSLog (@"Tracefile: %@", [self traceDescription]);
+  NSLog (@"Containers: %d", nContainer);
+  NSLog (@"States: %d", nState);
+  NSLog (@"Events: %d", nEvent);
+  NSLog (@"Variables: %d", nVariable);
+  NSLog (@"Links: %d", nLink);
+  NSLog (@"Memory used (in kbytes): %d", (memUsed)/1024);
+  NSLog (@"Traverse time (in seconds): %f", timeTraverse);
+  [NSApp terminate: self];
 }
 
 @end
