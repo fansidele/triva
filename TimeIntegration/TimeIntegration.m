@@ -34,44 +34,6 @@
   [super dealloc];
 }
 
-/*
--(void)timeSelectionChanged
-{
-  NSDate *sliceStartTime = [self selectionStartTime];
-  NSDate *sliceEndTime = [self selectionEndTime];
-  
-  if ([sliceStartTime timeIntervalSinceDate: sliceEndTime] == 0){
-    return;
-  }
-
-  [self calculateBehavioralHierarchy];
-  [super timeSelectionChanged];
-}
-
-- (void) entitySelectionChanged
-{
-  [self calculateBehavioralHierarchy];
-  [super entitySelectionChanged];
-}
-
-- (void) containerSelectionChanged
-{
-  [self calculateBehavioralHierarchy];
-  [super containerSelectionChanged];
-}
-
-- (void) dataChangedForEntityType: (PajeEntityType *) type
-{
-  [self calculateBehavioralHierarchy];
-  [super dataChangedForEntityType: type];
-}
-
-- (TimeSliceTree *) timeSliceTree
-{
-  return tree;
-}
-*/
-
 - (NSDictionary *) timeIntegrationOfType:(PajeEntityType*) type
                 inContainer:(PajeContainer*) cont
 {
