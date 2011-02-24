@@ -33,7 +33,7 @@ typedef enum {Local,Global,Convergence,Arnaud} TrivaScale;
 - (NSRect) sizeForGraph;
 
 /* aggregated stuff (methods trapped by TimeIntegration component */
-- (TimeSliceTree *) timeSliceTree;
+- (TimeSliceTree *) timeSliceTree; //DEPRECATED
 
 /* auxiliary methods */
 - (void) debugOf: (PajeEntityType*) type At: (PajeContainer*) container;

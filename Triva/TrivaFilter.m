@@ -45,6 +45,8 @@
 
 - (TimeSliceTree *) timeSliceTree
 {
+  //deprecated
+  [[NSException exceptionWithName: @"TrivaException" reason: @"timeSliceTree is deprecated" userInfo: nil] raise];
   return [(TrivaFilter*)inputComponent timeSliceTree];
 }
 
