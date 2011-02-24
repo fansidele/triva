@@ -49,7 +49,7 @@
   }
 
   //registering on the node
-  NSString *name = [type name]; //the name is the variable type name
+  NSString *name = [type description];
   NSMutableDictionary *tsValues = [node timeSliceValues];
   NSMutableDictionary *tsColors = [node timeSliceColors];
   NSMutableDictionary *tsTypes = [node timeSliceTypes];

@@ -73,7 +73,7 @@
 
   NSLog (@"DEBUG START");
   NSLog (@"slice (%@ - %@)", sliceStartTime, sliceEndTime);
-  NSLog (@"type = %@ container = %@", [type name], [container name]);
+  NSLog (@"type = %@ container = %@", [type description], [container name]);
   NSEnumerator *en;
   id ent;
   en = [self enumeratorOfEntitiesTyped:type

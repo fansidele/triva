@@ -31,7 +31,7 @@
       [ret addObjectsFromArray: [self getTypeFrom: childType withName: name]];
     }
   }
-  if ([[type name] isEqualToString: name]){
+  if ([[type description] isEqualToString: name]){
     [ret addObject: type];
   }
   
@@ -65,7 +65,7 @@
     en2 = [self enumeratorOfContainersTyped: type
                                 inContainer: [self rootInstance]];
     while ((entity = [en2 nextObject])){
-      [manager createNodeWithName: [entity name] type: [type name]];
+      [manager createNodeWithName: [entity name] type: [type description]];
     }
   }
 
@@ -152,7 +152,7 @@ NS_ENDHANDLER
   NSEnumerator *en = [manager enumeratorOfNodes];
   Tupi *node;
   while ((node = [en nextObject])){
-    TimeSliceTree *nodeTree = [[self timeSliceTree]
+    TimeSliceTree *nodeTree = (TimeSliceTree*)[[self timeSliceTree]
                                         searchChildByName: [node name]];
     [manager layoutOfNode: node
                withValues: [nodeTree timeSliceValues]
