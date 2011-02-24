@@ -17,14 +17,32 @@
 #include "Tree.h"
 
 @implementation Tree
-- (id) init
+- (Tree*) nodeWithName: (NSString*)n
+                 depth: (int)d
+                parent: (Tree*)p
+{
+  return [[[Tree alloc] initWithName: n
+                               depth: d
+                              parent: p] autorelease];
+}
+
+- (id) initWithName: (NSString*) n
+              depth: (int)d
+             parent: (Tree*)p
 {
   self = [super init];
   children = [[NSMutableArray alloc] init];
-  depth = maxDepth = -1;
-  parent = nil;
-  name = nil;
+  depth = d;
+  parent = p;
+  name = [[NSString stringWithString: n] retain];
   return self;
+}
+
+- (void) dealloc
+{
+  [name release];
+  [children release];
+  [super dealloc];
 }
 
 - (NSString *) name
@@ -40,6 +58,11 @@
 - (Tree *) parent
 {
   return parent;
+}
+
+- (int) depth
+{
+        return depth;
 }
 
 - (Tree *) searchChildByName: (NSString *) n
@@ -64,79 +87,8 @@
   return nil;
 }
 
-- (void) setName: (NSString *) n
-{
-  if (name != nil){
-    [name release];
-  }
-  name = n;
-  [name retain];
-}
-
-- (void) setParent: (Tree *) p
-{
-  parent = p; return;
-  /*
-  if (parent != nil){
-    [parent release];
-  }
-  parent = p;
-  [parent retain];
-  */
-}
-
 - (void) addChild: (Tree *) c
 {
   [children addObject: c];
-}
-
-- (void) dealloc
-{
-  [name release];
-//  [parent release];
-  [children release];
-  [super dealloc];
-}
-
-- (void) removeAllChildren
-{
-  [children removeAllObjects];
-}
-
-- (int) maxDepth
-{
-  if (maxDepth != -1){
-    return maxDepth;
-  }
-
-        if ([children count] == 0){
-                return depth;
-        }
-
-        int max = 0;
-        int i;
-        for (i = 0; i < [children count]; i++){
-                int d = [[children objectAtIndex: i] maxDepth];
-                if (d > max){
-                        max = d;
-                }
-        }
-  maxDepth = max;
-        return max;
-}
-
-- (void) setMaxDepth: (int) d
-{
-  maxDepth = d;
-}
-
-- (int) depth
-{
-        return depth;
-}
-
-- (void) setDepth: (int) d
-{
-        depth = d;
 }
 @end
