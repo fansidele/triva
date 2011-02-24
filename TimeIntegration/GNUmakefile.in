@@ -12,10 +12,7 @@ else
   ADDITIONAL_LIB_DIRS += -L../Triva/Triva.framework/Versions/Current
 endif
 
-TimeIntegration_OBJC_FILES = \
-  TimeIntegration.m \
-  TimeIntegration+State.m \
-  TimeIntegration+Variable.m
+TimeIntegration_OBJC_FILES = TimeIntegration.m 
 TimeIntegration_OBJCC_FILES=
 
 TimeIntegration_INCLUDE_DIRS += -I../ -I./ @CPPFLAGS@

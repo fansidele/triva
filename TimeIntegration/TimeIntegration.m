@@ -23,115 +23,18 @@
   if (self != nil){
   }
 
-  nodeNames = [[NSMutableDictionary alloc] init];
-
   /* starting configuration */
   considerExclusiveDuration = YES;
-  tree = nil;
   graphAggregationEnabled = YES;
-  
   return self;
 }
 
 - (void) dealloc
 {
-  [tree release];
-  [nodeNames release];
   [super dealloc];
 }
 
-- (void) timeSliceAt: (id) instance
-              ofType: (PajeEntityType*) type
-            withNode: (TimeSliceTree *) node
-{
-  if ([type isKindOfClass: [PajeVariableType class]]){
-    [self timeSliceOfVariableAt: instance
-      withType: (PajeVariableType*)type
-      withNode: node];
-  }else if ([type isKindOfClass: [PajeStateType class]]){
-    [self timeSliceOfStateAt: instance
-      withType: (PajeStateType*)type
-      withNode: node];
-  }
-  return;
-}
-
-- (TimeSliceTree *) createInstanceHierarchy: (id) instance
-             parent: (TimeSliceTree *) parent
-{
-  TimeSliceTree *node = [[TimeSliceTree alloc] init];
-  PajeEntityType *et = [self entityTypeForEntity: instance];
-  [node setName: [instance name]];
-  [node setParent: parent];
-  //[node setPajeEntity: instance];
-  if (parent != nil){
-    [node setDepth: [parent depth] + 1];
-  }else{
-    [node setDepth: 0];
-  }
-
-  NSEnumerator *en;
-  en = [[self containedTypesForContainerType:
-    [self entityTypeForEntity:instance]] objectEnumerator];
-  while ((et = [en nextObject]) != nil) {
-    if ([self isContainerEntityType:et]) {
-      NSEnumerator *en2;
-      PajeContainer *sub;
-      en2 = [self enumeratorOfContainersTyped: et
-                inContainer:instance];
-      while ((sub = [en2 nextObject]) != nil) {
-        TimeSliceTree *child;
-        child = [self createInstanceHierarchy: sub
-              parent: node];
-        [node addChild: child];
-      }
-    }else{
-      [self timeSliceAt: instance ofType: et withNode: node];
-    }
-        }
-  //saving node name in the nodeNames dict
-  [nodeNames setObject: node forKey: [node name]];
-
-  [node autorelease];
-  return node;
-}
-
-- (void) releaseTree
-{
-  if (tree){
-    [tree release];
-    tree = nil;
-    [nodeNames release];
-    nodeNames = [[NSMutableDictionary alloc] init];
-  }
-}
-
-- (void) calculateBehavioralHierarchy
-{
-//  NSLog (@"Calculating behavioral hierarchy...");
-  /* re-create hierarchy */
-  [self releaseTree];
-  tree = [self createInstanceHierarchy: [self rootInstance]
-              parent: nil];  
-
-  if (graphAggregationEnabled){
-    [self createGraphBasedOnLinks: [self rootInstance]
-       withTree: tree];
-  }
-
-  [tree retain];
-  /* aggregate values */
-  [tree doAggregation];
-
-  /* calculate the final value of the nodes (to be used by treemap)*/
-  [tree doFinalValue];
-
-  if (graphAggregationEnabled){
-    [tree doGraphAggregationWithNodeNames: nodeNames];
-  }
-//  NSLog (@"Done");
-}
-
+/*
 -(void)timeSelectionChanged
 {
   NSDate *sliceStartTime = [self selectionStartTime];
@@ -166,5 +69,132 @@
 - (TimeSliceTree *) timeSliceTree
 {
   return tree;
+}
+*/
+
+- (NSDictionary *) timeIntegrationOfType:(PajeEntityType*) type
+                inContainer:(PajeContainer*) cont
+{
+  if ([type isKindOfClass: [PajeVariableType class]]){
+    return [self timeIntegrationOfVariableType: type inContainer: cont];
+  }else if ([type isKindOfClass: [PajeStateType class]]){
+    return [self timeIntegrationOfStateType: type inContainer: cont];
+  }else{
+    return [NSDictionary dictionary];
+  }
+}
+
+- (NSDictionary *) timeIntegrationOfStateType: (PajeEntityType*) type
+                        inContainer: (PajeContainer *) instance
+{
+  NSMutableDictionary *ret = [NSMutableDictionary dictionary];
+  NSEnumerator *en = nil;
+  id ent = nil;
+
+/*
+  //initializing state values to zero (in timeSliveValues dict) if they do not exist yet
+  NSArray *allValuesOfStateType = [self allValuesForEntityType: type];
+  en = [allValuesOfStateType objectEnumerator];
+  while ((ent = [en nextObject]) != nil) {
+    NSString *currentValue = [ret objectForKey: ent];
+    if (!currentValue) {
+      [ret setObject: [NSNumber numberWithDouble: 0]
+              forKey: ent];
+    }
+  }
+  //setting colors for values of the entity type
+  en = [allValuesOfStateType objectEnumerator];
+  while ((ent = [en nextObject]) != nil) {
+    [tsColors setObject: [self colorForValue: ent
+               ofEntityType: type]
+      forKey: ent];
+    [tsTypes setObject: type forKey: ent];
+  }
+*/
+
+  NSDate *sliceStartTime = [self selectionStartTime];
+  NSDate *sliceEndTime = [self selectionEndTime];
+
+  double tsDuration = [sliceEndTime timeIntervalSinceDate: sliceStartTime];
+
+  //integrating in time for the selected time slice
+  en = [self enumeratorOfEntitiesTyped:type
+    inContainer:instance
+    fromTime: sliceStartTime
+    toTime: sliceEndTime 
+    minDuration:0];
+  while ((ent = [en nextObject]) != nil) {
+    NSDate *start = [ent startTime];
+    NSDate *end = [ent endTime];
+    NSString *name = [ent value]; //the name is the value of state
+
+    //controlling the time-slice border
+    start = [start laterDate: sliceStartTime];
+    end = [end earlierDate: sliceEndTime];
+
+    //calculting the duration and getting value
+    double duration = [end timeIntervalSinceDate: start];
+
+    if (considerExclusiveDuration){
+      float exclusiveDuration = [ent exclusiveDuration];
+      if (exclusiveDuration < duration){
+        duration = exclusiveDuration;
+      }
+    }
+
+    //integrating the value of state in time
+    double integrated = 1 * duration; //value of state is 1
+    integrated /= tsDuration; //normalizing to time-slice
+
+    //getting the current value
+    double value;
+    if ([ret objectForKey: name] == nil){
+      value = 0;
+    }else{
+      value = [[ret objectForKey: name] doubleValue];
+    }
+    value += integrated;
+
+    //saving in the ret dict
+    [ret setObject: [NSNumber numberWithDouble: value] forKey: name];
+  }
+  return ret;
+}
+
+- (NSDictionary *) timeIntegrationOfVariableType: (PajeEntityType *) type
+                     inContainer: (PajeContainer *) instance
+{
+  NSMutableDictionary *ret = [NSMutableDictionary dictionary];
+
+  NSDate *sliceStartTime = [self selectionStartTime];
+  NSDate *sliceEndTime = [self selectionEndTime];
+  double tsDuration = [sliceEndTime timeIntervalSinceDate: sliceStartTime];
+
+  id ent = nil;
+  double integrated = 0;
+  NSEnumerator *en = [self enumeratorOfEntitiesTyped:type
+    inContainer:instance
+    fromTime: sliceStartTime
+    toTime: sliceEndTime 
+    minDuration:0];
+  while ((ent = [en nextObject]) != nil) {
+    NSDate *start = [ent startTime];
+    NSDate *end = [ent endTime];
+
+    //controlling the time-slice border
+    start = [start laterDate: sliceStartTime];
+    end = [end earlierDate: sliceEndTime];
+
+    //calculting the duration and getting value
+    double duration = [end timeIntervalSinceDate: start];
+    double value = [[ent value] doubleValue];
+
+    //integrating in time
+    integrated += (duration/tsDuration) * value;
+  }
+
+  [ret setObject: [NSNumber numberWithDouble: integrated]
+                                      forKey: [type description]];
+  return ret;
 }
 @end
