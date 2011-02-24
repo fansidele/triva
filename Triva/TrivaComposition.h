@@ -18,7 +18,7 @@
 #define __TrivaComposition_h_
 #include <Foundation/Foundation.h>
 #include <General/PajeFilter.h>
-#include <Triva/Tree.h>
+#include <Triva/BasicTree.h>
 #include <Triva/TimeSliceTree.h>
 #include <Triva/TrivaFilter.h>
 #include <Triva/TrivaGraphNode.h>

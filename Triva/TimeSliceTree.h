@@ -18,11 +18,11 @@
 #define __TIMESLICETREE_H_
 
 #include <Foundation/Foundation.h>
-#include "Tree.h"
+#include <Triva/BasicTree.h>
 
 @class TimeSliceGraph;
 
-@interface TimeSliceTree : Tree <NSCopying>
+@interface TimeSliceTree : BasicTree <NSCopying>
 {
   /* to be used by the time-slice algorithm */
   NSMutableDictionary *timeSliceValues;

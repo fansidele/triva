@@ -18,7 +18,7 @@
 #define __TrivaGraphNode_h
 #include <Foundation/Foundation.h>
 #include <General/PajeFilter.h>
-#include <Triva/Tree.h>
+#include <Triva/BasicTree.h>
 #include <Triva/TimeSliceTree.h>
 
 @class TrivaComposition;
@@ -29,7 +29,7 @@ typedef enum {
   TRIVA_EDGE,
 } GraphNodeType;
 
-@interface TrivaGraphNode : Tree
+@interface TrivaGraphNode : BasicTree
 {
   NSString *type; //node type (entitytype from paje)
   //NSString *name (declared in super class); node name (unique id)

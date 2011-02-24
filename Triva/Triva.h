@@ -19,9 +19,9 @@
 
 #include "NSPointFunctions.h"
 #include "TimeSliceGraph.h"
-#include "TimeSliceTree.h"
 #include "TimeSliceDifTree.h"
-#include "Tree.h"
+#include "BasicTree.h"
+#include "TrivaTree.h"
 #include "TrivaFilter.h"
 #include "TrivaConfiguration.h"
 #include "TrivaGraphEdge.h"
