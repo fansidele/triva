@@ -44,6 +44,7 @@ CONFIG_FILES="
   SquarifiedTreemap/GNUmakefile \
   TimeInterval/GNUmakefile \
   TimeIntegration/GNUmakefile \
+  SpatialIntegration/GNUmakefile \
   TypeFilter/GNUmakefile \
   TimeSync/GNUmakefile \
   contrib/GNUmakefile \
