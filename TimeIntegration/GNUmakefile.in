@@ -15,8 +15,7 @@ endif
 TimeIntegration_OBJC_FILES = \
   TimeIntegration.m \
   TimeIntegration+State.m \
-  TimeIntegration+Variable.m \
-  TimeIntegration+Link.m
+  TimeIntegration+Variable.m
 TimeIntegration_OBJCC_FILES=
 
 TimeIntegration_INCLUDE_DIRS += -I../ -I./ @CPPFLAGS@
