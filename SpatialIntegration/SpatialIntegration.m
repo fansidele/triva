@@ -55,7 +55,7 @@
       [mergeTo setObject: [mergeFrom objectForKey: key]
                   forKey: key];
     }else{
-      //additive aggregation
+      //additive aggregation TODO: should be customizable?
       double currentValue = [existing doubleValue];
       currentValue += [[mergeFrom objectForKey: key] doubleValue];
       [mergeTo setObject: [NSNumber numberWithDouble: currentValue]
