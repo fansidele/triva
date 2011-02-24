@@ -21,9 +21,7 @@
 #include <Foundation/Foundation.h>
 #include <AppKit/AppKit.h>
 #include <Renaissance/Renaissance.h>
-#include <Triva/TrivaFilter.h>
-#include <Triva/TimeSliceTree.h>
-#include <Triva/TrivaWindow.h>
+#include <Triva/Triva.h>
 
 @class TreemapView;
 
@@ -33,8 +31,11 @@
   IBOutlet TrivaWindow *window;
 
   BOOL recordMode;
+
+  TrivaTreemap *tree;
 }
 - (void) setRecordMode;
+- (TrivaTreemap *) tree;
 @end
 
 #include "TreemapView.h"

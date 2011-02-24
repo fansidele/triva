@@ -29,26 +29,73 @@
   [window makeFirstResponder: view];
 
   recordMode = NO;
+  tree = nil;
   return self;
+}
+
+- (TrivaTreemap*) treeWithContainer: (PajeContainer *) cont
+                           depth: (int) depth
+                          parent: (TrivaTree*) p
+{
+  TrivaTreemap *ret = [TrivaTreemap nodeWithName: [cont name]
+                                     depth: depth
+                                    parent: p
+                                  expanded: NO
+                                 container: cont
+                                    filter: self];
+  //creating hierarchical structure
+  NSEnumerator *en = [[self containedTypesForContainerType: [cont entityType]] objectEnumerator];
+  PajeEntityType *type;
+  while ((type = [en nextObject])){
+    if ([self isContainerEntityType: type]){
+      NSEnumerator *en0 = [self enumeratorOfContainersTyped:type
+                                                inContainer:cont];
+      PajeContainer *sub;
+      while ((sub = [en0 nextObject]) != nil) {
+        TrivaTreemap *child = [self treeWithContainer: sub
+                                             depth: depth+1
+                                            parent: ret];
+        [ret addChild: child];
+      }
+    }
+  }
+  return ret;
+}
+
+- (TrivaTreemap*) tree
+{
+  return tree;
 }
 
 - (void) timeSelectionChanged
 {
   [view setNeedsDisplay: YES];
+  [tree timeSelectionChanged];
+  [tree refreshWithBoundingBox: [view bounds]];
 
   if (recordMode){
     [view printTreemap];
   }
 }
 
+- (void) hierarchyChanged
+{
+  if (tree == nil){
+    tree = [self treeWithContainer: [self rootInstance]
+                             depth: 0
+                            parent: nil];
+    [self timeSelectionChanged];
+  }
+}
+
 - (void) entitySelectionChanged
 {
-  [self timeSelectionChanged];
+  [self hierarchyChanged];
 }
 
 - (void) containerSelectionChanged
 {
-  [self timeSelectionChanged];
+  [self hierarchyChanged];
 }
 
 - (void) dataChangedForEntityType: (PajeEntityType *) type
