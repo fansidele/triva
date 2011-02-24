@@ -43,7 +43,7 @@ CONFIG_FILES="
   LinkView/GNUmakefile \
   SquarifiedTreemap/GNUmakefile \
   TimeInterval/GNUmakefile \
-  TimeSliceAggregation/GNUmakefile \
+  TimeIntegration/GNUmakefile \
   TypeFilter/GNUmakefile \
   TimeSync/GNUmakefile \
   contrib/GNUmakefile \

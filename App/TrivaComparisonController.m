@@ -33,7 +33,7 @@
          StorageController, \
          TimeSync, \
          TypeFilter, \
-         TimeSliceAggregation, \
+         TimeIntegration, \
          SquarifiedTreemap \
       ) )" propertyList];
   }else if ([configuration visualizationComponent] == TrivaGraphView){
@@ -43,7 +43,7 @@
          PajeSimulator, \
          StorageController, \
          TimeSync, \
-         TimeSliceAggregation, \
+         TimeIntegration, \
          GraphConfiguration, \
          GraphView \
       ) )" propertyList];

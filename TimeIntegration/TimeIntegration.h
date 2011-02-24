@@ -26,7 +26,7 @@
  * enumerators) to create a hierarchical structure that represents the
  * behavior of selected entity types instances for a certain interval of time.
  */
-@interface TimeSliceAggregation  : TrivaFilter
+@interface TimeIntegration  : TrivaFilter
 {
   TimeSliceTree *tree;
 
@@ -54,19 +54,19 @@
 - (TimeSliceTree *) createInstanceHierarchy: (id) instance parent:(TimeSliceTree *) parent;
 @end
 
-@interface TimeSliceAggregation (State)
+@interface TimeIntegration (State)
 - (void) timeSliceOfStateAt: (id) instance
     withType: (PajeStateType*) type
     withNode: (TimeSliceTree *) node;
 @end
 
-@interface TimeSliceAggregation (Variable)
+@interface TimeIntegration (Variable)
 - (void) timeSliceOfVariableAt: (id) instance
     withType: (PajeVariableType*) type
     withNode: (TimeSliceTree *) node;
 @end
 
-@interface TimeSliceAggregation (Link)
+@interface TimeIntegration (Link)
 - (void) timeSliceOfLinkAt: (id) instance
     withType: (PajeLinkType*) type
     withNode: (TimeSliceTree *) node;
@@ -74,7 +74,7 @@
       withTree: (TimeSliceTree *) node;
 @end
 
-@interface TimeSliceAggregation (Debugging)
+@interface TimeIntegration (Debugging)
 #ifdef GNUSTEP
 - (void) debug;
 - (void) activateRecordingOfClass: (NSString *)classname;

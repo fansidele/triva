@@ -32,7 +32,7 @@
        PajeSimulator, \
        StorageController, \
        TimeSync, \
-       TimeSliceAggregation, \
+       TimeIntegration, \
        Difference \
     ) )" propertyList];
 

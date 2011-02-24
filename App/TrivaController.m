@@ -174,7 +174,7 @@ NS_ENDHANDLER
        StorageController, \
        TimeInterval, \
        TypeFilter, \
-       TimeSliceAggregation, \
+       TimeIntegration, \
        SquarifiedTreemap \
     ) )" propertyList];
   [self addComponentSequences: graph withDictionary: components];
@@ -193,7 +193,7 @@ NS_ENDHANDLER
        PajeSimulator, \
        StorageController, \
        TimeInterval, \
-       TimeSliceAggregation, \
+       TimeIntegration, \
        GraphConfiguration, \
        GraphView \
     ) )" propertyList];
@@ -213,7 +213,7 @@ NS_ENDHANDLER
       PajeSimulator, \
       StorageController, \
       TimeInterval, \
-      TimeSliceAggregation, \
+      TimeIntegration, \
       LinkView \
     ) )" propertyList];
   [self addComponentSequences: graph withDictionary: components];

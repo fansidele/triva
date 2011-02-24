@@ -18,7 +18,7 @@ SUBPROJECTS = Triva \
   LinkView \
   SquarifiedTreemap \
   TimeInterval \
-  TimeSliceAggregation \
+  TimeIntegration \
   TypeFilter \
   TimeSync \
   Difference \

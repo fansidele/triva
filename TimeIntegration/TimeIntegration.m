@@ -14,9 +14,9 @@
     You should have received a copy of the GNU General Public License
     along with Triva.  If not, see <http://www.gnu.org/licenses/>.
 */
-#include "TimeSliceAggregation.h"
+#include "TimeIntegration.h"
 
-@implementation TimeSliceAggregation
+@implementation TimeIntegration
 - (id)initWithController:(PajeTraceController *)c
 {
   self = [super initWithController: c];
