@@ -115,4 +115,21 @@
   /* to be implemented by sub-classes */
   return;
 }
+
+- (NSDictionary *) timeIntegrationOfType:(PajeEntityType*) type
+                inContainer:(PajeContainer*) cont
+{
+  return [(TrivaFilter*)inputComponent timeIntegrationOfType: type
+                                                 inContainer: cont];
+}
+
+- (NSDictionary *) integrationOfContainer: (PajeContainer *) cont
+{
+  return [(TrivaFilter*)inputComponent integrationOfContainer: cont];
+}
+
+- (NSDictionary *) spatialIntegrationOfContainer: (PajeContainer *) cont
+{
+  return [(TrivaFilter*)inputComponent spatialIntegrationOfContainer:cont];
+}
 @end

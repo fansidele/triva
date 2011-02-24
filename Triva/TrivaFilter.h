@@ -58,6 +58,11 @@ typedef enum {Local,Global,Convergence,Arnaud} TrivaScale;
 - (void) setConfiguration: (TrivaConfiguration*) opt;
 - (void) show;
 - (void) hide;
+
+//spatial/time integration protocol
+- (NSDictionary *) timeIntegrationOfType:(PajeEntityType*) type inContainer:(PajeContainer*) cont;
+- (NSDictionary *) integrationOfContainer: (PajeContainer *) cont;
+- (NSDictionary *) spatialIntegrationOfContainer: (PajeContainer *) cont;
 @end
 
 #endif
