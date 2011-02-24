@@ -175,6 +175,7 @@ NS_ENDHANDLER
        TimeInterval, \
        TypeFilter, \
        TimeIntegration, \
+       SpatialIntegration, \
        SquarifiedTreemap \
     ) )" propertyList];
   [self addComponentSequences: graph withDictionary: components];
