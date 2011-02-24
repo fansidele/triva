@@ -73,14 +73,6 @@
 - (void) createGraphBasedOnLinks: (id) instance
       withTree: (TimeSliceTree *) node;
 @end
-
-@interface TimeIntegration (Debugging)
-#ifdef GNUSTEP
-- (void) debug;
-- (void) activateRecordingOfClass: (NSString *)classname;
-- (void) listRecordedObjectsOfClass: (NSString *) classname;
-- (void) debugOf: (PajeEntityType*) type At: (PajeContainer*) container;
-#endif
 @end
 
 #endif
