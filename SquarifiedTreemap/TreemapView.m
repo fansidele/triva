@@ -22,6 +22,70 @@
 {
   self = [super initWithFrame: frameRect];
   maxDepthToDraw = 0;
+  return self;
+}
+
+- (void)drawTree:(TrivaTreemap*) tree
+{
+  if ([tree depth] == maxDepthToDraw){
+    [tree drawTreemap];
+  }else{
+    //recurse
+    NSEnumerator *en = [[tree children] objectEnumerator];
+    TrivaTreemap *child;
+    while ((child = [en nextObject])){
+      [self drawTree: child];
+    }
+  }
+}
+
+- (void)drawRect:(NSRect)frame
+{
+  [self drawTree: [filter tree]];
+}
+
+- (void)scrollWheel:(NSEvent *)event
+{
+//  if (([event modifierFlags] & NSControlKeyMask)){
+    if ([event deltaY] > 0){
+      if (maxDepthToDraw < [[filter tree] maxDepth]){
+        maxDepthToDraw++;
+        [self setNeedsDisplay: YES];
+      }
+    }else{
+      if (maxDepthToDraw > 0){
+        maxDepthToDraw--;
+        [self setNeedsDisplay: YES];
+      }
+    }
+//  }
+}
+
+#ifdef GNUSTEP
+- (BOOL)acceptsFirstResponder
+{
+    return YES;
+}
+#endif
+
+- (BOOL)becomeFirstResponder
+{
+    [[self window] setAcceptsMouseMovedEvents: YES];
+    return YES;
+}
+
+- (void) setFilter: (SquarifiedTreemap *) f
+{
+  filter = f;
+}
+@end
+
+/*
+@implementation TreemapView
+- (id)initWithFrame:(NSRect)frameRect
+{
+  self = [super initWithFrame: frameRect];
+  maxDepthToDraw = 0;
   current = nil;
   highlighted = nil;
   updateCurrentTreemap = YES;
@@ -107,43 +171,6 @@
   return maxDepthToDraw;
 }
 
-- (void) setFilter: (SquarifiedTreemap *) f
-{
-  filter = f;
-}
-
-- (void)scrollWheel:(NSEvent *)event
-{
-  if (([event modifierFlags] & NSControlKeyMask)){
-    if ([event deltaY] > 0){
-      if (offset == 0){
-        offset += 1;
-      }else{
-        offset += offset*.3;
-      }
-    }else{
-      offset -= offset*.3;
-      if (offset < 0){
-        offset = 0;
-      }
-    }
-        [self setNeedsDisplay: YES];
-  }else{
-    if ([event deltaY] > 0){
-      if (maxDepthToDraw < [current maxDepth]){
-        maxDepthToDraw++;
-        updateCurrentTreemap = NO;
-        [self setNeedsDisplay: YES];
-      }
-    }else{
-      if (maxDepthToDraw > 0){
-        maxDepthToDraw--;
-        updateCurrentTreemap = NO;
-        [self setNeedsDisplay: YES];
-      }
-    }
-  }
-}
 
 - (void) setHighlight: (id) node highlight: (BOOL) highlight
 {
@@ -240,3 +267,4 @@
   }
 }
 @end
+*/

@@ -15,30 +15,23 @@
     along with Triva.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef _TREEMAPVIEW_H_
-#define _TREEMAPVIEW_H_
+#ifndef _TreemapView_H_
+#define _TreemapView_H_
 
 #include <Foundation/Foundation.h>
 #include <AppKit/AppKit.h>
-#include <Triva/TrivaTreemap.h>
 #include "SquarifiedTreemap.h"
 
 @interface TreemapView : NSView
 {
   int maxDepthToDraw;
   SquarifiedTreemap *filter;
-  TrivaTreemap *current, *highlighted;
-  BOOL updateCurrentTreemap;
-  double offset;
 }
-- (void) setMaxDepthToDraw: (int) d;
-- (int) maxDepthToDraw;
 - (void) setFilter: (SquarifiedTreemap *) f;
 - (void) printTreemap;
 - (void) setCurrentStatusString: (NSString *)str;
 - (void) highlightHierarchy;
 @end
 
-#include "TreemapView.h"
-#endif // _TREEMAPVIEW_H_
+#endif // _TreemapView_H_
 
