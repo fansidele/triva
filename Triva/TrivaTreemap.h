@@ -22,20 +22,29 @@
 #include <Triva/TimeSliceTree.h>
 #include <Triva/TrivaGraphNode.h>
 
-@interface TrivaTreemap : TrivaGraphNode
+@interface TrivaTreemap : TrivaTree
 {
-  float treemapValue;
-  NSMutableArray *aggregatedChildren;
-  BOOL isHighlighted;
+  double treemapValue;
   double offset;
-  id provider;
+
+  NSMutableArray *valueChildren;
 }
-- (id) initWithTimeSliceTree: (TimeSliceTree*) tree andProvider: (id) prov;
-- (void) setTreemapValue: (float) v;
-- (float) treemapValue;
++ (TrivaTreemap*) nodeWithName: (NSString*)n
+                      depth: (int)d
+                     parent: (TrivaTree*)p
+                   expanded: (BOOL)e
+                  container: (PajeContainer*)c
+                     filter: (TrivaFilter*)f;
+- (id) initWithName: (NSString*)n
+              depth: (int)d
+             parent: (TrivaTree*)p
+           expanded: (BOOL)e
+          container: (PajeContainer*)c
+             filter: (TrivaFilter*)f;
+- (void) setTreemapValue: (double)v;
+- (double) treemapValue;
 - (void) setOffset: (double) o; //recursive call
 - (double) offset;
-- (NSArray *) aggregatedChildren;
 
 /* squarified treemap algorithm */
 - (double) worstf: (NSArray *) list
@@ -50,18 +59,17 @@
                 andFactor: (double) factor;
 - (void) calculateTreemapRecursiveWithFactor: (double) factor;
 
+/* entry point for squarified algorithm */
+- (void) refreshWithBoundingBox: (NSRect) bb;
+
+/* draw (called by view, must be after refreshWithBoundingBox) */
+- (void) drawTreemap;
+
 /* search-based methods */
 - (TrivaTreemap *) searchWith: (NSPoint) point
       limitToDepth: (int) d;
 
 - (NSComparisonResult) compareValue: (TrivaTreemap *) other;
-
-/* highlight methods */
-- (BOOL) highlighted;
-- (void) setHighlighted: (BOOL) v;
-
-/* provider */
-- (void) setProvider: (id) prov;
 
 /* request hierarchy */
 - (NSMutableArray *) recursiveHierarchy; /* internal, called by next method */

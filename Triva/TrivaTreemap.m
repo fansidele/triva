@@ -20,81 +20,74 @@
 #define BIGFLOAT FLT_MAX
 
 @implementation TrivaTreemap
-- (id) init
++ (TrivaTreemap*) nodeWithName: (NSString*)n
+                      depth: (int)d
+                     parent: (TrivaTree*)p
+                   expanded: (BOOL)e
+                  container: (PajeContainer*)c
+                     filter: (TrivaFilter*)f
 {
-  self = [super init];
+  return [[[self alloc] initWithName: n
+              depth:d
+             parent:p
+           expanded:e
+          container:c
+             filter:f] autorelease];
+}
+
+
+- (id) initWithName: (NSString*)n
+              depth: (int)d
+             parent: (TrivaTree*)p
+           expanded: (BOOL)e
+          container: (PajeContainer*)c
+             filter: (TrivaFilter*)f
+{
+  self = [super initWithName:n depth:d parent:p expanded:e container:c filter:f];
+  if (self != nil){
+    offset = 0;
+    valueChildren = [[NSMutableArray alloc] init];
+  }
+  return self;
+}
+
+- (void) timeSelectionChanged
+{
+  [super timeSelectionChanged];
+
   treemapValue = 0;
-  isHighlighted = NO;
-  provider = nil;
-  aggregatedChildren = nil;
-  offset = 0;
-  return self;
+  [valueChildren removeAllObjects];
+
+  NSEnumerator *en = [values keyEnumerator];
+  NSString *valueName;
+  while ((valueName = [en nextObject])){
+    double value = [[values objectForKey: valueName] doubleValue];
+    TrivaTreemap *obj = [TrivaTreemap nodeWithName: valueName
+                                             depth: depth+1
+                                            parent: self
+                                          expanded: 0
+                                         container: nil
+                                            filter: nil];
+    
+    [obj setTreemapValue: value];
+    treemapValue += value;
+    [valueChildren addObject: obj];
+  }
 }
 
-- (id) initWithTimeSliceTree: (TimeSliceTree*) tree andProvider: (id) prov
-{
-  self = [self init];
-  [self setProvider: prov];
-  [self setName: [tree name]];
-  [self setTreemapValue: [tree finalValue]];
-  [self setDepth: [tree depth]];
-  [self setMaxDepth: [tree maxDepth]];
-
-  /* create aggregated children */
-  if (aggregatedChildren){
-    [aggregatedChildren release];
-  }
-  aggregatedChildren = [[NSMutableArray alloc] init];
-
-  NSDictionary *aggValues = [tree aggregatedValues];
-  NSEnumerator *keys = [aggValues keyEnumerator];
-  id key;
-  while ((key = [keys nextObject])){
-    TrivaTreemap *aggNode = [[TrivaTreemap alloc] init];
-    [aggNode setProvider: prov];
-    [aggNode setName: key];
-    [aggNode setTreemapValue:
-      [[aggValues objectForKey: key] floatValue]];
-    [aggNode setDepth: [tree depth] + 1];
-    [aggNode setMaxDepth: [tree maxDepth]];
-    [aggNode setType: [[tree timeSliceTypes] objectForKey: key]];
-    [aggNode setParent: self];
-    [aggregatedChildren addObject: aggNode];
-    [aggNode release];
-  }
-
-  /* recurse normally */
-  int i;
-  for (i = 0; i < [[tree children] count]; i++){
-    TimeSliceTree *child = [[tree children] objectAtIndex: i];
-    TrivaTreemap *node = [[TrivaTreemap alloc] initWithTimeSliceTree: child
-                                   andProvider: prov];
-    [node setParent: self];
-    [children addObject: node];
-    [node release];
-  }
-  return self;
-}
-
-- (void) setTreemapValue: (float) v
+- (void) setTreemapValue: (double)v
 {
   treemapValue = v;
 }
 
-- (float) treemapValue
+- (double) treemapValue
 {
   return treemapValue;
 }
 
 - (void) dealloc
 {
-  [aggregatedChildren release];
   [super dealloc];
-}
-
-- (NSArray *) aggregatedChildren
-{
-  return aggregatedChildren;
 }
 
 - (double) worstf: (NSArray *) list
@@ -213,9 +206,10 @@
   [sortedCopy addObjectsFromArray: 
     [children sortedArrayUsingSelector:
             @selector(compareValue:)]];
+
   NSMutableArray *sortedCopyAggregated = [NSMutableArray array];
   [sortedCopyAggregated addObjectsFromArray:
-    [aggregatedChildren sortedArrayUsingSelector:
+    [valueChildren sortedArrayUsingSelector:
             @selector(compareValue:)]];
 
   /* remove children with value equal to zero */
@@ -272,24 +266,26 @@
 /*
  * Entry method
  */
-- (void) refresh
+- (void) refreshWithBoundingBox: (NSRect) bounds
 {
-        if ([self treemapValue] == 0){
-                //nothing to calculate
-                return;
-        }
-        double area = (bb.size.width) * (bb.size.height);
-        double factor = area/[self treemapValue];
-        [self calculateTreemapRecursiveWithFactor: factor];
+  if ([self treemapValue] == 0){
+    //nothing to calculate
+    return;
+  }
+  [self setBoundingBox: bounds];
+  double area = (bb.size.width) * (bb.size.height);
+  double factor = area/[self treemapValue];
+  [self calculateTreemapRecursiveWithFactor: factor];
 }
 
 /*
- * draw
+ * drawTreemap
  */
-- (void) draw
+- (void) drawTreemap
 {
-  [[provider colorForValue: name
-                   ofEntityType: [provider entityTypeWithName: type]] set];
+//  [[filter colorForValue: name
+//            ofEntityType: [filter entityTypeWithName: type]] set];
+  [[NSColor whiteColor] set];
   NSRectFill(bb);
   [NSBezierPath strokeRect: bb];
   if (isHighlighted){
@@ -302,6 +298,13 @@
   }else{
     [[NSColor lightGrayColor] set];
     [NSBezierPath strokeRect: bb];
+
+    //drawing values
+    NSEnumerator *en = [valueChildren objectEnumerator];
+    TrivaTreemap *childValue;
+    while ((childValue = [en nextObject])){
+      [childValue drawTreemap];
+    }
   }
 }
 
@@ -311,6 +314,7 @@
 - (TrivaTreemap *) searchWith: (NSPoint) point
     limitToDepth: (int) d
 {
+  return nil;
   double x = point.x;
   double y = point.y;
   TrivaTreemap *ret = nil;
@@ -320,6 +324,7 @@
       y <= bb.origin.y+bb.size.height){
     if ([self depth] == d){
       // recurse to aggregated children 
+/*
       unsigned int i;
       for (i = 0; i < [aggregatedChildren count]; i++){
         TrivaTreemap *child = [aggregatedChildren
@@ -335,6 +340,7 @@
             break;
         }
       }
+*/
     }else{
       // recurse to ordinary children 
       unsigned int i;
@@ -379,21 +385,6 @@
                 }
         }
         NSLog (@"%@ - %@ %.2f", name, bb, [self treemapValue]);
-}
-
-- (BOOL) highlighted
-{
-  return isHighlighted;
-}
-
-- (void) setHighlighted: (BOOL) v
-{
-  isHighlighted = v;
-}
-
-- (void) setProvider: (id) prov
-{
-  provider = prov;
 }
 
 - (void) setOffset: (double) o //recursive call
