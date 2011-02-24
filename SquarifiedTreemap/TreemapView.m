@@ -41,6 +41,7 @@
 
 - (void)drawRect:(NSRect)frame
 {
+  [[filter tree] refreshWithBoundingBox: [self bounds]];
   [self drawTree: [filter tree]];
 }
 

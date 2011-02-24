@@ -71,7 +71,6 @@
 {
   [view setNeedsDisplay: YES];
   [tree timeSelectionChanged];
-  [tree refreshWithBoundingBox: [view bounds]];
 
   if (recordMode){
     [view printTreemap];
