@@ -14,21 +14,21 @@
     You should have received a copy of the GNU General Public License
     along with Triva.  If not, see <http://www.gnu.org/licenses/>.
 */
-#include "Tree.h"
+#include "BasicTree.h"
 
-@implementation Tree
-- (Tree*) nodeWithName: (NSString*)n
+@implementation BasicTree
++ (BasicTree*) nodeWithName: (NSString*)n
                  depth: (int)d
-                parent: (Tree*)p
+                parent: (BasicTree*)p
 {
-  return [[[Tree alloc] initWithName: n
+  return [[[self alloc] initWithName: n
                                depth: d
                               parent: p] autorelease];
 }
 
 - (id) initWithName: (NSString*) n
               depth: (int)d
-             parent: (Tree*)p
+             parent: (BasicTree*)p
 {
   self = [super init];
   children = [[NSMutableArray alloc] init];
@@ -55,9 +55,22 @@
   return children;
 }
 
-- (Tree *) parent
+- (BasicTree *) parent
 {
   return parent;
+}
+
+- (int) maxDepth
+{
+  int ret;
+  NSEnumerator *en = [children objectEnumerator];
+  BasicTree *child;
+  ret = depth;
+  while ((child = [en nextObject])){
+    int childDepth = [child maxDepth];
+    if (childDepth > ret) ret = childDepth;
+  }
+  return ret;
 }
 
 - (int) depth
@@ -65,7 +78,7 @@
         return depth;
 }
 
-- (Tree *) searchChildByName: (NSString *) n
+- (BasicTree *) searchChildByName: (NSString *) n
 {
   int i;
   if ([name isEqualToString: n]){ //that's me
@@ -78,8 +91,8 @@
 
   //look up among children
   for (i = 0; i < [children count]; i++){
-    Tree *child = [children objectAtIndex: i];
-    Tree *found = [child searchChildByName: n];
+    BasicTree *child = [children objectAtIndex: i];
+    BasicTree *found = [child searchChildByName: n];
     if (found){
       return found;
     }
@@ -87,7 +100,7 @@
   return nil;
 }
 
-- (void) addChild: (Tree *) c
+- (void) addChild: (BasicTree *) c
 {
   [children addObject: c];
 }

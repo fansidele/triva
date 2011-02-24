@@ -17,7 +17,8 @@ Triva_OBJC_FILES = \
 	TimeSliceTree.m \
 	TimeSliceDifTree.m \
 	TimeSliceGraph.m \
-	Tree.m \
+	BasicTree.m \
+	TrivaTree.m \
 	TrivaTreemap.m \
 	TrivaWindow.m \
 	TrivaConfiguration.m
@@ -36,7 +37,8 @@ Triva_HEADER_FILES = TrivaFilter.h \
 	TimeSliceTree.h \
 	TimeSliceDifTree.h \
 	TimeSliceGraph.h \
-	Tree.h \
+	BasicTree.h \
+	TrivaTree.h \
 	TrivaTreemap.h \
 	NSPointFunctions.h \
 	Triva.h \

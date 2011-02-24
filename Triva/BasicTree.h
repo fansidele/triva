@@ -14,32 +14,33 @@
     You should have received a copy of the GNU General Public License
     along with Triva.  If not, see <http://www.gnu.org/licenses/>.
 */
-#ifndef __Tree_H_
-#define __Tree_H_
+#ifndef __BasicTree_H_
+#define __BasicTree_H_
 
 #include <Foundation/Foundation.h>
 
-@interface Tree : NSObject
+@interface BasicTree : NSObject
 {
   NSString *name;
-  Tree *parent;
+  BasicTree *parent;
   int depth;
   NSMutableArray *children;
 }
-- (Tree*) nodeWithName: (NSString*)n
++ (BasicTree*) nodeWithName: (NSString*)n
                  depth: (int)d
-                parent: (Tree*)p;
+                parent: (BasicTree*)p;
 - (id) initWithName: (NSString*) n
               depth: (int)d
-             parent: (Tree*)p;
+             parent: (BasicTree*)p;
 - (NSString *) name;
 - (NSArray *) children;
-- (Tree *) parent;
+- (BasicTree *) parent;
 - (int) depth;
+- (int) maxDepth;
 
-- (Tree *) searchChildByName: (NSString *) n;
+- (BasicTree *) searchChildByName: (NSString *) n;
 
-- (void) addChild: (Tree *) c;
+- (void) addChild: (BasicTree *) c;
 @end
 
 #endif
