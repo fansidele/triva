@@ -17,9 +17,9 @@
 #ifndef __StatTrace_H
 #define __StatTrace_H
 #include <Foundation/Foundation.h>
-#include <General/PajeFilter.h>
+#include <Triva/TrivaFilter.h>
 
-@interface StatTrace  : PajeFilter
+@interface StatTrace  : TrivaFilter
 {
   long long nContainer;
   long long nState;
@@ -28,7 +28,6 @@
   long long nLink;
 
   long long memUsed;
-  double timeTraverse;
 }
 @end
 

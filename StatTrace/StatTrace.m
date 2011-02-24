@@ -58,7 +58,6 @@ static int pega_memoria ()
   if (self != nil){
   }
   nContainer = nState = nEvent = nVariable = nLink = 0;
-  timeTraverse = 0;
   memUsed = 0;
   return self;
 }
@@ -108,7 +107,7 @@ static int pega_memoria ()
 
   double t1 = gettime();
   [self iteraNosDados:[self rootInstance] level:0];
-  timeTraverse = gettime() - t1;
+  double t2 = gettime();
   NSLog (@"Tracefile: %@", [self traceDescription]);
   NSLog (@"Containers: %d", nContainer);
   NSLog (@"States: %d", nState);
@@ -116,7 +115,11 @@ static int pega_memoria ()
   NSLog (@"Variables: %d", nVariable);
   NSLog (@"Links: %d", nLink);
   NSLog (@"Memory used (in kbytes): %d", (memUsed)/1024);
-  NSLog (@"Traverse time (in seconds): %f", timeTraverse);
+  NSLog (@"Traverse time (in seconds): %f", t2-t1);
+  t1 = gettime();
+  [self spatialIntegrationOfContainer: [self rootInstance]];
+  t2 = gettime();
+  NSLog (@"Time/Spatial Aggregation (in seconds): %f", t2-t1);
   [NSApp terminate: self];
 }
 

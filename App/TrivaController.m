@@ -299,6 +299,8 @@ NS_ENDHANDLER
        PajeEventDecoder, \
        PajeSimulator, \
        StorageController, \
+       TimeIntegration, \
+       SpatialIntegration, \
        StatTrace \
     ) )" propertyList];
   [self addComponentSequences: graph withDictionary: components];
