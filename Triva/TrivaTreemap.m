@@ -217,6 +217,8 @@
   for (i = 0; i < [sortedCopy count]; i++){
     if ([[sortedCopy objectAtIndex: i] treemapValue] != 0){
       break;
+    }else{
+      [[sortedCopy objectAtIndex: i] setBoundingBox: NSZeroRect];
     }
   }
   NSRange range;
@@ -228,6 +230,8 @@
   for (i = 0; i < [sortedCopyAggregated count]; i++){
     if ([[sortedCopyAggregated objectAtIndex: i] treemapValue]!=0){
       break;
+    }else{
+      [[sortedCopyAggregated objectAtIndex: i] setBoundingBox: NSZeroRect];
     }
   }
   range.location = 0;
