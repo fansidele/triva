@@ -79,12 +79,12 @@
 
 - (void) hierarchyChanged
 {
-  if (tree == nil){
-    tree = [self treeWithContainer: [self rootInstance]
-                             depth: 0
-                            parent: nil];
-    [self timeSelectionChanged];
-  }
+  [tree release];
+  tree = [self treeWithContainer: [self rootInstance]
+                           depth: 0
+                          parent: nil];
+  [tree retain];
+  [self timeSelectionChanged];
 }
 
 - (void) entitySelectionChanged
