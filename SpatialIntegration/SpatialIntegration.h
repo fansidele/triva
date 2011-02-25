@@ -21,7 +21,9 @@
 
 @interface SpatialIntegration  : TrivaFilter
 {
+  NSMutableDictionary *cache;
 }
+- (void) resetCache;
 @end
 
 #endif

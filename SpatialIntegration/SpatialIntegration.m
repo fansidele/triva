@@ -21,13 +21,22 @@
 {
   self = [super initWithController: c];
   if (self != nil){
+    [self resetCache];
+    cache = [[NSMutableDictionary alloc] init];
   }
   return self;
 }
 
 - (void) dealloc
 {
+  [cache release];
   [super dealloc];
+}
+
+- (void) resetCache
+{
+  [cache release];
+  cache = [[NSMutableDictionary alloc] init];
 }
 
 - (NSDictionary *) integrationOfContainer: (PajeContainer *) cont
@@ -68,6 +77,11 @@
 {
   NSMutableDictionary *ret = [NSMutableDictionary dictionary];
 
+  //check if cache has data
+  if ([cache objectForKey: cont]){
+    return [cache objectForKey: cont];
+  }
+
   //integrate myself-only
   [ret addEntriesFromDictionary: [self integrationOfContainer: cont]];
 
@@ -85,7 +99,38 @@
       }
     }
   }
-  //TODO: save on cache
+  //save on cache
+  [cache setObject: ret forKey: cont];
   return ret;
+}
+
+- (void) timeSelectionChanged
+{
+  [self resetCache];
+  [super timeSelectionChanged];
+}
+
+- (void) hierarchyChanged
+{
+  [self resetCache];
+  [super hierarchyChanged];
+}
+
+- (void) containerSelectionChanged
+{
+  [self resetCache];
+  [super containerSelectionChanged];
+}
+
+- (void) entitySelectionChanged
+{
+  [self resetCache];
+  [super entitySelectionChanged];
+}
+
+- (void) dataChangedForEntityType: (PajeEntityType *) type
+{
+  [self resetCache];
+  [super dataChangedForEntityType: type];
 }
 @end
