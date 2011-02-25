@@ -99,7 +99,7 @@
 
 - (void) dataChangedForEntityType: (PajeEntityType *) type
 {
-  [self timeSelectionChanged];
+  [self hierarchyChanged];
 }
 
 - (BOOL) windowShouldClose: (id) sender
