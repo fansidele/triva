@@ -77,6 +77,10 @@
 {
   NSMutableDictionary *ret = [NSMutableDictionary dictionary];
 
+  if (cont == nil){
+    return ret;
+  }
+
   //check if cache has data
   if ([cache objectForKey: cont]){
     return [cache objectForKey: cont];

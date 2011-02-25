@@ -67,7 +67,7 @@
                                             parent: self
                                           expanded: 0
                                          container: nil
-                                            filter: nil];
+                                            filter: filter];
     
     [obj setTreemapValue: value];
     treemapValue += value;
@@ -287,9 +287,7 @@
  */
 - (void) drawTreemap
 {
-//  [[filter colorForValue: name
-//            ofEntityType: [filter entityTypeWithName: type]] set];
-  [[NSColor whiteColor] set];
+  [[filter colorForAggregationValueNamed: name] set];
   NSRectFill(bb);
   [NSBezierPath strokeRect: bb];
   if (isHighlighted){
