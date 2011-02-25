@@ -30,20 +30,20 @@
   NSEnumerator *en = [[self containedTypesForContainerType: type]
                         objectEnumerator];
   id et;
-  NSLog(@"i%*.*s%@", level, level, "", [type name]);
+  NSLog(@"i%*.*s%@", level, level, "", [type description]);
   int tlevel = level+1;
   while ((et = [en nextObject]) != nil) {
     if ([self isContainerEntityType: et]) {
       [self list: et level: level+2];      
     }else{
       if ([et isKindOfClass: [PajeStateType class]]){
-        NSLog (@"s%*.*s%@", tlevel, tlevel, "", [et name]);
+        NSLog (@"s%*.*s%@", tlevel, tlevel, "", [et description]);
       }else if ([et isKindOfClass: [PajeLinkType class]]){
-        NSLog (@"l%*.*s%@", tlevel, tlevel, "", [et name]);
+        NSLog (@"l%*.*s%@", tlevel, tlevel, "", [et description]);
       }else if ([et isKindOfClass: [PajeVariableType class]]){
-        NSLog (@"v%*.*s%@", tlevel, tlevel, "", [et name]);
+        NSLog (@"v%*.*s%@", tlevel, tlevel, "", [et description]);
       }else if ([et isKindOfClass: [PajeEventType class]]){
-        NSLog (@"e%*.*s%@", tlevel, tlevel, "", [et name]);
+        NSLog (@"e%*.*s%@", tlevel, tlevel, "", [et description]);
       }
     }
   }
