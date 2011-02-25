@@ -21,6 +21,7 @@
 {
   self = [super initWithController: c];
   if (self != nil){
+    colors = [[NSMutableDictionary alloc] init];
   }
 
   /* starting configuration */
@@ -31,6 +32,7 @@
 
 - (void) dealloc
 {
+  [colors release];
   [super dealloc];
 }
 
@@ -64,15 +66,13 @@
               forKey: ent];
     }
   }
-  //setting colors for values of the entity type
-  en = [allValuesOfStateType objectEnumerator];
-  while ((ent = [en nextObject]) != nil) {
-    [tsColors setObject: [self colorForValue: ent
-               ofEntityType: type]
-      forKey: ent];
-    [tsTypes setObject: type forKey: ent];
-  }
 */
+  //setting colors for values of the entity type
+  en = [[self allValuesForEntityType: type] objectEnumerator];
+  while ((ent = [en nextObject]) != nil) {
+    [colors setObject: [self colorForValue: ent ofEntityType: type]
+               forKey: ent];
+  }
 
   NSDate *sliceStartTime = [self selectionStartTime];
   NSDate *sliceEndTime = [self selectionEndTime];
@@ -155,8 +155,18 @@
     integrated += (duration/tsDuration) * value;
   }
 
+  NSString *variableIdent = [type description];
   [ret setObject: [NSNumber numberWithDouble: integrated]
-                                      forKey: [type description]];
+                                      forKey: variableIdent];
+
+  //saving color
+  [colors setObject: [self colorForEntityType: type]
+             forKey: variableIdent];
   return ret;
+}
+
+- (NSColor *) colorForAggregationValueNamed: (NSString *) valueName
+{
+  return [colors objectForKey: valueName];
 }
 @end

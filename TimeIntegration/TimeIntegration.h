@@ -24,6 +24,9 @@
   /* Configuration */
   BOOL considerExclusiveDuration;
   BOOL graphAggregationEnabled;
+
+  /* colors */
+  NSMutableDictionary *colors;
 }
 - (NSDictionary *) timeIntegrationOfStateType: (PajeEntityType*) type
                                   inContainer: (PajeContainer*) instance;
