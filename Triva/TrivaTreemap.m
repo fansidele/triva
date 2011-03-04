@@ -289,24 +289,28 @@
 {
   [[filter colorForAggregationValueNamed: name] set];
   NSRectFill(bb);
-  [NSBezierPath strokeRect: bb];
+
+  //iterate through values (if there are any)
+  NSEnumerator *en = [valueChildren objectEnumerator];
+  TrivaTreemap *childValue;
+  while ((childValue = [en nextObject])){
+    [childValue drawTreemap];
+  }
+
   if (isHighlighted){
-    [[NSColor blackColor] set];
     NSRect highlightedBorder = NSMakeRect (bb.origin.x + 1,
                                                        bb.origin.y + 1,
-                                                       bb.size.width - 1,
-                                                       bb.size.height - 1);
-    [NSBezierPath strokeRect: highlightedBorder];
+                                                       bb.size.width - 2,
+                                                       bb.size.height - 2);
+    [[NSColor blackColor] set];
+    NSBezierPath *path = [NSBezierPath bezierPathWithRect: highlightedBorder];
+    [path setLineWidth: 3];
+    [path stroke];
   }else{
     [[NSColor lightGrayColor] set];
-    [NSBezierPath strokeRect: bb];
-
-    //drawing values
-    NSEnumerator *en = [valueChildren objectEnumerator];
-    TrivaTreemap *childValue;
-    while ((childValue = [en nextObject])){
-      [childValue drawTreemap];
-    }
+    NSBezierPath *path = [NSBezierPath bezierPathWithRect: bb];
+    [path setLineWidth: 1];
+    [path stroke];
   }
 }
 
