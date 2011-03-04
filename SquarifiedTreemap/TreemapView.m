@@ -97,6 +97,12 @@
   [self setNeedsDisplay: YES];
 }
 
+- (void) rightMouseDown: (NSEvent *) event
+{
+  [self resetCurrentRoot];
+  [self setNeedsDisplay: YES];
+}
+
 - (void) mouseDown:(NSEvent *) event
 {
   NSPoint p;
@@ -111,7 +117,12 @@
   switch (code){
     case 33: [self printTreemap]; break; //P
     case 27: [filter setRecordMode]; break; //R
-    case 24: [self setCurrentRoot: [filter tree]]; break; //Q
+    case 24: [self resetCurrentRoot]; [self setNeedsDisplay: YES]; break; //Q
+    case 52: //Z
+      [highlighted setHighlighted: NO];
+      highlighted = nil;
+      [self setNeedsDisplay: YES];
+      break;
     default:
       break;
   }
