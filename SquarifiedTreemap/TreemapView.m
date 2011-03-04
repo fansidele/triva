@@ -23,7 +23,20 @@
   self = [super initWithFrame: frameRect];
   maxDepthToDraw = 0;
   highlighted = nil;
+  currentRoot = nil;
   return self;
+}
+
+- (void) setCurrentRoot: (TrivaTreemap *) nroot
+{
+  if (!nroot) return;
+
+  if (highlighted){
+    [highlighted setHighlighted: NO];
+    highlighted = nil;
+  }
+  currentRoot = nroot;
+  [self setNeedsDisplay: YES];
 }
 
 - (void)drawTree:(TrivaTreemap*) tree
@@ -42,8 +55,11 @@
 
 - (void)drawRect:(NSRect)frame
 {
-  [[filter tree] refreshWithBoundingBox: [self bounds]];
-  [self drawTree: [filter tree]];
+  if (currentRoot == nil){
+    [self setCurrentRoot: [filter tree]];
+  }
+  [currentRoot refreshWithBoundingBox: [self bounds]];
+  [self drawTree: currentRoot];
 }
 
 - (void)scrollWheel:(NSEvent *)event
@@ -51,12 +67,12 @@
   if (([event modifierFlags] & NSControlKeyMask)){
   }else{
     if ([event deltaY] > 0){
-      if (maxDepthToDraw < [[filter tree] maxDepth]){
+      if (maxDepthToDraw < [currentRoot maxDepth]){
         maxDepthToDraw++;
         [self setNeedsDisplay: YES];
       }
     }else{
-      if (maxDepthToDraw > 0){
+      if (maxDepthToDraw > [currentRoot depth]){
         maxDepthToDraw--;
         [self setNeedsDisplay: YES];
       }
@@ -68,11 +84,34 @@
 {
   NSPoint p;
   p = [self convertPoint:[event locationInWindow] fromView:nil];
-  TrivaTreemap *node = [[filter tree] searchAtPoint: p maxDepth: maxDepthToDraw];
+  TrivaTreemap *node = [currentRoot searchAtPoint: p maxDepth: maxDepthToDraw];
   [highlighted setHighlighted: NO];
   [node setHighlighted: YES];
   highlighted = node;
   [self setNeedsDisplay: YES];
+}
+
+- (void) mouseDown:(NSEvent *) event
+{
+  NSPoint p;
+  p = [self convertPoint:[event locationInWindow] fromView:nil];
+  TrivaTreemap *node = [currentRoot searchAtPoint: p maxDepth:maxDepthToDraw];
+  [self setCurrentRoot: node];
+  NSLog (@"node: %@", node);
+}
+
+- (void)keyDown:(NSEvent *)theEvent
+{
+  int code = [theEvent keyCode];
+  switch (code){
+    case 33: [self printTreemap]; break; //P
+    case 27: [filter setRecordMode]; break; //R
+    case 24: [self setCurrentRoot: [filter tree]]; break; //Q
+    default:
+      NSLog (@"%d pressed", code);
+      break;
+  }
+  return;
 }
 
 #ifdef GNUSTEP
@@ -91,6 +130,7 @@
 - (void) setFilter: (SquarifiedTreemap *) f
 {
   filter = f;
+  [self setCurrentRoot: [filter tree]];
 }
 @end
 

@@ -27,11 +27,12 @@
   int maxDepthToDraw;
   SquarifiedTreemap *filter;
   TrivaTreemap *highlighted;
+  TrivaTreemap *currentRoot;
 }
 - (void) setFilter: (SquarifiedTreemap *) f;
 - (void) printTreemap;
 - (void) setCurrentStatusString: (NSString *)str;
-- (void) highlightHierarchy;
+- (void) setCurrentRoot: (TrivaTreemap *) nroot;
 @end
 
 #endif // _TreemapView_H_
