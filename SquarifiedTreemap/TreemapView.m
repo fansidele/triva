@@ -132,6 +132,28 @@
   filter = f;
   [self setCurrentRoot: [filter tree]];
 }
+
+- (void) setCurrentStatusString: (NSString *)str
+{
+  [str drawAtPoint: NSMakePoint (0, 0)
+      withAttributes: nil];
+}
+
+
+- (void) printTreemap
+{
+  static int counter = 0;
+  NSPrintOperation *op;
+  NSMutableData *data = [NSMutableData data];
+  op = [NSPrintOperation EPSOperationWithView: self
+                                   insideRect: [self bounds]
+                                       toData: data];
+  [op runOperation];
+  NSString *filename = [NSString stringWithFormat: @"%03d-treemap-%@-%@.eps", counter++,
+    [filter selectionStartTime], [filter selectionEndTime]];
+  [data writeToFile: filename atomically: YES];
+  NSLog (@"screenshot written to %@", filename);
+}
 @end
 
 /*
@@ -253,39 +275,6 @@
 {
     [[self window] setAcceptsMouseMovedEvents: YES];
     return YES;
-}
-
-- (void) printTreemap
-{
-  static int counter = 0;
-  NSPrintOperation *op;
-  NSMutableData *data = [NSMutableData data];
-  op = [NSPrintOperation EPSOperationWithView: self
-                                   insideRect: [self bounds]
-                                       toData: data];
-  [op runOperation];
-  NSString *filename = [NSString stringWithFormat: @"%03d-treemap-%@-%@.eps", counter++,
-    [filter selectionStartTime], [filter selectionEndTime]];
-  [data writeToFile: filename atomically: YES];
-  NSLog (@"screenshot written to %@", filename);
-}
-
-- (void)keyDown:(NSEvent *)theEvent
-{
-  if (([theEvent modifierFlags] | NSAlternateKeyMask) &&
-    [theEvent keyCode] == 33){ //ALT + P
-    [self printTreemap];
-  }else if (([theEvent modifierFlags] | NSAlternateKeyMask) &&
-    [theEvent keyCode] == 27){ //ALT + R
-    [filter setRecordMode];
-  }
-
-}
-
-- (void) setCurrentStatusString: (NSString *)str
-{
-  [str drawAtPoint: NSMakePoint (0, 0)
-      withAttributes: nil];
 }
 
 - (void) highlightHierarchy
