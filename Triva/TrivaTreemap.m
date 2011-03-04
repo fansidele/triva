@@ -297,19 +297,32 @@
     [childValue drawTreemap];
   }
 
+  if (depth == 0) return;
+
   if (isHighlighted){
     NSRect highlightedBorder = NSMakeRect (bb.origin.x + 1,
                                                        bb.origin.y + 1,
                                                        bb.size.width - 2,
                                                        bb.size.height - 2);
-    [[NSColor blackColor] set];
+    [[NSColor yellowColor] set];
     NSBezierPath *path = [NSBezierPath bezierPathWithRect: highlightedBorder];
     [path setLineWidth: 3];
     [path stroke];
   }else{
     [[NSColor lightGrayColor] set];
     NSBezierPath *path = [NSBezierPath bezierPathWithRect: bb];
-    [path setLineWidth: 1];
+    [path setLineWidth: 0.8];
+    [path stroke];
+  }
+}
+
+- (void) drawBorder
+{
+  if (depth){
+    double width = ([self maxDepth])/((float)depth);
+    [[NSColor blackColor] set];
+    NSBezierPath *path = [NSBezierPath bezierPathWithRect: bb];
+    [path setLineWidth: width];
     [path stroke];
   }
 }

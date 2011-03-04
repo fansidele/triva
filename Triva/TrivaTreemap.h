@@ -64,6 +64,7 @@
 
 /* draw (called by view, must be after refreshWithBoundingBox) */
 - (void) drawTreemap;
+- (void) drawBorder;
 
 /* search-based methods */
 - (TrivaTreemap *) searchWith: (NSPoint) point

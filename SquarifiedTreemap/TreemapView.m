@@ -24,6 +24,7 @@
   maxDepthToDraw = 0;
   highlighted = nil;
   currentRoot = nil;
+  showLevelKey = YES;
   return self;
 }
 
@@ -56,6 +57,9 @@
     while ((child = [en nextObject])){
       [self drawTree: child];
     }
+    
+    //draw border
+    [tree drawBorder];
   }
 }
 
@@ -66,6 +70,30 @@
   }
   [currentRoot refreshWithBoundingBox: [self bounds]];
   [self drawTree: currentRoot];
+
+  //draw key
+  if (showLevelKey){
+    NSRect b = [self bounds];
+    int numberOfLevels = [[filter tree] maxDepth];
+    NSBezierPath *p = [NSBezierPath bezierPath];
+    [p setLineWidth: 1];
+    double top = b.size.height-10;
+    [p moveToPoint:NSMakePoint(10,top)];
+    [p lineToPoint:NSMakePoint(10,top-((numberOfLevels)*20))];
+    int i;
+    for (i = 0; i <= numberOfLevels; i++){
+      [p moveToPoint:NSMakePoint(5,top-(i)*20)];
+      [p lineToPoint:NSMakePoint(15,top-(i)*20)];
+    }
+    [[NSColor whiteColor] set];
+    [p stroke];
+    p = [NSBezierPath bezierPath];
+    [p setLineWidth: 2];
+    [p moveToPoint:NSMakePoint(5,top-(maxDepthToDraw)*20)];
+    [p lineToPoint:NSMakePoint(15,top-(maxDepthToDraw)*20)];
+    [[NSColor blackColor] set];
+    [p stroke];
+  }
 }
 
 - (void)scrollWheel:(NSEvent *)event
@@ -121,6 +149,10 @@
     case 52: //Z
       [highlighted setHighlighted: NO];
       highlighted = nil;
+      [self setNeedsDisplay: YES];
+      break;
+    case 45: //K
+      showLevelKey = !showLevelKey;
       [self setNeedsDisplay: YES];
       break;
     default:

@@ -28,6 +28,7 @@
   SquarifiedTreemap *filter;
   TrivaTreemap *highlighted;
   TrivaTreemap *currentRoot;
+  BOOL showLevelKey;
 }
 - (void) setFilter: (SquarifiedTreemap *) f;
 - (void) printTreemap;
