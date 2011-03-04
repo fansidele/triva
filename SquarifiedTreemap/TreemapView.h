@@ -26,6 +26,7 @@
 {
   int maxDepthToDraw;
   SquarifiedTreemap *filter;
+  TrivaTreemap *highlighted;
 }
 - (void) setFilter: (SquarifiedTreemap *) f;
 - (void) printTreemap;

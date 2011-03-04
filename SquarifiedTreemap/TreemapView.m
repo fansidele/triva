@@ -22,6 +22,7 @@
 {
   self = [super initWithFrame: frameRect];
   maxDepthToDraw = 0;
+  highlighted = nil;
   return self;
 }
 
@@ -47,7 +48,8 @@
 
 - (void)scrollWheel:(NSEvent *)event
 {
-//  if (([event modifierFlags] & NSControlKeyMask)){
+  if (([event modifierFlags] & NSControlKeyMask)){
+  }else{
     if ([event deltaY] > 0){
       if (maxDepthToDraw < [[filter tree] maxDepth]){
         maxDepthToDraw++;
@@ -59,7 +61,18 @@
         [self setNeedsDisplay: YES];
       }
     }
-//  }
+  }
+}
+
+- (void) mouseMoved:(NSEvent *)event
+{
+  NSPoint p;
+  p = [self convertPoint:[event locationInWindow] fromView:nil];
+  TrivaTreemap *node = [[filter tree] searchAtPoint: p maxDepth: maxDepthToDraw];
+  [highlighted setHighlighted: NO];
+  [node setHighlighted: YES];
+  highlighted = node;
+  [self setNeedsDisplay: YES];
 }
 
 #ifdef GNUSTEP
@@ -172,14 +185,6 @@
   return maxDepthToDraw;
 }
 
-
-- (void) setHighlight: (id) node highlight: (BOOL) highlight
-{
-  while (node){
-    [node setHighlighted: highlight];
-    node = [node parent];
-  }  
-}
 
 - (void) mouseMoved:(NSEvent *)event
 {
