@@ -98,4 +98,26 @@
   }
 
 }
+
+- (TrivaTree*) searchAtPoint: (NSPoint) p maxDepth: (int) d
+{
+  TrivaTreemap *ret = nil;
+  if (p.x >= bb.origin.x &&
+      p.x <= bb.origin.x+bb.size.width &&
+      p.y >= bb.origin.y &&
+      p.y <= bb.origin.y+bb.size.height){
+    if (depth == d){
+      //recurse on aggregates (subclass responsability)
+      return self;
+    }else{
+      NSEnumerator *en = [children objectEnumerator];
+      TrivaTree *child;
+      while ((child = [en nextObject])){
+        ret = [child searchAtPoint: p maxDepth: d];        
+        if (ret) break;
+      }
+    }
+  }
+  return ret; 
+}
 @end

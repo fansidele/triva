@@ -53,6 +53,8 @@
 - (void) setHighlighted: (BOOL) v;
 
 - (void) timeSelectionChanged;
+
+- (TrivaTree*) searchAtPoint: (NSPoint) p maxDepth: (int) d;
 @end
 
 #include <Triva/TrivaFilter.h>
