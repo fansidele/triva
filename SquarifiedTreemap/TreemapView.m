@@ -97,7 +97,6 @@
   p = [self convertPoint:[event locationInWindow] fromView:nil];
   TrivaTreemap *node = [currentRoot searchAtPoint: p maxDepth:maxDepthToDraw];
   [self setCurrentRoot: node];
-  NSLog (@"node: %@", node);
 }
 
 - (void)keyDown:(NSEvent *)theEvent
@@ -108,7 +107,6 @@
     case 27: [filter setRecordMode]; break; //R
     case 24: [self setCurrentRoot: [filter tree]]; break; //Q
     default:
-      NSLog (@"%d pressed", code);
       break;
   }
   return;
