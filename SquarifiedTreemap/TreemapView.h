@@ -33,6 +33,7 @@
 - (void) printTreemap;
 - (void) setCurrentStatusString: (NSString *)str;
 - (void) setCurrentRoot: (TrivaTreemap *) nroot;
+- (void) resetCurrentRoot;
 @end
 
 #endif // _TreemapView_H_

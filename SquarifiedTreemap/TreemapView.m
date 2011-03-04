@@ -39,6 +39,12 @@
   [self setNeedsDisplay: YES];
 }
 
+- (void) resetCurrentRoot
+{
+  currentRoot = nil;
+  highlighted = nil;
+}
+
 - (void)drawTree:(TrivaTreemap*) tree
 {
   if ([tree depth] == maxDepthToDraw){
