@@ -309,17 +309,19 @@
     [path setLineWidth: 3];
     [path stroke];
   }else{
-    [[NSColor lightGrayColor] set];
-    NSBezierPath *path = [NSBezierPath bezierPathWithRect: bb];
-    [path setLineWidth: 0.8];
-    [path stroke];
+    if ([valueChildren count] != 0){
+      [[NSColor blackColor] set];
+      NSBezierPath *path = [NSBezierPath bezierPathWithRect: bb];
+      [path setLineWidth: 0.8];
+      [path stroke];
+    }
   }
 }
 
 - (void) drawBorder
 {
   if (depth){
-    double width = ([self maxDepth])/((float)depth);
+    double width = ((float)[self maxDepth])/((float)depth);
     [[NSColor blackColor] set];
     NSBezierPath *path = [NSBezierPath bezierPathWithRect: bb];
     [path setLineWidth: width];
