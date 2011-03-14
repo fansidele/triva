@@ -19,10 +19,10 @@
 
 #include <Foundation/Foundation.h>
 #include <General/PajeFilter.h>
-#include <Triva/TrivaWindow.h>
+#include <Triva/Triva.h>
 #include "TimeSyncController.h"
 
-@interface TimeSync  : PajeFilter
+@interface TimeSync  : TrivaFilter 
 {
   double selectionStart;
   double selectionEnd;
