@@ -34,6 +34,7 @@
          TimeSync, \
          TypeFilter, \
          TimeIntegration, \
+         SpatialIntegration, \
          SquarifiedTreemap \
       ) )" propertyList];
   }else if ([configuration visualizationComponent] == TrivaGraphView){
@@ -44,6 +45,7 @@
          StorageController, \
          TimeSync, \
          TimeIntegration, \
+         SpatialIntegration, \
          GraphConfiguration, \
          GraphView \
       ) )" propertyList];
@@ -74,7 +76,7 @@
     d = [graphSequences objectAtIndex: i];
     
     //set the TimeSync filters' controller
-    SEL method = @selector(setController:);
+    SEL method = @selector(setTimeSyncController:);
     [[d objectForKey: @"TimeSync"] performSelector: method withObject: compareController];
 
     //add the compare filters to the controller
