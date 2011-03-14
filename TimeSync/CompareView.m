@@ -287,6 +287,30 @@
   draggingOperation = NO;
 }
 
+- (void) printCompare
+{
+  static int cnt = 0;
+  NSPrintOperation *op;
+  NSMutableData *data = [NSMutableData data];
+  op = [NSPrintOperation EPSOperationWithView: self
+                                   insideRect: [self bounds]
+                                       toData: data];
+  [op runOperation];
+  NSString *filename = [NSString stringWithFormat: @"%03d-compare.eps", cnt++];
+  [data writeToFile: filename atomically: YES];
+  NSLog (@"screenshot written to %@", filename);
+}
+
+
+- (void)keyDown:(NSEvent *)theEvent
+{
+  int code = [theEvent keyCode];
+  switch (code){
+    case 33: [self printCompare]; break; //P
+    default: break;
+  }
+}
+
 - (void) resizeSubviewsWithOldSize: (NSSize) size
 {
   //define pixelToTimeRatio
