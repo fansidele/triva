@@ -149,16 +149,18 @@ NS_ENDHANDLER
 
 - (void) redefineLayout
 {
+  //recalculate current values for containers, min, max and colors
+  [self updateCurrentValues];
+
+  //redefine layout for Tupi library
   NSEnumerator *en = [manager enumeratorOfNodes];
   Tupi *node;
   while ((node = [en nextObject])){
-    TimeSliceTree *nodeTree = (TimeSliceTree*)[[self timeSliceTree]
-                                        searchChildByName: [node name]];
-    [manager layoutOfNode: node
-               withValues: [nodeTree timeSliceValues]
-                minValues: [[self timeSliceTree] minValues]
-                maxValues: [[self timeSliceTree] maxValues]
-                   colors: [nodeTree timeSliceColors]];
+    [manager layoutOfNode:node
+               withValues:[values objectForKey:[node name]]
+                minValues:minValues
+                maxValues:maxValues
+                   colors:nil];//[nodeTree timeSliceColors]];
   }
 }
 
