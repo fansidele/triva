@@ -65,13 +65,14 @@
   }
 
   calculatedValues = [[NSMutableDictionary alloc] init];
-  colors = col;
+  colors = [[NSMutableDictionary alloc] initWithDictionary: col];
   return self;
 }
 
 - (void) dealloc
 {
   [calculatedValues release];
+  [colors release];
   [super dealloc];
 }
 
