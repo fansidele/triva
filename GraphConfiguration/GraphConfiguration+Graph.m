@@ -160,7 +160,7 @@ NS_ENDHANDLER
                withValues:[values objectForKey:[node name]]
                 minValues:minValues
                 maxValues:maxValues
-                   colors:nil];//[nodeTree timeSliceColors]];
+                   colors:colors];
   }
 }
 

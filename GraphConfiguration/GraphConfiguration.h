@@ -40,8 +40,9 @@
   NSDictionary *plist;
   TupiManager *manager;
 
-  //values, min, max dictionaries
+  //values, colors, min, max dictionaries
   NSMutableDictionary *values;
+  NSMutableDictionary *colors;
   NSMutableDictionary *minValues;
   NSMutableDictionary *maxValues;
 

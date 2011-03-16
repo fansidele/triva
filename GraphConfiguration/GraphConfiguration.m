@@ -172,9 +172,11 @@
 - (void) updateCurrentValues
 {
   [values release];
+  [colors release];
   [minValues release];
   [maxValues release];
   values = [[NSMutableDictionary alloc] init];
+  colors = [[NSMutableDictionary alloc] init];
   minValues = [[NSMutableDictionary alloc] init];
   maxValues = [[NSMutableDictionary alloc] init];
 
@@ -216,9 +218,11 @@
                         forKey:valueName];
         }
       }
+
+      //save colors
+      [colors setObject:[self colorForIntegratedValueNamed:valueName]
+                 forKey:valueName];
     }
-
-
   }
 }
 @end
