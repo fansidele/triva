@@ -265,19 +265,25 @@
   [transform concat];
 }
 
-- (void) layoutWith: (NSDictionary*)conf values: (NSDictionary*)values minValues: (NSDictionary *) min maxValues: (NSDictionary*) max colors: (NSDictionary*) colors
+- (void) layoutWith:(NSDictionary*)conf
+             values:(NSDictionary*)values
+          minValues:(NSDictionary *)minValues
+          maxValues:(NSDictionary*)maxValues
+             colors:(NSDictionary*)colors
 {
   NSString *sizeconf = [conf objectForKey: @"size"];
   double screensize;
   if ([self expressionHasVariables: sizeconf]){
-    double minVal = [self evaluateWithValues: min withExpr: sizeconf];
-    double maxVal = [self evaluateWithValues: max withExpr: sizeconf];
-    size = [self evaluateWithValues: values withExpr: sizeconf];
-    if ((maxVal - minVal) != 0) {
-      screensize = MAX_SIZE * (size) / (maxVal - minVal);
+    double min = [self evaluateWithValues: minValues withExpr: sizeconf];
+    double max = [self evaluateWithValues: maxValues withExpr: sizeconf];
+    double dif = max- min;
+    double val = [self evaluateWithValues: values withExpr: sizeconf];
+    if (dif != 0) {
+      screensize = MIN_SIZE + ((val - min)/dif)*(MAX_SIZE-MIN_SIZE);
     }else{
-      screensize = MAX_SIZE * (size) / (maxVal);
+      screensize = MIN_SIZE + ((val - min)/min)*(MAX_SIZE-MIN_SIZE);
     }
+    size = val;
   }else{
     screensize = [sizeconf doubleValue];
   }

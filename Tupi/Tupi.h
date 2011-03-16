@@ -21,6 +21,7 @@
 #include <Tupi/TupiComposition.h>
 #include <matheval.h>
 
+#define MIN_SIZE   20
 #define MAX_SIZE   40
 
 typedef enum {
