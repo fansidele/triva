@@ -43,13 +43,6 @@
   return [(TrivaFilter*)inputComponent sizeForGraph];
 }
 
-- (TimeSliceTree *) timeSliceTree
-{
-  //deprecated
-  [[NSException exceptionWithName: @"TrivaException" reason: @"timeSliceTree is deprecated" userInfo: nil] raise];
-  return [(TrivaFilter*)inputComponent timeSliceTree];
-}
-
 - (void) debugOf: (PajeEntityType*) type At: (PajeContainer*) container
 {
   return [(TrivaFilter*)inputComponent debugOf: type At: container];
