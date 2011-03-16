@@ -65,7 +65,7 @@
     en2 = [self enumeratorOfContainersTyped: type
                                 inContainer: [self rootInstance]];
     while ((entity = [en2 nextObject])){
-      [manager createNodeWithName: [entity name] type: [type description]];
+      [manager createNodeWithName: [entity name] type: type];
     }
   }
 

@@ -83,8 +83,13 @@
 
 - (void) layoutOfNode: (Tupi*) node withValues: (NSDictionary*) values minValues: (NSDictionary*) min maxValues: (NSDictionary*) max colors: (NSDictionary*) colors
 {
-  NSDictionary *nodeConf = [configuration configurationForType: [node type]];
-  [node layoutWith: nodeConf values: values minValues: min maxValues: max colors: colors];
+  NSDictionary *conf;
+  conf = [configuration configurationForType: [[node type] description]];
+  [node layoutWith:conf
+            values:values
+         minValues:min
+         maxValues:max
+            colors:colors];
 }
 
 - (NSRect) sizeForGraph
