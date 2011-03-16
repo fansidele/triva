@@ -40,6 +40,11 @@
   NSDictionary *plist;
   TupiManager *manager;
 
+  //values, min, max dictionaries
+  NSMutableDictionary *values;
+  NSMutableDictionary *minValues;
+  NSMutableDictionary *maxValues;
+
   // interface variables 
   id confView;
   NSTextField *title;
@@ -57,6 +62,7 @@
  * Called by interface and command-line options to apply the new configuration
  */
 - (void) applyGraphConfiguration;
+- (void) updateCurrentValues;
 @end
 
 @interface GraphConfiguration (Interface)

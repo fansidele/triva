@@ -167,4 +167,58 @@
     [window orderFront: self];
   }
 }
+
+/* values for the current time-slice */
+- (void) updateCurrentValues
+{
+  [values release];
+  [minValues release];
+  [maxValues release];
+  values = [[NSMutableDictionary alloc] init];
+  minValues = [[NSMutableDictionary alloc] init];
+  maxValues = [[NSMutableDictionary alloc] init];
+
+  NSEnumerator *en = [manager enumeratorOfNodes];
+  Tupi *node;
+  while ((node = [en nextObject])){
+    NSString *name = [node name];
+    PajeEntityType *type = [node type];
+    PajeContainer *cont = [self containerWithName:[node name] type:type]; 
+    NSDictionary *contValues = [self integrationOfContainer: cont];
+
+    //save on values
+    [values setObject: contValues forKey: name];
+
+    //calculate minValues and maxValues
+    NSEnumerator *en2 = [contValues keyEnumerator];
+    NSString *valueName, *value;
+    while ((valueName = [en2 nextObject])){
+      value = [contValues objectForKey:valueName];
+      //minValue
+      if ([minValues objectForKey:valueName] == nil){
+        [minValues setObject:value
+                      forKey:valueName];
+      }else{
+        if ([value doubleValue] <
+            [[minValues objectForKey:valueName] doubleValue]){
+          [minValues setObject:value
+                        forKey:valueName];
+        }
+      }
+      //maxValue
+      if ([maxValues objectForKey:valueName] == nil){
+        [maxValues setObject:value
+                      forKey:valueName];
+      }else{
+        if ([value doubleValue] >
+            [[maxValues objectForKey:valueName] doubleValue]){
+          [maxValues setObject:value
+                        forKey:valueName];
+        }
+      }
+    }
+
+
+  }
+}
 @end
