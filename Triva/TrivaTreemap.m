@@ -287,7 +287,7 @@
  */
 - (void) drawTreemap
 {
-  [[filter colorForAggregationValueNamed: name] set];
+  [[filter colorForIntegratedValueNamed: name] set];
   NSRectFill(bb);
 
   //iterate through values (if there are any)

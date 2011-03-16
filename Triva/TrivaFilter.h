@@ -60,7 +60,7 @@ typedef enum {Local,Global,Convergence,Arnaud} TrivaScale;
 - (NSDictionary *) timeIntegrationOfType:(PajeEntityType*) type inContainer:(PajeContainer*) cont;
 - (NSDictionary *) integrationOfContainer: (PajeContainer *) cont;
 - (NSDictionary *) spatialIntegrationOfContainer: (PajeContainer *) cont;
-- (NSColor *) colorForAggregationValueNamed: (NSString *) valueName;
+- (NSColor *) colorForIntegratedValueNamed: (NSString *) valueName;
 @end
 
 #endif

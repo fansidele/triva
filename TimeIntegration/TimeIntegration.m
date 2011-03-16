@@ -165,7 +165,7 @@
   return ret;
 }
 
-- (NSColor *) colorForAggregationValueNamed: (NSString *) valueName
+- (NSColor *) colorForIntegratedValueNamed: (NSString *) valueName
 {
   return [colors objectForKey: valueName];
 }

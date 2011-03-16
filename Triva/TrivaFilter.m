@@ -128,8 +128,8 @@
   return [(TrivaFilter*)inputComponent spatialIntegrationOfContainer:cont];
 }
 
-- (NSColor *) colorForAggregationValueNamed: (NSString *) valueName
+- (NSColor *) colorForIntegratedValueNamed: (NSString *) valueName
 {
-  return [(TrivaFilter*)inputComponent colorForAggregationValueNamed: valueName];
+  return [(TrivaFilter*)inputComponent colorForIntegratedValueNamed: valueName];
 }
 @end
