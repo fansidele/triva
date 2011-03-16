@@ -20,44 +20,9 @@
 #include "GraphConfiguration.h"
 
 @implementation GraphConfiguration (Protocol)
-// implementation the TrivaFilter "protocol" 
-- (NSEnumerator*) enumeratorOfNodes
-{
-  return [manager enumeratorOfNodes];
-}
-
 - (id) currentTupiManager
 {
   return manager;
-}
-
-- (NSRect) sizeForGraph
-{
-//FIXME
-  return [manager sizeForGraph];
-/*
-  if ([configuration userPosition]){
-    return [configuration userRect];
-  }else if ([configuration graphviz]){
-    NSRect ret;
-    ret.origin.x = ret.origin.y = 0;
-    if (graph){
-      ret.size.width = GD_bb(graph).UR.x;
-      ret.size.height = GD_bb(graph).UR.y;
-    }else{
-      ret.size.width = 0;
-      ret.size.height = 0;
-    }
-    return ret;
-  }else{
-    return NSZeroRect;
-  }
-*/
-}
-
-- (Tupi*) findNodeByName: (NSString *)name
-{
-  return [manager findNodeByName: name];
 }
 
 - (NSColor *) getColor: (NSColor *)c withSaturation: (double) saturation
@@ -75,43 +40,5 @@
     brightness: b
     alpha: a];
   return ret;
-}
-
-- (void) __defineMax: (double*)max
-            andMin: (double*)min
-         withScale: (TrivaScale) scale
-      fromVariable: (NSString*)var
-          ofObject: (NSString*) objName
-          withType: (NSString*) objType
-{
-  PajeEntityType *valtype = [self entityTypeWithName: var];
-  if (scale == Global){
-    *min = [self minValueForEntityType: valtype];
-    *max = [self maxValueForEntityType: valtype];
-  }else if (scale == Local){
-    //if local scale, *min and *max from this container
-    //  container is found based on the name of the obj
-    PajeEntityType *type = [self entityTypeWithName: objType]; 
-    PajeContainer *cont = [self containerWithName: objName type: type];
-    *min = [self minValueForEntityType: valtype inContainer: cont];
-    *max = [self maxValueForEntityType: valtype inContainer: cont];
-  }else if (scale == Convergence || scale == Arnaud){
-    PajeEntityType *type = [self entityTypeWithName: objType];
-    PajeContainer *cont = [self containerWithName: objName type: type];
-
-    *max = 0;
-    *min = FLT_MAX;
-    NSEnumerator *en = [self enumeratorOfEntitiesTyped: valtype
-                                           inContainer: cont
-                                              fromTime:[self selectionStartTime]
-                                                toTime: [self endTime]
-                                           minDuration: 0];
-    id ent;
-    while ((ent = [en nextObject])){
-      double val = [[ent value] doubleValue];
-      if (val > *max) *max = val;
-      if (val < *min) *min = val;
-    }
-  }
 }
 @end

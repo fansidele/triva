@@ -28,11 +28,6 @@
   return [(TrivaFilter*)inputComponent currentTupiManager];
 }
 
-- (NSEnumerator*) enumeratorOfNodes;
-{
-  return [(TrivaFilter*)inputComponent enumeratorOfNodes];
-}
-
 - (void) debugOf: (PajeEntityType*) type At: (PajeContainer*) container
 {
   return [(TrivaFilter*)inputComponent debugOf: type At: container];
