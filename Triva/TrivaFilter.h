@@ -19,18 +19,13 @@
 #include <Foundation/Foundation.h>
 #include <General/PajeFilter.h>
 #include <Triva/Triva.h>
+#include <Triva/TrivaConfiguration.h>
 
 typedef enum {Local,Global,Convergence,Arnaud} TrivaScale;
 
-@class TrivaGraphNode;
-@class TrivaGraphEdge;
-@class TrivaConfiguration;
-
 @interface TrivaFilter  : PajeFilter
 - (id) currentTupiManager;
-- (TrivaGraphNode*) findNodeByName: (NSString *)name; /* TODO: to be removed*/
 - (NSEnumerator*) enumeratorOfNodes;
-- (NSRect) sizeForGraph;
 
 /* auxiliary methods */
 - (void) debugOf: (PajeEntityType*) type At: (PajeContainer*) container;

@@ -343,21 +343,6 @@
     [theEvent keyCode] == 33){ //ALT + P
     [self printGraph];
   }else if (([theEvent modifierFlags] | NSAlternateKeyMask) &&
-    [theEvent keyCode] == 26){
-
-    TrivaGraphNode *node;
-    NSEnumerator *en = [filter enumeratorOfNodes];
-    while ((node = [en nextObject])){
-      NSPoint p = [node boundingBox].origin;
-      NSLog (@"%@ = { x = %f; y = %f; };", [node name], p.x, p.y);
-    }
-    NSRect rect = [filter sizeForGraph];
-    NSLog (@"Area = { x = %f; y = %f; width = %f; height = %f; };",
-      rect.origin.x,
-      rect.origin.y,
-      rect.size.width,
-      rect.size.height);
-  }else if (([theEvent modifierFlags] | NSAlternateKeyMask) &&
     [theEvent keyCode] == 27){ //ALT + R
     [filter setRecordMode];
   }

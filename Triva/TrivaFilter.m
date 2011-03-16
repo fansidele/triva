@@ -28,19 +28,9 @@
   return [(TrivaFilter*)inputComponent currentTupiManager];
 }
 
-- (TrivaGraphNode*) findNodeByName: (NSString *)name
-{
-  return [(TrivaFilter*)inputComponent findNodeByName: name];
-}
-
 - (NSEnumerator*) enumeratorOfNodes;
 {
   return [(TrivaFilter*)inputComponent enumeratorOfNodes];
-}
-
-- (NSRect) sizeForGraph
-{
-  return [(TrivaFilter*)inputComponent sizeForGraph];
 }
 
 - (void) debugOf: (PajeEntityType*) type At: (PajeContainer*) container
