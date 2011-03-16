@@ -195,6 +195,7 @@ NS_ENDHANDLER
        StorageController, \
        TimeInterval, \
        TimeIntegration, \
+       SpatialIntegration, \
        GraphConfiguration, \
        GraphView \
     ) )" propertyList];
