@@ -61,7 +61,7 @@
   [name retain];
 }
 
-- (void) setType: (NSString *) n
+- (void) setType: (id) n
 {
   if (type){
     [type release];
@@ -126,7 +126,7 @@
   return name;
 }
 
-- (NSString *) type
+- (id) type
 {
   return type;
 }

@@ -32,7 +32,7 @@ typedef enum {
 @interface Tupi : NSObject
 {
   NSString *name;
-  NSString *type;
+  id type;
   TupiType tupiType;
   NSMutableSet *connectedNodes;
   NSRect bb;
@@ -47,7 +47,7 @@ typedef enum {
 }
 - (id) initWithConfiguration: (NSDictionary*) dict;
 - (void) setName: (NSString *) n;
-- (void) setType: (NSString *) n;
+- (void) setType: (id) n;
 - (void) setTupiType: (TupiType) n;
 - (void) setHighlight: (BOOL) highlight;
 - (void) setBoundingBox: (NSRect) b;
@@ -55,7 +55,7 @@ typedef enum {
 
 
 - (NSString *) name;
-- (NSString *) type;
+- (id) type;
 - (TupiType) tupiType;
 - (NSRect) boundingBox;
 - (NSSet*) connectedNodes;

@@ -48,7 +48,7 @@
   [super dealloc];
 }
 
-- (void) createNodeWithName: (NSString*) name type: (NSString*) type
+- (void) createNodeWithName: (NSString*) name type: (id) type
 {
   NSDictionary *dict = [configuration configurationForType: type];
   Tupi *node = [[Tupi alloc] initWithConfiguration: dict];
