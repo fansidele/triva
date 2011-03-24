@@ -209,6 +209,8 @@
   [tree graphvizSetPositions];
   [self finalizeGraphviz];
 */
+  [tree setVisible: YES];
+  [tree setChildrenVisible: NO];
   [view resetCurrentRoot];
   [self timeSelectionChanged];
 }

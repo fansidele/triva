@@ -33,19 +33,17 @@
 - (void) recursiveLayoutWithMinValues: (NSDictionary *) minValues
                             maxValues: (NSDictionary *) maxValues
 {
-  //if i am expanded, recurse to my children
-  if ([self expanded]){
-    //recurse
+  if ([self visible]){
+    //I appear, consider me to force-direct my position, layout me
+    [filter addGraphNode: self];
+    [self layoutWithMinValues: minValues maxValues: maxValues];
+  }else{
+    //I do not appear, recurse to my children
     NSEnumerator *en = [children objectEnumerator];
     TrivaGraph *child;
     while ((child = [en nextObject])){
       [child recursiveLayoutWithMinValues: minValues maxValues: maxValues];
     }
-  }else{
-    //add myself to the filter's force-directed algo
-    [filter addGraphNode: self];
-    //i am NOT expanded, layout myself
-    [self layoutWithMinValues: minValues maxValues: maxValues];
   }
 }
 
@@ -193,6 +191,8 @@
 
 - (void) drawLayout
 {
+  if (![self visible]) return;
+
   NSEnumerator *en;
   //draw a line to connected nodes
 
