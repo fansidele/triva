@@ -133,6 +133,15 @@
     }
     bb.size.width = screenSize;
     bb.size.height = screenSize;
+
+    //layout my compositions 
+    //update bounding boxes of compositions
+    NSEnumerator *en = [compositions objectEnumerator];
+    id comp;
+    while ((comp = [en nextObject])){
+      [comp layoutWithRect: bb];
+      [comp layoutWithValues: values];
+    }
   }
 
   //layout my children
@@ -436,13 +445,6 @@
 {
   [super setBoundingBox: nbb];
 
-  //update bounding boxes of compositions
-  NSEnumerator *en = [compositions objectEnumerator];
-  id comp;
-  while ((comp = [en nextObject])){
-    [comp layoutWithRect: bb];
-    [comp layoutWithValues: values];
-  }
 
 }
 @end
