@@ -83,10 +83,6 @@
   }
 }
 
-- (void) layoutSizeWith: (double) s
-{
-}
-
 - (void) layoutConnectionPointsWith: (double) screenSize
 {
   //pre-requisite is layout bounding box size
