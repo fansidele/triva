@@ -48,4 +48,36 @@
 {
   return [currentGraphConfiguration objectForKey: [type description]];
 }
+
+- (NSDictionary *) minValuesForContainerType:(PajeEntityType*) type
+{
+  //check if this is a container type
+  if (![self isContainerEntityType: type]){
+    return nil;
+  }
+
+  //check if we have cached values, calculate if not, return result
+  NSDictionary *ret = nil;
+  while (!(ret = [minValues objectForKey: type])){
+    [self updateMinMaxColorForContainerType: type];
+    ret = [minValues objectForKey: type];
+  }
+  return ret;
+}
+
+- (NSDictionary *) maxValuesForContainerType:(PajeEntityType*) type
+{
+  //check if this is a container type
+  if (![self isContainerEntityType: type]){
+    return nil;
+  }
+
+  //check if we have cached values, calculate if not, return result
+  NSDictionary *ret = nil;
+  while (!(ret = [maxValues objectForKey: type])){
+    [self updateMinMaxColorForContainerType: type];
+    ret = [maxValues objectForKey: type];
+  }
+  return ret;
+}
 @end

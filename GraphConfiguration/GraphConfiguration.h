@@ -38,7 +38,6 @@
   NSDictionary *currentGraphConfiguration;
 
   //values, colors, min, max dictionaries
-  NSMutableDictionary *values;
   NSMutableDictionary *colors;
   NSMutableDictionary *minValues;
   NSMutableDictionary *maxValues;
@@ -60,7 +59,10 @@
  * Called by interface and command-line options to apply the new configuration
  */
 - (void) applyGraphConfiguration;
-- (void) updateCurrentValues;
+
+//
+- (void) resetMinMaxColor;
+- (void) updateMinMaxColorForContainerType:(PajeEntityType*)type;
 @end
 
 @interface GraphConfiguration (Interface)
@@ -73,11 +75,6 @@
 @end
 
 @interface GraphConfiguration (Protocol)
-@end
-
-@interface GraphConfiguration (Graph)
-- (BOOL) createGraph;
-- (void) redefineLayout;
 @end
 
 @interface GraphConfiguration (Position)

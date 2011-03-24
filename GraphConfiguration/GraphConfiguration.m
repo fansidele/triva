@@ -27,6 +27,9 @@
   self = [super initWithController: c];
   if (self != nil){
     [NSBundle loadGSMarkupNamed: @"GraphConfiguration" owner: self];
+    colors = [[NSMutableDictionary alloc] init];
+    minValues = [[NSMutableDictionary alloc] init];
+    maxValues = [[NSMutableDictionary alloc] init];
   }
   [self initInterface];
   hideWindow = NO;
@@ -35,6 +38,9 @@
 
 - (void) dealloc
 {
+  [colors release];
+  [minValues release];
+  [maxValues release];
   [super dealloc];
 }
 
@@ -74,17 +80,9 @@
   [self hierarchyChanged];
 }
 
-- (void) hierarchyChanged
-{
-//  [manager createGraph];
-
-  [self timeSelectionChanged];
-  [super hierarchyChanged];
-}
-
 - (void) timeSelectionChanged
 {
-  [self redefineLayout];
+  [self resetMinMaxColor];
   [super timeSelectionChanged];
 }
 
@@ -176,63 +174,64 @@
   }
 }
 
-/* values for the current time-slice */
-- (void) updateCurrentValues
+- (void) resetMinMaxColor
 {
-  [values release];
-  [colors release];
-  [minValues release];
-  [maxValues release];
-  values = [[NSMutableDictionary alloc] init];
-  colors = [[NSMutableDictionary alloc] init];
-  minValues = [[NSMutableDictionary alloc] init];
-  maxValues = [[NSMutableDictionary alloc] init];
+  [minValues removeAllObjects];
+  [maxValues removeAllObjects];
+  [colors removeAllObjects];
+}
 
-/*
-  NSEnumerator *en = [manager enumeratorOfNodes];
-  Tupi *node;
-  while ((node = [en nextObject])){
-    NSString *name = [node name];
-    PajeEntityType *type = [node type];
-    PajeContainer *cont = [self containerWithName:[node name] type:type]; 
-    NSDictionary *contValues = [self integrationOfContainer: cont];
+/* values for the current time-slice */
+- (void) updateMinMaxColorForContainerType:(PajeEntityType*)type
+{
+  NSEnumerator *en = [self enumeratorOfContainersTyped: type
+                                           inContainer: [self rootInstance]];
 
-    //save on values
-    [values setObject: contValues forKey: name];
+  NSMutableDictionary *min, *max, *color;
+  min = [NSMutableDictionary dictionary];
+  max = [NSMutableDictionary dictionary];
+  color = [NSMutableDictionary dictionary];
 
-    //calculate minValues and maxValues
+  PajeContainer *container;
+  while ((container = [en nextObject])){
+    NSDictionary *contValues = [self integrationOfContainer: container];
+
+    //calculate min and maxValues
     NSEnumerator *en2 = [contValues keyEnumerator];
     NSString *valueName, *value;
     while ((valueName = [en2 nextObject])){
       value = [contValues objectForKey:valueName];
       //minValue
-      if ([minValues objectForKey:valueName] == nil){
-        [minValues setObject:value
+      if ([min objectForKey:valueName] == nil){
+        [min setObject:value
                       forKey:valueName];
       }else{
         if ([value doubleValue] <
-            [[minValues objectForKey:valueName] doubleValue]){
-          [minValues setObject:value
+            [[min objectForKey:valueName] doubleValue]){
+          [min setObject:value
                         forKey:valueName];
         }
       }
       //maxValue
-      if ([maxValues objectForKey:valueName] == nil){
-        [maxValues setObject:value
+      if ([max objectForKey:valueName] == nil){
+        [max setObject:value
                       forKey:valueName];
       }else{
         if ([value doubleValue] >
-            [[maxValues objectForKey:valueName] doubleValue]){
-          [maxValues setObject:value
+            [[max objectForKey:valueName] doubleValue]){
+          [max setObject:value
                         forKey:valueName];
         }
       }
 
       //save colors
-      [colors setObject:[self colorForIntegratedValueNamed:valueName]
+      [color setObject:[self colorForIntegratedValueNamed:valueName]
                  forKey:valueName];
     }
   }
-*/
+
+  [minValues setObject: min forKey: type];
+  [maxValues setObject: max forKey: type];
+  [colors setObject: color forKey: type];
 }
 @end
