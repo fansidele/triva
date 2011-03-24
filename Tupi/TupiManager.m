@@ -32,9 +32,11 @@
 }
 
 - (id) initWithConfigurationDictionary: (NSDictionary*) conf
+                         andPajeFilter: (PajeFilter*) f
 {
   self = [self init];
   configuration = [[TupiConfiguration alloc] initWithDictionary: conf];
+  filter = f;
   return self;
 }
 
@@ -182,5 +184,20 @@
 - (NSArray*) edgeTypes
 {
   return [configuration edgeTypes];
+}
+
+- (TupiGroup*) treeWithContainer: (PajeContainer *) cont
+                           depth: (int) depth
+                          parent: (TupiGroup*) p
+{
+}
+
+- (void) createGraph
+{
+  [tree release];
+  tree = [self treeWithContainer: [filter rootInstance]
+                           depth: 0  
+                          parent: nil];
+  [tree retain];
 }
 @end

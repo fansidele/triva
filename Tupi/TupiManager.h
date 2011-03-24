@@ -18,8 +18,10 @@
 #define __TupiManager_h
 #include <Foundation/Foundation.h>
 #include <AppKit/AppKit.h>
+#include <General/PajeFilter.h>
 #include <Tupi/Tupi.h>
 #include <Tupi/TupiConfiguration.h>
+#include <Tupi/TupiGroup.h>
 #include <graphviz/gvc.h>
 
 //for compatibility with some graphviz's
@@ -38,8 +40,15 @@
   //Graphviz
   GVC_t *gvc;
   graph_t *graph;
+
+  //new hierarchical structure
+  TupiGroup *tree;
+
+  //filter that responds to paje protocol
+  PajeFilter *filter;
 }
-- (id) initWithConfigurationDictionary: (NSDictionary*) conf;
+- (id) initWithConfigurationDictionary: (NSDictionary*) conf
+                         andPajeFilter: (PajeFilter*) f;
 - (void) createNodeWithName: (NSString*) name type: (id) type;
 - (void) connectNode: (Tupi*) n1 toNode: (Tupi*) n2;
 - (NSEnumerator*) enumeratorOfNodes;
@@ -53,6 +62,9 @@
 //from the view
 - (BOOL) searchAndHighlightAtPoint: (NSPoint) p;
 - (BOOL) moveHighlightToPoint: (NSPoint) p;
+
+//graph creation
+- (void) createGraph;
 @end
 
 #endif
