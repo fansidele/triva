@@ -200,6 +200,9 @@
   en = [connectedNodes objectEnumerator];
   TrivaGraph *partner;
   while ((partner = [en nextObject])){
+    if (![partner visible]){
+      partner = [partner higherVisibleParent];
+    }
     NSPoint mp = [self centerPoint];
     NSPoint pp = [partner centerPoint];
 

@@ -40,6 +40,8 @@
   NSPoint velocity; //force-directed algo
 
   NSMutableDictionary *connectionPoints; //TrivaGraph->NSPoint(as NSString)
+
+  BOOL isVisible; //define whether it appears or not in the visualization
 }
 + (TrivaGraph*) nodeWithName: (NSString*)n
                       depth: (int)d
@@ -75,6 +77,10 @@
 - (void) setVelocity: (NSPoint)v;
 - (NSPoint) velocity;
 - (void) recursiveResetPositions;
+- (void) setVisible: (BOOL)v;
+- (void) setChildrenVisible: (BOOL) v; //recursive
+- (BOOL) visible;
+- (TrivaGraph *) higherVisibleParent;
 @end
 
 @interface TrivaGraph (Layout)

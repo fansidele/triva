@@ -52,6 +52,7 @@
   if (self != nil){
     connectedNodes = [[NSMutableSet alloc] init];
     compositions = [[NSMutableDictionary alloc] init];
+    isVisible = NO;
 
     //layout myself with update my graph values
     NSDictionary *configuration;
@@ -400,6 +401,50 @@
   TrivaGraph *child;
   while ((child = [en nextObject])){
     [child recursiveResetPositions];
+  }
+}
+
+- (void) setExpanded: (BOOL) e
+{
+  [super setExpanded: e];
+
+  if (e){
+    //I disappear, my children appear
+    [self setVisible: NO];
+    [self setChildrenVisible: YES];
+ 
+  }else{
+    //I appear, my children disappear
+    [self setVisible: YES];
+    [self setChildrenVisible: NO];
+  }
+}
+
+- (void) setVisible: (BOOL) v
+{
+  isVisible = v;
+}
+
+- (void) setChildrenVisible: (BOOL) v
+{
+  NSEnumerator *en = [children objectEnumerator];
+  TrivaGraph *child;
+  while ((child = [en nextObject])){
+    [child setVisible: v];
+  }
+}
+
+- (BOOL) visible
+{
+  return isVisible;
+}
+
+- (TrivaGraph *) higherVisibleParent
+{
+  if ([(TrivaGraph*)parent visible]){
+    return (TrivaGraph*)parent;
+  }else{
+    return [(TrivaGraph*)parent higherVisibleParent];
   }
 }
 @end
