@@ -105,7 +105,7 @@
 
 - (TrivaTree*) searchAtPoint: (NSPoint) p maxDepth: (int) d
 {
-  TrivaTreemap *ret = nil;
+  TrivaTree *ret = nil;
   if (p.x >= bb.origin.x &&
       p.x <= bb.origin.x+bb.size.width &&
       p.y >= bb.origin.y &&
