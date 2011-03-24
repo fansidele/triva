@@ -256,22 +256,19 @@
   }
   return;
 }
-
-- (void) drawBorder
-{
-  [[NSColor blackColor] set];
-  [NSBezierPath strokeRect: bb];
-}
+*/
 
 - (void) drawLayout
 {
+  NSEnumerator *en;
   //draw a line to connected nodes
+
   [[NSColor grayColor] set];
-  NSEnumerator *en = [connectedNodes objectEnumerator];
+  en = [connectedNodes objectEnumerator];
   TrivaGraph *partner;
   while ((partner = [en nextObject])){
-    NSPoint mp = [self connectionPointForPartner: partner];
-    NSPoint pp = [partner connectionPointForPartner: self];
+    NSPoint mp = [self centerPoint];//connectionPointForPartner: partner];
+    NSPoint pp = [partner centerPoint];//connectionPointForPartner: self];
 
     NSBezierPath *path = [NSBezierPath bezierPath];
     [path moveToPoint: mp];
@@ -297,7 +294,7 @@
                     size];
     [str drawAtPoint: NSMakePoint (bb.origin.x,
                                    bb.origin.y+bb.size.height)
-       withAttributes: nil];
+      withAttributes: nil];
   }
   [[NSColor grayColor] set];
   [border stroke];
@@ -329,14 +326,17 @@
  */
 - (TrivaGraph *) searchAtPoint: (NSPoint) point
 {
-  NSEnumerator *en = [children objectEnumerator];
-  TrivaGraph *child;
-  while ((child = [en nextObject])){
-    TrivaGraph *ret = [child searchAtPoint: point];
-    if (ret) return ret;
-  }
-  if (NSPointInRect(point, bb)){
-    return self;
+  if ([self expanded]){
+    NSEnumerator *en = [children objectEnumerator];
+    TrivaGraph *child;
+    while ((child = [en nextObject])){
+      TrivaGraph *ret = [child searchAtPoint: point];
+      if (ret) return ret;
+    }
+  }else{
+    if (NSPointInRect(point, bb)){
+      return self;
+    }
   }
   return nil;
 }

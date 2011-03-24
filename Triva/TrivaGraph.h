@@ -53,11 +53,11 @@
            expanded: (BOOL)e
           container: (PajeContainer*)c
              filter: (TrivaFilter*)f;
-- (void) graphvizCreateNodes;
-- (void) graphvizCreateEdges;
-- (void) graphvizSetPositions;
+//- (void) graphvizCreateNodes;
+//- (void) graphvizCreateEdges;
+//- (void) graphvizSetPositions;
 - (void) connectToNode: (TrivaGraph*) n;
-
+- (BOOL) isConnectedTo: (TrivaGraph*) c;
 - (void) drawLayout;
 
 /* search-based methods */
@@ -78,6 +78,8 @@
 @end
 
 @interface TrivaGraph (Layout)
+- (void) recursiveLayout;
+- (void) layout;
 - (void) layoutSizeWith: (double) screenSize;
 - (void) layoutConnectionPointsWith: (double) screenSize;
 - (NSPoint) connectionPointForPartner: (TrivaGraph *) p;

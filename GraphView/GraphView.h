@@ -32,14 +32,24 @@
   GVC_t *gvc;
   graph_t *graph;
 
+  NSMutableSet *graphNodes; /* of TrivaGraph, contains all the nodes
+                               that currently participate in the graph */
+
   IBOutlet DrawView *view;
   TrivaWindow *window;
 
   BOOL recordMode;
+
+  BOOL executeThread;
+  NSThread *thread;
 }
 - (void) setRecordMode;
 - (TrivaGraph *) tree;
 - (graph_t *) graphviz;
+
+- (void) addGraphNode: (TrivaGraph*) n;
+- (void) removeGraphNode: (TrivaGraph*) n;
+- (void) removeGraphNodes;
 @end
 
 #endif

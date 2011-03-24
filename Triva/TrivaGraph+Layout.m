@@ -17,16 +17,67 @@
 #include "TrivaGraph.h"
 
 @implementation TrivaGraph (Layout)
-- (void) layoutSizeWith: (double) screenSize
+- (void) recursiveLayout
 {
-  //define width/height sizes according to number of connectedNodes
-  int n = [connectedNodes count];
-  if (n > 4) {
-    bb.size.width = (n-1)/2*screenSize;
+  [filter removeGraphNodes];
+  [self recursiveLayout2];
+}
+
+- (void) recursiveLayout2
+{
+  //if i am expanded, recurse to my children
+  if ([self expanded]){
+    //recurse
+    NSEnumerator *en = [children objectEnumerator];
+    TrivaGraph *child;
+    while ((child = [en nextObject])){
+      [child recursiveLayout2];
+    }
   }else{
-    bb.size.width = screenSize;      
+    //add myself to the filter's force-directed algo
+    [filter addGraphNode: self];
+    //i am NOT expanded, layout myself
+    [self layout];
   }
-  bb.size.height = screenSize;
+}
+
+- (void) layout
+{
+  NSDictionary *minValues, *maxValues;
+  minValues = [filter minValuesForContainerType: [container entityType]];
+  maxValues = [filter maxValuesForContainerType: [container entityType]];
+
+  //layout myself with update my graph values
+  NSDictionary *configuration;
+  configuration = [filter graphConfigurationForContainerType:
+                            [container entityType]];
+  if (configuration){
+    NSString *sizeConfiguration = [configuration objectForKey: @"size"];
+    double s;
+    if ([self expressionHasVariables: sizeConfiguration]){
+      double min = [self evaluateWithValues: minValues
+                                   withExpr: sizeConfiguration];
+      double max = [self evaluateWithValues: maxValues
+                                   withExpr: sizeConfiguration];
+      double val = [self evaluateWithValues: values
+                                   withExpr: sizeConfiguration];
+      double dif = max - min;
+      if (dif != 0) {
+        s = MIN_SIZE + ((val - min)/dif)*(MAX_SIZE-MIN_SIZE);
+      }else{
+        s = MIN_SIZE + ((val - min)/min)*(MAX_SIZE-MIN_SIZE);
+      }
+      size = val;
+    }else{
+      s = [sizeConfiguration doubleValue];
+    }
+    bb.size.width = s;
+    bb.size.height = s;
+  }
+}
+
+- (void) layoutSizeWith: (double) s
+{
 }
 
 - (void) layoutConnectionPointsWith: (double) screenSize

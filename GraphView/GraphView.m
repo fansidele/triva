@@ -33,7 +33,25 @@
   graph = NULL;
 
   recordMode = NO;
+  graphNodes = [[NSMutableSet alloc] init];
+
   return self;
+}
+
+- (void) startThread
+{
+  executeThread = YES;
+  thread = [[NSThread alloc] initWithTarget: self
+                                   selector:
+                               @selector(forceDirectedGraph:)
+                                     object: nil];
+  [thread start];
+}
+
+- (void) dealloc
+{
+  executeThread = NO;
+  [super dealloc];
 }
 
 - (void) initializeGraphviz
@@ -122,8 +140,9 @@
     }
   }
 
-  //when it arrives here, all nodes have of the hierarchy 
-  //have been created. connect them using the user configuration
+  //when it arrives here, all nodes of the hierarchy 
+  //have been created. connect them using the user graph
+  //configuration
 
   //connecting the dots
   NSSet *edgeEntityTypeSet;
@@ -154,13 +173,15 @@
 
 - (void) hierarchyChanged
 {
-  [tree cancelThreads];
+  executeThread = NO;
+  [graphNodes removeAllObjects];
+  [self startThread];
+
   [tree release];
   tree = [self treeWithContainer: [self rootInstance]
                            depth: 0
                           parent: nil];
   [tree retain];
-  [tree forceDirectedLayout];
 /*
   [self initializeGraphviz];
   [tree graphvizCreateNodes];
@@ -177,6 +198,7 @@
 {
   [view setNeedsDisplay: YES];
   [tree timeSelectionChanged];
+  [tree recursiveLayout];
   if(recordMode){
     [view printGraph];
   }
@@ -201,5 +223,109 @@
 - (void) show
 {
   [window orderFront: self];
+}
+
+
+- (double) forceDirectedGraph: (id) sender
+{
+  NSLog (@"%s started", __FUNCTION__);
+  NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+  double total_energy = 0;
+  do{ 
+    NSAutoreleasePool *p2 = [[NSAutoreleasePool alloc] init];
+    NSPoint energy = NSMakePoint (0,0);
+
+    NSEnumerator *en1 = [graphNodes objectEnumerator];
+    TrivaGraph *c1;
+    while ((c1 = [en1 nextObject])){
+      NSPoint force = NSMakePoint (0, 0);
+
+      //see the influence of everybody over c1, register in force
+      NSEnumerator *en2 = [graphNodes objectEnumerator];
+      TrivaGraph *c2;
+      while ((c2 = [en2 nextObject])){
+        if ([[c1 name] isEqualToString: [c2 name]]) continue;
+
+        //calculating distance between particles
+        NSPoint c1p = [c1 centerPoint];//connectionPointForPartner: c2];
+        NSPoint c2p = [c2 centerPoint];//onnectionPointForPartner: c1];
+        double distance = LMSDistanceBetweenPoints (c1p, c2p);
+
+        //coulomb_repulsion (k_e * (q1 * q2 / r*r))
+        double coulomb_constant = 1;
+        double r = distance==0 ? 1 : distance;
+        double q1 = [c1 boundingBox].size.width;
+        double q2 = [c2 boundingBox].size.width;
+        double coulomb_repulsion = (coulomb_constant * (q1*q2)/(r*r));
+
+        //hooke_attraction (-k * x)
+        double hooke_attraction = 0;
+        if ([c1 isConnectedTo: c2]){
+          double spring = 100;
+          hooke_attraction = 1 - ((distance - spring) / spring);
+        }
+
+        //calculating direction of the effects
+        NSPoint direction = LMSNormalizePoint(NSSubtractPoints(c1p, c2p));
+        if (NSEqualPoints(direction, NSZeroPoint)){
+          double x = (drand48()*2)-1;
+          double y = (drand48()*2)-1;
+          direction = NSMakePoint(x,y);
+        }
+
+        //applying calculated values
+        force = NSAddPoints (force, LMSMultiplyPoint(direction, coulomb_repulsion));
+        force = NSAddPoints (force, LMSMultiplyPoint(direction, hooke_attraction));
+
+
+      }
+
+      double damping = 0.2;
+      NSPoint velocity = [c1 velocity];
+      velocity = NSAddPoints (velocity, force);
+      velocity = LMSMultiplyPoint (velocity, damping);
+      [c1 setVelocity: velocity];
+
+      //set origin of child c1
+      NSRect c1bb = [c1 boundingBox];
+      c1bb.origin = NSAddPoints (c1bb.origin, velocity);
+      [c1 setBoundingBox: c1bb];
+
+      energy = NSAddPoints (energy, force);
+    }
+    total_energy = fabs(energy.x) + fabs(energy.y);
+    [p2 release];
+    NSLog (@"%f %d", total_energy, [graphNodes count]);
+
+    if (total_energy < 0.001){
+//      [NSThread sleepForTimeInterval: 1];
+    }
+
+  }while(executeThread);
+//  }while(total_energy > 0.001 && executeThread);
+  NSLog (@"%s stopped", __FUNCTION__);
+  [pool release];
+}
+
+
+- (void) addGraphNode: (TrivaGraph*) n
+{
+  [graphNodes addObject: n];
+  if (![thread isExecuting]){
+    [self startThread];
+  }
+}
+
+- (void) removeGraphNode: (TrivaGraph*) n
+{
+  [graphNodes removeObject: n];
+  if (![thread isExecuting]){
+    [self startThread];
+  }
+}
+
+- (void) removeGraphNodes
+{
+  [graphNodes removeAllObjects];
 }
 @end
