@@ -117,4 +117,9 @@
 {
   return [(TrivaFilter*)inputComponent colorForIntegratedValueNamed: valueName];
 }
+
+- (NSDictionary *) graphConfigurationForContainerType:(PajeEntityType*) type
+{
+  return [(TrivaFilter*)inputComponent graphConfigurationForContainerType:type];
+}
 @end
