@@ -18,8 +18,7 @@
 #define __GraphView_h
 
 #include <AppKit/AppKit.h>
-#include <Triva/TrivaGraphNode.h>
-#include <Tupi/TupiView.h>
+#include <Triva/Triva.h>
 
 @class GraphView;
 
