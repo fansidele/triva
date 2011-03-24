@@ -9,13 +9,11 @@ BUNDLE_INSTALL_DIR = $(GNUSTEP_BUNDLES)/Triva
 
 ifeq ($(FOUNDATION_LIB), apple)
   LDFLAGS += -F../Triva -framework Triva \
-                        -framework General \
-                        -F../Tupi/ -framework Tupi
+                        -framework General 
   ADDITIONAL_INCLUDE_DIRS += -framework Renaissance
   ADDITIONAL_GUI_LIBS += -framework Renaissance
 else
-  ADDITIONAL_LIB_DIRS += -L../Triva/Triva.framework/Versions/Current \
-                         -L../Tupi/Tupi.framework/Versions/Current
+  ADDITIONAL_LIB_DIRS += -L../Triva/Triva.framework/Versions/Current 
   ADDITIONAL_GUI_LIBS += -lRenaissance
 endif
 
@@ -29,7 +27,7 @@ GraphConfiguration+Interface.m \
 GraphConfiguration+Protocol.m
 
 GraphConfiguration_INCLUDE_DIRS += -I../ -I./ @CPPFLAGS@
-GraphConfiguration_LDFLAGS += @LDFLAGS@ -lTupi
+GraphConfiguration_LDFLAGS += @LDFLAGS@
 
 -include GNUmakefile.preamble
 include $(GNUSTEP_MAKEFILES)/aggregate.make
