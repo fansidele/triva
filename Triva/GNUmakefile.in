@@ -6,9 +6,6 @@ Triva_OBJC_FILES = \
 	TrivaFilter.m \
 	TrivaComposition.m \
 	TrivaSeparation.m \
-	TimeSliceTree.m \
-	TimeSliceDifTree.m \
-	TimeSliceGraph.m \
 	BasicTree.m \
 	TrivaTree.m \
 	TrivaTreemap.m \
@@ -19,9 +16,6 @@ Triva_OBJC_FILES = \
 Triva_HEADER_FILES = TrivaFilter.h \
 	TrivaComposition.h \
 	TrivaSeparation.h \
-	TimeSliceTree.h \
-	TimeSliceDifTree.h \
-	TimeSliceGraph.h \
 	BasicTree.h \
 	TrivaTree.h \
 	TrivaTreemap.h \

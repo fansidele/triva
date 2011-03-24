@@ -18,8 +18,6 @@
 #define __Triva_H_
 
 #include "NSPointFunctions.h"
-#include "TimeSliceGraph.h"
-#include "TimeSliceDifTree.h"
 #include "BasicTree.h"
 #include "TrivaTree.h"
 #include "TrivaFilter.h"
