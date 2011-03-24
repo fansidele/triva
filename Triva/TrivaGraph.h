@@ -22,8 +22,8 @@
 #include <matheval.h>
 #include <graphviz/gvc.h>
 
-#define MIN_SIZE   20
-#define MAX_SIZE   40
+#define MIN_SIZE   50
+#define MAX_SIZE   100
 
 //for compatibility with some graphviz's
 //installations (ubuntu's lucid, for example)
