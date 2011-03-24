@@ -45,49 +45,66 @@
 {
   self = [super initWithName:n depth:d parent:p expanded:e container:c filter:f];
   if (self != nil){
+    compositions = [[NSMutableDictionary alloc] init];
   }
   return self;
+}
+
+- (void) dealloc
+{
+  [compositions release];
+  [super dealloc];
 }
 
 - (void) timeSelectionChanged
 {
   [super timeSelectionChanged];
+  //NSLog (@"%@ %@ layout myself with %@", name, values, [filter graphConfigurationForContainerType: [container entityType]]);
 
-/*
-  treemapValue = 0;
-  [valueChildren removeAllObjects];
+//- (void) layoutWith:(NSDictionary*)conf
+//             values:(NSDictionary*)currentValues
+//          minValues:(NSDictionary *)minValues
+//          maxValues:(NSDictionary*)maxValues
+//             colors:(NSDictionary*)colors
+  NSDictionary *minValues = [filter minValuesForContainerType: [container entityType]];
+  NSDictionary *maxValues = [filter maxValuesForContainerType: [container entityType]];
 
-  NSEnumerator *en = [values keyEnumerator];
-  NSString *valueName;
-  while ((valueName = [en nextObject])){
-    double value = [[values objectForKey: valueName] doubleValue];
-    TrivaTreemap *obj = [TrivaTreemap nodeWithName: valueName
-                                             depth: depth+1
-                                            parent: self
-                                          expanded: 0
-                                         container: nil
-                                            filter: filter];
-    
-    [obj setTreemapValue: value];
-    treemapValue += value;
-    [valueChildren addObject: obj];
+  //layout myself with update my graph values
+  NSDictionary *conf = [filter graphConfigurationForContainerType: [container entityType]];
+  if (conf){
+    //layout myself
+    NSString *sizeconf = [conf objectForKey: @"size"];
+    double screensize;
+    if ([self expressionHasVariables: sizeconf]){
+      double min = [self evaluateWithValues: minValues withExpr: sizeconf];
+      double max = [self evaluateWithValues: maxValues withExpr: sizeconf];
+      double dif = max- min;
+      double val = [self evaluateWithValues: values withExpr: sizeconf];
+      if (dif != 0) {
+        screensize = MIN_SIZE + ((val - min)/dif)*(MAX_SIZE-MIN_SIZE);
+      }else{
+        screensize = MIN_SIZE + ((val - min)/min)*(MAX_SIZE-MIN_SIZE);
+      }
+      size = val;
+    }else{
+      screensize = [sizeconf doubleValue];
+    }
+    bb.size.width = screensize;
+    bb.size.height = screensize;
   }
-*/
+
+  //layout my children
+  NSEnumerator *en = [children objectEnumerator];
+  TrivaGraph *child;
+  while ((child = [en nextObject])){
+    [child timeSelectionChanged];
+  }
 }
 
-
-- (void) dealloc
+- (void) drawLayout
 {
-  [super dealloc];
-}
-
-
-- (void) drawGraph
-{
-}
-
-- (void) drawBorder
-{
+  [[NSColor blackColor] set];
+  [NSBezierPath strokeRect: bb];
 }
 
 /*
@@ -99,45 +116,84 @@
   return nil;
   double x = point.x;
   double y = point.y;
-  TrivaTreemap *ret = nil;
+  TrivaGraph *ret = nil;
   if (x >= bb.origin.x &&
       x <= bb.origin.x+bb.size.width &&
       y >= bb.origin.y &&
       y <= bb.origin.y+bb.size.height){
     if ([self depth] == d){
       // recurse to aggregated children 
-/*
-      unsigned int i;
-      for (i = 0; i < [aggregatedChildren count]; i++){
-        TrivaTreemap *child = [aggregatedChildren
-              objectAtIndex: i];
-        if ([child treemapValue] &&
-          x >= [child boundingBox].origin.x &&
-                x <= [child boundingBox].origin.x+
-            [child boundingBox].size.width&&
-           y >= [child boundingBox].origin.y &&
-                y <= [child boundingBox].origin.y+
-              [child boundingBox].size.height){
-            ret = child;
-            break;
-        }
-      }
-*/
     }else{
       // recurse to ordinary children 
       unsigned int i;
       for (i = 0; i < [children count]; i++){
-        TrivaTreemap *child;
+        TrivaGraph *child;
         child = [children objectAtIndex: i];
-        if ([child treemapValue]){
-          ret = [child searchWith: point
-                limitToDepth: d];
-          if (ret != nil){
-            break;
-          }
+        ret = [child searchWith: point
+                   limitToDepth: d];
+        if (ret != nil){
+          break;
         }
       }
     }
+  }
+  return ret;
+}
+
+/* 
+ * expressions
+ */
+- (BOOL) expressionHasVariables: (NSString*) expr
+{
+  BOOL ret;
+  char **expr_names;
+  int count;
+  void *f = evaluator_create ((char*)[expr cString]);
+  evaluator_get_variables (f, &expr_names, &count);
+  if (count == 0){
+    ret = NO;
+  }else{
+    ret = YES;
+  }
+  evaluator_destroy (f);
+  return ret;
+}
+
+- (double) evaluateWithValues: (NSDictionary *) vals
+    withExpr: (NSString *) expr
+{
+  char **expr_names;
+  double *expr_values, ret;
+  int count, i;
+  void *f = evaluator_create ((char*)[expr cString]);
+  evaluator_get_variables (f, &expr_names, &count);
+  if (count == 0){
+    //no variables detected, return doubleValue
+    return [expr doubleValue];
+  }else{
+    //ok, we have some variables to be defined
+    expr_values = (double*)malloc (count * sizeof(double));
+    for (i = 0; i < count; i++){
+      NSString *var = [NSString stringWithFormat: @"%s", expr_names[i]];
+      NSString *val = [vals objectForKey: var];
+      if (val){
+        expr_values[i] = [val doubleValue];
+      }else{
+        static BOOL appeared = NO;
+        if (!appeared){
+          NSLog (@"%s:%d Expression (%@) has variables that are "
+            "not present in the aggregated tree (%@). Considering "
+            "that their values is zero. This message appears only once.",
+            __FUNCTION__, __LINE__, expr, vals);
+          appeared = YES;
+        }
+        expr_values[i] = 0;
+
+      }
+    }
+    ret = evaluator_evaluate (f, count, expr_names, expr_values);
+    evaluator_destroy (f);
+    free(expr_values);
   }
   return ret;
 }

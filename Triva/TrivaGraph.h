@@ -21,9 +21,15 @@
 #include <Triva/BasicTree.h>
 #include <Triva/TimeSliceTree.h>
 #include <Triva/TrivaGraphNode.h>
+#include <matheval.h>
+
+#define MIN_SIZE   20
+#define MAX_SIZE   40
 
 @interface TrivaGraph : TrivaTree
 {
+  NSMutableDictionary *compositions;
+  double size;
 }
 + (TrivaGraph*) nodeWithName: (NSString*)n
                       depth: (int)d
@@ -38,16 +44,17 @@
           container: (PajeContainer*)c
              filter: (TrivaFilter*)f;
 
-/* entry point for squarified algorithm */
-//- (void) refreshWithBoundingBox: (NSRect) bb;
-
-/* draw (called by view, must be after refreshWithBoundingBox) */
-//- (void) drawTreemap;
-//- (void) drawBorder;
+- (void) drawLayout;
 
 /* search-based methods */
 - (TrivaGraph *) searchWith: (NSPoint) point
       limitToDepth: (int) d;
+
+
+/* dealing with expressions */
+- (BOOL) expressionHasVariables: (NSString*) expr;
+- (double) evaluateWithValues: (NSDictionary *) values
+    withExpr: (NSString *) expr;
 @end
 
 #endif
