@@ -43,7 +43,12 @@
           container: (PajeContainer*)c
              filter: (TrivaFilter*)f
 {
-  self = [super initWithName:n depth:d parent:p expanded:e container:c filter:f];
+  self = [super initWithName:n
+                       depth:d
+                      parent:p
+                    expanded:e
+                   container:c
+                      filter:f];
   if (self != nil){
     connectedNodes = [[NSMutableSet alloc] init];
     compositions = [[NSMutableDictionary alloc] init];
