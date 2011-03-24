@@ -22,8 +22,6 @@
 #include <Foundation/Foundation.h>
 #include <Renaissance/Renaissance.h>
 #include <Triva/Triva.h>
-//#include <Tupi/Tupi.h>
-//#include <Tupi/TupiManager.h>
 #include <limits.h>
 #include <float.h>
 #include <matheval.h>
@@ -37,8 +35,7 @@
 @interface GraphConfiguration : TrivaFilter
 {
   // current graph configuration 
-  NSDictionary *plist;
-//  TupiManager *manager;
+  NSDictionary *currentGraphConfiguration;
 
   //values, colors, min, max dictionaries
   NSMutableDictionary *values;

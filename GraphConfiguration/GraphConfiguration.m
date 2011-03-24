@@ -42,10 +42,11 @@
 - (void) saveGraphConfiguration: (NSString *) c
                      withTitle: (NSString *) t
 {
+  //parsing to check format is ok
   NSData* plistData = [c dataUsingEncoding:NSUTF8StringEncoding];
   NSString *error;
   NSPropertyListFormat format;
-  plist = [NSPropertyListSerialization
+  NSDictionary *plist = [NSPropertyListSerialization
                 propertyListFromData: plistData
                     mutabilityOption:NSPropertyListImmutable
                               format:&format
@@ -53,6 +54,11 @@
 
   //save in file the new configuration
   [c writeToFile: t atomically: YES];
+
+  //save a copy of conf
+  [currentGraphConfiguration release];
+  currentGraphConfiguration = [NSDictionary dictionaryWithDictionary: plist];
+  [currentGraphConfiguration retain];
 
   //interface
   [self refreshInterfaceWithConfiguration: c withTitle: t];
