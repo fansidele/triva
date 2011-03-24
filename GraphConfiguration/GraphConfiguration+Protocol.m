@@ -42,6 +42,16 @@
   return [currentGraphConfiguration objectForKey: [type description]];
 }
 
+- (NSArray*) entityTypesForNodes
+{
+  return [currentGraphConfiguration objectForKey: @"node"];
+}
+
+- (NSArray*) entityTypesForEdges
+{
+  return [currentGraphConfiguration objectForKey: @"edge"];
+}
+
 - (NSDictionary *) minValuesForContainerType:(PajeEntityType*) type
 {
   //check if this is a container type

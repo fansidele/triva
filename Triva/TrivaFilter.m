@@ -123,6 +123,16 @@
   return [(TrivaFilter*)inputComponent graphConfigurationForContainerType:type];
 }
 
+- (NSArray*) entityTypesForNodes
+{
+  return [(TrivaFilter*)inputComponent entityTypesForNodes];
+}
+
+- (NSArray*) entityTypesForEdges
+{
+  return [(TrivaFilter*)inputComponent entityTypesForEdges];
+}
+
 - (NSDictionary *) minValuesForContainerType:(PajeEntityType*) type
 {
   return [(TrivaFilter*)inputComponent minValuesForContainerType:type];
