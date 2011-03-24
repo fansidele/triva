@@ -8,12 +8,6 @@ Triva_OBJC_FILES = \
 	TrivaGraphEdge.m \
 	TrivaComposition.m \
 	TrivaSeparation.m \
-	TrivaGradient.m \
-	TrivaColor.m \
-	TrivaConvergence.m \
-	TrivaSwarm.m \
-	TrivaPlot.m \
-	TrivaFFT.m \
 	TimeSliceTree.m \
 	TimeSliceDifTree.m \
 	TimeSliceGraph.m \
@@ -29,12 +23,6 @@ Triva_HEADER_FILES = TrivaFilter.h \
 	TrivaGraphEdge.h \
 	TrivaComposition.h \
 	TrivaSeparation.h \
-	TrivaGradient.h \
-	TrivaColor.h \
-	TrivaConvergence.h \
-	TrivaSwarm.h \
-	TrivaPlot.h \
-	TrivaFFT.h \
 	TimeSliceTree.h \
 	TimeSliceDifTree.h \
 	TimeSliceGraph.h \
