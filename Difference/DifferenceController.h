@@ -22,6 +22,7 @@
 #include <Renaissance/Renaissance.h>
 #include <Triva/Triva.h>
 #include <Triva/TrivaWindow.h>
+#include <Triva/TimeSliceDifTree.h>
 
 typedef enum {Subtract,Ratio,LogDif} TrivaDifferenceOperation;
 #define SUBTRACT_OPERATION @"A - B"
