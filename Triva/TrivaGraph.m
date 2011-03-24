@@ -45,6 +45,7 @@
 {
   self = [super initWithName:n depth:d parent:p expanded:e container:c filter:f];
   if (self != nil){
+    connectedNodes = [[NSMutableSet alloc] init];
     compositions = [[NSMutableDictionary alloc] init];
   }
   return self;
@@ -52,8 +53,14 @@
 
 - (void) dealloc
 {
+  [connectedNodes release];
   [compositions release];
   [super dealloc];
+}
+
+- (void) connectToNode: (TrivaGraph*) n
+{
+  [connectedNodes addObject: n];
 }
 
 - (void) timeSelectionChanged

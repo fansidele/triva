@@ -28,6 +28,7 @@
 
 @interface TrivaGraph : TrivaTree
 {
+  NSMutableSet *connectedNodes;
   NSMutableDictionary *compositions;
   double size;
 }
@@ -43,6 +44,7 @@
            expanded: (BOOL)e
           container: (PajeContainer*)c
              filter: (TrivaFilter*)f;
+- (void) connectToNode: (TrivaGraph*) n;
 
 - (void) drawLayout;
 
