@@ -4,8 +4,6 @@ FRAMEWORK_NAME = Triva
 
 Triva_OBJC_FILES = \
 	TrivaFilter.m \
-	TrivaGraphNode.m \
-	TrivaGraphEdge.m \
 	TrivaComposition.m \
 	TrivaSeparation.m \
 	TimeSliceTree.m \
@@ -19,8 +17,6 @@ Triva_OBJC_FILES = \
 	TrivaConfiguration.m
 
 Triva_HEADER_FILES = TrivaFilter.h \
-	TrivaGraphNode.h \
-	TrivaGraphEdge.h \
 	TrivaComposition.h \
 	TrivaSeparation.h \
 	TimeSliceTree.h \
