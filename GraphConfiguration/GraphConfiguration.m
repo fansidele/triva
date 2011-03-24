@@ -19,8 +19,6 @@
 #include <AppKit/AppKit.h>
 #include "GraphConfiguration.h"
 
-#define MAX_SIZE   40
-
 @implementation GraphConfiguration
 - (id)initWithController:(PajeTraceController *)c
 {
