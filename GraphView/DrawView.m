@@ -41,6 +41,7 @@
 - (void) setFilter: (GraphView *)f
 {
   filter = f;
+  [self setCurrentRoot: [filter tree]];
 }
 
 - (NSColor *) getColor: (NSColor *)c withSaturation: (double) saturation
@@ -71,17 +72,28 @@
 
 - (void)drawTree:(TrivaGraph*)tree
 {
-  [tree drawLayout];
-  //recurse
-  NSEnumerator *en = [[tree children] objectEnumerator];
-  TrivaTreemap *child;
-  while ((child = [en nextObject])){
-    [self drawTree: child];
+  if ([tree depth] == maxDepthToDraw){
+    [tree drawLayout];
+  }else{
+    //recurse
+    NSEnumerator *en = [[tree children] objectEnumerator];
+    TrivaGraph *child;
+    while ((child = [en nextObject])){
+      [self drawTree: child];
+    }
+
+    [tree drawBorder];
   }
 }
 
 - (void)drawRect:(NSRect)frame
 {
+  if (currentRoot == nil){
+    [self setCurrentRoot: [filter tree]];
+  }
+ // [currentRoot refreshWithBoundingBox: [self bounds]];
+  [self drawTree: currentRoot];
+
   NSRect tela = [self bounds];
 
   //white fill on view
@@ -99,7 +111,7 @@
 
   NSAffineTransform *transform = [self transform];
   [transform concat];
-  [self drawTree: [filter tree]];
+  [self drawTree: currentRoot];
   [transform invert];
   [transform concat];
 }
@@ -298,6 +310,12 @@
 */
 }
 
+- (void) rightMouseDown: (NSEvent *) event
+{
+  [self resetCurrentRoot];
+  [self setNeedsDisplay: YES];
+}
+
 - (void)scrollWheel:(NSEvent *)event
 {
   if ([event modifierFlags] & NSControlKeyMask){
@@ -327,6 +345,19 @@
                     NSSubtractPoints (screenPositionBefore, screenPositionAfter));
  
     [self setNeedsDisplay: YES];
+  }else{
+    if ([event deltaY] > 0){
+      if (maxDepthToDraw < [currentRoot maxDepth]){
+        maxDepthToDraw++;
+        [self setNeedsDisplay: YES];
+      }
+    }else{
+      if (maxDepthToDraw > [currentRoot depth]){
+        maxDepthToDraw--;
+        [self setNeedsDisplay: YES];
+      }
+    }
+    NSLog (@"%d", maxDepthToDraw);
   }
   [super scrollWheel: event];
   return;
@@ -356,5 +387,23 @@
     [theEvent keyCode] == 27){ //ALT + R
     [filter setRecordMode];
   }
+}
+
+- (void) setCurrentRoot: (TrivaGraph *) nroot
+{
+  if (!nroot) return;
+
+  if (highlighted){
+    [highlighted setHighlighted: NO];
+    highlighted = nil;
+  }
+  currentRoot = nroot;
+  [self setNeedsDisplay: YES];
+}
+
+- (void) resetCurrentRoot
+{
+  currentRoot = nil;
+  highlighted = nil;
 }
 @end

@@ -23,7 +23,7 @@
 
 @class GraphView;
 
-@interface DrawView : TupiView
+@interface DrawView : NSView
 {
   GraphView *filter;
 
@@ -39,10 +39,18 @@
   //drawing selectedArea
   NSRect selectedArea;
   BOOL highlightSelectedArea;
+
+  //graph's tree
+  TrivaGraph *currentRoot;
+  TrivaGraph *highlighted;
+  int maxDepthToDraw;
 }
 - (void) setFilter: (GraphView *)f;
 - (NSColor *) getColor: (NSColor *)c withSaturation: (double) saturation;
 - (void) printGraph;
+
+- (void) setCurrentRoot: (TrivaGraph *) nroot;
+- (void) resetCurrentRoot;
 @end
 
 

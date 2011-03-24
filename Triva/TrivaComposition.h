@@ -17,51 +17,42 @@
 #ifndef __TrivaComposition_h_
 #define __TrivaComposition_h_
 #include <Foundation/Foundation.h>
-#include <General/PajeFilter.h>
-#include <Triva/BasicTree.h>
-#include <Triva/TimeSliceTree.h>
-#include <Triva/TrivaFilter.h>
-#include <Triva/TrivaGraphNode.h>
 
-@class TrivaGraphNode;
-@class TrivaFilter;
+@class TrivaGraph;
 
 @interface TrivaComposition : NSObject
 {
   NSString *name;
   NSRect bb; //the bounding box
-  TrivaGraphNode *node; //to which node this composition is part of
+  TrivaGraph *node; //to which node this composition is part of
   NSDictionary *configuration;
 
   BOOL needSpace;
-  TrivaFilter *filter;
+  BOOL highlight;
 }
 + (id) compositionWithConfiguration: (NSDictionary*) conf
                            withName: (NSString*) n
-                          forObject: (TrivaGraphNode*)obj
-                    withDifferences: (NSDictionary*) differences
-                         withValues: (NSDictionary*) timeSliceValues
-                        andProvider: (TrivaFilter*) prov;
+                         withValues: (NSDictionary*) values
+                         withColors: (NSDictionary*) colors
+                           withNode: (TrivaGraph*) obj;
 - (id) initWithConfiguration: (NSDictionary*) conf
                     withName: (NSString*) n
-                   forObject: (TrivaGraphNode*)obj
-             withDifferences: (NSDictionary*) differences
-                  withValues: (NSDictionary*) timeSliceValues
-                 andProvider: (TrivaFilter*) prov;
-- (id) initWithFilter: (TrivaFilter *) f
-     andConfiguration: (NSDictionary *) conf
-             andSpace: (BOOL) s
-              andName: (NSString*) name
-            andObject: (TrivaGraphNode *)obj;
+                  withValues: (NSDictionary*) values
+                  withColors: (NSDictionary*) colors
+                    withNode: (TrivaGraph*) obj;
 
-- (BOOL) redefineLayoutWithValues: (NSDictionary*) timeSliceValues;
+- (void) timeSelectionChanged;
+- (void) setBoundingBox: (NSRect) rect;
+//- (void) layoutWithValues: (NSDictionary*) timeSliceValues;
+//- (void) layoutWithRect: (NSRect) rect;
+- (void) drawLayout;
+
+- (void) setHighlight: (BOOL) v;
+- (BOOL) highlight;
 - (BOOL) needSpace;
-- (void) refreshWithinRect: (NSRect) rect;
-- (BOOL) draw;
 - (NSRect) bb;
 - (NSString*) name;
-- (BOOL) mouseInside: (NSPoint)mPoint
-       withTransform: (NSAffineTransform*)transform;
+- (BOOL) pointInside: (NSPoint)mPoint;
 @end
 
 #endif

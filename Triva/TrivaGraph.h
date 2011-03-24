@@ -18,13 +18,18 @@
 #define __TrivaGraph_H_
 #include <Foundation/Foundation.h>
 #include <AppKit/AppKit.h>
-#include <Triva/BasicTree.h>
-#include <Triva/TimeSliceTree.h>
-#include <Triva/TrivaGraphNode.h>
+#include <Triva/Triva.h>
 #include <matheval.h>
+#include <graphviz/gvc.h>
 
 #define MIN_SIZE   20
 #define MAX_SIZE   40
+
+//for compatibility with some graphviz's
+//installations (ubuntu's lucid, for example)
+#ifndef ND_coord
+#define ND_coord ND_coord_i
+#endif
 
 @interface TrivaGraph : TrivaTree
 {
@@ -44,6 +49,9 @@
            expanded: (BOOL)e
           container: (PajeContainer*)c
              filter: (TrivaFilter*)f;
+- (void) graphvizCreateNodes;
+- (void) graphvizCreateEdges;
+- (void) graphvizSetPositions;
 - (void) connectToNode: (TrivaGraph*) n;
 
 - (void) drawLayout;
@@ -57,6 +65,8 @@
 - (BOOL) expressionHasVariables: (NSString*) expr;
 - (double) evaluateWithValues: (NSDictionary *) values
     withExpr: (NSString *) expr;
+
+- (NSPoint) centerPoint;
 @end
 
 #endif

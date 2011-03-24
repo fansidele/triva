@@ -47,6 +47,36 @@
   if (self != nil){
     connectedNodes = [[NSMutableSet alloc] init];
     compositions = [[NSMutableDictionary alloc] init];
+
+    //layout myself with update my graph values
+    NSDictionary *configuration;
+    configuration = [filter graphConfigurationForContainerType:
+                              [container entityType]];
+
+    //layout my compositions
+    NSMutableArray *array;
+    NSEnumerator *en;
+    NSString *compositionName;
+
+    array = [NSMutableArray arrayWithArray: [configuration allKeys]];
+    en = [array objectEnumerator];
+    while ((compositionName = [en nextObject])){
+      NSDictionary *compConf = [configuration objectForKey: compositionName];
+      if (![compConf isKindOfClass: [NSDictionary class]]) continue;
+      if (![compConf count]) continue;
+
+      //check if composition already exist
+      TrivaComposition *comp = [compositions objectForKey: compositionName];
+      if (!comp){
+        comp = [TrivaComposition compositionWithConfiguration: compConf
+                                                     withName: compositionName
+                                                   withValues: values
+                                                   withColors: nil//colors
+                                                     withNode: self];
+        [compositions setObject: comp forKey: compositionName];
+      }
+    }
+
   }
   return self;
 }
@@ -66,38 +96,38 @@
 - (void) timeSelectionChanged
 {
   [super timeSelectionChanged];
-  //NSLog (@"%@ %@ layout myself with %@", name, values, [filter graphConfigurationForContainerType: [container entityType]]);
 
-//- (void) layoutWith:(NSDictionary*)conf
-//             values:(NSDictionary*)currentValues
-//          minValues:(NSDictionary *)minValues
-//          maxValues:(NSDictionary*)maxValues
-//             colors:(NSDictionary*)colors
-  NSDictionary *minValues = [filter minValuesForContainerType: [container entityType]];
-  NSDictionary *maxValues = [filter maxValuesForContainerType: [container entityType]];
+  NSDictionary *minValues, *maxValues;
+  minValues = [filter minValuesForContainerType: [container entityType]];
+  maxValues = [filter maxValuesForContainerType: [container entityType]];
 
   //layout myself with update my graph values
-  NSDictionary *conf = [filter graphConfigurationForContainerType: [container entityType]];
-  if (conf){
+  NSDictionary *configuration;
+  configuration = [filter graphConfigurationForContainerType:
+                            [container entityType]];
+  if (configuration){
     //layout myself
-    NSString *sizeconf = [conf objectForKey: @"size"];
-    double screensize;
-    if ([self expressionHasVariables: sizeconf]){
-      double min = [self evaluateWithValues: minValues withExpr: sizeconf];
-      double max = [self evaluateWithValues: maxValues withExpr: sizeconf];
-      double dif = max- min;
-      double val = [self evaluateWithValues: values withExpr: sizeconf];
+    NSString *sizeConfiguration = [configuration objectForKey: @"size"];
+    double screenSize;
+    if ([self expressionHasVariables: sizeConfiguration]){
+      double min = [self evaluateWithValues: minValues
+                                   withExpr: sizeConfiguration];
+      double max = [self evaluateWithValues: maxValues
+                                   withExpr: sizeConfiguration];
+      double dif = max - min;
+      double val = [self evaluateWithValues: values
+                                   withExpr: sizeConfiguration];
       if (dif != 0) {
-        screensize = MIN_SIZE + ((val - min)/dif)*(MAX_SIZE-MIN_SIZE);
+        screenSize = MIN_SIZE + ((val - min)/dif)*(MAX_SIZE-MIN_SIZE);
       }else{
-        screensize = MIN_SIZE + ((val - min)/min)*(MAX_SIZE-MIN_SIZE);
+        screenSize = MIN_SIZE + ((val - min)/min)*(MAX_SIZE-MIN_SIZE);
       }
       size = val;
     }else{
-      screensize = [sizeconf doubleValue];
+      screenSize = [sizeConfiguration doubleValue];
     }
-    bb.size.width = screensize;
-    bb.size.height = screensize;
+    bb.size.width = screenSize;
+    bb.size.height = screenSize;
   }
 
   //layout my children
@@ -108,10 +138,196 @@
   }
 }
 
-- (void) drawLayout
+- (void) graphvizSetPositions
+{
+  graph_t *mainGraph = [filter graphviz];
+  graph_t *parentGraph = NULL;
+  if (parent){
+    NSMutableString *parentGraphName;
+    parentGraphName = [NSMutableString stringWithString: @"cluster_"];
+    [parentGraphName appendString: [parent name]];
+    parentGraph = agfindsubg (mainGraph, (char*)[parentGraphName cString]);
+  }else{
+    parentGraph = mainGraph;
+  }
+  if ([children count]){
+    //have children, add myself as a subgraph
+    NSMutableString *graphvizName;
+    graphvizName = [NSMutableString stringWithString: @"cluster_"];
+    [graphvizName appendString: name];
+    graph_t *graph = agfindsubg (parentGraph, (char*)[graphvizName cString]);
+
+    NSRect newBB;
+    newBB.origin.x = ((double)graph->u.bb.LL.x);
+    newBB.origin.y = ((double)graph->u.bb.LL.y);
+    newBB.size.width = ((double)graph->u.bb.UR.x) - newBB.origin.x;
+    newBB.size.height = ((double)graph->u.bb.UR.y) - newBB.origin.y;
+    [self setBoundingBox: newBB];
+  }else{
+    Agnode_t *node = agfindnode (parentGraph, (char*)[name cString]);
+    NSRect newBB;
+    newBB.origin.x = (double)ND_coord(node).x;
+    newBB.origin.y = (double)ND_coord(node).y;
+    if (bb.size.width == 0 && bb.size.height == 0){
+      newBB.size.width = ND_bb(node).UR.x - newBB.origin.x;
+      newBB.size.height = ND_bb(node).UR.y - newBB.origin.y;
+    }else{
+      newBB.size.width = bb.size.width;
+      newBB.size.height = bb.size.height;
+    }
+    [self setBoundingBox: newBB];
+  }
+  
+  //recurse among my children
+  NSEnumerator *en = [children objectEnumerator];
+  TrivaGraph *child;
+  while ((child = [en nextObject])){
+    [child graphvizSetPositions];
+  }
+}
+
+- (void) graphvizCreateEdges
+{
+  graph_t *mainGraph = [filter graphviz];
+  graph_t *parentGraph = NULL;
+  if (parent){
+    NSMutableString *parentGraphName;
+    parentGraphName = [NSMutableString stringWithString: @"cluster_"];
+    [parentGraphName appendString: [parent name]];
+    parentGraph = agfindsubg (mainGraph, (char*)[parentGraphName cString]);
+  }else{
+    parentGraph = mainGraph;
+  }
+  if (!parentGraph){
+    [[NSException exceptionWithName: @"graphvizCreateEdges" 
+                             reason: @"parentGraph was not found"
+                           userInfo: nil] raise];
+  }
+
+  if ([connectedNodes count]){
+    Agnode_t *my_node = agfindnode (parentGraph, (char*)[name cString]);
+    if (!my_node){
+      [[NSException exceptionWithName: @"graphvizCreateEdges" 
+                               reason: @"my_node is not created"
+                             userInfo: nil] raise];
+    }
+
+    //connect the dots in graphviz
+    NSEnumerator *en = [connectedNodes objectEnumerator];
+    TrivaGraph *partner;
+    while ((partner = [en nextObject])){
+      Agnode_t *partner_node;
+      partner_node = agfindnode (mainGraph, (char*)[[partner name] cString]);
+      if (!partner_node){
+        //exception, parentGraph should be always defined
+        [[NSException exceptionWithName: @"graphvizCreateEdges" 
+                                 reason: @"partner_node is not created"
+                               userInfo: nil] raise];
+      }
+      agedge (mainGraph, my_node, partner_node);
+    }
+  }
+
+  //recurse among my children
+  NSEnumerator *en = [children objectEnumerator];
+  TrivaGraph *child;
+  while ((child = [en nextObject])){
+    [child graphvizCreateEdges];
+  }
+  
+}
+
+- (void) graphvizCreateNodes
+{
+  //define parent graph (it has to be a subgraph, name starts as 'cluster_')
+  graph_t *mainGraph = [filter graphviz];
+  graph_t *parentGraph = NULL;
+  if (parent){
+    NSMutableString *parentGraphName;
+    parentGraphName = [NSMutableString stringWithString: @"cluster_"];
+    [parentGraphName appendString: [parent name]];
+    parentGraph = agfindsubg (mainGraph, (char*)[parentGraphName cString]);
+  }else{
+    parentGraph = mainGraph;
+  }
+
+  if (parentGraph == NULL){
+    //exception, parentGraph should be always defined
+    [[NSException exceptionWithName: @"GraphVizCreateNode" 
+                             reason: @"parentGraph is not created"
+                           userInfo: nil] raise];
+  }
+
+  if ([children count]){
+    //have children, add myself as a subgraph
+    NSMutableString *graphvizName;
+    graphvizName = [NSMutableString stringWithString: @"cluster_"];
+    [graphvizName appendString: name];
+    agsubg (parentGraph, (char*)[graphvizName cString]);
+  }else{
+    agnode (parentGraph, (char*)[name cString]);
+ }
+
+  //recurse among my children
+  NSEnumerator *en = [children objectEnumerator];
+  TrivaGraph *child;
+  while ((child = [en nextObject])){
+    [child graphvizCreateNodes];
+  }
+  return;
+}
+
+- (void) drawBorder
 {
   [[NSColor blackColor] set];
   [NSBezierPath strokeRect: bb];
+}
+
+- (void) drawLayout
+{
+  //draw a line to connected nodes
+  [[NSColor blackColor] set];
+  NSEnumerator *en = [connectedNodes objectEnumerator];
+  TrivaGraph *partner;
+  while ((partner = [en nextObject])){
+    NSBezierPath *path = [NSBezierPath bezierPath];
+    [path moveToPoint: [self centerPoint]];
+    [path lineToPoint: [partner centerPoint]];
+    [path stroke];
+  }
+
+//  NSAffineTransform *transform;
+//  transform = [self transform];
+//  [transform concat];
+
+  //compositions
+  //draw my components
+  en = [compositions objectEnumerator];
+  id comp;
+  while ((comp = [en nextObject])){
+    [comp drawLayout];
+  }
+
+  //draw myself
+  NSBezierPath *border = [NSBezierPath bezierPathWithRect: bb];
+  if ([self highlighted]){
+    NSString *str;
+    str = [NSString stringWithFormat: @"%@(%@) - %f",
+                    name,
+                    [container entityType],
+                    size];
+    [str drawAtPoint: NSMakePoint (bb.origin.x,
+                                   bb.origin.y+bb.size.height)
+       withAttributes: nil];
+  }
+  [[NSColor grayColor] set];
+  [border stroke];
+
+
+//  [transform invert];
+//  [transform concat];
+
+
 }
 
 /*
@@ -205,4 +421,23 @@
   return ret;
 }
 
+- (NSPoint) centerPoint
+{
+  return NSMakePoint (bb.origin.x + bb.size.width/2,
+                      bb.origin.y + bb.size.height/2);
+}
+
+- (void) setBoundingBox: (NSRect) nbb
+{
+  [super setBoundingBox: nbb];
+
+  //update bounding boxes of compositions
+  NSEnumerator *en = [compositions objectEnumerator];
+  id comp;
+  while ((comp = [en nextObject])){
+    [comp layoutWithRect: bb];
+    [comp layoutWithValues: values];
+  }
+
+}
 @end

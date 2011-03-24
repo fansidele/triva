@@ -15,21 +15,14 @@
     along with Triva.  If not, see <http://www.gnu.org/licenses/>.
 */
 #include "TrivaComposition.h"
-#include <Triva/TrivaSeparation.h>
-#include <Triva/TrivaGradient.h>
-#include <Triva/TrivaColor.h>
-#include <Triva/TrivaConvergence.h>
-#include <Triva/TrivaSwarm.h>
-#include <Triva/TrivaPlot.h>
-#include <Triva/TrivaFFT.h>
+#include "TrivaSeparation.h"
 
 @implementation TrivaComposition
 + (id) compositionWithConfiguration: (NSDictionary*) conf
                            withName: (NSString*) n
-                          forObject: (TrivaGraphNode*) obj
-                    withDifferences: (NSDictionary*) differences
-                         withValues: (NSDictionary*) timeSliceValues
-                        andProvider: (TrivaFilter*) prov
+                         withValues: (NSDictionary*) values
+                         withColors: (NSDictionary*) col
+                           withNode: (TrivaGraph*) obj;
 {
   if (![conf isKindOfClass: [NSDictionary class]]) {
     NSLog (@"%s:%d: configuration %@ is not a dictionary",
@@ -52,53 +45,52 @@
 
   if ([type isEqualToString: @"separation"]){
     return [[TrivaSeparation alloc] initWithConfiguration: conf
-                                                 withName: n
-                                                forObject: obj
-                                          withDifferences: differences
-                                               withValues: timeSliceValues
-                                              andProvider: prov];
-  }else if ([type isEqualToString: @"gradient"]){
-    return [[TrivaGradient alloc] initWithConfiguration: conf
-                                               withName: n
-                                              forObject: obj
-                                        withDifferences: differences
-                                             withValues: timeSliceValues
-                                            andProvider: prov];
-  }else if ([type isEqualToString: @"convergence"]){
-    return [[TrivaConvergence alloc] initWithConfiguration: conf
-                                                  withName: n
-                                                 forObject: obj
-                                           withDifferences: differences
-                                                withValues: timeSliceValues
-                                               andProvider: prov];
-  }else if ([type isEqualToString: @"color"]){
-    return [[TrivaColor alloc] initWithConfiguration: conf
-                                            withName: n
-                                           forObject: obj
-                                     withDifferences: differences
-                                          withValues: timeSliceValues
-                                         andProvider: prov];
-  }else if ([type isEqualToString: @"swarm"]){
-    return [[TrivaSwarm alloc] initWithConfiguration: conf
-                                            withName: n
-                                           forObject: obj
-                                     withDifferences: differences
-                                          withValues: timeSliceValues
-                                         andProvider: prov];
-  }else if ([type isEqualToString: @"plot"]){
-    return [[TrivaPlot alloc] initWithConfiguration: conf
-                                            withName: n
-                                           forObject: obj
-                                     withDifferences: differences
-                                          withValues: timeSliceValues
-                                         andProvider: prov];
-  }else if ([type isEqualToString: @"fft"]){
-    return [[TrivaFFT alloc] initWithConfiguration: conf
-                                            withName: n
-                                           forObject: obj
-                                     withDifferences: differences
-                                          withValues: timeSliceValues
-                                         andProvider: prov];
+                                                withName: n
+                                              withValues: values
+                                              withColors: col
+                                                withNode: obj];
+//  }else if ([type isEqualToString: @"gradient"]){
+//    return [[TrivaGradient alloc] initWithConfiguration: conf
+//                                               withName: n
+//                                              forObject: obj
+//                                        withDifferences: differences
+//                                             withValues: timeSliceValues
+//                                            andProvider: prov];
+//  }else if ([type isEqualToString: @"convergence"]){
+//    return [[TrivaConvergence alloc] initWithConfiguration: conf
+//                                                  withName: n
+//                                                 forObject: obj
+//                                           withDifferences: differences
+//                                                withValues: timeSliceValues
+//                                               andProvider: prov];
+//  }else if ([type isEqualToString: @"color"]){
+//    return [[TrivaColor alloc] initWithConfiguration: conf
+//                                            withName: n
+//                                           forObject: obj
+//                                     withDifferences: differences
+//                                          withValues: timeSliceValues
+//                                         andProvider: prov];
+//  }else if ([type isEqualToString: @"swarm"]){
+//    return [[TrivaSwarm alloc] initWithConfiguration: conf
+//                                            withName: n
+//                                           forObject: obj
+//                                     withDifferences: differences
+//                                          withValues: timeSliceValues
+//                                         andProvider: prov];
+//  }else if ([type isEqualToString: @"plot"]){
+//    return [[TrivaPlot alloc] initWithConfiguration: conf
+//                                            withName: n
+//                                           forObject: obj
+//                                     withDifferences: differences
+//                                          withValues: timeSliceValues
+//                                         andProvider: prov];
+//  }else if ([type isEqualToString: @"fft"]){
+//    return [[TrivaFFT alloc] initWithConfiguration: conf
+//                                            withName: n
+//                                           forObject: obj
+//                                     withDifferences: differences
+//                                          withValues: timeSliceValues
+//                                         andProvider: prov];
   }else{
     NSLog (@"%s:%d: type '%@' of configuration %@ is unknown",
                         __FUNCTION__, __LINE__, type, conf);
@@ -108,58 +100,51 @@
 
 - (id) initWithConfiguration: (NSDictionary*) conf
                     withName: (NSString*) n
-                   forObject: (TrivaGraphNode*)obj
-             withDifferences: (NSDictionary*) differences
-                  withValues: (NSDictionary*) timeSliceValues
-                 andProvider: (TrivaFilter*) prov
-{
-  //must be implemented in the subclasses
-  NSLog (@"%s:%d: this method must be implemented in the subclasses",
-                        __FUNCTION__, __LINE__);
-  return nil;
-}
-
-- (id) initWithFilter: (TrivaFilter *) f
-     andConfiguration: (NSDictionary *) conf
-             andSpace: (BOOL) s
-              andName: (NSString *) n
-            andObject: (TrivaGraphNode *)obj
+                  withValues: (NSDictionary*) values
+                  withColors: (NSDictionary*) col
+                    withNode: (TrivaGraph*) obj;
 {
   self = [super init];
   configuration = conf;
-  needSpace = s;
-  filter = f;
   name = n;
   node = obj;
   return self;
 }
 
-- (BOOL) redefineLayoutWithValues: (NSDictionary*) timeSliceValues
+- (void) timeSelectionChanged
 {
   //must be implemented in the subclasses
   NSLog (@"%s:%d: this method must be implemented in the subclasses",
                         __FUNCTION__, __LINE__);
-  return NO;
+}
+
+- (void) setBoundingBox: (NSRect) rect
+{
+  //must be implemented in the subclasses
+  NSLog (@"%s:%d: this method must be implemented in the subclasses",
+                        __FUNCTION__, __LINE__);
+}
+
+- (void) drawLayout
+{
+  //must be implemented in the subclasses
+  NSLog (@"%s:%d: this method must be implemented in the subclasses",
+                        __FUNCTION__, __LINE__);
+}
+
+- (void) setHighlight: (BOOL) v
+{
+  highlight = v;
+}
+
+- (BOOL) highlight
+{
+  return highlight;
 }
 
 - (BOOL) needSpace
 {
   return needSpace;
-}
-
-- (void) refreshWithinRect: (NSRect) rect
-{
-  //must be implemented in the subclasses
-  NSLog (@"%s:%d: this method must be implemented in the subclasses",
-                        __FUNCTION__, __LINE__);
-}
-
-- (BOOL) draw
-{
-  //must be implemented in the subclasses
-  NSLog (@"%s:%d: this method must be implemented in the subclasses",
-                        __FUNCTION__, __LINE__);
-  return NO;
 }
 
 - (NSRect) bb
@@ -177,8 +162,7 @@
   return [NSString stringWithFormat: @"[%@ %@]", [node name], name];
 }
 
-- (BOOL) mouseInside: (NSPoint)mPoint
-       withTransform: (NSAffineTransform*)transform
+- (BOOL) pointInside: (NSPoint)mPoint
 {
   //must be implemented in the subclasses
   NSLog (@"%s:%d: this method must be implemented in the subclasses",

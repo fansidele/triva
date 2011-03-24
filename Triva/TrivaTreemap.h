@@ -18,9 +18,7 @@
 #define __TrivaTreemap_H_
 #include <Foundation/Foundation.h>
 #include <AppKit/AppKit.h>
-#include <Triva/BasicTree.h>
-#include <Triva/TimeSliceTree.h>
-#include <Triva/TrivaGraphNode.h>
+#include <Triva/Triva.h>
 
 @interface TrivaTreemap : TrivaTree
 {

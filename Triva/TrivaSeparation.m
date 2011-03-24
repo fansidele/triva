@@ -17,47 +17,23 @@
 #include "TrivaSeparation.h"
 
 @implementation TrivaSeparation
-- (id) initWithFilter: (TrivaFilter *) f
-     andConfiguration: (NSDictionary *) conf
-             andSpace: (BOOL) s
-              andName: (NSString*)n
-            andObject: (TrivaGraphNode*)obj
-{
-  self = [super initWithFilter: f andConfiguration: conf
-                      andSpace: s andName: n andObject: obj];
-  overflow = 0;
-  direction = NO;
-  calculatedValues = [[NSMutableDictionary alloc] init];
-  size = nil;
-  values = nil;
-  diffForComparison = nil;
-  selectedType = nil;
-  return self;
-}
-
 - (id) initWithConfiguration: (NSDictionary*) conf
                     withName: (NSString*) n
-                   forObject: (TrivaGraphNode*)obj
-             withDifferences: (NSDictionary*) differences
-                  withValues: (NSDictionary*) timeSliceValues
-                 andProvider: (TrivaFilter*) prov
+                  withValues: (NSDictionary*) val
+                  withColors: (NSDictionary*) col
+                    withNode: (TrivaGraph*) obj
 {
-  self = [self initWithFilter: prov andConfiguration: conf
-                     andSpace: YES andName: n andObject: obj];
-
+  self = [super initWithConfiguration: conf
+                            withName: n
+                          withValues: val
+                          withColors: col
+                            withNode: obj];
   //get size
   size = [configuration objectForKey: @"size"];
   if (!size){
     NSLog (@"%s:%d: no 'size' configuration for composition %@",
                         __FUNCTION__, __LINE__, configuration);
     return nil;
-  }
-
-  //check for differences
-  if (differences){
-    //saving differences
-    diffForComparison = differences;
-    [diffForComparison retain];
   }
 
   //get values
@@ -87,23 +63,33 @@
   if (dir){
     direction = YES;
   }
+
+  calculatedValues = [[NSMutableDictionary alloc] init];
+  colors = [[NSMutableDictionary alloc] initWithDictionary: col];
   return self;
 }
 
-- (BOOL) redefineLayoutWithValues: (NSDictionary*) timeSliceValues
+- (void) dealloc
+{
+  [calculatedValues release];
+  [colors release];
+  [super dealloc];
+}
+
+- (void) layoutWithValues: (NSDictionary*) timeSliceValues
 {
   //clear calculatedValues
   [calculatedValues removeAllObjects];
 
   //we need the size
-  sepSize = [filter evaluateWithValues: timeSliceValues withExpr: size];
+  sepSize = [node evaluateWithValues: timeSliceValues withExpr: size];
 
   //get values
   NSEnumerator *en2 = [values objectEnumerator];
   id var;
   double sum = 0;
   while ((var = [en2 nextObject])){
-    double val = [filter evaluateWithValues: timeSliceValues withExpr: var];
+    double val = [node evaluateWithValues: timeSliceValues withExpr: var];
     if (val > 0){
       [calculatedValues setObject: [NSNumber numberWithDouble: val/sepSize]
           forKey: var];
@@ -112,68 +98,38 @@
   }
   overflow = sum - 1;
 
-  if ([calculatedValues count] == 0){
-    needSpace = NO;
-  }else{
-    needSpace = YES;
-  }
+//  if ([calculatedValues count] == 0){
+//    needSpace = NO;
+//  }else{
+//    needSpace = YES;
+//  }
 
-  if (threshold < 0){
-    return NO;
-  }
-
-  if (sum > threshold) {
-    return YES;
-  }else{
-    return NO;
-  }
+//  if (threshold < 0){
+//    return NO;
+//  }
+//
+//  if (sum > threshold) {
+//    return YES;
+//  }else{
+//    return NO;
+//  }
 }
 
-- (void) dealloc
-{
-  [calculatedValues release];
-  [diffForComparison release];
-  [super dealloc];
-}
-
-- (void) refreshWithinRect: (NSRect) rect
+- (void) layoutWithRect: (NSRect) rect
 {
   bb = rect;
 }
 
-- (BOOL) draw
+- (void) drawLayout
 {
   NSEnumerator *en = [calculatedValues keyEnumerator];
   NSString *type;
   double accum_y = 0;
+  NSMutableString *str = [NSMutableString string];
 
   while ((type = [en nextObject])){
+    [[colors objectForKey: type] set];
     double value = [[calculatedValues objectForKey: type] doubleValue];
-
-    if (!diffForComparison){
-      [[filter colorForEntityType:
-        [filter entityTypeWithName: type]] set];
-    }else{
-      //defining color based on the differences
-      NSColor *color = [filter colorForEntityType:
-                          [filter entityTypeWithName: type]];
-      //get difference for type
-      double val = [[diffForComparison objectForKey: type] doubleValue];
-#ifdef GNUSTEP
-      float h, s, b, a;
-      [color getHue:&h saturation:&s brightness:&b alpha:&a];
-#else
-      CGFloat h, s, b, a;
-      [color getHue:&h saturation:&s brightness:&b alpha:&a];
-#endif
-      if (val > 0){
-        [[NSColor colorWithCalibratedHue:h saturation: 1 brightness: b alpha:a] set];
-      }else if (val < 0){
-        [[NSColor colorWithCalibratedHue:h saturation: .5 brightness: b alpha:a] set];
-      }else{
-        //this should not happen, because its size will be equal to 0
-      }
-    }
 
     NSRect vr;
     vr.size.width = bb.size.width;
@@ -193,13 +149,20 @@
       [path appendBezierPathWithRect: vr];
     }
     [path fill];
-    if ([selectedType isEqualToString: type]){
-      [[NSColor blackColor] set];
+//    if ([selectedType isEqualToString: type]){
+//      [[NSColor blackColor] set];
+//    }
+    if ([self highlight]){
+      [str appendString: [NSString stringWithFormat: @"%@ - %f (%.2f%%)\n",
+                                  type, value*sepSize, 100*value]];
+      [type drawAtPoint: bb.origin withAttributes: nil];
     }
     [path stroke];
     accum_y += vr.size.height;
   }
-  return YES;
+  if ([self highlight]){
+    [str drawAtPoint: bb.origin withAttributes: nil];
+  }
 }
 
 - (NSRect) bb
@@ -209,57 +172,30 @@
 
 - (NSString *) description
 {
+return name;
   NSMutableString *ret = [NSMutableString string];
 
-  if (selectedType){
-    double value;
-    value = [[calculatedValues objectForKey: selectedType] doubleValue];
-    [ret appendString: [NSString stringWithFormat: @"%@ = %f (%.2f%%)\n",
-                  selectedType, value*sepSize*[[diffForComparison objectForKey: selectedType] doubleValue], value*100]];
-    return ret;
-  }
-
-  NSEnumerator *en = [calculatedValues keyEnumerator];
-  NSString *type;
-  while ((type = [en nextObject])){
-    double value = [[calculatedValues objectForKey: type] doubleValue];
-    [ret appendString: [NSString stringWithFormat: @"%@ = %f (%.2f%%)\n", type,
-                             value*sepSize*[[diffForComparison objectForKey: selectedType] doubleValue], value*100]]; //value is always between 0 and 1 here
-  }
+//  if (selectedType){
+//    double value;
+//    value = [[calculatedValues objectForKey: selectedType] doubleValue];
+//    [ret appendString: [NSString stringWithFormat: @"%@ = %f (%.2f%%)\n",
+//                  selectedType, value*sepSize*[[diffForComparison objectForKey: selectedType] doubleValue], value*100]];
+//    return ret;
+//  }
+//
+//  NSEnumerator *en = [calculatedValues keyEnumerator];
+//  NSString *type;
+//  while ((type = [en nextObject])){
+//    double value = [[calculatedValues objectForKey: type] doubleValue];
+//    [ret appendString: [NSString stringWithFormat: @"%@ = %f (%.2f%%)\n", type,
+//                             value*sepSize*[[diffForComparison objectForKey: selectedType] doubleValue], value*100]]; //value is always between 0 and 1 here
+//  }
   return ret;
 }
 
-- (BOOL) mouseInside: (NSPoint)mPoint
-       withTransform: (NSAffineTransform*)transform
+- (BOOL) pointInside: (NSPoint)mPoint
 {
-  NSEnumerator *en = [calculatedValues keyEnumerator];
-  NSString *type;
-  double accum_y = 0;
-  BOOL found = NO;
-  while ((type = [en nextObject])){
-    double value = [[calculatedValues objectForKey: type] doubleValue];
-    NSRect vr;
-    vr.size.width = bb.size.width;
-    vr.size.height = bb.size.height * value;
-    vr.origin.x = bb.origin.x;
-    vr.origin.y = bb.origin.y + accum_y;
-    accum_y += vr.size.height;
-
-    NSBezierPath *path = [NSBezierPath bezierPath];
-    [path appendBezierPathWithRect: vr];
-
-    if (transform){
-      [path transformUsingAffineTransform: transform];
-    }
-    if ([path containsPoint: mPoint]){
-      selectedType = type;
-      found = YES;
-      break;
-    }
-  }
-  if (!found){
-    selectedType = nil;
-  }
-  return found;
+  hitPoint = mPoint;
+  return NSPointInRect(hitPoint, bb);
 }
 @end

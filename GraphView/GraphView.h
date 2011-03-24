@@ -21,12 +21,16 @@
 #include <AppKit/AppKit.h>
 #include <Renaissance/Renaissance.h>
 #include <Triva/Triva.h>
+#include <graphviz/gvc.h>
 #include "DrawView.h"
 
 @interface GraphView : TrivaFilter
 {
   TrivaGraph *tree;
 
+  //Graphviz
+  GVC_t *gvc;
+  graph_t *graph;
 
   IBOutlet DrawView *view;
   TrivaWindow *window;
@@ -35,6 +39,7 @@
 }
 - (void) setRecordMode;
 - (TrivaGraph *) tree;
+- (graph_t *) graphviz;
 @end
 
 #endif

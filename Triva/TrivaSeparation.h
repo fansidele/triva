@@ -17,8 +17,7 @@
 #ifndef __TrivaSeparation_h_
 #define __TrivaSeparation_h_
 #include <Foundation/Foundation.h>
-#include <Triva/TrivaComposition.h>
-#include <Triva/NSPointFunctions.h>
+#include <Triva/Triva.h>
 
 @interface TrivaSeparation : TrivaComposition
 {
@@ -35,12 +34,13 @@
   NSString *size;
   NSArray *values;
   BOOL direction;
-
-  //differences for comparison (nil if not comparison)
-  NSDictionary *diffForComparison;
  
   //for highlight
   NSString *selectedType;
+
+  NSDictionary *colors;
+
+  NSPoint hitPoint;
 }
 @end
 
