@@ -56,8 +56,14 @@
   }else{
     NSEnumerator *en = [connectedNodes objectEnumerator];
     TrivaGraph *p;
+    double x = bb.size.width/2;
+    double y = bb.size.height/2;
     while ((p = [en nextObject])){
-    
+      [connectionPoints setObject:
+                          NSStringFromPoint(NSMakePoint(x,y))
+                           forKey: [p name]];
+      x += bb.size.width/n;
+      if (x > bb.size.width) { x = bb.size.width/n; }
     }
   }
 }
