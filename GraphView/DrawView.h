@@ -35,6 +35,8 @@
   BOOL movingSingleNode;
   BOOL selectingArea;
 
+  TrivaGraph *movingNode;
+
   //drawing selectedArea
   NSRect selectedArea;
   BOOL highlightSelectedArea;

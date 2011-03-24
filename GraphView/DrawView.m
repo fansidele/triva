@@ -144,10 +144,26 @@
     move = p;
  
     [self setNeedsDisplay: YES];
-  }
-  [super mouseDragged: event];
-  return;
+  }else{
 
+    if (movingSingleNode){
+      //code for changing the position of a node
+      if (highlighted == nil) {
+        return;
+      }
+
+      NSAffineTransform *t = [self transform];
+      [t invert];
+      NSPoint p2 = [t transformPoint: p];
+
+      NSRect nodebb = [highlighted boundingBox];
+      nodebb.origin.x = p2.x - nodebb.size.width/2;
+      nodebb.origin.y = p2.y - nodebb.size.height/2;
+      [highlighted setBoundingBox: nodebb];
+      [self setNeedsDisplay: YES];
+    }
+  }
+  return;
 /*
   if (selectingArea){
     NSAffineTransform *t = [self transform];
@@ -220,8 +236,16 @@
   if ([event modifierFlags] & NSControlKeyMask){
     //if something should be done for this event, do it here
     move = [self convertPoint:[event locationInWindow] fromView:nil];
+  }else{
+    NSPoint p, p2;
+    p = [self convertPoint:[event locationInWindow] fromView:nil];
+
+    NSAffineTransform *t = [self transform];
+    [t invert];
+    p2 = [t transformPoint: p];
+
+    movingSingleNode = YES;
   }
-  [super mouseDown: event];
   return;
 /*
   if ([event modifierFlags] & NSControlKeyMask){
@@ -255,8 +279,8 @@
   }
 
   selectingArea = NO;
-  movingSingleNode = NO;
 */
+  movingSingleNode = NO;
 }
 
 - (void) mouseMoved:(NSEvent *)event
