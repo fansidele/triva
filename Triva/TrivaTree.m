@@ -101,14 +101,6 @@
   [values release];
   values = [[NSDictionary dictionaryWithDictionary:
       [filter spatialIntegrationOfContainer: container]] retain];
-
-  //recursive
-  TrivaTree *child;
-  NSEnumerator *en = [children objectEnumerator];
-  while ((child = [en nextObject])){
-    [child timeSelectionChanged];
-  }
-
 }
 
 - (TrivaTree*) searchAtPoint: (NSPoint) p maxDepth: (int) d

@@ -73,6 +73,13 @@
     treemapValue += value;
     [valueChildren addObject: obj];
   }
+
+  //recursive
+  TrivaTree *child;
+  en = [children objectEnumerator];
+  while ((child = [en nextObject])){
+    [child timeSelectionChanged];
+  }
 }
 
 - (void) setTreemapValue: (double)v
