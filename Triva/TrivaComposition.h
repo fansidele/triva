@@ -17,6 +17,7 @@
 #ifndef __TrivaComposition_h_
 #define __TrivaComposition_h_
 #include <Foundation/Foundation.h>
+#include <Triva/Triva.h>
 
 @class TrivaGraph;
 
@@ -26,20 +27,21 @@
   NSRect bb; //the bounding box
   TrivaGraph *node; //to which node this composition is part of
   NSDictionary *configuration;
+  TrivaFilter *filter;
 
   BOOL needSpace;
   BOOL highlight;
 }
 + (id) compositionWithConfiguration: (NSDictionary*) conf
-                           withName: (NSString*) n
-                         withValues: (NSDictionary*) values
-                         withColors: (NSDictionary*) colors
-                           withNode: (TrivaGraph*) obj;
+                               name: (NSString*) n
+                             values: (NSDictionary*) values
+                               node: (TrivaGraph*) obj
+                             filter: (TrivaFilter*) f;
 - (id) initWithConfiguration: (NSDictionary*) conf
-                    withName: (NSString*) n
-                  withValues: (NSDictionary*) values
-                  withColors: (NSDictionary*) colors
-                    withNode: (TrivaGraph*) obj;
+                        name: (NSString*) n
+                      values: (NSDictionary*) values
+                        node: (TrivaGraph*) obj
+                      filter: (TrivaFilter*) f;
 
 - (void) timeSelectionChanged;
 - (void) setBoundingBox: (NSRect) rect;

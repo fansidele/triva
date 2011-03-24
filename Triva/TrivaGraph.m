@@ -73,11 +73,11 @@
       //check if composition already exist
       TrivaComposition *comp = [compositions objectForKey: compositionName];
       if (!comp){
-        comp = [TrivaComposition compositionWithConfiguration: compConf
-                                                     withName: compositionName
-                                                   withValues: values
-                                                   withColors: nil//colors
-                                                     withNode: self];
+        comp = [TrivaComposition compositionWithConfiguration:compConf
+                                                         name:compositionName
+                                                       values:values
+                                                         node:self
+                                                       filter:filter];
         [compositions setObject: comp forKey: compositionName];
       }
     }

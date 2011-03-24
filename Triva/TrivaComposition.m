@@ -19,10 +19,10 @@
 
 @implementation TrivaComposition
 + (id) compositionWithConfiguration: (NSDictionary*) conf
-                           withName: (NSString*) n
-                         withValues: (NSDictionary*) values
-                         withColors: (NSDictionary*) col
-                           withNode: (TrivaGraph*) obj;
+                               name: (NSString*) n
+                             values: (NSDictionary*) values
+                               node: (TrivaGraph*) obj
+                             filter: (TrivaFilter*) f
 {
   if (![conf isKindOfClass: [NSDictionary class]]) {
     NSLog (@"%s:%d: configuration %@ is not a dictionary",
@@ -45,10 +45,10 @@
 
   if ([type isEqualToString: @"separation"]){
     return [[TrivaSeparation alloc] initWithConfiguration: conf
-                                                withName: n
-                                              withValues: values
-                                              withColors: col
-                                                withNode: obj];
+                                                     name: n
+                                                   values: values
+                                                     node: obj
+                                                   filter: f];
 //  }else if ([type isEqualToString: @"gradient"]){
 //    return [[TrivaGradient alloc] initWithConfiguration: conf
 //                                               withName: n
@@ -99,15 +99,16 @@
 }
 
 - (id) initWithConfiguration: (NSDictionary*) conf
-                    withName: (NSString*) n
-                  withValues: (NSDictionary*) values
-                  withColors: (NSDictionary*) col
-                    withNode: (TrivaGraph*) obj;
+                        name: (NSString*) n
+                      values: (NSDictionary*) values
+                        node: (TrivaGraph*) obj
+                      filter: (TrivaFilter*) f
 {
   self = [super init];
   configuration = conf;
   name = n;
   node = obj;
+  filter = f;
   return self;
 }
 

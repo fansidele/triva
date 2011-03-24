@@ -38,8 +38,6 @@
   //for highlight
   NSString *selectedType;
 
-  NSDictionary *colors;
-
   NSPoint hitPoint;
 }
 @end

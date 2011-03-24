@@ -18,16 +18,16 @@
 
 @implementation TrivaSeparation
 - (id) initWithConfiguration: (NSDictionary*) conf
-                    withName: (NSString*) n
-                  withValues: (NSDictionary*) val
-                  withColors: (NSDictionary*) col
-                    withNode: (TrivaGraph*) obj
+                        name: (NSString*) n
+                      values: (NSDictionary*) val
+                        node: (TrivaGraph*) obj
+                      filter: (TrivaFilter*) f
 {
   self = [super initWithConfiguration: conf
-                            withName: n
-                          withValues: val
-                          withColors: col
-                            withNode: obj];
+                                 name: n
+                               values: val
+                                 node: obj
+                               filter: f];
   //get size
   size = [configuration objectForKey: @"size"];
   if (!size){
@@ -65,14 +65,12 @@
   }
 
   calculatedValues = [[NSMutableDictionary alloc] init];
-  colors = [[NSMutableDictionary alloc] initWithDictionary: col];
   return self;
 }
 
 - (void) dealloc
 {
   [calculatedValues release];
-  [colors release];
   [super dealloc];
 }
 
@@ -128,7 +126,7 @@
   NSMutableString *str = [NSMutableString string];
 
   while ((type = [en nextObject])){
-    [[colors objectForKey: type] set];
+    [[filter colorForIntegratedValueNamed: type] set];
     double value = [[calculatedValues objectForKey: type] doubleValue];
 
     NSRect vr;
