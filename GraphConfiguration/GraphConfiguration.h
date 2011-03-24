@@ -77,7 +77,4 @@
 @interface GraphConfiguration (Protocol)
 @end
 
-@interface GraphConfiguration (Position)
-@end
-
 #endif

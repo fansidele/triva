@@ -20,13 +20,6 @@
 #include "GraphConfiguration.h"
 
 @implementation GraphConfiguration (Protocol)
-/*
-- (id) currentTupiManager
-{
-  return manager;
-}
-*/
-
 - (NSColor *) getColor: (NSColor *)c withSaturation: (double) saturation
 {
   if (![[c colorSpaceName] isEqualToString:
