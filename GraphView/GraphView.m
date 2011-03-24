@@ -263,15 +263,15 @@
         if ([[c1 name] isEqualToString: [c2 name]]) continue;
 
         //calculating distance between particles
-        NSPoint c1p = [c1 centerPoint];//connectionPointForPartner: c2];
-        NSPoint c2p = [c2 centerPoint];//onnectionPointForPartner: c1];
+        NSPoint c1p = [c1 centerPoint];
+        NSPoint c2p = [c2 centerPoint];
         double distance = LMSDistanceBetweenPoints (c1p, c2p);
 
         //coulomb_repulsion (k_e * (q1 * q2 / r*r))
         double coulomb_constant = 1;
         double r = distance==0 ? 1 : distance;
-        double q1 = [c1 boundingBox].size.width;
-        double q2 = [c2 boundingBox].size.width;
+        double q1 = 10;
+        double q2 = 10;
         double coulomb_repulsion = (coulomb_constant * (q1*q2)/(r*r));
 
         //hooke_attraction (-k * x)
@@ -290,13 +290,13 @@
         }
 
         //applying calculated values
-        force = NSAddPoints (force, LMSMultiplyPoint(direction, coulomb_repulsion));
-        force = NSAddPoints (force, LMSMultiplyPoint(direction, hooke_attraction));
-
-
+        force = NSAddPoints (force, LMSMultiplyPoint(direction,
+                                                     coulomb_repulsion));
+        force = NSAddPoints (force, LMSMultiplyPoint(direction,
+                                                     hooke_attraction));
       }
-
-      double damping = 0.2;
+      
+      double damping = 0.5;
       NSPoint velocity = [c1 velocity];
       velocity = NSAddPoints (velocity, force);
       velocity = LMSMultiplyPoint (velocity, damping);
@@ -307,18 +307,11 @@
       c1bb.origin = NSAddPoints (c1bb.origin, velocity);
       [c1 setBoundingBox: c1bb];
 
-      energy = NSAddPoints (energy, force);
+      energy = NSAddPoints (energy, velocity);
     }
     total_energy = fabs(energy.x) + fabs(energy.y);
     [p2 release];
-    NSLog (@"%f %d", total_energy, [graphNodes count]);
-
-    if (total_energy < 0.001){
-//      [NSThread sleepForTimeInterval: 1];
-    }
-
   }while(executeThread);
-//  }while(total_energy > 0.001 && executeThread);
   NSLog (@"%s stopped", __FUNCTION__);
   [pool release];
 }
