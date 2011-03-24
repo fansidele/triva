@@ -38,8 +38,6 @@
   double size;
 
   NSPoint velocity; //force-directed algo
-  BOOL executeThread;
-  NSThread *thread;
 
   NSMutableDictionary *connectionPoints; //TrivaGraph->NSPoint(as NSString)
 }
@@ -74,11 +72,9 @@
 
 - (NSPoint) centerPoint;
 - (NSSet*) connectedNodes;
-- (void) forceDirectedLayout;
 - (void) resetVelocity;
 - (void) setVelocity: (NSPoint)v;
 - (NSPoint) velocity;
-- (void) cancelThreads;
 @end
 
 @interface TrivaGraph (Layout)
