@@ -161,12 +161,14 @@
                           parent: nil];
   [tree retain];
   [tree forceDirectedLayout];
+/*
   [self initializeGraphviz];
   [tree graphvizCreateNodes];
   [tree graphvizCreateEdges];
   [self layoutGraphviz];
   [tree graphvizSetPositions];
   [self finalizeGraphviz];
+*/
   [view resetCurrentRoot];
   [self timeSelectionChanged];
 }

@@ -36,9 +36,12 @@
   NSMutableSet *connectedNodes;
   NSMutableDictionary *compositions;
   double size;
+
   NSPoint velocity; //force-directed algo
   BOOL executeThread;
   NSThread *thread;
+
+  NSMutableDictionary *connectionPoints; //TrivaGraph->NSPoint(as NSString)
 }
 + (TrivaGraph*) nodeWithName: (NSString*)n
                       depth: (int)d
@@ -76,6 +79,12 @@
 - (void) setVelocity: (NSPoint)v;
 - (NSPoint) velocity;
 - (void) cancelThreads;
+@end
+
+@interface TrivaGraph (Layout)
+- (void) layoutSizeWith: (double) screenSize;
+- (void) layoutConnectionPointsWith: (double) screenSize;
+- (NSPoint) connectionPointForPartner: (TrivaGraph *) p;
 @end
 
 #endif

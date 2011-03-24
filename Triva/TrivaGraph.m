@@ -147,9 +147,14 @@
     }else{
       screenSize = [sizeConfiguration doubleValue];
     }
-    bb.size.width = screenSize;
-    bb.size.height = screenSize;
 
+    [self layoutSizeWith: screenSize];
+    [self layoutConnectionPointsWith: screenSize];
+
+
+    NSLog (@"%@ %d", [self name], [connectedNodes count]);    
+
+/*
     //layout my compositions 
     //update bounding boxes of compositions
     NSEnumerator *en = [compositions objectEnumerator];
@@ -158,6 +163,7 @@
       [comp setBoundingBox: bb];
       [comp timeSelectionChanged];
     }
+*/
   }
 
 }
@@ -314,9 +320,12 @@
   NSEnumerator *en = [connectedNodes objectEnumerator];
   TrivaGraph *partner;
   while ((partner = [en nextObject])){
+    NSPoint mp = [self connectionPointForPartner: partner];
+    NSPoint pp = [partner connectionPointForPartner: self];
+
     NSBezierPath *path = [NSBezierPath bezierPath];
-    [path moveToPoint: [self centerPoint]];
-    [path lineToPoint: [partner centerPoint]];
+    [path moveToPoint: mp];
+    [path lineToPoint: pp];
     [path stroke];
   }
 
@@ -476,8 +485,8 @@
         if (c1 == c2) continue;
 
         //calculating distance between particles
-        NSPoint c1p = [c1 centerPoint];
-        NSPoint c2p = [c2 centerPoint];
+        NSPoint c1p = [c1 connectionPointForPartner: c2];
+        NSPoint c2p = [c2 connectionPointForPartner: c1];
         NSPoint dif = NSSubtractPoints (c1p, c2p);
         double distance = LMSDistanceBetweenPoints (c1p, c2p);
 

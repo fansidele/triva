@@ -10,6 +10,7 @@ Triva_OBJC_FILES = \
 	TrivaTree.m \
 	TrivaTreemap.m \
 	TrivaGraph.m \
+	TrivaGraph+Layout.m \
 	TrivaWindow.m \
 	TrivaConfiguration.m
 
