@@ -350,9 +350,6 @@
 - (TrivaGraph *) searchWith: (NSPoint) point
                limitToDepth: (int) d
 {
-  double x = point.x;
-  double y = point.y;
-
   if ([self depth] == d){
     if (NSPointInRect (point, bb)){
       return self;
