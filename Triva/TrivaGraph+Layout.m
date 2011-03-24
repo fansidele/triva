@@ -234,8 +234,5 @@
   }
   [[NSColor grayColor] set];
   [border stroke];
-
-  NSPoint c = [self centerPoint];
-  NSRectFill(NSMakeRect(c.x-1,c.y-1,2,2));
 }
 @end
