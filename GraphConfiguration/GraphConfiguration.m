@@ -60,8 +60,9 @@
 
 - (void) applyGraphConfiguration
 {
-  [manager release];
-  manager = [[TupiManager alloc] initWithConfigurationDictionary: plist];
+//  [manager release];
+//  manager = [[TupiManager alloc] initWithConfigurationDictionary: plist
+//                                                   andPajeFilter: self];
 
   //let's inform other components that we have changes
   [self hierarchyChanged];
@@ -69,7 +70,8 @@
 
 - (void) hierarchyChanged
 {
-  [self createGraph];
+//  [manager createGraph];
+
   [self timeSelectionChanged];
   [super hierarchyChanged];
 }
@@ -180,6 +182,7 @@
   minValues = [[NSMutableDictionary alloc] init];
   maxValues = [[NSMutableDictionary alloc] init];
 
+/*
   NSEnumerator *en = [manager enumeratorOfNodes];
   Tupi *node;
   while ((node = [en nextObject])){
@@ -224,5 +227,6 @@
                  forKey:valueName];
     }
   }
+*/
 }
 @end

@@ -22,8 +22,8 @@
 #include <Foundation/Foundation.h>
 #include <Renaissance/Renaissance.h>
 #include <Triva/Triva.h>
-#include <Tupi/Tupi.h>
-#include <Tupi/TupiManager.h>
+//#include <Tupi/Tupi.h>
+//#include <Tupi/TupiManager.h>
 #include <limits.h>
 #include <float.h>
 #include <matheval.h>
@@ -38,7 +38,7 @@
 {
   // current graph configuration 
   NSDictionary *plist;
-  TupiManager *manager;
+//  TupiManager *manager;
 
   //values, colors, min, max dictionaries
   NSMutableDictionary *values;

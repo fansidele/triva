@@ -40,7 +40,7 @@
 
 - (BOOL) createGraph
 {
-  NSLog (@"%s", __FUNCTION__);
+/*
   //configurationParsed should be YES when arrive here (won't check)
   //prefer user positions than those from graphviz
 
@@ -114,6 +114,7 @@
     }
   }
   [manager endAdding];
+*/
   return YES;
 }
 
@@ -152,6 +153,7 @@ NS_ENDHANDLER
   //recalculate current values for containers, min, max and colors
   [self updateCurrentValues];
 
+/*
   //redefine layout for Tupi library
   NSEnumerator *en = [manager enumeratorOfNodes];
   Tupi *node;
@@ -162,6 +164,7 @@ NS_ENDHANDLER
                 maxValues:maxValues
                    colors:colors];
   }
+*/
 }
 
 /*
