@@ -45,8 +45,6 @@
 
 - (void) timeSelectionChanged;
 - (void) setBoundingBox: (NSRect) rect;
-//- (void) layoutWithValues: (NSDictionary*) timeSliceValues;
-//- (void) layoutWithRect: (NSRect) rect;
 - (void) drawLayout;
 
 - (void) setHighlight: (BOOL) v;
