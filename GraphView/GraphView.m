@@ -325,15 +325,18 @@
     [lock unlock];
 
     total_energy = fabs(energy.x) + fabs(energy.y);
-    [p2 release];
 
     //update view?
     NSDate *now = [NSDate dateWithTimeIntervalSinceNow: 0];
     double difTime = [now timeIntervalSinceDate: lastViewUpdate];
     if (difTime > 0.1){
+      [lastViewUpdate release];
       lastViewUpdate = now;
       [view setNeedsDisplay: YES];
     }
+    [lastViewUpdate retain];
+
+    [p2 release];
     
   }while(executeThread);
   NSLog (@"%s stopped", __FUNCTION__);
