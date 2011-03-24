@@ -74,8 +74,10 @@
   [super dealloc];
 }
 
-- (void) layoutWithValues: (NSDictionary*) timeSliceValues
+- (void) timeSelectionChanged
 {
+  NSDictionary *timeSliceValues = [node values];
+
   //clear calculatedValues
   [calculatedValues removeAllObjects];
 
@@ -113,7 +115,7 @@
 //  }
 }
 
-- (void) layoutWithRect: (NSRect) rect
+- (void) setBoundingBox: (NSRect) rect
 {
   bb = rect;
 }

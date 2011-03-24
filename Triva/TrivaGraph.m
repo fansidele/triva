@@ -139,8 +139,8 @@
     NSEnumerator *en = [compositions objectEnumerator];
     id comp;
     while ((comp = [en nextObject])){
-      [comp layoutWithRect: bb];
-      [comp layoutWithValues: values];
+      [comp setBoundingBox: bb];
+      [comp timeSelectionChanged];
     }
   }
 
