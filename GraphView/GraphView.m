@@ -35,6 +35,8 @@
   recordMode = NO;
   graphNodes = [[NSMutableSet alloc] init];
 
+  [self startThread];
+
   return self;
 }
 
@@ -45,6 +47,8 @@
                                    selector:
                                @selector(forceDirectedGraph:)
                                      object: nil];
+  static int count = 0;
+  [thread setName: [NSString stringWithFormat: @"t-%d", count++]];
   [thread start];
 }
 
@@ -185,9 +189,7 @@
 
 - (void) hierarchyChanged
 {
-  executeThread = NO;
   [graphNodes removeAllObjects];
-  [self startThread];
 
   [tree release];
   tree = [self treeWithContainer: [self rootInstance]
@@ -325,17 +327,11 @@
 - (void) addGraphNode: (TrivaGraph*) n
 {
   [graphNodes addObject: n];
-  if (![thread isExecuting]){
-    [self startThread];
-  }
 }
 
 - (void) removeGraphNode: (TrivaGraph*) n
 {
   [graphNodes removeObject: n];
-  if (![thread isExecuting]){
-    [self startThread];
-  }
 }
 
 - (void) removeGraphNodes
