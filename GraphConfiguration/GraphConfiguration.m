@@ -184,8 +184,15 @@
 /* values for the current time-slice */
 - (void) updateMinMaxColorForContainerType:(PajeEntityType*)type
 {
-  NSEnumerator *en = [self enumeratorOfContainersTyped: type
-                                           inContainer: [self rootInstance]];
+  NSEnumerator *en;
+  if ([[type description] isEqualToString:
+                            [[[self rootInstance] entityType] description]]){
+    en = [[NSArray arrayWithObjects: [self rootInstance], nil]
+           objectEnumerator];
+  }else{
+    en = [self enumeratorOfContainersTyped: type
+                               inContainer: [self rootInstance]];
+  }
 
   NSMutableDictionary *min, *max, *color;
   min = [NSMutableDictionary dictionary];
