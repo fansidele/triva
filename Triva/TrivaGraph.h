@@ -58,7 +58,6 @@
 //- (void) graphvizSetPositions;
 - (void) connectToNode: (TrivaGraph*) n;
 - (BOOL) isConnectedTo: (TrivaGraph*) c;
-- (void) drawLayout;
 
 /* search-based methods */
 - (TrivaGraph *) searchWith: (NSPoint) point
@@ -91,6 +90,7 @@
               usingComparisong: (NSComparisonResult) comp;
 - (NSDictionary *) graphGlobalMinValues;
 - (NSDictionary *) graphGlobalMaxValues;
+- (void) drawLayout;
 @end
 
 #endif

@@ -258,47 +258,7 @@
 }
 */
 
-- (void) drawLayout
-{
-  NSEnumerator *en;
-  //draw a line to connected nodes
 
-  [[NSColor grayColor] set];
-  en = [connectedNodes objectEnumerator];
-  TrivaGraph *partner;
-  while ((partner = [en nextObject])){
-    NSPoint mp = [self centerPoint];//connectionPointForPartner: partner];
-    NSPoint pp = [partner centerPoint];//connectionPointForPartner: self];
-
-    NSBezierPath *path = [NSBezierPath bezierPath];
-    [path moveToPoint: mp];
-    [path lineToPoint: pp];
-    [path stroke];
-  }
-
-  //compositions
-  //draw my components
-  en = [compositions objectEnumerator];
-  id comp;
-  while ((comp = [en nextObject])){
-    [comp drawLayout];
-  }
-
-  //draw myself
-  NSBezierPath *border = [NSBezierPath bezierPathWithRect: bb];
-  if ([self highlighted]){
-    NSString *str;
-    str = [NSString stringWithFormat: @"%@(%@) - %f",
-                    name,
-                    [container entityType],
-                    size];
-    [str drawAtPoint: NSMakePoint (bb.origin.x,
-                                   bb.origin.y+bb.size.height)
-      withAttributes: nil];
-  }
-  [[NSColor grayColor] set];
-  [border stroke];
-}
 
 /*
  * Search method
