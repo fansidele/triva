@@ -42,7 +42,6 @@
   //graph's tree
   TrivaGraph *currentRoot;
   TrivaGraph *highlighted;
-  int maxDepthToDraw;
 }
 - (void) setFilter: (GraphView *)f;
 - (NSColor *) getColor: (NSColor *)c withSaturation: (double) saturation;

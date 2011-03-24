@@ -74,16 +74,15 @@
 
 - (void)drawTree:(TrivaGraph*)tree
 {
-  if ([tree depth] <= maxDepthToDraw){
-    [tree drawLayout];
-    [tree drawBorder];
-  
+  if ([tree expanded]){
     //recurse
     NSEnumerator *en = [[tree children] objectEnumerator];
     TrivaGraph *child;
     while ((child = [en nextObject])){
       [self drawTree: child];
     }
+  }else{
+    [tree drawLayout];
   }
 }
 
@@ -321,20 +320,21 @@
  
     [self setNeedsDisplay: YES];
   }else{
-    if ([event deltaY] > 0){
-      if (maxDepthToDraw < [currentRoot maxDepth]){
-        maxDepthToDraw++;
-        [self setNeedsDisplay: YES];
+    double delta = [event deltaY];
+    if (highlighted){
+      //if user is scrolling over a highlighted node
+      //change its expansion level
+      if (delta > 0){
+        [highlighted setExpanded: YES];
+      }else{
+        [[highlighted parent] setExpanded: NO];
       }
-    }else{
-      if (maxDepthToDraw > [currentRoot depth]){
-        maxDepthToDraw--;
-        [self setNeedsDisplay: YES];
-      }
+      [highlighted setHighlighted: NO];
+      highlighted = nil;
+      [currentRoot recursiveLayout];
+      [self setNeedsDisplay: YES];
     }
-    NSLog (@"%d", maxDepthToDraw);
   }
-  [super scrollWheel: event];
   return;
 }
 
