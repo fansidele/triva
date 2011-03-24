@@ -92,24 +92,9 @@
                            depth: (int) depth
                           parent: (TrivaTree*) p
 {
-  //Create a hierarchical structure that contains
+  //TODO: Create a hierarchical structure that contains
   //only the types listed in the graphConfiguration
-  NSSet *nodeEntityTypeSet = [NSSet setWithArray: [self entityTypesForNodes]];
-
-
-  NSArray *containedTypes;
-  containedTypes = [self containedTypesForContainerType: [cont entityType]];
-/*
-  if ([self hasContainerType: containedTypes]){
-    NSLog (@"%@ no children container types", [cont name]);
-    //this is a leave node, before creating it
-    //check if its type belongs to configured types
-    if (![nodeEntityTypeSet containsObject: [[cont entityType] description]]){
-      NSLog (@"should not create %@", cont);
-      return nil;
-    }
-  }
-*/
+  //NSSet *nodeEntityTypeSet = [NSSet setWithArray: [self entityTypesForNodes]];
 
   //creating hierarchical structure
   TrivaGraph *ret = [TrivaGraph nodeWithName: [cont name]
@@ -119,16 +104,11 @@
                                  container: cont
                                     filter: self];
 
-
+  NSArray *containedTypes;
+  containedTypes = [self containedTypesForContainerType: [cont entityType]];
   NSEnumerator *en = [containedTypes objectEnumerator];
   PajeEntityType *type;
   while ((type = [en nextObject])){
-    //ignore if type does not belong to nodeEntityTypeSet (from graph configuration)
-//    if (![nodeEntityTypeSet containsObject: [type description]]){
-//      NSLog (@"%@ %@", nodeEntityTypeSet, type);
-//      continue;
-//    }
-
     if ([self isContainerEntityType: type]){
       NSEnumerator *en0 = [self enumeratorOfContainersTyped:type
                                                 inContainer:cont];
@@ -142,9 +122,14 @@
     }
   }
 
+  //when it arrives here, all nodes have of the hierarchy 
+  //have been created. connect them using the user configuration
+
   //connecting the dots
-  NSSet *edgeEntityTypeSet = [NSSet setWithArray: [self entityTypesForEdges]];
-  en = [[self containedTypesForContainerType: [cont entityType]] objectEnumerator];
+  NSSet *edgeEntityTypeSet;
+  edgeEntityTypeSet = [NSSet setWithArray: [self entityTypesForEdges]];
+  en = [[self containedTypesForContainerType:
+                [cont entityType]] objectEnumerator];
   while ((type = [en nextObject])){
     if ([edgeEntityTypeSet containsObject: [type description]]){
       NSDate *start_slice = [NSDate dateWithTimeIntervalSinceReferenceDate: -1];
