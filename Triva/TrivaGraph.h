@@ -75,6 +75,7 @@
 - (void) resetVelocity;
 - (void) setVelocity: (NSPoint)v;
 - (NSPoint) velocity;
+- (void) recursiveResetPositions;
 @end
 
 @interface TrivaGraph (Layout)

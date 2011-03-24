@@ -41,7 +41,17 @@
   BOOL recordMode;
 
   BOOL executeThread;
+  BOOL pauseThread;
   NSThread *thread;
+  NSConditionLock *lock;
+
+  //gui
+  NSSlider *springSlider;
+  NSSlider *chargeSlider;
+  NSSlider *dampingSlider;
+  NSTextField *springLabel;
+  NSTextField *chargeLabel;
+  NSTextField *dampingLabel;
 }
 - (void) setRecordMode;
 - (TrivaGraph *) tree;
@@ -50,6 +60,12 @@
 - (void) addGraphNode: (TrivaGraph*) n;
 - (void) removeGraphNode: (TrivaGraph*) n;
 - (void) removeGraphNodes;
+
+
+//from the interface
+- (void) forceDirected: (id) sender;
+- (void) updateLabels: (id) sender;
+- (void) resetPositions: (id) sender;
 @end
 
 #endif

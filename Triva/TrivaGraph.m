@@ -431,4 +431,15 @@
 {
   return velocity;
 }
+
+- (void) recursiveResetPositions
+{
+  bb.origin = NSZeroPoint;
+
+  NSEnumerator *en = [children objectEnumerator];
+  TrivaGraph *child;
+  while ((child = [en nextObject])){
+    [child recursiveResetPositions];
+  }
+}
 @end

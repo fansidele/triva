@@ -35,6 +35,7 @@
   recordMode = NO;
   graphNodes = [[NSMutableSet alloc] init];
 
+  [self updateLabels: self];
   [self startThread];
 
   return self;
@@ -43,6 +44,8 @@
 - (void) startThread
 {
   executeThread = YES;
+  pauseThread = NO;
+  lock = [[NSConditionLock alloc] initWithCondition: 0];
   thread = [[NSThread alloc] initWithTarget: self
                                    selector:
                                @selector(forceDirectedGraph:)
@@ -247,9 +250,18 @@
   NSLog (@"%s started", __FUNCTION__);
   NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
   double total_energy = 0;
+  NSDate *lastViewUpdate = [NSDate distantPast];
   do{ 
+    if (pauseThread) continue;
+    double spring = [springSlider floatValue];
+    double charge = [chargeSlider floatValue];
+    double damping = [dampingSlider floatValue];
+
     NSAutoreleasePool *p2 = [[NSAutoreleasePool alloc] init];
     NSPoint energy = NSMakePoint (0,0);
+
+    //get lock
+    [lock lock];
 
     NSEnumerator *en1 = [graphNodes objectEnumerator];
     TrivaGraph *c1;
@@ -270,14 +282,14 @@
         //coulomb_repulsion (k_e * (q1 * q2 / r*r))
         double coulomb_constant = 1;
         double r = distance==0 ? 1 : distance;
-        double q1 = 10;
-        double q2 = 10;
+        double q1 = charge;
+        double q2 = charge;
         double coulomb_repulsion = (coulomb_constant * (q1*q2)/(r*r));
+        if (coulomb_repulsion > 100) coulomb_repulsion = 100;
 
         //hooke_attraction (-k * x)
         double hooke_attraction = 0;
         if ([c1 isConnectedTo: c2]){
-          double spring = 100;
           hooke_attraction = 1 - ((distance - spring) / spring);
         }
 
@@ -295,8 +307,7 @@
         force = NSAddPoints (force, LMSMultiplyPoint(direction,
                                                      hooke_attraction));
       }
-      
-      double damping = 0.5;
+
       NSPoint velocity = [c1 velocity];
       velocity = NSAddPoints (velocity, force);
       velocity = LMSMultiplyPoint (velocity, damping);
@@ -309,8 +320,21 @@
 
       energy = NSAddPoints (energy, velocity);
     }
+
+    //unlock
+    [lock unlock];
+
     total_energy = fabs(energy.x) + fabs(energy.y);
     [p2 release];
+
+    //update view?
+    NSDate *now = [NSDate dateWithTimeIntervalSinceNow: 0];
+    double difTime = [now timeIntervalSinceDate: lastViewUpdate];
+    if (difTime > 0.1){
+      lastViewUpdate = now;
+      [view setNeedsDisplay: YES];
+    }
+    
   }while(executeThread);
   NSLog (@"%s stopped", __FUNCTION__);
   [pool release];
@@ -319,16 +343,42 @@
 
 - (void) addGraphNode: (TrivaGraph*) n
 {
+  [lock lock];
   [graphNodes addObject: n];
+  [lock unlock];
 }
 
 - (void) removeGraphNode: (TrivaGraph*) n
 {
+  [lock lock];
   [graphNodes removeObject: n];
+  [lock unlock];
 }
 
 - (void) removeGraphNodes
 {
+  [lock lock];
   [graphNodes removeAllObjects];
+  [lock unlock];
+}
+
+- (void) forceDirected: (id) sender
+{
+  pauseThread = !pauseThread;
+}
+
+- (void) updateLabels: (id) sender
+{
+  [springLabel setFloatValue: [springSlider floatValue]];
+  [chargeLabel setFloatValue: [chargeSlider floatValue]];
+  [dampingLabel setFloatValue: [dampingSlider floatValue]];
+}
+
+/* resetting positions of everybody */
+- (void) resetPositions: (id) sender
+{
+  [lock lock];
+  [tree recursiveResetPositions];
+  [lock unlock];
 }
 @end
