@@ -20,19 +20,21 @@
 #include <Foundation/Foundation.h>
 #include <AppKit/AppKit.h>
 #include <Renaissance/Renaissance.h>
-#include <Triva/TrivaFilter.h>
-#include <Triva/TrivaWindow.h>
-#include <AppKit/AppKit.h>
+#include <Triva/Triva.h>
 #include "DrawView.h"
 
 @interface GraphView : TrivaFilter
 {
+  TrivaGraph *tree;
+
+
   IBOutlet DrawView *view;
   TrivaWindow *window;
 
   BOOL recordMode;
 }
 - (void) setRecordMode;
+- (TrivaGraph *) tree;
 @end
 
 #endif

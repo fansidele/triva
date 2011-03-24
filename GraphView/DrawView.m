@@ -69,6 +69,17 @@
   return transform;
 }
 
+- (void)drawTree:(TrivaGraph*)tree
+{
+  [tree drawLayout];
+  //recurse
+  NSEnumerator *en = [[tree children] objectEnumerator];
+  TrivaTreemap *child;
+  while ((child = [en nextObject])){
+    [self drawTree: child];
+  }
+}
+
 - (void)drawRect:(NSRect)frame
 {
   NSRect tela = [self bounds];
@@ -88,8 +99,7 @@
 
   NSAffineTransform *transform = [self transform];
   [transform concat];
-  [self setTupiManager: [filter currentTupiManager]];
-  [super drawRect: frame];
+  [self drawTree: [filter tree]];
   [transform invert];
   [transform concat];
 }

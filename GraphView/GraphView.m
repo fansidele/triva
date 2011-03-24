@@ -34,8 +34,55 @@
   return self;
 }
 
+- (TrivaGraph*) tree
+{
+  return tree;
+}
+
+- (TrivaGraph*) treeWithContainer: (PajeContainer *) cont
+                           depth: (int) depth
+                          parent: (TrivaTree*) p
+{
+  TrivaGraph *ret = [TrivaGraph nodeWithName: [cont name]
+                                     depth: depth
+                                    parent: p
+                                  expanded: NO
+                                 container: cont
+                                    filter: self];
+  //creating hierarchical structure
+  NSEnumerator *en = [[self containedTypesForContainerType: [cont entityType]] objectEnumerator];
+  PajeEntityType *type;
+  while ((type = [en nextObject])){
+    if ([self isContainerEntityType: type]){
+      NSEnumerator *en0 = [self enumeratorOfContainersTyped:type
+                                                inContainer:cont];
+      PajeContainer *sub;
+      while ((sub = [en0 nextObject]) != nil) {
+        TrivaGraph *child = [self treeWithContainer: sub
+                                             depth: depth+1
+                                            parent: ret];
+        [ret addChild: child];
+      }
+    }
+  }
+  return ret;
+}
+
+- (void) hierarchyChanged
+{
+  [tree release];
+  tree = [self treeWithContainer: [self rootInstance]
+                           depth: 0
+                          parent: nil];
+  [tree retain];
+  [self timeSelectionChanged];
+}
+
 - (void) timeSelectionChanged
 {
+  [tree timeSelectionChanged];
+
+
   [view setNeedsDisplay: YES];
   if(recordMode){
     [view printGraph];
