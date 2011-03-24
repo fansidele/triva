@@ -52,6 +52,7 @@
   if (self != nil){
     connectedNodes = [[NSMutableSet alloc] init];
     compositions = [[NSMutableDictionary alloc] init];
+    posCalculated = NO;
     isVisible = NO;
 
     //layout myself with update my graph values
@@ -412,11 +413,35 @@
     //I disappear, my children appear
     [self setVisible: NO];
     [self setChildrenVisible: YES];
- 
+
+    NSEnumerator *en = [children objectEnumerator];
+    TrivaGraph *child;
+    while ((child = [en nextObject])){
+      if (![child positionsAlreadyCalculated]){
+        NSRect bbc = [child boundingBox];
+        bbc.origin = bb.origin;
+        [child setBoundingBox: bbc];
+        [child setPositionsAlreadyCalculated: YES];
+      }
+    }
   }else{
     //I appear, my children disappear
     [self setVisible: YES];
     [self setChildrenVisible: NO];
+
+    NSRect ur = NSZeroRect;
+    NSEnumerator *en = [children objectEnumerator];
+    TrivaGraph *child;
+    while ((child = [en nextObject])){
+      ur = NSUnionRect (ur, [child boundingBox]);
+    }
+    NSPoint nc = NSMakePoint (ur.origin.x+ur.size.width/2,
+                              ur.origin.y+ur.size.height/2);
+    NSRect mbb = [self boundingBox];
+    mbb.origin = NSMakePoint (nc.x - mbb.size.width/2,
+                              nc.y - mbb.size.height/2);
+    mbb.size = mbb.size;
+    [self setBoundingBox: mbb];
   }
 }
 
@@ -446,5 +471,15 @@
   }else{
     return [(TrivaGraph*)parent higherVisibleParent];
   }
+}
+
+- (BOOL) positionsAlreadyCalculated
+{
+  return posCalculated;
+}
+
+- (void) setPositionsAlreadyCalculated: (BOOL) p
+{
+  posCalculated = p;
 }
 @end

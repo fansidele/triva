@@ -41,6 +41,7 @@
 
   NSMutableDictionary *connectionPoints; //TrivaGraph->NSPoint(as NSString)
 
+  BOOL posCalculated;
   BOOL isVisible; //define whether it appears or not in the visualization
 }
 + (TrivaGraph*) nodeWithName: (NSString*)n
@@ -81,6 +82,8 @@
 - (void) setChildrenVisible: (BOOL) v; //recursive
 - (BOOL) visible;
 - (TrivaGraph *) higherVisibleParent;
+- (BOOL) positionsAlreadyCalculated;
+- (void) setPositionsAlreadyCalculated: (BOOL) p;
 @end
 
 @interface TrivaGraph (Layout)
