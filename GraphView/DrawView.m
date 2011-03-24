@@ -274,7 +274,7 @@
 
   [highlighted setHighlighted: NO];
 
-  TrivaGraph *ret = [currentRoot searchWith: p2 limitToDepth: maxDepthToDraw];
+  TrivaGraph *ret = [currentRoot searchAtPoint: p2];
   if (ret){
     highlighted = ret;
     [highlighted setHighlighted: YES];

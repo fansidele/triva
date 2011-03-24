@@ -65,7 +65,7 @@
 /* search-based methods */
 - (TrivaGraph *) searchWith: (NSPoint) point
       limitToDepth: (int) d;
-
+- (TrivaGraph *) searchAtPoint: (NSPoint) point;
 
 /* dealing with expressions */
 - (BOOL) expressionHasVariables: (NSString*) expr;

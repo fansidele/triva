@@ -375,6 +375,23 @@
 }
 
 /* 
+ * Another search method: bottom-up search
+ */
+- (TrivaGraph *) searchAtPoint: (NSPoint) point
+{
+  NSEnumerator *en = [children objectEnumerator];
+  TrivaGraph *child;
+  while ((child = [en nextObject])){
+    TrivaGraph *ret = [child searchAtPoint: point];
+    if (ret) return ret;
+  }
+  if (NSPointInRect(point, bb)){
+    return self;
+  }
+  return nil;
+}
+
+/* 
  * expressions
  */
 - (BOOL) expressionHasVariables: (NSString*) expr
