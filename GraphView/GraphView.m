@@ -154,11 +154,13 @@
 
 - (void) hierarchyChanged
 {
+  [tree cancelThreads];
   [tree release];
   tree = [self treeWithContainer: [self rootInstance]
                            depth: 0
                           parent: nil];
   [tree retain];
+  [tree forceDirectedLayout];
   [self initializeGraphviz];
   [tree graphvizCreateNodes];
   [tree graphvizCreateEdges];

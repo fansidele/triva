@@ -90,6 +90,9 @@
 {
   [connectedNodes release];
   [compositions release];
+  //kill thread
+  executeThread = NO;
+  [thread cancel];
   [super dealloc];
 }
 
@@ -102,6 +105,19 @@
 {
   [super timeSelectionChanged];
 
+  // [self layout];
+
+  //top-down
+  NSEnumerator *en = [children objectEnumerator];
+  TrivaGraph *child;
+  while ((child = [en nextObject])){
+    [child timeSelectionChanged];
+  }
+
+}
+
+- (void) layout
+{
   NSDictionary *minValues, *maxValues;
   minValues = [filter minValuesForContainerType: [container entityType]];
   maxValues = [filter maxValuesForContainerType: [container entityType]];
@@ -144,12 +160,6 @@
     }
   }
 
-  //layout my children
-  NSEnumerator *en = [children objectEnumerator];
-  TrivaGraph *child;
-  while ((child = [en nextObject])){
-    [child timeSelectionChanged];
-  }
 }
 
 - (void) graphvizSetPositions
@@ -429,5 +439,146 @@
 - (NSSet*) connectedNodes;
 {
   return connectedNodes;
+}
+
+
+- (double) forceDirectedChildrenLayout: (id) sender
+{
+  NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+
+  //first, position children randomly withing a 100 x 100 points square
+  NSEnumerator *en0 = [children objectEnumerator];
+  TrivaGraph *c0;
+  while ((c0 = [en0 nextObject])){
+    NSRect b = [c0 boundingBox];
+    b.origin = NSMakePoint (drand48()*100, drand48()*100);
+    [c0 setBoundingBox: b];
+    [c0 resetVelocity];
+  }
+
+  double total_energy = 0;
+
+  do{
+    double spring = 100;
+    double damping = 0.9;
+    NSPoint total_kinetic_energy = NSMakePoint (0,0);
+
+    NSEnumerator *en1 = [children objectEnumerator];
+    TrivaGraph *c1;
+    while ((c1 = [en1 nextObject])){
+      NSPoint force = NSMakePoint (0, 0);
+
+      //see the influence of everybody over me
+      NSEnumerator *en2 = [children objectEnumerator];
+      TrivaGraph *c2;
+      while ((c2 = [en2 nextObject])){
+
+        if (c1 == c2) continue;
+
+        //calculating distance between particles
+        NSPoint c1p = [c1 centerPoint];
+        NSPoint c2p = [c2 centerPoint];
+        NSPoint dif = NSSubtractPoints (c1p, c2p);
+        double distance = LMSDistanceBetweenPoints (c1p, c2p);
+
+        //coulomb_repulsion (k_e * (q1 * q2 / r*r))
+        double coulomb_constant = 1;
+        double r = distance;
+        double q1 = 100;
+        double q2 = 100;
+        double coulomb_repulsion = coulomb_constant * (q1*q2)/(r*r);
+
+        //hooke_attraction (-k * x)
+        double hooke_attraction = 0;
+        if ([[c1 connectedNodes] containsObject: c2]){
+          hooke_attraction = 1 - (fabs (distance - spring) / spring);
+        }
+
+        //applying calculated values
+        force = NSAddPoints (force,
+                             LMSMultiplyPoint (LMSNormalizePoint(dif),
+                                               coulomb_repulsion));
+        force = NSAddPoints (force,
+                             LMSMultiplyPoint (LMSNormalizePoint(dif),
+                                               hooke_attraction));
+      }
+
+      //calculate my velocity
+      NSPoint v = [c1 velocity];
+      v = NSAddPoints (v, force);
+      v = LMSMultiplyPoint (v, damping);
+      [c1 setVelocity: v];
+
+      total_kinetic_energy = NSAddPoints (total_kinetic_energy, v);
+
+      //set origin of child c1
+      NSRect c1bb = [c1 boundingBox];
+      c1bb.origin = NSAddPoints (c1bb.origin, v);
+      [c1 setBoundingBox: c1bb];
+    }
+
+    //calculate my bounding box depending on children's bb
+    NSEnumerator *en0 = [children objectEnumerator];
+    TrivaGraph *c0;
+    NSRect myBB = NSZeroRect;
+    while ((c0 = [en0 nextObject])){
+      myBB = NSUnionRect ([c0 boundingBox], myBB);
+    }
+    //change size
+    [self setBoundingBox: myBB];
+    total_energy = fabs(total_kinetic_energy.x) + fabs(total_kinetic_energy.y);
+  }while(total_energy > 0.0001 && executeThread);
+  [pool release];
+}
+
+- (void) forceDirectedLayout //bottom-up
+{
+  NSEnumerator *en = [children objectEnumerator];
+  TrivaGraph *child;
+  while ((child = [en nextObject])){
+    [child forceDirectedLayout];
+  }
+
+  [thread cancel];
+
+  //layout myself if a have no children
+  if ([children count] == 0){
+    [self layout];
+  }else{
+    //calculate positions of my children in space
+    //launch a thread to do it
+    executeThread = YES;
+    thread = [[NSThread alloc] initWithTarget: self
+                                     selector:
+                                 @selector(forceDirectedChildrenLayout:)
+                                       object: nil];
+    [thread start];
+  }
+}
+
+- (void) resetVelocity
+{
+  velocity = NSZeroPoint;
+}
+
+- (void) setVelocity: (NSPoint)v
+{
+  velocity = v;
+}
+
+- (NSPoint) velocity
+{
+  return velocity;
+}
+
+- (void) cancelThreads
+{
+  executeThread = NO;
+  [thread cancel];
+  NSEnumerator *en = [children objectEnumerator];
+  TrivaGraph *child;
+  while ((child = [en nextObject])){
+    [child cancelThreads];
+  }
 }
 @end
