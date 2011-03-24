@@ -154,13 +154,17 @@
 
 - (void) hierarchyChanged
 {
-  [self finalizeGraphviz];
   [tree release];
   tree = [self treeWithContainer: [self rootInstance]
                            depth: 0
                           parent: nil];
   [tree retain];
   [self initializeGraphviz];
+  [tree graphvizCreateNodes];
+  [tree graphvizCreateEdges];
+  [self layoutGraphviz];
+  [tree graphvizSetPositions];
+  [self finalizeGraphviz];
   [view resetCurrentRoot];
   [self timeSelectionChanged];
 }
@@ -169,10 +173,6 @@
 {
   [view setNeedsDisplay: YES];
   [tree timeSelectionChanged];
-  [tree graphvizCreateNodes];
-  [tree graphvizCreateEdges];
-  [self layoutGraphviz];
-  [tree graphvizSetPositions];
   if(recordMode){
     [view printGraph];
   }
