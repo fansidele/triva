@@ -67,6 +67,7 @@
     withExpr: (NSString *) expr;
 
 - (NSPoint) centerPoint;
+- (NSSet*) connectedNodes;
 @end
 
 #endif

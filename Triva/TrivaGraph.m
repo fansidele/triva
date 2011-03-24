@@ -425,4 +425,9 @@
 
 
 }
+
+- (NSSet*) connectedNodes;
+{
+  return connectedNodes;
+}
 @end
