@@ -300,7 +300,7 @@
 - (void) drawLayout
 {
   //draw a line to connected nodes
-  [[NSColor blackColor] set];
+  [[NSColor grayColor] set];
   NSEnumerator *en = [connectedNodes objectEnumerator];
   TrivaGraph *partner;
   while ((partner = [en nextObject])){
@@ -309,10 +309,6 @@
     [path lineToPoint: [partner centerPoint]];
     [path stroke];
   }
-
-//  NSAffineTransform *transform;
-//  transform = [self transform];
-//  [transform concat];
 
   //compositions
   //draw my components
@@ -336,12 +332,6 @@
   }
   [[NSColor grayColor] set];
   [border stroke];
-
-
-//  [transform invert];
-//  [transform concat];
-
-
 }
 
 /*
