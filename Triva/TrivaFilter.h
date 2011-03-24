@@ -58,6 +58,8 @@ typedef enum {Local,Global,Convergence,Arnaud} TrivaScale;
 
 //graph view protocol
 - (NSDictionary *) graphConfigurationForContainerType:(PajeEntityType*) type;
+- (NSDictionary *) minValuesForContainerType:(PajeEntityType*) type;
+- (NSDictionary *) maxValuesForContainerType:(PajeEntityType*) type;
 @end
 
 #endif

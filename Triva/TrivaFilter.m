@@ -122,4 +122,14 @@
 {
   return [(TrivaFilter*)inputComponent graphConfigurationForContainerType:type];
 }
+
+- (NSDictionary *) minValuesForContainerType:(PajeEntityType*) type
+{
+  return [(TrivaFilter*)inputComponent minValuesForContainerType:type];
+}
+
+- (NSDictionary *) maxValuesForContainerType:(PajeEntityType*) type
+{
+  return [(TrivaFilter*)inputComponent maxValuesForContainerType:type];
+}
 @end
