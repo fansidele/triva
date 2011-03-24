@@ -43,4 +43,9 @@
     alpha: a];
   return ret;
 }
+
+- (NSDictionary *) graphConfigurationForContainerType:(PajeEntityType*) type
+{
+  return [currentGraphConfiguration objectForKey: [type description]];
+}
 @end
