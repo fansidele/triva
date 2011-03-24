@@ -22,8 +22,8 @@
 #include <matheval.h>
 #include <graphviz/gvc.h>
 
-#define MIN_SIZE   50
-#define MAX_SIZE   100
+#define MIN_SIZE   20.0
+#define MAX_SIZE   100.0
 
 //for compatibility with some graphviz's
 //installations (ubuntu's lucid, for example)
@@ -80,10 +80,17 @@
 
 @interface TrivaGraph (Layout)
 - (void) recursiveLayout;
-- (void) layout;
-- (void) layoutSizeWith: (double) screenSize;
+- (void) recursiveLayoutWithMinValues: (NSDictionary *) minValues
+                            maxValues: (NSDictionary *) maxValues;
+- (void) layoutWithMinValues: (NSDictionary *) minValues
+                   maxValues: (NSDictionary *) maxValues;
 - (void) layoutConnectionPointsWith: (double) screenSize;
 - (NSPoint) connectionPointForPartner: (TrivaGraph *) p;
+- (void) mergeValuesDictionary: (NSDictionary *) a
+                intoDictionary: (NSMutableDictionary *) b
+              usingComparisong: (NSComparisonResult) comp;
+- (NSDictionary *) graphGlobalMinValues;
+- (NSDictionary *) graphGlobalMaxValues;
 @end
 
 #endif

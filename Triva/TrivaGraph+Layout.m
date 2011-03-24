@@ -19,11 +19,19 @@
 @implementation TrivaGraph (Layout)
 - (void) recursiveLayout
 {
+  //remove all nodes from force-directed algorithm
   [filter removeGraphNodes];
-  [self recursiveLayout2];
+
+  //search for min max values considering the whole hierarchical graph
+  NSDictionary *min = [self graphGlobalMinValues];
+  NSDictionary *max = [self graphGlobalMaxValues];
+
+  //do the layout
+  [self recursiveLayoutWithMinValues: min maxValues: max];
 }
 
-- (void) recursiveLayout2
+- (void) recursiveLayoutWithMinValues: (NSDictionary *) minValues
+                            maxValues: (NSDictionary *) maxValues
 {
   //if i am expanded, recurse to my children
   if ([self expanded]){
@@ -31,48 +39,47 @@
     NSEnumerator *en = [children objectEnumerator];
     TrivaGraph *child;
     while ((child = [en nextObject])){
-      [child recursiveLayout2];
+      [child recursiveLayoutWithMinValues: minValues maxValues: maxValues];
     }
   }else{
     //add myself to the filter's force-directed algo
     [filter addGraphNode: self];
     //i am NOT expanded, layout myself
-    [self layout];
+    [self layoutWithMinValues: minValues maxValues: maxValues];
   }
 }
 
-- (void) layout
-{
-  NSDictionary *minValues, *maxValues;
-  minValues = [filter minValuesForContainerType: [container entityType]];
-  maxValues = [filter maxValuesForContainerType: [container entityType]];
 
+- (void) layoutWithMinValues: (NSDictionary*) minValues
+                   maxValues: (NSDictionary*) maxValues
+{
   //layout myself with update my graph values
-  NSDictionary *configuration;
-  configuration = [filter graphConfigurationForContainerType:
-                            [container entityType]];
-  if (configuration){
-    NSString *sizeConfiguration = [configuration objectForKey: @"size"];
-    double s;
-    if ([self expressionHasVariables: sizeConfiguration]){
-      double min = [self evaluateWithValues: minValues
-                                   withExpr: sizeConfiguration];
-      double max = [self evaluateWithValues: maxValues
-                                   withExpr: sizeConfiguration];
-      double val = [self evaluateWithValues: values
-                                   withExpr: sizeConfiguration];
-      double dif = max - min;
-      if (dif != 0) {
-        s = MIN_SIZE + ((val - min)/dif)*(MAX_SIZE-MIN_SIZE);
-      }else{
-        s = MIN_SIZE + ((val - min)/min)*(MAX_SIZE-MIN_SIZE);
-      }
-      size = val;
-    }else{
-      s = [sizeConfiguration doubleValue];
+  PajeEntityType *type = [container entityType];
+  NSDictionary *conf  = [filter graphConfigurationForContainerType: type];
+  if (conf){
+    NSString *sizeConf = [conf objectForKey: @"size"];
+    NSString *typeConf = [conf objectForKey: @"type"];
+    if (typeConf == nil){
+      typeConf = @"node";
     }
-    bb.size.width = s;
-    bb.size.height = s;
+    if (sizeConf != nil){
+      double val = [self evaluateWithValues: values withExpr: sizeConf];
+      double min = [self evaluateWithValues: minValues withExpr: sizeConf];
+      double max = [self evaluateWithValues: maxValues withExpr: sizeConf];
+      double dif = max - min;
+      double multiplier;
+      if (dif != 0) {
+        multiplier = (val-min)/dif;
+      }else{
+        multiplier = (val-min)/min;
+      }
+      //multiplier = multiplier==0 ? 1 : multiplier;
+      double s = MIN_SIZE + multiplier*(MAX_SIZE-MIN_SIZE);
+
+      size = val;
+      bb.size.width = s;
+      bb.size.height = s;
+    }
   }
 }
 
@@ -131,5 +138,60 @@
   NSAffineTransform *t = [NSAffineTransform transform];
   [t translateXBy: bb.origin.x yBy: bb.origin.y];
   return [t transformPoint: ret];
+}
+
+
+- (void) mergeValuesDictionary: (NSDictionary *) a
+                intoDictionary: (NSMutableDictionary *) b
+              usingComparisong: (NSComparisonResult) comp
+{
+  //merge cret into ret
+  NSEnumerator *en0 = [a keyEnumerator];
+  NSString *key;
+  while ((key = [en0 nextObject])){
+    NSNumber *existingValue = [b objectForKey: key];
+    NSNumber *newValue = [a objectForKey: key];
+    if (existingValue == nil){
+      [b setObject: newValue
+            forKey: key];
+    }else{
+      if ([existingValue compare: newValue] == comp){
+        [b setObject: [a objectForKey: key]
+              forKey: key];
+      }
+    }
+  }
+}
+
+- (NSDictionary *) graphGlobalMinValues
+{
+  NSMutableDictionary *ret = [NSMutableDictionary dictionaryWithDictionary:
+                                         [filter minValuesForContainerType:
+                                                   [container entityType]]];
+  NSEnumerator *en = [children objectEnumerator];
+  TrivaGraph *child;
+  while ((child = [en nextObject])){
+    NSDictionary *cret = [child graphGlobalMinValues];
+    [self mergeValuesDictionary: cret
+                 intoDictionary: ret
+               usingComparisong: NSOrderedDescending];
+  }
+  return ret;
+}
+
+- (NSDictionary *) graphGlobalMaxValues
+{
+  NSMutableDictionary *ret = [NSMutableDictionary dictionaryWithDictionary:
+                                         [filter maxValuesForContainerType:
+                                                   [container entityType]]];
+  NSEnumerator *en = [children objectEnumerator];
+  TrivaGraph *child;
+  while ((child = [en nextObject])){
+    NSDictionary *cret = [child graphGlobalMinValues];
+    [self mergeValuesDictionary: cret
+                 intoDictionary: ret
+               usingComparisong: NSOrderedAscending];
+  }
+  return ret;
 }
 @end
