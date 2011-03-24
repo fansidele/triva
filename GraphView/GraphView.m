@@ -139,36 +139,48 @@
       }
     }
   }
+  return ret;
+}
 
-  //when it arrives here, all nodes of the hierarchy 
-  //have been created. connect them using the user graph
-  //configuration
 
-  //connecting the dots
-  NSSet *edgeEntityTypeSet;
-  edgeEntityTypeSet = [NSSet setWithArray: [self entityTypesForEdges]];
-  en = [[self containedTypesForContainerType:
-                [cont entityType]] objectEnumerator];
+- (void) interconnectTree: (TrivaGraph*)rootNode
+           usingContainer: (PajeContainer*) cont
+{
+  NSArray *containedTypes;
+  containedTypes = [self containedTypesForContainerType: [cont entityType]];
+  NSEnumerator *en = [containedTypes objectEnumerator];
+  PajeEntityType *type;
   while ((type = [en nextObject])){
-    if ([edgeEntityTypeSet containsObject: [type description]]){
-      NSDate *start_slice = [NSDate dateWithTimeIntervalSinceReferenceDate: -1];
-      NSDate *end_slice = [self endTime];
-      NSEnumerator *en2 = [self enumeratorOfEntitiesTyped: type
-                                inContainer: [self rootInstance]
-                                   fromTime: start_slice
-                                     toTime: end_slice
-                                minDuration: 0];
-      id entity;
-      while ((entity = [en2 nextObject])){
-        TrivaGraph *sourceNode, *destNode;
-        sourceNode = [ret searchChildByName: [[entity sourceContainer] name]];
-        destNode = [ret searchChildByName: [[entity destContainer] name]];
-        [sourceNode connectToNode: destNode];
-        [destNode connectToNode: sourceNode];
+    if ([self isContainerEntityType: type]){
+      NSEnumerator *en0 = [self enumeratorOfContainersTyped:type
+                                                inContainer:cont];
+      PajeContainer *sub;
+      while ((sub = [en0 nextObject]) != nil) {
+        [self interconnectTree: rootNode
+                usingContainer: sub];
+      }
+    }else{
+      NSSet *edgeSet = [NSSet setWithArray: [self entityTypesForEdges]];
+      if ([edgeSet containsObject: [type description]]){
+        NSDate *st = [NSDate dateWithTimeIntervalSinceReferenceDate: -1];
+        NSDate *et = [NSDate dateWithTimeIntervalSinceReferenceDate: 1];
+        NSEnumerator *en2 = [self enumeratorOfEntitiesTyped: type
+                                                inContainer: cont
+                                                   fromTime: st
+                                                     toTime: et
+                                                minDuration: 0];
+        PajeEntity *entity;
+        while ((entity = [en2 nextObject])){
+          TrivaGraph *s, *d;
+          s = [rootNode searchChildByName: [[entity sourceContainer] name]];
+          d = [rootNode searchChildByName: [[entity destContainer] name]];
+          [s connectToNode: d];
+          [d connectToNode: s];
+        }
       }
     }
   }
-  return ret;
+  return;
 }
 
 - (void) hierarchyChanged
@@ -181,6 +193,8 @@
   tree = [self treeWithContainer: [self rootInstance]
                            depth: 0
                           parent: nil];
+  [self interconnectTree: tree
+          usingContainer: [self rootInstance]];
   [tree retain];
 /*
   [self initializeGraphviz];
