@@ -51,6 +51,7 @@
 - (NSRect) boundingBox;
 - (BOOL) highlighted;
 - (void) setHighlighted: (BOOL) v;
+- (NSDictionary *) values;
 
 - (void) timeSelectionChanged;
 

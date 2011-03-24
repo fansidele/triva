@@ -84,6 +84,11 @@
   isHighlighted = v;
 }
 
+- (NSDictionary*) values
+{
+  return values;
+}
+
 - (void) timeSelectionChanged
 {
   [values release];
