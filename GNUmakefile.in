@@ -8,13 +8,11 @@ SUBPROJECTS = Triva \
   App \
   GraphConfiguration \
   GraphView \
-  LinkView \
   Dot \
   CheckTrace \
   StatTrace \
   List \
   Instances \
-  LinkView \
   SquarifiedTreemap \
   TimeInterval \
   TimeIntegration \
