@@ -26,8 +26,7 @@ GraphConfiguration_HEADER_FILES = GraphConfiguration.h
 GraphConfiguration_OBJC_FILES = \
 GraphConfiguration.m \
 GraphConfiguration+Interface.m \
-GraphConfiguration+Protocol.m \
-GraphConfiguration+Graph.m
+GraphConfiguration+Protocol.m
 
 GraphConfiguration_INCLUDE_DIRS += -I../ -I./ @CPPFLAGS@
 GraphConfiguration_LDFLAGS += @LDFLAGS@ -lTupi
