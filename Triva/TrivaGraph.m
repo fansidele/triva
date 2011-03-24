@@ -467,7 +467,9 @@
 
   double total_energy = 0;
 
-  do{
+  do{ 
+    NSAutoreleasePool *p2 = [[NSAutoreleasePool alloc] init];
+    
     double spring = 100;
     double damping = 0.9;
     NSPoint total_kinetic_energy = NSMakePoint (0,0);
@@ -536,6 +538,7 @@
     //change size
     [self setBoundingBox: myBB];
     total_energy = fabs(total_kinetic_energy.x) + fabs(total_kinetic_energy.y);
+    [p2 release];
   }while(total_energy > 0.0001 && executeThread);
   [pool release];
 }
