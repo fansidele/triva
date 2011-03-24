@@ -29,6 +29,7 @@
 #include "TrivaComposition.h"
 #include "Triva.h"
 #include "TrivaTreemap.h"
+#include "TrivaGraph.h"
 #include "TrivaWindow.h"
 
 #endif
