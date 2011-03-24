@@ -72,17 +72,16 @@
 
 - (void)drawTree:(TrivaGraph*)tree
 {
-  if ([tree depth] == maxDepthToDraw){
+  if ([tree depth] <= maxDepthToDraw){
     [tree drawLayout];
-  }else{
+    [tree drawBorder];
+  
     //recurse
     NSEnumerator *en = [[tree children] objectEnumerator];
     TrivaGraph *child;
     while ((child = [en nextObject])){
       [self drawTree: child];
     }
-
-    [tree drawBorder];
   }
 }
 
