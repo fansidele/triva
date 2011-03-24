@@ -194,7 +194,7 @@
 
   PajeContainer *container;
   while ((container = [en nextObject])){
-    NSDictionary *contValues = [self integrationOfContainer: container];
+    NSDictionary *contValues = [self spatialIntegrationOfContainer: container];
 
     //calculate min and maxValues
     NSEnumerator *en2 = [contValues keyEnumerator];
