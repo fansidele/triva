@@ -20,6 +20,7 @@ Triva_OBJC_FILES = \
 	BasicTree.m \
 	TrivaTree.m \
 	TrivaTreemap.m \
+	TrivaGraph.m \
 	TrivaWindow.m \
 	TrivaConfiguration.m
 
@@ -40,6 +41,7 @@ Triva_HEADER_FILES = TrivaFilter.h \
 	BasicTree.h \
 	TrivaTree.h \
 	TrivaTreemap.h \
+	TrivaGraph.h \
 	NSPointFunctions.h \
 	Triva.h \
 	TrivaWindow.h \
