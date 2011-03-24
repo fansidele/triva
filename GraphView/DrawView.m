@@ -30,6 +30,8 @@
   movingSingleNode = NO;
   selectingArea = NO;
   selectedArea = NSZeroRect;
+
+  highlighted = nil;
   return self;
 }
 
@@ -263,9 +265,6 @@
   if ([event modifierFlags] & NSControlKeyMask){
     //if something should be done for this event, do it here
   }
-  [super mouseMoved: event];
-  return;
-/*
   NSPoint p, p2;
   p = [self convertPoint:[event locationInWindow] fromView:nil];
 
@@ -273,40 +272,17 @@
   [t invert];
   p2 = [t transformPoint: p];
 
-  //search for selected areas
-  if (NSPointInRect (p2, selectedArea)){
-    highlightSelectedArea = YES;
+  [highlighted setHighlighted: NO];
+
+  TrivaGraph *ret = [currentRoot searchWith: p2 limitToDepth: maxDepthToDraw];
+  if (ret){
+    highlighted = ret;
+    [highlighted setHighlighted: YES];
   }else{
-    highlightSelectedArea = NO;
+    highlighted = nil;
   }
   [self setNeedsDisplay: YES];
-
-  //search for nodes
-  TrivaGraphNode *node;
-  NSEnumerator *en = [filter enumeratorOfNodes];
-  BOOL found = NO;
-  while ((node = [en nextObject])){
-    if([node mouseInside: p2]){
-      if (selectedNode){
-        [selectedNode setHighlight: NO];
-      }
-      selectedNode = node;
-      [selectedNode setHighlight: YES];
-      [self setNeedsDisplay: YES];
-      found = YES;
-      break;
-    }
-  }
-  if (!found){
-    if (selectedNode){
-      [selectedNode setHighlight: NO];
-      selectedNode = nil;
-      [self setNeedsDisplay: YES];
-    }
-  }else{
-    return;
-  }
-*/
+  return;
 }
 
 - (void) rightMouseDown: (NSEvent *) event

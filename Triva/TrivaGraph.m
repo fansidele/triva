@@ -348,33 +348,24 @@
  * Search method
  */
 - (TrivaGraph *) searchWith: (NSPoint) point
-    limitToDepth: (int) d
+               limitToDepth: (int) d
 {
-  return nil;
   double x = point.x;
   double y = point.y;
-  TrivaGraph *ret = nil;
-  if (x >= bb.origin.x &&
-      x <= bb.origin.x+bb.size.width &&
-      y >= bb.origin.y &&
-      y <= bb.origin.y+bb.size.height){
-    if ([self depth] == d){
-      // recurse to aggregated children 
-    }else{
-      // recurse to ordinary children 
-      unsigned int i;
-      for (i = 0; i < [children count]; i++){
-        TrivaGraph *child;
-        child = [children objectAtIndex: i];
-        ret = [child searchWith: point
-                   limitToDepth: d];
-        if (ret != nil){
-          break;
-        }
-      }
+
+  if ([self depth] == d){
+    if (NSPointInRect (point, bb)){
+      return self;
+    }
+  }else{
+    NSEnumerator *en = [children objectEnumerator];
+    TrivaGraph *child;
+    while ((child = [en nextObject])){
+      TrivaGraph *ret = [child searchWith: point limitToDepth: d];
+      if (ret) return ret;
     }
   }
-  return ret;
+  return nil;
 }
 
 /* 
