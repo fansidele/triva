@@ -24,6 +24,9 @@
 {
   self = [super initWithFrame: frame];
   translate = NSZeroPoint;
+  translate = NSAddPoints (translate,
+                           NSMakePoint(frame.size.width/2,
+                                       frame.size.height/2));
   move = NSZeroPoint;
   ratio = 1;
 
