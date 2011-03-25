@@ -179,8 +179,10 @@
         PajeEntity *entity;
         while ((entity = [en2 nextObject])){
           TrivaGraph *s, *d;
-          s = [rootNode searchChildByName: [[entity sourceContainer] name]];
-          d = [rootNode searchChildByName: [[entity destContainer] name]];
+          s = (TrivaGraph*)[rootNode searchChildByName:
+                                       [[entity sourceContainer] name]];
+          d = (TrivaGraph*)[rootNode searchChildByName:
+                          [[entity destContainer] name]];
           [s connectToNode: d];
           [d connectToNode: s];
         }
@@ -247,7 +249,7 @@
 }
 
 
-- (double) forceDirectedGraph: (id) sender
+- (void) forceDirectedGraph: (id) sender
 {
   NSLog (@"%s started", __FUNCTION__);
   NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];

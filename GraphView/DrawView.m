@@ -349,9 +349,9 @@
       //if user is scrolling over a highlighted node
       //change its expansion level
       if (delta > 0){
-        [highlighted setExpanded: YES];
+        [(TrivaGraph*)highlighted setExpanded: YES];
       }else{
-        [[highlighted parent] setExpanded: NO];
+        [(TrivaGraph*)[highlighted parent] setExpanded: NO];
       }
       [highlighted setHighlighted: NO];
       highlighted = nil;

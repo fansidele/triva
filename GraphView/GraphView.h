@@ -53,10 +53,12 @@
   NSTextField *chargeLabel;
   NSTextField *dampingLabel;
 }
+- (void) startThread;
 - (void) setRecordMode;
 - (TrivaGraph *) tree;
 - (graph_t *) graphviz;
 
+- (void) forceDirectedGraph: (id) sender;
 - (void) addGraphNode: (TrivaGraph*) n;
 - (void) removeGraphNode: (TrivaGraph*) n;
 - (void) removeGraphNodes;
