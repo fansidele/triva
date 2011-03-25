@@ -150,6 +150,8 @@
       //code for changing the position of a node
       if (highlighted == nil) {
         return;
+      }else{
+        [filter addForceDirectedIgnoredNode: highlighted];
       }
 
       NSAffineTransform *t = [self transform];
@@ -271,6 +273,10 @@
     //if something should be done for this event, do it here
   }
   [super mouseUp: event];
+  if (highlighted){
+    [filter removeForceDirectedIgnoredNode: highlighted];
+  }
+  movingSingleNode = NO;
   return;
 /*
   return;
@@ -280,7 +286,7 @@
 
   selectingArea = NO;
 */
-  movingSingleNode = NO;
+
 }
 
 - (void) mouseMoved:(NSEvent *)event

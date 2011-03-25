@@ -20,7 +20,7 @@
 - (void) recursiveLayout
 {
   //remove all nodes from force-directed algorithm
-  [filter removeGraphNodes];
+  [filter removeForceDirectedNodes];
 
   //search for min max values considering the whole hierarchical graph
   NSDictionary *min = [self graphGlobalMinValues];
@@ -35,7 +35,7 @@
 {
   if ([self visible]){
     //I appear, consider me to force-direct my position, layout me
-    [filter addGraphNode: self];
+    [filter addForceDirectedNode: self];
     [self layoutWithMinValues: minValues maxValues: maxValues];
   }else{
     //I do not appear, recurse to my children

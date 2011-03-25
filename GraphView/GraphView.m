@@ -33,7 +33,8 @@
   graph = NULL;
 
   recordMode = NO;
-  graphNodes = [[NSMutableSet alloc] init];
+  forceDirectedNodes = [[NSMutableSet alloc] init];
+  forceDirectedIgnoredNodes = [[NSMutableSet alloc] init];
 
   [self updateLabels: self];
   [self startThread];
@@ -194,7 +195,7 @@
 
 - (void) hierarchyChanged
 {
-  [graphNodes removeAllObjects];
+  [forceDirectedNodes removeAllObjects];
 
   [tree release];
   tree = [self treeWithContainer: [self rootInstance]
@@ -267,13 +268,13 @@
     //get lock
     [lock lock];
 
-    NSEnumerator *en1 = [graphNodes objectEnumerator];
+    NSEnumerator *en1 = [forceDirectedNodes objectEnumerator];
     TrivaGraph *c1;
     while ((c1 = [en1 nextObject])){
       NSPoint force = NSMakePoint (0, 0);
 
       //see the influence of everybody over c1, register in force
-      NSEnumerator *en2 = [graphNodes objectEnumerator];
+      NSEnumerator *en2 = [forceDirectedNodes objectEnumerator];
       TrivaGraph *c2;
       while ((c2 = [en2 nextObject])){
         if ([[c1 name] isEqualToString: [c2 name]]) continue;
@@ -320,7 +321,9 @@
       //set origin of child c1
       NSRect c1bb = [c1 boundingBox];
       c1bb.origin = NSAddPoints (c1bb.origin, velocity);
-      [c1 setBoundingBox: c1bb];
+      if (![forceDirectedIgnoredNodes containsObject: c1]){
+        [c1 setBoundingBox: c1bb];
+      }
 
       energy = NSAddPoints (energy, velocity);
     }
@@ -347,25 +350,35 @@
   [pool release];
 }
 
-
-- (void) addGraphNode: (TrivaGraph*) n
+- (void) removeForceDirectedNode: (TrivaGraph*) n
 {
   [lock lock];
-  [graphNodes addObject: n];
+  [forceDirectedNodes removeObject: n];
   [lock unlock];
 }
 
-- (void) removeGraphNode: (TrivaGraph*) n
+- (void) removeForceDirectedIgnoredNode: (TrivaGraph*) n
+{
+  [forceDirectedIgnoredNodes removeObject: n];
+  NSLog (@"%@", forceDirectedIgnoredNodes);
+}
+
+- (void) addForceDirectedNode: (TrivaGraph*) n
 {
   [lock lock];
-  [graphNodes removeObject: n];
+  [forceDirectedNodes addObject: n];
   [lock unlock];
 }
 
-- (void) removeGraphNodes
+- (void) addForceDirectedIgnoredNode: (TrivaGraph*) n
+{
+  [forceDirectedIgnoredNodes addObject: n];
+}
+
+- (void) removeForceDirectedNodes
 {
   [lock lock];
-  [graphNodes removeAllObjects];
+  [forceDirectedNodes removeAllObjects];
   [lock unlock];
 }
 

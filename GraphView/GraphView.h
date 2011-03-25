@@ -32,8 +32,12 @@
   GVC_t *gvc;
   graph_t *graph;
 
-  NSMutableSet *graphNodes; /* of TrivaGraph, contains all the nodes
-                               that currently participate in the graph */
+  NSMutableSet *forceDirectedNodes; /* of TrivaGraph, contains all the nodes
+                                       that currently participate in the
+                                       graph */
+  NSMutableSet *forceDirectedIgnoredNodes; /* of TrivaGraph, contains nodes
+                                              that does not receive updates
+                                              from force-directed algorithm */
 
   IBOutlet DrawView *view;
   TrivaWindow *window;
@@ -59,10 +63,11 @@
 - (graph_t *) graphviz;
 
 - (void) forceDirectedGraph: (id) sender;
-- (void) addGraphNode: (TrivaGraph*) n;
-- (void) removeGraphNode: (TrivaGraph*) n;
-- (void) removeGraphNodes;
-
+- (void) addForceDirectedNode: (TrivaGraph*) n;
+- (void) addForceDirectedIgnoredNode: (TrivaGraph*) n;
+- (void) removeForceDirectedNode: (TrivaGraph*) n;
+- (void) removeForceDirectedIgnoredNode: (TrivaGraph*) n;
+- (void) removeForceDirectedNodes;
 
 //from the interface
 - (void) forceDirected: (id) sender;
