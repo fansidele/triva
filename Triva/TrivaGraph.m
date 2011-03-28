@@ -71,7 +71,6 @@
       NSDictionary *compConf = [configuration objectForKey: compositionName];
       if (![compConf isKindOfClass: [NSDictionary class]]) continue;
       if (![compConf count]) continue;
-
       //check if composition already exist
       TrivaComposition *comp = [compositions objectForKey: compositionName];
       if (!comp){
@@ -83,7 +82,6 @@
         [compositions setObject: comp forKey: compositionName];
       }
     }
-
   }
   return self;
 }
@@ -381,11 +379,6 @@
     free(expr_values);
   }
   return ret;
-}
-
-- (void) setBoundingBox: (NSRect) nbb
-{
-  [super setBoundingBox: nbb];
 }
 
 - (NSSet*) connectedNodes;

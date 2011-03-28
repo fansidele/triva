@@ -94,6 +94,7 @@
   }
 }
 
+/*
 - (void) layoutConnectionPointsWith: (double) screenSize
 {
   //pre-requisite is layout bounding box size
@@ -132,6 +133,7 @@
     }
   }
 }
+*/
 
 - (NSPoint) connectionPointForPartner: (TrivaGraph *) p
 {

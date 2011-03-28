@@ -102,7 +102,6 @@ typedef enum {
                             maxValues: (NSDictionary *) maxValues;
 - (void) layoutWithMinValues: (NSDictionary *) minValues
                    maxValues: (NSDictionary *) maxValues;
-- (void) layoutConnectionPointsWith: (double) screenSize;
 - (NSPoint) connectionPointForPartner: (TrivaGraph *) p;
 - (void) mergeValuesDictionary: (NSDictionary *) a
                 intoDictionary: (NSMutableDictionary *) b
