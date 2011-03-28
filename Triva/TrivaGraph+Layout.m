@@ -242,7 +242,6 @@
 - (void) drawLayout
 {
   if (![self visible]) return;
-  [self drawConnectNodes];
 
   //define transformation structure
   NSAffineTransform *transform = [NSAffineTransform transform];
@@ -255,9 +254,6 @@
     [transform translateXBy: -bb.size.width/2 yBy: -bb.size.height/2];
   }
   [transform concat];
-
-  //draw compositions
-  [self drawCompositions];
 
   //draw myself
   int border;
@@ -283,8 +279,15 @@
     [path setLineWidth: border];
     [path stroke];
   }else{
-    [[NSBezierPath bezierPathWithOvalInRect: bb] stroke];
+    NSBezierPath *path = [NSBezierPath bezierPathWithOvalInRect: bb];
+    [[NSColor whiteColor] set];
+    [path fill];
+    [[NSColor blackColor] set];
+    [path stroke];
   }
+
+  //draw compositions
+  [self drawCompositions];
 
   //draw name if I am highlighted
   [self drawHighlighted];

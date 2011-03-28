@@ -75,14 +75,28 @@
   return transform;
 }
 
-- (void)drawTree:(TrivaGraph*)tree
+- (void)drawConnections:(TrivaGraph*)tree
 {
   if ([tree expanded]){
     //recurse
     NSEnumerator *en = [[tree children] objectEnumerator];
     TrivaGraph *child;
     while ((child = [en nextObject])){
-      [self drawTree: child];
+      [self drawConnections: child];
+    }
+  }else{
+    [tree drawConnectNodes];
+  }
+}
+
+- (void)drawNodes:(TrivaGraph*)tree
+{
+  if ([tree expanded]){
+    //recurse
+    NSEnumerator *en = [[tree children] objectEnumerator];
+    TrivaGraph *child;
+    while ((child = [en nextObject])){
+      [self drawNodes: child];
     }
   }else{
     [tree drawLayout];
@@ -94,9 +108,6 @@
   if (currentRoot == nil){
     [self setCurrentRoot: [filter tree]];
   }
- // [currentRoot refreshWithBoundingBox: [self bounds]];
-  [self drawTree: currentRoot];
-
   NSRect tela = [self bounds];
 
   //white fill on view
@@ -114,7 +125,8 @@
 
   NSAffineTransform *transform = [self transform];
   [transform concat];
-  [self drawTree: currentRoot];
+  [self drawConnections: currentRoot];
+  [self drawNodes: currentRoot];
   [transform invert];
   [transform concat];
 }
