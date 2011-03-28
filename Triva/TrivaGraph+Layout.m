@@ -85,6 +85,13 @@
       bb.size.height = s;
     }
   }
+
+  //layout compositions with the new bounding box just calculated
+  NSEnumerator *en = [compositions objectEnumerator];
+  id comp;
+  while ((comp = [en nextObject])){
+    [comp setBoundingBox: bb];
+  }
 }
 
 - (void) layoutConnectionPointsWith: (double) screenSize

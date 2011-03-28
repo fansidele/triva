@@ -117,6 +117,20 @@
 {
   //update current values
   [super timeSelectionChanged];
+
+  //layout my compositions
+  NSEnumerator *en0 = [compositions objectEnumerator];
+  TrivaComposition *comp;
+  while ((comp = [en0 nextObject])){
+    [comp timeSelectionChanged];
+  }
+
+  //recurse to my children
+  NSEnumerator *en1 = [children objectEnumerator];
+  TrivaGraph *child;
+  while ((child = [en1 nextObject])){
+    [child timeSelectionChanged];
+  }
 }
 
 /*
