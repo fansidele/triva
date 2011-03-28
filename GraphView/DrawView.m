@@ -161,10 +161,7 @@
       [t invert];
       NSPoint p2 = [t transformPoint: p];
 
-      NSRect nodebb = [highlighted boundingBox];
-      nodebb.origin.x = p2.x - nodebb.size.width/2;
-      nodebb.origin.y = p2.y - nodebb.size.height/2;
-      [highlighted setBoundingBox: nodebb];
+      [highlighted setLocation: p2];
       [self setNeedsDisplay: YES];
     }
   }

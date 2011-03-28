@@ -260,7 +260,14 @@
 }
 */
 
-
+- (BOOL) pointWithinLocation: (NSPoint) p
+{
+  NSRect myTargetRect;
+  myTargetRect.origin = NSMakePoint ([self location].x - bb.size.width/2,
+                                     [self location].y - bb.size.height/2);
+  myTargetRect.size = bb.size;
+  return NSPointInRect (p, myTargetRect);
+}
 
 /*
  * Search method
@@ -268,8 +275,9 @@
 - (TrivaGraph *) searchWith: (NSPoint) point
                limitToDepth: (int) d
 {
+
   if ([self depth] == d){
-    if (NSPointInRect (point, bb)){
+    if ([self pointWithinLocation: point]){
       return self;
     }
   }else{
@@ -296,7 +304,7 @@
       if (ret) return ret;
     }
   }else{
-    if (NSPointInRect(point, bb)){
+    if ([self pointWithinLocation: point]){
       return self;
     }
   }
@@ -361,17 +369,9 @@
   return ret;
 }
 
-- (NSPoint) centerPoint
-{
-  return NSMakePoint (bb.origin.x + bb.size.width/2,
-                      bb.origin.y + bb.size.height/2);
-}
-
 - (void) setBoundingBox: (NSRect) nbb
 {
   [super setBoundingBox: nbb];
-
-
 }
 
 - (NSSet*) connectedNodes;
@@ -384,14 +384,29 @@
   velocity = NSZeroPoint;
 }
 
+- (void) resetLocation
+{
+  location = NSZeroPoint;
+}
+
 - (void) setVelocity: (NSPoint)v
 {
   velocity = v;
 }
 
+- (void) setLocation: (NSPoint)l
+{
+  location = l;
+}
+
 - (NSPoint) velocity
 {
   return velocity;
+}
+
+- (NSPoint) location
+{
+  return location;
 }
 
 - (void) recursiveResetPositions
@@ -410,6 +425,8 @@
   [super setExpanded: e];
 
   if (e){
+    if ([children count] == 0) return;
+
     //I disappear, my children appear
     [self setVisible: NO];
     [self setChildrenVisible: YES];
@@ -418,9 +435,7 @@
     TrivaGraph *child;
     while ((child = [en nextObject])){
       if (![child positionsAlreadyCalculated]){
-        NSRect bbc = [child boundingBox];
-        bbc.origin = bb.origin;
-        [child setBoundingBox: bbc];
+        [child setLocation: [self location]];
         [child setPositionsAlreadyCalculated: YES];
       }
     }
@@ -429,19 +444,22 @@
     [self setVisible: YES];
     [self setChildrenVisible: NO];
 
+    //find my new location based on children's locations
     NSRect ur = NSZeroRect;
     NSEnumerator *en = [children objectEnumerator];
     TrivaGraph *child;
     while ((child = [en nextObject])){
-      ur = NSUnionRect (ur, [child boundingBox]);
+      NSRect cRect;
+      NSPoint cLoc = [child location];
+      NSRect cBB = [child boundingBox];
+      cRect.origin = NSMakePoint (cLoc.x - cBB.size.width/2,
+                                  cLoc.y - cBB.size.height/2);
+      cRect.size = cBB.size;
+      ur = NSUnionRect (ur, cRect);
     }
     NSPoint nc = NSMakePoint (ur.origin.x+ur.size.width/2,
                               ur.origin.y+ur.size.height/2);
-    NSRect mbb = [self boundingBox];
-    mbb.origin = NSMakePoint (nc.x - mbb.size.width/2,
-                              nc.y - mbb.size.height/2);
-    mbb.size = mbb.size;
-    [self setBoundingBox: mbb];
+    [self setLocation: nc];
   }
 }
 

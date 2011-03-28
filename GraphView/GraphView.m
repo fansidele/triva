@@ -280,8 +280,8 @@
         if ([[c1 name] isEqualToString: [c2 name]]) continue;
 
         //calculating distance between particles
-        NSPoint c1p = [c1 centerPoint];
-        NSPoint c2p = [c2 centerPoint];
+        NSPoint c1p = [c1 location];
+        NSPoint c2p = [c2 location];
         double distance = LMSDistanceBetweenPoints (c1p, c2p);
 
         //coulomb_repulsion (k_e * (q1 * q2 / r*r))
@@ -318,11 +318,11 @@
       velocity = LMSMultiplyPoint (velocity, damping);
       [c1 setVelocity: velocity];
 
-      //set origin of child c1
-      NSRect c1bb = [c1 boundingBox];
-      c1bb.origin = NSAddPoints (c1bb.origin, velocity);
+      //set location of child c1
+      NSPoint c1loc = [c1 location];
+      c1loc = NSAddPoints (c1loc, velocity);
       if (![forceDirectedIgnoredNodes containsObject: c1]){
-        [c1 setBoundingBox: c1bb];
+        [c1 setLocation: c1loc];
       }
 
       energy = NSAddPoints (energy, velocity);

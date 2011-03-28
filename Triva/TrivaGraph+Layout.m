@@ -127,7 +127,7 @@
   if (a){
     ret = NSPointFromString(a);
   }else{
-    ret = [self centerPoint];
+    ret = location;
   }
   NSAffineTransform *t = [NSAffineTransform transform];
   [t translateXBy: bb.origin.x yBy: bb.origin.y];

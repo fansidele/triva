@@ -37,7 +37,8 @@
   NSMutableDictionary *compositions;
   double size;
 
-  NSPoint velocity; //force-directed algo
+  NSPoint location; //current location
+  NSPoint velocity; //current velocity
 
   NSMutableDictionary *connectionPoints; //TrivaGraph->NSPoint(as NSString)
 
@@ -72,11 +73,13 @@
 - (double) evaluateWithValues: (NSDictionary *) values
     withExpr: (NSString *) expr;
 
-- (NSPoint) centerPoint;
 - (NSSet*) connectedNodes;
 - (void) resetVelocity;
+- (void) resetLocation;
 - (void) setVelocity: (NSPoint)v;
+- (void) setLocation: (NSPoint)l;
 - (NSPoint) velocity;
+- (NSPoint) location;
 - (void) recursiveResetPositions;
 - (void) setVisible: (BOOL)v;
 - (void) setChildrenVisible: (BOOL) v; //recursive
