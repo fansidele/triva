@@ -52,13 +52,19 @@
                    maxValues: (NSDictionary*) maxValues
 {
   //layout myself with update my graph values
-  PajeEntityType *type = [container entityType];
-  NSDictionary *conf  = [filter graphConfigurationForContainerType: type];
+  PajeEntityType *entityType = [container entityType];
+  NSDictionary *conf  = [filter graphConfigurationForContainerType: entityType];
   if (conf){
     NSString *sizeConf = [conf objectForKey: @"size"];
     NSString *typeConf = [conf objectForKey: @"type"];
     if (typeConf == nil){
-      typeConf = @"node";
+      type = TRIVA_NODE;
+    }else if ([typeConf isEqualToString: @"node"]){
+      type = TRIVA_NODE;
+    }else if ([typeConf isEqualToString: @"edge"]){
+      type = TRIVA_EDGE;
+    }else if ([typeConf isEqualToString: @"router"]){
+      type = TRIVA_ROUTER;
     }
     if (sizeConf != nil){
       double val = [self evaluateWithValues: values withExpr: sizeConf];
@@ -189,50 +195,104 @@
   return ret;
 }
 
-- (void) drawLayout
+- (void) drawConnectNodes
 {
-  if (![self visible]) return;
-
-  NSEnumerator *en;
-  //draw a line to connected nodes
-
   [[NSColor grayColor] set];
-  en = [connectedNodes objectEnumerator];
+
+  NSEnumerator *en = [connectedNodes objectEnumerator];
   TrivaGraph *partner;
   while ((partner = [en nextObject])){
     if (![partner visible]){
       partner = [partner higherVisibleParent];
     }
-    NSPoint mp = [self centerPoint];
-    NSPoint pp = [partner centerPoint];
+    NSPoint mp = [self location];
+    NSPoint pp = [partner location];
 
     NSBezierPath *path = [NSBezierPath bezierPath];
     [path moveToPoint: mp];
     [path lineToPoint: pp];
     [path stroke];
   }
+}
 
-  //compositions
-  //draw my components
-  en = [compositions objectEnumerator];
-  id comp;
-  while ((comp = [en nextObject])){
-    [comp drawLayout];
-  }
-
-  //draw myself
-  NSBezierPath *border = [NSBezierPath bezierPathWithRect: bb];
+- (void) drawHighlighted
+{
   if ([self highlighted]){
     NSString *str;
     str = [NSString stringWithFormat: @"%@(%@) - %f",
                     name,
                     [container entityType],
                     size];
-    [str drawAtPoint: NSMakePoint (bb.origin.x,
-                                   bb.origin.y+bb.size.height)
+    [str drawAtPoint: NSMakePoint (0, bb.size.height)
       withAttributes: nil];
   }
-  [[NSColor grayColor] set];
-  [border stroke];
+}
+
+- (void) drawCompositions
+{
+  //compositions
+  //draw my components
+  NSEnumerator *en = [compositions objectEnumerator];
+  id comp;
+  while ((comp = [en nextObject])){
+    [comp drawLayout];
+  }
+}
+
+- (void) drawLayout
+{
+  if (![self visible]) return;
+  [self drawConnectNodes];
+
+  //define transformation structure
+  NSAffineTransform *transform = [NSAffineTransform transform];
+  if (type == TRIVA_NODE || type == TRIVA_ROUTER){
+    [transform translateXBy: location.x - bb.size.width/2
+                        yBy: location.y - bb.size.height/2];
+  }else if (type == TRIVA_EDGE){
+    [transform translateXBy: location.x yBy: location.y];
+    [transform rotateByDegrees: 45];
+    [transform translateXBy: -bb.size.width/2 yBy: -bb.size.height/2];
+  }
+  [transform concat];
+
+  //draw compositions
+  [self drawCompositions];
+
+  //draw myself
+  int border;
+  if (type == TRIVA_NODE){
+    [[NSColor blackColor] set];
+    border = 4;
+  }else if (type == TRIVA_EDGE){
+    [[NSColor grayColor] set];
+    border = 2;
+  }else{
+    [[NSColor darkGrayColor] set];
+    border = 1;
+  }
+
+  if (type == TRIVA_NODE || type == TRIVA_EDGE){
+    NSBezierPath *path;
+    path = [NSBezierPath bezierPathWithRect: NSMakeRect(-border/2,
+                                                        -border/2,
+                                                        bb.size.width+border,
+                                                        bb.size.height+border)];
+    [path setLineCapStyle: NSRoundLineCapStyle];
+    [path setLineJoinStyle: NSRoundLineJoinStyle];
+    [path setLineWidth: border];
+    [path stroke];
+  }else{
+    [[NSBezierPath bezierPathWithOvalInRect: bb] stroke];
+  }
+
+  //draw name if I am highlighted
+  [self drawHighlighted];
+
+  //invert transformation structure
+  [transform invert];
+  [transform concat];
+
+  return;
 }
 @end

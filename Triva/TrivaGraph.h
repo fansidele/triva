@@ -31,11 +31,18 @@
 #define ND_coord ND_coord_i
 #endif
 
+typedef enum {
+  TRIVA_NODE,
+  TRIVA_EDGE,
+  TRIVA_ROUTER
+} TrivaGraphType;
+
 @interface TrivaGraph : TrivaTree
 {
   NSMutableSet *connectedNodes;
   NSMutableDictionary *compositions;
   double size;
+  TrivaGraphType type;
 
   NSPoint location; //current location
   NSPoint velocity; //current velocity
