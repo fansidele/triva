@@ -263,27 +263,20 @@
   [transform concat];
 
   //draw myself
-  int border;
   if (type == TRIVA_NODE){
     [[NSColor blackColor] set];
-    border = 4;
   }else if (type == TRIVA_EDGE){
     [[NSColor grayColor] set];
-    border = 2;
   }else{
     [[NSColor darkGrayColor] set];
-    border = 1;
   }
 
   if (type == TRIVA_NODE || type == TRIVA_EDGE){
     NSBezierPath *path;
-    path = [NSBezierPath bezierPathWithRect: NSMakeRect(-border/2,
-                                                        -border/2,
-                                                        bb.size.width+border,
-                                                        bb.size.height+border)];
-    [path setLineCapStyle: NSRoundLineCapStyle];
-    [path setLineJoinStyle: NSRoundLineJoinStyle];
-    [path setLineWidth: border];
+    path = [NSBezierPath bezierPathWithRect:bb];
+    [[NSColor whiteColor] set];
+    [path fill];
+    [[NSColor blackColor] set];
     [path stroke];
   }else{
     NSBezierPath *path = [NSBezierPath bezierPathWithOvalInRect: bb];
