@@ -294,7 +294,9 @@
 
         //hooke_attraction (-k * x)
         double hooke_attraction = 0;
-        if ([c1 isConnectedTo: c2]){
+
+        if ([c1 isConnectedTo: c2] ||
+            [c2 isConnectedTo: c1]){
           hooke_attraction = 1 - ((distance - spring) / spring);
         }
 
