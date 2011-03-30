@@ -68,8 +68,9 @@
     }
     if (sizeConf != nil){
       double val = [self evaluateWithValues: values withExpr: sizeConf];
-      double min = [self evaluateWithValues: minValues withExpr: sizeConf];
+      //double min = [self evaluateWithValues: minValues withExpr: sizeConf];
       double max = [self evaluateWithValues: maxValues withExpr: sizeConf];
+      double min = 0;
       double dif = max - min;
       double multiplier;
       if (dif != 0) {
