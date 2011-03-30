@@ -45,7 +45,6 @@
   BOOL recordMode;
 
   BOOL executeThread;
-  BOOL pauseThread;
   NSThread *thread;
   NSConditionLock *lock;
 
@@ -57,7 +56,8 @@
   NSTextField *chargeLabel;
   NSTextField *dampingLabel;
 }
-- (void) startThread;
+- (void) startForceDirectedThread;
+- (void) stopForceDirectedThread;
 - (void) setRecordMode;
 - (TrivaGraph *) tree;
 - (graph_t *) graphviz;

@@ -37,15 +37,14 @@
   forceDirectedIgnoredNodes = [[NSMutableSet alloc] init];
 
   [self updateLabels: self];
-  [self startThread];
+  [self startForceDirectedThread];
 
   return self;
 }
 
-- (void) startThread
+- (void) startForceDirectedThread
 {
   executeThread = YES;
-  pauseThread = NO;
   lock = [[NSConditionLock alloc] initWithCondition: 0];
   thread = [[NSThread alloc] initWithTarget: self
                                    selector:
@@ -54,6 +53,11 @@
   static int count = 0;
   [thread setName: [NSString stringWithFormat: @"t-%d", count++]];
   [thread start];
+}
+
+- (void) stopForceDirectedThread
+{
+  executeThread = NO;
 }
 
 - (void) dealloc
@@ -252,12 +256,10 @@
 
 - (void) forceDirectedGraph: (id) sender
 {
-  NSLog (@"%s started", __FUNCTION__);
   NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
   double total_energy = 0;
   NSDate *lastViewUpdate = [NSDate distantPast];
   do{ 
-    if (pauseThread) continue;
     double spring = [springSlider floatValue];
     double charge = [chargeSlider floatValue];
     double damping = [dampingSlider floatValue];
@@ -348,7 +350,6 @@
     [p2 release];
     
   }while(executeThread);
-  NSLog (@"%s stopped", __FUNCTION__);
   [pool release];
 }
 
@@ -385,7 +386,11 @@
 
 - (void) forceDirected: (id) sender
 {
-  pauseThread = !pauseThread;
+  if (executeThread){
+    [self stopForceDirectedThread];
+  }else{
+    [self startForceDirectedThread];
+  }
 }
 
 - (void) updateLabels: (id) sender
