@@ -362,7 +362,6 @@
 - (void) removeForceDirectedIgnoredNode: (TrivaGraph*) n
 {
   [forceDirectedIgnoredNodes removeObject: n];
-  NSLog (@"%@", forceDirectedIgnoredNodes);
 }
 
 - (void) addForceDirectedNode: (TrivaGraph*) n
