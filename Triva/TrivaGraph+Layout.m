@@ -196,7 +196,7 @@
   NSEnumerator *en = [children objectEnumerator];
   TrivaGraph *child;
   while ((child = [en nextObject])){
-    NSDictionary *cret = [child graphGlobalMinValues];
+    NSDictionary *cret = [child graphGlobalMaxValues];
     [self mergeValuesDictionary: cret
                  intoDictionary: ret
                usingComparisong: NSOrderedAscending];
