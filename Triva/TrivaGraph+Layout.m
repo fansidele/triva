@@ -205,15 +205,15 @@
   }else{
     [[NSColor lightGrayColor] set];
   }
-  if ([children count]){
-    NSBezierPath *path = [NSBezierPath bezierPath];
-    [path appendBezierPathWithArcWithCenter: NSMakePoint(bb.size.width,
-                                                         bb.size.height)
-                                     radius: 5
-                                 startAngle: 270
-                                   endAngle: 180];
-    [path fill];
-  }
+  // if ([children count]){
+  //   NSBezierPath *path = [NSBezierPath bezierPath];
+  //   [path appendBezierPathWithArcWithCenter: NSMakePoint(bb.size.width,
+  //                                                        bb.size.height)
+  //                                    radius: 5
+  //                                startAngle: 270
+  //                                  endAngle: 180];
+  //   [path fill];
+  // }
 
   [t invert];
   [t concat];
