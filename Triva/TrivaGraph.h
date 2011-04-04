@@ -40,8 +40,6 @@ typedef enum {
 {
   NSMutableSet *connectedNodes;
   NSMutableDictionary *compositions;
-  double size;
-  TrivaGraphType type;
 
   NSPoint location; //current location
   NSPoint velocity; //current velocity
@@ -99,16 +97,9 @@ typedef enum {
 
 @interface TrivaGraph (Layout)
 - (void) recursiveLayout;
-- (void) recursiveLayoutWithMinValues: (NSDictionary *) minValues
-                            maxValues: (NSDictionary *) maxValues;
-- (void) layoutWithMinValues: (NSDictionary *) minValues
-                   maxValues: (NSDictionary *) maxValues;
-- (NSPoint) connectionPointForPartner: (TrivaGraph *) p;
-- (void) mergeValuesDictionary: (NSDictionary *) a
-                intoDictionary: (NSMutableDictionary *) b
-              usingComparisong: (NSComparisonResult) comp;
-- (NSDictionary *) graphGlobalMinValues;
-- (NSDictionary *) graphGlobalMaxValues;
+- (void) recursiveLayout2;
+- (void) layout;
+- (void) drawConnectNodes;
 - (void) drawLayout;
 @end
 

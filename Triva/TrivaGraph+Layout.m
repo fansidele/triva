@@ -22,116 +22,41 @@
   //remove all nodes from force-directed algorithm
   [filter removeForceDirectedNodes];
 
-  //search for min max values considering the whole hierarchical graph
-  NSDictionary *min = [self graphGlobalMinValues];
-  NSDictionary *max = [self graphGlobalMaxValues];
-
   //do the layout
-  [self recursiveLayoutWithMinValues: min maxValues: max];
+  [self recursiveLayout2];
 }
 
-- (void) recursiveLayoutWithMinValues: (NSDictionary *) minValues
-                            maxValues: (NSDictionary *) maxValues
+- (void) recursiveLayout2
 {
   if ([self visible]){
     //I appear, consider me to force-direct my position, layout me
     [filter addForceDirectedNode: self];
-    [self layoutWithMinValues: minValues maxValues: maxValues];
+    [self layout];
   }else{
     //I do not appear, recurse to my children
     NSEnumerator *en = [children objectEnumerator];
     TrivaGraph *child;
     while ((child = [en nextObject])){
-      [child recursiveLayoutWithMinValues: minValues maxValues: maxValues];
+      [child recursiveLayout2];
     }
   }
 }
 
-
-- (void) layoutWithMinValues: (NSDictionary*) minValues
-                   maxValues: (NSDictionary*) maxValues
+- (void) layout
 {
-  //layout myself with update my graph values
-  PajeEntityType *entityType = [container entityType];
-  NSDictionary *conf  = [filter graphConfigurationForContainerType: entityType];
-  if (conf){
-    NSString *sizeConf = [conf objectForKey: @"size"];
-    NSString *typeConf = [conf objectForKey: @"type"];
-    if (typeConf == nil){
-      type = TRIVA_NODE;
-    }else if ([typeConf isEqualToString: @"node"]){
-      type = TRIVA_NODE;
-    }else if ([typeConf isEqualToString: @"edge"]){
-      type = TRIVA_EDGE;
-    }else if ([typeConf isEqualToString: @"router"]){
-      type = TRIVA_ROUTER;
-    }
-    if (sizeConf != nil){
-      if ([self expressionHasVariables: sizeConf]){
-        double val = [self evaluateWithValues: values withExpr: sizeConf];
-        double max = [self evaluateWithValues: maxValues withExpr: sizeConf];
-        double s = val/max * MAX_SIZE;
-
-        size = val;
-        bb.size.width = s;
-        bb.size.height = s;
-      }else{
-        size = 0;
-        bb.size.width = [sizeConf doubleValue];
-        bb.size.height = [sizeConf doubleValue];
-      }
-    }
-  }
-
-  //layout compositions with the new bounding box just calculated
+  //calculate my bounding box based on my compositions
+  NSRect nbb = NSZeroRect;
   NSEnumerator *en = [compositions objectEnumerator];
-  id comp;
-  while ((comp = [en nextObject])){
-    [comp setBoundingBox: bb];
+  TrivaComposition *composition;
+  while ((composition = [en nextObject])){
+    NSRect compbb = [composition bb];
+    nbb.size.width += compbb.size.width;
+    nbb.size.height = fmax (nbb.size.height, compbb.size.height);
   }
+  [self setBoundingBox: nbb];
 }
 
 /*
-- (void) layoutConnectionPointsWith: (double) screenSize
-{
-  //pre-requisite is layout bounding box size
-  [self layoutSizeWith: screenSize];
-
-  //release previous layout definitions
-  [connectionPoints release];
-  connectionPoints = [[NSMutableDictionary alloc] init];
-
-  int n = [connectedNodes count];
-  if (n <= 4){
-    NSEnumerator *en = [connectedNodes objectEnumerator];
-    TrivaGraph *p;
-    double x = bb.size.width/2;
-    double y = 0;
-    while ((p = [en nextObject])){
-      [connectionPoints setObject: 
-                          NSStringFromPoint (NSMakePoint (x, y))
-                           forKey: [p name]];
-      x += bb.size.width/2;
-      if (x > bb.size.width) { x = 0; }
-      y += bb.size.height/2;
-      if (y > bb.size.height) { y = 0; }
-    }
-  }else{
-    NSEnumerator *en = [connectedNodes objectEnumerator];
-    TrivaGraph *p;
-    double x = bb.size.width/2;
-    double y = bb.size.height/2;
-    while ((p = [en nextObject])){
-      [connectionPoints setObject:
-                          NSStringFromPoint(NSMakePoint(x,y))
-                           forKey: [p name]];
-      x += bb.size.width/n;
-      if (x > bb.size.width) { x = bb.size.width/n; }
-    }
-  }
-}
-*/
-
 - (NSPoint) connectionPointForPartner: (TrivaGraph *) p
 {
   NSString *a = [connectionPoints objectForKey: [p name]];
@@ -200,6 +125,7 @@
   }
   return ret;
 }
+*/
 
 - (void) drawConnectNodes
 {
@@ -221,80 +147,60 @@
   }
 }
 
-- (void) drawHighlighted
-{
-  if ([self highlighted]){
-    NSString *str;
-    str = [NSString stringWithFormat: @"%@(%@) - %f",
-                    name,
-                    [container entityType],
-                    size];
-    [str drawAtPoint: NSMakePoint (0, bb.size.height)
-      withAttributes: nil];
-  }
-}
-
 - (void) drawCompositions
 {
-  //compositions
-  //draw my components
   NSEnumerator *en = [compositions objectEnumerator];
-  id comp;
-  while ((comp = [en nextObject])){
-    [comp drawLayout];
-  }
+  TrivaComposition *composition;
+  double composition_origin = 0;
+  while ((composition = [en nextObject])){
+    NSAffineTransform *t = [NSAffineTransform transform];    
+    [t translateXBy: composition_origin yBy: 0];
+    [t concat];
+    [composition drawLayout];
+    [t invert];
+    [t concat];
+    composition_origin += [composition bb].size.width;
+  }  
 }
 
 - (void) drawLayout
 {
   if (![self visible]) return;
 
-  //define transformation structure
-  NSAffineTransform *transform = [NSAffineTransform transform];
-  if (type == TRIVA_NODE || type == TRIVA_ROUTER){
-    [transform translateXBy: location.x - bb.size.width/2
-                        yBy: location.y - bb.size.height/2];
-  }else if (type == TRIVA_EDGE){
-    [transform translateXBy: location.x yBy: location.y];
-    [transform rotateByDegrees: 45];
-    [transform translateXBy: -bb.size.width/2 yBy: -bb.size.height/2];
-  }
-  [transform concat];
+  NSAffineTransform *t = [NSAffineTransform transform];
+  [t translateXBy: location.x - bb.size.width/2
+              yBy: location.y - bb.size.height/2];
+  [t concat];
 
-  //draw myself
-  if (type == TRIVA_NODE){
-    [[NSColor blackColor] set];
-  }else if (type == TRIVA_EDGE){
-    [[NSColor grayColor] set];
-  }else{
-    [[NSColor darkGrayColor] set];
-  }
+  [[NSColor whiteColor] set];
+  [[NSBezierPath bezierPathWithRect:bb] fill];
 
-  if (type == TRIVA_NODE || type == TRIVA_EDGE){
-    NSBezierPath *path;
-    path = [NSBezierPath bezierPathWithRect:bb];
-    [[NSColor whiteColor] set];
-    [path fill];
-    [[NSColor blackColor] set];
-    [path stroke];
-  }else{
-    NSBezierPath *path = [NSBezierPath bezierPathWithOvalInRect: bb];
-    [[NSColor whiteColor] set];
-    [path fill];
-    [[NSColor blackColor] set];
-    [path stroke];
-  }
-
-  //draw compositions
+  //draw my compositions
   [self drawCompositions];
 
-  //draw name if I am highlighted
-  [self drawHighlighted];
+  //draw myself
+  if ([self highlighted]){
+    [[NSColor redColor] set];
+    double m = .05;
+    NSRect x = NSMakeRect (bb.origin.x - bb.size.width*m,
+                           bb.origin.y - bb.size.height*m,
+                           bb.size.width + 2*bb.size.width*m,
+                           bb.size.height + 2*bb.size.height*m);
+    [[NSBezierPath bezierPathWithRect: x] stroke];
+  }else{
+    [[NSColor lightGrayColor] set];
+  }
+  if ([children count]){
+    NSBezierPath *path = [NSBezierPath bezierPath];
+    [path appendBezierPathWithArcWithCenter: NSMakePoint(bb.size.width,
+                                                         bb.size.height)
+                                     radius: 5
+                                 startAngle: 270
+                                   endAngle: 180];
+    [path fill];
+  }
 
-  //invert transformation structure
-  [transform invert];
-  [transform concat];
-
-  return;
+  [t invert];
+  [t concat];
 }
 @end

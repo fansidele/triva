@@ -56,30 +56,24 @@
     isVisible = NO;
 
     //layout myself with update my graph values
-    NSDictionary *configuration;
-    configuration = [filter graphConfigurationForContainerType:
-                              [container entityType]];
-
-    //layout my compositions
-    NSMutableArray *array;
-    NSEnumerator *en;
+    NSDictionary *configuration = [filter graphConfiguration];
+    NSEnumerator *en = [configuration keyEnumerator];
     NSString *compositionName;
-
-    array = [NSMutableArray arrayWithArray: [configuration allKeys]];
-    en = [array objectEnumerator];
     while ((compositionName = [en nextObject])){
       NSDictionary *compConf = [configuration objectForKey: compositionName];
       if (![compConf isKindOfClass: [NSDictionary class]]) continue;
       if (![compConf count]) continue;
       //check if composition already exist
-      TrivaComposition *comp = [compositions objectForKey: compositionName];
-      if (!comp){
+      if (![compositions objectForKey: compositionName]){
+        TrivaComposition *comp;
         comp = [TrivaComposition compositionWithConfiguration:compConf
                                                          name:compositionName
                                                        values:values
                                                          node:self
                                                        filter:filter];
-        [compositions setObject: comp forKey: compositionName];
+        if (comp){
+          [compositions setObject: comp forKey: compositionName];
+        }
       }
     }
   }
