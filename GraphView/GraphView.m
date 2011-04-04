@@ -38,8 +38,69 @@
 
   [self updateLabels: self];
   [self startForceDirectedThread];
-
   return self;
+}
+
+
+- (void) createScaleSliders
+{
+  static BOOL created = NO;
+  if (created) return;
+
+  NSLog (@"==> %@", [tree name]);
+
+  scaleSliders = [[NSMutableDictionary alloc] init];
+  scaleLabels = [[NSMutableDictionary alloc] init];
+  NSEnumerator *en = [[self graphConfiguration] keyEnumerator];
+  NSString *confName;
+  while ((confName = [en nextObject])){
+    NSRect frame = NSMakeRect(0,0,80,16);
+
+    frame.size = [confName sizeWithAttributes: nil];
+    NSTextField *t = [[NSTextField alloc] initWithFrame: frame];
+    [t setStringValue: confName];
+    [t setEditable:NO];
+    [t setBezeled:NO];
+    [t setDrawsBackground:NO];
+    [t setSelectable:NO];
+    [scaleBox addView: t];
+    [scaleBox setMinimumSize: frame.size forView: t];
+    [t release];
+
+    double confTraceMaxSize = [tree sizeForConfigurationName: confName];
+
+    frame = NSMakeRect(0,0,190,16);
+    NSSlider *slider = [[NSSlider alloc] initWithFrame: frame];
+    [slider setMinValue: 0];
+    [slider setMaxValue: MAX_SIZE/confTraceMaxSize];
+    [slider setDoubleValue: 2*MAX_SIZE/confTraceMaxSize];
+    [slider setTarget: self];
+    [slider setAction: @selector(updateScaleSliders:)];
+    [scaleBox addView: slider];
+    [scaleBox setMinimumSize: frame.size forView: slider];
+    [scaleSliders setObject: slider forKey: confName];
+    [slider release];
+
+    frame = NSMakeRect(0,0,50,16);
+    NSTextField *l = [[NSTextField alloc] initWithFrame: frame];
+    [l setStringValue: @"1"];
+    [l setEditable:NO];
+    [l setBezeled:NO];
+    [l setDrawsBackground:NO];
+    [l setSelectable:NO];
+    [scaleBox addView: l];
+    [scaleBox setMinimumSize: frame.size forView: l];
+    [scaleLabels setObject: l forKey: confName];
+    [l release];
+  }
+
+  [scaleBox sizeToFitContent];
+  [mainVBox setMinimumSize: [scaleBox frame].size forView: scaleBox];
+  [[mainVBox window] setContentSize: [mainVBox frame].size];
+
+  [self updateScaleSliders: self];
+
+  created = YES;
 }
 
 - (void) startForceDirectedThread
@@ -208,6 +269,8 @@
   [self interconnectTree: tree
           usingContainer: [self rootInstance]];
   [tree retain];
+
+  [self createScaleSliders];
 /*
   [self initializeGraphviz];
   [tree graphvizCreateNodes];
@@ -415,4 +478,24 @@
   [tree recursiveResetPositions];
   [lock unlock];
 }
+
+- (void) updateScaleSliders: (id) sender
+{
+  NSEnumerator *en = [scaleSliders keyEnumerator];
+  NSString *confName;
+  while ((confName = [en nextObject])){
+    NSSlider *slider = [scaleSliders objectForKey: confName];
+    [[scaleLabels objectForKey: confName] setStringValue: 
+                                            [slider stringValue]];
+  }
+  [tree recursiveLayout3];
+  [view setNeedsDisplay: YES];
+}
+
+- (double) scaleForConfigurationWithName: (NSString *) name
+{
+  if ([scaleSliders count] == 0) return 0;
+  return [[scaleSliders objectForKey: name] doubleValue];
+}
+
 @end

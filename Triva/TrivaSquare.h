@@ -22,7 +22,6 @@
 @interface TrivaSquare : TrivaComposition
 {
   NSString *sizeConf;
-  NSString *scaleConf;
 }
 @end
 

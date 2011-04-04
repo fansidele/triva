@@ -128,6 +128,11 @@
   return [(TrivaFilter*)inputComponent graphConfiguration];
 }
 
+- (double) scaleForConfigurationWithName: (NSString *) name
+{
+  return [(TrivaFilter*)inputComponent scaleForConfigurationWithName: name]; 
+}
+
 - (NSArray*) entityTypesForNodes
 {
   return [(TrivaFilter*)inputComponent entityTypesForNodes];

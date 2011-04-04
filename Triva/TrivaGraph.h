@@ -93,6 +93,7 @@ typedef enum {
 - (void) setPositionsAlreadyCalculated: (BOOL) p;
 - (double) charge;
 - (double) spring: (TrivaGraph *) n;
+- (double) sizeForConfigurationName: (NSString *)compName;
 @end
 
 @interface TrivaGraph (Layout)

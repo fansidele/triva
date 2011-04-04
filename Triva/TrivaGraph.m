@@ -523,4 +523,9 @@
   }
   return ret;
 }
+
+- (double) sizeForConfigurationName: (NSString *)compName
+{
+  return [[compositions objectForKey: compName] evaluateSize];
+}
 @end

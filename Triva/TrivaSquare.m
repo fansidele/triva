@@ -29,14 +29,6 @@
                                  node: obj
                                filter: f];
 
-  //get scale
-  scaleConf = [configuration objectForKey: @"scale"];
-  if (!scaleConf){
-    NSLog (@"%s:%d: no 'scale' configuration for composition %@",
-                        __FUNCTION__, __LINE__, configuration);
-    return nil;
-  }
-
   //get size
   sizeConf = [configuration objectForKey: @"size"];
   if (!sizeConf){
@@ -69,8 +61,8 @@
 - (void) timeSelectionChanged
 {
   double scale, size;
-  scale = [scaleConf doubleValue];
-  size = scale * [node evaluateWithValues: [node values] withExpr: sizeConf];
+  scale = [filter scaleForConfigurationWithName: name];
+  size = scale * [self evaluateSize];
   [self setBoundingBox: NSMakeRect(0, 0, size, size)];
 }
 
@@ -92,12 +84,17 @@
 
 - (NSString *) description
 {
-  double size = [node evaluateWithValues: [node values] withExpr: sizeConf];
+  double size = [self evaluateSize];
   return [NSString stringWithFormat: @"%@: %@=%f", name, sizeConf, size];
 }
 
 - (BOOL) pointInside: (NSPoint)mPoint
 {
   return NSPointInRect(mPoint, bb);
+}
+
+- (double) evaluateSize
+{
+  return [node evaluateWithValues: [node values] withExpr: sizeConf];
 }
 @end

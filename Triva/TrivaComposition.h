@@ -53,6 +53,7 @@
 - (NSRect) bb;
 - (NSString*) name;
 - (BOOL) pointInside: (NSPoint)mPoint;
+- (double) evaluateSize;
 @end
 
 #endif

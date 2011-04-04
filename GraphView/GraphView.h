@@ -55,6 +55,12 @@
   NSTextField *springLabel;
   NSTextField *chargeLabel;
   NSTextField *dampingLabel;
+  id scaleBox;
+  id mainVBox;
+
+  //scale sliders
+  NSMutableDictionary *scaleSliders;
+  NSMutableDictionary *scaleLabels;
 }
 - (void) startForceDirectedThread;
 - (void) stopForceDirectedThread;
@@ -73,6 +79,7 @@
 - (void) forceDirected: (id) sender;
 - (void) updateLabels: (id) sender;
 - (void) resetPositions: (id) sender;
+- (void) updateScaleSliders: (id) sender;
 @end
 
 #endif

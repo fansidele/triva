@@ -172,4 +172,11 @@
                         __FUNCTION__, __LINE__);
   return NO;
 }
+
+- (double) evaluateSize
+{
+  NSLog (@"%s:%d: this method must be implemented in the subclasses",
+                        __FUNCTION__, __LINE__);  
+  return 0;
+}
 @end
