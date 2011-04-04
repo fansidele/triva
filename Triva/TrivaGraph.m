@@ -343,7 +343,7 @@
 }
 
 - (double) evaluateWithValues: (NSDictionary *) vals
-    withExpr: (NSString *) expr
+                     withExpr: (NSString *) expr
 {
   char **expr_names;
   double *expr_values, ret;
@@ -362,16 +362,10 @@
       if (val){
         expr_values[i] = [val doubleValue];
       }else{
-        static BOOL appeared = NO;
-        if (!appeared){
-          NSLog (@"%s:%d Expression (%@) has variables that are "
-            "not present in the aggregated tree (%@). Considering "
-            "that their values is zero. This message appears only once.",
-            __FUNCTION__, __LINE__, expr, vals);
-          appeared = YES;
-        }
-        expr_values[i] = 0;
-
+        evaluator_destroy (f);
+        [[NSException exceptionWithName: @"TrivaGraphEvaluation"
+                                 reason: @"Not enough values"
+                               userInfo: nil] raise];
       }
     }
     ret = evaluator_evaluate (f, count, expr_names, expr_values);
