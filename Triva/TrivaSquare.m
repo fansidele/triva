@@ -37,6 +37,10 @@
     return nil;
   }
 
+  //optional values
+  valuesConf = [[NSArray arrayWithArray:
+                       [configuration objectForKey: @"values"]] retain];
+
   //verify if we can transform size expression in a value
   if ([node expressionHasVariables: sizeConf]){
     NS_DURING
@@ -55,6 +59,7 @@
 
 - (void) dealloc
 {
+  [valuesConf release];
   [super dealloc];
 }
 
@@ -75,6 +80,29 @@
 {
   [[NSColor grayColor] set];
   [[NSBezierPath bezierPathWithRect: bb] stroke];
+
+  double scale, size;
+  scale = [filter scaleForConfigurationWithName: name];
+  size = scale * [self evaluateSize];
+  //drawValues
+  NSEnumerator *en = [valuesConf objectEnumerator];
+  NSString *valueConf;
+  double accum_y = 0;
+  while ((valueConf = [en nextObject])){
+    double value = [node evaluateWithValues: [node values] withExpr: valueConf];
+
+    NSRect vr;
+    vr.size.width = bb.size.width;
+    vr.size.height = value * scale;
+    vr.origin.x = bb.origin.x;
+    vr.origin.y = bb.origin.y + accum_y;
+
+    NSBezierPath *path = [NSBezierPath bezierPath];
+    [path appendBezierPathWithRect: vr];
+    [path fill];
+    [path stroke];
+    accum_y += vr.size.height;
+  }
 }
 
 - (NSRect) bb
