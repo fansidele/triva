@@ -515,4 +515,18 @@
   double ret = [self charge] + [n charge];
   return ret;
 }
+
+- (NSString *) description
+{
+  NSMutableString *ret = [NSMutableString string];
+  [ret appendString: name];
+  [ret appendString: @"\n"];
+  NSEnumerator *en = [compositions objectEnumerator];
+  TrivaComposition *composition;
+  while ((composition = [en nextObject])){
+    [ret appendString: [composition description]];
+    [ret appendString: @"\n"];
+  }
+  return ret;
+}
 @end

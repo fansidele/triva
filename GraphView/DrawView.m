@@ -129,6 +129,14 @@
   [self drawNodes: currentRoot];
   [transform invert];
   [transform concat];
+
+  //write highlighted node information
+  if (highlighted){
+    NSString *str = [highlighted description];
+    NSSize size = [str sizeWithAttributes: nil];
+    [str drawAtPoint: NSMakePoint(0, tela.size.height - size.height)
+      withAttributes: nil];
+  }
 }
 
 - (BOOL)acceptsFirstResponder

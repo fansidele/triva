@@ -165,11 +165,6 @@
   return name;
 }
 
-- (NSString*) description
-{
-  return [NSString stringWithFormat: @"[%@ %@]", [node name], name];
-}
-
 - (BOOL) pointInside: (NSPoint)mPoint
 {
   //must be implemented in the subclasses
