@@ -8,7 +8,7 @@
             width="500" height="300"
             title="Triva - Graph View"
             resizable="yes" closable="yes" visible="no">
-      <vbox halign="expand">
+      <vbox id="mainVBox" halign="expand">
         <view id="view"
               instanceOf="DrawView"
               halign="expand" valign="expand" />
@@ -44,6 +44,7 @@
              action="resetPositions:"
              title="Reset Positions"/>
         </hbox>
+        <hbox id="scaleBox"/>
       </vbox>
     </window>
   </objects>
@@ -57,5 +58,7 @@
     <outlet source="#NSOwner" target="#chargeLabel" key="chargeLabel" />
     <outlet source="#NSOwner" target="#springLabel" key="springLabel" />
     <outlet source="#NSOwner" target="#dampingLabel" key="dampingLabel" />
+    <outlet source="#NSOwner" target="#scaleBox" key="scaleBox" />
+    <outlet source="#NSOwner" target="#mainVBox" key="mainVBox" />
   </connectors>
 </gsmarkup>
