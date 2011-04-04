@@ -418,7 +418,7 @@
 
 - (void) recursiveResetPositions
 {
-  bb.origin = NSZeroPoint;
+  location = NSZeroPoint;
 
   NSEnumerator *en = [children objectEnumerator];
   TrivaGraph *child;
