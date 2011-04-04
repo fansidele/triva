@@ -89,6 +89,7 @@
   NSString *valueConf;
   double accum_y = 0;
   while ((valueConf = [en nextObject])){
+    [[filter colorForIntegratedValueNamed: valueConf] set];
     double value = [node evaluateWithValues: [node values] withExpr: valueConf];
 
     NSRect vr;
