@@ -47,8 +47,6 @@
   static BOOL created = NO;
   if (created) return;
 
-  NSLog (@"==> %@", [tree name]);
-
   scaleSliders = [[NSMutableDictionary alloc] init];
   scaleLabels = [[NSMutableDictionary alloc] init];
   NSEnumerator *en = [[self graphConfiguration] keyEnumerator];
@@ -69,7 +67,7 @@
 
     double confTraceMaxSize = [tree sizeForConfigurationName: confName];
 
-    frame = NSMakeRect(0,0,190,16);
+    frame = NSMakeRect(0,0,80,16);
     NSSlider *slider = [[NSSlider alloc] initWithFrame: frame];
     [slider setMinValue: 0];
     [slider setMaxValue: MAX_SIZE/confTraceMaxSize];
