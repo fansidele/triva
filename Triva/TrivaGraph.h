@@ -93,6 +93,8 @@ typedef enum {
 - (TrivaGraph *) higherVisibleParent;
 - (BOOL) positionsAlreadyCalculated;
 - (void) setPositionsAlreadyCalculated: (BOOL) p;
+- (double) charge;
+- (double) spring: (TrivaGraph *) n;
 @end
 
 @interface TrivaGraph (Layout)

@@ -507,4 +507,18 @@
 {
   posCalculated = p;
 }
+
+- (double) charge
+{
+  //charge = space occupied in view (calculated from time/space trace data)
+  double ret = bb.size.width;
+  return ret;
+}
+
+- (double) spring: (TrivaGraph*) n
+{
+  //spring to a given node = the sum of our charges
+  double ret = [self charge] + [n charge];
+  return ret;
+}
 @end
