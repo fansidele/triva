@@ -289,8 +289,8 @@
         //coulomb_repulsion (k_e * (q1 * q2 / r*r))
         double coulomb_constant = 1;
         double r = distance==0 ? 1 : distance;
-        double q1 = charge;
-        double q2 = charge;
+        double q1 = [c1 charge] * charge;
+        double q2 = [c2 charge] * charge;
         double coulomb_repulsion = (coulomb_constant * (q1*q2)/(r*r));
         if (coulomb_repulsion > 100) coulomb_repulsion = 100;
 
@@ -299,7 +299,15 @@
 
         if ([c1 isConnectedTo: c2] ||
             [c2 isConnectedTo: c1]){
-          hooke_attraction = 1 - ((distance - spring) / spring);
+          //s should be smaller than one 
+          double s = [c1 spring: c2] * spring;
+          if (s < 1) s = 1;
+
+          //hooke_attraction force should be maximum 100
+          hooke_attraction = 1 - ((distance - s) / s);
+          double m = 1;
+          if (hooke_attraction < 0) m = -1;
+          if (fabs(hooke_attraction) > 100) hooke_attraction = 100*m;
         }
 
         //calculating direction of the effects
