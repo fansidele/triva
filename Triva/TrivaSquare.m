@@ -83,7 +83,6 @@
 {
   [[NSColor grayColor] set];
   [[NSBezierPath bezierPathWithRect: bb] stroke];
-  NSSize s = [name sizeWithAttributes: nil];
 }
 
 - (NSRect) bb
