@@ -17,6 +17,7 @@
 #include "TrivaComposition.h"
 #include "TrivaSeparation.h"
 #include "TrivaSquare.h"
+#include "TrivaRhombus.h"
 
 @implementation TrivaComposition
 + (id) compositionWithConfiguration: (NSDictionary*) conf
@@ -46,6 +47,12 @@
 
   if ([type isEqualToString: @"square"]){
     return [[TrivaSquare alloc] initWithConfiguration: conf
+                                                 name: n
+                                               values: values
+                                                 node: obj
+                                               filter: f];
+  }else if ([type isEqualToString: @"rhombus"]){
+    return [[TrivaRhombus alloc] initWithConfiguration: conf
                                                  name: n
                                                values: values
                                                  node: obj

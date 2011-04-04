@@ -7,6 +7,7 @@ Triva_OBJC_FILES = \
 	TrivaComposition.m \
 	TrivaSeparation.m \
 	TrivaSquare.m \
+	TrivaRhombus.m \
 	BasicTree.m \
 	TrivaTree.m \
 	TrivaTreemap.m \
@@ -19,6 +20,7 @@ Triva_HEADER_FILES = TrivaFilter.h \
 	TrivaComposition.h \
 	TrivaSeparation.h \
 	TrivaSquare.h \
+	TrivaRhombus.h \
 	BasicTree.h \
 	TrivaTree.h \
 	TrivaTreemap.h \
