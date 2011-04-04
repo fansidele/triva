@@ -119,7 +119,7 @@
   return self;
 }
 
-- (void) timeSelectionChanged
+- (void) layout
 {
   //must be implemented in the subclasses
   NSLog (@"%s:%d: this method must be implemented in the subclasses",

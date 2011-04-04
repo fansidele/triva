@@ -114,7 +114,7 @@
   NSEnumerator *en0 = [compositions objectEnumerator];
   TrivaComposition *comp;
   while ((comp = [en0 nextObject])){
-    [comp timeSelectionChanged];
+    [comp layout];
   }
 
   //recurse to my children

@@ -43,7 +43,7 @@
                         node: (TrivaGraph*) obj
                       filter: (TrivaFilter*) f;
 
-- (void) timeSelectionChanged;
+- (void) layout;
 - (void) setBoundingBox: (NSRect) rect;
 - (void) drawLayout;
 

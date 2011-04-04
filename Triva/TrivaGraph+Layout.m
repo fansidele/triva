@@ -49,11 +49,26 @@
   NSEnumerator *en = [compositions objectEnumerator];
   TrivaComposition *composition;
   while ((composition = [en nextObject])){
+    [composition layout];
     NSRect compbb = [composition bb];
     nbb.size.width += compbb.size.width;
     nbb.size.height = fmax (nbb.size.height, compbb.size.height);
   }
   [self setBoundingBox: nbb];
+}
+
+- (void) recursiveLayout3
+{
+  if ([self visible]){
+    [self layout];
+  }else{
+     //I do not appear, recurse to my children
+    NSEnumerator *en = [children objectEnumerator];
+    TrivaGraph *child;
+    while ((child = [en nextObject])){
+      [child recursiveLayout3];
+    }   
+  }
 }
 
 /*

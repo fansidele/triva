@@ -99,6 +99,7 @@ typedef enum {
 @interface TrivaGraph (Layout)
 - (void) recursiveLayout;
 - (void) recursiveLayout2;
+- (void) recursiveLayout3;
 - (void) layout;
 - (void) drawConnectNodes;
 - (void) drawLayout;

@@ -49,7 +49,7 @@
       }
     NS_ENDHANDLER
   }
-  [self timeSelectionChanged];
+  [self layout];
   return self;
 }
 
@@ -58,7 +58,7 @@
   [super dealloc];
 }
 
-- (void) timeSelectionChanged
+- (void) layout
 {
   double scale, size;
   scale = [filter scaleForConfigurationWithName: name];
