@@ -67,23 +67,19 @@
       type = TRIVA_ROUTER;
     }
     if (sizeConf != nil){
-      double val = [self evaluateWithValues: values withExpr: sizeConf];
-      //double min = [self evaluateWithValues: minValues withExpr: sizeConf];
-      double max = [self evaluateWithValues: maxValues withExpr: sizeConf];
-      double min = 0;
-      double dif = max - min;
-      double multiplier;
-      if (dif != 0) {
-        multiplier = (val-min)/dif;
-      }else{
-        multiplier = (val-min)/min;
-      }
-      //multiplier = multiplier==0 ? 1 : multiplier;
-      double s = MIN_SIZE + multiplier*(MAX_SIZE-MIN_SIZE);
+      if ([self expressionHasVariables: sizeConf]){
+        double val = [self evaluateWithValues: values withExpr: sizeConf];
+        double max = [self evaluateWithValues: maxValues withExpr: sizeConf];
+        double s = val/max * MAX_SIZE;
 
-      size = val;
-      bb.size.width = s;
-      bb.size.height = s;
+        size = val;
+        bb.size.width = s;
+        bb.size.height = s;
+      }else{
+        size = 0;
+        bb.size.width = [sizeConf doubleValue];
+        bb.size.height = [sizeConf doubleValue];
+      }
     }
   }
 

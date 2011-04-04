@@ -22,7 +22,6 @@
 #include <matheval.h>
 #include <graphviz/gvc.h>
 
-#define MIN_SIZE   0.0
 #define MAX_SIZE   400.0
 
 //for compatibility with some graphviz's
