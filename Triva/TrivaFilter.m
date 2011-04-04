@@ -123,6 +123,11 @@
   return [(TrivaFilter*)inputComponent graphConfigurationForContainerType:type];
 }
 
+- (NSDictionary *) graphConfiguration
+{
+  return [(TrivaFilter*)inputComponent graphConfiguration];
+}
+
 - (NSArray*) entityTypesForNodes
 {
   return [(TrivaFilter*)inputComponent entityTypesForNodes];

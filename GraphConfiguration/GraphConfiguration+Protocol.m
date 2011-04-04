@@ -42,6 +42,15 @@
   return [currentGraphConfiguration objectForKey: [type description]];
 }
 
+- (NSDictionary *) graphConfiguration
+{
+  NSMutableDictionary *ret = [NSMutableDictionary dictionary];
+  [ret addEntriesFromDictionary: currentGraphConfiguration];
+  [ret removeObjectForKey: @"node"];
+  [ret removeObjectForKey: @"edge"];
+  return ret;
+}
+
 - (NSArray*) entityTypesForNodes
 {
   return [currentGraphConfiguration objectForKey: @"node"];
