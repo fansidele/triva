@@ -43,15 +43,10 @@
 
   //verify if we can transform size expression in a value
   if ([node expressionHasVariables: sizeConf]){
-    NS_DURING
-      [node evaluateWithValues: val withExpr: sizeConf];
-    NS_HANDLER
-      if ([[localException name] isEqualToString: @"TrivaGraphEvaluation"]){
-        return nil;
-      }else{
-        [localException raise];
-      }
-    NS_ENDHANDLER
+    double test;
+    if (![node evaluateWithValues: val withExpr: sizeConf evaluated: &test]){
+      return nil;
+    }
   }
   [self layout];
   return self;
@@ -90,7 +85,10 @@
   double accum_y = 0;
   while ((valueConf = [en nextObject])){
     [[filter colorForIntegratedValueNamed: valueConf] set];
-    double value = [node evaluateWithValues: [node values] withExpr: valueConf];
+    double value;
+    [node evaluateWithValues: [node values]
+                    withExpr: valueConf
+                   evaluated: &value];
 
     NSRect vr;
     vr.size.width = bb.size.width;
@@ -124,6 +122,8 @@
 
 - (double) evaluateSize
 {
-  return [node evaluateWithValues: [node values] withExpr: sizeConf];
+  double ret;
+  [node evaluateWithValues: [node values] withExpr: sizeConf evaluated: &ret];
+  return ret;
 }
 @end

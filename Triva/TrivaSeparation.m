@@ -81,15 +81,16 @@
   //clear calculatedValues
   [calculatedValues removeAllObjects];
 
-  //we need the size
-  sepSize = [node evaluateWithValues: timeSliceValues withExpr: size];
+  //we need the siz
+  [node evaluateWithValues: timeSliceValues withExpr: size evaluated: &sepSize];
 
   //get values
   NSEnumerator *en2 = [values objectEnumerator];
   id var;
   double sum = 0;
   while ((var = [en2 nextObject])){
-    double val = [node evaluateWithValues: timeSliceValues withExpr: var];
+    double val;
+    [node evaluateWithValues: timeSliceValues withExpr: var evaluated: &val];
     if (val > 0){
       [calculatedValues setObject: [NSNumber numberWithDouble: val/sepSize]
           forKey: var];

@@ -336,8 +336,9 @@
   return ret;
 }
 
-- (double) evaluateWithValues: (NSDictionary *) vals
-                     withExpr: (NSString *) expr
+- (BOOL) evaluateWithValues: (NSDictionary *) vals
+                   withExpr: (NSString *) expr
+                  evaluated: (double*) output
 {
   char **expr_names;
   double *expr_values, ret;
@@ -357,16 +358,16 @@
         expr_values[i] = [val doubleValue];
       }else{
         evaluator_destroy (f);
-        [[NSException exceptionWithName: @"TrivaGraphEvaluation"
-                                 reason: @"Not enough values"
-                               userInfo: nil] raise];
+        *output = 0;
+        return NO;
       }
     }
     ret = evaluator_evaluate (f, count, expr_names, expr_values);
     evaluator_destroy (f);
     free(expr_values);
   }
-  return ret;
+  *output = ret;
+  return YES;
 }
 
 - (NSSet*) connectedNodes;

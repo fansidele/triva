@@ -74,9 +74,9 @@ typedef enum {
 
 /* dealing with expressions */
 - (BOOL) expressionHasVariables: (NSString*) expr;
-- (double) evaluateWithValues: (NSDictionary *) values
-    withExpr: (NSString *) expr;
-
+- (BOOL) evaluateWithValues: (NSDictionary *) values
+                   withExpr: (NSString *) expr
+                  evaluated: (double*) output;
 - (NSSet*) connectedNodes;
 - (void) resetVelocity;
 - (void) resetLocation;
