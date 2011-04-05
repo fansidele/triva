@@ -187,9 +187,6 @@
               yBy: location.y - bb.size.height/2];
   [t concat];
 
-  [[NSColor whiteColor] set];
-  [[NSBezierPath bezierPathWithRect:bb] fill];
-
   //draw my compositions
   [self drawCompositions];
 
