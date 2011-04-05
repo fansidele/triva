@@ -73,8 +73,11 @@
 
 - (void) drawLayout
 {
+  NSBezierPath *path = [NSBezierPath bezierPathWithRect: bb];
+  [[NSColor whiteColor] set];
+  [path fill];
   [[NSColor grayColor] set];
-  [[NSBezierPath bezierPathWithRect: bb] stroke];
+  [path stroke];
 
   double scale, size;
   scale = [filter scaleForConfigurationWithName: name];
