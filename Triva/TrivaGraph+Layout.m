@@ -144,7 +144,7 @@
 
 - (void) drawConnectNodes
 {
-  [[NSColor grayColor] set];
+  [[[NSColor grayColor] colorWithAlphaComponent: 0.2] set];
 
   NSEnumerator *en = [connectedNodes objectEnumerator];
   TrivaGraph *partner;
