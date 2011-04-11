@@ -22,8 +22,6 @@
 #include <matheval.h>
 #include <graphviz/gvc.h>
 
-#define MAX_SIZE   400.0
-
 //for compatibility with some graphviz's
 //installations (ubuntu's lucid, for example)
 #ifndef ND_coord

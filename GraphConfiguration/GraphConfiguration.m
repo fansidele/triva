@@ -31,11 +31,16 @@
   }
   [self initInterface];
   hideWindow = NO;
+  graph = NULL;
   return self;
 }
 
 - (void) dealloc
 {
+  if (graph){
+    agclose(graph);
+    gvFreeContext(gvc);
+  }
   [colors release];
   [minValues release];
   [maxValues release];
@@ -139,6 +144,18 @@
       hideWindow = NO;
     }else if([key isEqualToString: @"gc_apply"]){
       apply = YES;
+    }else if([key isEqualToString: @"gc_dot"]){
+      FILE *fp = fopen ([value cString], "r");
+      if (fp == NULL){
+        //file not found, launch exception
+        NSException *ex;
+        ex = [NSException exceptionWithName: @"GraphConfigurationDotFileNotFound"
+                   reason: [NSString stringWithFormat: @"file = %@", value]
+                 userInfo: nil];
+        [ex raise];
+      }
+      gvc = gvContext();
+      graph = agread(fp);
     }
   }
 

@@ -8,5 +8,7 @@
               description = "Hide the GraphConfiguration window"; };
     gc_show = { type = bool;
               description = "Show the GraphConfiguration window"; };
+    gc_dot = { type = file;
+              description = "Nodes/Edges positions encoded in Graphviz's dot";};
   };
 }

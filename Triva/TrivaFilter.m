@@ -152,4 +152,19 @@
 {
   return [(TrivaFilter*)inputComponent maxValuesForContainerType:type];
 }
+
+- (BOOL) hasGraphvizLocationFromFile
+{
+  return [(TrivaFilter*)inputComponent hasGraphvizLocationFromFile];
+}
+
+- (NSPoint) graphvizLocationForName: (NSString *)name
+{
+  return [(TrivaFilter*)inputComponent graphvizLocationForName: name];
+}
+
+- (NSSize) graphvizSize
+{
+  return [(TrivaFilter*)inputComponent graphvizSize];
+}
 @end

@@ -25,12 +25,7 @@
 #include <limits.h>
 #include <float.h>
 #include <matheval.h>
-
-//for compatibility with some graphviz's
-//installations (ubuntu's lucid, for example)
-#ifndef ND_coord
-#define ND_coord ND_coord_i
-#endif
+#include <graphviz/gvc.h>
 
 @interface GraphConfiguration : TrivaFilter
 {
@@ -49,6 +44,10 @@
   TrivaWindow *window;
 
   BOOL hideWindow;
+
+  //to get node position from graphviz dot file
+  Agraph_t *graph;
+  GVC_t *gvc;
 }
 /*
  * Called by interface and command-line options to set a new configuration

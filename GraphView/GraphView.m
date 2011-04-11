@@ -19,6 +19,8 @@
 #include <AppKit/AppKit.h>
 #include "GraphView.h"
 
+#define MAX_SIZE 400
+
 @implementation GraphView
 - (id)initWithController:(PajeTraceController *)c
 {
@@ -192,6 +194,18 @@
                                   expanded: NO
                                  container: cont
                                     filter: self];
+
+  if ([self hasGraphvizLocationFromFile]){
+    NSPoint p = [self graphvizLocationForName: [ret name]];
+    NSSize size = [self graphvizSize];
+    if (!NSEqualPoints(p, NSZeroPoint)){
+      NSRect vb = [view bounds];
+      p = NSMakePoint ((p.x/size.width) * vb.size.width,
+                       (p.y/size.height) * vb.size.height);
+      [ret setLocation: p];
+      [ret setPositionsAlreadyCalculated: YES];
+    }
+  }
 
   NSArray *containedTypes;
   containedTypes = [self containedTypesForContainerType: [cont entityType]];

@@ -92,4 +92,40 @@
   }
   return ret;
 }
+
+- (BOOL) hasGraphvizLocationFromFile
+{
+  if (graph) return YES;
+  return NO;
+}
+
+- (NSPoint) graphvizLocationForName: (NSString *)name
+{
+  Agnode_t *node = agfindnode (graph, (char*)[name cString]);
+  NSPoint ret = NSZeroPoint;
+  if (node != NULL){
+    const char *s = agget(node, "pos");
+    if (s == NULL) return ret;
+
+    NSString *str = [NSString stringWithFormat: @"%s", s];
+    NSArray *ar = [str componentsSeparatedByString: @","];
+    if ([ar count] != 2) return ret;
+    ret = NSMakePoint ([[ar objectAtIndex: 0] doubleValue],
+                       [[ar objectAtIndex: 1] doubleValue]);
+  }
+  return ret;
+}
+
+- (NSSize) graphvizSize
+{
+  NSSize ret = NSZeroSize;
+  char *s = agget (graph, "bb");
+  if (s == NULL) return ret;
+  NSArray *ar;
+  ar = [[NSString stringWithFormat: @"%s", s] componentsSeparatedByString: @","];
+  if ([ar count] != 4) return ret;
+  ret = NSMakeSize ([[ar objectAtIndex: 2] doubleValue],
+                    [[ar objectAtIndex: 3] doubleValue]);
+  return ret;
+}
 @end
