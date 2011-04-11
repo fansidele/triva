@@ -127,36 +127,6 @@
   [super dealloc];
 }
 
-- (void) initializeGraphviz
-{
-  NSLog (@"%s", __FUNCTION__);
-  //initialize graphviz
-  gvc = gvContext();
-  graph = agopen ((char *)"graph", AGRAPHSTRICT);
-  agnodeattr (graph, (char*)"label", (char*)"");
-  agraphattr (graph, (char*)"overlap", (char*)"false");
-  agraphattr (graph, (char*)"splines", (char*)"true");
-}
-
-- (void) finalizeGraphviz
-{
-  NSLog (@"%s", __FUNCTION__);
-  if (gvc) {
-    gvFreeLayout (gvc, graph);
-    agclose (graph);
-    gvFreeContext (gvc);
-  }
-}
-
-- (void) layoutGraphviz
-{
-  NSLog (@"%s", __FUNCTION__);
-  if (gvc && graph){
-    gvLayout (gvc, graph, "dot");
-    gvRenderFilename (gvc, graph, "png", "x.png");
-  }
-}
-
 - (TrivaGraph*) tree
 {
   return tree;
@@ -283,14 +253,6 @@
   [tree retain];
 
   [self createScaleSliders];
-/*
-  [self initializeGraphviz];
-  [tree graphvizCreateNodes];
-  [tree graphvizCreateEdges];
-  [self layoutGraphviz];
-  [tree graphvizSetPositions];
-  [self finalizeGraphviz];
-*/
   [tree setVisible: YES];
   [tree setChildrenVisible: NO];
   [view resetCurrentRoot];

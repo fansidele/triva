@@ -66,7 +66,6 @@
 - (void) stopForceDirectedThread;
 - (void) setRecordMode;
 - (TrivaGraph *) tree;
-- (graph_t *) graphviz;
 
 - (void) forceDirectedGraph: (id) sender;
 - (void) addForceDirectedNode: (TrivaGraph*) n;

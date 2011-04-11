@@ -20,13 +20,6 @@
 #include <AppKit/AppKit.h>
 #include <Triva/Triva.h>
 #include <matheval.h>
-#include <graphviz/gvc.h>
-
-//for compatibility with some graphviz's
-//installations (ubuntu's lucid, for example)
-#ifndef ND_coord
-#define ND_coord ND_coord_i
-#endif
 
 typedef enum {
   TRIVA_NODE,
@@ -59,9 +52,6 @@ typedef enum {
            expanded: (BOOL)e
           container: (PajeContainer*)c
              filter: (TrivaFilter*)f;
-//- (void) graphvizCreateNodes;
-//- (void) graphvizCreateEdges;
-//- (void) graphvizSetPositions;
 - (void) connectToNode: (TrivaGraph*) n;
 - (BOOL) isConnectedTo: (TrivaGraph*) c;
 
