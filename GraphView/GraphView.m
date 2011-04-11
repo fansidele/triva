@@ -69,11 +69,13 @@
 
     double confTraceMaxSize = [tree sizeForConfigurationName: confName];
 
+    double max_size = MAX_SIZE/confTraceMaxSize;
+
     frame = NSMakeRect(0,0,80,16);
     NSSlider *slider = [[NSSlider alloc] initWithFrame: frame];
     [slider setMinValue: 0];
-    [slider setMaxValue: MAX_SIZE/confTraceMaxSize];
-    [slider setDoubleValue: 2*MAX_SIZE/confTraceMaxSize];
+    [slider setMaxValue: 10*max_size];
+    [slider setDoubleValue: max_size];
     [slider setTarget: self];
     [slider setAction: @selector(updateScaleSliders:)];
     [scaleBox addView: slider];
