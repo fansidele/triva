@@ -152,11 +152,9 @@
 
 - (void) mouseDragged:(NSEvent *)event
 {
-  NSPoint p;
-  p = [self convertPoint:[event locationInWindow] fromView:nil];
+  NSPoint p = [self convertPoint:[event locationInWindow] fromView:nil];
 
-  if ([event modifierFlags] & NSControlKeyMask){
-    //if something should be done for this event, do it here
+  if (highlighted == nil){
     NSPoint dif;
     dif = NSSubtractPoints (p, move);
     if (NSEqualPoints (translate, NSZeroPoint)){
@@ -168,22 +166,16 @@
  
     [self setNeedsDisplay: YES];
   }else{
+    [filter addForceDirectedIgnoredNode: highlighted];
 
-    if (movingSingleNode){
-      //code for changing the position of a node
-      if (highlighted == nil) {
-        return;
-      }else{
-        [filter addForceDirectedIgnoredNode: highlighted];
-      }
+    NSAffineTransform *t = [self transform];
+    [t invert];
+    NSPoint p2 = [t transformPoint: p];
 
-      NSAffineTransform *t = [self transform];
-      [t invert];
-      NSPoint p2 = [t transformPoint: p];
+    [highlighted setLocation: p2];
+    [self setNeedsDisplay: YES];
 
-      [highlighted setLocation: p2];
-      [self setNeedsDisplay: YES];
-    }
+    movingSingleNode = YES;
   }
   return;
 /*
@@ -255,19 +247,17 @@
 
 - (void) mouseDown: (NSEvent *) event
 {
-  if ([event modifierFlags] & NSControlKeyMask){
-    //if something should be done for this event, do it here
-    move = [self convertPoint:[event locationInWindow] fromView:nil];
-  }else{
-    NSPoint p, p2;
-    p = [self convertPoint:[event locationInWindow] fromView:nil];
+  move = [self convertPoint:[event locationInWindow] fromView:nil];
 
-    NSAffineTransform *t = [self transform];
-    [t invert];
-    p2 = [t transformPoint: p];
+  NSPoint p, p2;
+  p = [self convertPoint:[event locationInWindow] fromView:nil];
 
-    movingSingleNode = YES;
-  }
+  NSAffineTransform *t = [self transform];
+  [t invert];
+  p2 = [t transformPoint: p];
+
+//  movingSingleNode = YES;
+
   return;
 /*
   if ([event modifierFlags] & NSControlKeyMask){
@@ -289,14 +279,17 @@
 
 - (void) mouseUp: (NSEvent *) event
 {
-  if ([event modifierFlags] & NSControlKeyMask){
-    //if something should be done for this event, do it here
-  }
   [super mouseUp: event];
-  if (highlighted){
+  if (highlighted && movingSingleNode){
     [filter removeForceDirectedIgnoredNode: highlighted];
+    movingSingleNode = NO;
+  }else if (highlighted){
+    [(TrivaGraph*)highlighted setExpanded: YES];
+    [highlighted setHighlighted: NO];
+    highlighted = nil;
+    [currentRoot recursiveLayout];
+    [self setNeedsDisplay: YES];
   }
-  movingSingleNode = NO;
   return;
 /*
   return;
@@ -336,56 +329,38 @@
 
 - (void) rightMouseDown: (NSEvent *) event
 {
+  if (highlighted){
+    [(TrivaGraph*)[highlighted parent] setExpanded: NO];
+  }
   [self resetCurrentRoot];
   [self setNeedsDisplay: YES];
 }
 
 - (void)scrollWheel:(NSEvent *)event
 {
-  if ([event modifierFlags] & NSControlKeyMask){
-    //if something should be done for this event, do it here
-
-    NSPoint screenPositionAfter, screenPositionBefore, graphPoint;
-    NSAffineTransform *t;
+  NSPoint screenPositionAfter, screenPositionBefore, graphPoint;
+  NSAffineTransform *t;
  
-    screenPositionBefore = [self convertPoint: [event locationInWindow]
-                                     fromView: nil];
-    t = [self transform];
-    [t invert];
-    graphPoint = [t transformPoint: screenPositionBefore];
+  screenPositionBefore = [self convertPoint: [event locationInWindow]
+                                   fromView: nil];
+  t = [self transform];
+  [t invert];
+  graphPoint = [t transformPoint: screenPositionBefore];
  
-    //updating the ratio considering 10% of its value 
-    if ([event deltaY] > 0){
-      ratio += ratio*0.1;
-    }else{
-      ratio -= ratio*0.1;
-    }
- 
-    t = [self transform];
-    screenPositionAfter = [t transformPoint: graphPoint];
- 
-    //update translate to compensate change on scale
-    translate = NSAddPoints (translate,
-                    NSSubtractPoints (screenPositionBefore, screenPositionAfter));
- 
-    [self setNeedsDisplay: YES];
+  //updating the ratio considering 10% of its value 
+  if ([event deltaY] > 0){
+    ratio += ratio*0.1;
   }else{
-    double delta = [event deltaY];
-    if (highlighted){
-      //if user is scrolling over a highlighted node
-      //change its expansion level
-      if (delta > 0){
-        [(TrivaGraph*)highlighted setExpanded: YES];
-      }else{
-        [(TrivaGraph*)[highlighted parent] setExpanded: NO];
-      }
-      [highlighted setHighlighted: NO];
-      highlighted = nil;
-      [currentRoot recursiveLayout];
-      [self setNeedsDisplay: YES];
-    }
+    ratio -= ratio*0.1;
   }
-  return;
+ 
+  t = [self transform];
+  screenPositionAfter = [t transformPoint: graphPoint];
+ 
+  //update translate to compensate change on scale
+  translate = NSAddPoints (translate,
+                           NSSubtractPoints (screenPositionBefore,
+                                             screenPositionAfter));
 }
 
 - (void) printGraph
