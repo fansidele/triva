@@ -373,8 +373,13 @@
 - (NSString *) description
 {
   NSMutableString *ret = [NSMutableString string];
-  [ret appendString: name];
-  [ret appendString: @"\n"];
+  [ret appendString: [NSString stringWithFormat: @"Name: %@ (%@)",
+                               name, [container entityType]]];
+  if ([compositions count]){
+    [ret appendString: @"\n"];
+  }else{
+    return ret;
+  }
   NSEnumerator *en = [compositions objectEnumerator];
   TrivaComposition *composition;
   while ((composition = [en nextObject])){

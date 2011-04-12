@@ -114,8 +114,31 @@
 
 - (NSString *) description
 {
+  NSMutableString *ret = [NSMutableString string];
   double size = [self evaluateSize];
-  return [NSString stringWithFormat: @"%@: %@=%f", name, sizeConf, size];
+  [ret appendString:
+         [NSString stringWithFormat: @"%@: %@ = %g", name, sizeConf, size]];
+  if ([valuesConf count]){
+    [ret appendString: @"\n"];
+  }else{
+    return ret;
+  }
+
+  NSEnumerator *en = [valuesConf objectEnumerator];
+  NSString *valueConf;
+  while ((valueConf = [en nextObject])){
+    [[filter colorForIntegratedValueNamed: valueConf] set];
+    double value;
+    [node evaluateWithValues: [node values]
+                    withExpr: valueConf
+                   evaluated: &value];
+    if (value == 0) continue;
+    
+    [ret appendString:
+           [NSString stringWithFormat: @"    %@ = %g (%.2g\%)\n",
+                     valueConf, value, 100*value/size]];
+  }
+  return ret;
 }
 
 - (BOOL) pointInside: (NSPoint)mPoint
