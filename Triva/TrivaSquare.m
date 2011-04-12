@@ -115,18 +115,11 @@
 
 - (NSString *) description
 {
-  NSMutableString *ret = [NSMutableString string];
   double size = [self evaluateSize];
-  [ret appendString:
-         [NSString stringWithFormat: @"%@: %@ = %g", name, sizeConf, size]];
-  if ([valuesConf count]){
-    [ret appendString: @"\n"];
-  }else{
-    return ret;
-  }
-
+  NSMutableString *ret2 = [NSMutableString string];
   NSEnumerator *en = [valuesConf objectEnumerator];
   NSString *valueConf;
+  double total = 0;
   while ((valueConf = [en nextObject])){
     [[filter colorForIntegratedValueNamed: valueConf] set];
     double value;
@@ -135,10 +128,22 @@
                    evaluated: &value];
     if (value == 0) continue;
     
-    [ret appendString:
-           [NSString stringWithFormat: @"    %@ = %g (%.2g\%)\n",
+    [ret2 appendString:
+           [NSString stringWithFormat: @"    %@ = %g (%.3g\%)\n",
                      valueConf, value, 100*value/size]];
+    total += value;
   }
+
+  NSMutableString *ret = [NSMutableString string];
+  [ret appendString:
+         [NSString stringWithFormat: @"%@: %@ = %g (%.3g\%)",
+                   name, sizeConf, size, 100*total/size]];
+  if ([valuesConf count]){
+    [ret appendString: @"\n"];
+  }else{
+    return ret;
+  }
+  [ret appendString: ret2];
   return ret;
 }
 
