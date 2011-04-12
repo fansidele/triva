@@ -134,8 +134,29 @@
   if (highlighted){
     NSString *str = [highlighted description];
     NSSize size = [str sizeWithAttributes: nil];
-    [str drawAtPoint: NSMakePoint(0, tela.size.height - size.height)
+    double base = tela.size.height - size.height;
+    [str drawAtPoint: NSMakePoint(0, base)
       withAttributes: nil];
+
+    //draw key
+    NSDictionary *d = [filter spatialIntegrationOfContainer:
+                                [highlighted container]];
+    NSEnumerator *en = [d keyEnumerator];
+    NSString *key;
+    double current_base = base;
+    while ((key = [en nextObject])){
+      NSColor *color = [filter colorForIntegratedValueNamed: key];
+      double value = [[d objectForKey: key] doubleValue];
+      if (value == 0) continue;
+      NSSize s = [key sizeWithAttributes: nil];
+      NSRect r = NSMakeRect(0, current_base - s.height, 10, s.height);
+      [color set];
+      NSRectFill (r);
+      [[NSColor blackColor] set];
+      [key drawAtPoint: NSMakePoint (10, current_base - s.height)
+        withAttributes: nil];
+      current_base -= s.height-1;
+    }
   }
 }
 

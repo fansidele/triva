@@ -52,6 +52,7 @@
 - (BOOL) highlighted;
 - (void) setHighlighted: (BOOL) v;
 - (NSDictionary *) values;
+- (PajeContainer*) container;
 
 - (void) timeSelectionChanged;
 

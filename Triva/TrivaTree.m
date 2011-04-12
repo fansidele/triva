@@ -96,6 +96,11 @@
   return values;
 }
 
+- (PajeContainer*) container
+{
+  return container;
+}
+
 - (void) timeSelectionChanged
 {
   [values release];
