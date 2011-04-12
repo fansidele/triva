@@ -92,6 +92,7 @@
     [node evaluateWithValues: [node values]
                     withExpr: valueConf
                    evaluated: &value];
+    if (value == 0) continue;
 
     NSRect vr;
     vr.size.width = bb.size.width;
