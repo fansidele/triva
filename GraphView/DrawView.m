@@ -131,7 +131,7 @@
   [transform concat];
 
   //write highlighted node information
-  if (highlighted){
+  if (highlighted && !movingSingleNode){
     NSString *str = [highlighted description];
     NSSize size = [str sizeWithAttributes: nil];
     double base = tela.size.height - size.height;
