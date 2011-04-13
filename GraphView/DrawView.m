@@ -326,9 +326,6 @@
 
 - (void) mouseMoved:(NSEvent *)event
 {
-  if ([event modifierFlags] & NSControlKeyMask){
-    //if something should be done for this event, do it here
-  }
   NSPoint p, p2;
   p = [self convertPoint:[event locationInWindow] fromView:nil];
 
@@ -342,10 +339,10 @@
   if (ret){
     highlighted = ret;
     [highlighted setHighlighted: YES];
+    [self setNeedsDisplay: YES];
   }else{
     highlighted = nil;
   }
-  [self setNeedsDisplay: YES];
   return;
 }
 
@@ -383,6 +380,7 @@
   translate = NSAddPoints (translate,
                            NSSubtractPoints (screenPositionBefore,
                                              screenPositionAfter));
+  [self setNeedsDisplay: YES];
 }
 
 - (void) printGraph
