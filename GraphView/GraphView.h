@@ -68,11 +68,10 @@
 - (TrivaGraph *) tree;
 
 - (void) forceDirectedGraph: (id) sender;
-- (void) addForceDirectedNode: (TrivaGraph*) n;
+//aditional methods to complete protocol (used only within this component)
 - (void) addForceDirectedIgnoredNode: (TrivaGraph*) n;
 - (void) removeForceDirectedNode: (TrivaGraph*) n;
 - (void) removeForceDirectedIgnoredNode: (TrivaGraph*) n;
-- (void) removeForceDirectedNodes;
 
 //from the interface
 - (void) forceDirected: (id) sender;

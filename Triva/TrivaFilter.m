@@ -153,6 +153,16 @@
   return [(TrivaFilter*)inputComponent maxValuesForContainerType:type];
 }
 
+- (void) removeForceDirectedNodes
+{
+  return [(TrivaFilter*)inputComponent removeForceDirectedNodes];
+}
+
+- (void) addForceDirectedNode: (id) node
+{
+  return [(TrivaFilter*)inputComponent addForceDirectedNode: node];
+}
+
 - (BOOL) hasGraphvizLocationFromFile
 {
   return [(TrivaFilter*)inputComponent hasGraphvizLocationFromFile];

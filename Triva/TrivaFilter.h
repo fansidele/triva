@@ -64,6 +64,12 @@ typedef enum {Local,Global,Convergence,Arnaud} TrivaScale;
 - (NSArray*) entityTypesForEdges;
 - (NSDictionary *) minValuesForContainerType:(PajeEntityType*) type;
 - (NSDictionary *) maxValuesForContainerType:(PajeEntityType*) type;
+
+//force-directed protocol
+- (void) removeForceDirectedNodes;
+- (void) addForceDirectedNode: (id) node;
+
+//obtaining position information from file protocol
 - (BOOL) hasGraphvizLocationFromFile;
 - (NSPoint) graphvizLocationForName: (NSString *)name;
 - (NSSize) graphvizSize;
