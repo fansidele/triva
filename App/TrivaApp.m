@@ -33,7 +33,6 @@ NS_DURING
   if ([command state] == TrivaHelp){
     [TrivaCommand printOptions: allOptions];
   }else if ([command state] == TrivaCommandConfigured){
-    printf ("%s", [[[command configuration] description] cString]);
 
     //initializing controller with options and input file names
     triva = [TrivaController controllerWithConfiguration:
