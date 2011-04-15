@@ -36,6 +36,24 @@
   [super timeLimitsChanged];
 }
 
+- (void) entitySelectionChanged
+{
+  [timeSyncController timeLimitsChangedWithSender: self];
+  [super entitySelectionChanged];
+}
+
+- (void) containerSelectionChanged
+{
+  [timeSyncController timeLimitsChangedWithSender: self];
+  [super containerSelectionChanged];
+}
+
+- (void) dataChangedForEntityType: (PajeEntityType *) type
+{
+  [timeSyncController timeLimitsChangedWithSender: self];
+  [super dataChangedForEntityType: type];
+}
+
 - (void) setTimeIntervalFrom: (double) start to: (double) end
 {
   double startTime = [[[self startTime] description] doubleValue];
