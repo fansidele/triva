@@ -391,6 +391,6 @@
 
 - (double) sizeForConfigurationName: (NSString *)compName
 {
-  return [[compositions objectForKey: compName] evaluateSize];
+  return sqrt([[compositions objectForKey: compName] evaluateSize]);
 }
 @end

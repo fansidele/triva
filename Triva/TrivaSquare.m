@@ -62,7 +62,7 @@
 {
   double scale, size;
   scale = [filter scaleForConfigurationWithName: name];
-  size = scale * [self evaluateSize];
+  size = scale * sqrt([self evaluateSize]);
   [self setBoundingBox: NSMakeRect(0, 0, size, size)];
 }
 
@@ -81,7 +81,7 @@
 
   double scale, size;
   scale = [filter scaleForConfigurationWithName: name];
-  size = scale * [self evaluateSize];
+  size = sqrt([self evaluateSize]);
   //drawValues
   NSEnumerator *en = [valuesConf objectEnumerator];
   NSString *valueConf;
@@ -96,7 +96,7 @@
 
     NSRect vr;
     vr.size.width = bb.size.width;
-    vr.size.height = value * scale;
+    vr.size.height = (value / size) * scale;
     vr.origin.x = bb.origin.x;
     vr.origin.y = bb.origin.y + accum_y;
 
