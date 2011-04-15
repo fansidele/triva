@@ -18,16 +18,16 @@
 #define __TrivaConfiguration_h
 #include <Foundation/Foundation.h>
 
-typedef enum { TrivaGraphView,
-               TrivaSquarifiedTreemap,
-               TrivaMerge,
-               TrivaComparison,
-               TrivaLinkView,
-               TrivaStat,
-               TrivaCheck,
-               TrivaHierarchy,
-               TrivaList,
-               TrivaInstances } TrivaVisualizationComponent;
+typedef enum { TrivaGraphView = 1,
+               TrivaSquarifiedTreemap = 2,
+               TrivaMerge = 4,
+               TrivaComparison = 8,
+               TrivaLinkView = 16,
+               TrivaStat = 32,
+               TrivaCheck = 64,
+               TrivaHierarchy = 128,
+               TrivaList = 256,
+               TrivaInstances = 512} TrivaVisualizationComponent;
 
 typedef enum { TrivaConfigurationHelp,
                TrivaConfigurationOK } TrivaConfigurationState;

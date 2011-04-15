@@ -21,32 +21,44 @@
 + (id) controllerWithConfiguration: (TrivaConfiguration *) configuration
 {
   TrivaController *triva = nil;
-  //configuring triva
-  if ([configuration visualizationComponent] == TrivaComparison){
-    triva = [[TrivaComparisonController alloc] initWithConfiguration: configuration];
-  }else if ([configuration visualizationComponent] == TrivaMerge){
-    triva = [[TrivaMergeController alloc] initWithConfiguration: configuration];
+  TrivaVisualizationComponent comp = [configuration visualizationComponent];
+
+  if (comp&TrivaComparison){
+    triva = [[TrivaComparisonController alloc]
+              initWithConfiguration: configuration];
+  }else if (comp&TrivaMerge){
+    triva = [[TrivaMergeController alloc]
+              initWithConfiguration: configuration];
   }else{
-    if ([configuration visualizationComponent] == TrivaSquarifiedTreemap) {
-      triva = [[TrivaTreemapController alloc] initWithConfiguration: configuration];
-    }else if ([configuration visualizationComponent] == TrivaGraphView){
-      triva = [[TrivaGraphController alloc] initWithConfiguration: configuration];
-    }else if ([configuration visualizationComponent] == TrivaLinkView){
-      triva = [[TrivaLinkController alloc] initWithConfiguration: configuration];
-    }else if ([configuration visualizationComponent] == TrivaHierarchy) {
-      triva = [[TrivaDotController alloc] initWithConfiguration: configuration];
-    }else if ([configuration visualizationComponent] == TrivaStat) {
-      triva = [[TrivaStatController alloc] initWithConfiguration: configuration];
-    }else if ([configuration visualizationComponent] == TrivaCheck) {
-      triva = [[TrivaCheckController alloc] initWithConfiguration: configuration];
-    }else if ([configuration visualizationComponent] == TrivaList) {
-      triva = [[TrivaListController alloc] initWithConfiguration: configuration];
-    }else if ([configuration visualizationComponent] == TrivaInstances) {
-      triva = [[TrivaInstanceController alloc] initWithConfiguration: configuration];
+    if (comp&TrivaSquarifiedTreemap) {
+      triva = [[TrivaTreemapController alloc]
+                initWithConfiguration: configuration];
+    }else if (comp&TrivaGraphView){
+      triva = [[TrivaGraphController alloc]
+                initWithConfiguration: configuration];
+    }else if (comp&TrivaLinkView){
+      triva = [[TrivaLinkController alloc]
+                initWithConfiguration: configuration];
+    }else if (comp&TrivaHierarchy) {
+      triva = [[TrivaDotController alloc]
+                initWithConfiguration: configuration];
+    }else if (comp&TrivaStat) {
+      triva = [[TrivaStatController alloc]
+                initWithConfiguration: configuration];
+    }else if (comp&TrivaCheck) {
+      triva = [[TrivaCheckController alloc]
+                initWithConfiguration: configuration];
+    }else if (comp&TrivaList) {
+      triva = [[TrivaListController alloc]
+                initWithConfiguration: configuration];
+    }else if (comp&TrivaInstances) {
+      triva = [[TrivaInstanceController alloc]
+                initWithConfiguration: configuration];
     }else{
-      NSException *exception = [NSException exceptionWithName: @"TrivaException"
-                     reason: @"No visualization option activated" userInfo: nil];
-      [exception raise];
+      NSException *ex;
+      [ex = [NSException exceptionWithName: @"TrivaException"
+                                    reason: @"No visualization option activated"
+                                  userInfo: nil] raise];
     }
   }
   return triva;

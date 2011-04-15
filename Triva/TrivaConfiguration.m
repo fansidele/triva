@@ -125,17 +125,20 @@
 
 - (TrivaVisualizationComponent) visualizationComponent
 {
-  if ([conf objectForKey: @"graph"]) return TrivaGraphView;
-  if ([conf objectForKey: @"treemap"]) return TrivaSquarifiedTreemap;
-  if ([conf objectForKey: @"merge"]) return TrivaMerge;
-  if ([conf objectForKey: @"comparison"]) return TrivaComparison;
-  if ([conf objectForKey: @"linkview"]) return TrivaLinkView;
-  if ([conf objectForKey: @"stat"]) return TrivaStat;
-  if ([conf objectForKey: @"check"]) return TrivaCheck;
-  if ([conf objectForKey: @"hierarchy"]) return TrivaHierarchy;
-  if ([conf objectForKey: @"list"]) return TrivaList;
-  if ([conf objectForKey: @"instances"]) return TrivaInstances;
-  return TrivaCheck;
+  TrivaVisualizationComponent comp = 0;
+  NSLog (@"%@", conf);
+  if ([conf objectForKey: @"graph"]) comp |= TrivaGraphView;
+  if ([conf objectForKey: @"treemap"]) comp |= TrivaSquarifiedTreemap;
+  if ([conf objectForKey: @"merge"]) comp |= TrivaMerge;
+  if ([conf objectForKey: @"comparison"]) comp |= TrivaComparison;
+  if ([conf objectForKey: @"linkview"]) comp |= TrivaLinkView;
+  if ([conf objectForKey: @"stat"]) comp |= TrivaStat;
+  if ([conf objectForKey: @"check"]) comp |= TrivaCheck;
+  if ([conf objectForKey: @"hierarchy"]) comp |= TrivaHierarchy;
+  if ([conf objectForKey: @"list"]) comp |= TrivaList;
+  if ([conf objectForKey: @"instances"]) comp |= TrivaInstances;
+  NSLog (@"%s %d", __FUNCTION__, comp);
+  return comp;
 }
 
 - (void) setOption: (NSString*) option withValue: (NSString*) value

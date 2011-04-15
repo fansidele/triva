@@ -25,7 +25,8 @@
 
   int input_size = [[configuration inputFiles] count], i = 0;
   NSArray *g = nil;
-  if ([configuration visualizationComponent] == TrivaSquarifiedTreemap){
+  TrivaVisualizationComponent comp = [configuration visualizationComponent];
+  if (comp&TrivaSquarifiedTreemap){
     g = [@"(  \
       ( FileReader, \
          PajeEventDecoder, \
@@ -37,7 +38,7 @@
          SpatialIntegration, \
          SquarifiedTreemap \
       ) )" propertyList];
-  }else if ([configuration visualizationComponent] == TrivaGraphView){
+  }else if (comp&TrivaGraphView){
     g = [@"(  \
       ( FileReader, \
          PajeEventDecoder, \
@@ -50,9 +51,10 @@
          GraphView \
       ) )" propertyList];
   }else{
-    NSException *exception = [NSException exceptionWithName: @"TrivaException"
-                   reason: @"No visualization option activated for comparing" userInfo: nil];
-    [exception raise];
+    NSException *ex;
+    [ex = [NSException exceptionWithName: @"TrivaException"
+                                  reason: @"No visualization option activated for comparing"
+                                userInfo: nil] raise];
   }
 
   //loading bundles and creating graph sequences
