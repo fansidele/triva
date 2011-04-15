@@ -48,7 +48,6 @@ CONFIG_FILES="
   TypeFilter/GNUmakefile \
   TimeSync/GNUmakefile \
   contrib/GNUmakefile \
-  contrib/SimGridColors/GNUmakefile \
   Difference/GNUmakefile \
   GNUmakefile"
 

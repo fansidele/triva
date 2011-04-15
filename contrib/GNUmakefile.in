@@ -1,6 +1,6 @@
 include $(GNUSTEP_MAKEFILES)/common.make
 
 AGGREGATE_NAME = contrib
-SUBPROJECTS = SimGridColors
+SUBPROJECTS = 
 
 include $(GNUSTEP_MAKEFILES)/aggregate.make
