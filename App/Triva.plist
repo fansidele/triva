@@ -4,8 +4,6 @@
                     description = "Configurable Graph"; };
         treemap = { type = bool;
                     description = "Squarified Treemap"; };
-        merge   = { type = bool;
-                    description = "Merge Trace Files (Experimental)"; };
         comparison = { type = bool;
                        description = "Compare Trace Files (Experimental)"; };
         linkview = { type = bool;

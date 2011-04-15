@@ -48,7 +48,6 @@ CONFIG_FILES="
   TypeFilter/GNUmakefile \
   TimeSync/GNUmakefile \
   contrib/GNUmakefile \
-  Difference/GNUmakefile \
   GNUmakefile"
 
 AC_CONFIG_FILES($CONFIG_FILES)

@@ -27,8 +27,12 @@
     triva = [[TrivaComparisonController alloc]
               initWithConfiguration: configuration];
   }else if (comp&TrivaMerge){
-    triva = [[TrivaMergeController alloc]
-              initWithConfiguration: configuration];
+    NSException *ex;
+    [ex = [NSException exceptionWithName: @"TrivaControllerException"
+                                  reason: @"Merge Controller is deprecated"
+                                    info: nil] raise];
+//    triva = [[TrivaMergeController alloc]
+//              initWithConfiguration: configuration];
   }else{
     if (comp&TrivaSquarifiedTreemap) {
       triva = [[TrivaTreemapController alloc]
