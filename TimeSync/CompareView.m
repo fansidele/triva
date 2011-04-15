@@ -67,7 +67,8 @@
     NSEnumerator *en = [filter enumeratorOfEntitiesTyped: type
                                            inContainer: root
                                               fromTime: 0
-                                                toTime: [filter endTime]
+                                                toTime: 
+                                 [NSDate distantFuture]
                                            minDuration: 0];
     id entity;
     while ((entity = [en nextObject])){
@@ -186,7 +187,8 @@
     NSEnumerator *en = [filter enumeratorOfEntitiesTyped: type
                                            inContainer: root
                                               fromTime: 0
-                                                toTime: [filter endTime]
+                                                toTime: 
+                                 [NSDate distantFuture]
                                            minDuration: 0];
     id entity;
     while ((entity = [en nextObject])){
