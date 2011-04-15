@@ -125,7 +125,7 @@
 
 - (TrivaVisualizationComponent) visualizationComponent
 {
-  TrivaVisualizationComponent comp = TrivaStat;
+  TrivaVisualizationComponent comp = 0;
   if ([conf objectForKey: @"graph"]) comp |= TrivaGraphView;
   if ([conf objectForKey: @"treemap"]) comp |= TrivaSquarifiedTreemap;
   if ([conf objectForKey: @"merge"]) comp |= TrivaMerge;
@@ -136,7 +136,8 @@
   if ([conf objectForKey: @"hierarchy"]) comp |= TrivaHierarchy;
   if ([conf objectForKey: @"list"]) comp |= TrivaList;
   if ([conf objectForKey: @"instances"]) comp |= TrivaInstances;
-  return comp;
+  if (comp == 0) return TrivaStat;
+  else return comp;
 }
 
 - (void) setOption: (NSString*) option withValue: (NSString*) value
