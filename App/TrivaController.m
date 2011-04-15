@@ -30,7 +30,7 @@
     NSException *ex;
     [ex = [NSException exceptionWithName: @"TrivaControllerException"
                                   reason: @"Merge Controller is deprecated"
-                                    info: nil] raise];
+                                userInfo: nil] raise];
 //    triva = [[TrivaMergeController alloc]
 //              initWithConfiguration: configuration];
   }else{
