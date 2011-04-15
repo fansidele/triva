@@ -33,6 +33,7 @@
        StorageController, \
        TimeSync, \
        TimeIntegration, \
+       SpatialIntegration, \
        Difference \
     ) )" propertyList];
 
