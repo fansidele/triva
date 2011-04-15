@@ -118,7 +118,8 @@
 {
   NSPoint p;
   p = [self convertPoint:[event locationInWindow] fromView:nil];
-  TrivaTreemap *node = [currentRoot searchAtPoint: p maxDepth: maxDepthToDraw];
+  TrivaTreemap *node=(TrivaTreemap*)[currentRoot searchAtPoint: p
+                                                      maxDepth: maxDepthToDraw];
   [highlighted setHighlighted: NO];
   [node setHighlighted: YES];
   highlighted = node;
@@ -135,7 +136,8 @@
 {
   NSPoint p;
   p = [self convertPoint:[event locationInWindow] fromView:nil];
-  TrivaTreemap *node = [currentRoot searchAtPoint: p maxDepth:maxDepthToDraw];
+  TrivaTreemap *node =(TrivaTreemap*)[currentRoot searchAtPoint: p
+                                                       maxDepth:maxDepthToDraw];
   [self setCurrentRoot: node];
 }
 

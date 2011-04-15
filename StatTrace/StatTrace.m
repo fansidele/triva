@@ -16,6 +16,8 @@
 */
 #include "StatTrace.h"
 #include <sys/time.h>
+#include <sys/types.h>
+#include <unistd.h>
 
 static double gettime ()
 {

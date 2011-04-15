@@ -17,6 +17,7 @@
 #ifndef __TrivaConfiguration_h
 #define __TrivaConfiguration_h
 #include <Foundation/Foundation.h>
+#include <Triva/Triva.h>
 
 typedef enum { TrivaGraphView = 1,
                TrivaSquarifiedTreemap = 2,
