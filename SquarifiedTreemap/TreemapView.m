@@ -94,6 +94,23 @@
     [[NSColor blackColor] set];
     [p stroke];
   }
+
+  //draw highlighted node information
+  if (highlighted){
+    [highlighted drawHighlighted];
+
+    //draw information
+    NSRect tela = [self bounds];
+    NSString *str = [highlighted description];
+    NSSize size = [str sizeWithAttributes: nil];
+    double base = tela.size.height - size.height-10;
+    NSRect infoRect = NSMakeRect (10, base, size.width, size.height);
+    [[[NSColor whiteColor] colorWithAlphaComponent: 0.8] set];
+    NSRectFill (infoRect);
+    [[NSColor blackColor] set];
+    [str drawAtPoint: NSMakePoint(10, base)
+      withAttributes: nil];
+  }
 }
 
 - (void)scrollWheel:(NSEvent *)event
