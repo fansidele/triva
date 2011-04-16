@@ -406,7 +406,28 @@
 
 - (NSString *) description
 {
-  return name;  
+  NSMutableString *ret = [NSMutableString string];
+  NSString *ident;
+  if (parent == nil){
+    ident = @"Root";
+  }else{
+    ident = name;
+  }
+  [ret appendString: [NSString stringWithFormat: @"%@: %f",
+                               ident, treemapValue]];
+  if (![valueChildren count]){
+    return ret;
+  }else{
+    [ret appendString: @"\n\n"];
+  }
+  TrivaTreemap *child;
+  NSEnumerator *en = [valueChildren objectEnumerator];
+  while ((child = [en nextObject])){
+    [ret appendString: [NSString stringWithFormat: @"%@ = %f\n", 
+                                 [child name],
+                                 [child treemapValue]]];
+  }
+  return ret;  
 }
 
 - (void) testTree
