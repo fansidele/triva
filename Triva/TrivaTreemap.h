@@ -62,6 +62,7 @@
 
 /* draw (called by view, must be after refreshWithBoundingBox) */
 - (void) drawTreemap;
+- (void) drawHighlighted;
 - (void) drawBorder;
 
 /* search-based methods */

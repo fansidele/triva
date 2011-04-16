@@ -307,14 +307,7 @@
   if (depth == 0) return;
 
   if (isHighlighted){
-    NSRect highlightedBorder = NSMakeRect (bb.origin.x + 1,
-                                                       bb.origin.y + 1,
-                                                       bb.size.width - 2,
-                                                       bb.size.height - 2);
-    [[NSColor yellowColor] set];
-    NSBezierPath *path = [NSBezierPath bezierPathWithRect: highlightedBorder];
-    [path setLineWidth: 3];
-    [path stroke];
+    [self drawHighlighted];
   }else{
     if ([valueChildren count] != 0){
       [[NSColor blackColor] set];
@@ -323,6 +316,18 @@
       [path stroke];
     }
   }
+}
+
+- (void) drawHighlighted
+{
+  NSRect highlightedBorder = NSMakeRect (bb.origin.x + 1,
+                                         bb.origin.y + 1,
+                                         bb.size.width - 2,
+                                         bb.size.height - 2);
+  [[NSColor yellowColor] set];
+  NSBezierPath *path = [NSBezierPath bezierPathWithRect: highlightedBorder];
+  [path setLineWidth: 3];
+  [path stroke];
 }
 
 - (void) drawBorder
