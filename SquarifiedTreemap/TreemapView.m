@@ -24,7 +24,7 @@
   maxDepthToDraw = 0;
   highlighted = nil;
   currentRoot = nil;
-  showLevelKey = YES;
+  showLevelKey = NO;
   return self;
 }
 
