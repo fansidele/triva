@@ -33,24 +33,29 @@
   return self;
 }
 
-- (void) hierarchyChanged
+- (void) updateGUI
 {
   [outlineview reloadData];
   [outlineview expandItem:nil expandChildren:YES];
   [scrollview setNeedsDisplay: YES];
   [outlineview setNeedsDisplay: YES];
+}
+
+- (void) hierarchyChanged
+{
+  [self updateGUI];
   [super hierarchyChanged];
 }
 
 - (void) timeSelectionChanged
 {
-  [self hierarchyChanged];
+  [self updateGUI];
   [super timeSelectionChanged];
 }
 
 - (void) timeLimitsChanged
 {
-  [self hierarchyChanged];
+  [self updateGUI];
   [super timeLimitsChanged];
 }
 

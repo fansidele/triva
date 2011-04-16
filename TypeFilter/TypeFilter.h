@@ -46,6 +46,7 @@
 
   regex_t *regex;
 }
+- (void) updateGUI;
 - (void) setNotifications: (BOOL) notifications;
 - (BOOL) isHiddenEntityType: (PajeEntityType *) type;
 - (BOOL) isHiddenValue: (NSString *) value forEntityType: (PajeEntityType*)type;
