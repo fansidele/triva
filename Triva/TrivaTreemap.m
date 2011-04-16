@@ -405,7 +405,11 @@
 }
 
 - (NSString *) description
-{
+{  
+  NSDate *sliceStartTime = [filter selectionStartTime];
+  NSDate *sliceEndTime = [filter selectionEndTime];
+  double tsDuration = [sliceEndTime timeIntervalSinceDate: sliceStartTime];
+
   NSMutableString *ret = [NSMutableString string];
   NSString *ident;
   if (parent == nil){
@@ -414,7 +418,7 @@
     ident = name;
   }
   [ret appendString: [NSString stringWithFormat: @"%@: %f",
-                               ident, treemapValue]];
+                               ident, treemapValue*tsDuration]];
   if (![valueChildren count]){
     return ret;
   }else{
@@ -425,7 +429,7 @@
   while ((child = [en nextObject])){
     [ret appendString: [NSString stringWithFormat: @"%@ = %f\n", 
                                  [child name],
-                                 [child treemapValue]]];
+                                 [child treemapValue]*tsDuration]];
   }
   return ret;  
 }
