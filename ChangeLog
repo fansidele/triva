@@ -1,6 +1,40 @@
-2010-11-30 (try-1.3) Lucas M. Schnorr <schnorr@gmail.com>
-  * New command line parameter scheme
-    * TimeInterval and GraphConfiguration now acts according to command line
+2011-04-19 (try-1.3) Lucas M. Schnorr <schnorr@gmail.com>
+  TimeIntegration & SpatialIntegration
+  * Time/Space integration is splitted in two components
+  * Caching is used to keep results, invalidated when time interval changes
+  * Space integrates time-integrated data
+  Triva Framework
+  * Complete re-write, TrivaTreemap and TrivaGraph classes introduced
+  * Protocol improved with new notifications and queries
+  * TimeSliceDif related classes are deprecated
+  * TrivaConfiguration represents a configuration from the user
+  * TrivaComposition subclasses deprecated, new introduced (Square and Rhombus)
+  GraphConfiguration
+  * Configuration re-written, all configurations are always applied to nodes
+     * node & edge entries still have to be provided
+  * Usable with space-integrated views
+  * New parameter added, --gc_dot <file>, where file is a graphviz with node pos
+  GraphView (--graph)
+  * Hierarchy-capable graph view added, new user interaction:
+     * Left click opens an aggregated node and show all its subnodes
+     * Right click aggregates a given node and its siblings into their father
+  * Force-directed position algorithm, user-controlled with spring/charge/damp
+  * Scale-slider for user graph configurations automatically defined
+  * New interactions (no need to use Crtl to graphical translate and zoom)
+     * Click and Drag translates the graph
+     * Mouse wheel ahead and back make a graphical zoom in and out
+     * Alt+P prints the current view to a EPS file
+  SquarifiedTreemap (--treemap)
+  * Hierarchy perception improved with thicker lines according to tree-depth
+  * Capacity to select a given node to become the new root node
+  * Highlighting works again, showing a summary of time/space integrated values
+  * New Interaction mechanisms
+     * Left click selects a new root node
+     * Right click resets the root node to the default
+  Stat (--stat parameter)
+  * Stats about the Paje trace file
+  Triva
+  * New command line parameter scheme (run Triva --help)
   * New parameter --server <port> makes Triva receive commands through a socket
     * All the command-line options are also available through socket, except
       the opening of new trace files
