@@ -29,7 +29,6 @@ AM_INIT_AUTOMAKE([gnu -Wno-portability])
 
 #components that are always compiled
 CONFIG_FILES="
-  Tupi/GNUmakefile \
   App/GNUmakefile \
   Triva/GNUmakefile \
   GraphConfiguration/GNUmakefile \
