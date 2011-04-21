@@ -12,7 +12,7 @@ make install
 
 # Install Paje
 
-git clone git://paje.git.sourceforge.net/gitroot/paje/paje Paje
+git clone -b schnorr/official/master git://paje.git.sourceforge.net/gitroot/paje/paje Paje
 export LANG=C
 cd Paje
 source /Library/GNUstep//Makefiles/GNUstep.sh
@@ -21,16 +21,14 @@ make install
 
 # Install other Triva's dependencies
 
-port install argp-standalone
 port install libmatheval
 port install graphviz-devel
 port install gsl-devel
 
-# Install Renaissance (modified for Triva)
+# Install Renaissance
 
-wget http://triva.gforge.inria.fr/Renaissance-0.9.1-triva.tar.gz
-tar xfz Renaissance-0.9.1-triva.tar.gz
-cd Renaissance-0.9.1-triva
+svn co http://svn.gna.org/svn/gnustep/libs/renaissance/trunk renaissance
+cd renaissance
 source /Library/GNUstep//Makefiles/GNUstep.sh
 export ADDITIONAL_FLAGS="-isysroot /Developer/SDKs/MacOSX10.6.sdk -mmacosx-version-min=10.6"
 export ADDITIONAL_LDFLAGS="-isysroot /Developer/SDKs/MacOSX10.6.sdk -mmacosx-version-min=10.6"

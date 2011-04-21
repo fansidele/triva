@@ -23,7 +23,7 @@ $ sudo ./InstallGNUstep
 # You might want to put this line in some initialization script 
 $ source /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
 
-# Installing Paje (a dependency for installing Triva)
+# Installing Paje
 
 $ source /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
 $ git clone -b schnorr/official/master git://paje.git.sourceforge.net/gitroot/paje/paje Paje
@@ -33,7 +33,7 @@ $ git checkout
 $ make
 $ make install GNUSTEP_INSTALLATION_DOMAIN=USER
 
-# Installing GNUstep's Renaissance (adapted for Triva)
+# Installing Renaissance
 
 $ svn co http://svn.gna.org/svn/gnustep/libs/renaissance/trunk renaissance
 $ cd renaissance
