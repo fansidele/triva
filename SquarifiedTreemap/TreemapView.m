@@ -120,11 +120,13 @@
     if ([event deltaY] > 0){
       if (maxDepthToDraw < [currentRoot maxDepth]){
         maxDepthToDraw++;
+        [self mouseMoved: event];
         [self setNeedsDisplay: YES];
       }
     }else{
       if (maxDepthToDraw > [currentRoot depth]){
         maxDepthToDraw--;
+        [self mouseMoved: event];
         [self setNeedsDisplay: YES];
       }
     }
