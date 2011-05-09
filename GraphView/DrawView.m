@@ -349,10 +349,10 @@
 {
   if (highlighted){
     [(TrivaGraph*)[highlighted parent] setExpanded: NO];
+    [filter redefineLayout];
+    highlighted = nil;
+    [self setNeedsDisplay: YES];
   }
-  [filter redefineLayout];
-  highlighted = nil;
-  [self setNeedsDisplay: YES];
 }
 
 - (void)scrollWheel:(NSEvent *)event
