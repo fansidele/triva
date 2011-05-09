@@ -301,7 +301,6 @@
 
 - (void) mouseUp: (NSEvent *) event
 {
-  [super mouseUp: event];
   if (highlighted && movingSingleNode){
     [filter removeForceDirectedIgnoredNode: highlighted];
     movingSingleNode = NO;
