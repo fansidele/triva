@@ -398,6 +398,21 @@
   NSLog (@"screenshot written to %@", filename);
 }
 
+- (void) exportDot
+{
+  NSMutableString *ret = [NSMutableString string];
+  [ret appendString: @"strict digraph DotGraphPositions {\n"];
+  [ret appendFormat: @"graph [ bb = \"0,0,%d,%d\" ];\n",
+       (int)[self bounds].size.width, (int)[self bounds].size.height];
+  [ret appendString: [currentRoot exportDot]];
+  [ret appendString: @"}\n"];
+  NSString *filename = [NSString stringWithFormat: @"triva-graph-export.dot"];
+  [[ret dataUsingEncoding: NSUTF8StringEncoding]
+    writeToFile: filename atomically: YES];
+  NSLog (@"screenshot written to %@", filename);
+  NSLog (@"bounds: %@", NSStringFromRect([self bounds]));
+}
+
 - (void)keyDown:(NSEvent *)theEvent
 {
   if (([theEvent modifierFlags] | NSAlternateKeyMask) &&
@@ -406,6 +421,9 @@
   }else if (([theEvent modifierFlags] | NSAlternateKeyMask) &&
     [theEvent keyCode] == 27){ //ALT + R
     [filter setRecordMode];
+  }else if (([theEvent modifierFlags] | NSAlternateKeyMask) &&
+            [theEvent keyCode] == 26){ //ALT + E
+    [self exportDot];
   }
 }
 

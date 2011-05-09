@@ -374,4 +374,18 @@
   }
   [self setExpanded: NO];
 }
+
+/* export */
+- (NSString *) exportDot
+{
+  NSMutableString *ret = [NSMutableString string];
+  NSPoint loc = [self location];
+  [ret appendFormat: @"\"%@\" [pos=\"%d,%d\"];\n", name,(int)loc.x, (int)loc.y];
+  NSEnumerator *en = [children objectEnumerator];
+  TrivaGraph* child;
+  while ((child = [en nextObject])){
+    [ret appendString: [child exportDot]];
+  }
+  return ret;
+}
 @end

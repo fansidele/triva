@@ -82,6 +82,9 @@ typedef enum {
 /* new methods */
 - (void) expand;    //non-recursive (one level only)
 - (void) collapse;  //recursive (all to the bottom)
+
+/* export */
+- (NSString *) exportDot;
 @end
 
 @interface TrivaGraph (Layout)
