@@ -61,13 +61,7 @@
 
 - (void) setExpanded: (BOOL)e
 {
-  if (e){
-//only expand if I have children to show
-    if (![children count]){
-      return;
-    }
-  }
-  
+  //local operation, subclasses should increment logic
   isExpanded = e;
 }
 
