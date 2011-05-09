@@ -132,7 +132,8 @@
 
   //write highlighted node information
   if (highlighted && !movingSingleNode){
-    NSMutableString *str = [highlighted description];
+    NSString *desc = [highlighted description];
+    NSMutableString *str = [NSMutableString stringWithString: desc];
     [str appendString: @"\n"];
     NSSize size = [str sizeWithAttributes: nil];
     double base = tela.size.height - size.height;
