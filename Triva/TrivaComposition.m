@@ -17,6 +17,7 @@
 #include "TrivaComposition.h"
 #include "TrivaSeparation.h"
 #include "TrivaSquare.h"
+#include "TrivaSquareFixed.h"
 #include "TrivaRhombus.h"
 
 @implementation TrivaComposition
@@ -47,6 +48,12 @@
 
   if ([type isEqualToString: @"square"]){
     return [[TrivaSquare alloc] initWithConfiguration: conf
+                                                 name: n
+                                               values: values
+                                                 node: obj
+                                               filter: f];
+  }else if ([type isEqualToString: @"square_fixed"]){
+    return [[TrivaSquareFixed alloc] initWithConfiguration: conf
                                                  name: n
                                                values: values
                                                  node: obj
