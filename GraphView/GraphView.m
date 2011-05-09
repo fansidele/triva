@@ -265,7 +265,7 @@
 {
   [view setNeedsDisplay: YES];
   [tree timeSelectionChanged];
-  [tree recursiveLayout];
+  [self redefineLayout];
   if(recordMode){
     [view printGraph];
   }
@@ -464,7 +464,7 @@
     [[scaleLabels objectForKey: confName] setStringValue: 
                                             [slider stringValue]];
   }
-  [tree recursiveLayout3];
+  [self redefineLayout];
   [view setNeedsDisplay: YES];
 }
 
@@ -474,4 +474,10 @@
   return [[scaleSliders objectForKey: name] doubleValue];
 }
 
+
+- (void) redefineLayout
+{
+  [self removeForceDirectedNodes];
+  [tree recursiveLayout];
+}
 @end

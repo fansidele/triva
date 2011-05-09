@@ -78,6 +78,8 @@
 - (void) updateLabels: (id) sender;
 - (void) resetPositions: (id) sender;
 - (void) updateScaleSliders: (id) sender;
+
+- (void) redefineLayout;
 @end
 
 #endif

@@ -309,7 +309,7 @@
     [(TrivaGraph*)highlighted setExpanded: YES];
     [highlighted setHighlighted: NO];
     highlighted = nil;
-    [currentRoot recursiveLayout];
+    [filter redefineLayout];
     [self setNeedsDisplay: YES];
   }
   return;
@@ -351,7 +351,8 @@
   if (highlighted){
     [(TrivaGraph*)[highlighted parent] setExpanded: NO];
   }
-  [self resetCurrentRoot];
+  [filter redefineLayout];
+  highlighted = nil;
   [self setNeedsDisplay: YES];
 }
 
