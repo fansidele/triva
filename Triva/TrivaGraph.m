@@ -91,17 +91,58 @@
   [connectedNodes addObject: n];
 }
 
-- (BOOL) isConnectedTo: (TrivaGraph*) c
+- (NSMutableSet *) allConnectedNodes
 {
-  //return YES if connected directly to me 
-  //or any of my children
-  if ([connectedNodes containsObject: c]) return YES;
+  NSMutableSet *ret = [NSMutableSet set];
+  if (![children count]) {
+    [ret unionSet: [self connectedNodes]];
+    return ret;
+  }
+
   NSEnumerator *en = [children objectEnumerator];
   TrivaGraph *child;
   while ((child = [en nextObject])){
-    if ([child isConnectedTo: c]) return YES;
+    NSSet *s = [child allConnectedNodes];
+    [ret unionSet: s];
   }
-  return NO;
+  [ret unionSet: [self connectedNodes]];
+  return ret;
+}
+
+- (NSMutableSet *) allNodes
+{
+  NSMutableSet *ret = [NSMutableSet set];
+  NSEnumerator *en = [children objectEnumerator];
+  TrivaGraph *child;
+  while ((child = [en nextObject])){
+    NSSet *s = [child allNodes];
+    [ret unionSet: s];
+  }
+  [ret addObject: self];
+  return ret;
+}
+
+- (BOOL) isConnectedTo: (TrivaGraph*) c
+{
+  if ([[self connectedNodes] containsObject: c] ||
+      [[c connectedNodes] containsObject: self]){
+    return YES;
+  }
+
+  //1 - get all nodes below self and c
+  NSMutableSet *s0 = [self allNodes];
+  NSMutableSet *s1 = [c allNodes];
+
+  //2 - get all connected nodes of self
+  NSMutableSet *allConnectedNodes = [self allConnectedNodes];
+
+  [allConnectedNodes intersectSet: s1];
+
+  if ([allConnectedNodes count]){
+    return YES;
+  }else{
+    return NO;
+  }
 }
 
 - (void) timeSelectionChanged
@@ -274,41 +315,6 @@
   }
 }
 
-- (void) setExpanded: (BOOL) e
-{
-  [super setExpanded: e];
-
-  if (e){
-    if ([children count] == 0) return;
-
-    NSEnumerator *en = [children objectEnumerator];
-    TrivaGraph *child;
-    while ((child = [en nextObject])){
-      if (![child positionsAlreadyCalculated]){
-        [child setLocation: [self location]];
-        [child setPositionsAlreadyCalculated: YES];
-      }
-    }
-  }else{
-    //find my new location based on children's locations
-    NSRect ur = NSZeroRect;
-    NSEnumerator *en = [children objectEnumerator];
-    TrivaGraph *child;
-    while ((child = [en nextObject])){
-      NSRect cRect;
-      NSPoint cLoc = [child location];
-      NSRect cBB = [child boundingBox];
-      cRect.origin = NSMakePoint (cLoc.x - cBB.size.width/2,
-                                  cLoc.y - cBB.size.height/2);
-      cRect.size = cBB.size;
-      ur = NSUnionRect (ur, cRect);
-    }
-    NSPoint nc = NSMakePoint (ur.origin.x+ur.size.width/2,
-                              ur.origin.y+ur.size.height/2);
-    [self setLocation: nc];
-  }
-}
-
 - (BOOL) positionsAlreadyCalculated
 {
   return posCalculated;
@@ -359,16 +365,60 @@
 
 
 /* new methods */
-- (void) expand    //non-recursive (one level only)
+- (NSSet *) allExpanded //get all expanded nodes (those that are visible)
 {
-  [self setExpanded: YES];
+  NSMutableSet *ret = [NSMutableSet set];
+  if ([self expanded] == NO){
+    [ret addObject: self];
+  }else{
+    NSEnumerator *en = [children objectEnumerator];
+    TrivaGraph* child;
+    while ((child = [en nextObject])){
+      [ret unionSet: [child allExpanded]];
+    }
+  }
+  return ret;
 }
 
 
+- (void) expand    //non-recursive (one level only)
+{
+  //only expand if has children
+  if ([children count]){
+    [self setExpanded: YES];
+
+    //define initial position for my children 
+    NSEnumerator *en = [children objectEnumerator];
+    TrivaGraph *child;
+    while ((child = [en nextObject])){
+      if (![child positionsAlreadyCalculated]){
+        [child setLocation: [self location]];
+      }
+      [child setPositionsAlreadyCalculated: YES];
+    }
+  }
+}
+
 - (void) collapse  //recursive (from to the bottom up to self)
 {
+  //find my new location based on children's locations
   NSEnumerator *en = [children objectEnumerator];
+  NSRect ur = NSZeroRect;
   TrivaGraph* child;
+  while ((child = [en nextObject])){
+    NSRect cRect;
+    NSPoint cLoc = [child location];
+    NSRect cBB = [child boundingBox];
+    cRect.origin = NSMakePoint (cLoc.x - cBB.size.width/2,
+                                cLoc.y - cBB.size.height/2);
+    cRect.size = cBB.size;
+    ur = NSUnionRect (ur, cRect);
+  }
+  NSPoint nc = NSMakePoint (ur.origin.x+ur.size.width/2,
+                            ur.origin.y+ur.size.height/2);
+  [self setLocation: nc];
+
+  en = [children objectEnumerator];
   while ((child = [en nextObject])){
     [child collapse];
   }

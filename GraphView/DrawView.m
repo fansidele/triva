@@ -75,31 +75,34 @@
   return transform;
 }
 
-- (void)drawConnections:(TrivaGraph*)tree
+- (void)drawConnections:(TrivaGraph*)tree withPresentNodes: (NSSet*)present
 {
   if ([tree expanded]){
     //recurse
     NSEnumerator *en = [[tree children] objectEnumerator];
     TrivaGraph *child;
     while ((child = [en nextObject])){
-      [self drawConnections: child];
+      [self drawConnections: child withPresentNodes: present];
     }
   }else{
-    [tree drawConnectNodes];
-  }
-}
+    NSEnumerator *en = [present objectEnumerator];
+    TrivaGraph *present;
+    while ((present = [en nextObject])){
+      if (tree == present) continue;
+      BOOL isConnected = [tree isConnectedTo: present];
+      if (isConnected){
+        NSPoint mp = [tree location];
+        NSPoint pp = [present location];
+        [[[NSColor grayColor] colorWithAlphaComponent: 0.2] set];
+        NSBezierPath *path = [NSBezierPath bezierPath];
+        [path moveToPoint: mp];
+        [path lineToPoint: pp];
+        [path stroke];
+      }
 
-- (void)drawNodes:(TrivaGraph*)tree
-{
-  if ([tree expanded]){
-    //recurse
-    NSEnumerator *en = [[tree children] objectEnumerator];
-    TrivaGraph *child;
-    while ((child = [en nextObject])){
-      [self drawNodes: child];
+      //    NSLog (@"tree=%@ present=%@ => %d", [tree name], [present name], isConnected);
     }
-  }else{
-    [tree drawLayout];
+//  [tree drawConnectNodes];
   }
 }
 
@@ -108,6 +111,9 @@
   if (currentRoot == nil){
     [self setCurrentRoot: [filter tree]];
   }
+  //create a set with all nodes present in the visualization
+  NSSet *presentNodes = [currentRoot allExpanded];
+
   NSRect tela = [self bounds];
 
   //white fill on view
@@ -125,8 +131,8 @@
 
   NSAffineTransform *transform = [self transform];
   [transform concat];
-  [self drawConnections: currentRoot];
-  [self drawNodes: currentRoot];
+  [self drawConnections: currentRoot withPresentNodes: presentNodes];
+  [currentRoot recursiveDrawLayout];
   [transform invert];
   [transform concat];
 
@@ -306,7 +312,7 @@
     [filter removeForceDirectedIgnoredNode: highlighted];
     movingSingleNode = NO;
   }else if (highlighted){
-    [(TrivaGraph*)highlighted setExpanded: YES];
+    [(TrivaGraph*)highlighted expand];
     [highlighted setHighlighted: NO];
     highlighted = nil;
     [filter redefineLayout];
@@ -349,7 +355,7 @@
 - (void) rightMouseDown: (NSEvent *) event
 {
   if (highlighted){
-    [(TrivaGraph*)[highlighted parent] setExpanded: NO];
+    [(TrivaGraph*)[highlighted parent] collapse];
     [filter redefineLayout];
     highlighted = nil;
     [self setNeedsDisplay: YES];

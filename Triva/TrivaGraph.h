@@ -80,6 +80,9 @@ typedef enum {
 
 
 /* new methods */
+- (NSMutableSet *) allNodes;
+- (NSMutableSet *) allConnectedNodes;
+- (NSSet *) allExpanded; //get all expanded nodes (those that are visible)
 - (void) expand;    //non-recursive (one level only)
 - (void) collapse;  //recursive (all to the bottom)
 
