@@ -336,8 +336,7 @@
         //hooke_attraction (-k * x)
         double hooke_attraction = 0;
 
-        if ([c1 isConnectedTo: c2] ||
-            [c2 isConnectedTo: c1]){
+        if ([c1 isConnectedTo: c2]){
           //s should be smaller than one 
           double s = [c1 spring: c2] * spring;
           if (s < 1) s = 1;
