@@ -53,7 +53,6 @@
     connectedNodes = [[NSMutableSet alloc] init];
     compositions = [[NSMutableDictionary alloc] init];
     posCalculated = NO;
-    isVisible = NO;
 
     //layout myself with update my graph values
     NSDictionary *configuration = [filter graphConfiguration];
@@ -282,10 +281,6 @@
   if (e){
     if ([children count] == 0) return;
 
-    //I disappear, my children appear
-    [self setVisible: NO];
-    [self setChildrenVisible: YES];
-
     NSEnumerator *en = [children objectEnumerator];
     TrivaGraph *child;
     while ((child = [en nextObject])){
@@ -295,10 +290,6 @@
       }
     }
   }else{
-    //I appear, my children disappear
-    [self setVisible: YES];
-    [self setChildrenVisible: NO];
-
     //find my new location based on children's locations
     NSRect ur = NSZeroRect;
     NSEnumerator *en = [children objectEnumerator];
@@ -315,34 +306,6 @@
     NSPoint nc = NSMakePoint (ur.origin.x+ur.size.width/2,
                               ur.origin.y+ur.size.height/2);
     [self setLocation: nc];
-  }
-}
-
-- (void) setVisible: (BOOL) v
-{
-  isVisible = v;
-}
-
-- (void) setChildrenVisible: (BOOL) v
-{
-  NSEnumerator *en = [children objectEnumerator];
-  TrivaGraph *child;
-  while ((child = [en nextObject])){
-    [child setVisible: v];
-  }
-}
-
-- (BOOL) visible
-{
-  return isVisible;
-}
-
-- (TrivaGraph *) higherVisibleParent
-{
-  if ([(TrivaGraph*)parent visible]){
-    return (TrivaGraph*)parent;
-  }else{
-    return [(TrivaGraph*)parent higherVisibleParent];
   }
 }
 
@@ -392,5 +355,23 @@
 - (double) sizeForConfigurationName: (NSString *)compName
 {
   return sqrt([[compositions objectForKey: compName] evaluateSize]);
+}
+
+
+/* new methods */
+- (void) expand    //non-recursive (one level only)
+{
+  [self setExpanded: YES];
+}
+
+
+- (void) collapse  //recursive (from to the bottom up to self)
+{
+  NSEnumerator *en = [children objectEnumerator];
+  TrivaGraph* child;
+  while ((child = [en nextObject])){
+    [child collapse];
+  }
+  [self setExpanded: NO];
 }
 @end

@@ -38,7 +38,6 @@ typedef enum {
   NSMutableDictionary *connectionPoints; //TrivaGraph->NSPoint(as NSString)
 
   BOOL posCalculated;
-  BOOL isVisible; //define whether it appears or not in the visualization
 }
 + (TrivaGraph*) nodeWithName: (NSString*)n
                       depth: (int)d
@@ -73,23 +72,23 @@ typedef enum {
 - (NSPoint) velocity;
 - (NSPoint) location;
 - (void) recursiveResetPositions;
-- (void) setVisible: (BOOL)v;
-- (void) setChildrenVisible: (BOOL) v; //recursive
-- (BOOL) visible;
-- (TrivaGraph *) higherVisibleParent;
 - (BOOL) positionsAlreadyCalculated;
 - (void) setPositionsAlreadyCalculated: (BOOL) p;
 - (double) charge;
 - (double) spring: (TrivaGraph *) n;
 - (double) sizeForConfigurationName: (NSString *)compName;
+
+
+/* new methods */
+- (void) expand;    //non-recursive (one level only)
+- (void) collapse;  //recursive (all to the bottom)
 @end
 
 @interface TrivaGraph (Layout)
 - (void) recursiveLayout;
-- (void) recursiveLayout2;
-- (void) recursiveLayout3;
 - (void) layout;
-- (void) drawConnectNodes;
+
+- (void) recursiveDrawLayout;
 - (void) drawLayout;
 @end
 

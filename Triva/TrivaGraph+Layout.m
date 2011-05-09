@@ -19,25 +19,15 @@
 @implementation TrivaGraph (Layout)
 - (void) recursiveLayout
 {
-  //remove all nodes from force-directed algorithm
-  [filter removeForceDirectedNodes];
-
-  //do the layout
-  [self recursiveLayout2];
-}
-
-- (void) recursiveLayout2
-{
-  if ([self visible]){
-    //I appear, consider me to force-direct my position, layout me
+  if ([self expanded] == NO){
     [filter addForceDirectedNode: self];
     [self layout];
   }else{
-    //I do not appear, recurse to my children
+    //recurse
     NSEnumerator *en = [children objectEnumerator];
     TrivaGraph *child;
     while ((child = [en nextObject])){
-      [child recursiveLayout2];
+      [child recursiveLayout];
     }
   }
 }
@@ -57,17 +47,17 @@
   [self setBoundingBox: nbb];
 }
 
-- (void) recursiveLayout3
+- (void) recursiveDrawLayout
 {
-  if ([self visible]){
-    [self layout];
+  if ([self expanded] == NO){
+    [self drawLayout];
   }else{
-     //I do not appear, recurse to my children
+    //recurse
     NSEnumerator *en = [children objectEnumerator];
     TrivaGraph *child;
     while ((child = [en nextObject])){
-      [child recursiveLayout3];
-    }   
+      [child recursiveDrawLayout];
+    }
   }
 }
 
@@ -89,8 +79,6 @@
 
 - (void) drawLayout
 {
-  if (![self visible]) return;
-
   NSAffineTransform *t = [NSAffineTransform transform];
   [t translateXBy: location.x - bb.size.width/2
               yBy: location.y - bb.size.height/2];
