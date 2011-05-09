@@ -255,8 +255,6 @@
   [tree retain];
 
   [self createScaleSliders];
-  [tree setVisible: YES];
-  [tree setChildrenVisible: NO];
   [view resetCurrentRoot];
   [self timeSelectionChanged];
 }
