@@ -295,6 +295,11 @@
   [window orderFront: self];
 }
 
+- (void) show: (id) sender
+{
+  [self show];
+}
+
 
 - (void) forceDirectedGraph: (id) sender
 {

@@ -189,6 +189,11 @@
   }
 }
 
+- (void) show: (id) sender
+{
+  [self show];
+}
+
 - (void) resetMinMaxColor
 {
   [minValues removeAllObjects];
