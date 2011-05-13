@@ -26,35 +26,3 @@ int main (int argc, const char **argv){
   [pool release];
   return 0;
 }
-/*
-  
-
-NS_DURING
-  //parsing command line
-  TrivaController *triva = [[TrivaController alloc] init];
-  NSDictionary *allOptions = [triva defaultOptions];
-  TrivaCommand *command;
-  command = [[TrivaCommand alloc] initWithArguments: argv
-                                            andSize: argc
-                                  andDefaultOptions: allOptions];
-  if ([command state] == TrivaHelp){
-    [TrivaCommand printOptions: allOptions];
-  }else if ([command state] == TrivaCommandConfigured){
-
-    //initializing controller with options and input file names
-    triva = [TrivaController controllerWithConfiguration:
-                                                       [command configuration]];
-    //run the application
-    [app run];
-  }
-NS_HANDLER
-  printf ("%s: %s\n\n", [[localException name] cString],
-                    [[localException reason] cString]);
-  exit(1);
-NS_ENDHANDLER
-
-  //that's it
-  [pool release];
-  return 0;
-}
-*/
