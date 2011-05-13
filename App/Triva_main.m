@@ -20,9 +20,10 @@
 
 int main (int argc, const char **argv){
   NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-  [[NSApplication sharedApplication] setDelegate:
-                             [[TrivaApplication alloc] init]];
+  TrivaApplication *application = [[TrivaApplication alloc] init];
+  [[NSApplication sharedApplication] setDelegate: application];
   [NSApp run];
+  [application release];
   [pool release];
   return 0;
 }
