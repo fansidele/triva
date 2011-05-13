@@ -44,6 +44,7 @@
          PajeEventDecoder, \
          PajeSimulator, \
          StorageController, \
+         TypeFilter, \
          TimeSync, \
          TimeIntegration, \
          SpatialIntegration, \
