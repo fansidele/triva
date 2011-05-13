@@ -171,9 +171,6 @@
     NSPoint p = [self graphvizLocationForName: [ret name]];
     NSSize size = [self graphvizSize];
     if (!NSEqualPoints(p, NSZeroPoint)){
-      NSRect vb = [view bounds];
-      p = NSMakePoint ((p.x/size.width) * vb.size.width,
-                       (p.y/size.height) * vb.size.height);
       [ret setLocation: p];
       [ret setPositionsAlreadyCalculated: YES];
     }
