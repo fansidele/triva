@@ -81,6 +81,10 @@
     //set the TimeSync filters' controller
     SEL method = @selector(setTimeSyncController:);
     [[d objectForKey: @"TimeSync"] performSelector: method withObject: compareController];
+    method = @selector(show:);
+    [[d objectForKey: @"TypeFilter"] performSelector: method withObject: self];
+    [[d objectForKey: @"GraphView"] performSelector: method withObject: self];
+    [[d objectForKey: @"GraphConfiguration"] performSelector: method withObject: self];
 
     //add the compare filters to the controller
     [compareFilters addObject: [d objectForKey: @"TimeSync"]];
@@ -104,36 +108,36 @@
   //reading the files
   for (i = 0; i < [files count]; i++){
     id graph = [graphSequences objectAtIndex: i];
-    id r = [self componentWithName:@"FileReader" fromDictionary: graph];
-    id storage = [self componentWithName:@"StorageController" fromDictionary: graph];
+    id r0 = [self componentWithName:@"FileReader" fromDictionary: graph];
+    [r0 setInputFilename: [files objectAtIndex: i]];
+    [self readAllTracefileFrom: r0];
 
-    [r setInputFilename: [files objectAtIndex: i]];
-    [self readAllTracefileFrom: r];
-    [storage timeLimitsChanged];
-
+    id s0 = [self componentWithName:@"StorageController"
+                     fromDictionary: graph];
+    [s0 setSelectionStartTime: [s0 startTime]
+                      endTime: [s0 endTime]];
   }
 
   //check if trace files are good to go
   SEL method = @selector(check);
   [compareController performSelector: method withObject: nil];
 
-  [self setSelectionWindow];
+  //configure the filters that are from Triva
+  for (i = 0; i < [files count]; i++){
+    id graph = [graphSequences objectAtIndex: i];
+    NSEnumerator *en = [graph objectEnumerator];
+    id component;
+    while ((component = [en nextObject])){
+      if ([component isKindOfClass: [TrivaFilter class]]){
+        [component setConfiguration: configuration];
+      }
+    }
+  }
 }
 
 - (void) dealloc
 {
   [graphSequences release];
   [super dealloc];
-}
-
-- (void)setSelectionWindow
-{
-  NSEnumerator *en = [graphSequences objectEnumerator];
-  id graph;
-  while ((graph = [en nextObject])){
-    id storage = [self componentWithName:@"StorageController" fromDictionary: graph];
-    [storage setSelectionStartTime: [storage startTime]
-                          endTime: [storage endTime]];
-  }
 }
 @end

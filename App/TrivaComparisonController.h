@@ -25,7 +25,6 @@
   NSMutableArray *graphSequences;
   id compareController;
 }
-- (void) setSelectionWindow;
 @end
 
 #endif
