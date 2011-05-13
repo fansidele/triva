@@ -45,7 +45,7 @@
               halign="wexpand" valign="wexpand" />
 
         <!-- Time Slice Animation -->
-        <box title="Time Slice Animation" valign="min">
+        <box title="Time Slice Animation" valign="bottom">
           <vbox>
             <hbox>
               <label>Forward (in seconds)</label>
