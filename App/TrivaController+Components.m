@@ -27,7 +27,7 @@
     componentClass = NSClassFromString(className);
     if (componentClass == Nil) {
         NSBundle *bundle;
-        bundle = [self bundleWithName:className];
+        bundle = [[NSApp delegate] bundleWithName:className];
         componentClass = NSClassFromString(className);
         if (componentClass == nil){
           componentClass = [bundle principalClass];

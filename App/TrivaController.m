@@ -78,7 +78,6 @@
 {
   self = [super init];
   components = [NSMutableDictionary dictionary];
-  bundles = [NSMutableDictionary dictionary];
   if ([configuration serverMode]){
     int serverPort = [configuration serverPort];
     server = [[TrivaServerSocket alloc] initWithPort: serverPort];
@@ -151,31 +150,6 @@ NS_ENDHANDLER
       [component show];
     }
   }
-}
-
-- (NSDictionary *) defaultOptions
-{
-  NSMutableDictionary *allOptions = [NSMutableDictionary dictionary];
-
-  //add components options
-  Class cl;
-  id dict;
-  NSArray *ar = [NSArray arrayWithObjects: @"TimeInterval",
-                                           @"GraphConfiguration", nil];
-  NSEnumerator *en = [ar objectEnumerator];
-  id className;
-  while ((className = [en nextObject])){
-    cl = [[self loadTrivaBundleNamed: className] principalClass];
-    dict = [cl defaultOptions];
-    [allOptions addEntriesFromDictionary: dict];
-  }
-
-  //add triva options
-  NSBundle *bundle = [NSBundle mainBundle];
-  NSString *file = [bundle pathForResource: @"Triva" ofType: @"plist"];
-  [allOptions addEntriesFromDictionary:
-                 [NSDictionary dictionaryWithContentsOfFile: file]];
-  return allOptions;
 }
 @end
 

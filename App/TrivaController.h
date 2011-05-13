@@ -22,6 +22,7 @@
 #include <General/PSortedArray.h>
 #include <Triva/Triva.h>
 #include "TrivaServerSocket.h"
+#include "TrivaApplication.h"
 
 @class TrivaComparisonController;
 
@@ -30,7 +31,6 @@
   id reader;
   id encapsulator;
 
-  NSMutableDictionary *bundles;
   NSMutableDictionary *components;
 
   TrivaServerSocket *server;
@@ -38,14 +38,7 @@
 + (id) controllerWithConfiguration: (TrivaConfiguration *) configuration;
 - (id) initWithConfiguration: (TrivaConfiguration *) configuration;
 - (void) initializeWithConfiguration: (TrivaConfiguration *) configuration;
-- (NSDictionary *) defaultOptions;
 - (void) updateWithConfiguration: (TrivaConfiguration *) configuration;
-@end
-
-@interface TrivaController (Bundles)
-- (NSBundle *)loadTrivaBundleNamed:(NSString*)name;
-- (NSBundle *)bundleWithName:(NSString *)name;
-- (NSBundle *)loadBundleNamed:(NSString*)name;
 @end
 
 @interface TrivaController (Chunks)

@@ -32,6 +32,8 @@ typedef enum { TrivaHelp,
             withAttributes: (NSDictionary *) attr;
 + (void) printFirstLevelOptions: (NSDictionary*) dict;
 + (void) printOptions: (NSDictionary*) dictionary;
+- (id) initWithString: (NSString *) str
+    andDefaultOptions: (NSDictionary *) options;
 - (id) initWithArguments: (const char**)argv
                  andSize: (int) argc
        andDefaultOptions: (NSDictionary *) options;

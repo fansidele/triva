@@ -17,6 +17,20 @@
 #include "TrivaCommand.h"
 
 @implementation TrivaCommand
+- (id) initWithString: (NSString *) str
+    andDefaultOptions: (NSDictionary *) options
+{
+  self = [self init];
+  configuration = [[TrivaConfiguration alloc] initWithString: str
+                                           andDefaultOptions: options];
+  if ([configuration configurationState] == TrivaConfigurationHelp){
+    state = TrivaHelp;
+  }else{
+    state = TrivaCommandConfigured;
+  }
+  return self;
+}
+
 - (id) initWithArguments: (const char**)argv
                  andSize: (int) argc
        andDefaultOptions: (NSDictionary *) options
