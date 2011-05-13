@@ -15,7 +15,6 @@
     along with Triva.  If not, see <http://www.gnu.org/licenses/>.
 */
 #include "TrivaApplication.h"
-#include "TrivaCommand.h"
 
 @implementation TrivaApplication
 + (NSDictionary *) defaultOptions
@@ -30,7 +29,7 @@
   NSEnumerator *en = [ar objectEnumerator];
   id className;
   while ((className = [en nextObject])){
-    cl = [[self bundleWithName: className] principalClass];
+    cl = [[TrivaApplication bundleWithName: className] principalClass];
     dict = [cl defaultOptions];
     [options addEntriesFromDictionary: dict];
   }

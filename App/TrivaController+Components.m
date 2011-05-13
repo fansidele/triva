@@ -27,7 +27,7 @@
     componentClass = NSClassFromString(className);
     if (componentClass == Nil) {
         NSBundle *bundle;
-        bundle = [[NSApp delegate] bundleWithName:className];
+        bundle = [TrivaApplication bundleWithName:className];
         componentClass = NSClassFromString(className);
         if (componentClass == nil){
           componentClass = [bundle principalClass];

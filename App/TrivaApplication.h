@@ -18,6 +18,7 @@
 #define TrivaApplication_h_
 
 #include <AppKit/AppKit.h>
+#include "TrivaCommand.h"
 
 @interface TrivaApplication : NSObject
 @end
