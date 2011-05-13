@@ -63,9 +63,11 @@ NS_DURING
     [TrivaCommand printOptions: defaultOptions];
     [NSApp terminate: self];
   }else if ([command state] == TrivaCommandConfigured){
+    [TrivaController controllerWithConfiguration: [command configuration]];
   }else{
     [NSApp terminate: self];
   }
+  [command release];
  NS_HANDLER
    printf ("\n%s: %s\n\n", [[localException name] cString],
                      [[localException reason] cString]);
