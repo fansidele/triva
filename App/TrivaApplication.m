@@ -51,12 +51,14 @@
 {
 NS_DURING
   NSDictionary *defaultOptions = [TrivaApplication defaultOptions];
-  NSString *line = [[[NSProcessInfo processInfo] arguments] 
-    componentsJoinedByString:@" "];
+  NSMutableArray *arguments = [NSMutableArray arrayWithArray:
+                              [[NSProcessInfo processInfo] arguments]];
+  [arguments removeObjectAtIndex: 0];
+  NSString *line = [arguments componentsJoinedByString:@" "];
 
-  TrivaCommand *command;
-  command = [[TrivaCommand alloc] initWithString: line
-                               andDefaultOptions: defaultOptions];
+  TrivaCommand *command = [[TrivaCommand alloc] initWithString: line
+                                             andDefaultOptions: defaultOptions];
+
   if ([command state] == TrivaHelp){
     [TrivaCommand printOptions: defaultOptions];
     [NSApp terminate: self];
