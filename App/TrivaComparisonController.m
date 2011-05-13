@@ -21,7 +21,7 @@
 {
   self = [super initWithConfiguration: configuration];
 
-  graphSequences = [NSMutableArray array];
+  graphSequences = [[NSMutableArray alloc] init];
 
   int input_size = [[configuration inputFiles] count], i = 0;
   NSArray *g = nil;
@@ -59,9 +59,10 @@
 
   //loading bundles and creating graph sequences
   for (i = 0; i < input_size; i++){ 
-    NSMutableDictionary *d = [NSMutableDictionary dictionary];
+    NSMutableDictionary *d = [[NSMutableDictionary alloc] init];
     [self addComponentSequences: g withDictionary: d];
     [graphSequences addObject: d];
+    [d release];
   }
 
   //create the TimeSyncController
@@ -117,6 +118,12 @@
   [compareController performSelector: method withObject: nil];
 
   [self setSelectionWindow];
+}
+
+- (void) dealloc
+{
+  [graphSequences release];
+  [super dealloc];
 }
 
 - (void)setSelectionWindow
