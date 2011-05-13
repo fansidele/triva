@@ -16,11 +16,20 @@
 */
 #include "TrivaController.h"
 #include "TrivaCommand.h"
+#include "TrivaApplication.h"
 
 int main (int argc, const char **argv){
-  //appkit init
-  NSApplication *app = [NSApplication sharedApplication];
   NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+  [[NSApplication sharedApplication] setDelegate:
+                             [[TrivaApplication alloc] init]];
+  [NSApp run];
+  [pool release];
+  return 0;
+}
+/*
+  //appkit init
+  NSApplication *app = [
+  
 
 NS_DURING
   //parsing command line
@@ -50,3 +59,4 @@ NS_ENDHANDLER
   [pool release];
   return 0;
 }
+*/
