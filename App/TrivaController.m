@@ -119,11 +119,12 @@ NS_ENDHANDLER
 {
 NS_DURING
   NSArray *files = [configuration inputFiles];
-  NSLog (@"Tracefile (%@). Reading.... please wait\n", files);
+  NSString *file = [files objectAtIndex: 0];
+  NSLog (@"Tracefile (%@). Reading.... please wait\n", file);
   //reading only the first file by default (subclasses
   //should override this if necessary)
   reader = [self componentWithName:@"FileReader" fromDictionary: components];
-  [reader setInputFilename: [files objectAtIndex: 0]];
+  [reader setInputFilename: file];
   [self readAllTracefileFrom: reader];
   encapsulator = [self componentWithName:@"StorageController" fromDictionary: components];
   [encapsulator timeLimitsChanged];
