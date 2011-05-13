@@ -27,8 +27,6 @@ int main (int argc, const char **argv){
   return 0;
 }
 /*
-  //appkit init
-  NSApplication *app = [
   
 
 NS_DURING

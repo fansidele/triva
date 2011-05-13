@@ -3,7 +3,7 @@ include $(GNUSTEP_MAKEFILES)/common.make
 APP_NAME = Triva
 
 Triva_OBJC_FILES = \
-	TrivaApp.m \
+	Triva_main.m \
 	TrivaApplication.m \
 	TrivaApplication+Bundles.m \
 	TrivaCommand.m \
