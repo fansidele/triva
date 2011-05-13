@@ -43,6 +43,7 @@
   TrivaWindow *window;
 
   BOOL recordMode;
+  BOOL slidersCreated;
 
   BOOL executeThread;
   NSThread *thread;

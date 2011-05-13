@@ -37,6 +37,7 @@
   recordMode = NO;
   forceDirectedNodes = [[NSMutableSet alloc] init];
   forceDirectedIgnoredNodes = [[NSMutableSet alloc] init];
+  slidersCreated = NO;
 
   [self updateLabels: self];
   [self startForceDirectedThread];
@@ -46,8 +47,7 @@
 
 - (void) createScaleSliders
 {
-  static BOOL created = NO;
-  if (created) return;
+  if (slidersCreated) return;
 
   scaleSliders = [[NSMutableDictionary alloc] init];
   scaleLabels = [[NSMutableDictionary alloc] init];
@@ -102,7 +102,7 @@
 
   [self updateScaleSliders: self];
 
-  created = YES;
+  slidersCreated = YES;
 }
 
 - (void) startForceDirectedThread
