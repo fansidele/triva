@@ -71,13 +71,14 @@
 - (void) dealloc
 {
   [server release];
+  [components release];
   [super dealloc];
 }
 
 - (id) initWithConfiguration: (TrivaConfiguration *) configuration
 {
   self = [super init];
-  components = [NSMutableDictionary dictionary];
+  components = [[NSMutableDictionary alloc] init];
   if ([configuration serverMode]){
     int serverPort = [configuration serverPort];
     server = [[TrivaServerSocket alloc] initWithPort: serverPort];
