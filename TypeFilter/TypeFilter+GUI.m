@@ -74,36 +74,65 @@
 
 - (void) regularExpression: (id) sender
 {
+  //we have a valid regular expression and user press enter
   if (selectedType != nil){
-    NSArray *array;
+    NSEnumerator *en;
     if ([super isContainerEntityType: selectedType]){
-      NSEnumerator *en = [super enumeratorOfContainersTyped: selectedType
+      en = [super enumeratorOfContainersTyped: selectedType
                                 inContainer: [super rootInstance]];
-      array = [en allObjects];
     }else{
-      NSEnumerator *en = [[self unfilteredObjectsForEntityType: selectedType]
+      en = [[self unfilteredObjectsForEntityType: selectedType]
                             objectEnumerator];
-      array = [en allObjects];
     }
-    int i;
-    int count = [array count];
-    for (i = 0; i < count; i++){
-      if ([[entities selectedRowIndexes] containsIndex: i]){
-        if ([super isContainerEntityType: selectedType]){
-          id obj = [array objectAtIndex: i];
-          BOOL hidden = [self isHiddenContainer: obj
-                                  forEntityType: selectedType];
-          [self filterContainer: obj show: hidden];
-        }else{
-          id obj = [array objectAtIndex: i];
-          BOOL hidden = [self isHiddenValue: obj
-                              forEntityType: selectedType];
-          [self filterValue: obj
-              forEntityType: selectedType
-                       show: hidden];
+    id obj;
+
+    NSMutableSet *setToYES = [[NSMutableSet alloc] init];
+    NSMutableSet *setToNO = [[NSMutableSet alloc] init];
+
+    while ((obj = [en nextObject])){
+      if ([super isContainerEntityType: selectedType]){
+        NSString *name = [obj name];
+        if (![[expression stringValue] isEqualToString: @""]){
+          if (!regexec (regex, [name cString], 0, NULL, 0)){
+            BOOL current = [self isHiddenContainer: obj
+                                     forEntityType: selectedType];
+            if (!current){
+              [setToNO addObject: obj];
+            }else{
+              [setToYES addObject: obj];
+            }
+          }
+        }
+      }else{
+        NSString *value = obj;
+        if (![[expression stringValue] isEqualToString: @""]){
+          if (!regexec (regex, [value cString], 0, NULL, 0)){
+            BOOL current = [self isHiddenValue: value
+                                 forEntityType: selectedType];
+            if (!current){
+              [setToNO addObject: obj];
+            }else{
+              [setToYES addObject: obj];
+            }
+          }
         }
       }
     }
+
+    if ([super isContainerEntityType: selectedType]){
+      [self filterContainers: setToYES show: YES];
+      [self filterContainers: setToNO show: NO];
+    }else{
+      [self filterValues: setToYES
+           forEntityType: selectedType
+                    show: YES];
+      [self filterValues: setToNO
+           forEntityType: selectedType
+                    show: NO];
+    }
+
+    [setToYES release];
+    [setToNO release];
   }
   [entities reloadData];
   [expression becomeFirstResponder];
