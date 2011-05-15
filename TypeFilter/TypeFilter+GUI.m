@@ -193,10 +193,10 @@
                                   inContainer: [super rootInstance]];
         NSArray *array = [en allObjects];
         if ([self isHiddenContainer: [array objectAtIndex: index]
-                      forEntityType: selectedType] == NO){
-          return [NSNumber numberWithInt: NSOnState];
-        }else{
+                      forEntityType: selectedType]){
           return [NSNumber numberWithInt: NSOffState];
+        }else{
+          return [NSNumber numberWithInt: NSOnState];
         }
       }else{
         NSEnumerator *en;
