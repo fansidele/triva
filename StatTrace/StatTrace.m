@@ -117,7 +117,7 @@ static int pega_memoria ()
   NSLog (@"Events: %d", nEvent);
   NSLog (@"Variables: %d", nVariable);
   NSLog (@"Links: %d", nLink);
-  NSLog (@"Memory used (in kbytes): %d", (memUsed)/1024);
+  NSLog (@"Virtual Memory used (Mbytes): %d", (memUsed)/1024);
   NSLog (@"Traverse time (in seconds): %f", t2-t1);
   t1 = gettime();
   [self spatialIntegrationOfContainer: [self rootInstance]];
