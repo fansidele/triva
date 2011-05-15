@@ -30,9 +30,13 @@
 - (void)readAllTracefileFrom: (id)r
 {
   int chunkNumber = 0;
+  NSFileManager *fm = [NSFileManager defaultManager];
+  NSDictionary *dict = [fm fileAttributesAtPath: [r inputFilename]
+                                   traverseLink: NO];
+  unsigned long long fileSize = [dict fileSize];
 
   //set chunk size
-  [r setUserChunkSize: 1500000000];
+  [r setUserChunkSize: fileSize];
 
   //read up to the end
   while ([r hasMoreData]){
