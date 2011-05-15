@@ -118,6 +118,24 @@
   [self dataChangedForEntityType: type];
 }
 
+- (void) filterValues: (NSMutableSet *) set
+        forEntityType: (PajeEntityType *) type
+                 show: (BOOL) show
+{
+  NSMutableSet *set2 = [hiddenEntityValues objectForKey: type];
+  if (!set2){
+    set2 = [NSMutableSet set];
+    [hiddenEntityValues setObject: set2 forKey: type];
+  }
+
+  if (show){
+    [set2 minusSet: set];
+  }else{
+    [set2 unionSet: set];
+  }
+  [self dataChangedForEntityType: type];
+}
+
 - (void) filterContainer: (PajeContainer *) container
                     show: (BOOL) show
 {
@@ -125,6 +143,17 @@
     [hiddenContainers removeObject: [container name]];
   }else{
     [hiddenContainers addObject: [container name]];
+  }
+  [self containerSelectionChanged];
+}
+
+- (void) filterContainers: (NSSet *) set
+                     show: (BOOL) show
+{
+  if (show){
+    [hiddenContainers minusSet: set]; 
+  }else{
+    [hiddenContainers unionSet: set];
   }
   [self containerSelectionChanged];
 }

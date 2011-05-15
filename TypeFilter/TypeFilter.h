@@ -56,8 +56,13 @@
 - (void) filterValue: (NSString *) value
        forEntityType: (PajeEntityType *) type
                 show: (BOOL) show;
+- (void) filterValues: (NSMutableSet *) set
+        forEntityType: (PajeEntityType *) type
+                 show: (BOOL) show;
 - (void) filterContainer: (PajeContainer *) container
                     show: (BOOL) show;
+- (void) filterContainers: (NSSet *) set
+                     show: (BOOL) show;
 - (PajeFilter *) inputComponent;
 - (NSArray *)unfilteredObjectsForEntityType:(PajeEntityType *)entityType;
 @end
