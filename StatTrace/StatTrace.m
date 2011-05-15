@@ -30,7 +30,7 @@ static int pega_memoria ()
 {
   int pid = getpid();
   char command[200];
-  snprintf (command, 200, "cat /proc/%d/status | grep VmRSS| awk {'print $2'} > /tmp/pegando-memoria", pid);
+  snprintf (command, 200, "cat /proc/%d/status | grep VmSize| awk {'print $2'} > /tmp/pegando-memoria", pid);
   int y = system (command);
   if (y == -1){
     perror ("");
