@@ -38,7 +38,6 @@
 + (id) controllerWithConfiguration: (TrivaConfiguration *) configuration;
 - (id) initWithConfiguration: (TrivaConfiguration *) configuration;
 - (void) initializeWithConfiguration: (TrivaConfiguration *) configuration;
-- (void) updateWithConfiguration: (TrivaConfiguration *) configuration;
 @end
 
 @interface TrivaController (Chunks)

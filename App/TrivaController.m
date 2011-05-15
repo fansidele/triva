@@ -91,30 +91,6 @@
   return self;
 }
 
-- (void) updateWithConfiguration: (TrivaConfiguration *) configuration
-{
-  NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-NS_DURING
-  NSEnumerator *en = [components objectEnumerator];
-  id component;
-  while ((component = [en nextObject])){
-    if ([component isKindOfClass: [TrivaFilter class]]){
-      [component setConfiguration: configuration];
-    }
-  }
-NS_HANDLER
-  NSLog (@"Exception on configuring components.");
-  NSLog (@"Info: %@", [localException userInfo]);
-  NSLog (@"Name: %@", [localException name]);
-  NSLog (@"Reason: %@", [localException reason]);
-  NSLog (@"Configuration provided: %@", [configuration configuredOptions]);
-  if (![configuration ignore]){
-    exit(1);
-  }
-NS_ENDHANDLER
-  [pool release];
-}
-
 - (void) initializeWithConfiguration: (TrivaConfiguration *) configuration
 {
 NS_DURING
@@ -142,8 +118,12 @@ NS_ENDHANDLER
   NSEnumerator *en;
   id component;
 
-  //configuring components
-  [self updateWithConfiguration: configuration];
+  en = [components objectEnumerator];
+  while ((component = [en nextObject])){
+    if ([component isKindOfClass: [TrivaFilter class]]){
+      [component setConfiguration: configuration];
+    }
+  }
 
   //open component windows
   en = [components objectEnumerator];
