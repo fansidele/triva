@@ -111,6 +111,7 @@ static int pega_memoria ()
   [self iteraNosDados:[self rootInstance] level:0];
   double t2 = gettime();
   NSLog (@"Tracefile: %@", [self traceDescription]);
+  NSLog (@"Trace time: [%@ %@]", [self startTime], [self endTime]);
   NSLog (@"Containers: %d", nContainer);
   NSLog (@"States: %d", nState);
   NSLog (@"Events: %d", nEvent);
