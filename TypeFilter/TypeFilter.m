@@ -87,7 +87,7 @@
 - (BOOL) isHiddenContainer: (PajeContainer *) container
              forEntityType: (PajeEntityType*)type
 {
-  return [hiddenContainers containsObject: [container name]];
+  return [hiddenContainers containsObject: container];
 }
 
 - (void) filterEntityType: (PajeEntityType *) type
@@ -140,9 +140,9 @@
                     show: (BOOL) show
 {
   if (show){
-    [hiddenContainers removeObject: [container name]];
+    [hiddenContainers removeObject: container];
   }else{
-    [hiddenContainers addObject: [container name]];
+    [hiddenContainers addObject: container];
   }
   [self containerSelectionChanged];
 }
@@ -244,7 +244,7 @@
 - (id)filterHiddenContainer:(PajeContainer *)container
   filter:(NSSet *)filter
 {
-  if ([filter containsObject: [container name]]){
+  if ([filter containsObject: container]){
     return nil;
   }else{
     return container;
