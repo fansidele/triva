@@ -165,7 +165,6 @@
                                   inContainer: [super rootInstance]];
         NSArray *array = [en allObjects];
         NSString *name = [[array objectAtIndex: index] name];
-
         if (![[expression stringValue] isEqualToString: @""]){
           if (!regexec (regex, [name cString], 0, NULL, 0)){
             NSIndexSet *set = [NSIndexSet indexSetWithIndex: index];
@@ -201,17 +200,16 @@
       }else{
         NSEnumerator *en;
         en = [[self unfilteredObjectsForEntityType: selectedType] objectEnumerator];
-        if ([self isHiddenValue: [[en allObjects] objectAtIndex: index]
-              forEntityType: selectedType]){
+        NSArray *array = [en allObjects];
+
+        if ([self isHiddenValue: [array objectAtIndex: index]
+                  forEntityType: selectedType]){
           return [NSNumber numberWithInt: NSOffState];
         }else{
           return [NSNumber numberWithInt: NSOnState];
-          //retur no
         }
       }
-
     }
-
   }else{
     return 0;
   }
