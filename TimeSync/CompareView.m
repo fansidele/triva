@@ -260,6 +260,7 @@
   }
   [self setFrame: sf];
   [self updatePixelToTimeRatio];
+  [self updateRuler];
 
   double newpixel = [self timeToPixel: mouseTime] - difPixels;
   [self scrollPoint: NSMakePoint(newpixel,0)];
@@ -333,6 +334,29 @@
   return (time*pixelToTimeRatio)+10;
 }
 
+- (void) updateRuler
+{
+  NSRulerView *ruler = [[self enclosingScrollView] horizontalRulerView];
+  if (ruler && pixelToTimeRatio != 0){
+    // // sets ruler scale
+    NSArray *upArray;
+    NSArray *downArray;
+
+    upArray = [NSArray arrayWithObjects:
+                         [NSNumber numberWithFloat:5.0],
+                       [NSNumber numberWithFloat:2.0], nil];
+    downArray = [NSArray arrayWithObjects:
+                           [NSNumber numberWithFloat:0.5],
+                         [NSNumber numberWithFloat:0.2], nil];
+    [NSRulerView registerUnitWithName:@"Seconds"
+                         abbreviation:@"sec"
+         unitToPointsConversionFactor:pixelToTimeRatio
+                          stepUpCycle:upArray
+                        stepDownCycle:downArray];
+    [ruler setMeasurementUnits:@"Seconds"];
+  }
+}
+
 - (void) update
 {
   //defining the number of timelines
@@ -346,6 +370,7 @@
     double endTime = [[[filter endTime] description] doubleValue];
     if (endTime > largestTimestamp) largestTimestamp = endTime;
   }
+  [self updateRuler];
 }
 
 - (void) timeSelectionChangedWithSender: (TimeSync *) filter

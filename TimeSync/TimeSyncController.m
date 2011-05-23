@@ -29,6 +29,12 @@
   [window setAcceptsMouseMovedEvents: YES];
   [markerTypeButton removeAllItems];
   [markerTypeButton setEnabled: NO];
+ 
+  [scrollview setRulersVisible: YES];
+  [scrollview setHasHorizontalRuler: YES];
+  [scrollview setHasVerticalRuler: NO];
+  NSRulerView *horizRuler = [scrollview horizontalRulerView];
+  [horizRuler setOriginOffset: 10];
 
   NSRect vrect = NSMakeRect(0,0,0,0);
   vrect.size = [NSScrollView frameSizeForContentSize: [scrollview contentSize]
@@ -38,6 +44,7 @@
   view = [[CompareView alloc] initWithFrame: vrect];
   [view setController: self];
   [scrollview setDocumentView: view];
+
 
   [frequencySlider setMinValue: 0.001];
   [frequencySlider setMaxValue: 4];
