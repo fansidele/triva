@@ -49,6 +49,8 @@ typedef enum { Start, End, Nothing } DragWhat;
 - (void) markerTypeChanged: (id) sender;
 
 - (void) drawText: (NSString*)str atPoint:(NSPoint)p;
+- (void) zoomIn;
+- (void) zoomOut;
 @end
 
 #endif

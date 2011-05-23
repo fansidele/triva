@@ -325,4 +325,14 @@
     [filter setTimeIntervalFrom: start to: end];
   }
 }
+
+- (void) zoomIn: (id) sender
+{
+  [view zoomIn];
+}
+
+- (void) zoomOut: (id) sender
+{
+  [view zoomOut];
+}
 @end

@@ -356,14 +356,42 @@
   return YES;
 }
 
-- (void) zoomIn: (id) sender
+- (void) zoomIn
 {
-  NSLog (@"%s", __FUNCTION__);
+  NSRect rect = [[self superview] bounds];
+  double time = [self pixelToTime: rect.origin.x + rect.size.width/2];
+
+  NSRect sf = [self bounds];
+  NSRect f = [[self superview] frame];
+  sf.size.width += f.size.width*.1;
+
+  [self setFrame: sf];
+  [self updatePixelToTimeRatio];
+  [self updateRuler];
+
+  double newpixel = [self timeToPixel: time];
+  [self scrollPoint: NSMakePoint(newpixel - rect.size.width/2,0)];
+  [self setNeedsDisplay: YES];
 }
 
-- (void) zoomOut: (id) sender
+- (void) zoomOut
 {
-  NSLog (@"%s", __FUNCTION__);
+  NSRect rect = [[self superview] bounds];
+  double time = [self pixelToTime: rect.origin.x + rect.size.width/2];
+
+  NSRect sf = [self bounds];
+  NSRect f = [[self superview] frame];
+
+  sf.size.width -= f.size.width*.1;
+  if (sf.size.width < f.size.width) sf.size.width = f.size.width;
+
+  [self setFrame: sf];
+  [self updatePixelToTimeRatio];
+  [self updateRuler];
+
+  double newpixel = [self timeToPixel: time];
+  [self scrollPoint: NSMakePoint(newpixel - rect.size.width/2,0)];
+  [self setNeedsDisplay: YES];
 }
 @end
 

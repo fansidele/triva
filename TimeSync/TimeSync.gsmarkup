@@ -35,6 +35,12 @@
                     target="#NSOwner"
                     action="synchronizedChanged:"
                     title="End" type="switch" />
+            <button target="#NSOwner"
+                    action="zoomIn:"
+                    title="Zoom In"/>
+            <button target="#NSOwner"
+                    action="zoomOut:"
+                    title="Zoom Out"/>
           </hbox>
         </box>
 
