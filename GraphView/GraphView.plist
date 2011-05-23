@@ -1,0 +1,8 @@
+{
+  GraphView = {
+    gv_expand_all = {
+             type = bool;
+             description = "Expand all graph elements";
+             };
+  };
+}

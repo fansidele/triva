@@ -62,6 +62,9 @@
   //scale sliders
   NSMutableDictionary *scaleSliders;
   NSMutableDictionary *scaleLabels;
+
+  //User options
+  BOOL expandAll;
 }
 - (void) startForceDirectedThread;
 - (void) stopForceDirectedThread;

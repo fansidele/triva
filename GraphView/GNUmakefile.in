@@ -17,7 +17,8 @@ else
 endif
 
 GraphView_RESOURCE_FILES = \
-  GraphView.gsmarkup
+  GraphView.gsmarkup \
+  GraphView.plist
 GraphView_HEADER_FILES = DrawView.h GraphView.h
 GraphView_OBJC_FILES = DrawView.m GraphView.m
 GraphView_INCLUDE_DIRS += -I../ -I./ @CPPFLAGS@

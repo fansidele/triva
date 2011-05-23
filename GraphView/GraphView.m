@@ -39,11 +39,40 @@
   forceDirectedIgnoredNodes = [[NSMutableSet alloc] init];
   slidersCreated = NO;
 
+  //user options default
+  expandAll = NO;
+
   [self updateLabels: self];
   [self startForceDirectedThread];
   return self;
 }
 
+
++ (NSDictionary *) defaultOptions
+{
+  NSBundle *bundle;
+  bundle = [NSBundle bundleForClass: NSClassFromString(@"GraphView")];
+  NSString *file = [bundle pathForResource: @"GraphView"
+                                    ofType: @"plist"];
+  return [NSDictionary dictionaryWithContentsOfFile: file];
+}
+
+- (void) setConfiguration: (TrivaConfiguration*) conf
+{
+  //extract my configuration and put in myOptions dictionary
+  NSDictionary *myOptions = [conf configuredOptionsForClass: [self class]];
+
+  //configure myself using the configuration in myOptions
+  NSEnumerator *en = [myOptions keyEnumerator];
+  NSString *key;
+  while ((key = [en nextObject])){
+    NSString *value = [myOptions objectForKey: key];
+    if(0){
+    }else if([key isEqualToString: @"gv_expand_all"]){
+      expandAll = YES;
+    }
+  }
+}
 
 - (void) createScaleSliders
 {
@@ -192,6 +221,11 @@
         [ret addChild: child];
       }
     }
+  }
+
+  //set user options
+  if ([[ret children] count]){
+    [ret setExpanded: YES];
   }
   return ret;
 }
