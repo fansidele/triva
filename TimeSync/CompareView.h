@@ -21,6 +21,7 @@
 #include <AppKit/AppKit.h>
 #include <float.h>
 #include "TimeSyncController.h"
+#include <Triva/Triva.h>
 
 typedef enum { Start, End, Nothing } DragWhat;
 
@@ -48,10 +49,6 @@ typedef enum { Start, End, Nothing } DragWhat;
 - (void) markerTypeChanged: (id) sender;
 
 - (void) drawText: (NSString*)str atPoint:(NSPoint)p;
-
-- (void) updatePixelToTimeRatio;
-- (double) pixelToTime: (double) pixel;
-- (double) timeToPixel: (double) time;
 @end
 
 #endif

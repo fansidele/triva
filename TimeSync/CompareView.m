@@ -18,6 +18,13 @@
 
 #include "CompareView.h"
 
+@interface CompareView (Hidden)
+- (void) updatePixelToTimeRatio;
+- (double) pixelToTime: (double) pixel;
+- (double) timeToPixel: (double) time;
+- (void) updateRuler;
+@end
+
 @implementation CompareView
 - (id) initWithFrame: (NSRect) r
 {
@@ -318,6 +325,50 @@
   }
 }
 
+
+- (void) update
+{
+  //defining the number of timelines
+  nTimeline = [[controller filters] count];
+
+  //defining the largest timestampd found among all timelines
+  largestTimestamp = -FLT_MAX;
+  id filter;
+  NSEnumerator *en = [[controller filters] objectEnumerator];
+  while ((filter = [en nextObject])){
+    double endTime = [[[filter endTime] description] doubleValue];
+    if (endTime > largestTimestamp) largestTimestamp = endTime;
+  }
+  [self updateRuler];
+}
+
+- (void) timeSelectionChangedWithSender: (TimeSync *) filter
+{
+}
+
+- (void) markerTypeChanged: (id) sender
+{
+  [self setNeedsDisplay: YES];
+}
+
+- (BOOL)acceptsFirstResponder
+{
+  return YES;
+}
+
+- (void) zoomIn: (id) sender
+{
+  NSLog (@"%s", __FUNCTION__);
+}
+
+- (void) zoomOut: (id) sender
+{
+  NSLog (@"%s", __FUNCTION__);
+}
+@end
+
+
+@implementation CompareView (Hidden)
 - (void) updatePixelToTimeRatio
 {
   double width = [self bounds].size.width;
@@ -355,35 +406,5 @@
                         stepDownCycle:downArray];
     [ruler setMeasurementUnits:@"Seconds"];
   }
-}
-
-- (void) update
-{
-  //defining the number of timelines
-  nTimeline = [[controller filters] count];
-
-  //defining the largest timestampd found among all timelines
-  largestTimestamp = -FLT_MAX;
-  id filter;
-  NSEnumerator *en = [[controller filters] objectEnumerator];
-  while ((filter = [en nextObject])){
-    double endTime = [[[filter endTime] description] doubleValue];
-    if (endTime > largestTimestamp) largestTimestamp = endTime;
-  }
-  [self updateRuler];
-}
-
-- (void) timeSelectionChangedWithSender: (TimeSync *) filter
-{
-}
-
-- (void) markerTypeChanged: (id) sender
-{
-  [self setNeedsDisplay: YES];
-}
-
-- (BOOL)acceptsFirstResponder
-{
-  return YES;
 }
 @end
