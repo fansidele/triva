@@ -43,6 +43,8 @@
 
 - (void) drawRect: (NSRect)r
 {
+  //The code of drawRect functions is experimental
+  //
   if (pixelToTimeRatio == 0){
     [self updatePixelToTimeRatio];
   }
@@ -103,16 +105,31 @@
     NSEnumerator *en2 = [positions objectEnumerator];
 
     NSPoint points[[positions count]]; //eca
+    NSPoint dates[[positions count]]; //eca
     int i = 0;
     while ((pos = [en2 nextObject])){
       double t = [[pos description] doubleValue];
       points[i] = NSMakePoint ([self timeToPixel: t],timelineVerticalPosition);
+      dates[i] = NSMakePoint (t, timelineVerticalPosition);
       timelineVerticalPosition += verticalStep;
       i++;
     }
-    NSBezierPath *path = [NSBezierPath bezierPath];
-    [path appendBezierPathWithPoints: points count: i];
-    [path stroke];
+
+
+    //define the color and stroke of the line based on the angle
+    int j;
+    for (j = 0; j+1 < i; j++){
+      //calculate angle between dates[j], dates[j+1]
+      double slope = fmod(fabs(LMSAngleBetweenPoints (dates[j], dates[j+1])), 90)/90;
+      NSColor *color = [NSColor colorWithCalibratedRed: slope
+                                                 green: slope
+                                                  blue: slope
+                                                 alpha: 1];
+      [color set];
+      NSBezierPath *path = [NSBezierPath bezierPath];
+      [path appendBezierPathWithPoints: points+j count: 2];
+      [path stroke];
+    }
 
 
   }
