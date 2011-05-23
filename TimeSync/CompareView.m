@@ -36,6 +36,10 @@
 
 - (void) drawRect: (NSRect)r
 {
+  if (pixelToTimeRatio == 0){
+    [self updatePixelToTimeRatio];
+  }
+
   [[NSColor whiteColor] set];
   [NSBezierPath fillRect: [self bounds]];
   [[NSColor blackColor] set];
@@ -242,23 +246,23 @@
 - (void)scrollWheel:(NSEvent *)event
 {
   mousePoint = [self convertPoint:[event locationInWindow] fromView:nil];
-  double time = [self pixelToTime: mousePoint.x];
+  NSRect rect = [[self superview] bounds];
+  double mouseTime = [self pixelToTime: mousePoint.x];
+  double difPixels = mousePoint.x - rect.origin.x;
 
-  NSRect sf = [[self superview] bounds];
-  NSRect f = [self frame];
+  NSRect sf = [self bounds];
+  NSRect f = [[self superview] frame];
   if ([event deltaY] > 0){
-    f.size.width += f.size.width*.1;
+    sf.size.width += f.size.width*.1;
   }else{
-    f.size.width -= f.size.width*.1;
-    if (f.size.width < sf.size.width+20) f.size.width = sf.size.width;
+    sf.size.width -= f.size.width*.1;
+    if (sf.size.width < f.size.width) sf.size.width = f.size.width;
   }
-  double oldpixel = [self timeToPixel: time];
-  [self setFrame: f];
-  double newpixel = [self timeToPixel: time];
-  double difp = newpixel - oldpixel;
-  NSRect b = [[self superview] bounds];
-  b.origin.x += difp;
-  [[self superview] setBounds: b];
+  [self setFrame: sf];
+  [self updatePixelToTimeRatio];
+
+  double newpixel = [self timeToPixel: mouseTime] - difPixels;
+  [self scrollPoint: NSMakePoint(newpixel,0)];
   [self setNeedsDisplay: YES];
 }
 

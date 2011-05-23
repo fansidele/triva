@@ -39,10 +39,11 @@
         </box>
 
         <!-- the Compare View -->
-        <view id="view"
-              instanceOf="CompareView"
-              sendActionOn="anyEvent"
-              halign="wexpand" valign="wexpand" />
+        <scrollView id="scrollview"
+                    halign="wexpand"
+                    valign="wexpand"
+                    hasVerticalScroller="NO"
+                    borderType="none"/>
 
         <!-- Time Slice Animation -->
         <box title="Time Slice Animation" valign="bottom">
@@ -88,7 +89,7 @@
     <outlet source="#NSOwner" target="#markerTypeButton" key="markerTypeButton" />
     <outlet source="#NSOwner" target="#startSynchronized" key="startSynchronized" />
     <outlet source="#NSOwner" target="#endSynchronized" key="endSynchronized" />
-    <outlet source="#NSOwner" target="#view" key="view" />
+    <outlet source="#NSOwner" target="#scrollview" key="scrollview" />
     <outlet source="#NSOwner" target="#forwardSlider" key="forwardSlider" />
     <outlet source="#NSOwner" target="#frequencySlider" key="frequencySlider" />
     <outlet source="#NSOwner" target="#forwardLabel" key="forwardLabel" />

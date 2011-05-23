@@ -33,6 +33,7 @@
   //GUI
   TrivaWindow *window;
   CompareView *view;
+  NSScrollView *scrollview;
   id markerTypeButton;
   id startSynchronized;
   id endSynchronized;

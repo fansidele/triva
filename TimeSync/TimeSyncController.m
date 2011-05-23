@@ -29,7 +29,15 @@
   [window setAcceptsMouseMovedEvents: YES];
   [markerTypeButton removeAllItems];
   [markerTypeButton setEnabled: NO];
+
+  NSRect vrect = NSMakeRect(0,0,0,0);
+  vrect.size = [NSScrollView frameSizeForContentSize: [scrollview contentSize]
+                               hasHorizontalScroller: [scrollview hasHorizontalScroller]
+                                 hasVerticalScroller: [scrollview hasVerticalScroller]
+                                          borderType: [scrollview borderType]];
+  view = [[CompareView alloc] initWithFrame: vrect];
   [view setController: self];
+  [scrollview setDocumentView: view];
 
   [frequencySlider setMinValue: 0.001];
   [frequencySlider setMaxValue: 4];
