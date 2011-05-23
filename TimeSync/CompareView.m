@@ -313,13 +313,8 @@
   }
 }
 
-- (void) resizeSubviewsWithOldSize: (NSSize) size
+- (void) updatePixelToTimeRatio
 {
-  //define pixelToTimeRatio
-  if (largestTimestamp < 0){
-    return;
-  }
-
   double width = [self bounds].size.width;
   pixelToTimeRatio = (width - 20)/largestTimestamp; //10 pixel each side
 }

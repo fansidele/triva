@@ -49,6 +49,7 @@ typedef enum { Start, End, Nothing } DragWhat;
 
 - (void) drawText: (NSString*)str atPoint:(NSPoint)p;
 
+- (void) updatePixelToTimeRatio;
 - (double) pixelToTime: (double) pixel;
 - (double) timeToPixel: (double) time;
 @end
