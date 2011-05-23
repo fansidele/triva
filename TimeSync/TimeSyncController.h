@@ -71,8 +71,6 @@
 @end
 
 @interface TimeSyncController (TypeHierarchy)
-- (NSDictionary *) typeHierarchy: (id) filter ofType: (PajeEntityType*) type;
-- (NSDictionary *) typeHierarchy: (id) filter;
 - (BOOL) checkTypeHierarchies: (NSArray*)typeHierarchies; //entry method
 @end
 

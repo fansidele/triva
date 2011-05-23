@@ -84,15 +84,8 @@
 
 - (void) check
 {
-  NSMutableArray *typeHierarchies = [NSMutableArray array];
-  NSEnumerator *en = [compareFilters objectEnumerator];
-  id filter = nil;
-  while ((filter = [en nextObject])){
-    [typeHierarchies addObject: [self typeHierarchy: filter]];
-  }
-
   //check if they are good to go
-  if (![self checkTypeHierarchies: typeHierarchies]){
+  if (![self checkTypeHierarchies: compareFilters]){
     //they do not match, raise exception
     [NSException raise:@"TrivaException"
                 format:@"The type hierarchies of trace files do not match."];
@@ -101,7 +94,7 @@
   //search for markers
   NSArray *markerTypes = [self markerTypes];
   if ([markerTypes count]){
-    en = [markerTypes objectEnumerator];
+    NSEnumerator *en = [markerTypes objectEnumerator];
     id type;
     while ((type = [en nextObject])){
       [markerTypeButton addItemWithTitle: [type description]];

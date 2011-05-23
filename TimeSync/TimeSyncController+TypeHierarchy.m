@@ -16,7 +16,13 @@
 */
 #include "TimeSyncController.h"
 
-@implementation TimeSyncController (TypeHierarchy)
+@interface TimeSyncController (TypeHierarchyHidden)
+- (NSDictionary *) typeHierarchy: (id) filter ofType: (PajeEntityType*) type;
+- (NSDictionary *) typeHierarchy: (id) filter;
+@end
+
+
+@implementation TimeSyncController (TypeHierarchyHidden)
 - (NSDictionary *) typeHierarchy: (id) filter ofType: (PajeEntityType*) type
 {
   NSMutableDictionary *ret = [NSMutableDictionary dictionary];
@@ -40,13 +46,22 @@
   [ret setObject: [self typeHierarchy: filter ofType: rootType] forKey: rootType];
   return ret;
 }
+@end
 
-- (BOOL) checkTypeHierarchies: (NSArray*)typeHierarchies
+@implementation TimeSyncController (TypeHierarchy)
+- (BOOL) checkTypeHierarchies: (NSArray*)filters
 {
-  NSEnumerator *en = [typeHierarchies objectEnumerator];
-  NSDictionary *t1 = [en nextObject];
+  NSMutableArray *typeHierarchies = [NSMutableArray array];
+  NSEnumerator *en0 = [filters objectEnumerator];
+  id filter = nil;
+  while ((filter = [en0 nextObject])){
+    [typeHierarchies addObject: [self typeHierarchy: filter]];
+  }
+
+  NSEnumerator *en1 = [typeHierarchies objectEnumerator];
+  NSDictionary *t1 = [en1 nextObject];
   NSDictionary *t2 = nil;
-  while ((t2 = [en nextObject])){
+  while ((t2 = [en1 nextObject])){
     if (![t1 isEqualToDictionary: t2]){
       return NO;
     }
