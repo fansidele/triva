@@ -41,6 +41,9 @@
             <button target="#NSOwner"
                     action="zoomOut:"
                     title="Zoom Out"/>
+            <button target="#NSOwner"
+                    action="reset:"
+                    title="Reset Zoom"/>
           </hbox>
         </box>
 

@@ -393,6 +393,21 @@
   [self scrollPoint: NSMakePoint(newpixel - rect.size.width/2,0)];
   [self setNeedsDisplay: YES];
 }
+
+- (void) reset
+{
+  NSRect sf = [self bounds];
+  NSRect f = [[self superview] frame];
+
+  sf.size.width = f.size.width;
+
+  [self setFrame: sf];
+  [self updatePixelToTimeRatio];
+  [self updateRuler];
+
+  [self scrollPoint: NSMakePoint(0,0)];
+  [self setNeedsDisplay: YES];
+}
 @end
 
 

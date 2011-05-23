@@ -335,4 +335,9 @@
 {
   [view zoomOut];
 }
+
+- (void) reset: (id) sender
+{
+  [view reset];
+}
 @end

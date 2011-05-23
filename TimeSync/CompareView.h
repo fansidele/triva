@@ -51,6 +51,7 @@ typedef enum { Start, End, Nothing } DragWhat;
 - (void) drawText: (NSString*)str atPoint:(NSPoint)p;
 - (void) zoomIn;
 - (void) zoomOut;
+- (void) reset;
 @end
 
 #endif
