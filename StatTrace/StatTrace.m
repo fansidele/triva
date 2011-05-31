@@ -112,12 +112,12 @@ static int pega_memoria ()
   double t2 = gettime();
   NSLog (@"Tracefile: %@", [self traceDescription]);
   NSLog (@"Trace time: [%@ %@]", [self startTime], [self endTime]);
-  NSLog (@"Containers: %d", nContainer);
-  NSLog (@"States: %d", nState);
-  NSLog (@"Events: %d", nEvent);
-  NSLog (@"Variables: %d", nVariable);
-  NSLog (@"Links: %d", nLink);
-  NSLog (@"Virtual Memory used (Mbytes): %d", (memUsed)/1024);
+  NSLog (@"Containers: %lld", nContainer);
+  NSLog (@"States: %lld", nState);
+  NSLog (@"Events: %lld", nEvent);
+  NSLog (@"Variables: %lld", nVariable);
+  NSLog (@"Links: %lld", nLink);
+  NSLog (@"Virtual Memory used (Mbytes): %lld", (memUsed)/1024);
   NSLog (@"Traverse time (in seconds): %f", t2-t1);
   t1 = gettime();
   [self spatialIntegrationOfContainer: [self rootInstance]];

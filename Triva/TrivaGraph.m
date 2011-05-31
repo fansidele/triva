@@ -129,8 +129,7 @@
     return YES;
   }
 
-  //1 - get all nodes below self and c
-  NSMutableSet *s0 = [self allNodes];
+  //1 - get all nodes below c
   NSMutableSet *s1 = [c allNodes];
 
   //2 - get all connected nodes of self

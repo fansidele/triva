@@ -21,9 +21,6 @@
 #include <Triva/TrivaSquare.h>
 
 @interface TrivaRhombus : TrivaSquare
-{
-  NSString *sizeConf;
-}
 @end
 
 #endif

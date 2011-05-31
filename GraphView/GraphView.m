@@ -66,7 +66,7 @@
   NSEnumerator *en = [myOptions keyEnumerator];
   NSString *key;
   while ((key = [en nextObject])){
-    NSString *value = [myOptions objectForKey: key];
+//    NSString *value = [myOptions objectForKey: key];
     if(0){
     }else if([key isEqualToString: @"gv_expand_all"]){
       expandAll = YES;
@@ -198,7 +198,6 @@
 
   if ([self hasGraphvizLocationFromFile]){
     NSPoint p = [self graphvizLocationForName: [ret name]];
-    NSSize size = [self graphvizSize];
     if (!NSEqualPoints(p, NSZeroPoint)){
       [ret setLocation: p];
       [ret setPositionsAlreadyCalculated: YES];
