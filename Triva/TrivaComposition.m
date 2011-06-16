@@ -71,7 +71,7 @@
                                                    values: values
                                                      node: obj
                                                    filter: f];
-  }else if ([type isEqualToString: @"color"]){
+  }else if ([type isEqualToString: @"marker"]){
     return [[TrivaMarker alloc] initWithConfiguration: conf
                                                 name: n
                                               values: values
