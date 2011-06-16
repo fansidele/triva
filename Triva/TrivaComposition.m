@@ -19,7 +19,7 @@
 #include "TrivaSquare.h"
 #include "TrivaSquareFixed.h"
 #include "TrivaRhombus.h"
-#include "TrivaColor.h"
+#include "TrivaMarker.h"
 
 @implementation TrivaComposition
 + (id) compositionWithConfiguration: (NSDictionary*) conf
@@ -72,7 +72,7 @@
                                                      node: obj
                                                    filter: f];
   }else if ([type isEqualToString: @"color"]){
-    return [[TrivaColor alloc] initWithConfiguration: conf
+    return [[TrivaMarker alloc] initWithConfiguration: conf
                                                 name: n
                                               values: values
                                                 node: obj

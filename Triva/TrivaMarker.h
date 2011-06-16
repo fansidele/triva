@@ -14,12 +14,12 @@
     You should have received a copy of the GNU General Public License
     along with Triva.  If not, see <http://www.gnu.org/licenses/>.
 */
-#ifndef __TrivaColor_h_
-#define __TrivaColor_h_
+#ifndef __TrivaMarker_h_
+#define __TrivaMarker_h_
 #include <Foundation/Foundation.h>
 #include <Triva/Triva.h>
 
-@interface TrivaColor : TrivaComposition
+@interface TrivaMarker : TrivaComposition
 {
   double size;
   NSString *variable;

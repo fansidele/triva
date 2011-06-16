@@ -14,9 +14,9 @@
     You should have received a copy of the GNU General Public License
     along with Triva.  If not, see <http://www.gnu.org/licenses/>.
 */
-#include "TrivaColor.h"
+#include "TrivaMarker.h"
 
-@implementation TrivaColor
+@implementation TrivaMarker
 - (id) initWithConfiguration: (NSDictionary*) conf
                         name: (NSString*) n
                       values: (NSDictionary*) val
