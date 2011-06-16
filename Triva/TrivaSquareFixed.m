@@ -43,7 +43,7 @@
   }
 
   NSString *sizeConf = [configuration objectForKey: @"size"];
-  if (!filterConf){
+  if (!sizeConf){
     NSLog (@"%s:%d: no 'size' configuration for composition %@",
                         __FUNCTION__, __LINE__, configuration);
     return nil;
