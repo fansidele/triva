@@ -18,15 +18,28 @@
 
 @implementation TrivaColor
 - (id) initWithConfiguration: (NSDictionary*) conf
-                    withName: (NSString*) n
-                   forObject: (TrivaGraphNode*)obj
-                  withValues: (NSDictionary*) timeSliceValues
-                 andProvider: (TrivaFilter*) prov
+                        name: (NSString*) n
+                      values: (NSDictionary*) val
+                        node: (TrivaGraph*) obj
+                      filter: (TrivaFilter*) f
 {
-  self = [super initWithFilter: prov andConfiguration: conf
-                      andSpace: YES andName: n andObject: obj];
+  self = [super initWithConfiguration: conf
+                                 name: n
+                               values: val
+                                 node: obj
+                               filter: f];
+
+  //size configuration
+  NSString *sizeConf = [configuration objectForKey: @"size"];
+  if (!sizeConf){
+    NSLog (@"%s:%d: no 'size' configuration for composition %@",
+                        __FUNCTION__, __LINE__, configuration);
+    return nil;
+  }
+  size = [sizeConf doubleValue];
+
   //get values
-  values = [configuration objectForKey: @"values"];
+  NSArray *values = [configuration objectForKey: @"values"];
   if (!values){
     NSLog (@"%s:%d: no 'values' configuration for composition %@",
                         __FUNCTION__, __LINE__, configuration);
@@ -34,34 +47,56 @@
   }else{
     if (![values isKindOfClass: [NSArray class]]){
       NSLog (@"%s:%d: 'value' is invalid (%@). "
-              " It should be something like (var,var2)",
+              " It should be something like (var)",
                __FUNCTION__, __LINE__, values);
       return nil;
+    }else{
+      if ([values count] > 1){
+        NSLog (@"%s:%d: 'value' has more than one variable (%@). "
+               " It should contain only one: (var)",
+               __FUNCTION__, __LINE__, values);
+        return nil;
+      }
     }
+  }
+  variable = [values objectAtIndex: 0];
+  if ([val objectForKey: variable] == nil){
+    return nil;
+  }
+  double v = [[val objectForKey: variable] doubleValue];
+  if (v == 0){
+    return nil;
   }
   return self;
 }
 
 - (BOOL) redefineLayoutWithValues: (NSDictionary*) timeSliceValues
 {
-  //clear calculatedValues
-  [calculatedValues removeAllObjects];
+  return YES;
+}
 
-  //get values
-  NSEnumerator *en2 = [values objectEnumerator];
-  id var;
-  while ((var = [en2 nextObject])){
-    double val = [filter evaluateWithValues: timeSliceValues withExpr: var];
-    if (val){
-      [calculatedValues setObject: [NSNumber numberWithDouble: 1]
-          forKey: var];
-    }
-  }
-  if ([calculatedValues count] == 0){
-    needSpace = NO;
-  }else{
-    needSpace = YES;
-  }
-  return NO;
+- (void) layout
+{
+  [self setBoundingBox: NSMakeRect(0, 0, size, size)];
+}
+
+- (void) setBoundingBox: (NSRect) rect
+{
+  bb = rect;
+}
+
+- (void) drawLayout
+{
+  NSBezierPath *path = [NSBezierPath bezierPathWithRect: bb];
+
+  [[filter colorForIntegratedValueNamed: variable] set];
+  [path fill];
+  [[NSColor grayColor] set];
+  [path stroke];
+}
+
+- (double) evaluateSize
+{
+  return size;
 }
 @end

@@ -17,10 +17,13 @@
 #ifndef __TrivaColor_h_
 #define __TrivaColor_h_
 #include <Foundation/Foundation.h>
-#include <Triva/TrivaSeparation.h>
-#include <Triva/NSPointFunctions.h>
+#include <Triva/Triva.h>
 
-@interface TrivaColor : TrivaSeparation
+@interface TrivaColor : TrivaComposition
+{
+  double size;
+  NSString *variable;
+}
 @end
 
 #endif

@@ -19,6 +19,7 @@
 #include "TrivaSquare.h"
 #include "TrivaSquareFixed.h"
 #include "TrivaRhombus.h"
+#include "TrivaColor.h"
 
 @implementation TrivaComposition
 + (id) compositionWithConfiguration: (NSDictionary*) conf
@@ -70,6 +71,12 @@
                                                    values: values
                                                      node: obj
                                                    filter: f];
+  }else if ([type isEqualToString: @"color"]){
+    return [[TrivaColor alloc] initWithConfiguration: conf
+                                                name: n
+                                              values: values
+                                                node: obj
+                                              filter: f];
 //  }else if ([type isEqualToString: @"gradient"]){
 //    return [[TrivaGradient alloc] initWithConfiguration: conf
 //                                               withName: n
@@ -84,13 +91,6 @@
 //                                           withDifferences: differences
 //                                                withValues: timeSliceValues
 //                                               andProvider: prov];
-//  }else if ([type isEqualToString: @"color"]){
-//    return [[TrivaColor alloc] initWithConfiguration: conf
-//                                            withName: n
-//                                           forObject: obj
-//                                     withDifferences: differences
-//                                          withValues: timeSliceValues
-//                                         andProvider: prov];
 //  }else if ([type isEqualToString: @"swarm"]){
 //    return [[TrivaSwarm alloc] initWithConfiguration: conf
 //                                            withName: n

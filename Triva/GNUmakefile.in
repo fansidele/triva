@@ -9,6 +9,7 @@ Triva_OBJC_FILES = \
 	TrivaSquare.m \
 	TrivaSquareFixed.m \
 	TrivaRhombus.m \
+	TrivaColor.m \
 	BasicTree.m \
 	TrivaTree.m \
 	TrivaTreemap.m \
@@ -23,6 +24,7 @@ Triva_HEADER_FILES = TrivaFilter.h \
 	TrivaSquare.h \
 	TrivaSquareFixed.h \
 	TrivaRhombus.h \
+	TrivaColor.h \
 	BasicTree.h \
 	TrivaTree.h \
 	TrivaTreemap.h \
