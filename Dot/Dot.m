@@ -79,17 +79,17 @@
         [color getRed: &red green: &green blue: &blue alpha: &alpha];
       NS_ENDHANDLER
       [ret appendString: [NSString stringWithFormat: @"\"%s\" [ /* fontsize=8,*/ label=\"%s\", style=filled, fillcolor=\"#%02x%02x%02x\" ] ;\n",
-        [[instance name] cString], [[[[instance name] componentsSeparatedByString:@"-"] objectAtIndex: 0] cString], (int)(red*255), (int)(green*255), (int)(blue*255)]];
+        [[instance description] cString], [[[[instance description] componentsSeparatedByString:@"-"] objectAtIndex: 0] cString], (int)(red*255), (int)(green*255), (int)(blue*255)]];
       NSEnumerator *en2;
       PajeContainer *sub;
       en2 = [self enumeratorOfContainersTyped:et inContainer:instance];
       while ((sub = [en2 nextObject]) != nil) {
-        [ret appendString: [NSString stringWithFormat: @"\"%s\" -> \"%s\";\n", [[instance name] cString],
-          [[sub name] cString]]];
+        [ret appendString: [NSString stringWithFormat: @"\"%s\" -> \"%s\";\n", [[instance description] cString],
+          [[sub description] cString]]];
         [ret appendString: [self dumpDotTraceFormatWithInstance: sub]];
       }
     }else{
-//      if (![[[[instance name] componentsSeparatedByString:@"-"] objectAtIndex: 0] isEqualToString: @"surf"])continue;
+//      if (![[[[instance description] componentsSeparatedByString:@"-"] objectAtIndex: 0] isEqualToString: @"surf"])continue;
       NSEnumerator *en3;
       PajeEntity *ent;
       en3 = [self enumeratorOfEntitiesTyped:et
@@ -145,7 +145,7 @@
   id et;
   [ret appendString:
     [NSString stringWithFormat:@"\"%p\"[label=\"%@\",shape=\"rectangle\"];\n",
-      type, [type name]]];
+      type, [type description]]];
   while ((et = [en nextObject]) != nil) {
           if ([self isContainerEntityType: et]) {
       [ret appendString: [self dotTypeHierarchy: et]];
@@ -167,7 +167,7 @@
       }
       [ret appendString:
         [NSString stringWithFormat:@"\"%p\"[label=\"%@\", shape=\"%@\", style=filled, fillcolor=\"%@\"];\n", et,
-          [et name], @"rectangle", fillcolor]];
+          [et description], @"rectangle", fillcolor]];
     }
     [ret appendString:
       [NSString stringWithFormat: @"\"%p\"->\"%p\";\n",
