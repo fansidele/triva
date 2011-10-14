@@ -39,7 +39,7 @@ $ svn co http://svn.gna.org/svn/gnustep/libs/renaissance/trunk renaissance
 $ cd renaissance
 $ source /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
 $ make
-$ make install
+$ make install GNUSTEP_INSTALLATION_DOMAIN=USER
 
 # Installing Triva (and its dependencies - packages for Ubuntu 10.04)
 # The lines below consider a possibly unstable installation of Triva (based
