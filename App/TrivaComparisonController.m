@@ -52,10 +52,13 @@
          GraphView \
       ) )" propertyList];
   }else{
-    NSException *ex;
-    [ex = [NSException exceptionWithName: @"TrivaException"
-                                  reason: @"No visualization option activated for comparing"
-                                userInfo: nil] raise];
+   g = [@"(  \
+      ( FileReader, \
+         PajeEventDecoder, \
+         PajeSimulator, \
+         StorageController, \
+         TimeSync, \
+      ) )" propertyList];
   }
 
   //loading bundles and creating graph sequences
