@@ -25,4 +25,5 @@ endif
 Triva_INCLUDE_DIRS += -I../ -I./ @CPPFLAGS@
 Triva_LDFLAGS += @LDFLAGS@ 
 
+include GNUmakefile.preamble
 include $(GNUSTEP_MAKEFILES)/application.make
