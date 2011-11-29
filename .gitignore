@@ -13,7 +13,6 @@ missing
 stamp-h1
 install-sh
 configure
-*GNUmakefile
 *\.app/
 obj/
 .*.sw*

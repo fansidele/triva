@@ -29,7 +29,6 @@ AM_INIT_AUTOMAKE([gnu -Wno-portability])
 CONFIG_FILES="
   App/GNUmakefile \
   Triva/GNUmakefile \
-  GraphConfiguration/GNUmakefile \
   GraphView/GNUmakefile \
   LinkView/GNUmakefile \
   Dot/GNUmakefile \
