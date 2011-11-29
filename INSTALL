@@ -1,6 +1,6 @@
-#=====================
-#| Triva INSTALL file
-#=====================
+#|====================|
+#| Triva INSTALL file |
+#|====================|
 
 # This installs all the dependencies for a GNUstep installation based
 # on the GNUstep-startup package. The list of packages may depend on
