@@ -15,6 +15,6 @@ Triva_OBJC_FILES = \
 
 Triva_APPLICATION_ICON = Triva.tiff
 Triva_RESOURCE_FILES = Triva.tiff trivaInfo.plist Triva.plist
-Triva_LDFLAGS = -lTriva -lGeneral
+ADDITIONAL_TOOL_LIBS = -lTriva -lGeneral
 
 include $(GNUSTEP_MAKEFILES)/application.make
