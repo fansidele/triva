@@ -22,7 +22,7 @@ else
 LDFLAGS += -L../Triva/Triva.framework -lTriva -lGeneral
 endif
 
-Triva_INCLUDE_DIRS += -I../ -I./ @CPPFLAGS@
+Triva_INCLUDE_DIRS += @CPPFLAGS@
 Triva_LDFLAGS += @LDFLAGS@ 
 
 include GNUmakefile.preamble

@@ -17,8 +17,7 @@
 #ifndef __TrivaGradient_h_
 #define __TrivaGradient_h_
 #include <Foundation/Foundation.h>
-#include <Triva/TrivaComposition.h>
-#include <Triva/TrivaSeparation.h>
+#include "TrivaSeparation.h"
 
 @interface TrivaGradient : TrivaSeparation
 {

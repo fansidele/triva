@@ -17,12 +17,7 @@
 #ifndef __TrivaFFT_h_
 #define __TrivaFFT_h_
 #include <Foundation/Foundation.h>
-#include <Triva/TrivaComposition.h>
-#include <math.h>
-#include <gsl/gsl_errno.h>
-#include <gsl/gsl_fft_complex.h>
-#include <gsl/gsl_fft_real.h>
-#include <gsl/gsl_fft_halfcomplex.h>
+#include "TrivaComposition.h"
 
 @interface TrivaFFT : TrivaComposition
 {

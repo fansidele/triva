@@ -16,12 +16,10 @@
 */
 #ifndef __TrivaTree_H_
 #define __TrivaTree_H_
-
 #include <Foundation/Foundation.h>
-#include <Triva/BasicTree.h>
 #include <General/PajeContainer.h>
-
-@class TrivaFilter;
+#include "TrivaFilter.h"
+#include "BasicTree.h"
 
 @interface TrivaTree : BasicTree
 {
@@ -59,5 +57,4 @@
 - (TrivaTree*) searchAtPoint: (NSPoint) p maxDepth: (int) d;
 @end
 
-#include <Triva/TrivaFilter.h>
 #endif

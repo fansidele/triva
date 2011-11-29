@@ -18,8 +18,11 @@
 #define __TrivaGraph_H_
 #include <Foundation/Foundation.h>
 #include <AppKit/AppKit.h>
-#include <Triva/Triva.h>
-#include <matheval.h>
+#include <General/PajeContainer.h>
+#include "TrivaTree.h"
+#include "TrivaComposition.h"
+
+@class TrivaTree;
 
 typedef enum {
   TRIVA_NODE,
@@ -98,4 +101,5 @@ typedef enum {
 - (void) drawLayout;
 @end
 
+#include "TrivaTree.h"
 #endif

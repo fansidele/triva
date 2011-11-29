@@ -15,6 +15,7 @@
     along with Triva.  If not, see <http://www.gnu.org/licenses/>.
 */
 #include "TrivaConfiguration.h"
+#include "TrivaComposition.h"
 
 @implementation TrivaConfiguration
 - (id) init

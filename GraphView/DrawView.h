@@ -16,9 +16,8 @@
 */
 #ifndef __GraphView_h
 #define __GraphView_h
-
 #include <AppKit/AppKit.h>
-#include <Triva/Triva.h>
+#include "../Triva/TrivaGraph.h"
 
 @class GraphView;
 

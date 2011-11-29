@@ -14,7 +14,7 @@ endif
 
 List_OBJC_FILES=List.m
 List_OBJCC_FILES = 
-List_INCLUDE_DIRS += -I../ -I./ @CPPFLAGS@
+List_INCLUDE_DIRS += @CPPFLAGS@
 List_LDFLAGS += @LDFLAGS@
 
 include $(GNUSTEP_MAKEFILES)/bundle.make

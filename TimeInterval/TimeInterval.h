@@ -19,8 +19,8 @@
 #include <Foundation/Foundation.h>
 #include <AppKit/AppKit.h>
 #include <Renaissance/Renaissance.h>
-#include <Triva/Triva.h>
-
+#include "../Triva/TrivaFilter.h"
+#include "../Triva/TrivaWindow.h"
 #include "SliceView.h"
 
 @interface TimeInterval  : TrivaFilter

@@ -16,7 +16,6 @@
 */
 #ifndef __TimeSliceDifTree_H_
 #define __TimeSliceDifTree_H_
-
 #include <Foundation/Foundation.h>
 #include "TimeSliceTree.h"
 

@@ -14,7 +14,7 @@ endif
 
 Dot_OBJC_FILES=Dot.m
 Dot_OBJCC_FILES = 
-Dot_INCLUDE_DIRS += -I../ -I./ @CPPFLAGS@
+Dot_INCLUDE_DIRS += @CPPFLAGS@
 Dot_LDFLAGS += @LDFLAGS@
 
 include $(GNUSTEP_MAKEFILES)/bundle.make

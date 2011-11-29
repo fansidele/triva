@@ -20,7 +20,7 @@ TypeFilter_RESOURCE_FILES = \
 	TypeFilter.gsmarkup
 TypeFilter_HEADER_FILES = TypeFilter.h
 TypeFilter_OBJC_FILES = TypeFilter.m TypeFilter+GUI.m
-TypeFilter_INCLUDE_DIRS += -I../ -I./ @CPPFLAGS@
+TypeFilter_INCLUDE_DIRS += @CPPFLAGS@
 TypeFilter_LDFLAGS += @LDFLAGS@
 
 -include GNUmakefile.preamble

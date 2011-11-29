@@ -14,8 +14,6 @@
     You should have received a copy of the GNU General Public License
     along with Triva.  If not, see <http://www.gnu.org/licenses/>.
 */
-/* All Rights reserved */
-
 #include <AppKit/AppKit.h>
 #include "GraphConfiguration.h"
 
@@ -28,7 +26,7 @@
         "RGB color space.", __FUNCTION__, __LINE__);
     return nil;
   }
-  float h, s, b, a;
+  double h, s, b, a;
   [c getHue: &h saturation: &s brightness: &b alpha: &a];
   NSColor *ret = [NSColor colorWithCalibratedHue: h
     saturation: saturation

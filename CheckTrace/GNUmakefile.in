@@ -15,7 +15,7 @@ endif
 CheckTrace_OBJC_FILES=CheckTrace.m
 CheckTrace_OBJCC_FILES = 
 
-CheckTrace_INCLUDE_DIRS += -I../ -I./ @CPPFLAGS@
+CheckTrace_INCLUDE_DIRS += @CPPFLAGS@
 CheckTrace_LDFLAGS += @LDFLAGS@
 
 include $(GNUSTEP_MAKEFILES)/bundle.make

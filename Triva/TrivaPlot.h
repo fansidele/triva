@@ -17,7 +17,7 @@
 #ifndef __TrivaPlot_h_
 #define __TrivaPlot_h_
 #include <Foundation/Foundation.h>
-#include <Triva/TrivaComposition.h>
+#include "TrivaComposition.h"
 
 @interface TrivaPlot : TrivaComposition
 {

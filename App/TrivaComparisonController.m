@@ -15,6 +15,7 @@
     along with Triva.  If not, see <http://www.gnu.org/licenses/>.
 */
 #include "TrivaComparisonController.h"
+#include "../Triva/TrivaFilter.h"
 
 @implementation TrivaComparisonController
 - (id) initWithConfiguration: (TrivaConfiguration *) configuration

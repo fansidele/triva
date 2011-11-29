@@ -17,7 +17,7 @@
 #ifndef __TrivaSeparation_h_
 #define __TrivaSeparation_h_
 #include <Foundation/Foundation.h>
-#include <Triva/Triva.h>
+#include "TrivaComposition.h"
 
 @interface TrivaSeparation : TrivaComposition
 {

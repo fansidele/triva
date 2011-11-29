@@ -19,7 +19,7 @@
 
 #include <Foundation/Foundation.h>
 #include <General/PajeFilter.h>
-#include <Triva/Triva.h>
+#include "../Triva/TrivaFilter.h"
 #include "TimeSyncController.h"
 
 @interface TimeSync  : TrivaFilter 

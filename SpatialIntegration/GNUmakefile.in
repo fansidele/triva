@@ -15,7 +15,7 @@ endif
 SpatialIntegration_OBJC_FILES = SpatialIntegration.m
 SpatialIntegration_OBJCC_FILES=
 
-SpatialIntegration_INCLUDE_DIRS += -I../ -I./ @CPPFLAGS@
+SpatialIntegration_INCLUDE_DIRS += @CPPFLAGS@
 SpatialIntegration_LDFLAGS += @LDFLAGS@
 
 include $(GNUSTEP_MAKEFILES)/bundle.make

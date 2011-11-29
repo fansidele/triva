@@ -16,6 +16,7 @@
 */
 #include "TrivaController.h"
 #include "TrivaCommand.h"
+#include "../Triva/TrivaFilter.m"
 
 @implementation TrivaController
 + (id) controllerWithConfiguration: (TrivaConfiguration *) configuration

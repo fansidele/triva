@@ -26,7 +26,7 @@ GraphConfiguration.m \
 GraphConfiguration+Interface.m \
 GraphConfiguration+Protocol.m
 
-GraphConfiguration_INCLUDE_DIRS += -I../ -I./ @CPPFLAGS@
+GraphConfiguration_INCLUDE_DIRS += @CPPFLAGS@
 GraphConfiguration_LDFLAGS += @LDFLAGS@
 
 -include GNUmakefile.preamble

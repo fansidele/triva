@@ -17,7 +17,7 @@
 #ifndef __TrivaConvergence_h_
 #define __TrivaConvergence_h_
 #include <Foundation/Foundation.h>
-#include <Triva/TrivaGradient.h>
+#include "TrivaGradient.h"
 
 @interface TrivaConvergence : TrivaGradient
 - (void) defineMax: (double*)ma andMin: (double*)mi fromVariable: (NSString*)var

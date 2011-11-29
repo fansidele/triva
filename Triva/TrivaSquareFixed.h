@@ -17,8 +17,7 @@
 #ifndef __TrivaSquareFixed_h_
 #define __TrivaSquareFixed_h_
 #include <Foundation/Foundation.h>
-#include <Triva/Triva.h>
-#include "TrivaSquare.h"
+#include "TrivaComposition.h"
 
 @interface TrivaSquareFixed : TrivaComposition
 {

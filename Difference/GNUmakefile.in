@@ -19,7 +19,7 @@ endif
 Difference_RESOURCE_FILES = Difference.gsmarkup
 Difference_HEADER_FILES = Difference.h DifferenceController.h
 Difference_OBJC_FILES = Difference.m DifferenceController.m
-Difference_INCLUDE_DIRS += -I../ -I./ @CPPFLAGS@
+Difference_INCLUDE_DIRS += @CPPFLAGS@
 Difference_LDFLAGS += @LDFLAGS@
 
 -include GNUmakefile.preamble

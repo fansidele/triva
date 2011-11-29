@@ -14,14 +14,10 @@
     You should have received a copy of the GNU General Public License
     along with Triva.  If not, see <http://www.gnu.org/licenses/>.
 */
-/* All Rights reserved */
 #ifndef __COMPARE_VIEW_H
 #define __COMPARE_VIEW_H
-
 #include <AppKit/AppKit.h>
-#include <float.h>
 #include "TimeSyncController.h"
-#include <Triva/Triva.h>
 
 typedef enum { Start, End, Nothing } DragWhat;
 

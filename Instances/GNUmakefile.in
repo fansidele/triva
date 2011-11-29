@@ -13,7 +13,7 @@ else
 endif
 
 Instances_OBJC_FILES=Instances.m
-Instances_INCLUDE_DIRS += -I../ -I./ @CPPFLAGS@
+Instances_INCLUDE_DIRS += @CPPFLAGS@
 Instances_LDFLAGS += @LDFLAGS@
 
 include $(GNUSTEP_MAKEFILES)/bundle.make

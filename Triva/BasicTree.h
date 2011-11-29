@@ -16,7 +16,6 @@
 */
 #ifndef __BasicTree_H_
 #define __BasicTree_H_
-
 #include <Foundation/Foundation.h>
 
 @interface BasicTree : NSObject

@@ -21,7 +21,7 @@ GraphView_RESOURCE_FILES = \
   GraphView.plist
 GraphView_HEADER_FILES = DrawView.h GraphView.h
 GraphView_OBJC_FILES = DrawView.m GraphView.m
-GraphView_INCLUDE_DIRS += -I../ -I./ @CPPFLAGS@
+GraphView_INCLUDE_DIRS += @CPPFLAGS@
 GraphView_LDFLAGS += @LDFLAGS@
 
 -include GNUmakefile.preamble

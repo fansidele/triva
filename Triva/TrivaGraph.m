@@ -15,6 +15,7 @@
     along with Triva.  If not, see <http://www.gnu.org/licenses/>.
 */
 #include "TrivaGraph.h"
+#include <matheval.h>
 #include <float.h>
 
 #define BIGFLOAT FLT_MAX

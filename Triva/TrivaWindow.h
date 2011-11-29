@@ -17,8 +17,6 @@
 #ifndef TRIVA_WINDOW_H
 #define TRIVA_WINDOW_H
 
-#include <AppKit/AppKit.h>
-
 @interface TrivaWindow : NSWindow
 {
 }

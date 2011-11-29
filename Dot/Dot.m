@@ -71,7 +71,7 @@
   while ((et = [en nextObject]) != nil) {
           if ([self isContainerEntityType:et]) {
       NSColor *color = [et color];
-      float red, green, blue, alpha;
+      double red, green, blue, alpha;
       NS_DURING
       [color getRed: &red green: &green blue: &blue alpha: &alpha];
       NS_HANDLER

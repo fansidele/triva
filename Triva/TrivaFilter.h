@@ -18,7 +18,6 @@
 #define __TrivaFilter_h
 #include <Foundation/Foundation.h>
 #include <General/PajeFilter.h>
-#include <Triva/Triva.h>
 
 @class TrivaConfiguration;
 
@@ -76,5 +75,5 @@ typedef enum {Local,Global,Convergence,Arnaud} TrivaScale;
 - (NSSize) graphvizSize;
 @end
 
-#include <Triva/TrivaConfiguration.h>
+#include "TrivaConfiguration.h"
 #endif

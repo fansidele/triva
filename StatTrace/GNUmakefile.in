@@ -13,7 +13,7 @@ else
 endif
 
 StatTrace_OBJC_FILES=StatTrace.m
-StatTrace_INCLUDE_DIRS += -I../ -I./ @CPPFLAGS@
+StatTrace_INCLUDE_DIRS += @CPPFLAGS@
 StatTrace_LDFLAGS += @LDFLAGS@
 
 include $(GNUSTEP_MAKEFILES)/bundle.make

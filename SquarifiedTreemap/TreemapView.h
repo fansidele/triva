@@ -17,10 +17,12 @@
 
 #ifndef _TreemapView_H_
 #define _TreemapView_H_
-
 #include <Foundation/Foundation.h>
 #include <AppKit/AppKit.h>
+#include "../Triva/TrivaTreemap.h"
 #include "SquarifiedTreemap.h"
+
+@class SquarifiedTreemap;
 
 @interface TreemapView : NSView
 {

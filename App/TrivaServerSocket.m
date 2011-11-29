@@ -15,6 +15,7 @@
     along with Triva.  If not, see <http://www.gnu.org/licenses/>.
 */
 #include "TrivaServerSocket.h"
+#include "../Triva/TrivaFilter.h"
 
 @implementation TrivaServerSocket
 - (id) initWithPort: (int) port

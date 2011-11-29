@@ -16,6 +16,7 @@
 */
 #ifndef __NSPointFunctions_H_
 #define __NSPointFunctions_H_
+#include <AppKit/AppKit.h>
 
 #include <math.h>
 #include <float.h>

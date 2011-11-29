@@ -26,7 +26,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include <Triva/TrivaConfiguration.h>
+#include "../Triva/TrivaConfiguration.h"
 
 @interface TrivaServerSocket : NSObject
 {

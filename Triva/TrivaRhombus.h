@@ -17,8 +17,7 @@
 #ifndef __TrivaRhombus_h_
 #define __TrivaRhombus_h_
 #include <Foundation/Foundation.h>
-#include <Triva/Triva.h>
-#include <Triva/TrivaSquare.h>
+#include "TrivaSquare.h"
 
 @interface TrivaRhombus : TrivaSquare
 @end

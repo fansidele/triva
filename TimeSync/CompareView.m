@@ -14,9 +14,9 @@
     You should have received a copy of the GNU General Public License
     along with Triva.  If not, see <http://www.gnu.org/licenses/>.
 */
-/* All Rights reserved */
-
+#include "../Triva/NSPointFunctions.h"
 #include "CompareView.h"
+#include <float.h>
 
 @interface CompareView (Hidden)
 - (void) updatePixelToTimeRatio;

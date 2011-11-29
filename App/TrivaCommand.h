@@ -17,7 +17,7 @@
 #ifndef __TRIVA_COMMAND_H
 #define __TRIVA_COMMAND_H
 #include <Foundation/Foundation.h>
-#include <Triva/Triva.h>
+#include "../Triva/TrivaConfiguration.h"
 
 typedef enum { TrivaHelp,
                TrivaError,

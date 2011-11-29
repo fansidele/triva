@@ -17,7 +17,7 @@
 #ifndef __TrivaMarker_h_
 #define __TrivaMarker_h_
 #include <Foundation/Foundation.h>
-#include <Triva/Triva.h>
+#include "TrivaComposition.h"
 
 @interface TrivaMarker : TrivaComposition
 {

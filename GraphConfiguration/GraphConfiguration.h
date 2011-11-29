@@ -14,18 +14,11 @@
     You should have received a copy of the GNU General Public License
     along with Triva.  If not, see <http://www.gnu.org/licenses/>.
 */
-/* All Rights reserved */
 #ifndef __GraphConfiguration_h
 #define __GraphConfiguration_h
-
-#include <AppKit/AppKit.h>
-#include <Foundation/Foundation.h>
-#include <Renaissance/Renaissance.h>
-#include <Triva/Triva.h>
-#include <limits.h>
-#include <float.h>
-#include <matheval.h>
 #include <graphviz/gvc.h>
+#include "../Triva/TrivaFilter.h"
+#include "../Triva/TrivaWindow.h"
 
 @interface GraphConfiguration : TrivaFilter
 {

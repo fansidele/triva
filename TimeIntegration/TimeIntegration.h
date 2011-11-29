@@ -17,7 +17,7 @@
 #ifndef __TimeIntegration_H
 #define __TimeIntegration_H
 #include <Foundation/Foundation.h>
-#include <Triva/TrivaFilter.h>
+#include "../Triva/TrivaFilter.h"
 
 @interface TimeIntegration  : TrivaFilter
 {

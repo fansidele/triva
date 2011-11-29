@@ -14,7 +14,7 @@ endif
 
 HCMReader_OBJC_FILES=HCMReader.m
 
-HCMReader_INCLUDE_DIRS += -I../ -I./
+HCMReader_INCLUDE_DIRS += 
 ADDITIONAL_TOOL_LIBS = -lGeneral -lPaje -lDIMVisual -lDIMVClient
 
 include $(GNUSTEP_MAKEFILES)/bundle.make

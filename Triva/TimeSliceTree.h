@@ -16,11 +16,8 @@
 */
 #ifndef __TIMESLICETREE_H_
 #define __TIMESLICETREE_H_
-
 #include <Foundation/Foundation.h>
-#include <Triva/BasicTree.h>
-
-@class TimeSliceGraph;
+#include "BasicTree.h"
 
 @interface TimeSliceTree : BasicTree <NSCopying>
 {

@@ -19,7 +19,7 @@ endif
 LinkView_RESOURCE_FILES = LinkView.gsmarkup
 LinkView_HEADER_FILES = DrawView.h LinkView.h LinkViewNode.h LinkViewEdge.h
 LinkView_OBJC_FILES = DrawView.m LinkView.m LinkViewNode.m LinkViewEdge.m
-LinkView_INCLUDE_DIRS += -I../ -I./ @CPPFLAGS@
+LinkView_INCLUDE_DIRS += @CPPFLAGS@
 LinkView_LDFLAGS += @LDFLAGS@
 
 -include GNUmakefile.preamble

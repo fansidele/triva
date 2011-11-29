@@ -17,7 +17,7 @@
 #ifndef __TrivaSwarm_h_
 #define __TrivaSwarm_h_
 #include <Foundation/Foundation.h>
-#include <Triva/TrivaComposition.h>
+#include "TrivaComposition.h"
 
 @interface TrivaSwarm : TrivaComposition
 {

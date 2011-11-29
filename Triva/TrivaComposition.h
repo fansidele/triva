@@ -17,7 +17,8 @@
 #ifndef __TrivaComposition_h_
 #define __TrivaComposition_h_
 #include <Foundation/Foundation.h>
-#include <Triva/Triva.h>
+#include "TrivaGraph.h"
+#include "TrivaFilter.h"
 
 @class TrivaGraph;
 

@@ -17,11 +17,11 @@
 
 #ifndef _SQUARIFIEDTREEMAP_H_
 #define _SQUARIFIEDTREEMAP_H_
-
 #include <Foundation/Foundation.h>
 #include <AppKit/AppKit.h>
-#include <Renaissance/Renaissance.h>
-#include <Triva/Triva.h>
+#include "../Triva/TrivaFilter.h"
+#include "../Triva/TrivaWindow.h"
+#include "TreemapView.h"
 
 @class TreemapView;
 
@@ -38,6 +38,5 @@
 - (TrivaTreemap *) tree;
 @end
 
-#include "TreemapView.h"
 #endif // _SQUARIFIEDTREEMAP_H_
 

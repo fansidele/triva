@@ -17,7 +17,7 @@
 
 #include <AppKit/AppKit.h>
 #include "DrawView.h"
-#include "Triva/NSPointFunctions.h"
+#include "../Triva/NSPointFunctions.h"
 
 @implementation DrawView
 - (id) initWithFrame: (NSRect) frame
@@ -57,7 +57,7 @@
         "RGB color space.", __FUNCTION__, __LINE__);
     return nil;
   }
-  float h, s, b, a;
+  double h, s, b, a;
   [c getHue: &h saturation: &s brightness: &b alpha: &a];
 
   NSColor *ret = [NSColor colorWithCalibratedHue: h

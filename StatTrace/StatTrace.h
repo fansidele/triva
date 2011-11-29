@@ -17,7 +17,7 @@
 #ifndef __StatTrace_H
 #define __StatTrace_H
 #include <Foundation/Foundation.h>
-#include <Triva/TrivaFilter.h>
+#include "../Triva/TrivaFilter.h"
 
 @interface StatTrace  : TrivaFilter
 {

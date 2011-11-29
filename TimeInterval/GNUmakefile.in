@@ -21,7 +21,7 @@ TimeInterval_RESOURCE_FILES = \
 	TimeInterval.plist
 TimeInterval_HEADER_FILES = TimeInterval.h SliceView.h
 TimeInterval_OBJC_FILES = TimeInterval.m SliceView.m
-TimeInterval_INCLUDE_DIRS += -I../ -I./ @CPPFLAGS@
+TimeInterval_INCLUDE_DIRS += @CPPFLAGS@
 TimeInterval_LDFLAGS += @LDFLAGS@
 
 -include GNUmakefile.preamble

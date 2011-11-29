@@ -17,7 +17,7 @@
 #ifndef __TrivaSquare_h_
 #define __TrivaSquare_h_
 #include <Foundation/Foundation.h>
-#include <Triva/Triva.h>
+#include "TrivaComposition.h"
 
 @interface TrivaSquare : TrivaComposition
 {

@@ -14,9 +14,8 @@
     You should have received a copy of the GNU General Public License
     along with Triva.  If not, see <http://www.gnu.org/licenses/>.
 */
-/* All Rights reserved */
-
 #include <AppKit/AppKit.h>
+#include <Renaissance/Renaissance.h>
 #include "GraphConfiguration.h"
 
 @implementation GraphConfiguration

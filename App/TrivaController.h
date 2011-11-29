@@ -20,7 +20,6 @@
 #include <Foundation/Foundation.h>
 #include <General/PajeFilter.h>
 #include <General/PSortedArray.h>
-#include <Triva/Triva.h>
 #include "TrivaServerSocket.h"
 #include "TrivaApplication.h"
 

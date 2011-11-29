@@ -19,9 +19,9 @@
 
 #include <Foundation/Foundation.h>
 #include <AppKit/AppKit.h>
-#include <Renaissance/Renaissance.h>
-#include <Triva/Triva.h>
 #include <graphviz/gvc.h>
+#include "../Triva/TrivaGraph.h"
+#include "../Triva/TrivaWindow.h"
 #include "DrawView.h"
 
 @interface GraphView : TrivaFilter

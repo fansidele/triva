@@ -30,11 +30,10 @@ Triva_HEADER_FILES = TrivaFilter.h \
 	TrivaTreemap.h \
 	TrivaGraph.h \
 	NSPointFunctions.h \
-	Triva.h \
 	TrivaWindow.h \
 	TrivaConfiguration.h
 
-Triva_INCLUDE_DIRS += -I../ -I./ @CPPFLAGS@
+Triva_INCLUDE_DIRS += @CPPFLAGS@
 Triva_LDFLAGS += @LDFLAGS@ -lm -lgraph -lgvc -lmatheval
 
 include $(GNUSTEP_MAKEFILES)/framework.make
