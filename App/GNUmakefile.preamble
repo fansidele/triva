@@ -1,1 +1,0 @@
-ADDITIONAL_GUI_LIBS += -lTriva -lGeneral -lmatheval

@@ -15,15 +15,6 @@ Triva_OBJC_FILES = \
 
 Triva_APPLICATION_ICON = Triva.tiff
 Triva_RESOURCE_FILES = Triva.tiff trivaInfo.plist Triva.plist
+Triva_LDFLAGS = -lTriva -lGeneral
 
-ifeq ($(FOUNDATION_LIB), apple)
-LDFLAGS += -F../Triva -framework Triva -framework General
-else
-LDFLAGS += -L../Triva/Triva.framework -lTriva -lGeneral
-endif
-
-Triva_INCLUDE_DIRS += @CPPFLAGS@
-Triva_LDFLAGS += @LDFLAGS@ 
-
-include GNUmakefile.preamble
 include $(GNUSTEP_MAKEFILES)/application.make

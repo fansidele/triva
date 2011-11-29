@@ -25,26 +25,4 @@ AC_SUBST(ARCHITECTURE)
 
 AM_INIT_AUTOMAKE([gnu -Wno-portability])
 
-#components that are always compiled
-CONFIG_FILES="
-  App/GNUmakefile \
-  Triva/GNUmakefile \
-  GraphView/GNUmakefile \
-  LinkView/GNUmakefile \
-  Dot/GNUmakefile \
-  CheckTrace/GNUmakefile \
-  StatTrace/GNUmakefile \
-  List/GNUmakefile \
-  Instances/GNUmakefile \
-  LinkView/GNUmakefile \
-  SquarifiedTreemap/GNUmakefile \
-  TimeInterval/GNUmakefile \
-  TimeIntegration/GNUmakefile \
-  SpatialIntegration/GNUmakefile \
-  TypeFilter/GNUmakefile \
-  TimeSync/GNUmakefile \
-  contrib/GNUmakefile \
-  GNUmakefile"
-
-AC_CONFIG_FILES($CONFIG_FILES)
 AC_OUTPUT

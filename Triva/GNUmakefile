@@ -33,7 +33,7 @@ Triva_HEADER_FILES = TrivaFilter.h \
 	TrivaWindow.h \
 	TrivaConfiguration.h
 
-Triva_INCLUDE_DIRS += @CPPFLAGS@
-Triva_LDFLAGS += @LDFLAGS@ -lm -lgraph -lgvc -lmatheval
+Triva_INCLUDE_DIRS += 
+Triva_LDFLAGS +=  -lm -lgraph -lgvc -lmatheval
 
 include $(GNUSTEP_MAKEFILES)/framework.make
