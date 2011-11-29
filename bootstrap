@@ -1,5 +1,0 @@
-#!/bin/bash
-
-aclocal
-autoconf
-automake -c -a 2> /dev/null
