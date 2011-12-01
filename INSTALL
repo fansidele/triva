@@ -54,8 +54,6 @@ $ source /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
 $ git clone git://scm.gforge.inria.fr/triva/triva.git
 $ export LANG=C
 $ cd triva
-$ ./bootstrap
-$ ./configure
 $ make
 $ make install GNUSTEP_INSTALLATION_DOMAIN=USER
 
