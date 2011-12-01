@@ -436,13 +436,13 @@
 
 - (void) testTree
 {
-        int i;
-        if ([children count] != 0){
-                for (i = 0; i < [children count]; i++){
-                        [[children objectAtIndex: i] testTree];
-                }
-        }
-        NSLog (@"%@ - %@ %.2f", name, bb, [self treemapValue]);
+  int i;
+  if ([children count] != 0){
+    for (i = 0; i < [children count]; i++){
+      [[children objectAtIndex: i] testTree];
+    }
+  }
+  NSLog (@"%@ - %@ %.2f", name, NSStringFromRect(bb), [self treemapValue]);
 }
 
 - (void) setOffset: (double) o //recursive call
