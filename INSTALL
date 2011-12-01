@@ -51,7 +51,7 @@ $ sudo apt-get install autoconf automake \
                        libgsl0-dev
 
 $ source /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
-$ svn checkout svn://scm.gforge.inria.fr/svn/triva
+$ git clone git://scm.gforge.inria.fr/triva/triva.git
 $ export LANG=C
 $ cd triva
 $ ./bootstrap
