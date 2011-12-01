@@ -2,7 +2,7 @@ Triva README file
 =================
 
 Triva is a visualization tool for the analysis of traces from distributed
-systems. The tool relies on the Pajé Simulator component to create generic
+systems. The tool relies on the Paje Simulator component to create generic
 and novel techniques to understand the behavior that is registered on traces.
 
 Check the INSTALL file for compilation instructions.
