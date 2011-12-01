@@ -4,15 +4,15 @@
 
 # Install GNUstep-make package for Apple, like this:
 
-wget http://ftpmain.gnustep.org/pub/gnustep/core/gnustep-make-2.4.0.tar.gz
-tar xfz gnustep-make-2.4.0.tar.gz
-cd gnustep-make-2.4.0
+wget http://ftpmain.gnustep.org/pub/gnustep/core/gnustep-make-2.6.1.tar.gz
+tar xfz gnustep-make-2.6.1.tar.gz
+cd gnustep-make-2.6.1
 ./configure --with-library-combo=apple-apple-apple
 make install
 
 # Install Paje
 
-git clone -b schnorr/official/master git://paje.git.sourceforge.net/gitroot/paje/paje Paje
+git clone git://paje.git.sourceforge.net/gitroot/paje/paje Paje
 export LANG=C
 cd Paje
 source /Library/GNUstep//Makefiles/GNUstep.sh
@@ -37,11 +37,9 @@ make install
 
 # Install Triva
 
-svn checkout svn://scm.gforge.inria.fr/svn/triva
+git clone git://scm.gforge.inria.fr/triva/triva.git
 export LANG=C
 cd triva
 source /Library/GNUstep//Makefiles/GNUstep.sh
-./bootstrap
-LDFLAGS=-L/opt/local/lib/ CPPFLAGS=-I/opt/local/include/ ./configure
 make
 make install

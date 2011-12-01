@@ -14,7 +14,7 @@ $ sudo apt-get install libxml2-dev libxslt1-dev libssl-dev libx11-dev \
 # Installing GNUstep startup from source (change the version according
 # to the GNUstep website)
 
-$ GNUSTEP=gnustep-startup-0.25.0
+$ GNUSTEP=gnustep-startup-0.26.2
 $ wget http://ftpmain.gnustep.org/pub/gnustep/core/$GNUSTEP.tar.gz
 $ tar xfz $GNUSTEP.tar.gz   
 $ cd $GNUSTEP
@@ -26,7 +26,7 @@ $ source /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
 # Installing Paje
 
 $ source /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
-$ git clone -b schnorr/official/master git://paje.git.sourceforge.net/gitroot/paje/paje Paje
+$ git clone git://paje.git.sourceforge.net/gitroot/paje/paje Paje
 $ export LANG=C
 $ cd Paje
 $ git checkout 
@@ -46,9 +46,7 @@ $ make install GNUSTEP_INSTALLATION_DOMAIN=USER
 # on the SVN development version). Packaged versions can be found on the
 # the website: http://triva.gforge.inria.fr.
 
-$ sudo apt-get install autoconf automake \
-                       libgraphviz-dev libmatheval1-dev \
-                       libgsl0-dev
+$ sudo apt-get install libgraphviz-dev libmatheval1-dev libgsl0-dev
 
 $ source /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
 $ git clone git://scm.gforge.inria.fr/triva/triva.git
@@ -60,7 +58,7 @@ $ make install GNUSTEP_INSTALLATION_DOMAIN=USER
 # To execute triva from its source directory, do
 
 $ export \
-  LD_LIBRARY_PATH=$LD_LIBRARY_PATH:./Triva/Triva.framework/Versions/Current/:./Tupi/Tupi.framework/Versions/Current/
+  LD_LIBRARY_PATH=$LD_LIBRARY_PATH:./Triva/Triva.framework/Versions/Current/
 $ ./App/Triva.app/Triva --help
 
 # To install it (so you can use it anywhere on your system as your user)
