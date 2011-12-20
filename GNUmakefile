@@ -33,10 +33,3 @@ deb:
 		--requires "libgnustep-gui0.16,libgnustep-base1.19,\
 			gnustep-back0.16,libmatheval1,libgraphviz4,paje" \
 		./checkinstall-make
-
-after-distclean::
-	rm -f config.guess config.h config.sub config.log config.status
-	rm -f install-sh missing
-	rm -f GNUmakefile */GNUmakefile 
-	rm -rf autom4te.cache
-	rm -f configure aclocal.m4 stamp-h1
