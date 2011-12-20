@@ -52,7 +52,20 @@
                                      toTime:endt
                                 minDuration:0];
       while ((ent = [en3 nextObject]) != nil) {
-        NSLog(@"e%*.*s%@", level+2, level+2, "", [self descriptionForEntity:ent]);
+        if ([[self entityTypeForEntity: ent] isKindOfClass: [PajeLinkType class]]){
+          NSDate *startTime = [ent startTime];
+          NSDate *endTime = [ent endTime];
+          NSLog(@"e%*.*s%@ [%@ in start=%@ end=%@] duration=%f source=%@ dest=%@", level+2, level+2, "",
+                [ent valueOfFieldNamed:@"Value"],
+                [ent entityType],
+                [ent startTime],
+                [ent endTime],
+                [endTime timeIntervalSinceDate: startTime],
+                [[ent sourceContainer] name],
+                [[ent destContainer] name]);
+        }else{
+          NSLog(@"e%*.*s%@", level+2, level+2, "", [self descriptionForEntity:ent]);
+        }
       }
     }
   }
