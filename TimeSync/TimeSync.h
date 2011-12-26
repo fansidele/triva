@@ -18,7 +18,7 @@
 #define __TimeSync_H
 
 #include <Foundation/Foundation.h>
-#include <General/PajeFilter.h>
+#include <PajeGeneral/PajeFilter.h>
 #include "../Triva/TrivaFilter.h"
 #include "TimeSyncController.h"
 

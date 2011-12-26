@@ -17,7 +17,7 @@
 #ifndef __List_H
 #define __List_H
 #include <Foundation/Foundation.h>
-#include <General/PajeFilter.h>
+#include <PajeGeneral/PajeFilter.h>
 
 @interface List  : PajeFilter
 {

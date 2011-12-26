@@ -17,7 +17,7 @@
 #ifndef __CHECKTRACE_H
 #define __CHECKTRACE_H
 #include <Foundation/Foundation.h>
-#include <General/PajeFilter.h>
+#include <PajeGeneral/PajeFilter.h>
 
 @interface CheckTrace  : PajeFilter
 {

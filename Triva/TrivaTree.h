@@ -17,7 +17,7 @@
 #ifndef __TrivaTree_H_
 #define __TrivaTree_H_
 #include <Foundation/Foundation.h>
-#include <General/PajeContainer.h>
+#include <PajeGeneral/PajeContainer.h>
 #include "TrivaFilter.h"
 #include "BasicTree.h"
 

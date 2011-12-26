@@ -15,7 +15,7 @@
     along with Triva.  If not, see <http://www.gnu.org/licenses/>.
 */
 #include "TypeFilter.h"
-#include "General/FilteredEnumerator.h"
+#include <PajeGeneral/FilteredEnumerator.h>
 
 @implementation TypeFilter
 - (id)initWithController:(PajeTraceController *)c

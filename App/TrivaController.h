@@ -18,8 +18,8 @@
 #define TrivaController_h_
 
 #include <Foundation/Foundation.h>
-#include <General/PajeFilter.h>
-#include <General/PSortedArray.h>
+#include <PajeGeneral/PajeFilter.h>
+#include <PajeGeneral/PSortedArray.h>
 #include "TrivaServerSocket.h"
 #include "TrivaApplication.h"
 

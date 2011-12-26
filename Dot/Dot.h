@@ -17,7 +17,7 @@
 #ifndef __MARCO_H
 #define __MARCO_H
 #include <Foundation/Foundation.h>
-#include <General/PajeFilter.h>
+#include <PajeGeneral/PajeFilter.h>
 #include <graphviz/gvc.h>
 
 @interface Dot  : PajeFilter

@@ -17,7 +17,7 @@
 #ifndef __Instances_H
 #define __Instances_H
 #include <Foundation/Foundation.h>
-#include <General/PajeFilter.h>
+#include <PajeGeneral/PajeFilter.h>
 
 @interface Instances  : PajeFilter
 {

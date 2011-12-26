@@ -17,7 +17,7 @@
 #include <Foundation/Foundation.h>
 #import <DIMVisual/IntegratorLib.h>
 #import <GenericEvent/GEvent.h>
-#include <General/PajeFilter.h>
+#include <PajeGeneral/PajeFilter.h>
 
 @interface HCMReader : PajeFilter 
 {

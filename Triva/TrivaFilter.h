@@ -17,7 +17,7 @@
 #ifndef __TrivaFilter_h
 #define __TrivaFilter_h
 #include <Foundation/Foundation.h>
-#include <General/PajeFilter.h>
+#include <PajeGeneral/PajeFilter.h>
 
 @class TrivaConfiguration;
 

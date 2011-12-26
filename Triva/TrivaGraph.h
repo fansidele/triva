@@ -18,7 +18,7 @@
 #define __TrivaGraph_H_
 #include <Foundation/Foundation.h>
 #include <AppKit/AppKit.h>
-#include <General/PajeContainer.h>
+#include <PajeGeneral/PajeContainer.h>
 #include "TrivaTree.h"
 #include "TrivaComposition.h"
 

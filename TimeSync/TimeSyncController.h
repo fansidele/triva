@@ -21,7 +21,7 @@
 #include <AppKit/AppKit.h>
 #include <Renaissance/Renaissance.h>
 #include "../Triva/TrivaWindow.h"
-#include <General/PajeFilter.h>
+#include <PajeGeneral/PajeFilter.h>
 
 @class TimeSync;
 @class CompareView;
