@@ -16,6 +16,6 @@ Triva_OBJC_FILES = \
 Triva_APPLICATION_ICON = Triva.tiff
 Triva_RESOURCE_FILES = Triva.tiff trivaInfo.plist Triva.plist
 LDFLAGS=-L../Triva/Triva.framework/Versions/Current/ 
-ADDITIONAL_TOOL_LIBS = -lTriva -lPajeGeneral
+ADDITIONAL_TOOL_LIBS = -lTriva -lPajeGeneral -lm -lgraph -lgvc -lmatheval
 
 include $(GNUSTEP_MAKEFILES)/application.make
