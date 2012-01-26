@@ -65,7 +65,7 @@
                 [[ent destContainer] name],
                 [ent extraFields]);
         }else{
-          NSLog(@"e%*.*s%@ %@", level+2, level+2, "", [self descriptionForEntity:ent], [ent extraFields]);
+          NSLog(@"e%*.*s%@ %@ %@", level+2, level+2, "", [self descriptionForEntity:ent], [[ent container] name], [ent extraFields]);
         }
       }
     }
