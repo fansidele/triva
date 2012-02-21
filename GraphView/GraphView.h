@@ -65,6 +65,7 @@
 
   //User options
   BOOL expandAll;
+  BOOL exportDot;
 }
 - (void) startForceDirectedThread;
 - (void) stopForceDirectedThread;

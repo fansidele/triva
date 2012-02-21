@@ -44,6 +44,7 @@
 
   //user options default
   expandAll = NO;
+  exportDot = NO;
 
   [self updateLabels: self];
   [self startForceDirectedThread];
@@ -73,6 +74,8 @@
     if(0){
     }else if([key isEqualToString: @"gv_expand_all"]){
       expandAll = YES;
+    }else if([key isEqualToString: @"gv_export_dot"]){
+      exportDot = YES;
     }
   }
 }
@@ -280,6 +283,32 @@
   return;
 }
 
+- (void) recursiveExportGraphTree: (TrivaGraph*)node
+{
+  if ([[node children] count] != 0){
+    NSEnumerator *en = [[node children] objectEnumerator];
+    TrivaGraph *child;
+    while ((child = [en nextObject])){
+      [self recursiveExportGraphTree: child];
+    }
+  }else{
+    NSEnumerator *en = [[node connectedNodes] objectEnumerator];
+    TrivaGraph *connected;
+    while ((connected = [en nextObject])){
+      NSString *str = [NSString stringWithFormat: @"\"%@\" -- \"%@\"",
+                                [node name], [connected name]];
+      printf ("%s\n", [str UTF8String]);
+    }
+  }
+}
+
+- (void) exportGraphTree: (TrivaGraph*)node
+{
+  printf ("graph {\n");
+  [self recursiveExportGraphTree: node];
+  printf ("}\n");
+}
+
 - (void) hierarchyChanged
 {
   [forceDirectedNodes removeAllObjects];
@@ -291,6 +320,11 @@
   [self interconnectTree: tree
           usingContainer: [self rootInstance]];
   [tree retain];
+
+  if (exportDot){
+    [self exportGraphTree: tree];
+  }
+
 
   [self createScaleSliders];
   [view resetCurrentRoot];

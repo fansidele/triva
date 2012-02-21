@@ -4,5 +4,9 @@
              type = bool;
              description = "Expand all graph elements";
              };
+    gv_export_dot = {
+             type = bool;
+             description = "Export graph in dot format";
+             };
   };
 }
