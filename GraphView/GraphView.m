@@ -295,8 +295,8 @@
     NSEnumerator *en = [[node connectedNodes] objectEnumerator];
     TrivaGraph *connected;
     while ((connected = [en nextObject])){
-      NSString *str = [NSString stringWithFormat: @"\"%@\" -- \"%@\"",
-                                [node name], [connected name]];
+      NSString *str = [NSString stringWithFormat: @"\"%@\" -- \"%@\";\n\"%@\" [label=\"\"];\n\"%@\"  [label=\"\"];",
+                                [node name], [connected name], [node name], [connected name]];
       printf ("%s\n", [str UTF8String]);
     }
   }
@@ -307,6 +307,7 @@
   printf ("graph {\n");
   [self recursiveExportGraphTree: node];
   printf ("}\n");
+  NSLog (@"Graph (in the dot file format) was printed to stdout");
 }
 
 - (void) hierarchyChanged
