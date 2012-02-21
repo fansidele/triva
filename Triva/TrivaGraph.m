@@ -449,4 +449,15 @@
     return NO;
   }
 }
+
+- (void) setParticle: (id)p
+{
+  //don't retain
+  tupiParticle = p;
+}
+
+- (id) particle
+{
+  return tupiParticle;
+}
 @end

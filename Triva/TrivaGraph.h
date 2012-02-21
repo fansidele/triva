@@ -43,8 +43,9 @@ typedef enum {
 
   BOOL posCalculated;
 
-  //tupi position
+  //tupi position and particle
   NSPoint tupiPos;
+  id tupiParticle;
 }
 + (TrivaGraph*) nodeWithName: (NSString*)n
                       depth: (int)d
