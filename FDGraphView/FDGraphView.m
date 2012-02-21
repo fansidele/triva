@@ -324,7 +324,6 @@ double gettime ()
   [tree retain];
 
   //checks
-  NSLog (@"%@", [tupiLayout allParticles]);
   [layoutThread start];
 
   //gui stuff
