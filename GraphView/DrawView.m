@@ -77,6 +77,7 @@
 
 - (void)drawConnections:(TrivaGraph*)tree withPresentNodes: (NSSet*)present
 {
+  [NSBezierPath setDefaultLineWidth: 2];
   if ([tree expanded]){
     //recurse
     NSEnumerator *en = [[tree children] objectEnumerator];
@@ -125,13 +126,14 @@
                           drawAtPoint: NSMakePoint(0,0)
                        withAttributes: nil];
 
-  //set default line width based on ratio
-  [NSBezierPath setDefaultLineWidth: 1/ratio];
-
 
   NSAffineTransform *transform = [self transform];
   [transform concat];
   [self drawConnections: currentRoot withPresentNodes: presentNodes];
+
+  //set default line width based on ratio
+  [NSBezierPath setDefaultLineWidth: 1/ratio];
+
   [currentRoot recursiveDrawLayout];
   [transform invert];
   [transform concat];
