@@ -382,6 +382,24 @@ double gettime ()
   [forceDirectedNodes removeAllObjects];
 }
 
+//from the view
+- (void) startMovingNode: (TrivaGraph*) node
+{
+  [tupiLayout freezeNode: node frozen: YES];
+}
+
+- (void) moveNode: (TrivaGraph*) node toLocation: (NSPoint) newLoc
+{
+  NSLog (@"%s", __FUNCTION__);
+  NSPoint tupiNewLocation = NSMakePoint(newLoc.x/100, newLoc.y/100);
+  [tupiLayout moveNode: node toLocation: tupiNewLocation];
+}
+
+- (void) stopMovingNode: (TrivaGraph*) node
+{
+  [tupiLayout freezeNode: node frozen: NO];
+}
+
 - (void) clickForceDirected: (id) sender
 {
   NSLog (@"%@", layoutThread);

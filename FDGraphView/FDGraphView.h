@@ -66,6 +66,11 @@
 - (void) removeForceDirectedNode: (TrivaGraph*) n;
 - (void) removeForceDirectedIgnoredNode: (TrivaGraph*) n;
 
+//from the view
+- (void) startMovingNode: (TrivaGraph*) node;
+- (void) moveNode: (TrivaGraph*) node toLocation: (NSPoint) newLoc;
+- (void) stopMovingNode: (TrivaGraph*) node;
+
 //from the interface
 - (void) clickForceDirected: (id) sender;
 - (void) clickResetPositions: (id) sender;

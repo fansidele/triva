@@ -204,8 +204,7 @@
     NSAffineTransform *t = [self transform];
     [t invert];
     NSPoint p2 = [t transformPoint: p];
-
-    [highlighted setLocation: p2];
+    [filter moveNode: highlighted toLocation: p2];
     [self setNeedsDisplay: YES];
 
     movingSingleNode = YES;
@@ -289,8 +288,10 @@
   [t invert];
   p2 = [t transformPoint: p];
 
-//  movingSingleNode = YES;
-
+  if (highlighted){
+    movingSingleNode = YES;
+    [filter startMovingNode: highlighted];
+  }
   return;
 /*
   if ([event modifierFlags] & NSControlKeyMask){
@@ -314,6 +315,7 @@
 {
   if (highlighted && movingSingleNode){
     [filter removeForceDirectedIgnoredNode: highlighted];
+    [filter stopMovingNode: highlighted];
     movingSingleNode = NO;
   }else if (highlighted){
     [(TrivaGraph*)highlighted expand];
