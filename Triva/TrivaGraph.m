@@ -123,28 +123,6 @@
   return ret;
 }
 
-- (BOOL) isConnectedTo: (TrivaGraph*) c
-{
-  if ([[self connectedNodes] containsObject: c] ||
-      [[c connectedNodes] containsObject: self]){
-    return YES;
-  }
-
-  //1 - get all nodes below c
-  NSMutableSet *s1 = [c allNodes];
-
-  //2 - get all connected nodes of self
-  NSMutableSet *allConnectedNodes = [self allConnectedNodes];
-
-  [allConnectedNodes intersectSet: s1];
-
-  if ([allConnectedNodes count]){
-    return YES;
-  }else{
-    return NO;
-  }
-}
-
 - (void) timeSelectionChanged
 {
   //update current values
@@ -267,11 +245,6 @@
   }
   *output = ret;
   return YES;
-}
-
-- (NSSet*) connectedNodes;
-{
-  return connectedNodes;
 }
 
 - (void) resetVelocity
@@ -437,5 +410,43 @@
     [ret appendString: [child exportDot]];
   }
   return ret;
+}
+
+/* FDNode protocol */
+- (NSPoint) position
+{
+  return location;
+}
+- (void) setPosition: (NSPoint) newPosition
+{
+  NSLog (@"%s %@ %@", __FUNCTION__, [self name], NSStringFromPoint(newPosition));
+  location = newPosition;
+}
+
+- (NSSet *) connectedNodes
+{
+  return connectedNodes;
+}
+
+- (BOOL) isConnectedTo: (id<FDNode>) c
+{
+  if ([[self connectedNodes] containsObject: c] ||
+      [[c connectedNodes] containsObject: self]){
+    return YES;
+  }
+
+  //1 - get all nodes below c
+  NSMutableSet *s1 = [(TrivaGraph*)c allNodes];
+
+  //2 - get all connected nodes of self
+  NSMutableSet *allConnectedNodes = [self allConnectedNodes];
+
+  [allConnectedNodes intersectSet: s1];
+
+  if ([allConnectedNodes count]){
+    return YES;
+  }else{
+    return NO;
+  }
 }
 @end

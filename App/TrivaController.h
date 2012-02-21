@@ -73,6 +73,9 @@
 @interface TrivaGraphController : TrivaController
 @end
 
+@interface TrivaGraphFDController : TrivaController
+@end
+
 @interface TrivaLinkController : TrivaController
 @end
 

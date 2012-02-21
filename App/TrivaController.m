@@ -41,6 +41,9 @@
     }else if (comp&TrivaGraphView){
       triva = [[TrivaGraphController alloc]
                 initWithConfiguration: configuration];
+    }else if (comp&TrivaGraphFD){
+      triva = [[TrivaGraphFDController alloc]
+                initWithConfiguration: configuration];
     }else if (comp&TrivaLinkView){
       triva = [[TrivaLinkController alloc]
                 initWithConfiguration: configuration];
@@ -171,6 +174,27 @@ NS_ENDHANDLER
        SpatialIntegration, \
        GraphConfiguration, \
        GraphView \
+    ) )" propertyList];
+  [self addComponentSequences: graph withDictionary: components];
+  [self initializeWithConfiguration: configuration];
+  return self;
+}
+@end
+
+@implementation TrivaGraphFDController
+- (id) initWithConfiguration: (TrivaConfiguration *) configuration
+{
+  self = [super initWithConfiguration: configuration];
+  NSArray *graph = [@"(  \
+    ( FileReader, \
+       PajeEventDecoder, \
+       PajeSimulator, \
+       StorageController, \
+       TimeInterval, \
+       TimeIntegration, \
+       SpatialIntegration, \
+       GraphConfiguration, \
+       FDGraphView \
     ) )" propertyList];
   [self addComponentSequences: graph withDictionary: components];
   [self initializeWithConfiguration: configuration];

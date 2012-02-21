@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<!DOCTYPE gsmarkup>
+
+<gsmarkup>
+  <objects>
+    <window id="window"
+            instanceOf="TrivaWindow"
+            width="500" height="300"
+            title="Triva - FD Graph View"
+            resizable="yes" closable="yes" visible="no">
+      <vbox id="mainVBox" halign="expand">
+        <view id="view"
+              instanceOf="DrawView"
+              halign="expand" valign="expand" />
+        <hbox>
+          <button 
+             type="pushOnPushOff"
+             target="#NSOwner"
+             action="forceDirected:"
+             title="Force Directed"/>
+          <button
+             target="#NSOwner"
+             action="resetPositions:"
+             title="Reset Positions"/>
+        </hbox>
+        <hbox id="scaleBox"/>
+      </vbox>
+    </window>
+  </objects>
+
+  <connectors>
+    <outlet source="#NSOwner" target="#window" key="window" />
+    <outlet source="#NSOwner" target="#view" key="view" />
+    <outlet source="#NSOwner" target="#springSlider" key="springSlider" />
+    <outlet source="#NSOwner" target="#chargeSlider" key="chargeSlider" />
+    <outlet source="#NSOwner" target="#dampingSlider" key="dampingSlider" />
+    <outlet source="#NSOwner" target="#chargeLabel" key="chargeLabel" />
+    <outlet source="#NSOwner" target="#springLabel" key="springLabel" />
+    <outlet source="#NSOwner" target="#dampingLabel" key="dampingLabel" />
+    <outlet source="#NSOwner" target="#scaleBox" key="scaleBox" />
+    <outlet source="#NSOwner" target="#mainVBox" key="mainVBox" />
+  </connectors>
+</gsmarkup>

@@ -21,6 +21,7 @@
 #include <PajeGeneral/PajeContainer.h>
 #include "TrivaTree.h"
 #include "TrivaComposition.h"
+#include <Tupi/Tupi.h>
 
 @class TrivaTree;
 
@@ -30,7 +31,7 @@ typedef enum {
   TRIVA_ROUTER
 } TrivaGraphType;
 
-@interface TrivaGraph : TrivaTree
+@interface TrivaGraph : TrivaTree <FDNode>
 {
   NSMutableSet *connectedNodes;
   NSMutableDictionary *compositions;

@@ -1,5 +1,7 @@
 {
   Triva = {
+        fdgraph = { type = bool;
+                    description = "Graph (Force-Directed)"; };
         graph   = { type = bool;
                     description = "Configurable Graph"; };
         treemap = { type = bool;
