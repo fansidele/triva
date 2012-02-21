@@ -41,17 +41,7 @@
   BOOL recordMode;
   BOOL slidersCreated;
 
-  BOOL executeThread;
-  NSThread *thread;
-  NSConditionLock *lock;
-
   //gui
-  NSSlider *springSlider;
-  NSSlider *chargeSlider;
-  NSSlider *dampingSlider;
-  NSTextField *springLabel;
-  NSTextField *chargeLabel;
-  NSTextField *dampingLabel;
   id scaleBox;
   id mainVBox;
 
@@ -65,23 +55,20 @@
 
   //Tupi layout
   Layout *tupiLayout;
+  LayoutRunner *runner;
   NSThread *layoutThread;
 }
-- (void) startForceDirectedThread;
-- (void) stopForceDirectedThread;
 - (void) setRecordMode;
 - (TrivaGraph *) tree;
 
-- (void) forceDirectedGraph: (id) sender;
 //aditional methods to complete protocol (used only within this component)
 - (void) addForceDirectedIgnoredNode: (TrivaGraph*) n;
 - (void) removeForceDirectedNode: (TrivaGraph*) n;
 - (void) removeForceDirectedIgnoredNode: (TrivaGraph*) n;
 
 //from the interface
-- (void) forceDirected: (id) sender;
-- (void) updateLabels: (id) sender;
-- (void) resetPositions: (id) sender;
+- (void) clickForceDirected: (id) sender;
+- (void) clickResetPositions: (id) sender;
 - (void) updateScaleSliders: (id) sender;
 
 - (void) redefineLayout;

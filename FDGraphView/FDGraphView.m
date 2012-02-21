@@ -21,7 +21,7 @@
 #include <unistd.h>
 #include "../Triva/NSPointFunctions.h"
 #include "FDGraphView.h"
-
+#include <sys/time.h>
 
 double gettime ()
 {
@@ -54,25 +54,35 @@ double gettime ()
   expandAll = NO;
   exportDot = NO;
 
-  [self updateLabels: self];
-  [self startForceDirectedThread];
-
   //The tupi layout (the manager of all particles)
   tupiLayout = [[Layout alloc] init];
-
-  //the force-directed algorithm runner of Tupi
-  LayoutRunner *runner = [[LayoutRunner alloc] init];
-  [runner setLayout: tupiLayout];
-  [runner setProvider: self];
-
-  //create the thread, but only start it when particles have been added
-  //hierarchyChanged add the particles
-  layoutThread = [[NSThread alloc] initWithTarget: runner
-                                         selector: @selector(run:)
-                                           object: nil];
   return self;
 }
 
+- (void) startThread
+{
+  //the force-directed algorithm runner of Tupi
+  runner = [[LayoutRunner alloc] init];
+  [runner setLayout: tupiLayout];
+  [runner setProvider: self];
+
+  layoutThread = [[NSThread alloc] initWithTarget: runner
+                                         selector: @selector(run:)
+                                           object: nil];
+  [layoutThread start];
+}
+
+- (void) stopThread
+{
+  if ([layoutThread isExecuting]){
+    [layoutThread cancel];
+
+    [runner release];
+    runner = nil;
+    [layoutThread release];
+    layoutThread = nil;
+  }
+}
 
 + (NSDictionary *) defaultOptions
 {
@@ -162,27 +172,8 @@ double gettime ()
   slidersCreated = YES;
 }
 
-- (void) startForceDirectedThread
-{
-  executeThread = YES;
-  lock = [[NSConditionLock alloc] initWithCondition: 0];
-  thread = [[NSThread alloc] initWithTarget: self
-                                   selector:
-                               @selector(forceDirectedGraph:)
-                                     object: nil];
-  static int count = 0;
-  [thread setName: [NSString stringWithFormat: @"t-%d", count++]];
-  [thread start];
-}
-
-- (void) stopForceDirectedThread
-{
-  executeThread = NO;
-}
-
 - (void) dealloc
 {
-  executeThread = NO;
   [super dealloc];
 }
 
@@ -308,9 +299,7 @@ double gettime ()
   [forceDirectedNodes removeAllObjects];
 
   //stop thread
-  if ([layoutThread isExecuting]){
-    [layoutThread cancel];
-  }
+  [self stopThread];
 
   //free previous tree
   [tree release];
@@ -324,7 +313,7 @@ double gettime ()
   [tree retain];
 
   //checks
-  [layoutThread start];
+  [self startThread];
 
   //gui stuff
   [self createScaleSliders];
@@ -368,118 +357,9 @@ double gettime ()
   [self show];
 }
 
-
-- (void) forceDirectedGraph: (id) sender
-{
-  NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-  double total_energy = 0;
-  NSDate *lastViewUpdate = [NSDate distantPast];
-  do{ 
-    double spring = [springSlider floatValue];
-    double charge = [chargeSlider floatValue];
-    double damping = [dampingSlider floatValue];
-
-    NSAutoreleasePool *p2 = [[NSAutoreleasePool alloc] init];
-    NSPoint energy = NSMakePoint (0,0);
-
-    //get lock
-    [lock lock];
-
-    NSEnumerator *en1 = [forceDirectedNodes objectEnumerator];
-    TrivaGraph *c1;
-    while ((c1 = [en1 nextObject])){
-      NSPoint force = NSMakePoint (0, 0);
-
-      //see the influence of everybody over c1, register in force
-      NSEnumerator *en2 = [forceDirectedNodes objectEnumerator];
-      TrivaGraph *c2;
-      while ((c2 = [en2 nextObject])){
-        if ([[c1 name] isEqualToString: [c2 name]]) continue;
-
-        //calculating distance between particles
-        NSPoint c1p = [c1 location];
-        NSPoint c2p = [c2 location];
-        double distance = LMSDistanceBetweenPoints (c1p, c2p);
-
-        //coulomb_repulsion (k_e * (q1 * q2 / r*r))
-        double coulomb_constant = 1;
-        double r = distance==0 ? 1 : distance;
-        double q1 = [c1 charge] * charge;
-        double q2 = [c2 charge] * charge;
-        double coulomb_repulsion = (coulomb_constant * (q1*q2)/(r*r));
-        if (coulomb_repulsion > 100) coulomb_repulsion = 100;
-
-        //hooke_attraction (-k * x)
-        double hooke_attraction = 0;
-
-        if ([c1 isConnectedTo: c2]){
-          //s should be smaller than one 
-          double s = [c1 spring: c2] * spring;
-          if (s < 1) s = 1;
-
-          //hooke_attraction force should be maximum 100
-          hooke_attraction = 1 - ((distance - s) / s);
-          double m = 1;
-          if (hooke_attraction < 0) m = -1;
-          if (fabs(hooke_attraction) > 100) hooke_attraction = 100*m;
-        }
-
-        //calculating direction of the effects
-        NSPoint direction = LMSNormalizePoint(NSSubtractPoints(c1p, c2p));
-        if (NSEqualPoints(direction, NSZeroPoint)){
-          double x = (drand48()*2)-1;
-          double y = (drand48()*2)-1;
-          direction = NSMakePoint(x,y);
-        }
-
-        //applying calculated values
-        force = NSAddPoints (force, LMSMultiplyPoint(direction,
-                                                     coulomb_repulsion));
-        force = NSAddPoints (force, LMSMultiplyPoint(direction,
-                                                     hooke_attraction));
-      }
-
-      NSPoint velocity = [c1 velocity];
-      velocity = NSAddPoints (velocity, force);
-      velocity = LMSMultiplyPoint (velocity, damping);
-      [c1 setVelocity: velocity];
-
-      //set location of child c1
-      NSPoint c1loc = [c1 location];
-      c1loc = NSAddPoints (c1loc, velocity);
-      if (![forceDirectedIgnoredNodes containsObject: c1]){
-        [c1 setLocation: c1loc];
-      }
-
-      energy = NSAddPoints (energy, velocity);
-    }
-
-    //unlock
-    [lock unlock];
-
-    total_energy = fabs(energy.x) + fabs(energy.y);
-
-    //update view?
-    NSDate *now = [NSDate dateWithTimeIntervalSinceNow: 0];
-    double difTime = [now timeIntervalSinceDate: lastViewUpdate];
-    if (difTime > 0.1){
-      [lastViewUpdate release];
-      lastViewUpdate = now;
-      [view setNeedsDisplay: YES];
-    }
-    [lastViewUpdate retain];
-
-    [p2 release];
-    
-  }while(executeThread);
-  [pool release];
-}
-
 - (void) removeForceDirectedNode: (TrivaGraph*) n
 {
-  [lock lock];
   [forceDirectedNodes removeObject: n];
-  [lock unlock];
 }
 
 - (void) removeForceDirectedIgnoredNode: (TrivaGraph*) n
@@ -489,9 +369,7 @@ double gettime ()
 
 - (void) addForceDirectedNode: (TrivaGraph*) n
 {
-  [lock lock];
   [forceDirectedNodes addObject: n];
-  [lock unlock];
 }
 
 - (void) addForceDirectedIgnoredNode: (TrivaGraph*) n
@@ -501,33 +379,23 @@ double gettime ()
 
 - (void) removeForceDirectedNodes
 {
-  [lock lock];
   [forceDirectedNodes removeAllObjects];
-  [lock unlock];
 }
 
-- (void) forceDirected: (id) sender
+- (void) clickForceDirected: (id) sender
 {
-  if (executeThread){
-    [self stopForceDirectedThread];
+  NSLog (@"%@", layoutThread);
+  if ([layoutThread isExecuting]){
+    [self stopThread];
   }else{
-    [self startForceDirectedThread];
+    [self startThread];
   }
 }
 
-- (void) updateLabels: (id) sender
-{
-  [springLabel setFloatValue: [springSlider floatValue]];
-  [chargeLabel setFloatValue: [chargeSlider floatValue]];
-  [dampingLabel setFloatValue: [dampingSlider floatValue]];
-}
-
 /* resetting positions of everybody */
-- (void) resetPositions: (id) sender
+- (void) clickResetPositions: (id) sender
 {
-  [lock lock];
-  [tree recursiveResetPositions];
-  [lock unlock];
+  // [tree recursiveResetPositions];
 }
 
 - (void) updateScaleSliders: (id) sender
