@@ -19,7 +19,6 @@
 
 #include <Foundation/Foundation.h>
 #include <AppKit/AppKit.h>
-#include <graphviz/gvc.h>
 #include "../Triva/TrivaGraph.h"
 #include "../Triva/TrivaWindow.h"
 #include "DrawView.h"
@@ -27,10 +26,6 @@
 @interface GraphView : TrivaFilter
 {
   TrivaGraph *tree;
-
-  //Graphviz
-  GVC_t *gvc;
-  graph_t *graph;
 
   NSMutableSet *forceDirectedNodes; /* of TrivaGraph, contains all the nodes
                                        that currently participate in the

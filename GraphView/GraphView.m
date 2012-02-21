@@ -34,8 +34,6 @@
   [view setFilter: self];
   [window initializeWithDelegate: self];
   [window makeFirstResponder: view];
-  gvc = NULL;
-  graph = NULL;
 
   recordMode = NO;
   forceDirectedNodes = [[NSMutableSet alloc] init];
@@ -167,11 +165,6 @@
 - (TrivaGraph*) tree
 {
   return tree;
-}
-
-- (graph_t *) graphviz
-{
-  return graph;
 }
 
 - (BOOL) hasContainerType: (NSArray *) containedTypes
