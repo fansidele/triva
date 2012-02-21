@@ -42,6 +42,9 @@ typedef enum {
   NSMutableDictionary *connectionPoints; //TrivaGraph->NSPoint(as NSString)
 
   BOOL posCalculated;
+
+  //tupi position
+  NSPoint tupiPos;
 }
 + (TrivaGraph*) nodeWithName: (NSString*)n
                       depth: (int)d

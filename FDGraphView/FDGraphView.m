@@ -560,7 +560,6 @@ double gettime ()
 /* TupiProtocols */
 - (void) layoutChanged
 {
-  NSLog (@"%s", __FUNCTION__);
   [view setNeedsDisplay: YES];
 }
 @end

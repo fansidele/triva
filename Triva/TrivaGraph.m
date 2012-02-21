@@ -415,12 +415,12 @@
 /* FDNode protocol */
 - (NSPoint) position
 {
-  return location;
+  return tupiPos;
 }
 - (void) setPosition: (NSPoint) newPosition
 {
-  NSLog (@"%s %@ %@", __FUNCTION__, [self name], NSStringFromPoint(newPosition));
-  location = newPosition;
+  tupiPos = newPosition;
+  location = NSMakePoint(tupiPos.x*100, tupiPos.y*100);
 }
 
 - (NSSet *) connectedNodes
