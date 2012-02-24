@@ -94,7 +94,7 @@
       if (isConnected){
         NSPoint mp = [tree location];
         NSPoint pp = [present location];
-        [[[NSColor grayColor] colorWithAlphaComponent: 0.2] set];
+        [[[NSColor blackColor] colorWithAlphaComponent: 0.8] set];
         NSBezierPath *path = [NSBezierPath bezierPath];
         [path moveToPoint: mp];
         [path lineToPoint: pp];
