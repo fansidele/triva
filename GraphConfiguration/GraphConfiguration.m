@@ -91,16 +91,19 @@
 - (void) entitySelectionChanged
 {
   [self timeSelectionChanged];
+  [super entitySelectionChanged];
 }
 
 - (void) containerSelectionChanged
 {
   [self timeSelectionChanged];
+  [super containerSelectionChanged];
 }
 
 - (void) dataChangedForEntityType: (PajeEntityType *) type
 {
   [self timeSelectionChanged];
+  [super dataChangedForEntityType: type];
 }
 
 + (NSDictionary *) defaultOptions
