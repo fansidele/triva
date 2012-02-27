@@ -170,6 +170,7 @@ NS_ENDHANDLER
        PajeSimulator, \
        StorageController, \
        TimeInterval, \
+       TypeFilter, \
        TimeIntegration, \
        SpatialIntegration, \
        GraphConfiguration, \
