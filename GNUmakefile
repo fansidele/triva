@@ -8,7 +8,6 @@ SUBPROJECTS = Triva \
   App \
   GraphConfiguration \
   GraphView \
-  FDGraphView \
   Dot \
   CheckTrace \
   StatTrace \
