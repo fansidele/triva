@@ -1,7 +1,7 @@
 include $(GNUSTEP_MAKEFILES)/common.make
 
 PACKAGE_NAME = Triva
-VERSION = 1.4
+VERSION = 1.5rc1
 
 AGGREGATE_NAME = Triva
 SUBPROJECTS = Triva \
