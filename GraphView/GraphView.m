@@ -321,7 +321,6 @@
     [self exportGraphTree: tree];
   }
 
-
   [self createScaleSliders];
   [view resetCurrentRoot];
   [self timeSelectionChanged];
