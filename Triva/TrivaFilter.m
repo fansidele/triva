@@ -23,11 +23,6 @@
   return self;
 }
 
-- (id) currentTupiManager
-{
-  return [(TrivaFilter*)inputComponent currentTupiManager];
-}
-
 - (void) debugOf: (PajeEntityType*) type At: (PajeContainer*) container
 {
   return [(TrivaFilter*)inputComponent debugOf: type At: container];

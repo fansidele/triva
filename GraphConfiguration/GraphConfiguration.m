@@ -74,10 +74,6 @@
 
 - (void) applyGraphConfiguration
 {
-//  [manager release];
-//  manager = [[TupiManager alloc] initWithConfigurationDictionary: plist
-//                                                   andPajeFilter: self];
-
   //let's inform other components that we have changes
   [self hierarchyChanged];
 }

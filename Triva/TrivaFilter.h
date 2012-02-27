@@ -24,8 +24,6 @@
 typedef enum {Local,Global,Convergence,Arnaud} TrivaScale;
 
 @interface TrivaFilter  : PajeFilter
-- (id) currentTupiManager;
-
 /* auxiliary methods */
 - (void) debugOf: (PajeEntityType*) type At: (PajeContainer*) container;
 - (BOOL) expressionHasVariables: (NSString*) expr;

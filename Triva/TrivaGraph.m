@@ -428,7 +428,7 @@
   return connectedNodes;
 }
 
-- (BOOL) isConnectedTo: (id<FDNode>) c
+- (BOOL) isConnectedTo: (id) c
 {
   if ([[self connectedNodes] containsObject: c] ||
       [[c connectedNodes] containsObject: self]){
