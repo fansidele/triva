@@ -254,8 +254,10 @@
                                      [[entity sourceContainer] name]];
         d = (TrivaGraph*)[rootNode searchChildByName:
                                      [[entity destContainer] name]];
-        [s connectToNode: d];
-        [d connectToNode: s];
+        if (s && d){
+          [s connectToNode: d];
+          [d connectToNode: s];
+        }
       }
     }
   }
