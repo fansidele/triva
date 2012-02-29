@@ -31,7 +31,6 @@
   FDDrawView *view;
   TrivaWindow *window;
 
-  BOOL recordMode;
   BOOL slidersCreated;
 
   //gui
@@ -47,7 +46,6 @@
   LayoutRunner *runner;
   NSThread *layoutThread;
 }
-- (void) setRecordMode;
 - (TrivaGraph *) tree;
 
 //from the view

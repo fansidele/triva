@@ -31,8 +31,6 @@
   ratio = 1;
 
   movingSingleNode = NO;
-  selectingArea = NO;
-  selectedArea = NSZeroRect;
 
   highlighted = nil;
   return self;

@@ -32,13 +32,6 @@
 
   //interaction states
   BOOL movingSingleNode;
-  BOOL selectingArea;
-
-  TrivaGraph *movingNode;
-
-  //drawing selectedArea
-  NSRect selectedArea;
-  BOOL highlightSelectedArea;
 
   //graph's tree
   TrivaGraph *currentRoot;

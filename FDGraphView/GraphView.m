@@ -36,7 +36,6 @@
   [window initializeWithDelegate: self];
   [window makeFirstResponder: view];
 
-  recordMode = NO;
   slidersCreated = NO;
 
   //The tupi layout (the manager of all particles)
@@ -314,12 +313,6 @@
 {
   [[NSApplication sharedApplication] terminate:self];
   return YES;
-}
-
-- (void) setRecordMode
-{
-  recordMode = !recordMode;
-  NSLog (@"recordMode set to %d", recordMode);
 }
 
 - (void) show
