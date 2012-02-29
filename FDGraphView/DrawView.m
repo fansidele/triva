@@ -226,24 +226,27 @@
 
 - (void) mouseMoved:(NSEvent *)event
 {
-  NSPoint p, p2;
-  p = [self convertPoint:[event locationInWindow] fromView:nil];
+  NSPoint p = [self convertPoint:[event locationInWindow] fromView:nil];
 
   NSAffineTransform *t = [self transform];
   [t invert];
-  p2 = [t transformPoint: p];
+  NSPoint p2 = [t transformPoint: p];
 
-  [highlighted setHighlighted: NO];
+  TrivaGraph *ret = [[filter tree] searchAtPoint: p2];
+  if (ret == nil && highlighted == nil){
+    return;
+  }
 
-  TrivaGraph *root = [filter tree];
-  TrivaGraph *ret = [root searchAtPoint: p2];
+  if (highlighted){
+    [highlighted setHighlighted: NO];
+  }
+
   if (ret){
     highlighted = ret;
     [highlighted setHighlighted: YES];
-    [self setNeedsDisplay: YES];
-  }else{
-    highlighted = nil;
   }
+
+  [self setNeedsDisplay: YES];
   return;
 }
 
