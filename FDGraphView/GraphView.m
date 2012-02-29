@@ -175,10 +175,6 @@
                            depth: (int) depth
                           parent: (TrivaTree*) p
 {
-  //TODO: Create a hierarchical structure that contains
-  //only the types listed in the graphConfiguration
-  //NSSet *nodeEntityTypeSet = [NSSet setWithArray: [self entityTypesForNodes]];
-
   //creating hierarchical structure
   TrivaGraph *ret = [TrivaGraph nodeWithName: [cont name]
                                      depth: depth
@@ -186,17 +182,6 @@
                                   expanded: NO
                                  container: cont
                                     filter: self];
-
-  //add the new TrivaGraph node to the tupiLayout
-  [tupiLayout addNode: ret withName: [ret name]];
-
-  if ([self hasGraphvizLocationFromFile]){
-    NSPoint p = [self graphvizLocationForName: [ret name]];
-    if (!NSEqualPoints(p, NSZeroPoint)){
-      [ret setLocation: p];
-      [ret setPositionsAlreadyCalculated: YES];
-    }
-  }
 
   NSArray *containedTypes;
   containedTypes = [self containedTypesForContainerType: [cont entityType]];
@@ -214,11 +199,6 @@
         [ret addChild: child];
       }
     }
-  }
-
-  //set user options
-  if ([[ret children] count]){
-    [ret setExpanded: YES];
   }
   return ret;
 }
@@ -281,12 +261,9 @@
   //free previous tree
   [tree release];
 
-  //define new tree based on configuration, interconnect nodes
-  tree = [self treeWithContainer: [self rootInstance]
-                           depth: 0
-                          parent: nil];
-  [self interconnectTree: tree
-          usingContainer: [self rootInstance]];
+  //create and interconnect new tree based on trace hierarchy/links
+  tree = [self treeWithContainer: [self rootInstance] depth: 0 parent: nil];
+  [self interconnectTree: tree usingContainer: [self rootInstance]];
   [tree retain];
 
   //checks
@@ -294,7 +271,6 @@
 
   //gui stuff
   [self createScaleSliders];
-  [view resetCurrentRoot];
   [self timeSelectionChanged];
 }
 

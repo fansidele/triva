@@ -34,13 +34,10 @@
   BOOL movingSingleNode;
 
   //graph's tree
-  TrivaGraph *currentRoot;
   TrivaGraph *highlighted;
 }
 - (void) setFilter: (FDGraphView *)f;
-- (NSColor *) getColor: (NSColor *)c withSaturation: (double) saturation;
-- (void) setCurrentRoot: (TrivaGraph *) nroot;
-- (void) resetCurrentRoot;
+- (NSAffineTransform*) transform;
 @end
 
 #include "GraphView.h"

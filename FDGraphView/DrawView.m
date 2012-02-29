@@ -23,15 +23,15 @@
 - (id) initWithFrame: (NSRect) frame
 {
   self = [super initWithFrame: frame];
-  translate = NSZeroPoint;
-  translate = NSAddPoints (translate,
+
+  //for graphical translation and zoom
+  ratio = 1;
+  move = NSZeroPoint;
+  translate = NSAddPoints (NSZeroPoint,
                            NSMakePoint(frame.size.width/2,
                                        frame.size.height/2));
-  move = NSZeroPoint;
-  ratio = 1;
 
   movingSingleNode = NO;
-
   highlighted = nil;
   return self;
 }
@@ -44,25 +44,6 @@
 - (void) setFilter: (FDGraphView *)f
 {
   filter = f;
-  [self setCurrentRoot: [filter tree]];
-}
-
-- (NSColor *) getColor: (NSColor *)c withSaturation: (double) saturation
-{
-  if (![[c colorSpaceName] isEqualToString:
-      @"NSCalibratedRGBColorSpace"]){
-    NSLog (@"%s:%d Color provided is not part of the "
-        "RGB color space.", __FUNCTION__, __LINE__);
-    return nil;
-  }
-  double h, s, b, a;
-  [c getHue: &h saturation: &s brightness: &b alpha: &a];
-
-  NSColor *ret = [NSColor colorWithCalibratedHue: h
-    saturation: saturation
-    brightness: b
-    alpha: a];
-  return ret;
 }
 
 - (NSAffineTransform*) transform
@@ -98,20 +79,16 @@
         [path lineToPoint: pp];
         [path stroke];
       }
-
-      //    NSLog (@"tree=%@ present=%@ => %d", [tree name], [present name], isConnected);
     }
-//  [tree drawConnectNodes];
   }
 }
 
 - (void)drawRect:(NSRect)frame
 {
-  if (currentRoot == nil){
-    [self setCurrentRoot: [filter tree]];
-  }
+  TrivaGraph *root = [filter tree];
+
   //create a set with all nodes present in the visualization
-  NSSet *presentNodes = [currentRoot allExpanded];
+  NSSet *presentNodes = [root allExpanded];
 
   NSRect tela = [self bounds];
 
@@ -124,17 +101,20 @@
                           drawAtPoint: NSMakePoint(0,0)
                        withAttributes: nil];
 
+  //apply the graphical transformation for translation and zoom
   NSAffineTransform *transform = [self transform];
   [transform concat];
-
 
   //set default line width based on ratio
   [NSBezierPath setDefaultLineWidth: 1/ratio];
 
-  [self drawConnections: currentRoot withPresentNodes: presentNodes];
+  //draw connections first (so they appear in the background)
+  [self drawConnections: root withPresentNodes: presentNodes];
 
+  //draw nodes
+  [root recursiveDrawLayout];
 
-  [currentRoot recursiveDrawLayout];
+  //invert the graphical transformation
   [transform invert];
   [transform concat];
 
@@ -252,7 +232,8 @@
 
   [highlighted setHighlighted: NO];
 
-  TrivaGraph *ret = [currentRoot searchAtPoint: p2];
+  TrivaGraph *root = [filter tree];
+  TrivaGraph *ret = [root searchAtPoint: p2];
   if (ret){
     highlighted = ret;
     [highlighted setHighlighted: YES];
@@ -299,23 +280,5 @@
                            NSSubtractPoints (screenPositionBefore,
                                              screenPositionAfter));
   [self setNeedsDisplay: YES];
-}
-
-- (void) setCurrentRoot: (TrivaGraph *) nroot
-{
-  if (!nroot) return;
-
-  if (highlighted){
-    [highlighted setHighlighted: NO];
-    highlighted = nil;
-  }
-  currentRoot = nroot;
-  [self setNeedsDisplay: YES];
-}
-
-- (void) resetCurrentRoot
-{
-  currentRoot = nil;
-  highlighted = nil;
 }
 @end
