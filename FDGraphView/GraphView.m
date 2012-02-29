@@ -236,6 +236,8 @@
   while ((type = [en nextObject])){
     if ([type isKindOfClass: [PajeLinkType class]] &&
         [edgeSet containsObject: [type description]]){
+
+      //FIXME TODO: why -1 to 1 for finding links?
       NSDate *st = [NSDate dateWithTimeIntervalSinceReferenceDate: -1];
       NSDate *et = [NSDate dateWithTimeIntervalSinceReferenceDate: 1];
       NSEnumerator *en2 = [self enumeratorOfEntitiesTyped: type
