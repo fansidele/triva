@@ -20,7 +20,7 @@
 #include <AppKit/AppKit.h>
 #include <unistd.h>
 #include "../Triva/NSPointFunctions.h"
-#include "FDGraphView.h"
+#include "GraphView.h"
 
 #define MAX_SIZE 400
 

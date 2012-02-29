@@ -16,7 +16,7 @@
 */
 
 #include <AppKit/AppKit.h>
-#include "FDDrawView.h"
+#include "DrawView.h"
 #include "../Triva/NSPointFunctions.h"
 
 @implementation FDDrawView

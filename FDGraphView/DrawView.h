@@ -53,6 +53,6 @@
 @end
 
 
-#include "FDGraphView.h"
+#include "GraphView.h"
 
 #endif
