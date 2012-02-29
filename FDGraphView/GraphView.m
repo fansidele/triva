@@ -37,13 +37,7 @@
   [window makeFirstResponder: view];
 
   recordMode = NO;
-  forceDirectedNodes = [[NSMutableSet alloc] init];
-  forceDirectedIgnoredNodes = [[NSMutableSet alloc] init];
   slidersCreated = NO;
-
-  //user options default
-  expandAll = NO;
-  exportDot = NO;
 
   //The tupi layout (the manager of all particles)
   tupiLayout = [[Layout alloc] init];
@@ -93,13 +87,6 @@
   NSEnumerator *en = [myOptions keyEnumerator];
   NSString *key;
   while ((key = [en nextObject])){
-//    NSString *value = [myOptions objectForKey: key];
-    if(0){
-    }else if([key isEqualToString: @"gv_expand_all"]){
-      expandAll = YES;
-    }else if([key isEqualToString: @"gv_export_dot"]){
-      exportDot = YES;
-    }
   }
 }
 
@@ -287,8 +274,6 @@
 
 - (void) hierarchyChanged
 {
-  [forceDirectedNodes removeAllObjects];
-
   //stop thread
   [self stopThread];
 
@@ -317,9 +302,6 @@
   [view setNeedsDisplay: YES];
   [tree timeSelectionChanged];
   [self redefineLayout];
-  if(recordMode){
-    [view printGraph];
-  }
 }
 
 - (void)windowDidMove:(NSNotification *)win
@@ -346,31 +328,6 @@
 - (void) show: (id) sender
 {
   [self show];
-}
-
-- (void) removeForceDirectedNode: (TrivaGraph*) n
-{
-  [forceDirectedNodes removeObject: n];
-}
-
-- (void) removeForceDirectedIgnoredNode: (TrivaGraph*) n
-{
-  [forceDirectedIgnoredNodes removeObject: n];
-}
-
-- (void) addForceDirectedNode: (TrivaGraph*) n
-{
-  [forceDirectedNodes addObject: n];
-}
-
-- (void) addForceDirectedIgnoredNode: (TrivaGraph*) n
-{
-  [forceDirectedIgnoredNodes addObject: n];
-}
-
-- (void) removeForceDirectedNodes
-{
-  [forceDirectedNodes removeAllObjects];
 }
 
 //from the view
@@ -429,7 +386,6 @@
 
 - (void) redefineLayout
 {
-  [self removeForceDirectedNodes];
   [tree recursiveLayout];
 }
 

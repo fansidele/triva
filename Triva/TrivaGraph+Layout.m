@@ -20,7 +20,6 @@
 - (void) recursiveLayout
 {
   if ([self expanded] == NO){
-    [filter addForceDirectedNode: self];
     [self layout];
   }else{
     //recurse

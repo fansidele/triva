@@ -23,19 +23,12 @@
 #include "../Triva/TrivaWindow.h"
 #include <Tupi/Layout.h>
 #include <Tupi/LayoutRunner.h>
+#include "DrawView.h"
 
 @interface FDGraphView : TrivaFilter <TupiProvider>
 {
   TrivaGraph *tree;
-
-  NSMutableSet *forceDirectedNodes; /* of TrivaGraph, contains all the nodes
-                                       that currently participate in the
-                                       graph */
-  NSMutableSet *forceDirectedIgnoredNodes; /* of TrivaGraph, contains nodes
-                                              that does not receive updates
-                                              from force-directed algorithm */
-
-  id view;
+  FDDrawView *view;
   TrivaWindow *window;
 
   BOOL recordMode;
@@ -49,10 +42,6 @@
   NSMutableDictionary *scaleSliders;
   NSMutableDictionary *scaleLabels;
 
-  //User options
-  BOOL expandAll;
-  BOOL exportDot;
-
   //Tupi layout
   Layout *tupiLayout;
   LayoutRunner *runner;
@@ -60,11 +49,6 @@
 }
 - (void) setRecordMode;
 - (TrivaGraph *) tree;
-
-//aditional methods to complete protocol (used only within this component)
-- (void) addForceDirectedIgnoredNode: (TrivaGraph*) n;
-- (void) removeForceDirectedNode: (TrivaGraph*) n;
-- (void) removeForceDirectedIgnoredNode: (TrivaGraph*) n;
 
 //from the view
 - (void) startMovingNode: (TrivaGraph*) node;

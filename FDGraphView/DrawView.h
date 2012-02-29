@@ -46,13 +46,9 @@
 }
 - (void) setFilter: (FDGraphView *)f;
 - (NSColor *) getColor: (NSColor *)c withSaturation: (double) saturation;
-- (void) printGraph;
-
 - (void) setCurrentRoot: (TrivaGraph *) nroot;
 - (void) resetCurrentRoot;
 @end
 
-
 #include "GraphView.h"
-
 #endif
