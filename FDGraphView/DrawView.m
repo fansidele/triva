@@ -166,23 +166,26 @@
   NSPoint p = [self convertPoint:[event locationInWindow] fromView:nil];
 
   if (highlighted == nil){
-    NSPoint dif;
-    dif = NSSubtractPoints (p, move);
+    //there is no node highlighted,
+    //calculate new graphical transformation
+    NSPoint dif = NSSubtractPoints (p, move);
     if (NSEqualPoints (translate, NSZeroPoint)){
       translate = dif;
     }else{
       translate = NSAddPoints (translate, dif);
     }
     move = p;
- 
     [self setNeedsDisplay: YES];
+
   }else{
+    //there is a selected node
+    //move it to the new place
+    //change state to movingSingleNode
     NSAffineTransform *t = [self transform];
     [t invert];
     NSPoint p2 = [t transformPoint: p];
     [filter moveNode: highlighted toLocation: p2];
     [self setNeedsDisplay: YES];
-
     movingSingleNode = YES;
   }
   return;
