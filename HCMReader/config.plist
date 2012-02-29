@@ -1,5 +1,0 @@
-{
-id = "client1";
-aggregators = ("aggreg1");
-bundles=("dimvisual-ganglia-hcm.bundle");
-}
