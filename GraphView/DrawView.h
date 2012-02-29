@@ -30,11 +30,7 @@
   NSPoint translate;
   NSPoint move; //for use in mouse(down|dragged)
 
-  //interaction states
   BOOL movingSingleNode;
-  BOOL selectingArea;
-
-  TrivaGraph *movingNode;
 
   //drawing selectedArea
   NSRect selectedArea;

@@ -29,11 +29,6 @@
                                        frame.size.height/2));
   move = NSZeroPoint;
   ratio = 1;
-
-  movingSingleNode = NO;
-  selectingArea = NO;
-  selectedArea = NSZeroRect;
-
   highlighted = nil;
   return self;
 }
@@ -100,10 +95,7 @@
         [path lineToPoint: pp];
         [path stroke];
       }
-
-      //    NSLog (@"tree=%@ present=%@ => %d", [tree name], [present name], isConnected);
     }
-//  [tree drawConnectNodes];
   }
 }
 
@@ -209,71 +201,6 @@
     movingSingleNode = YES;
   }
   return;
-/*
-  if (selectingArea){
-    NSAffineTransform *t = [self transform];
-    [t invert];
-    NSPoint b = [t transformPoint: p];
-    NSPoint a = selectedArea.origin;
- 
-    NSPoint origin, diagonal;
-    NSSize size;
- 
-    if (b.x == a.x || b.y == a.y) return;
- 
-    if (b.x > a.x && b.y > a.y) {
-      //top right
-      origin = a;
-      diagonal = b;
-    } else if (b.x < a.x && b.y < a.y) {
-      //bottom left
-      origin = b;
-      diagonal = NSMakePoint(a.x+selectedArea.size.width, a.y+selectedArea.size.height);
-    } else if (b.x > a.x && b.y < a.y){
-      //bottom right
-      origin = NSMakePoint (a.x, b.y);
-      diagonal = NSMakePoint (b.x, a.y + selectedArea.size.height);
-    } else if (b.x < a.x && b.y > a.y) {
-      //top left
-      origin = NSMakePoint (b.x, a.y);
-      diagonal = NSMakePoint (a.x + selectedArea.size.width, b.y);
-    }
- 
-    size.width = diagonal.x - origin.x;
-    size.height = diagonal.y - origin.y;
- 
-    selectedArea.origin = origin;
-    selectedArea.size = size;
- 
-    [self setNeedsDisplay: YES];
-  }
-
-  if (movingSingleNode){
-    //code for changing the position of a node
-    if (selectedNode == nil) {
-      return;
-    }
-
-    NSAffineTransform *t = [self transform];
-    [t invert];
-    NSPoint p2 = [t transformPoint: p];
-
-    NSRect nodebb = [selectedNode boundingBox];
-    nodebb.origin.x = p2.x - nodebb.size.width/2;
-    nodebb.origin.y = p2.y - nodebb.size.height/2;
-    [selectedNode setBoundingBox: nodebb];
-  }else{
-    NSPoint dif;
-    dif = NSSubtractPoints (p, move);
-    if (NSEqualPoints (translate, NSZeroPoint)){
-      translate = dif;
-    }else{
-      translate = NSAddPoints (translate, dif);
-    }
-    move = p;
-  }
-  [self setNeedsDisplay: YES];
-*/
 }
 
 - (void) mouseDown: (NSEvent *) event
@@ -286,26 +213,7 @@
   NSAffineTransform *t = [self transform];
   [t invert];
   p2 = [t transformPoint: p];
-
-//  movingSingleNode = YES;
-
   return;
-/*
-  if ([event modifierFlags] & NSControlKeyMask){
-    if (selectedNode != nil){
-      //moving a single node
-      movingSingleNode = YES;
-    }else{
-      //selecting area
-      selectingArea = YES;
-      NSAffineTransform *t = [self transform];
-      [t invert];
-      NSPoint pt = [t transformPoint: move];
-      selectedArea.origin = pt;
-      selectedArea.size = NSZeroSize;
-    }
-  }
-*/
 }
 
 - (void) mouseUp: (NSEvent *) event
@@ -321,15 +229,6 @@
     [self setNeedsDisplay: YES];
   }
   return;
-/*
-  return;
-  if (selectingArea){
-    //do multiple node selection
-  }
-
-  selectingArea = NO;
-*/
-
 }
 
 - (void) mouseMoved:(NSEvent *)event
