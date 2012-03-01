@@ -82,6 +82,9 @@
 @interface TrivaDotController : TrivaController
 @end
 
+@interface TrivaEntityDotController : TrivaController
+@end
+
 @interface TrivaCheckController : TrivaController
 @end
 

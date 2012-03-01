@@ -136,6 +136,7 @@
   if ([conf objectForKey: @"stat"]) comp |= TrivaStat;
   if ([conf objectForKey: @"check"]) comp |= TrivaCheck;
   if ([conf objectForKey: @"hierarchy"]) comp |= TrivaHierarchy;
+  if ([conf objectForKey: @"entitydot"]) comp |= TrivaEntityDot;
   if ([conf objectForKey: @"list"]) comp |= TrivaList;
   if ([conf objectForKey: @"instances"]) comp |= TrivaInstances;
   if (comp == 0) return TrivaStat;

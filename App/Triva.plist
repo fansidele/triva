@@ -16,6 +16,8 @@
                     description = "Check Trace File Integrity"; };
         hierarchy = { type = bool;
                     description = "Export Trace Type Hierarchy (dot)"; };
+        entitydot = { type = bool;
+                    description = "Print entity hierarchy (in the dot format)"; };
         list = { type = bool;
                     description = "Print Trace Type Hierarchy"; };
         instances = { type = bool;

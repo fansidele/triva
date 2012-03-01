@@ -9,6 +9,7 @@ SUBPROJECTS = Triva \
   GraphConfiguration \
   GraphView \
   Dot \
+  EntityDot \
   CheckTrace \
   StatTrace \
   List \

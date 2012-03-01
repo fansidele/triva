@@ -50,6 +50,9 @@
     }else if (comp&TrivaHierarchy) {
       triva = [[TrivaDotController alloc]
                 initWithConfiguration: configuration];
+    }else if (comp&TrivaEntityDot) {
+      triva = [[TrivaEntityDotController alloc]
+                initWithConfiguration: configuration];
     }else if (comp&TrivaStat) {
       triva = [[TrivaStatController alloc]
                 initWithConfiguration: configuration];
@@ -232,6 +235,23 @@ NS_ENDHANDLER
        PajeSimulator, \
        StorageController, \
        Dot \
+    ) )" propertyList];
+  [self addComponentSequences: graph withDictionary: components];
+  [self initializeWithConfiguration: configuration];
+  return self;
+}
+@end
+
+@implementation TrivaEntityDotController
+- (id) initWithConfiguration: (TrivaConfiguration *) configuration
+{
+  self = [super initWithConfiguration: configuration];
+  NSArray *graph = [@"(  \
+    ( FileReader, \
+       PajeEventDecoder, \
+       PajeSimulator, \
+       StorageController, \
+       EntityDot \
     ) )" propertyList];
   [self addComponentSequences: graph withDictionary: components];
   [self initializeWithConfiguration: configuration];

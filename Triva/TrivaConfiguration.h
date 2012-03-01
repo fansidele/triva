@@ -26,9 +26,10 @@ typedef enum { TrivaGraphView = 1,
                TrivaStat = 32,
                TrivaCheck = 64,
                TrivaHierarchy = 128,
-               TrivaList = 256,
-               TrivaInstances = 512,
-               TrivaGraphFD = 1024} TrivaVisualizationComponent;
+               TrivaEntityDot = 256,
+               TrivaList = 512,
+               TrivaInstances = 1024,
+               TrivaGraphFD = 2048} TrivaVisualizationComponent;
 
 typedef enum { TrivaConfigurationHelp,
                TrivaConfigurationOK } TrivaConfigurationState;
