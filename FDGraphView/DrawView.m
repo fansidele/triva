@@ -215,6 +215,9 @@
   if (highlighted && !movingSingleNode){
     [filter clickNode: highlighted];
   }
+
+  //all mouse operation has ended,
+  // reset the movingSingleNode to its initial state
   movingSingleNode = NO;
   return;
 }
