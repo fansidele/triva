@@ -258,6 +258,9 @@
   //stop thread
   [self stopThread];
 
+  //clear particle system
+  [tupiLayout clear];
+
   //free previous tree
   [tree release];
 
