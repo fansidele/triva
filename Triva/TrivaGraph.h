@@ -36,8 +36,7 @@ typedef enum {
   NSMutableSet *connectedNodes;
   NSMutableDictionary *compositions;
 
-  NSPoint location; //current location
-  NSPoint velocity; //current velocity
+  NSPoint location;
 
   NSMutableDictionary *connectionPoints; //TrivaGraph->NSPoint(as NSString)
 
@@ -73,15 +72,10 @@ typedef enum {
                    withExpr: (NSString *) expr
                   evaluated: (double*) output;
 - (NSSet*) connectedNodes;
-- (void) resetVelocity;
 - (void) resetLocation;
-- (void) setVelocity: (NSPoint)v;
 - (void) setLocation: (NSPoint)l;
-- (NSPoint) velocity;
 - (NSPoint) location;
 - (void) recursiveResetPositions;
-- (BOOL) positionsAlreadyCalculated;
-- (void) setPositionsAlreadyCalculated: (BOOL) p;
 - (double) charge;
 - (double) spring: (TrivaGraph *) n;
 - (double) sizeForConfigurationName: (NSString *)compName;

@@ -53,7 +53,6 @@
   if (self != nil){
     connectedNodes = [[NSMutableSet alloc] init];
     compositions = [[NSMutableDictionary alloc] init];
-    posCalculated = NO;
 
     //layout myself with update my graph values
     NSDictionary *configuration = [filter graphConfiguration];
@@ -247,29 +246,14 @@
   return YES;
 }
 
-- (void) resetVelocity
-{
-  velocity = NSZeroPoint;
-}
-
 - (void) resetLocation
 {
   location = NSZeroPoint;
 }
 
-- (void) setVelocity: (NSPoint)v
-{
-  velocity = v;
-}
-
 - (void) setLocation: (NSPoint)l
 {
   location = l;
-}
-
-- (NSPoint) velocity
-{
-  return velocity;
 }
 
 - (NSPoint) location
@@ -286,16 +270,6 @@
   while ((child = [en nextObject])){
     [child recursiveResetPositions];
   }
-}
-
-- (BOOL) positionsAlreadyCalculated
-{
-  return posCalculated;
-}
-
-- (void) setPositionsAlreadyCalculated: (BOOL) p
-{
-  posCalculated = p;
 }
 
 - (double) charge
@@ -359,16 +333,6 @@
   //only expand if has children
   if ([children count]){
     [self setExpanded: YES];
-
-    //define initial position for my children 
-    NSEnumerator *en = [children objectEnumerator];
-    TrivaGraph *child;
-    while ((child = [en nextObject])){
-      if (![child positionsAlreadyCalculated]){
-        [child setLocation: [self location]];
-      }
-      [child setPositionsAlreadyCalculated: YES];
-    }
   }
 }
 
