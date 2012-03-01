@@ -239,11 +239,12 @@
 
   if (highlighted){
     [highlighted setHighlighted: NO];
+    highlighted = nil;
   }
 
   if (ret){
+    [ret setHighlighted: YES];
     highlighted = ret;
-    [highlighted setHighlighted: YES];
   }
 
   [self setNeedsDisplay: YES];
