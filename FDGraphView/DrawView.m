@@ -51,7 +51,7 @@
   return transform;
 }
 
-- (void)drawConnections:(TrivaGraph*)tree withPresentNodes: (NSSet*)present
+- (void)drawConnections:(TrivaGraph*)tree
 {
   [NSBezierPath setDefaultLineWidth: 2];
   if ([tree expanded]){
@@ -59,23 +59,19 @@
     NSEnumerator *en = [[tree children] objectEnumerator];
     TrivaGraph *child;
     while ((child = [en nextObject])){
-      [self drawConnections: child withPresentNodes: present];
+      [self drawConnections: child];
     }
   }else{
-    NSEnumerator *en = [present objectEnumerator];
-    TrivaGraph *present;
-    while ((present = [en nextObject])){
-      if (tree == present) continue;
-      BOOL isConnected = [tree isConnectedTo: present];
-      if (isConnected){
-        NSPoint mp = [tree location];
-        NSPoint pp = [present location];
-        [[[NSColor grayColor] colorWithAlphaComponent: 0.2] set];
-        NSBezierPath *path = [NSBezierPath bezierPath];
-        [path moveToPoint: mp];
-        [path lineToPoint: pp];
-        [path stroke];
-      }
+    NSEnumerator *en = [[tree connectedNodes] objectEnumerator];
+    TrivaGraph *connected;
+    while ((connected = [en nextObject])){
+      NSPoint mp = [tree location];
+      NSPoint pp = [connected location];
+      [[[NSColor grayColor] colorWithAlphaComponent: 0.2] set];
+      NSBezierPath *path = [NSBezierPath bezierPath];
+      [path moveToPoint: mp];
+      [path lineToPoint: pp];
+      [path stroke];
     }
   }
 }
@@ -91,9 +87,6 @@
   }
 
   TrivaGraph *root = [filter tree];
-
-  //create a set with all nodes present in the visualization
-  NSSet *presentNodes = [root allExpanded];
 
   NSRect tela = [self bounds];
 
@@ -114,7 +107,7 @@
   [NSBezierPath setDefaultLineWidth: 1/ratio];
 
   //draw connections first (so they appear in the background)
-  [self drawConnections: root withPresentNodes: presentNodes];
+  [self drawConnections: root];
 
   //draw nodes
   [root recursiveDrawLayout];
