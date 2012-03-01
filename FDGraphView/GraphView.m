@@ -171,10 +171,35 @@
   return NO;
 }
 
+- (BOOL) shouldBePresent: (PajeEntityType *) containerType
+{
+  NSSet *nodeTypes = [NSSet setWithArray: [self entityTypesForNodes]];
+
+  //first, a direct check
+  if ([nodeTypes containsObject: [containerType description]]){
+    return YES;
+  }
+
+  //check if the children entity types are present
+  NSEnumerator *en = [[self containedTypesForContainerType: containerType]
+                       objectEnumerator];
+  PajeEntityType *type;
+  while ((type = [en nextObject])){
+    if ([self shouldBePresent: type]){
+      return YES;
+    }
+  }
+  return NO;
+}
+
 - (TrivaGraph*) treeWithContainer: (PajeContainer *) cont
                            depth: (int) depth
                           parent: (TrivaTree*) p
 {
+  //filter by entity type
+  if (![self shouldBePresent: [cont entityType]]){
+    return nil;
+  }
   //creating hierarchical structure
   TrivaGraph *ret = [TrivaGraph nodeWithName: [cont name]
                                      depth: depth
@@ -196,7 +221,9 @@
         TrivaGraph *child = [self treeWithContainer: sub
                                              depth: depth+1
                                             parent: ret];
-        [ret addChild: child];
+        if (child){
+          [ret addChild: child];
+        }
       }
     }
   }
