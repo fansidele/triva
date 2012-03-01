@@ -203,10 +203,6 @@
 - (void) mouseUp: (NSEvent *) event
 {
   move = [self convertPoint:[event locationInWindow] fromView:nil];
-  NSPoint p = [self convertPoint:[event locationInWindow] fromView:nil];
-  NSAffineTransform *t = [self transform];
-  [t invert];
-  NSPoint p2 = [t transformPoint: p];
 
   if (highlighted && movingSingleNode == NO){
     [filter clickNode: highlighted];
