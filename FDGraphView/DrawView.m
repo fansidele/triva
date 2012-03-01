@@ -194,13 +194,8 @@
 - (void) mouseDown: (NSEvent *) event
 {
   move = [self convertPoint:[event locationInWindow] fromView:nil];
-
-  NSPoint p, p2;
-  p = [self convertPoint:[event locationInWindow] fromView:nil];
-
-  NSAffineTransform *t = [self transform];
-  [t invert];
-  p2 = [t transformPoint: p];
+  return;
+}
 
   if (highlighted){
     movingSingleNode = YES;
@@ -211,16 +206,16 @@
 
 - (void) mouseUp: (NSEvent *) event
 {
-  if (highlighted && movingSingleNode){
-    [filter stopMovingNode: highlighted];
-    movingSingleNode = NO;
-  }else if (highlighted){
-    [(TrivaGraph*)highlighted expand];
-    [highlighted setHighlighted: NO];
-    highlighted = nil;
-    [filter redefineLayout];
-    [self setNeedsDisplay: YES];
+  move = [self convertPoint:[event locationInWindow] fromView:nil];
+  NSPoint p = [self convertPoint:[event locationInWindow] fromView:nil];
+  NSAffineTransform *t = [self transform];
+  [t invert];
+  NSPoint p2 = [t transformPoint: p];
+
+  if (highlighted && !movingSingleNode){
+    [filter clickNode: highlighted];
   }
+  movingSingleNode = NO;
   return;
 }
 
