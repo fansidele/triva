@@ -332,21 +332,68 @@
 }
 
 //from the view
-- (void) startMovingNode: (TrivaGraph*) node
+- (void) clickNode: (TrivaGraph*) node
 {
-  [tupiLayout freezeNode: node frozen: YES];
+
+  //if node has no children, do nothing
+  if (![[node children] count]){
+    return;
+  }
+
+  //remove node from the particle system
+  [tupiLayout removeNode: node];
+
+  //expand the node
+  [node expand];
+
+  //add node's children to the particle system
+  NSEnumerator *en = [[node children] objectEnumerator];
+  TrivaGraph *child;
+  while ((child = [en nextObject])){
+    [tupiLayout addNode: child withName: [child name]];
+  }
+
+  //redefine layout of the structure
+  [self redefineLayout];
+
+  //reset the view
+  [view reset];
+}
+
+- (void) rightClickNode: (TrivaGraph*) node
+{
+  //if node has no parent, do nothing
+  if (![node parent]){
+    return;
+  }
+
+  //clean-up particle system:
+  //remove all nodes from the tree below node's parent
+  NSEnumerator *en = [[[node parent] allExpanded] objectEnumerator];
+  TrivaGraph *child;
+  while ((child = [en nextObject])){
+    [tupiLayout removeNode: child];
+  }
+
+  //collapse the parent node
+  [(TrivaGraph*)[node parent] collapse];
+
+  //add the parent to the particle system
+  [tupiLayout addNode: (TrivaGraph*)[node parent]
+             withName: [[node parent] name]];
+
+  //redefine layout of the structure
+  [self redefineLayout];
+
+  //reset the view
+  [view reset];
 }
 
 - (void) moveNode: (TrivaGraph*) node toLocation: (NSPoint) newLoc
 {
-  NSLog (@"%s", __FUNCTION__);
   NSPoint tupiNewLocation = NSMakePoint(newLoc.x/100, newLoc.y/100);
   [tupiLayout moveNode: node toLocation: tupiNewLocation];
-}
 
-- (void) stopMovingNode: (TrivaGraph*) node
-{
-  [tupiLayout freezeNode: node frozen: NO];
 }
 
 - (void) clickForceDirected: (id) sender

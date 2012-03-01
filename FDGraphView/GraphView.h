@@ -49,9 +49,9 @@
 - (TrivaGraph *) tree;
 
 //from the view
-- (void) startMovingNode: (TrivaGraph*) node;
+- (void) clickNode: (TrivaGraph*) node;
+- (void) rightClickNode: (TrivaGraph*) node;
 - (void) moveNode: (TrivaGraph*) node toLocation: (NSPoint) newLoc;
-- (void) stopMovingNode: (TrivaGraph*) node;
 
 //from the interface
 - (void) clickForceDirected: (id) sender;
