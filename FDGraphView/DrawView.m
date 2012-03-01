@@ -25,12 +25,9 @@
   self = [super initWithFrame: frame];
 
   //for graphical translation and zoom
-  ratio = 1;
+  ratio = 0.2;
   move = NSZeroPoint;
-  translate = NSAddPoints (NSZeroPoint,
-                           NSMakePoint(frame.size.width/2,
-                                       frame.size.height/2));
-
+  translate = NSZeroPoint;
   movingSingleNode = NO;
   highlighted = nil;
   return self;
@@ -85,6 +82,14 @@
 
 - (void)drawRect:(NSRect)frame
 {
+  static BOOL firstDrawing = YES;
+  if (firstDrawing){
+    translate = NSAddPoints(translate,
+                            NSMakePoint(frame.size.width/2,
+                                        frame.size.height/2));
+    firstDrawing = NO;
+  }
+
   TrivaGraph *root = [filter tree];
 
   //create a set with all nodes present in the visualization
