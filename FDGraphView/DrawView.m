@@ -180,19 +180,17 @@
       translate = NSAddPoints (translate, dif);
     }
     move = p;
-    [self setNeedsDisplay: YES];
-
   }else{
     //there is a selected node
     //move it to the new place
     //change state to movingSingleNode
+    movingSingleNode = YES;
     NSAffineTransform *t = [self transform];
     [t invert];
     NSPoint p2 = [t transformPoint: p];
     [filter moveNode: highlighted toLocation: p2];
-    [self setNeedsDisplay: YES];
-    movingSingleNode = YES;
   }
+  [self setNeedsDisplay: YES];
   return;
 }
 
@@ -217,7 +215,7 @@
   [t invert];
   NSPoint p2 = [t transformPoint: p];
 
-  if (highlighted && !movingSingleNode){
+  if (highlighted && movingSingleNode == NO){
     [filter clickNode: highlighted];
   }
 
