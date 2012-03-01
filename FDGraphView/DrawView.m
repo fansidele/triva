@@ -197,11 +197,11 @@
   return;
 }
 
+- (void) rightMouseDown: (NSEvent *) event
+{
   if (highlighted){
-    movingSingleNode = YES;
-    [filter startMovingNode: highlighted];
+    [filter rightClickNode: highlighted];
   }
-  return;
 }
 
 - (void) mouseUp: (NSEvent *) event
@@ -241,19 +241,8 @@
     [ret setHighlighted: YES];
     highlighted = ret;
   }
-
   [self setNeedsDisplay: YES];
   return;
-}
-
-- (void) rightMouseDown: (NSEvent *) event
-{
-  if (highlighted){
-    [(TrivaGraph*)[highlighted parent] collapse];
-    [filter redefineLayout];
-    highlighted = nil;
-    [self setNeedsDisplay: YES];
-  }
 }
 
 - (void)scrollWheel:(NSEvent *)event
