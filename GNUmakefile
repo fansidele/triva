@@ -7,7 +7,6 @@ AGGREGATE_NAME = Triva
 SUBPROJECTS = Triva \
   App \
   GraphConfiguration \
-  GraphView \
   FDGraphView \
   Dot \
   EntityDot \
