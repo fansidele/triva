@@ -272,4 +272,11 @@
                                              screenPositionAfter));
   [self setNeedsDisplay: YES];
 }
+
+- (void) reset
+{
+  [highlighted setHighlighted: NO];
+  highlighted = nil;
+  [self setNeedsDisplay: YES];
+}
 @end

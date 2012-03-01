@@ -37,6 +37,7 @@
   TrivaGraph *highlighted;
 }
 - (void) setFilter: (FDGraphView *)f;
+- (void) reset;
 - (NSAffineTransform*) transform;
 @end
 
