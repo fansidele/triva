@@ -449,4 +449,13 @@
   }
   return set;
 }
+
+- (BOOL) isEqual: (id) another
+{
+  if (![another isKindOfClass: [TrivaGraph class]]){
+    return NO;
+  }else{
+    return [name isEqual: [(TrivaGraph*)another name]];
+  }
+}
 @end
