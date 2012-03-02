@@ -296,12 +296,12 @@
   [self interconnectTree: tree usingContainer: [self rootInstance]];
   [tree retain];
 
-  //checks
-  [self startThread];
-
   //gui stuff
   [self createScaleSliders];
   [self timeSelectionChanged];
+
+  //checks
+  [self startThread];
 }
 
 - (void) timeSelectionChanged
