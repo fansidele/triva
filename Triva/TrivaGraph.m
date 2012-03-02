@@ -95,7 +95,7 @@
 {
   NSMutableSet *ret = [NSMutableSet set];
   if (![children count]) {
-    [ret unionSet: [self connectedNodes]];
+    [ret unionSet: connectedNodes];
     return ret;
   }
 
@@ -105,7 +105,7 @@
     NSSet *s = [child allConnectedNodes];
     [ret unionSet: s];
   }
-  [ret unionSet: [self connectedNodes]];
+  [ret unionSet: connectedNodes];
   return ret;
 }
 
@@ -394,8 +394,7 @@
 
 - (BOOL) isConnectedTo: (id) c
 {
-  if ([[self connectedNodes] containsObject: c] ||
-      [[c connectedNodes] containsObject: self]){
+  if ([connectedNodes containsObject: c]){
     return YES;
   }
 
