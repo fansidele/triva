@@ -424,4 +424,31 @@
 {
   return tupiParticle;
 }
+
+- (TrivaGraph *) root
+{
+  if (parent == nil){
+    return self;
+  }else{
+    return [(TrivaGraph*)parent root];
+  }
+}
+
+/*
+ * Gives a set with all nodes below 'self' that are collapsed.
+ */
+- (NSSet *) collapsedNodes
+{
+  NSMutableSet *set = [NSMutableSet set];
+  if ([self expanded]){
+    NSEnumerator *en = [children objectEnumerator];
+    TrivaGraph *child;
+    while ((child = [en nextObject])){
+      [set unionSet: [child collapsedNodes]];
+    }
+  }else{
+    [set addObject: self];
+  }
+  return set;
+}
 @end

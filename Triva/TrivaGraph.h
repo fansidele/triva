@@ -80,7 +80,6 @@ typedef enum {
 - (double) spring: (TrivaGraph *) n;
 - (double) sizeForConfigurationName: (NSString *)compName;
 
-
 /* new methods */
 - (NSMutableSet *) allNodes;
 - (NSMutableSet *) allConnectedNodes;
@@ -90,6 +89,11 @@ typedef enum {
 
 /* export */
 - (NSString *) exportDot;
+
+
+/* new methods 2012-3-2 */
+- (TrivaGraph *) root;
+- (NSSet *) collapsedNodes;
 @end
 
 @interface TrivaGraph (Layout)
