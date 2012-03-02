@@ -25,7 +25,7 @@
   self = [super initWithFrame: frame];
 
   //for graphical translation and zoom
-  ratio = 0.2;
+  ratio = 1;
   move = NSZeroPoint;
   translate = NSZeroPoint;
   movingSingleNode = NO;

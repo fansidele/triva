@@ -22,7 +22,7 @@
 #include "../Triva/NSPointFunctions.h"
 #include "GraphView.h"
 
-#define MAX_SIZE 400
+#define MAX_SIZE 100
 
 @implementation FDGraphView
 - (id)initWithController:(PajeTraceController *)c
