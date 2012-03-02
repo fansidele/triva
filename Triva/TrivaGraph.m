@@ -88,7 +88,23 @@
 
 - (void) connectToNode: (TrivaGraph*) n
 {
+  if (n == nil) return;                     //don't connect with nil
+  if ([self isEqual: n] == YES) return;     //don't connect with itself
+
   [connectedNodes addObject: n];
+
+  if ([parent isEqual: [n parent]]) return; //only connect with sibling
+
+  TrivaGraph *np = (TrivaGraph*)[n parent];
+  while (np){
+    if ([np parent] == nil) break;
+    [connectedNodes addObject: np];
+    np = (TrivaGraph*)[np parent];
+  }
+
+  //bottom-up recursion
+  [parent connectToNode: n];
+  return;
 }
 
 - (NSMutableSet *) allConnectedNodes
