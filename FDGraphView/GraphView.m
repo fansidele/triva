@@ -414,7 +414,7 @@
 /* resetting positions of everybody */
 - (void) clickResetPositions: (id) sender
 {
-  // [tree recursiveResetPositions];
+  [self hierarchyChanged];
 }
 
 - (void) updateScaleSliders: (id) sender
