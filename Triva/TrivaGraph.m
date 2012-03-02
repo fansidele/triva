@@ -111,14 +111,13 @@
 
 - (NSMutableSet *) allNodes
 {
-  NSMutableSet *ret = [NSMutableSet set];
+  NSMutableSet *ret = [NSMutableSet setWithObject: self];
   NSEnumerator *en = [children objectEnumerator];
   TrivaGraph *child;
   while ((child = [en nextObject])){
     NSSet *s = [child allNodes];
     [ret unionSet: s];
   }
-  [ret addObject: self];
   return ret;
 }
 
