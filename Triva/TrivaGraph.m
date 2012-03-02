@@ -404,7 +404,9 @@
 
 - (NSSet *) connectedNodes
 {
-  return connectedNodes;
+  NSMutableSet *set = [NSMutableSet setWithSet: connectedNodes];
+  [set intersectSet: [[self root] collapsedNodes]];
+  return set;
 }
 
 - (BOOL) isConnectedTo: (id) c
