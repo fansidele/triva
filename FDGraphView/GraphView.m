@@ -394,6 +394,9 @@
   NSPoint tupiNewLocation = NSMakePoint(newLoc.x/100, newLoc.y/100);
   [tupiLayout moveNode: node toLocation: tupiNewLocation];
 
+- (void) finishMoveNode: (TrivaGraph *) node
+{
+  [tupiLayout freezeNode: node frozen: NO];
 }
 
 - (void) clickForceDirected: (id) sender

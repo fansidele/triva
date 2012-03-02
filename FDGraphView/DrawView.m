@@ -208,6 +208,9 @@
     [filter clickNode: highlighted];
   }
 
+  if (movingSingleNode){
+    [filter finishMoveNode: highlighted];
+  }
   //all mouse operation has ended,
   // reset the movingSingleNode to its initial state
   movingSingleNode = NO;

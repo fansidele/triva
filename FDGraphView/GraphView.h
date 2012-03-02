@@ -52,6 +52,7 @@
 - (void) clickNode: (TrivaGraph*) node;
 - (void) rightClickNode: (TrivaGraph*) node;
 - (void) moveNode: (TrivaGraph*) node toLocation: (NSPoint) newLoc;
+- (void) finishMoveNode: (TrivaGraph *) node;
 
 //from the interface
 - (void) clickForceDirected: (id) sender;
