@@ -350,9 +350,12 @@
   NSEnumerator *en = [[node children] objectEnumerator];
   TrivaGraph *child;
   while ((child = [en nextObject])){
+    NSPoint pos = [node position];
+    pos.x += (2*drand48() - 1);
+    pos.y += (2*drand48() - 1);
     [tupiLayout addNode: child
                withName: [child name]
-           withLocation: [node position]];
+           withLocation: pos];
   }
 
   //redefine layout of the structure
