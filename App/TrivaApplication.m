@@ -24,7 +24,7 @@
   //add components options
   Class cl;
   id dict;
-  NSArray *ar = [NSArray arrayWithObjects: @"TimeInterval", @"GraphConfiguration", @"GraphView", @"FDGraphView", nil];
+  NSArray *ar = [NSArray arrayWithObjects: @"TimeInterval", @"GraphConfiguration", @"FDGraphView", nil];
   NSEnumerator *en = [ar objectEnumerator];
   id className;
   while ((className = [en nextObject])){
