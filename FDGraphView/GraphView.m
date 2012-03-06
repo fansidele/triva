@@ -407,7 +407,6 @@
 
 - (void) clickForceDirected: (id) sender
 {
-  NSLog (@"%@", layoutThread);
   if ([layoutThread isExecuting]){
     [self stopThread];
   }else{
