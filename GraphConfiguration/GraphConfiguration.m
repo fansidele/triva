@@ -29,7 +29,7 @@
     maxValues = [[NSMutableDictionary alloc] init];
   }
   [self initInterface];
-  hideWindow = NO;
+  hideWindow = YES;
   graph = NULL;
   return self;
 }
