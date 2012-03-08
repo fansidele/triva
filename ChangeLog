@@ -1,5 +1,6 @@
 2012-02-27 (1.5rc1) Lucas M. Schnorr <schnorr@gmail.com>
   * TypeFilter activated in the graph visualization
+  * GraphView now uses a barnes-hut force-directed algorithm (from Tupi)
 
 2011-12-20 (1.4) Lucas M. Schnorr <schnorr@gmail.com>
   * Drop autoconf, using pure gnustep makefiles
