@@ -390,7 +390,7 @@
 
   //clean-up particle system:
   //remove all nodes from the tree below node's parent
-  NSEnumerator *en = [[[node parent] allExpanded] objectEnumerator];
+  NSEnumerator *en = [[(TrivaGraph*)[node parent] allExpanded] objectEnumerator];
   TrivaGraph *child;
   while ((child = [en nextObject])){
     [tupiLayout removeNode: child];

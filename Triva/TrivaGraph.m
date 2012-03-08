@@ -103,7 +103,7 @@
   }
 
   //bottom-up recursion
-  [parent connectToNode: n];
+  [(TrivaGraph*)parent connectToNode: n];
   return;
 }
 
