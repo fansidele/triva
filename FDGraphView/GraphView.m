@@ -311,6 +311,22 @@
   [view setNeedsDisplay: YES];
 }
 
+- (void) entitySelectionChanged
+{
+  [self hierarchyChanged];
+}
+
+- (void) containerSelectionChanged
+{
+  [self hierarchyChanged];
+}
+
+- (void) dataChangedForEntityType: (PajeEntityType *) type
+{
+  [self hierarchyChanged];
+}
+
+
 - (void)windowDidMove:(NSNotification *)win
 {
 }
