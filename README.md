@@ -30,8 +30,11 @@ framework](http://paje.sf.net), the [Tupi
 framework](http://github.com/schnorr/tupi), and the [Graphviz
 library](http://www.graphviz.org/).
 
-Check the INSTALL file for compilation instructions.
-Check the INSTALL.mac file for compilation instructions in Apple OS.
+Installation
+------------
+
+* Check the INSTALL file for compilation instructions.
+* Check the INSTALL.mac file for compilation instructions in Apple OS.
 
 Contact
 -------
