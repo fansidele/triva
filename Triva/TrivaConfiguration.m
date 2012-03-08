@@ -128,7 +128,6 @@
 {
   TrivaVisualizationComponent comp = 0;
   if ([conf objectForKey: @"graph"]) comp |= TrivaGraphView;
-  if ([conf objectForKey: @"fdgraph"]) comp |= TrivaGraphFD;
   if ([conf objectForKey: @"treemap"]) comp |= TrivaSquarifiedTreemap;
   if ([conf objectForKey: @"merge"]) comp |= TrivaMerge;
   if ([conf objectForKey: @"comparison"]) comp |= TrivaComparison;

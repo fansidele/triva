@@ -70,9 +70,6 @@
 @interface TrivaTreemapController : TrivaController
 @end
 
-@interface TrivaGraphController : TrivaController
-@end
-
 @interface TrivaGraphFDController : TrivaController
 @end
 

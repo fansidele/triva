@@ -39,9 +39,6 @@
       triva = [[TrivaTreemapController alloc]
                 initWithConfiguration: configuration];
     }else if (comp&TrivaGraphView){
-      triva = [[TrivaGraphController alloc]
-                initWithConfiguration: configuration];
-    }else if (comp&TrivaGraphFD){
       triva = [[TrivaGraphFDController alloc]
                 initWithConfiguration: configuration];
     }else if (comp&TrivaLinkView){
@@ -163,28 +160,6 @@ NS_ENDHANDLER
 }
 @end
 
-@implementation TrivaGraphController
-- (id) initWithConfiguration: (TrivaConfiguration *) configuration
-{
-  self = [super initWithConfiguration: configuration];
-  NSArray *graph = [@"(  \
-    ( FileReader, \
-       PajeEventDecoder, \
-       PajeSimulator, \
-       StorageController, \
-       TimeInterval, \
-       TypeFilter, \
-       TimeIntegration, \
-       SpatialIntegration, \
-       GraphConfiguration, \
-       GraphView \
-    ) )" propertyList];
-  [self addComponentSequences: graph withDictionary: components];
-  [self initializeWithConfiguration: configuration];
-  return self;
-}
-@end
-
 @implementation TrivaGraphFDController
 - (id) initWithConfiguration: (TrivaConfiguration *) configuration
 {
@@ -195,6 +170,7 @@ NS_ENDHANDLER
        PajeSimulator, \
        StorageController, \
        TimeInterval, \
+       TypeFilter, \
        TimeIntegration, \
        SpatialIntegration, \
        GraphConfiguration, \
