@@ -35,6 +35,14 @@ export ADDITIONAL_LDFLAGS="-isysroot /Developer/SDKs/MacOSX10.6.sdk -mmacosx-ver
 make
 make install
 
+# Install Tupi
+
+$ source /Library/GNUstep//Makefiles/GNUstep.sh
+$ git clone git://github.com/schnorr/tupi.git
+$ cd tupi
+$ make
+$ make install GNUSTEP_INSTALLATION_DOMAIN=USER
+
 # Install Triva
 
 git clone git://scm.gforge.inria.fr/triva/triva.git

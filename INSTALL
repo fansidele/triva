@@ -41,6 +41,14 @@ $ source /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
 $ make
 $ make install GNUSTEP_INSTALLATION_DOMAIN=USER
 
+# Installing Tupi
+
+$ source /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
+$ git clone git://github.com/schnorr/tupi.git
+$ cd tupi
+$ make
+$ make install GNUSTEP_INSTALLATION_DOMAIN=USER
+
 # Installing Triva (and its dependencies - packages for Ubuntu 10.04)
 # The lines below consider a possibly unstable installation of Triva (based
 # on the SVN development version). Packaged versions can be found on the
