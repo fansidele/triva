@@ -14,16 +14,16 @@
     You should have received a copy of the GNU General Public License
     along with Triva.  If not, see <http://www.gnu.org/licenses/>.
 */
-#ifndef __FDDrawView_h
-#define __FDDrawView_h
+#ifndef __DrawView_h
+#define __DrawView_h
 #include <AppKit/AppKit.h>
 #include "../Triva/TrivaGraph.h"
 
-@class FDGraphView;
+@class GraphView;
 
-@interface FDDrawView : NSView
+@interface DrawView : NSView
 {
-  FDGraphView *filter;
+  GraphView *filter;
 
   //for screen transformation
   double ratio;
@@ -36,7 +36,7 @@
   //graph's tree
   TrivaGraph *highlighted;
 }
-- (void) setFilter: (FDGraphView *)f;
+- (void) setFilter: (GraphView *)f;
 - (void) reset;
 - (NSAffineTransform*) transform;
 @end

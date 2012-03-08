@@ -7,7 +7,7 @@ AGGREGATE_NAME = Triva
 SUBPROJECTS = Triva \
   App \
   GraphConfiguration \
-  FDGraphView \
+  GraphView \
   Dot \
   EntityDot \
   CheckTrace \

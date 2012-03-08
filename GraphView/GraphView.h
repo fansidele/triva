@@ -14,8 +14,8 @@
     You should have received a copy of the GNU General Public License
     along with Triva.  If not, see <http://www.gnu.org/licenses/>.
 */
-#ifndef __FDGraphView_H
-#define __FDGraphView_H
+#ifndef __GraphView_H
+#define __GraphView_H
 
 #include <Foundation/Foundation.h>
 #include <AppKit/AppKit.h>
@@ -25,10 +25,10 @@
 #include <Tupi/LayoutRunner.h>
 #include "DrawView.h"
 
-@interface FDGraphView : TrivaFilter <TupiProvider>
+@interface GraphView : TrivaFilter <TupiProvider>
 {
   TrivaGraph *tree;
-  FDDrawView *view;
+  DrawView *view;
   TrivaWindow *window;
 
   BOOL slidersCreated;

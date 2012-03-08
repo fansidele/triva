@@ -174,7 +174,7 @@ NS_ENDHANDLER
        TimeIntegration, \
        SpatialIntegration, \
        GraphConfiguration, \
-       FDGraphView \
+       GraphView \
     ) )" propertyList];
   [self addComponentSequences: graph withDictionary: components];
   [self initializeWithConfiguration: configuration];

@@ -24,7 +24,7 @@
 
 #define MAX_SIZE 100
 
-@implementation FDGraphView
+@implementation GraphView
 - (id)initWithController:(PajeTraceController *)c
 {
   self = [super initWithController: c];

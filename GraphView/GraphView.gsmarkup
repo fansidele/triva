@@ -10,7 +10,7 @@
             resizable="yes" closable="yes" visible="no">
       <vbox id="mainVBox" halign="expand">
         <view id="view"
-              instanceOf="FDDrawView"
+              instanceOf="DrawView"
               halign="expand" valign="expand" />
         <hbox>
           <button 

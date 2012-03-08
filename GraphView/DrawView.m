@@ -19,7 +19,7 @@
 #include "DrawView.h"
 #include "../Triva/NSPointFunctions.h"
 
-@implementation FDDrawView
+@implementation DrawView
 - (id) initWithFrame: (NSRect) frame
 {
   self = [super initWithFrame: frame];
@@ -38,7 +38,7 @@
     return NO;
 }
 
-- (void) setFilter: (FDGraphView *)f
+- (void) setFilter: (GraphView *)f
 {
   filter = f;
 }
