@@ -306,9 +306,9 @@
 
 - (void) timeSelectionChanged
 {
-  [view setNeedsDisplay: YES];
   [tree timeSelectionChanged];
   [self redefineLayout];
+  [view setNeedsDisplay: YES];
 }
 
 - (void)windowDidMove:(NSNotification *)win
