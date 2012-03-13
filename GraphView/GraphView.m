@@ -38,6 +38,9 @@
 
   slidersCreated = NO;
 
+  //the graph representaiton
+  graph = [[NSMutableDictionary alloc] init];
+
   //The tupi layout (the manager of all particles)
   tupiLayout = [[Layout alloc] init];
   return self;
@@ -280,13 +283,63 @@
   return;
 }
 
+- (void) clearParticleSystem
+{
+  //clear everything
+  [tupiLayout clear];
+  [graph removeAllObjects];
+}
+
+- (void) startParticleSystem
+{
+  //first add all particles
+  NSSet *nodes = [tree collapsedNodes];
+  NSEnumerator *en = [nodes objectEnumerator];
+  TrivaGraph *node;
+  while ((node = [en nextObject])){
+    NSPoint pos = [node location];
+    if (NSEqualPoints (pos, NSZeroPoint)){
+      pos = [(TrivaGraph*)[node parent] location];
+    }
+    pos.x += (2*drand48() - 1);
+    pos.y += (2*drand48() - 1);
+
+    //transform to tupi space
+    pos.x /= 100;
+    pos.y /= 100;
+
+    //create the graph node
+    GraphNode *n = [[GraphNode alloc] initWithTrivaNode: node];
+
+    [graph setObject: n forKey: [node name]];
+
+    [tupiLayout addNode: n
+               withName: [node name]
+           withLocation: pos];
+  }
+
+  en = [nodes objectEnumerator];
+  while ((node = [en nextObject])){
+    GraphNode *n = [graph objectForKey: [node name]];
+
+    NSEnumerator *en2 = [[node connectedNodes] objectEnumerator];
+    TrivaGraph *connected;
+    while ((connected = [en2 nextObject])){
+      GraphNode *nn = [graph objectForKey: [connected name]];
+
+      [n->connected addObject: nn];
+    }
+  }
+}
+
+
 - (void) hierarchyChanged
 {
   //stop thread
   [self stopThread];
 
   //clear particle system
-  [tupiLayout clear];
+  [self clearParticleSystem];
 
   //free previous tree
   [tree release];
@@ -302,6 +355,9 @@
 
   //checks
   [self startThread];
+
+  //the particle system
+  [self startParticleSystem];
 }
 
 - (void) timeSelectionChanged
@@ -347,32 +403,23 @@
   [self show];
 }
 
+
 //from the view
 - (void) clickNode: (TrivaGraph*) node
 {
-
   //if node has no children, do nothing
   if (![[node children] count]){
     return;
   }
 
-  //remove node from the particle system
-  [tupiLayout removeNode: node];
+  //clear particle system
+  [self clearParticleSystem];
 
   //expand the node
   [node expand];
 
-  //add node's children to the particle system
-  NSEnumerator *en = [[node children] objectEnumerator];
-  TrivaGraph *child;
-  while ((child = [en nextObject])){
-    NSPoint pos = [node position];
-    pos.x += (2*drand48() - 1);
-    pos.y += (2*drand48() - 1);
-    [tupiLayout addNode: child
-               withName: [child name]
-           withLocation: pos];
-  }
+  //remove the node from the particle system
+  [self startParticleSystem];
 
   //redefine layout of the structure
   [self redefineLayout];
@@ -388,20 +435,12 @@
     return;
   }
 
-  //clean-up particle system:
-  //remove all nodes from the tree below node's parent
-  NSEnumerator *en = [[(TrivaGraph*)[node parent] allExpanded] objectEnumerator];
-  TrivaGraph *child;
-  while ((child = [en nextObject])){
-    [tupiLayout removeNode: child];
-  }
+  [self clearParticleSystem];
 
   //collapse the parent node
   [(TrivaGraph*)[node parent] collapse];
 
-  //add the parent to the particle system
-  [tupiLayout addNode: (TrivaGraph*)[node parent]
-             withName: [[node parent] name]];
+  [self startParticleSystem];
 
   //redefine layout of the structure
   [self redefineLayout];
@@ -413,12 +452,14 @@
 - (void) moveNode: (TrivaGraph*) node toLocation: (NSPoint) newLoc
 {
   NSPoint tupiNewLocation = NSMakePoint(newLoc.x/100, newLoc.y/100);
-  [tupiLayout moveNode: node toLocation: tupiNewLocation];
+  GraphNode *n = [graph objectForKey: [node name]];
+  [tupiLayout moveNode: n toLocation: tupiNewLocation];
 }
 
 - (void) finishMoveNode: (TrivaGraph *) node
 {
-  [tupiLayout freezeNode: node frozen: NO];
+  GraphNode *n = [graph objectForKey: [node name]];
+  [tupiLayout freezeNode: n frozen: NO];
 }
 
 - (void) clickForceDirected: (id) sender

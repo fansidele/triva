@@ -24,6 +24,7 @@
 #include <Tupi/Layout.h>
 #include <Tupi/LayoutRunner.h>
 #include "DrawView.h"
+#include "GraphNode.h"
 
 @interface GraphView : TrivaFilter <TupiProvider>
 {
@@ -40,6 +41,9 @@
   //scale sliders
   NSMutableDictionary *scaleSliders;
   NSMutableDictionary *scaleLabels;
+
+  //graph representation
+  NSMutableDictionary *graph;
 
   //Tupi layout
   Layout *tupiLayout;
