@@ -19,7 +19,6 @@
 #include <Foundation/Foundation.h>
 #include <AppKit/AppKit.h>
 #include <PajeGeneral/PajeContainer.h>
-#include <Tupi/TupiProtocols.h>
 #include "TrivaTree.h"
 #include "TrivaComposition.h"
 
@@ -31,7 +30,7 @@ typedef enum {
   TRIVA_ROUTER
 } TrivaGraphType;
 
-@interface TrivaGraph : TrivaTree <TupiNode>
+@interface TrivaGraph : TrivaTree
 {
   NSMutableSet *connectedNodes;
   NSMutableDictionary *compositions;
@@ -41,10 +40,6 @@ typedef enum {
   NSMutableDictionary *connectionPoints; //TrivaGraph->NSPoint(as NSString)
 
   BOOL posCalculated;
-
-  //tupi position and particle
-  NSPoint tupiPos;
-  id tupiParticle;
 }
 + (TrivaGraph*) nodeWithName: (NSString*)n
                       depth: (int)d
@@ -59,7 +54,6 @@ typedef enum {
           container: (PajeContainer*)c
              filter: (TrivaFilter*)f;
 - (void) connectToNode: (TrivaGraph*) n;
-- (BOOL) isConnectedTo: (TrivaGraph*) c;
 
 /* search-based methods */
 - (TrivaGraph *) searchWith: (NSPoint) point

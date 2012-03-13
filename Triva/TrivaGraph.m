@@ -391,54 +391,11 @@
   return ret;
 }
 
-/* FDNode protocol */
-- (NSPoint) position
-{
-  return tupiPos;
-}
-- (void) setPosition: (NSPoint) newPosition
-{
-  tupiPos = newPosition;
-  location = NSMakePoint(tupiPos.x*100, tupiPos.y*100);
-}
-
 - (NSSet *) connectedNodes
 {
   NSMutableSet *set = [NSMutableSet setWithSet: connectedNodes];
   [set intersectSet: [[self root] collapsedNodes]];
   return set;
-}
-
-- (BOOL) isConnectedTo: (id) c
-{
-  if ([connectedNodes containsObject: c]){
-    return YES;
-  }
-
-  //1 - get all nodes below c
-  NSMutableSet *s1 = [(TrivaGraph*)c allNodes];
-
-  //2 - get all connected nodes of self
-  NSMutableSet *allConnectedNodes = [self allConnectedNodes];
-
-  [allConnectedNodes intersectSet: s1];
-
-  if ([allConnectedNodes count]){
-    return YES;
-  }else{
-    return NO;
-  }
-}
-
-- (void) setParticle: (id)p
-{
-  //don't retain
-  tupiParticle = p;
-}
-
-- (id) particle
-{
-  return tupiParticle;
 }
 
 - (TrivaGraph *) root
