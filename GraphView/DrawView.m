@@ -208,7 +208,7 @@
     [filter clickNode: highlighted];
   }
 
-  if (movingSingleNode){
+  if (highlighted && movingSingleNode == YES){
     [filter finishMoveNode: highlighted];
   }
   //all mouse operation has ended,
