@@ -14,12 +14,6 @@
     You should have received a copy of the GNU General Public License
     along with Triva.  If not, see <http://www.gnu.org/licenses/>.
 */
-#include <Foundation/Foundation.h>
-#include <Renaissance/Renaissance.h>
-#include <Renaissance/GSAutoLayoutHBox.h>
-#include <AppKit/AppKit.h>
-#include <unistd.h>
-#include "../Triva/NSPointFunctions.h"
 #include "GraphView.h"
 
 #define MAX_SIZE 100

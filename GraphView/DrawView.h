@@ -18,6 +18,7 @@
 #define __DrawView_h
 #include <AppKit/AppKit.h>
 #include "../Triva/TrivaGraph.h"
+#include "../Triva/NSPointFunctions.h"
 
 @class GraphView;
 

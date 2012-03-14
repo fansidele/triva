@@ -19,6 +19,8 @@
 
 #include <Foundation/Foundation.h>
 #include <AppKit/AppKit.h>
+#include <Renaissance/Renaissance.h>
+#include <Renaissance/GSAutoLayoutHBox.h>
 #include "../Triva/TrivaGraph.h"
 #include "../Triva/TrivaWindow.h"
 #include <Tupi/Layout.h>
