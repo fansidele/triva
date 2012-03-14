@@ -29,6 +29,7 @@
 - (void) dealloc
 {
   [connected release];
+  [super dealloc];
 }
 
 /* The TupiNode protocol implementation */
