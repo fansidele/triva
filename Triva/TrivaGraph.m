@@ -107,36 +107,6 @@
   return;
 }
 
-- (NSMutableSet *) allConnectedNodes
-{
-  NSMutableSet *ret = [NSMutableSet set];
-  if (![children count]) {
-    [ret unionSet: connectedNodes];
-    return ret;
-  }
-
-  NSEnumerator *en = [children objectEnumerator];
-  TrivaGraph *child;
-  while ((child = [en nextObject])){
-    NSSet *s = [child allConnectedNodes];
-    [ret unionSet: s];
-  }
-  [ret unionSet: connectedNodes];
-  return ret;
-}
-
-- (NSMutableSet *) allNodes
-{
-  NSMutableSet *ret = [NSMutableSet setWithObject: self];
-  NSEnumerator *en = [children objectEnumerator];
-  TrivaGraph *child;
-  while ((child = [en nextObject])){
-    NSSet *s = [child allNodes];
-    [ret unionSet: s];
-  }
-  return ret;
-}
-
 - (void) timeSelectionChanged
 {
   //update current values
@@ -167,10 +137,9 @@
 }
 
 /*
- * Search method
+ * Search methods
  */
-- (TrivaGraph *) searchWith: (NSPoint) point
-               limitToDepth: (int) d
+- (TrivaGraph *) searchWith: (NSPoint) point limitToDepth: (int) d
 {
 
   if ([self depth] == d){
@@ -261,11 +230,6 @@
   return YES;
 }
 
-- (void) resetLocation
-{
-  location = NSZeroPoint;
-}
-
 - (void) setLocation: (NSPoint)l
 {
   location = l;
@@ -274,31 +238,6 @@
 - (NSPoint) location
 {
   return location;
-}
-
-- (void) recursiveResetPositions
-{
-  location = NSZeroPoint;
-
-  NSEnumerator *en = [children objectEnumerator];
-  TrivaGraph *child;
-  while ((child = [en nextObject])){
-    [child recursiveResetPositions];
-  }
-}
-
-- (double) charge
-{
-  //charge = space occupied in view (calculated from time/space trace data)
-  double ret = bb.size.width;
-  return ret;
-}
-
-- (double) spring: (TrivaGraph*) n
-{
-  //spring to a given node = the sum of our charges
-  double ret = [self charge] + [n charge];
-  return ret;
 }
 
 - (NSString *) description
@@ -324,24 +263,6 @@
 {
   return sqrt([[compositions objectForKey: compName] evaluateSize]);
 }
-
-
-/* new methods */
-- (NSSet *) allExpanded //get all expanded nodes (those that are visible)
-{
-  NSMutableSet *ret = [NSMutableSet set];
-  if ([self expanded] == NO){
-    [ret addObject: self];
-  }else{
-    NSEnumerator *en = [children objectEnumerator];
-    TrivaGraph* child;
-    while ((child = [en nextObject])){
-      [ret unionSet: [child allExpanded]];
-    }
-  }
-  return ret;
-}
-
 
 - (void) expand    //non-recursive (one level only)
 {
@@ -377,20 +298,6 @@
   [self setExpanded: NO];
 }
 
-/* export */
-- (NSString *) exportDot
-{
-  NSMutableString *ret = [NSMutableString string];
-  NSPoint loc = [self location];
-  [ret appendFormat: @"\"%@\" [pos=\"%d,%d\"];\n", name,(int)loc.x, (int)loc.y];
-  NSEnumerator *en = [children objectEnumerator];
-  TrivaGraph* child;
-  while ((child = [en nextObject])){
-    [ret appendString: [child exportDot]];
-  }
-  return ret;
-}
-
 - (NSSet *) connectedNodes
 {
   NSMutableSet *set = [NSMutableSet setWithSet: connectedNodes];
@@ -398,6 +305,9 @@
   return set;
 }
 
+/*
+ * Return the root of the tree
+ */
 - (TrivaGraph *) root
 {
   if (parent == nil){

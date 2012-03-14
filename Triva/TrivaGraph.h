@@ -24,22 +24,11 @@
 
 @class TrivaTree;
 
-typedef enum {
-  TRIVA_NODE,
-  TRIVA_EDGE,
-  TRIVA_ROUTER
-} TrivaGraphType;
-
 @interface TrivaGraph : TrivaTree
 {
   NSMutableSet *connectedNodes;
   NSMutableDictionary *compositions;
-
   NSPoint location;
-
-  NSMutableDictionary *connectionPoints; //TrivaGraph->NSPoint(as NSString)
-
-  BOOL posCalculated;
 }
 + (TrivaGraph*) nodeWithName: (NSString*)n
                       depth: (int)d
@@ -53,47 +42,36 @@ typedef enum {
            expanded: (BOOL)e
           container: (PajeContainer*)c
              filter: (TrivaFilter*)f;
+
+/* how the nodes are connected (as a graph) */
+- (NSSet*) connectedNodes;
 - (void) connectToNode: (TrivaGraph*) n;
 
-/* search-based methods */
-- (TrivaGraph *) searchWith: (NSPoint) point
-      limitToDepth: (int) d;
+/* search methods */
 - (TrivaGraph *) searchAtPoint: (NSPoint) point;
+- (TrivaGraph *) searchWith: (NSPoint) point limitToDepth: (int) d;
 
 /* dealing with expressions */
+- (double) sizeForConfigurationName: (NSString *)compName;
 - (BOOL) expressionHasVariables: (NSString*) expr;
 - (BOOL) evaluateWithValues: (NSDictionary *) values
                    withExpr: (NSString *) expr
                   evaluated: (double*) output;
-- (NSSet*) connectedNodes;
-- (void) resetLocation;
-- (void) setLocation: (NSPoint)l;
-- (NSPoint) location;
-- (void) recursiveResetPositions;
-- (double) charge;
-- (double) spring: (TrivaGraph *) n;
-- (double) sizeForConfigurationName: (NSString *)compName;
 
-/* new methods */
-- (NSMutableSet *) allNodes;
-- (NSMutableSet *) allConnectedNodes;
-- (NSSet *) allExpanded; //get all expanded nodes (those that are visible)
+/* other methods used for creating graph cuts from the tree */
 - (void) expand;    //non-recursive (one level only)
 - (void) collapse;  //recursive (all to the bottom)
-
-/* export */
-- (NSString *) exportDot;
-
-
-/* new methods 2012-3-2 */
 - (TrivaGraph *) root;
 - (NSSet *) collapsedNodes;
+
+/* location of the node in a bi-dimensional space */
+- (void) setLocation: (NSPoint)l;
+- (NSPoint) location;
 @end
 
 @interface TrivaGraph (Layout)
 - (void) recursiveLayout;
 - (void) layout;
-
 - (void) recursiveDrawLayout;
 - (void) drawLayout;
 @end
