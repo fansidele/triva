@@ -23,6 +23,8 @@
   if (self != nil){
     [self resetCache];
     cache = [[NSMutableDictionary alloc] init];
+    lastStart = -1;
+    lastEnd = -1;
   }
   return self;
 }
@@ -110,7 +112,14 @@
 
 - (void) timeSelectionChanged
 {
-  [self resetCache];
+  double cStart = [[self selectionStartTime] timeIntervalSinceReferenceDate];
+  double cEnd = [[self selectionEndTime] timeIntervalSinceReferenceDate];
+  if (cStart != lastStart ||
+      cEnd != lastEnd){
+    [self resetCache];
+    lastStart = cStart;
+    lastEnd = cEnd;
+  }
   [super timeSelectionChanged];
 }
 
