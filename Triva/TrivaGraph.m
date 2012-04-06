@@ -347,4 +347,9 @@
     return [name isEqual: [(TrivaGraph*)another name]];
   }
 }
+
+- (NSUInteger) hash
+{
+  return [name hash];
+}
 @end
