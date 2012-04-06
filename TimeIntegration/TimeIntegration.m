@@ -23,10 +23,7 @@
   if (self != nil){
     colors = [[NSMutableDictionary alloc] init];
   }
-
-  /* starting configuration */
   considerExclusiveDuration = YES;
-  graphAggregationEnabled = YES;
   return self;
 }
 
@@ -37,7 +34,7 @@
 }
 
 - (NSDictionary *) timeIntegrationOfType:(PajeEntityType*) type
-                inContainer:(PajeContainer*) cont
+                             inContainer:(PajeContainer*) cont
 {
   if ([type isKindOfClass: [PajeVariableType class]]){
     return [self timeIntegrationOfVariableType: type inContainer: cont];
@@ -49,24 +46,12 @@
 }
 
 - (NSDictionary *) timeIntegrationOfStateType: (PajeEntityType*) type
-                        inContainer: (PajeContainer *) instance
+                                  inContainer: (PajeContainer *) instance
 {
   NSMutableDictionary *ret = [NSMutableDictionary dictionary];
   NSEnumerator *en = nil;
   id ent = nil;
 
-/*
-  //initializing state values to zero (in timeSliveValues dict) if they do not exist yet
-  NSArray *allValuesOfStateType = [self allValuesForEntityType: type];
-  en = [allValuesOfStateType objectEnumerator];
-  while ((ent = [en nextObject]) != nil) {
-    NSString *currentValue = [ret objectForKey: ent];
-    if (!currentValue) {
-      [ret setObject: [NSNumber numberWithDouble: 0]
-              forKey: ent];
-    }
-  }
-*/
   //setting colors for values of the entity type
   en = [[self allValuesForEntityType: type] objectEnumerator];
   while ((ent = [en nextObject]) != nil) {
@@ -124,7 +109,7 @@
 }
 
 - (NSDictionary *) timeIntegrationOfVariableType: (PajeEntityType *) type
-                     inContainer: (PajeContainer *) instance
+                                     inContainer: (PajeContainer *) instance
 {
   NSMutableDictionary *ret = [NSMutableDictionary dictionary];
 

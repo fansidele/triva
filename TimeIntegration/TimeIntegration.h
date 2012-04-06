@@ -21,11 +21,7 @@
 
 @interface TimeIntegration  : TrivaFilter
 {
-  /* Configuration */
   BOOL considerExclusiveDuration;
-  BOOL graphAggregationEnabled;
-
-  /* colors */
   NSMutableDictionary *colors;
 }
 - (NSDictionary *) timeIntegrationOfStateType: (PajeEntityType*) type
