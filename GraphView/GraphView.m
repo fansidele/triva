@@ -310,6 +310,8 @@
     [tupiLayout addNode: n
                withName: [node name]
            withLocation: pos];
+
+    [n release];
   }
 
   en = [nodes objectEnumerator];
