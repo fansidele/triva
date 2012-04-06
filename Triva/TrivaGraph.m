@@ -279,23 +279,27 @@
 - (void) collapse  //recursive (from to the bottom up to self)
 {
   //find my new location based on children's locations
-  NSEnumerator *en = [children objectEnumerator];
-  NSRect ur = NSZeroRect;
-  TrivaGraph* child;
-  while ((child = [en nextObject])){
-    NSRect cRect;
-    NSPoint cLoc = [child location];
-    NSRect cBB = [child boundingBox];
-    cRect.origin = NSMakePoint (cLoc.x - cBB.size.width/2,
-                                cLoc.y - cBB.size.height/2);
-    cRect.size = cBB.size;
-    ur = NSUnionRect (ur, cRect);
+  //(only if my location wasn't defined yet)
+  if (NSEqualPoints (NSZeroPoint, [self location])){
+    NSEnumerator *en = [children objectEnumerator];
+    NSRect ur = NSZeroRect;
+    TrivaGraph* child;
+    while ((child = [en nextObject])){
+      NSRect cRect;
+      NSPoint cLoc = [child location];
+      NSRect cBB = [child boundingBox];
+      cRect.origin = NSMakePoint (cLoc.x - cBB.size.width/2,
+                                  cLoc.y - cBB.size.height/2);
+      cRect.size = cBB.size;
+      ur = NSUnionRect (ur, cRect);
+    }
+    NSPoint nc = NSMakePoint (ur.origin.x+ur.size.width/2,
+                              ur.origin.y+ur.size.height/2);
+    [self setLocation: nc];
   }
-  NSPoint nc = NSMakePoint (ur.origin.x+ur.size.width/2,
-                            ur.origin.y+ur.size.height/2);
-  [self setLocation: nc];
 
-  en = [children objectEnumerator];
+  NSEnumerator *en = [children objectEnumerator];
+  TrivaGraph *child;
   while ((child = [en nextObject])){
     [child collapse];
   }
