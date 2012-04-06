@@ -119,11 +119,15 @@
     [comp layout];
   }
 
-  //recurse to my children
-  NSEnumerator *en1 = [children objectEnumerator];
-  TrivaGraph *child;
-  while ((child = [en1 nextObject])){
-    [child timeSelectionChanged];
+  if ([self expanded]){
+
+    //recurse to my children
+    NSEnumerator *en1 = [children objectEnumerator];
+    TrivaGraph *child;
+    while ((child = [en1 nextObject])){
+      [child timeSelectionChanged];
+    }
+
   }
 }
 
