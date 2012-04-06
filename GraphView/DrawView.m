@@ -64,7 +64,7 @@
     while ((connected = [en nextObject])){
       NSPoint mp = [tree location];
       NSPoint pp = [connected location];
-      [[[NSColor grayColor] colorWithAlphaComponent: 0.2] set];
+      [[[NSColor darkGrayColor] colorWithAlphaComponent: 0.8] set];
       NSBezierPath *path = [NSBezierPath bezierPath];
       [path moveToPoint: mp];
       [path lineToPoint: pp];
