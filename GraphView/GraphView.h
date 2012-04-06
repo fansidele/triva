@@ -64,8 +64,6 @@
 - (void) clickForceDirected: (id) sender;
 - (void) clickResetPositions: (id) sender;
 - (void) updateScaleSliders: (id) sender;
-
-- (void) redefineLayout;
 @end
 
 #endif

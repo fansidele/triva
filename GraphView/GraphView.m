@@ -357,7 +357,7 @@
 - (void) timeSelectionChanged
 {
   [tree timeSelectionChanged];
-  [self redefineLayout];
+  [tree recursiveLayout];
   [view setNeedsDisplay: YES];
 }
 
@@ -416,7 +416,7 @@
   [self startParticleSystem];
 
   //redefine layout of the structure
-  [self redefineLayout];
+  [tree recursiveLayout];
 
   //reset the view
   [view reset];
@@ -437,7 +437,7 @@
   [self startParticleSystem];
 
   //redefine layout of the structure
-  [self redefineLayout];
+  [tree recursiveLayout];
 
   //reset the view
   [view reset];
@@ -480,7 +480,7 @@
     [[scaleLabels objectForKey: confName] setStringValue: 
                                             [slider stringValue]];
   }
-  [self redefineLayout];
+  [tree recursiveLayout];
   [view setNeedsDisplay: YES];
 }
 
@@ -488,12 +488,6 @@
 {
   if ([scaleSliders count] == 0) return 0;
   return [[scaleSliders objectForKey: name] doubleValue];
-}
-
-
-- (void) redefineLayout
-{
-  [tree recursiveLayout];
 }
 
 /* TupiProtocols */
