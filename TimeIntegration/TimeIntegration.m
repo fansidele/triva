@@ -41,6 +41,7 @@
   }else if ([type isKindOfClass: [PajeStateType class]]){
     return [self timeIntegrationOfStateType: type inContainer: cont];
   }else{
+    //we don't time integrate links and events
     return [NSDictionary dictionary];
   }
 }
@@ -51,13 +52,6 @@
   NSMutableDictionary *ret = [NSMutableDictionary dictionary];
   NSEnumerator *en = nil;
   id ent = nil;
-
-  //setting colors for values of the entity type
-  en = [[self allValuesForEntityType: type] objectEnumerator];
-  while ((ent = [en nextObject]) != nil) {
-    [colors setObject: [self colorForValue: ent ofEntityType: type]
-               forKey: ent];
-  }
 
   NSDate *sliceStartTime = [self selectionStartTime];
   NSDate *sliceEndTime = [self selectionEndTime];
@@ -143,11 +137,47 @@
   NSString *variableIdent = [type description];
   [ret setObject: [NSNumber numberWithDouble: integrated]
                                       forKey: variableIdent];
-
-  //saving color
-  [colors setObject: [self colorForEntityType: type]
-             forKey: variableIdent];
   return ret;
+}
+
+- (void) setColorsForEntityType: (PajeEntityType*) containerType
+{
+  NSEnumerator *en = [[self containedTypesForContainerType: containerType]
+                       objectEnumerator];
+  PajeEntityType *type;
+  while ((type = [en nextObject])){
+    if ([self isContainerEntityType: type]){
+      [self setColorsForEntityType: type];
+    }else{
+      if ([type isKindOfClass: [PajeVariableType class]]){
+        [colors setObject: [self colorForEntityType: type]
+                   forKey: [type description]];
+      }else if ([type isKindOfClass: [PajeStateType class]]){
+        //setting colors for values of the state type
+        NSEnumerator *en2;
+        id ent;
+        en2 = [[self allValuesForEntityType: type] objectEnumerator];
+        while ((ent = [en2 nextObject]) != nil) {
+          [colors setObject: [self colorForValue: ent ofEntityType: type]
+                     forKey: ent];
+        }
+      }else{
+        //we don't set colors for links and events
+      }
+    }
+  }
+}
+
+- (void) dataChangedForEntityType: (PajeEntityType*) type
+{
+  [self setColorsForEntityType: type];
+  [super dataChangedForEntityType: type];
+}
+
+- (void) hierarchyChanged
+{
+  [self setColorsForEntityType: [[self rootInstance] entityType]];
+  [super hierarchyChanged];
 }
 
 - (NSColor *) colorForIntegratedValueNamed: (NSString *) valueName
