@@ -359,7 +359,6 @@
 - (void) timeSelectionChanged
 {
   [tree timeSelectionChanged];
-  [tree recursiveLayout];
   [view setNeedsDisplay: YES];
 }
 
