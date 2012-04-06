@@ -18,6 +18,7 @@ SUBPROJECTS = Triva \
   TimeInterval \
   TimeIntegration \
   SpatialIntegration \
+  AggregationBuffer \
   TypeFilter \
   TimeSync \
   contrib
