@@ -7,9 +7,8 @@
 # your system installation. The list below considers an Ubuntu 10.04.
 
 $ sudo apt-get install libxml2-dev libxslt1-dev libssl-dev libx11-dev \
-                       libxext-dev libxt-dev libjpeg62-dev libtiff4-dev \
-                       libpng12-dev libffi-dev gobjc \
-                       build-essential
+                       libxext-dev libxt-dev libjpeg-dev libtiff4-dev \
+                       libpng12-dev libffi-dev libcairo2-dev gobjc
 
 # Installing GNUstep startup from source (change the version according
 # to the GNUstep website)
@@ -29,7 +28,6 @@ $ source /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
 $ git clone git://paje.git.sourceforge.net/gitroot/paje/paje Paje
 $ export LANG=C
 $ cd Paje
-$ git checkout 
 $ make
 $ make install GNUSTEP_INSTALLATION_DOMAIN=USER
 
