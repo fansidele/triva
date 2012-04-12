@@ -17,7 +17,7 @@
 #ifndef __CHECKTRACE_H
 #define __CHECKTRACE_H
 #include <Foundation/Foundation.h>
-#include <Triva/TrivaFilter.h>
+#include "../Triva/TrivaFilter.h"
 
 @interface CheckTrace  : TrivaFilter
 @end

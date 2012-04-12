@@ -17,7 +17,7 @@
 #ifndef __AggregationBuffer_H
 #define __AggregationBuffer_H
 #include <Foundation/Foundation.h>
-#include <Triva/TrivaFilter.h>
+#include "../Triva/TrivaFilter.h"
 
 @interface AggregationBuffer  : TrivaFilter
 {
