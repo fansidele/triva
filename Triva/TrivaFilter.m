@@ -113,6 +113,16 @@
   return [(TrivaFilter*)inputComponent colorForIntegratedValueNamed: valueName];
 }
 
+- (NSDictionary *) entropyOfContainer: (PajeContainer*) cont;
+{
+  return [(TrivaFilter*)inputComponent entropyOfContainer: cont];
+}
+
+- (NSDictionary *) entropyGainOfContainer: (PajeContainer*) cont
+{
+  return [(TrivaFilter*)inputComponent entropyGainOfContainer: cont];
+}
+
 - (NSDictionary *) graphConfigurationForContainerType:(PajeEntityType*) type
 {
   return [(TrivaFilter*)inputComponent graphConfigurationForContainerType:type];

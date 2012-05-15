@@ -54,6 +54,10 @@ typedef enum {Local,Global,Convergence,Arnaud} TrivaScale;
 - (NSDictionary *) spatialIntegrationOfContainer: (PajeContainer *) cont;
 - (NSColor *) colorForIntegratedValueNamed: (NSString *) valueName;
 
+//entropy support
+- (NSDictionary *) entropyOfContainer: (PajeContainer*) cont;
+- (NSDictionary *) entropyGainOfContainer: (PajeContainer*) cont;
+
 //graph view protocol
 - (NSDictionary *) graphConfigurationForContainerType:(PajeEntityType*) type;
 - (NSDictionary *) graphConfiguration;
