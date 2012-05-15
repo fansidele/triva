@@ -17,6 +17,9 @@
 #include "TrivaController.h"
 #include "TrivaCommand.h"
 #include "TrivaApplication.h"
+#include <Renaissance/Renaissance.h>
+
+int (*linkRenaissanceIn)(int, const char **) = GSMarkupApplicationMain;
 
 int main (int argc, const char **argv){
   NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
