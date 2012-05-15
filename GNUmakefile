@@ -16,6 +16,7 @@ SUBPROJECTS = Triva \
   Instances \
   SquarifiedTreemap \
   TimeInterval \
+  Entropy \
   TimeIntegration \
   SpatialIntegration \
   AggregationBuffer \
