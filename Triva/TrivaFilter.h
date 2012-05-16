@@ -58,6 +58,8 @@ typedef enum {Local,Global,Convergence,Arnaud} TrivaScale;
 - (NSDictionary *) entropyOfContainer: (PajeContainer*) cont;
 - (NSDictionary *) entropyGainOfContainer: (PajeContainer*) cont;
 - (NSDictionary *) informationLossOfContainer: (PajeContainer*) cont;
+- (NSDictionary *) divergenceOfContainer: (PajeContainer*) cont;
+- (NSDictionary *) ricOfContainer: (PajeContainer*) cont;
 
 //graph view protocol
 - (NSDictionary *) graphConfigurationForContainerType:(PajeEntityType*) type;

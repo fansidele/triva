@@ -128,6 +128,16 @@
   return [(TrivaFilter*)inputComponent informationLossOfContainer: cont];
 }
 
+- (NSDictionary *) divergenceOfContainer: (PajeContainer*) cont
+{
+  return [(TrivaFilter*)inputComponent divergenceOfContainer: cont];
+}
+
+- (NSDictionary *) ricOfContainer: (PajeContainer*) cont
+{
+  return [(TrivaFilter*)inputComponent ricOfContainer: cont];
+}
+
 - (NSDictionary *) graphConfigurationForContainerType:(PajeEntityType*) type
 {
   return [(TrivaFilter*)inputComponent graphConfigurationForContainerType:type];
