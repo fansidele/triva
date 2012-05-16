@@ -152,6 +152,24 @@
   return accum;
 }
 
+- (NSDictionary *) informationLossOfContainer: (PajeContainer*) cont
+{
+  NSMutableDictionary *ret = [NSMutableDictionary dictionary];
+  NSArray *leafConts = [self leafContainersInContainer: cont];
+  NSDictionary *vzero = [self spatialIntegrationOfContainer: [self rootInstance]];
+  NSDictionary *spatial = [self spatialIntegrationOfContainer: cont];
+  NSEnumerator *en = [vzero keyEnumerator];
+  id variable;
+  while ((variable = [en nextObject])){
+    double var_spatial_integrated = [[spatial objectForKey: variable] doubleValue];
+    double var_vzero = [[vzero objectForKey: variable] doubleValue];
+    double ratio = var_spatial_integrated / var_vzero;
+    double information_loss = ratio * log2 ([leafConts count]);
+    [ret setObject: [NSNumber numberWithDouble: information_loss] forKey: variable];
+  }
+  return ret;
+}
+
 - (void) test: (PajeContainer*) cont
 {
   {
