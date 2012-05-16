@@ -138,8 +138,8 @@
 
 - (NSDictionary *) entropyGainOfContainer: (PajeContainer *) cont
 {
-  NSDictionary *dict = [self leafContainersInContainer: cont];
-  NSEnumerator *en = [dict objectEnumerator];
+  NSArray *leafConts = [self leafContainersInContainer: cont];
+  NSEnumerator *en = [leafConts objectEnumerator];
   PajeContainer *leaf;
   NSMutableDictionary *accum = [NSMutableDictionary dictionary];
   while ((leaf = [en nextObject])){
