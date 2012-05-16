@@ -170,35 +170,24 @@
   return ret;
 }
 
-- (void) test: (PajeContainer*) cont
+- (NSDictionary *) divergenceOfContainer: (PajeContainer*) cont
 {
-  {
-    NSDictionary *dict = [self entropyGainOfContainer: cont];
-    id variable;
-    NSEnumerator *en = [dict keyEnumerator];
-    while ((variable = [en nextObject])){
-      NSLog (@"node = %@, entropy_gain_%@ = %@", [cont name], variable, [dict objectForKey: variable]);
-    }
-  }
-
-  NSArray *containedTypes = [self containedTypesForContainerType: [cont entityType]];
-  NSEnumerator *en = [containedTypes objectEnumerator];
-  PajeEntityType *type = nil;
-  while ((type = [en nextObject])){
-    if ([self isContainerEntityType: type]){
-      NSEnumerator *en0 = [self enumeratorOfContainersTyped: type inContainer: cont];
-      PajeContainer *sub;
-      while ((sub = [en0 nextObject]) != nil) {
-        [self test: sub];
-      }
-    }
-  }
+  NSMutableDictionary *ret = [NSMutableDictionary dictionary];
+  NSDictionary *loss = [self informationLossOfContainer: cont];
+  NSDictionary *gain = [self entropyGainOfContainer: cont];
+  [self addThis: loss toThis: ret];
+  [self subtractThis: gain fromThis: ret];
+  return ret;
 }
 
-- (void) timeSelectionChanged
+- (NSDictionary *) ricOfContainer: (PajeContainer*) cont
 {
-  [self test: [self rootInstance]];
-//  NSLog (@"%@", [self entropyOfContainer: [self rootInstance]]);
-  [super timeSelectionChanged];
+  NSMutableDictionary *ret = [NSMutableDictionary dictionary];
+  NSDictionary *gain = [self entropyGainOfContainer: cont];
+  NSDictionary *loss = [self informationLossOfContainer: cont];
+  [self addThis: gain toThis: ret];
+  [self addThis: gain toThis: ret];
+  [self subtractThis: loss fromThis: ret];
+  return ret;
 }
 @end
