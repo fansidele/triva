@@ -123,6 +123,11 @@
   return [(TrivaFilter*)inputComponent entropyGainOfContainer: cont];
 }
 
+- (NSDictionary *) informationLossOfContainer: (PajeContainer*) cont
+{
+  return [(TrivaFilter*)inputComponent informationLossOfContainer: cont];
+}
+
 - (NSDictionary *) graphConfigurationForContainerType:(PajeEntityType*) type
 {
   return [(TrivaFilter*)inputComponent graphConfigurationForContainerType:type];
