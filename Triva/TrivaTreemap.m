@@ -431,6 +431,17 @@
                                  [child name],
                                  [child treemapValue]*tsDuration]];
   }
+
+  //ric
+  NSDictionary *ric = [filter ricOfContainer: container];
+  {
+    NSEnumerator *en = [ric keyEnumerator];
+    id variable;
+    while ((variable = [en nextObject])){
+      [ret appendString: [NSString stringWithFormat: @"ric_%@ = %.4f\n", variable,
+                                  [[ric objectForKey: variable] doubleValue]]];
+    }
+  }
   return ret;  
 }
 
