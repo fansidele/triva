@@ -190,4 +190,13 @@
   [self subtractThis: loss fromThis: ret];
   return ret;
 }
+
+- (void) hierarchyChanged
+{
+  if (leafContainers){
+    [leafContainers release];
+    leafContainers = nil;
+  }
+  [super hierarchyChanged];
+}
 @end
