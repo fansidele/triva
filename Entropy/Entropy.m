@@ -21,6 +21,8 @@
 {
   self = [super initWithController: c];
   if (self != nil){
+    [NSBundle loadGSMarkupNamed: @"Entropy" owner: self];
+    [window initializeWithDelegate: self];
   }
   leafContainers = nil;
   return self;
@@ -222,5 +224,10 @@
     leafContainers = nil;
   }
   [super hierarchyChanged];
+}
+
+- (void) pChanged
+{
+  //the 'p' value has changed, its current value is stored in the p attribute
 }
 @end

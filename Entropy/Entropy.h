@@ -17,11 +17,20 @@
 #ifndef __Entropy_H
 #define __Entropy_H
 #include <Foundation/Foundation.h>
+#include <AppKit/AppKit.h>
+#include <Renaissance/Renaissance.h>
 #include "../Triva/TrivaFilter.h"
+#include "../Triva/TrivaWindow.h"
 
 @interface Entropy  : TrivaFilter
 {
   NSMutableArray *leafContainers;
+  double p;
+
+  //GUI
+  TrivaWindow *window;
+  NSSlider *slider;
+  NSTextField *text;
 }
 - (NSMutableArray *) leafContainersInContainer: (PajeContainer *) cont;
 - (NSMutableArray *) childrenOfContainer: (PajeContainer *) cont;
@@ -30,6 +39,14 @@
 - (void) subtractThis: (NSDictionary *) origin
              fromThis: (NSMutableDictionary *) destination;
 - (NSDictionary*) vzeroOfType: (PajeEntityType*) type;
+
+//notification of a change in P
+- (void) pChanged;
+@end
+
+@interface Entropy (GUI)
+- (void) pSliderChanged: (id) sender;
+- (void) pTextChanged: (id) sender;
 @end
 
 #endif

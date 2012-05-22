@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!DOCTYPE gsmarkup>
+
+<gsmarkup>
+  <objects>
+    <window id="window"
+            instanceOf="TrivaWindow"
+            width="300"
+            title="Triva - Entropy"
+            resizable="no" closable="yes" visible="yes">
+      <vbox>
+        <!-- Trace Time -->
+        <box title="Define the 'p' value" halign="wexpand">
+          <vbox halign="wexpand">
+            <slider id="slider"
+                    target="#NSOwner"
+                    action="pSliderChanged:"
+                    min = "0"
+                    max = "1"
+                    current = "0"
+                    height="17"
+                    halign="expand" />
+            <textField id="text"
+                       target="#NSOwner"
+                       action="pTextChanged:" />
+            <label>Type 'Enter' after entering a number between 0 and 1 in the text field.</label>
+          </vbox>
+        </box>
+      </vbox>
+    </window>
+  </objects>
+
+  <connectors>
+    <outlet source="#NSOwner" target="#window" key="window" />
+    <outlet source="#NSOwner" target="#slider" key="slider" />
+    <outlet source="#NSOwner" target="#text" key="text" />
+  </connectors>
+</gsmarkup>
