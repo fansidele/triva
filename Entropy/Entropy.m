@@ -56,6 +56,25 @@
   return ret;
 }
 
+- (NSMutableArray *) childrenOfContainer: (PajeContainer *) cont
+{
+  NSMutableArray *ret = [NSMutableArray array];
+
+  NSArray *containedTypes = [self containedTypesForContainerType: [cont entityType]];
+  NSEnumerator *en = [containedTypes objectEnumerator];
+  PajeEntityType *type = nil;
+  while ((type = [en nextObject])){
+    if ([self isContainerEntityType: type]){
+      NSEnumerator *en0 = [self enumeratorOfContainersTyped: type inContainer: cont];
+      PajeContainer *sub;
+      while ((sub = [en0 nextObject]) != nil) {
+        [ret addObject: sub];
+      }
+    }
+  }
+  return ret;
+}
+
 - (void) addThis: (NSDictionary *) origin
           toThis: (NSMutableDictionary *) destination
 {

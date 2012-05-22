@@ -24,6 +24,7 @@
   NSMutableArray *leafContainers;
 }
 - (NSMutableArray *) leafContainersInContainer: (PajeContainer *) cont;
+- (NSMutableArray *) childrenOfContainer: (PajeContainer *) cont;
 - (void) addThis: (NSDictionary *) origin
           toThis: (NSMutableDictionary *) destination;
 - (void) subtractThis: (NSDictionary *) origin
