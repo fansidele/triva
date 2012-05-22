@@ -210,6 +210,11 @@
   return ret;
 }
 
+- (void) timeSelectionChanged
+{
+  [super timeSelectionChanged];
+}
+
 - (void) hierarchyChanged
 {
   if (leafContainers){
