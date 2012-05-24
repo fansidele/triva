@@ -114,23 +114,4 @@
     p.y >= bb.origin.y &&
     p.y <= bb.origin.y+bb.size.height;
 }
-
-- (TrivaTree*) searchAtPoint: (NSPoint) p maxDepth: (int) d
-{
-  TrivaTree *ret = nil;
-  if ([self hasPoint: p]){
-    if (depth == d){
-      //recurse on aggregates (subclass responsability)
-      return self;
-    }else{
-      NSEnumerator *en = [children objectEnumerator];
-      TrivaTree *child;
-      while ((child = [en nextObject])){
-        ret = [child searchAtPoint: p maxDepth: d];        
-        if (ret) break;
-      }
-    }
-  }
-  return ret; 
-}
 @end
