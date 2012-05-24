@@ -115,6 +115,19 @@
   }
 }
 
+- (void) multiplyThis: (NSMutableDictionary *) origin
+	       byThis: (double) m
+{
+  NSEnumerator *en = [origin keyEnumerator];
+  NSString *key;
+  while ((key = [en nextObject])){
+    double currentValue = [[origin objectForKey: key] doubleValue];
+    currentValue *= m;
+    [origin setObject: [NSNumber numberWithDouble: currentValue]
+	       forKey: key];
+  }
+}
+
 - (NSDictionary*) vzeroOfType: (PajeEntityType*) type
 {
   NSMutableDictionary *ret = [NSMutableDictionary dictionary];

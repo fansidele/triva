@@ -38,6 +38,8 @@
           toThis: (NSMutableDictionary *) destination;
 - (void) subtractThis: (NSDictionary *) origin
              fromThis: (NSMutableDictionary *) destination;
+- (void) multiplyThis: (NSMutableDictionary *) origin
+               byThis: (double) m;
 - (NSDictionary*) vzeroOfType: (PajeEntityType*) type;
 
 //notification of a change in P
