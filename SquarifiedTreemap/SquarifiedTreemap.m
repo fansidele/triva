@@ -106,6 +106,7 @@
 
 - (void) entropyChanged
 {
+  [view resetHighlighted];
   [view setNeedsDisplay: YES];
 }
 
