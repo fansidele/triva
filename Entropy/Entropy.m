@@ -326,5 +326,6 @@
 - (void) pChanged
 {
   [self recalculateBestAggregation];
+  [self entropyChanged];
 }
 @end
