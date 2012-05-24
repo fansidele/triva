@@ -30,6 +30,7 @@
 
   recordMode = NO;
   tree = nil;
+  zType = GlobalZoom;
   return self;
 }
 
@@ -118,5 +119,28 @@
 - (void) show
 {
   [window orderFront: self];
+}
+
+- (void) globalZoom: (id) sender
+{
+  zType = GlobalZoom;
+  [view setNeedsDisplay: YES];
+}
+
+- (void) localZoom: (id) sender
+{
+  zType = LocalZoom;
+  [view setNeedsDisplay: YES];
+}
+
+- (void) entropyZoom: (id) sender
+{
+  zType = EntropyZoom;
+  [view setNeedsDisplay: YES];
+}
+
+- (ZoomType) zoomType
+{
+  return zType;
 }
 @end

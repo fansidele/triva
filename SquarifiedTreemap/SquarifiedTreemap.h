@@ -25,6 +25,8 @@
 
 @class TreemapView;
 
+typedef enum { GlobalZoom, LocalZoom, EntropyZoom } ZoomType;
+
 @interface SquarifiedTreemap  : TrivaFilter
 {
   IBOutlet TreemapView *view;
@@ -33,9 +35,17 @@
   BOOL recordMode;
 
   TrivaTreemap *tree;
+
+  ZoomType zType;
 }
 - (void) setRecordMode;
 - (TrivaTreemap *) tree;
+
+//from menu
+- (void) globalZoom: (id) sender;
+- (void) localZoom: (id) sender;
+- (void) entropyZoom: (id) sender;
+- (ZoomType) zoomType;
 @end
 
 #endif // _SQUARIFIEDTREEMAP_H_

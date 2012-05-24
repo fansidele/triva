@@ -12,6 +12,16 @@
             instanceOf="TreemapView"
             halign="expand" />
     </window>
+
+    <menu type="main">
+      <menu title="Zoom Type">
+        <menuItem title="Global (default)" action="globalZoom:" target="#NSOwner" keyEquivalent="g" />
+        <menuItem title="Local" action="localZoom:" target="#NSOwner" keyEquivalent="l" />
+        <menuItem title="Entropy" action="entropyZoom:" target="#NSOwner" keyEquivalent="e" />
+      </menu>
+      <menuItem title="Quit" action="terminate:" keyEquivalent="q" />
+    </menu>
+
   </objects>
 
   <connectors>
