@@ -19,9 +19,9 @@
 #define _SQUARIFIEDTREEMAP_H_
 #include <Foundation/Foundation.h>
 #include <AppKit/AppKit.h>
+#include "../Triva/TrivaTreemap.h"
 #include "../Triva/TrivaFilter.h"
 #include "../Triva/TrivaWindow.h"
-#include "TreemapView.h"
 
 @class TreemapView;
 
@@ -48,5 +48,6 @@ typedef enum { GlobalZoom, LocalZoom, EntropyZoom } ZoomType;
 - (ZoomType) zoomType;
 @end
 
+#include "TreemapView.h"
 #endif // _SQUARIFIEDTREEMAP_H_
 
