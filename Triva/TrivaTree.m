@@ -107,6 +107,14 @@
       [filter spatialIntegrationOfContainer: container]] retain];
 }
 
+- (BOOL) hasPoint: (NSPoint) p
+{
+  return p.x >= bb.origin.x &&
+    p.x <= bb.origin.x+bb.size.width &&
+    p.y >= bb.origin.y &&
+    p.y <= bb.origin.y+bb.size.height;
+}
+
 - (TrivaTree*) searchAtPoint: (NSPoint) p maxDepth: (int) d
 {
   TrivaTree *ret = nil;

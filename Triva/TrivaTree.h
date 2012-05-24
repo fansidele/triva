@@ -54,6 +54,7 @@
 
 - (void) timeSelectionChanged;
 
+- (BOOL) hasPoint: (NSPoint) p;
 - (TrivaTree*) searchAtPoint: (NSPoint) p maxDepth: (int) d;
 @end
 
