@@ -54,9 +54,13 @@
 
 - (void)drawTree:(TrivaTreemap*) tree
 {
-  if ([tree depth] == maxDepthToDraw){
-    [tree drawTreemap];
-  }else{
+  BOOL entropyDisaggregate = ([filter zoomType] == EntropyZoom
+                              && [filter entropyLetDisaggregateContainer: [tree container]]);
+  BOOL globalDisaggregate = ([filter zoomType] == GlobalZoom
+                             && [tree depth] != maxDepthToDraw);
+  BOOL localDisaggregate = ([filter zoomType] == LocalZoom
+                            && [tree expanded]);
+  if (entropyDisaggregate || globalDisaggregate || localDisaggregate){
     //recurse
     NSEnumerator *en = [[tree children] objectEnumerator];
     TrivaTreemap *child;
@@ -66,6 +70,8 @@
     
     //draw border
     [tree drawBorder];
+  }else{
+    [tree drawTreemap];
   }
 }
 
