@@ -265,7 +265,7 @@
   }
   NSArray *bestAggregationOfContainer = [NSArray arrayWithObject: cont];
   double ricOfChildren = 0;
-  NSMutableArray *bestAggregationOfChildren = [NSMutableArray new];
+  NSMutableArray *bestAggregationOfChildren = [NSMutableArray array];
 
   NSArray *childConts = [self childrenOfContainer: cont];
   if (![childConts count]) {
