@@ -24,7 +24,7 @@
 
   p = np;
 
-  [text setStringValue: [NSString stringWithFormat: @"%f", p]];
+  [text setDoubleValue: p];
   [slider setDoubleValue: p];
 
   [self pChanged];
