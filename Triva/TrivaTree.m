@@ -62,7 +62,12 @@
 - (void) setExpanded: (BOOL)e
 {
   //local operation, subclasses should increment logic
-  isExpanded = e;
+  //only expand if has children
+  if ([children count] && e == YES){
+    isExpanded = YES;
+  }else{
+    isExpanded = NO;
+  }
 }
 
 - (void) setBoundingBox: (NSRect) b
