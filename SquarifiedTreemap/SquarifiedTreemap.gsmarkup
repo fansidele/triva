@@ -11,7 +11,7 @@
       <vbox>
         <view id="view"
               instanceOf="TreemapView"
-              halign="expand" valign="expand" vborder="0" hborder="0" />
+              halign="expand" valign="expand" vpadding="0" hpadding="0" />
       </vbox>
     </window>
 
