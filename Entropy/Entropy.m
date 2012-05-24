@@ -260,15 +260,19 @@
   double ricOfContainer = 0;
   NSDictionary *dict = [self pRicOfContainer: cont withP: pval];
   NSArray *array = [[dict keyEnumerator] allObjects];
-  if ([array count]) ricOfContainer = [[dict objectForKey: [array objectAtIndex: 0]] doubleValue];
+  if ([array count]){
+    ricOfContainer = [[dict objectForKey: [array objectAtIndex: 0]] doubleValue];
+  }
   NSArray *bestAggregationOfContainer = [NSArray arrayWithObject: cont];
-
   double ricOfChildren = 0;
   NSMutableArray *bestAggregationOfChildren = [NSMutableArray new];
 
   NSArray *childConts = [self childrenOfContainer: cont];
   if (![childConts count]) {
-    return [NSArray arrayWithObjects: [NSNumber numberWithDouble: ricOfContainer], bestAggregationOfContainer, nil];
+    return [NSArray arrayWithObjects:
+                      [NSNumber numberWithDouble: ricOfContainer],
+                    bestAggregationOfContainer,
+                    nil];
   }
 
   NSEnumerator *en = [childConts objectEnumerator];
@@ -280,8 +284,17 @@
   }
 
   NSArray *ret;
-  if (ricOfChildren > ricOfContainer) { ret = [NSArray arrayWithObjects: [NSNumber numberWithDouble: ricOfChildren], bestAggregationOfChildren, nil]; }
-  else { ret = [NSArray arrayWithObjects: [NSNumber numberWithDouble: ricOfContainer], bestAggregationOfContainer, nil]; }
+  if (ricOfChildren > ricOfContainer){
+    ret = [NSArray arrayWithObjects:
+                     [NSNumber numberWithDouble: ricOfChildren],
+                   bestAggregationOfChildren,
+                   nil];
+  }else{
+    ret = [NSArray arrayWithObjects:
+                     [NSNumber numberWithDouble: ricOfContainer],
+                   bestAggregationOfContainer,
+                   nil];
+  }
   return ret;
 }
 
