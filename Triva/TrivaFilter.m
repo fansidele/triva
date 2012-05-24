@@ -153,6 +153,11 @@
   return [(TrivaFilter*)inputComponent entropyLetShowContainer: cont];
 }
 
+- (void) entropyChanged
+{
+  return [(TrivaFilter*)outputComponent entropyChanged];
+}
+
 - (NSDictionary *) graphConfigurationForContainerType:(PajeEntityType*) type
 {
   return [(TrivaFilter*)inputComponent graphConfigurationForContainerType:type];
