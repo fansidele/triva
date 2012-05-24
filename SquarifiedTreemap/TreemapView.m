@@ -143,8 +143,9 @@
 {
   NSPoint p;
   p = [self convertPoint:[event locationInWindow] fromView:nil];
-  TrivaTreemap *node=(TrivaTreemap*)[currentRoot searchAtPoint: p
-                                                      maxDepth: maxDepthToDraw];
+  TrivaTreemap *node = [self searchAtPoint: p
+                                  withNode: currentRoot
+                              withZoomType: [filter zoomType]];
   [highlighted setHighlighted: NO];
   [node setHighlighted: YES];
   highlighted = node;
@@ -161,8 +162,9 @@
 {
   NSPoint p;
   p = [self convertPoint:[event locationInWindow] fromView:nil];
-  TrivaTreemap *node =(TrivaTreemap*)[currentRoot searchAtPoint: p
-                                                       maxDepth:maxDepthToDraw];
+  TrivaTreemap *node = [self searchAtPoint: p
+                                  withNode: currentRoot
+                              withZoomType: [filter zoomType]];
   [self setCurrentRoot: node];
 }
 
@@ -228,152 +230,30 @@
   [data writeToFile: filename atomically: YES];
   NSLog (@"screenshot written to %@", filename);
 }
-@end
 
-/*
-@implementation TreemapView
-- (id)initWithFrame:(NSRect)frameRect
+- (TrivaTreemap*) searchAtPoint: (NSPoint) p
+                       withNode: (TrivaTreemap*) root
+                   withZoomType: (ZoomType) zoom
 {
-  self = [super initWithFrame: frameRect];
-  maxDepthToDraw = 0;
-  current = nil;
-  highlighted = nil;
-  updateCurrentTreemap = YES;
-  offset = 0;
-  return self;
-}
-
-- (void) drawTreemap: (TrivaTreemap*) treemap
-{
-  if ([treemap treemapValue] == 0){
-    return;
-  }
-  if ([treemap depth] == maxDepthToDraw){
-    //draw aggregates
-    int nAggChildren, i;
-    nAggChildren = [[treemap aggregatedChildren] count];
-    for (i = 0; i < nAggChildren; i++){
-      TrivaTreemap *child = [[treemap aggregatedChildren]
-          objectAtIndex: i];
-      [child draw];
-    }
-  }else{
-    //recurse
-    int i;
-    for (i = 0; i < [[treemap children] count]; i++){
-      [self drawTreemap: [[treemap children]
-            objectAtIndex: i]];
+  TrivaTreemap *ret = nil;
+  if ([root hasPoint: p]){
+    BOOL entropySearch = (zoom == EntropyZoom &&
+                          [filter entropyLetShowContainer: [root container]]);
+    BOOL globalSearch = (zoom == GlobalZoom &&
+                         [root depth] == maxDepthToDraw);
+    BOOL localSearch = (zoom == LocalZoom &&
+                        ![root expanded]);
+    if (entropySearch || globalSearch || localSearch){
+      ret = root;
+    }else{
+      NSEnumerator *en = [[root children] objectEnumerator];
+      TrivaTreemap *child;
+      while ((child = [en nextObject])){
+        ret = [self searchAtPoint: p withNode: child withZoomType: zoom];
+        if (ret) break;
+      }
     }
   }
-}
-
-- (BOOL) isFlipped
-{
-  return NO;
-}
-
-- (void)drawRect:(NSRect)frame
-{
-  NSRect b = [self bounds];
-  if (updateCurrentTreemap){
-    TimeSliceTree *tree = [filter timeSliceTree];
-    if (tree == nil){
-      [[NSColor whiteColor] set];
-      NSRectFill (b);
-      [[NSColor blackColor] set];
-      NSString *message = @"Please, set a time slice.";
-      NSSize size = [message sizeWithAttributes: nil];
-      NSPoint p = NSMakePoint (b.size.width/2 - size.width/2, b.size.height/2);
-      [message drawAtPoint: p withAttributes: nil];
-      return;
-    }
-        
-    if (maxDepthToDraw > [tree maxDepth]){
-      maxDepthToDraw = [tree maxDepth];
-    }
-        
-    if (current){
-      [current release];
-    }
-    current = [[TrivaTreemap alloc] initWithTimeSliceTree: tree
-        andProvider: filter];
-    [current setBoundingBox: b];
-    [current setOffset: offset];
-    [current refresh];
-    //timeslicetree changed, highlighted is no longer valid
-    highlighted = nil;
-  }
-  [self drawTreemap: current];
-  if (highlighted){
-    [self setCurrentStatusString: [[highlighted hierarchy] description]];
-    [self highlightHierarchy];
-  }
-  updateCurrentTreemap = YES;
-}
-
-- (void) setMaxDepthToDraw: (int) d
-{
-  maxDepthToDraw = d;
-}
-
-- (int) maxDepthToDraw
-{
-  return maxDepthToDraw;
-}
-
-
-- (void) mouseMoved:(NSEvent *)event
-{
-  NSPoint p;
-  p = [self convertPoint:[event locationInWindow] fromView:nil];
-
-  id node = [current searchWith: p limitToDepth: maxDepthToDraw];
-  if (node != highlighted){
-    [self setHighlight: highlighted highlight: NO];
-    [self setHighlight: node highlight: YES];
-    updateCurrentTreemap = NO;
-    [self setNeedsDisplay: YES];
-    highlighted = node;
-  }
-}
-
-#ifdef GNUSTEP
-- (BOOL)acceptsFirstResponder
-{
-    return YES;
-}
-#endif
-
-
-- (BOOL)becomeFirstResponder
-{
-    [[self window] setAcceptsMouseMovedEvents: YES];
-    return YES;
-}
-
-- (void) highlightHierarchy
-{
-  //highlight hierarchy
-  NSRect bounds = [self bounds];
-
-  double lineWidth = bounds.size.width*.001; 
-  if (lineWidth < 1) lineWidth = 1;
-  id p = [highlighted parent];
-  while (p){
-    if (![p parent]) break;
-    if ([[p children] count] > 1){
-      NSRect pbb = [p boundingBox];
-      NSRect border = NSMakeRect (pbb.origin.x + 1,
-                                  pbb.origin.y + 1,
-                                  pbb.size.width - 1,
-                                  pbb.size.height -1);
-      NSBezierPath *path = [NSBezierPath bezierPathWithRect: border];
-      [path setLineWidth: lineWidth];
-      [path stroke];
-    }
-    p = [p parent];
-    lineWidth += lineWidth * 0.1;
-  }
+  return ret; 
 }
 @end
-*/

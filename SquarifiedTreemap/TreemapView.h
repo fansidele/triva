@@ -39,6 +39,10 @@
 - (void) resetCurrentRoot;
 - (void) resetHighlighted;
 
+//custom search that uses the zoom
+- (TrivaTreemap*) searchAtPoint: (NSPoint) p
+                       withNode: (TrivaTreemap*) root
+                   withZoomType: (ZoomType) zoom;
 @end
 
 #endif // _TreemapView_H_
