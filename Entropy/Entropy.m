@@ -225,6 +225,19 @@
   return ret;
 }
 
+
+- (NSDictionary *) pRicOfContainer: (PajeContainer*) cont
+                             withP: (double) pval
+{
+  NSMutableDictionary *ret = [NSMutableDictionary dictionary];
+  NSMutableDictionary *gain = [NSMutableDictionary dictionaryWithDictionary: [self entropyGainOfContainer: cont]];
+  NSMutableDictionary *div = [NSMutableDictionary dictionaryWithDictionary: [self divergenceOfContainer: cont]];
+  [self multiplyThis: gain byThis: 2*pval];
+  [self multiplyThis: div byThis: 2*(1-pval)];
+  [self addThis: gain toThis: ret];
+  [self subtractThis: div fromThis: ret];
+  return ret;
+}
 - (void) timeSelectionChanged
 {
   [super timeSelectionChanged];

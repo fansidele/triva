@@ -138,6 +138,10 @@
   return [(TrivaFilter*)inputComponent ricOfContainer: cont];
 }
 
+- (NSDictionary *) pRicOfContainer: (PajeContainer*) cont withP: (double) pval
+{
+  return [(TrivaFilter*)inputComponent pRicOfContainer: cont withP: pval];
+}
 - (NSDictionary *) graphConfigurationForContainerType:(PajeEntityType*) type
 {
   return [(TrivaFilter*)inputComponent graphConfigurationForContainerType:type];
