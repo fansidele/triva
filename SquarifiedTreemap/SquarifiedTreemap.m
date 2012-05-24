@@ -104,6 +104,11 @@
   [self hierarchyChanged];
 }
 
+- (void) entropyChanged
+{
+  [view setNeedsDisplay: YES];
+}
+
 - (BOOL) windowShouldClose: (id) sender
 {
   [[NSApplication sharedApplication] terminate:self];
