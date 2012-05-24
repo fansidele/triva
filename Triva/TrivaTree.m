@@ -118,10 +118,7 @@
 - (TrivaTree*) searchAtPoint: (NSPoint) p maxDepth: (int) d
 {
   TrivaTree *ret = nil;
-  if (p.x >= bb.origin.x &&
-      p.x <= bb.origin.x+bb.size.width &&
-      p.y >= bb.origin.y &&
-      p.y <= bb.origin.y+bb.size.height){
+  if ([self hasPoint: p]){
     if (depth == d){
       //recurse on aggregates (subclass responsability)
       return self;
