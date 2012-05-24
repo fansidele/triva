@@ -37,7 +37,6 @@
 - (NSMutableArray *) leafContainersInContainer: (PajeContainer *) cont
 {
   NSMutableArray *ret = [NSMutableArray array];
-
   NSArray *containedTypes = [self containedTypesForContainerType: [cont entityType]];
   NSEnumerator *en = [containedTypes objectEnumerator];
   PajeEntityType *type = nil;
@@ -283,7 +282,7 @@
     [bestAggregationOfChildren addObjectsFromArray: [array objectAtIndex: 1]];
   }
 
-  NSArray *ret;
+  NSArray *ret = nil;
   if (ricOfChildren > ricOfContainer){
     ret = [NSArray arrayWithObjects:
                      [NSNumber numberWithDouble: ricOfChildren],
