@@ -37,6 +37,8 @@
 - (void) setCurrentStatusString: (NSString *)str;
 - (void) setCurrentRoot: (TrivaTreemap *) nroot;
 - (void) resetCurrentRoot;
+- (void) resetHighlighted;
+
 @end
 
 #endif // _TreemapView_H_

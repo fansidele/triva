@@ -32,10 +32,7 @@
 {
   if (!nroot) return;
 
-  if (highlighted){
-    [highlighted setHighlighted: NO];
-    highlighted = nil;
-  }
+  [self resetHighlighted];
   currentRoot = nroot;
   [self setNeedsDisplay: YES];
 }
@@ -43,7 +40,16 @@
 - (void) resetCurrentRoot
 {
   currentRoot = nil;
-  highlighted = nil;
+  [self resetHighlighted];
+}
+
+- (void) resetHighlighted
+{
+  if (highlighted){
+    [highlighted setHighlighted: NO];
+    highlighted = nil;
+  }
+  [self setNeedsDisplay: YES];
 }
 
 - (void)drawTree:(TrivaTreemap*) tree

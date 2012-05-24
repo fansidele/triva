@@ -129,18 +129,21 @@
 - (void) globalZoom: (id) sender
 {
   zType = GlobalZoom;
+  [view resetHighlighted];
   [view setNeedsDisplay: YES];
 }
 
 - (void) localZoom: (id) sender
 {
   zType = LocalZoom;
+  [view resetHighlighted];
   [view setNeedsDisplay: YES];
 }
 
 - (void) entropyZoom: (id) sender
 {
   zType = EntropyZoom;
+  [view resetHighlighted];
   [view setNeedsDisplay: YES];
 }
 
