@@ -8,9 +8,11 @@
             width="500" height="300"
             title="Triva - Squarified Treemap"
             resizable="yes" closable="yes" visible="no">
-      <view id="view"
-            instanceOf="TreemapView"
-            halign="expand" />
+      <vbox>
+        <view id="view"
+              instanceOf="TreemapView"
+              halign="expand" valign="expand" vborder="0" hborder="0" />
+      </vbox>
     </window>
 
     <menu type="main">
