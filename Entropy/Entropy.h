@@ -24,6 +24,7 @@
 
 @interface Entropy  : TrivaFilter
 {
+  NSArray *bestAggregationContainer;
   NSMutableArray *leafContainers;
   double p;
 
@@ -41,6 +42,9 @@
 - (void) multiplyThis: (NSMutableDictionary *) origin
                byThis: (double) m;
 - (NSDictionary*) vzeroOfType: (PajeEntityType*) type;
+- (NSArray *) maxPRicOfContainer: (PajeContainer*) cont
+                           withP: (double) pval;
+- (void) recalculateBestAggregation;
 
 //notification of a change in P
 - (void) pChanged;

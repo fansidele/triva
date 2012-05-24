@@ -25,6 +25,7 @@
     [window initializeWithDelegate: self];
   }
   leafContainers = nil;
+  bestAggregationContainer = nil;
   return self;
 }
 
@@ -238,6 +239,39 @@
   [self subtractThis: div fromThis: ret];
   return ret;
 }
+
+- (NSArray *) maxPRicOfContainer: (PajeContainer*) cont
+                           withP: (double) pval
+{
+  double ricOfContainer = 0;
+  NSDictionary *dict = [self pRicOfContainer: cont withP: pval];
+  NSArray *array = [[dict keyEnumerator] allObjects];
+  if ([array count]) ricOfContainer = [[dict objectForKey: [array objectAtIndex: 0]] doubleValue];
+  NSArray *bestAggregationOfContainer = [NSArray arrayWithObject: cont];
+
+  double ricOfChildren = 0;
+  NSMutableArray *bestAggregationOfChildren = [NSMutableArray new];
+
+  NSArray *childConts = [self childrenOfContainer: cont];
+  if (![childConts count]) {
+    return [NSArray arrayWithObjects: [NSNumber numberWithDouble: ricOfContainer], bestAggregationOfContainer, nil];
+  }
+
+  NSEnumerator *en = [childConts objectEnumerator];
+  PajeContainer *child;
+  while ((child = [en nextObject])){
+    NSArray *array = [self maxPRicOfContainer: child withP: p];
+    ricOfChildren += [[array objectAtIndex: 0] doubleValue];
+    [bestAggregationOfChildren addObjectsFromArray: [array objectAtIndex: 1]];
+  }
+
+  NSArray *ret;
+  if (ricOfChildren > ricOfContainer) { ret = [NSArray arrayWithObjects: [NSNumber numberWithDouble: ricOfChildren], bestAggregationOfChildren, nil]; }
+  else { ret = [NSArray arrayWithObjects: [NSNumber numberWithDouble: ricOfContainer], bestAggregationOfContainer, nil]; }
+  return ret;
+}
+
+
 - (void) timeSelectionChanged
 {
   [super timeSelectionChanged];
@@ -249,11 +283,21 @@
     [leafContainers release];
     leafContainers = nil;
   }
+  [self recalculateBestAggregation];
   [super hierarchyChanged];
+}
+
+- (void) recalculateBestAggregation
+{
+  [bestAggregationContainer release];
+
+  NSArray *array = [self maxPRicOfContainer: [self rootInstance] withP: p];
+  bestAggregationContainer = [array objectAtIndex: 1];
+  [bestAggregationContainer retain];
 }
 
 - (void) pChanged
 {
-  //the 'p' value has changed, its current value is stored in the p attribute
+  [self recalculateBestAggregation];
 }
 @end
