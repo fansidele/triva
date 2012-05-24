@@ -240,6 +240,20 @@
   return ret;
 }
 
+- (BOOL) entropyLetDisaggregateContainer: (PajeContainer*) cont
+{
+  return ![self entropyLetShowContainer: cont];
+}
+
+- (BOOL) entropyLetShowContainer: (PajeContainer*) cont
+{
+  if ([bestAggregationContainer containsObject: cont]){
+    return YES;
+  }else{
+    return NO;
+  }
+}
+
 - (NSArray *) maxPRicOfContainer: (PajeContainer*) cont
                            withP: (double) pval
 {

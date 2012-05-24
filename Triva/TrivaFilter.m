@@ -142,6 +142,17 @@
 {
   return [(TrivaFilter*)inputComponent pRicOfContainer: cont withP: pval];
 }
+
+- (BOOL) entropyLetDisaggregateContainer: (PajeContainer*) cont
+{
+  return [(TrivaFilter*)inputComponent entropyLetDisaggregateContainer: cont];
+}
+
+- (BOOL) entropyLetShowContainer: (PajeContainer*) cont
+{
+  return [(TrivaFilter*)inputComponent entropyLetShowContainer: cont];
+}
+
 - (NSDictionary *) graphConfigurationForContainerType:(PajeEntityType*) type
 {
   return [(TrivaFilter*)inputComponent graphConfigurationForContainerType:type];
