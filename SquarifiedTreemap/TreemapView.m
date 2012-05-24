@@ -127,22 +127,32 @@
 
 - (void)scrollWheel:(NSEvent *)event
 {
-  if (([event modifierFlags] & NSControlKeyMask)){
-  }else{
-    if ([event deltaY] > 0){
-      if (maxDepthToDraw < [currentRoot maxDepth]){
-        maxDepthToDraw++;
-        [self mouseMoved: event];
-        [self setNeedsDisplay: YES];
-      }
-    }else{
-      if (maxDepthToDraw > [currentRoot depth]){
-        maxDepthToDraw--;
-        [self mouseMoved: event];
-        [self setNeedsDisplay: YES];
-      }
-    }
+  switch ([filter zoomType]){
+  case EntropyZoom: break;
+  case GlobalZoom:
+     {
+       if ([event deltaY] > 0){
+         if (maxDepthToDraw < [currentRoot maxDepth]){
+           maxDepthToDraw++;
+         }
+       }else{
+         if (maxDepthToDraw > [currentRoot depth]){
+           maxDepthToDraw--;
+         }
+       }
+     } break;
+  case LocalZoom:
+     {
+       if ([event deltaY] > 0){
+         [highlighted setExpanded: YES];
+       }else{
+         [(TrivaTreemap*)[highlighted parent] setExpanded: NO];
+       }
+     } break;
+  default: break;
   }
+  [self mouseMoved: event];
+  [self setNeedsDisplay: YES];
 }
 
 - (void) mouseMoved:(NSEvent *)event
