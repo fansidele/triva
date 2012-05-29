@@ -32,9 +32,9 @@
   NSRectFill(b);
   [NSBezierPath strokeRect: b];
 
-  NSString *variableName = @"IDLE";
+  Entropy *entropy = [[Entropy alloc] init]; // TODO: Get the real Entropy object defined during the initialization
+  NSString *variableName = [entropy getVariableName];
 
-  Entropy *entropy = [[Entropy alloc] init];
   NSArray *points = [entropy getEntropyPoints: variableName];
   [entropy release];
 

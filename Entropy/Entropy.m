@@ -322,9 +322,8 @@
   return ret;
 }
 
-- (NSString *) getVariable
+- (NSString *) getVariableName
 {
-  NSString *variableName = @"IDLE";
   return variableName;
 }
 
@@ -385,8 +384,6 @@
 {
   [bestAggregationContainer release];
   
-  NSString *variableName = @"IDLE";
-
   NSArray *array = [self maxPRicOfContainer: [self rootInstance] withP: p withVariable: variableName];
   bestAggregationContainer = [array objectAtIndex: 1];
   [bestAggregationContainer retain];
@@ -396,26 +393,6 @@
 {
   [self recalculateBestAggregation];
   [self entropyChanged];
-
-  /*  for (double param = 0; param < 1.05; param += 0.05) {
-    double gain = 0;
-    double divergence = 0;
-
-    NSArray *containers = [[self maxPRicOfContainer: [self rootInstance] withParameter: param] objectAtIndex: 1];
-    NSEnumerator *en = [containers objectEnumerator];
-    PajeContainer *cont;
-    while ((cont = [en nextObject])){
-
-      NSDictionary *dict1 = [self entropyGainOfContainer: cont];
-      NSArray *array1 = [[dict1 keyEnumerator] allObjects];
-      if ([array1 count]) gain += [[dict1 objectForKey: [array1 objectAtIndex: 0]] doubleValue];
-
-      NSDictionary *dict2 = [self divergenceOfContainer: cont];
-      NSArray *array2 = [[dict2 keyEnumerator] allObjects];
-      if ([array2 count]) divergence += [[dict2 objectForKey: [array2 objectAtIndex: 0]] doubleValue];
-    }
-    printf ("%f;%f;%f\n",param,gain,divergence);
-    }*/
 }
 
 - (void) variableChanged
