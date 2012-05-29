@@ -27,11 +27,14 @@
   NSArray *bestAggregationContainer;
   NSMutableArray *leafContainers;
   double p;
+  NSString *variableName;
 
   //GUI
   TrivaWindow *window;
   NSSlider *slider;
   NSTextField *text;
+  NSPopUpButton *variableboxer;
+  NSTextField *variablecurrent;
 }
 - (NSMutableArray *) leafContainersInContainer: (PajeContainer *) cont;
 - (NSMutableArray *) childrenOfContainer: (PajeContainer *) cont;
@@ -48,11 +51,13 @@
 
 //notification of a change in P
 - (void) pChanged;
+- (void) variableChanged;
 @end
 
 @interface Entropy (GUI)
 - (void) pSliderChanged: (id) sender;
 - (void) pTextChanged: (id) sender;
+- (void) variableChanged: (id) sender;
 @end
 
 #endif
