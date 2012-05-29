@@ -160,7 +160,7 @@
 }
 
 /* NSTableViewDataSource Protocol */
-- (NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView
+- (int)numberOfRowsInTableView:(NSTableView *)aTableView
 {
   if (selectedType != nil){
 
@@ -183,7 +183,7 @@
 
 - (id)            tableView:(NSTableView *)aTableView
   objectValueForTableColumn:(NSTableColumn *)column
-                        row:(NSInteger)index
+                        row:(int)index
 {
   if (selectedType != nil){
 
@@ -247,7 +247,7 @@
 - (void)tableView:(NSTableView *)aTableView
    setObjectValue:(id)anObject
    forTableColumn:(NSTableColumn *)aTableColumn
-              row:(NSInteger) index
+              row:(int) index
 {
   if ([super isContainerEntityType: selectedType]){
     NSEnumerator *en = [super enumeratorOfContainersTyped: selectedType
@@ -269,7 +269,7 @@
 
 /* NSOutlinewViewDataSource Protocol ... */
 - (id)outlineView:(NSOutlineView *)outlineView
-            child:(NSInteger)index
+            child:(int)index
            ofItem:(id)item
 {
   if (item == nil){
@@ -287,7 +287,7 @@
   }
 }
 
-- (NSInteger)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(id)item
+- (int)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(id)item
 {
   if (item == nil){
     item = [[super rootInstance] entityType];
