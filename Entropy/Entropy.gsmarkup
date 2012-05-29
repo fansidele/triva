@@ -26,6 +26,22 @@
             <label>Type 'Enter' after entering a number between 0 and 1 in the text field.</label>
           </vbox>
         </box>
+        <box title="Select the variable to be used" halign="wexpand">
+          <vbox>
+            <hbox>
+              <label>Currently using:</label>
+              <textField editable="no" id="variablecurrent" halign="wexpand"/>
+            </hbox>
+            <hbox>
+              <label>Available variables:</label>
+              <popUpButton id="variableboxer"
+                           target="#NSOwner"
+                           action="variableChanged:"
+                           halign="expand"
+                           height="20"/>
+            </hbox>
+          </vbox>
+        </box>
       </vbox>
     </window>
   </objects>
@@ -34,5 +50,7 @@
     <outlet source="#NSOwner" target="#window" key="window" />
     <outlet source="#NSOwner" target="#slider" key="slider" />
     <outlet source="#NSOwner" target="#text" key="text" />
+    <outlet source="#NSOwner" target="#variableboxer" key="variableboxer" />
+    <outlet source="#NSOwner" target="#variablecurrent" key="variablecurrent" />
   </connectors>
 </gsmarkup>

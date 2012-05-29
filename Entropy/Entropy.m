@@ -310,7 +310,23 @@
     leafContainers = nil;
   }
   [self recalculateBestAggregation];
+  [self redefineAvailableVariables];
   [super hierarchyChanged];
+}
+
+- (void) redefineAvailableVariables
+{
+  [variableboxer removeAllItems];
+  NSDictionary *vars = [self spatialIntegrationOfContainer: [self rootInstance]];
+  NSString *var;
+  NSEnumerator *en = [vars keyEnumerator];
+  while ((var = [en nextObject])){
+    [variableboxer addItemWithTitle: var];
+  }
+  [variableboxer setEnabled: YES];
+  if ([variableboxer numberOfItems]){
+    [self variableChanged: self];
+  }
 }
 
 - (void) recalculateBestAggregation
@@ -326,5 +342,10 @@
 {
   [self recalculateBestAggregation];
   [self entropyChanged];
+}
+
+- (void) variableChanged
+{
+  //the variableName attribute has changed
 }
 @end

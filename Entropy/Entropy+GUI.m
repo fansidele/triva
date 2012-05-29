@@ -30,6 +30,16 @@
   [self pChanged];
 }
 
+- (void) setVariableName: (NSString *) newname
+{
+  [variableName release];
+  variableName = newname;
+  [variableName retain];
+  [variablecurrent setStringValue: variableName];
+
+  [self variableChanged];
+}
+
 - (void) pSliderChanged: (id) sender
 {
   [self setP: [slider doubleValue]];
@@ -38,6 +48,11 @@
 - (void) pTextChanged: (id) sender
 {
   [self setP: [text doubleValue]];
+}
+
+- (void) variableChanged: (id) sender
+{
+  [self setVariableName: [variableboxer titleOfSelectedItem]];
 }
 
 - (BOOL) windowShouldClose: (id) sender
