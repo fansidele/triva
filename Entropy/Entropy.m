@@ -26,6 +26,7 @@
   }
   leafContainers = nil;
   bestAggregationContainer = nil;
+  [entropyPlot setFilter: self];
   return self;
 }
 
@@ -398,5 +399,11 @@
 - (void) variableChanged
 {
   //the variableName attribute has changed
+  [entropyPlot setNeedsDisplay: YES];
+}
+
+- (NSString *) variableName
+{
+  return variableName;
 }
 @end

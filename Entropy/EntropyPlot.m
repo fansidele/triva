@@ -14,9 +14,7 @@
     You should have received a copy of the GNU General Public License
     along with Triva.  If not, see <http://www.gnu.org/licenses/>.
 */
-#include <AppKit/AppKit.h>
 #include "EntropyPlot.h"
-#include "Entropy.h"
 
 @implementation EntropyPlot
 - (void) setFilter: (id) f
@@ -32,11 +30,10 @@
   NSRectFill(b);
   [NSBezierPath strokeRect: b];
 
-  Entropy *entropy = [[Entropy alloc] init]; // TODO: Get the real Entropy object defined during the initialization
-  NSString *variableName = [entropy getVariableName];
+  id entropy = filter;
+  NSString *variableName = [entropy variableName];
 
   NSArray *points = [entropy getEntropyPoints: variableName];
-  [entropy release];
 
   NSArray *lastPoint = [points lastObject];
   double maxGain = [[lastPoint objectAtIndex: 1] doubleValue];

@@ -22,12 +22,15 @@
 #include "../Triva/TrivaFilter.h"
 #include "../Triva/TrivaWindow.h"
 
+@class EntropyPlot;
+
 @interface Entropy  : TrivaFilter
 {
   NSArray *bestAggregationContainer;
   NSMutableArray *leafContainers;
   double p;
   NSString *variableName;
+  EntropyPlot *entropyPlot;
 
   //GUI
   TrivaWindow *window;
@@ -53,7 +56,7 @@
 - (NSDictionary *) entropyGainOfAggregation: (NSArray*) containers;
 - (NSDictionary *) divergenceOfAggregation: (NSArray*) containers;
 - (NSMutableArray *) getEntropyPoints: (NSString*) variable;
-- (NSString *) getVariable;
+- (NSString *) variableName;
 
 //notification of a change in P
 - (void) pChanged;
@@ -66,4 +69,5 @@
 - (void) variableChanged: (id) sender;
 @end
 
+#include "EntropyPlot.h"
 #endif

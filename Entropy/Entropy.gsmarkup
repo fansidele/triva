@@ -9,6 +9,11 @@
             title="Triva - Entropy"
             resizable="no" closable="yes" visible="yes">
       <vbox>
+        <box title="Entropy Plot">
+          <view id="entropyPlot"
+                  instanceOf="EntropyPlot"
+                  halign="expand" valigheight="100" />
+        </box>
         <!-- Trace Time -->
         <box title="Define the 'p' value" halign="wexpand">
           <vbox halign="wexpand">
@@ -52,5 +57,6 @@
     <outlet source="#NSOwner" target="#text" key="text" />
     <outlet source="#NSOwner" target="#variableboxer" key="variableboxer" />
     <outlet source="#NSOwner" target="#variablecurrent" key="variablecurrent" />
+    <outlet source="#NSOwner" target="#entropyPlot" key="entropyPlot" />
   </connectors>
 </gsmarkup>
