@@ -85,7 +85,7 @@
                            depth: 0
                           parent: nil];
   [tree retain];
-  [view resetCurrentRoot];
+  [view killCurrentRoot];
   [self timeSelectionChanged];
 }
 
