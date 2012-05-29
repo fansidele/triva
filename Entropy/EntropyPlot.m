@@ -52,23 +52,22 @@
     double gain2 = [[point2 objectAtIndex: 1] doubleValue];
     double div2 = [[point2 objectAtIndex: 2] doubleValue];
 
-    
     [[NSColor blueColor] set];
-    NSPoint p1 = NSMakePoint (param1,b.size.height*(1-gain1/maxGain));
-    NSPoint p2 = NSMakePoint (param1+(param2-param1)/2,b.size.height*(1-gain1/maxGain));
+    NSPoint p1 = NSMakePoint (param1*b.size.width,b.size.height*(1-gain1/maxGain));
+    NSPoint p2 = NSMakePoint ((param1+(param2-param1)/2)*b.size.width,b.size.height*(1-gain1/maxGain));
     [NSBezierPath strokeLineFromPoint: p1 toPoint: p2];
 
-    p1 = NSMakePoint (param1+(param2-param1)/2,b.size.height*(1-gain2/maxGain));
-    p2 = NSMakePoint (param2,b.size.height*(1-gain2/maxGain));
+    p1 = NSMakePoint ((param1+(param2-param1)/2)*b.size.width,b.size.height*(1-gain2/maxGain));
+    p2 = NSMakePoint ((param2*b.size.width),b.size.height*(1-gain2/maxGain));
     [NSBezierPath strokeLineFromPoint: p1 toPoint: p2];
 
     [[NSColor redColor] set];
-    p1 = NSMakePoint (param1,b.size.height*(1-div1/maxDiv));
-    p2 = NSMakePoint (param1+(param2-param1)/2,b.size.height*(1-div1/maxDiv));
+    p1 = NSMakePoint (param1*b.size.width,b.size.height*(1-div1/maxDiv));
+    p2 = NSMakePoint ((param1+(param2-param1)/2)*b.size.width,b.size.height*(1-div1/maxDiv));
     [NSBezierPath strokeLineFromPoint: p1 toPoint: p2];
 
-    p1 = NSMakePoint (param1+(param2-param1)/2,b.size.height*(1-div2/maxDiv));
-    p2 = NSMakePoint (param2,b.size.height*(1-div2/maxDiv));
+    p1 = NSMakePoint ((param1+(param2-param1)/2)*b.size.width,b.size.height*(1-div2/maxDiv));
+    p2 = NSMakePoint (param2*b.size.width,b.size.height*(1-div2/maxDiv));
     [NSBezierPath strokeLineFromPoint: p1 toPoint: p2];
   }
 }
