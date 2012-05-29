@@ -37,6 +37,12 @@
   [self setNeedsDisplay: YES];
 }
 
+- (void) killCurrentRoot
+{
+  currentRoot = nil;
+  highlighted = nil;
+}
+
 - (void) resetCurrentRoot
 {
   currentRoot = nil;
