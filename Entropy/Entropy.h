@@ -46,8 +46,14 @@
                byThis: (double) m;
 - (NSDictionary*) vzeroOfType: (PajeEntityType*) type;
 - (NSArray *) maxPRicOfContainer: (PajeContainer*) cont
-                           withP: (double) pval;
+                           withP: (double) pval
+			   withVariable: (NSString *) variable;
 - (void) recalculateBestAggregation;
+
+- (NSDictionary *) entropyGainOfAggregation: (NSArray*) containers;
+- (NSDictionary *) divergenceOfAggregation: (NSArray*) containers;
+- (NSMutableArray *) getEntropyPoints: (NSString*) variable;
+- (NSString *) getVariable;
 
 //notification of a change in P
 - (void) pChanged;

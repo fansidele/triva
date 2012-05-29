@@ -5,6 +5,6 @@ BUNDLE_NAME = Entropy
 Entropy_PRINCIPAL_CLASS = Entropy
 Entropy_INSTALL_DIR = $(GNUSTEP_BUNDLES)/Triva
 Entropy_RESOURCE_FILES = Entropy.gsmarkup
-Entropy_OBJC_FILES = Entropy.m Entropy+GUI.m
+Entropy_OBJC_FILES = Entropy.m Entropy+GUI.m EntropyPlot.m
 
 include $(GNUSTEP_MAKEFILES)/bundle.make

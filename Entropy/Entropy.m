@@ -239,6 +239,32 @@
   return ret;
 }
 
+- (NSDictionary *) entropyGainOfAggregation: (NSArray*) containers
+{
+  NSMutableDictionary *ret = [NSMutableDictionary dictionary];
+  NSEnumerator *en = [containers objectEnumerator];
+  PajeContainer *cont;
+  while ((cont = [en nextObject])){
+    NSMutableDictionary *gain = [NSMutableDictionary dictionaryWithDictionary: [self entropyGainOfContainer: cont]];
+    [self addThis: gain toThis: ret];    
+  }
+  return ret;
+}
+
+
+- (NSDictionary *) divergenceOfAggregation: (NSArray*) containers
+{
+  NSMutableDictionary *ret = [NSMutableDictionary dictionary];
+  NSEnumerator *en = [containers objectEnumerator];
+  PajeContainer *cont;
+  while ((cont = [en nextObject])){
+    NSMutableDictionary *div = [NSMutableDictionary dictionaryWithDictionary: [self divergenceOfContainer: cont]];
+    [self addThis: div toThis: ret];
+  }
+  return ret;
+}
+
+
 - (BOOL) entropyLetDisaggregateContainer: (PajeContainer*) cont
 {
   return ![self entropyLetShowContainer: cont];
@@ -255,13 +281,12 @@
 
 - (NSArray *) maxPRicOfContainer: (PajeContainer*) cont
                            withP: (double) pval
+		    withVariable: (NSString*) variable
 {
   double ricOfContainer = 0;
   NSDictionary *dict = [self pRicOfContainer: cont withP: pval];
-  NSArray *array = [[dict keyEnumerator] allObjects];
-  if ([array count]){
-    ricOfContainer = [[dict objectForKey: [array objectAtIndex: 0]] doubleValue];
-  }
+  ricOfContainer = [[dict objectForKey: variable] doubleValue];
+
   NSArray *bestAggregationOfContainer = [NSArray arrayWithObject: cont];
   double ricOfChildren = 0;
   NSMutableArray *bestAggregationOfChildren = [NSMutableArray array];
@@ -277,7 +302,7 @@
   NSEnumerator *en = [childConts objectEnumerator];
   PajeContainer *child;
   while ((child = [en nextObject])){
-    NSArray *array = [self maxPRicOfContainer: child withP: p];
+    NSArray *array = [self maxPRicOfContainer: child withP: p withVariable: variable];
     ricOfChildren += [[array objectAtIndex: 0] doubleValue];
     [bestAggregationOfChildren addObjectsFromArray: [array objectAtIndex: 1]];
   }
@@ -295,6 +320,32 @@
                    nil];
   }
   return ret;
+}
+
+- (NSString *) getVariable
+{
+  NSString *variableName = @"IDLE";
+  return variableName;
+}
+
+- (NSMutableArray *) getEntropyPoints: (NSString*) variable
+{
+  double step = 0.1;
+  NSMutableArray *points = [NSMutableArray arrayWithCapacity: round(1/step)+1];
+  for (double param = 0; param <= 1; param += 0.1) {
+    
+    NSArray *array = [self maxPRicOfContainer: [self rootInstance] withP: p withVariable: variable];
+    NSArray *bestAggregation = [array objectAtIndex: 1];
+    double entropyGain = [[[self entropyGainOfAggregation: bestAggregation] objectForKey: variable] doubleValue];
+    double divergence = [[[self divergenceOfAggregation: bestAggregation] objectForKey: variable] doubleValue];
+    NSArray *point = [NSArray arrayWithObjects:
+				[NSNumber numberWithDouble: param],
+			      [NSNumber numberWithDouble: entropyGain],
+			      [NSNumber numberWithDouble: divergence],
+			      nil];
+    [points addObject: point];
+  }
+  return points;
 }
 
 
@@ -333,8 +384,10 @@
 - (void) recalculateBestAggregation
 {
   [bestAggregationContainer release];
+  
+  NSString *variableName = @"IDLE";
 
-  NSArray *array = [self maxPRicOfContainer: [self rootInstance] withP: p];
+  NSArray *array = [self maxPRicOfContainer: [self rootInstance] withP: p withVariable: variableName];
   bestAggregationContainer = [array objectAtIndex: 1];
   [bestAggregationContainer retain];
 }
