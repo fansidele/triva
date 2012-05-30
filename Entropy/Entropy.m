@@ -26,6 +26,7 @@
   }
   leafContainers = nil;
   bestAggregationContainer = nil;
+  savedEntropyPoints = nil;
   [entropyPlot setFilter: self];
   return self;
 }
@@ -303,7 +304,7 @@
   NSEnumerator *en = [childConts objectEnumerator];
   PajeContainer *child;
   while ((child = [en nextObject])){
-    NSArray *array = [self maxPRicOfContainer: child withP: p withVariable: variable];
+    NSArray *array = [self maxPRicOfContainer: child withP: pval withVariable: variable];
     ricOfChildren += [[array objectAtIndex: 0] doubleValue];
     [bestAggregationOfChildren addObjectsFromArray: [array objectAtIndex: 1]];
   }
@@ -325,7 +326,7 @@
 
 - (NSMutableArray *) getEntropyPoints: (NSString*) variable
 {
-  double step = 0.1;
+  double step = 0.01;
   NSMutableArray *points = [NSMutableArray arrayWithCapacity: round(1/step)+1];
   for (double param = 0; param <= 1; param += step) {
     
@@ -395,10 +396,9 @@
 
 - (void) variableChanged
 {
-  //the variableName attribute has changed
+  [savedEntropyPoints release];
   savedEntropyPoints = [self getEntropyPoints: variableName];
-  NSLog(@"%@",[self description]);
-  NSLog(@"CHANGED %@",[savedEntropyPoints description]);
+  [savedEntropyPoints retain];
   [entropyPlot setNeedsDisplay: YES];
 }
 
@@ -414,8 +414,6 @@
 
 - (NSMutableArray *) savedEntropyPoints
 {
-  NSLog(@"SAVED %@",[savedEntropyPoints description]);
-  NSLog(@"STOP");
   return savedEntropyPoints;
 }
 @end

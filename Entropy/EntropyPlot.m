@@ -31,21 +31,13 @@
   [NSBezierPath strokeRect: b];
 
   id entropy = filter;
-  NSLog(@"OK1");
   NSMutableArray *points = [entropy savedEntropyPoints];
-  NSLog (@"%@", [points description]);
-  //if (points == nil)
-  points = [entropy getEntropyPoints: [entropy variableName]];
-  NSLog (@"%@", [points description]);
  
-  //  if ([points count] < 3) { NSLog(@"RET"); return; }
-
   NSArray *lastPoint = [points lastObject];
   double maxGain = [[lastPoint objectAtIndex: 1] doubleValue];
   double maxDiv = [[lastPoint objectAtIndex: 2] doubleValue];
   double max = maxGain;
   if (maxDiv > maxGain) max = maxDiv;
-  NSLog(@"OK2");
 
   NSEnumerator *en = [points objectEnumerator];
   NSArray *point1 = [en nextObject];
@@ -54,8 +46,6 @@
   NSPoint p2;
 
   while ((point2 = [en nextObject])) {
-
-    NSLog (@"%@", [point2 description]);
 
     double param1 =  [[point1 objectAtIndex: 0] doubleValue];
     double gain1 = [[point1 objectAtIndex: 1] doubleValue];
