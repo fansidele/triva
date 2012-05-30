@@ -323,18 +323,13 @@
   return ret;
 }
 
-- (NSString *) getVariableName
-{
-  return variableName;
-}
-
 - (NSMutableArray *) getEntropyPoints: (NSString*) variable
 {
   double step = 0.1;
   NSMutableArray *points = [NSMutableArray arrayWithCapacity: round(1/step)+1];
-  for (double param = 0; param <= 1; param += 0.1) {
+  for (double param = 0; param <= 1; param += step) {
     
-    NSArray *array = [self maxPRicOfContainer: [self rootInstance] withP: p withVariable: variable];
+    NSArray *array = [self maxPRicOfContainer: [self rootInstance] withP: param withVariable: variable];
     NSArray *bestAggregation = [array objectAtIndex: 1];
     double entropyGain = [[[self entropyGainOfAggregation: bestAggregation] objectForKey: variable] doubleValue];
     double divergence = [[[self divergenceOfAggregation: bestAggregation] objectForKey: variable] doubleValue];
@@ -343,6 +338,7 @@
 			      [NSNumber numberWithDouble: entropyGain],
 			      [NSNumber numberWithDouble: divergence],
 			      nil];
+
     [points addObject: point];
   }
   return points;
@@ -394,16 +390,32 @@
 {
   [self recalculateBestAggregation];
   [self entropyChanged];
+  [entropyPlot setNeedsDisplay: YES];
 }
 
 - (void) variableChanged
 {
   //the variableName attribute has changed
+  savedEntropyPoints = [self getEntropyPoints: variableName];
+  NSLog(@"%@",[self description]);
+  NSLog(@"CHANGED %@",[savedEntropyPoints description]);
   [entropyPlot setNeedsDisplay: YES];
 }
 
 - (NSString *) variableName
 {
   return variableName;
+}
+
+- (double) parameter
+{
+  return p;
+}
+
+- (NSMutableArray *) savedEntropyPoints
+{
+  NSLog(@"SAVED %@",[savedEntropyPoints description]);
+  NSLog(@"STOP");
+  return savedEntropyPoints;
 }
 @end
