@@ -348,6 +348,7 @@
 
 - (void) timeSelectionChanged
 {
+  [self variableChanged];
   [super timeSelectionChanged];
 }
 
