@@ -31,8 +31,8 @@
   [NSBezierPath strokeRect: b];
 
   id entropy = filter;
-  NSMutableArray *points = [entropy savedEntropyPoints];
- 
+  NSArray *points = [entropy savedEntropyPoints];
+
   NSArray *lastPoint = [points lastObject];
   double maxGain = [[lastPoint objectAtIndex: 1] doubleValue];
   double maxDiv = [[lastPoint objectAtIndex: 2] doubleValue];
@@ -60,6 +60,10 @@
     p2 = NSMakePoint ((param1+(param2-param1)/2)*b.size.width,b.size.height*gain1/max);
     [NSBezierPath strokeLineFromPoint: p1 toPoint: p2];
 
+    p1 = NSMakePoint ((param1+(param2-param1)/2)*b.size.width,b.size.height*gain1/max);
+    p2 = NSMakePoint ((param1+(param2-param1)/2)*b.size.width,b.size.height*gain2/max);
+    [NSBezierPath strokeLineFromPoint: p1 toPoint: p2];
+
     p1 = NSMakePoint ((param1+(param2-param1)/2)*b.size.width,b.size.height*gain2/max);
     p2 = NSMakePoint (param2*b.size.width,b.size.height*gain2/max);
     [NSBezierPath strokeLineFromPoint: p1 toPoint: p2];
@@ -67,6 +71,10 @@
     [[NSColor redColor] set];
     p1 = NSMakePoint (param1*b.size.width,b.size.height*div1/max);
     p2 = NSMakePoint ((param1+(param2-param1)/2)*b.size.width,b.size.height*div1/max);
+    [NSBezierPath strokeLineFromPoint: p1 toPoint: p2];
+
+    p1 = NSMakePoint ((param1+(param2-param1)/2)*b.size.width,b.size.height*div1/max);
+    p2 = NSMakePoint ((param1+(param2-param1)/2)*b.size.width,b.size.height*div2/max);
     [NSBezierPath strokeLineFromPoint: p1 toPoint: p2];
 
     p1 = NSMakePoint ((param1+(param2-param1)/2)*b.size.width,b.size.height*div2/max);

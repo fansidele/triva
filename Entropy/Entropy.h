@@ -31,7 +31,7 @@
   double p;
   NSString *variableName;
   EntropyPlot *entropyPlot;
-  NSMutableArray *savedEntropyPoints;
+  NSArray *savedEntropyPoints;
 
   //GUI
   TrivaWindow *window;
@@ -56,10 +56,18 @@
 
 - (NSDictionary *) entropyGainOfAggregation: (NSArray*) containers;
 - (NSDictionary *) divergenceOfAggregation: (NSArray*) containers;
-- (NSMutableArray *) getEntropyPoints: (NSString*) variable;
+
+- (NSArray *) getEntropyPointsFromPoint: (NSArray*) minPoint
+				toPoint: (NSArray*) maxPoint
+				withVariable: (NSString*) variable;
+- (NSArray *) getEntropyPointsWithVariable: (NSString*) variable;
+- (NSMutableArray *) getEntropyPointsByStep: (double) step withVariable: (NSString*) variable;
+- (NSArray *) translateEntropyPoints: (NSArray *) points withVariable: (NSString*) variable;
+- (BOOL) areEqualsAggregation1: (NSArray *) aggregation1 aggregation2: (NSArray *) aggregation2;
+
 - (NSString *) variableName;
 - (double) parameter;
-- (NSMutableArray *) savedEntropyPoints;
+- (NSArray *) savedEntropyPoints;
 
 //notification of a change in P
 - (void) pChanged;

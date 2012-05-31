@@ -324,25 +324,107 @@
   return ret;
 }
 
-- (NSMutableArray *) getEntropyPoints: (NSString*) variable
+
+- (NSArray *) getEntropyPointsWithVariable: (NSString*) variable
 {
-  double step = 0.01;
+  double minParam = 0;
+  double maxParam = 1;
+  NSArray *minAggregation = [self leafContainersInContainer: [self rootInstance]];
+  NSArray *maxAggregation = [NSArray arrayWithObjects: [self rootInstance], nil];
+
+  NSArray *minPoint = [NSArray arrayWithObjects: [NSNumber numberWithDouble: minParam], minAggregation, nil];
+  NSArray *maxPoint = [NSArray arrayWithObjects: [NSNumber numberWithDouble: maxParam], maxAggregation, nil];
+  NSArray *newPoints = [self getEntropyPointsFromPoint: minPoint toPoint: maxPoint withVariable: variable];
+
+  NSMutableArray *points = [NSMutableArray arrayWithCapacity: [newPoints count]+2];
+  [points addObject: minPoint];
+  [points addObjectsFromArray: newPoints];
+  [points addObject: maxPoint];
+
+  return [self translateEntropyPoints: points withVariable: variable];
+}
+
+
+- (NSArray *) getEntropyPointsFromPoint: (NSArray*) minPoint
+				toPoint: (NSArray*) maxPoint
+			   withVariable: (NSString*) variable
+{
+  double minParam = [[minPoint objectAtIndex: 0] doubleValue];
+  double maxParam = [[maxPoint objectAtIndex: 0] doubleValue];
+
+  NSArray *minAggregation = [minPoint objectAtIndex: 1];
+  NSArray *maxAggregation = [maxPoint objectAtIndex: 1];
+
+  double newParam = minParam+(maxParam-minParam)/2;
+  NSArray *newAggregation = [[self maxPRicOfContainer: [self rootInstance] withP: newParam withVariable: variable] objectAtIndex: 1];
+  NSArray *newPoint = [NSArray arrayWithObjects: [NSNumber numberWithDouble: newParam], newAggregation, nil];
+
+  NSArray *minPoints = [NSArray array];
+  NSArray *maxPoints = [NSArray array];
+  if ((maxParam-minParam)/2 > 0.005) {
+    if (![self areEqualsAggregation1: minAggregation aggregation2: newAggregation]) {
+      minPoints = [self getEntropyPointsFromPoint: minPoint toPoint: newPoint withVariable: variable];
+    }
+
+    if (![self areEqualsAggregation1: newAggregation aggregation2: maxAggregation]) {
+      maxPoints = [self getEntropyPointsFromPoint: newPoint toPoint: maxPoint withVariable: variable];
+    }
+  }
+
+  NSMutableArray *newPoints = [NSMutableArray arrayWithCapacity: [minPoints count]+[maxPoints count]+1];
+  [newPoints addObjectsFromArray: minPoints];
+  [newPoints addObject: newPoint];
+  [newPoints addObjectsFromArray: maxPoints];
+
+  return newPoints;
+}
+
+
+- (NSMutableArray *) getEntropyPointsByStep: (double) step
+			       withVariable: (NSString*) variable
+{
   NSMutableArray *points = [NSMutableArray arrayWithCapacity: round(1/step)+1];
   for (double param = 0; param <= 1; param += step) {
     
     NSArray *array = [self maxPRicOfContainer: [self rootInstance] withP: param withVariable: variable];
     NSArray *bestAggregation = [array objectAtIndex: 1];
-    double entropyGain = [[[self entropyGainOfAggregation: bestAggregation] objectForKey: variable] doubleValue];
-    double divergence = [[[self divergenceOfAggregation: bestAggregation] objectForKey: variable] doubleValue];
+    NSNumber *gain = [[self entropyGainOfAggregation: bestAggregation] objectForKey: variable];
+    NSNumber *div = [[self divergenceOfAggregation: bestAggregation] objectForKey: variable];
     NSArray *point = [NSArray arrayWithObjects:
 				[NSNumber numberWithDouble: param],
-			      [NSNumber numberWithDouble: entropyGain],
-			      [NSNumber numberWithDouble: divergence],
-			      nil];
+			      gain, div, nil];
 
     [points addObject: point];
   }
   return points;
+}
+
+
+- (NSArray *) translateEntropyPoints: (NSArray *) points
+			withVariable: (NSString*) variable
+{
+  NSMutableArray *translatedPoints = [NSMutableArray arrayWithCapacity: [points count]];
+
+  NSEnumerator *en = [points objectEnumerator];
+  NSArray *point;
+  while ((point = [en nextObject])) {
+    NSNumber *param = [point objectAtIndex: 0];
+    NSNumber *gain = [[self entropyGainOfAggregation: [point objectAtIndex: 1]] objectForKey: variable];
+    NSNumber *div = [[self divergenceOfAggregation: [point objectAtIndex: 1]] objectForKey: variable];
+    [translatedPoints addObject: [NSArray arrayWithObjects: param, gain, div, nil]];	 
+  }
+  return translatedPoints;
+}
+
+- (BOOL) areEqualsAggregation1: (NSArray *) aggregation1
+		  aggregation2: (NSArray *) aggregation2
+{
+  NSEnumerator *en = [aggregation1 objectEnumerator];
+  PajeContainer *cont;
+  while ((cont = [en nextObject])){
+    if (![aggregation2 containsObject: cont]) return NO;
+  }
+  return YES;
 }
 
 
@@ -398,7 +480,7 @@
 - (void) variableChanged
 {
   [savedEntropyPoints release];
-  savedEntropyPoints = [self getEntropyPoints: variableName];
+  savedEntropyPoints = [self getEntropyPointsWithVariable: variableName];
   [savedEntropyPoints retain];
   [entropyPlot setNeedsDisplay: YES];
 }
@@ -413,7 +495,7 @@
   return p;
 }
 
-- (NSMutableArray *) savedEntropyPoints
+- (NSArray *) savedEntropyPoints
 {
   return savedEntropyPoints;
 }
