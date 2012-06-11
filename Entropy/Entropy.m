@@ -483,6 +483,7 @@
   savedEntropyPoints = [self getEntropyPointsWithVariable: variableName];
   [savedEntropyPoints retain];
   [entropyPlot setNeedsDisplay: YES];
+  [self pChanged];
 }
 
 - (NSString *) variableName
