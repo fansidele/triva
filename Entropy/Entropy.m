@@ -384,7 +384,8 @@
 			       withVariable: (NSString*) variable
 {
   NSMutableArray *points = [NSMutableArray arrayWithCapacity: round(1/step)+1];
-  for (double param = 0; param <= 1; param += step) {
+  double param;
+  for (param = 0; param <= 1; param += step) {
     
     NSArray *array = [self maxPRicOfContainer: [self rootInstance] withP: param withVariable: variable];
     NSArray *bestAggregation = [array objectAtIndex: 1];
