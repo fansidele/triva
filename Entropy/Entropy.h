@@ -52,6 +52,7 @@
 - (NSArray *) maxPRicOfContainer: (PajeContainer*) cont
                            withP: (double) pval
 			   withVariable: (NSString *) variable;
+- (void) redefineAvailableVariables;
 - (void) recalculateBestAggregation;
 
 - (NSDictionary *) entropyGainOfAggregation: (NSArray*) containers;
